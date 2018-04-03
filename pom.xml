@@ -29,11 +29,4 @@
     <module>bpg-cbt-apac-services-main</module>
   </modules>
   
-  
-  <dependencies>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context-support</artifactId>
-    </dependency>
-  </dependencies>
 </project>
