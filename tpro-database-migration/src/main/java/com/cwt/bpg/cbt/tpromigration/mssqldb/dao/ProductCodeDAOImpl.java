@@ -28,7 +28,7 @@ public class ProductCodeDAOImpl implements ProductCodeDAO {
 	public List<ProductCode> listProductCodes() {
 		List<ProductCode> productCodeList = new ArrayList<ProductCode>();
 		String sql = "SELECT * FROM tblProductCodes";
-
+		
 		Connection conn = null;
 
 //		@Column(name="ProductCode")
@@ -43,6 +43,7 @@ public class ProductCodeDAOImpl implements ProductCodeDAO {
 //		@Column(name="Type")
 
 		try {
+			logger.info("getting product codes from mssqldb");
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -72,6 +73,7 @@ public class ProductCodeDAOImpl implements ProductCodeDAO {
 				}
 			}
 		}
+		logger.info("size of product codes from mssqldb: {}", productCodeList.size());
 
 		return productCodeList;
 	}

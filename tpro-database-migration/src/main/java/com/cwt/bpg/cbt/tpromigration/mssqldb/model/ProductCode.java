@@ -1,6 +1,10 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.model;
 
 public class ProductCode {
+
+	public static final String COLLECTION = "_productCodes";
+	private String countryCode;
+	
 	private String productCode;
 
 	private String description;
@@ -20,6 +24,14 @@ public class ProductCode {
 	private String tktPrefix;
 
 	private String type;
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 
 	public String getProductCode() {
 		return this.productCode;

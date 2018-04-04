@@ -9,21 +9,21 @@ public class PropertyConfig
 {
     
     @Configuration("com.cwt.bpg.cbt.tpromigration.config.property.source")
-    @Profile("hk")
+    @Profile("HK")
     @PropertySource(value = { "classpath:properties/tprodb-hk.properties" }, ignoreResourceNotFound = true)
     static class HkPropertyConfig
     {
     }
     
     @Configuration("com.cwt.bpg.cbt.tpromigration.config.property.source")
-    @Profile("sg")
+    @Profile("SG")
     @PropertySource(value = { "classpath:properties/tprodb-sg.properties" }, ignoreResourceNotFound = true)
     static class SgPropertyConfig
     {
     }
 
     @Configuration("com.cwt.bpg.cbt.tpromigration.config.property.source")
-    @Profile("in")
+    @Profile("IN")
     @PropertySource(value = { "classpath:properties/tprodb-in.properties" }, ignoreResourceNotFound = true)
     static class InPropertyConfig
     {

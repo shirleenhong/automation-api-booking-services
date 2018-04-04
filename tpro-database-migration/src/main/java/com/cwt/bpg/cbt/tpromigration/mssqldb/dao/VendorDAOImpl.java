@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,7 @@ public class VendorDAOImpl implements VendorDAO {
 //		@Column(name="VendorName")
 
 		try {
+			logger.info("getting vendors from mssqldb");
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -62,7 +65,11 @@ public class VendorDAOImpl implements VendorDAO {
 				tblVendor.setEmail(rs.getString("Email"));
 				tblVendor.setFaxNumber(rs.getString("FaxNumber"));
 				tblVendor.setMisc(rs.getObject("MISC") == null ? null : rs.getBoolean("MISC"));
-				tblVendor.setProductCodes(rs.getString("ProductCodes"));
+				String productCodesStr = rs.getString("ProductCodes");
+				if(StringUtils.isNotBlank(productCodesStr)) {
+					List<String> productCodes = Arrays.asList(productCodesStr.split(";"));
+					tblVendor.setProductCodes(productCodes);
+				}
 				tblVendor.setRaiseType(rs.getString("RaiseType"));
 				tblVendor.setSortKey(rs.getString("SortKey"));
 				tblVendor.setVendorName(rs.getString("VendorName"));
@@ -80,6 +87,7 @@ public class VendorDAOImpl implements VendorDAO {
 				}
 			}
 		}
+		logger.info("size of vendors from mssqldb: {}", vendorList.size());
 		return vendorList;
 	}
 

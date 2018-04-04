@@ -1,8 +1,12 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.model;
 
+import java.util.List;
+
 public class Vendor {
 
-
+	public static final String COLLECTION = "_vendors";
+	private String countryCode;
+	
 	private String vendorNumber;
 
 	private String address1;
@@ -23,13 +27,21 @@ public class Vendor {
 
 	private Boolean misc;
 
-	private String productCodes;
+	private List<String> productCodes;
 
 	private String raiseType;
 
 	private String sortKey;
 
 	private String vendorName;
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 
 	public String getVendorNumber() {
 		return this.vendorNumber;
@@ -111,11 +123,11 @@ public class Vendor {
 		this.misc = misc;
 	}
 
-	public String getProductCodes() {
+	public List<String> getProductCodes() {
 		return this.productCodes;
 	}
 
-	public void setProductCodes(String productCodes) {
+	public void setProductCodes(List<String> productCodes) {
 		this.productCodes = productCodes;
 	}
 
