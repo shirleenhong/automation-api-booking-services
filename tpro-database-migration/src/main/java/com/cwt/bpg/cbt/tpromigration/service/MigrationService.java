@@ -4,14 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.cwt.bpg.cbt.tpromigration.encryptor.Encryptor;
-import com.mongodb.MongoCredential;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductCodeDAO;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAO;
 
 @Service
 public class MigrationService {
 
     @Autowired
-    private Encryptor encryptor;
+    private VendorDAO vendorDAO;
+    @Autowired
+    private ProductCodeDAO productCodeDAO;
 
     @Value("${com.cwt.tpromigration.mongodb.dbuser}")
     private String dbUser;
@@ -26,8 +28,8 @@ public class MigrationService {
 		
 
 
-        System.out.println(encryptor.decrypt(this.dbPwd));
-        System.out.println(encryptor.decrypt(this.dbUser));
 		System.out.println("start migration...");
+		vendorDAO.listVendors();
+		productCodeDAO.listProductCodes();
 	}
 }
