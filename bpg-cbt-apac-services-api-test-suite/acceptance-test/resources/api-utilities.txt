@@ -1,0 +1,130 @@
+*** Keywords ***
+Append To Response
+    [Arguments]    ${string}
+    ${response_body}    Catenate    SEPARATOR=    ${response_body}    ${string}
+    Set Test Variable    ${response_body}
+
+Check If Parameter Is A Number
+    [Arguments]    ${parameter}
+    ${is_number}    Run Keyword And Return Status    Should Match RegExp    ${parameter}    ^[0-9]+$
+    [Return]    ${is_number}
+
+Convert Epoch To Local Time
+    [Arguments]    ${epoch}
+    ${local_time}    Evaluate    time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(${epoch}))    modules=time
+    [Return]    ${local_time}
+
+Convert Epoch To UTC
+    [Arguments]    ${epoch}
+    ${utc}    Evaluate    time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(${epoch}))    modules=time
+    [Return]    ${utc}
+
+Convert Local Time To Epoch
+    [Arguments]    ${local_time}
+    ${epoch}    Convert Date    ${local_time}    epoch
+    ${epoch}    Convert To Integer    ${epoch}
+    [Return]    ${epoch}
+
+Generate Random UID
+    ${random_uid}    Generate UUID    unique_key=C
+    Set Test Variable    ${uid}    ${random_uid}
+
+Generate UUID
+    [Arguments]    ${unique_key}=C
+    ${current_datetime}    Get Current Date
+    ${epoch_datetime}    Convert Date    ${current_datetime}    epoch
+    ${uuid}    Evaluate    str(${epoch_datetime}-1400000000).replace(".","${unique_key}")
+    [Return]    ${uuid}
+
+Verify Response Status Code Is Correct
+    [Arguments]    ${status_code}
+    Verify That Actual Value Matches Expected Value    ${response.status_code}    ${status_code}
+
+Verify Actual Value Does Not Match Expected Value
+    [Arguments]    ${actual_value}    ${expected_value}
+    Log    Actual Value: ${actual_value}
+    Log    Expected Value: ${expected_value}
+    ${actual_value}    Convert To String    ${actual_value}
+    ${expected_value}    Convert To String    ${expected_value}
+    Run Keyword And Continue On Failure    Should Not Be Equal    ${actual_value}    ${expected_value}    Actual value "${actual_value}" matches expected value "${expected_value}"    FALSE
+
+Verify Actual Value Matches Expected Value
+    [Arguments]    ${actual_value}    ${expected_value}
+    Log    Actual Value: ${actual_value}
+    Log    Expected Value: ${expected_value}
+    ${actual_value}    Convert To String    ${actual_value}
+    ${expected_value}    Convert To String    ${expected_value}
+    Run Keyword And Continue On Failure    Should Be Equal    ${actual_value}    ${expected_value}    Actual value "${actual_value}" does not match expected value "${expected_value}"    FALSE
+
+Verify Json Element Does Not Exist
+    [Arguments]    ${json_object}
+    Log    Json Object: ${json_object}
+    ${status}    Run Keyword And Return Status    Get Json Value    ${response.content}    ${json_object}
+    Verify That Actual Value Matches Expected Value    ${status}    False
+
+Verify Json Element Exists
+    [Arguments]    ${json_object}
+    Log    Json Object: ${json_object}
+    ${status}    Run Keyword And Return Status    Get Json Value    ${response.content}    ${json_object}
+    Verify That Actual Value Matches Expected Value    ${status}    True
+
+Verify Json Value Is Correct
+    [Arguments]    ${json_object}    ${expected_value}    ${data_type}=string    ${handle_null}=true
+    Log    Json Object: ${json_object}
+    Log    Expected Value: ${expected_value}
+    ${expected_value}    Set Variable If    "${data_type}" == "string"    "${expected_value}"    ${expected_value}
+    ${expected_value}    Set Variable If    "${data_type}" == "array"    [${expected_value}]    ${expected_value}
+    ${expected_value}    Convert To String    ${expected_value}
+    ${expected_value}    Run Keyword If    "${handle_null}" == "true"    Replace String    ${expected_value}    "null"    null
+    ...    ELSE    Set Variable    ${expected_value}
+    ${expected_value}    Run Keyword If    "${handle_null}" == "true"    Replace String    ${expected_value}    [null]    null
+    ...    ELSE    Set Variable    ${expected_value}
+    Run Keyword And Continue On Failure    Json Value Should Equal    ${response.content}    ${json_object}    ${expected_value}
+
+Verify Json Value Matches Pattern
+    [Arguments]    ${json_object}    ${expected_pattern}
+    Log    Json Object: ${json_object}
+    Log    Expected Pattern: ${expected_pattern}
+    ${actual_value}    Get Json Value    ${response.content}    ${json_object}
+    Verify That String Matches Pattern    ${actual_value}    ${expected_pattern}
+
+Verify List Contains Value
+    [Arguments]    ${list}    ${value}
+    Log    Actual List: ${list}
+    Log    Expected Value: ${value}
+    Run Keyword And Continue On Failure    List Should Contain Value    ${list}    ${value}    List "${list}" does not contain value "${value}"
+
+Verify Response Status Code Is Correct
+    [Arguments]    ${status_code}
+    Verify That Actual Value Matches Expected Value    ${response.status_code}    ${status_code}
+
+Verify String Contains Substring
+    [Arguments]    ${string}    ${substring}
+    Log    Actual String: ${string}
+    Log    Expected Substring: ${substring}
+    Run Keyword And Continue On Failure    Should Contain    ${string}    ${substring}    String "${string}" does not contain substring "${substring}"    FALSE
+
+Verify String Contains Substring X Times
+    [Arguments]    ${string}    ${substring}    ${occurence}
+    Log    Actual String: ${string}
+    Log    Expected Substring: ${substring} (displayed ${occurence} time/s only)
+    Run Keyword And Continue On Failure    Should Contain X Times    ${string}    ${substring}    ${occurence}    Substring "${substring}" is not found ${occurence} time/s
+
+Verify String Does Not Contain Substring
+    [Arguments]    ${string}    ${substring}
+    Log    Actual String: ${string}
+    Log    Expected Substring: ${substring}
+    ${string}    Decode Bytes To String    ${string}    UTF8
+    Run Keyword And Continue On Failure    Should Not Contain    ${string}    ${substring}    String "${string}" contains substring "${substring}"    FALSE
+
+Verify String Does Not Match Pattern
+    [Arguments]    ${string}    ${pattern}
+    Log    Actual String: ${string}
+    Log    Expected Pattern: ${pattern}
+    Run Keyword And Continue On Failure    Should Not Match RegExp    ${string}    ${pattern}    String "${string}" matches pattern "${pattern}"    FALSE
+
+Verify String Matches Pattern
+    [Arguments]    ${string}    ${pattern}
+    Log    Actual String: ${string}
+    Log    Expected Pattern: ${pattern}
+    Run Keyword And Continue On Failure    Should Match RegExp    ${string}    ${pattern}    String "${string}" does not match pattern "${pattern}"    FALSE
