@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.authentication.impl;
+package com.cwt.bpg.cbt.security.impl;
 
 import java.io.IOException;
 
@@ -23,9 +23,10 @@ public class TokenImpl implements TokenApi {
 
 	@Override
 	public boolean isTokenExist(String token) {
+		
 		boolean isExist = false;
 		
-		FindIterable iterable = mongoDbConnection.getCollection("tokens").find(new Document("_id",token));
+		FindIterable iterable = mongoDbConnection.getCollection("nxtgen_tokens").find(new Document("_id",token));
 
 		Token tokenResult = null;
 		try {
