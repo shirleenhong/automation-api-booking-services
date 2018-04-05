@@ -29,6 +29,11 @@
       <artifactId>bpg-cbt-apac-services-authentication-rest</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.cwt.bpg.cbt</groupId>
+      <artifactId>bpg-cbt-apac-services-security-rest</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     
     <dependency>
       <groupId>org.springframework.boot</groupId>
