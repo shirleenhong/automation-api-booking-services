@@ -27,7 +27,7 @@ public class CustomFilter extends GenericFilterBean {
             return ;
         }
 
-        String token = authHeader.substring(7);
+        String token = authHeader.substring(7).trim();
         try {
         	System.out.println("token: "+ token);
         } catch (Exception e) {
