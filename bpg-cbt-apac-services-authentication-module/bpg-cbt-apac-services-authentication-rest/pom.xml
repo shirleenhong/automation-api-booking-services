@@ -10,4 +10,12 @@
 	<artifactId>bpg-cbt-apac-services-authentication-rest</artifactId>
 	<name>bpg-cbt-apac-services-authentication-rest</name>
 	<description>bpg-cbt-apac-services-authentication-rest</description>
+	
+	
+	<dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+  </dependencies>
 </project>
