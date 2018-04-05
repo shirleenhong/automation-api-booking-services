@@ -3,7 +3,7 @@ package com.cwt.bpg.cbt.security.api.model;
 import java.util.Date;
 
 public class Token {
-	
+	public static final String COLLECTION = "nxtgen_tokens";
 	private String key;
     private Date creationTime;
     private Date expirationTime;

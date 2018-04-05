@@ -26,7 +26,7 @@ public class TokenImpl implements TokenApi {
 		
 		boolean isExist = false;
 		
-		FindIterable iterable = mongoDbConnection.getCollection("nxtgen_tokens").find(new Document("_id",token));
+		FindIterable iterable = mongoDbConnection.getCollection(Token.COLLECTION).find(new Document("_id",token));
 
 		Token tokenResult = null;
 		try {
