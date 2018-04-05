@@ -16,5 +16,10 @@
 			<artifactId>bpg-cbt-apac-services-security-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.cwt.bpg.cbt</groupId>
+			<artifactId>bpg-cbt-apac-services-mongodb</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 </project>
