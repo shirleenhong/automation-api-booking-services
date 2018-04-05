@@ -13,7 +13,6 @@
 
   <name>bpg-cbt-apac-services-security-module</name>
   <modules>
-  	<module>bpg-cbt-apac-services-security-rest</module>
   	<module>bpg-cbt-apac-services-security-api</module>
   	<module>bpg-cbt-apac-services-security-impl</module>
   </modules>
