@@ -32,6 +32,7 @@
 		<module>bpg-cbt-apac-services-fees-module</module>
 		<module>bpg-cbt-apac-services-exchange-order-module</module>
 		<module>bpg-cbt-apac-services-authentication-module</module>
+		<module>bpg-cbt-apac-services-security-module</module>
 		<module>bpg-cbt-apac-services-rest</module>
 		<module>bpg-cbt-apac-services-main</module>
 		<module>bpg-cbt-apac-services-mongodb</module>
@@ -122,4 +123,7 @@
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
 	</dependencies>
+	
+	
+	
 </project>
