@@ -10,6 +10,11 @@
   
 	<dependencies>
 		<dependency>
+    		<groupId>com.cwt.bpg.cbt</groupId>
+			<artifactId>bpg-cbt-apac-services-encryptor</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
 		</dependency>

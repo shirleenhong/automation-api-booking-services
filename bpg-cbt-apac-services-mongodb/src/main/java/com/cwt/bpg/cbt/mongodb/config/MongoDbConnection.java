@@ -8,10 +8,14 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import com.cwt.bpg.cbt.encryptor.impl.Encryptor;
 import com.cwt.bpg.cbt.mongodb.config.util.MongoSSLCertificateUtility;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -25,28 +29,28 @@ import com.mongodb.client.model.Indexes;
 @Component
 public class MongoDbConnection
 {
-//    private static final Logger LOGGER = LoggerFactory.getLogger(ExplorerMongoDbConnection.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MongoDbConnection.class);
 
-    @Value("${com.cwt.explorer.mongodb.dbuser}")
+    @Value("${com.cwt.mongodb.dbuser}")
     private String dbUser;
 
-    @Value("${com.cwt.explorer.mongodb.dbpwd}")
+    @Value("${com.cwt.mongodb.dbpwd}")
     private String dbPwd;
 
-    @Value("${com.cwt.explorer.mongodb.dbname}")
+    @Value("${com.cwt.mongodb.dbname}")
     private String dbName;
 
-    @Value("${com.cwt.explorer.mongodb.dbAddresses}")
+    @Value("${com.cwt.mongodb.dbAddresses}")
     private String dbAddresses;
 
-    @Value("${com.cwt.explorer.mongodb.database.sslenabled}")
+    @Value("${com.cwt.mongodb.database.sslenabled}")
     private Boolean sslEnabled;
 
-    @Value("${com.cwt.explorer.mongodb.database.invalidhostnameallowed}")
+    @Value("${com.cwt.mongodb.database.invalidhostnameallowed}")
     private Boolean invalidHostNameAllowed;
 
-//    @Value("${encryptor.secret.key}")
-//    private String secretKey;
+    @Autowired
+    private Encryptor encryptor;
 
     private MongoClient mongoClient;
 
@@ -63,17 +67,13 @@ public class MongoDbConnection
     public void init()
     {
 
-//        LOGGER.info("Initializing mongodb connection");
+        LOGGER.info("Initializing mongodb connection");
         try
         {
-//            final Encryptor encryptor = new Encryptor(this.secretKey);
-//            char[] pwd = encryptor.decrypt(this.mongoDBAccountPwd).toCharArray();
-//            String mongoDBName = encryptor.decrypt(this.mongoDBName);
-//            MongoCredential credential = MongoCredential.createCredential(encryptor.decrypt(this.mongoDBAccountUser), mongoDBName, pwd);
-
-            char[] pwd = this.dbPwd.toCharArray();
+            char[] pwd = encryptor.decrypt(this.dbPwd).toCharArray();
             String mongoDBName = this.dbName;
-            MongoCredential credential = MongoCredential.createCredential(this.dbUser, mongoDBName, pwd);
+            MongoCredential credential = MongoCredential.createCredential(encryptor.decrypt(this.dbUser), mongoDBName, pwd);
+
             List<MongoCredential> credentials = new ArrayList<>();
             credentials.add(credential);
             MongoClientOptions.Builder options = new MongoClientOptions.Builder().sslEnabled(sslEnabled)
@@ -89,14 +89,13 @@ public class MongoDbConnection
                 hosts.add(new ServerAddress(address));
             }
 
-//            mongoClient = new MongoClient(hosts, options.build());
             mongoClient = new MongoClient(hosts, credentials, options.build());
             this.database = mongoClient.getDatabase(mongoDBName);
-//            LOGGER.info("Mongodb connection initialized");
+            LOGGER.info("Mongodb connection initialized");
         }
         catch (Exception e)
         {
-//            LOGGER.error("Exception while creating mongodb connection", e);
+            LOGGER.error("Exception while creating mongodb connection", e);
         }
     }
 
@@ -123,7 +122,7 @@ public class MongoDbConnection
         }
         catch (Exception e)
         {
-//            LOGGER.error("Exception while creating an index", e);
+            LOGGER.error("Exception while creating an index", e);
         }
 
         return false;
