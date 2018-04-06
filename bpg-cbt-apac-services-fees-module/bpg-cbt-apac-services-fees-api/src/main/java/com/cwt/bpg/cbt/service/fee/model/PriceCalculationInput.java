@@ -19,7 +19,11 @@ public class PriceCalculationInput implements Serializable {
 //	obFee
 //	fuelSurcharge
 	
+	private String countryCode;
+
 	private BigDecimal baseFare;
+	
+	private BigDecimal nettFare;
 	
 	private BigDecimal totalTaxes;
 	
@@ -43,12 +47,28 @@ public class PriceCalculationInput implements Serializable {
 
 	private BigDecimal fuelSurcharge;
 
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+
 	public BigDecimal getBaseFare() {
 		return baseFare;
 	}
 
 	public void setBaseFare(BigDecimal baseFare) {
 		this.baseFare = baseFare;
+	}
+
+	public BigDecimal getNettFare() {
+		return nettFare;
+	}
+
+	public void setNettFare(BigDecimal nettFare) {
+		this.nettFare = nettFare;
 	}
 
 	public BigDecimal getTotalTaxes() {
