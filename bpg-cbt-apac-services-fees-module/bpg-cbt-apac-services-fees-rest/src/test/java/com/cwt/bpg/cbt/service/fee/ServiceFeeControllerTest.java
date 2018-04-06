@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -14,9 +15,12 @@ public class ServiceFeeControllerTest {
 	
 	private ServiceFeeController controller;
 	
+	@Mock
+	private ServiceFeeApi serviceFee;
+	
 	@Before
 	public void setup() {
-		controller = new ServiceFeeController();
+		controller = new ServiceFeeController(serviceFee);
 	}
 
 	@Test
