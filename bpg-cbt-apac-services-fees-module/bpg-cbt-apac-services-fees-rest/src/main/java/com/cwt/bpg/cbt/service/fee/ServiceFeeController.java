@@ -16,15 +16,14 @@ import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
 @RestController
 @RequestMapping("/servicefee")
 public class ServiceFeeController {
-	
-	@PostMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }
-				, consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }
-	)
-    public @ResponseBody ResponseEntity<PriceBreakdown> calculatePriceInput(@RequestBody PriceCalculationInput input) {
+
+	@PostMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public @ResponseBody ResponseEntity<PriceBreakdown> calculatePriceInput(@RequestBody PriceCalculationInput input) {
 		PriceBreakdown sf = new PriceBreakdown();
-        return new ResponseEntity<>(sf, HttpStatus.OK);
-    }
-	
+		return new ResponseEntity<>(sf, HttpStatus.OK);
+	}
+
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody PriceBreakdown xxx() {
 		PriceBreakdown sf = new PriceBreakdown();
