@@ -38,6 +38,18 @@ Calculate Transaction Fee Amount
     ${calculated_value}    Evaluate    ${base_fare}*${transaction_percentage}
     Set Test Variable    ${transaction_amount}    ${calculated_value}
 
+Create Test Variables For Service Fees Post Request
+    [Arguments]    ${fees_list}    ${country}
+    [Documentation]    sample data: fees_list=base_fare;1|taxes;2|ob_fee;3|merchant_amount;null|merchant_percentage;6|transaction_amount;7|transaction_percentage;null|markup_amount;9|markup_percentage;null|commission_amount;11|commission_percentage;12|fuel_surcharge;13|nett_fare;14
+    ...
+    ...    country=sg
+    ${fees_list}    Split String    ${fees_list}    |
+    : FOR    ${fees}    IN    @{fees_list}
+    \    ${fees_item}    Split String    ${fees}    ;
+    \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
+    Set Test Variable    ${fees_list}
+    Set Test Variable    ${country}
+
 Generate Test Variables For Calculate Fees
     [Arguments]    ${fees_list}
     Parse Fees List    ${fees_list}
@@ -60,6 +72,37 @@ Parse Fees List
     : FOR    ${item}    IN    @{fees_list}
     \    ${details_list}    Split String    ${item}    ,
     \    Set Test Variable    ${${details_list[0]}}    ${details_list[1]}
+
+Send Service Fees Post Request
+    Create Session    fees    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    @{calculate_request_list}    Create List
+    Run Keyword If    "${country}"!="null"    Append To List    ${calculate_request_list}    "country":"${country}"
+    Run Keyword If    "${base_fare_value}"!="null"    Append To List    ${calculate_request_list}    "baseFare":${base_fare_value}
+    Run Keyword If    "${taxes_value}"!="null"    Append To List    ${calculate_request_list}    "totalTaxes":${taxes_value}
+    Run Keyword If    "${ob_fee_value}"!="null"    Append To List    ${calculate_request_list}    "obFee":${ob_fee_value}
+    Run Keyword If    "${merchant_amount_value}"!="null"    Append To List    ${calculate_request_list}    "merchantFeeAmount":${merchant_amount_value}
+    Run Keyword If    "${merchant_percentage_value}"!="null"    Append To List    ${calculate_request_list}    "merchantFeePercentage":${merchant_percentage_value}
+    Run Keyword If    "${transaction_amount_value}"!="null"    Append To List    ${calculate_request_list}    "transactionFeeAmount":${transaction_amount_value}
+    Run Keyword If    "${transaction_percentage_value}"!="null"    Append To List    ${calculate_request_list}    "transactionFeePercentage":${transaction_percentage_value}
+    Run Keyword If    "${markup_amount_value}"!="null"    Append To List    ${calculate_request_list}    "markupAmount":${markup_amount_value}
+    Run Keyword If    "${markup_percentage_value}"!="null"    Append To List    ${calculate_request_list}    "markupPercentage":${markup_percentage_value}
+    Run Keyword If    "${commission_amount_value}"!="null"    Append To List    ${calculate_request_list}    "commissionRebateAmount":${commission_amount_value}
+    Run Keyword If    "${commission_percentage_value}"!="null"    Append To List    ${calculate_request_list}    "commissionRebatePercentage":${commission_percentage_value}
+    Run Keyword If    "${fuel_surcharge_value}"!="null"    Append To List    ${calculate_request_list}    "fuelSurcharge":${fuel_surcharge_value}
+    Run Keyword If    "${nett_fare_value}"!="null"    Append To List    ${calculate_request_list}    "nettFare":${nett_fare_value}
+    ${list_count}    Get Length    ${calculate_request_list}
+    : FOR    ${i}    IN RANGE    0    ${list_count}
+    \    ${fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${fees_list},
+    \    ${fees_list}    Set Variable    ${fees_list}${calculate_request_list[${i}]}
+    ${data}    Set Variable    {${fees_list}}
+    Log    ${data}
+    ${response}    Post Request    fees    /bpg-cbt-apac-services-rest/api/servicefee    data=${data}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    fees
 
 Verify Calculated Fees Are Returned Correctly
     Verify Json Value Is Correct    /fees/fopAmount    ${fop_amount}
