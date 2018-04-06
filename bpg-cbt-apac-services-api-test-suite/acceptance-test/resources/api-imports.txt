@@ -5,3 +5,4 @@ Library           HttpLibrary.HTTP
 Library           RequestsLibrary
 Library           String
 Library           JSONLibrary
+Library           custom-libraries/ApacSvcLibrary.py

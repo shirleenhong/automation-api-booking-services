@@ -3,7 +3,7 @@ Resource          resources/calculate.txt
 
 *** Test Cases ***
 test
-    ${result}    Evaluate    math.ceil(33.344*100/100)
+    Round Up    83.333    2
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes Only
     Generate Test Variables For Calculate Fees    base_fare,100.50|taxes,40.00|ob_fee,5.00|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
@@ -18,7 +18,7 @@ Verify That Service Fees Are Calculated With Fare Including Taxes, Markup Amount
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount, Merchant Amount And Transaction Amount
 
-Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, \ Transaction Amount And Fuel Surcharge
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Transaction Amount And Fuel Surcharge
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount And Fuel Surcharge
 
@@ -69,3 +69,65 @@ Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes,
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Transaction Amount
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Fuel Surcharge
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount, Merchant Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated With Fare Including Taxes, Markup Amount, Merchant Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated With Fare Including Taxes, Markup Amount, Commission Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated With Fare Including Taxes, Markup Amount, Commission Amount, Merchant Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount, Merchant Amount And Transaction Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount And Merchant Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount And Transaction Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Merchant Amount And Transaction Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Merchant Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount And Commission Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount And Merchant Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount And Transaction Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Markup Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount, Merchant Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount, Merchant Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount, Merchant Amount And Transaction Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount And Merchant Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount And Transaction Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Commission Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Merchant Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Merchant Amount And Transaction Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Merchant Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Merchant Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Transaction Amount And Fuel Surcharge Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Transaction Amount Using Nett Fare
+
+Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Fuel Surcharge Using Nett Fare
