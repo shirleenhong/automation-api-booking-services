@@ -15,7 +15,7 @@ public class ServiceFeeController {
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     public @ResponseBody PriceBreakdown appInfo()
     {
-		PriceBreakdown sf = new PriceBreakdown(10,20);
+		PriceBreakdown sf = new PriceBreakdown();
 		
         return sf;
     }
