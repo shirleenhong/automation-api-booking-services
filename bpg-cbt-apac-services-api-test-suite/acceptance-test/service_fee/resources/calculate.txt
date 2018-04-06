@@ -1,0 +1,71 @@
+*** Settings ***
+Resource          ../../resources/api-imports.txt
+
+*** Keywords ***
+Calculate Commission Amount
+    [Arguments]    ${base_fare}    ${commission_percentage}=${commission_percentage}
+    ${calculated_value}    Evaluate    ${base_fare}*${commission_percentage}
+    Set Test Variable    ${commission_amount}    ${calculated_value}
+
+Calculate FOP Amount
+    [Arguments]    ${base_fare}    ${taxes}= ${taxes}    ${markup_amount}=${markup_amount}    ${commission}=${commission_amount}
+    ${calculated_value}    Evaluate    (${base_fare}+${taxes}+${markup_amount})-${commission}
+    Set Test Variable    ${fop_amount}    ${calculated_value}
+
+Calculate Fare Incuding Air Taxes
+    [Arguments]    ${base_fare}    ${taxes}=${taxes}    ${ob_fee}=${ob_fee}    ${markup_amount}=${markup_amount}    ${commission}=${commission_amount}
+    ${calculated_value}    Evaluate    (${base_fare}+${taxes}+${ob_fee}+${markup_amount})-${commission}
+    Set Test Variable    ${fare_including_air_taxes}    ${calculated_value}
+
+Calculate Markup Amount
+    [Arguments]    ${base_fare}    ${markup_percentage}=${markup_percentage}
+    ${calculated_value}    Evaluate    ${base_fare}*${markup_percentage}
+    Set Test Variable    ${markup_amount}    ${calculated_value}
+
+Calculate Merchant Fee Amount
+    [Arguments]    ${base_fare}=${base_fare}    ${taxes}=${taxes}    ${merchant_percentage}=${merchant_percentage}    ${markup_amount}=${markup_amount}    ${commission}=${commission_amount}
+    ${charged_fare}    Evaluate    ${base_fare}+${taxes}
+    ${calculated_value}    Evaluate    ((${charged_fare}+${markup_amount})-${commission})*merchant_percentage
+    Set Test Variable    ${merchant_amount}    ${calculated_value}
+
+Calculate Total Amount
+    [Arguments]    ${fare_including_air_taxes}=${fare_including_air_taxes}    ${transaction_amount}=${transaction_amount}    ${merchant_amount}=${merchant_amount}    ${fuel_surcharge}=${fuel_surcharge}
+    ${calculated_total_amount_value}    Evaluate    ${fare_including_air_taxes}+${transaction_amount}+${merchant_amount}+${fuel_surcharge}
+    Set Test Variable    ${calculated_total_amount_value}
+
+Calculate Transaction Fee Amount
+    [Arguments]    ${base_fare}    ${transaction_percentage}=${transaction_percentage}
+    ${calculated_value}    Evaluate    ${base_fare}*${transaction_percentage}
+    Set Test Variable    ${transaction_amount}    ${calculated_value}
+
+Generate Test Variables For Calculate Fees
+    [Arguments]    ${fees_list}
+    Parse Fees List    ${fees_list}
+    ${fare}    Set Variable If    "${base_fare} " == "null"    ${nett_fare}    ${base_fare}
+    Run Keyword If    "${fuel_surcharge}" == "null"    Set Test Variable    ${fuel_surcharge}    0
+    Run Keyword If    "${markup_amount}" == "null" and "${markup_percentage}" != "null"    Calculate Markup Amount    ${fare}    ${markup_percentage}
+    ...    ELSE IF    "${markup_amount}" == "null" and "${markup_percentage}" == "null"    Set Test Variable    ${markup_amount}    0
+    Run Keyword If    "${merchant_amount}" == "null" and "${merchant_percentage}" != "null"    Calculate Merchant Fee Amount    ${fare}    ${merchant_percentage}
+    ...    ELSE IF    "${merchant_amount}" == "null" and "${merchant_percentage}" == "null"    Set Test Variable    ${merchant_amount}    0
+    Run Keyword If    "${transaction_amount}" == "null" and "${transaction_percentage}" != "null"    Calculate Transaction Fee Amount    ${fare}    ${transaction_percentage}
+    ...    ELSE IF    "${transaction_amount}" == "null" and "${merchant_percentage}" == "null"    Set Test Variable    ${transaction_amount}    0
+    Run Keyword If    "${commission_amount}" == "null" and "${commission_percentage}" != "null"    Calculate Commission Amount    ${fare}    ${commission_percentage}
+    ...    ELSE IF    "${commission_amount}" == "null" and "${commission_percentage}" == "null"    Set Test Variable    ${commission_amount}    0
+    Calculate Fare Incuding Air Taxes    ${fare}
+    Calculate Total Amount
+
+Parse Fees List
+    [Arguments]    ${fees_list}
+    ${fees_list}    Split String    ${fees_list}    |
+    : FOR    ${item}    IN    @{fees_list}
+    \    ${details_list}    Split String    ${item}    ,
+    \    Set Test Variable    ${${details_list[0]}}    ${details_list[1]}
+
+Verify Calculated Fees Are Returned Correctly
+    Verify Json Value Is Correct    /fees/fopAmount    ${fop_amount}
+    Verify Json Value Is Correct    /fees/airFareWithTaxAmount    ${fare_including_air_taxes}
+    Verify Json Value Is Correct    /fees/merchantFeeAmount    ${merchant_amount}
+    Verify Json Value Is Correct    /fees/transactionFeeAmount    ${transaction_amount}
+    Verify Json Value Is Correct    /fees/markupAmount    ${markup_amount}
+    Verify Json Value Is Correct    /fees/commissionRebateAmount    ${commission_amount}
+    Verify Json Value Is Correct    /fees/totalAmount    ${calculated_total_amount_value}
