@@ -2,10 +2,13 @@ package com.cwt.bpg.cbt.service.fee;
 
 import java.math.BigDecimal;
 
+import org.springframework.stereotype.Service;
+
 import com.cwt.bpg.cbt.service.fee.model.PriceBreakdown;
 import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
 import com.cwt.bpg.cbt.service.fee.util.ServiceFeeUtil;
 
+@Service
 public class ServiceFeeImpl implements ServiceFeeApi {
 	
 	@Override
