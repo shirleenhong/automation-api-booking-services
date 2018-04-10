@@ -3,39 +3,41 @@ Resource          ../../resources/api-imports.txt
 
 *** Keywords ***
 Calculate Commission Amount
-    [Arguments]    ${base_fare_value}    ${commission_percentage_value}=${commission_percentage_value}
-    ${calculated_value}    Evaluate    ${base_fare_value}*${commission_percentage_value}
+    [Arguments]    ${decimal_place}    ${base_fare_value}    ${commission_percentage_value}=${commission_percentage_value}
+    ${calculated_value}    Evaluate    round((${base_fare_value}*${commission_percentage_value}), ${decimal_place})
     Set Test Variable    ${commission_amount}    ${calculated_value}
 
 Calculate FOP Amount
-    [Arguments]    ${base_fare}    ${taxes}= ${taxes}    ${markup_amount}=${markup_amount}    ${commission}=${commission_amount}
-    ${calculated_value}    Evaluate    (${base_fare}+${taxes}+${markup_amount})-${commission}
+    [Arguments]    ${decimal_place}    ${base_fare}    ${taxes}= ${taxes}    ${markup_amount}=${markup_amount}    ${commission}=${commission_amount}
+    ${calculated_value}    Evaluate    round(((${base_fare}+${taxes}+${markup_amount})-${commission}), ${decimal_place})
     Set Test Variable    ${fop_amount}    ${calculated_value}
 
 Calculate Fare Incuding Air Taxes
-    [Arguments]    ${base_fare_value}    ${taxes_value}=${taxes_value}    ${ob_fee_value}=${ob_fee_value}    ${markup_amount_value}=${markup_amount_value}    ${commission}=${commission_amount_value}
-    ${calculated_value}    Evaluate    (${base_fare_value}+${taxes_value}+${ob_fee_value}+${markup_amount_value})-${commission}
+    [Arguments]    ${decimal_place}    ${base_fare_value}    ${taxes_value}=${taxes_value}    ${ob_fee_value}=${ob_fee_value}    ${markup_amount_value}=${markup_amount_value}    ${commission}=${commission_amount}
+    ${calculated_value}    Evaluate    round(((${base_fare_value}+${taxes_value}+${ob_fee_value}+${markup_amount})-${commission}), ${decimal_place})
     Set Test Variable    ${fare_including_air_taxes}    ${calculated_value}
 
 Calculate Markup Amount
-    [Arguments]    ${base_fare_value}    ${markup_percentage_value}=${markup_percentage_value}
-    ${calculated_value}    Evaluate    ${base_fare_value}*${markup_percentage_value}
+    [Arguments]    ${decimal_place}    ${base_fare_value}    ${markup_percentage_value}=${markup_percentage_value}
+    ${calculated_value}    Evaluate    round((${base_fare_value}*${markup_percentage_value}), ${decimal_place})
     Set Test Variable    ${markup_amount}    ${calculated_value}
 
 Calculate Merchant Fee Amount
-    [Arguments]    ${base_fare_value}=${base_fare_value}    ${taxes_value}=${taxes_value}    ${merchant_percentage_value}=${merchant_percentage_value}    ${markup_amount_value}=${markup_amount_value}    ${commission}=${commission_amount_value}
+    [Arguments]    ${decimal_place}    ${base_fare_value}=${base_fare_value}    ${taxes_value}=${taxes_value}    ${merchant_percentage_value}=${merchant_percentage_value}    ${markup_amount_value}=${markup_amount}    ${commission}=${commission_amount_value}
     ${charged_fare_value}    Evaluate    ${base_fare_value}+${taxes_value}
-    ${calculated_value}    Evaluate    ((${charged_fare_value}+${markup_amount_value})-${commission})*merchant_percentage_value
+    ${calculated_value}    Evaluate    ((${charged_fare_value}+${markup_amount_value})-${commission})*${merchant_percentage_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${merchant_amount}    ${calculated_value}
 
 Calculate Total Amount
-    [Arguments]    ${fare_including_air_taxes}=${fare_including_air_taxes}    ${transaction_amount}=${transaction_amount}    ${merchant_amount}=${merchant_amount}    ${fuel_surcharge_value}=${fuel_surcharge_value}
+    [Arguments]    ${decimal_place}    ${fare_including_air_taxes}=${fare_including_air_taxes}    ${transaction_amount}=${transaction_amount}    ${merchant_amount}=${merchant_amount}    ${fuel_surcharge}=${fuel_surcharge_value}
     ${calculated_total_amount_value}    Evaluate    ${fare_including_air_taxes}+${transaction_amount}+${merchant_amount}+${fuel_surcharge}
+    ${calculated_total_amount_value}    Evaluate    round(${calculated_total_amount_value},${decimal_place})
     Set Test Variable    ${calculated_total_amount_value}
 
 Calculate Transaction Fee Amount
-    [Arguments]    ${base_fare_value}    ${transaction_percentage_value}=${transaction_percentage_value}
-    ${calculated_value}    Evaluate    ${base_fare_value}*${transaction_percentage_value}
+    [Arguments]    ${decimal_place}    ${base_fare_value}    ${transaction_percentage_value}=${transaction_percentage_value}
+    ${calculated_value}    Evaluate    round((${base_fare_value}*${transaction_percentage_value}), ${decimal_place})
     Set Test Variable    ${transaction_amount}    ${calculated_value}
 
 Parse Service Fees List
@@ -45,26 +47,27 @@ Parse Service Fees List
     ...    country=sg
     ${fees_list}    Split String    ${fees_list}    |
     : FOR    ${fees}    IN    @{fees_list}
-    \    ${fees_item}    Split String    ${fees}    ;
+    \    ${fees_item}    Split String    ${fees}    ,
     \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
     Set Test Variable    ${fees_list}
     Set Test Variable    ${country}
 
 Generate Test Variables For Calculate Fees
-    [Arguments]    ${fees_list}
-    Parse Fees List    ${fees_list}
+    [Arguments]    ${fees_list}    ${country}=SG
+    Parse Service Fees List    ${fees_list}    ${country}
     ${fare}    Set Variable If    "${base_fare_value} " == "null"    ${nett_fare_value}    ${base_fare_value}
+    ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
     Run Keyword If    "${fuel_surcharge_value}" == "null"    Set Test Variable    ${fuel_surcharge_value}    0
-    Run Keyword If    "${markup_amount_value}" == "null" and "${markup_percentage_value}" != "null"    Calculate Markup Amount    ${fare}    ${markup_percentage_value}
-    ...    ELSE IF    "${markup_amount}" == "null" and "${markup_percentage}" == "null"    Set Test Variable    ${markup_amount_value}    0
-    Run Keyword If    "${merchant_amount_value}" == "null" and "${merchant_percentage_value}" != "null"    Calculate Merchant Fee Amount    ${fare}    ${merchant_percentage_value}
-    ...    ELSE IF    "${merchant_amount}" == "null" and "${merchant_percentage}" == "null"    Set Test Variable    ${merchant_amount_value}    0
-    Run Keyword If    "${transaction_amount_value}" == "null" and "${transaction_percentage_value}" != "null"    Calculate Transaction Fee Amount    ${fare}    ${transaction_percentage_value}
-    ...    ELSE IF    "${transaction_amount}" == "null" and "${merchant_percentage}" == "null"    Set Test Variable    ${transaction_amount_value}    0
-    Run Keyword If    "${commission_amount_value}" == "null" and "${commission_percentage_value}" != "null"    Calculate Commission Amount    ${fare}    ${commission_percentage_value}
-    ...    ELSE IF    "${commission_amount}" == "null" and "${commission_percentage}" == "null"    Set Test Variable    ${commission_amount_value}    0
-    Calculate Fare Incuding Air Taxes    ${fare}
-    Calculate Total Amount
+    Run Keyword If    "${markup_amount_value}" == "null" and "${markup_percentage_value}" != "null"    Calculate Markup Amount    ${decimal_place}    ${fare}    ${markup_percentage_value}
+    ...    ELSE IF    "${markup_amount_value}" == "null" and "${markup_percentage_value}" == "null"    Set Test Variable    ${markup_amount}    0
+    Run Keyword If    "${merchant_amount_value}" == "null" and "${merchant_percentage_value}" != "null"    Calculate Merchant Fee Amount    ${decimal_place}    ${fare}    ${merchant_percentage_value}
+    ...    ELSE IF    "${merchant_amount_value}" == "null" and "${merchant_percentage_value}" == "null"    Set Test Variable    ${merchant_amount}    0
+    Run Keyword If    "${transaction_amount_value}" == "null" and "${transaction_percentage_value}" != "null"    Calculate Transaction Fee Amount    ${decimal_place}    ${fare}    ${transaction_percentage_value}
+    ...    ELSE IF    "${transaction_amount_value}" == "null" and "${merchant_percentage_value}" == "null"    Set Test Variable    ${transaction_amount}    0
+    Run Keyword If    "${commission_amount_value}" == "null" and "${commission_percentage_value}" != "null"    Calculate Commission Amount    ${decimal_place}    ${fare}    ${commission_percentage_value}
+    ...    ELSE IF    "${commission_amount_value}" == "null" and "${commission_percentage_value}" == "null"    Set Test Variable    ${commission_amount}    0
+    Calculate Fare Incuding Air Taxes    ${decimal_place}    ${fare}
+    Calculate Total Amount    ${decimal_place}
 
 Parse Fees List
     [Arguments]    ${fees_list}
@@ -112,3 +115,19 @@ Verify Calculated Fees Are Returned Correctly
     Verify Json Value Is Correct    /fees/markupAmount    ${markup_amount}
     Verify Json Value Is Correct    /fees/commissionRebateAmount    ${commission_amount}
     Verify Json Value Is Correct    /fees/totalAmount    ${calculated_total_amount_value}
+
+Remove Decimal Places
+    ${commission_amount}    Remove String    .0
+    ${fop_amount}    Remove String    .0
+    ${fare_including_air_taxes}    Remove String    .0
+    ${markup_amount}    Remove String    .0
+    ${merchant_amount}    Remove String    .0
+    ${transaction_amount}    Remove String    .0
+    ${calculated_total_amount_value}    Remove String    .0
+    Set Test Variable    ${commission_amount}
+    Set Test Variable    ${fop_amount}
+    Set Test Variable    ${fare_including_air_taxes}
+    Set Test Variable    ${markup_amount}
+    Set Test Variable    ${merchant_amount}
+    Set Test Variable    ${transaction_amount}
+    Set Test Variable    ${calculated_total_amount_value}

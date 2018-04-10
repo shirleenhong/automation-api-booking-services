@@ -3,8 +3,8 @@ Resource          resources/calculate.txt
 
 *** Test Cases ***
 test
-    Comment    ${value}    Evaluate    round(83.3312, 3)
-    ${value}    Round Up    83.33121    2
+    ${value}    Evaluate    round(83.3312, 0)
+    Comment    ${value}    Round Up    83.33121
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes Only
     Generate Test Variables For Calculate Fees    base_fare,100.50|taxes,40.00|ob_fee,5.00|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
