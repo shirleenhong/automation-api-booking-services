@@ -70,7 +70,7 @@ Generate Test Variables For Calculate Fees
     ...    ELSE IF    "${merchant_amount_value}" == "null" and "${merchant_percentage_value}" == "null"    Set Test Variable    ${merchant_amount}    0
     ...    ELSE    Set Test Variable    ${merchant_amount}    ${merchant_amount_value}
     Run Keyword If    "${transaction_amount_value}" == "null" and "${transaction_percentage_value}" != "null"    Calculate Transaction Fee Amount    ${decimal_place}    ${fare}    ${transaction_percentage_value}
-    ...    ELSE IF    "${transaction_amount_value}" == "null" and "${merchant_percentage_value}" == "null"    Set Test Variable    ${transaction_amount}    0
+    ...    ELSE IF    "${transaction_amount_value}" == "null" and "${transaction_percentage_value}" == "null"    Set Test Variable    ${transaction_amount}    0
     ...    ELSE    Set Test Variable    ${transaction_amount}    ${transaction_amount_value}
     Calculate FOP Amount    ${decimal_place}    ${fare}
     Calculate Fare Incuding Air Taxes    ${decimal_place}    ${fare}
