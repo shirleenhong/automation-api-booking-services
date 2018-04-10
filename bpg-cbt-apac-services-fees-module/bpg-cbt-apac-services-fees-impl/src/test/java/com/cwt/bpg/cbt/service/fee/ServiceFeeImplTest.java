@@ -26,7 +26,7 @@ public class ServiceFeeImplTest {
 	}
 
 	@Test
-	public void souldCalculateFare() {
+	public void shouldCalculateFare() {
 		PriceCalculationInput input = new PriceCalculationInput();
 
 		input.setBaseFare(new BigDecimal(2000));
@@ -43,7 +43,7 @@ public class ServiceFeeImplTest {
 	}
 	
 	@Test
-	public void souldCalculateMerchantFee() {
+	public void shouldCalculateMerchantFee() {
 		PriceCalculationInput input = new PriceCalculationInput();
 
 		input.setBaseFare(new BigDecimal(2000));
@@ -61,7 +61,7 @@ public class ServiceFeeImplTest {
 	}
 	
 	@Test
-	public void souldCalculateTransFeeLowCap() {
+	public void shouldCalculateTransFeeLowCap() {
 		PriceCalculationInput input = new PriceCalculationInput();
 
 		input.setBaseFare(new BigDecimal(2000));
@@ -81,7 +81,7 @@ public class ServiceFeeImplTest {
 	}
 	
 	@Test
-	public void souldCalculateTransFee() {
+	public void shouldCalculateTransFee() {
 		PriceCalculationInput input = new PriceCalculationInput();
 
 		input.setBaseFare(new BigDecimal(2000));
@@ -101,7 +101,7 @@ public class ServiceFeeImplTest {
 	}
 	
 	@Test
-	public void souldCalculate() {
+	public void shouldCalculate() {
 		PriceCalculationInput input = new PriceCalculationInput();
 
 		input.setBaseFare(new BigDecimal(2000));
@@ -112,20 +112,40 @@ public class ServiceFeeImplTest {
 		input.setCommissionRebateAmount(new BigDecimal(200));
 		input.setMerchantFeePercentage(10D);
 		input.setTransactionFeeAmount(new BigDecimal(50));
-		input.setTransactionFeePercentage(2D);
-
+		//input.setTransactionFeePercentage(2D);
+		input.setFuelSurcharge(new BigDecimal(620));
+		
 		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
 
 		assertNotNull(priceBreakdown);
 		assertEquals(new BigDecimal(300), priceBreakdown.getMarkupAmount());
-		//assertEquals(new BigDecimal(300), priceBreakdown.getFopAmount());
+		assertEquals(new BigDecimal(2300), priceBreakdown.getFopAmount());
+		assertEquals(new BigDecimal(230), priceBreakdown.getMerchantFeeAmount());
+		assertEquals(new BigDecimal(2650), priceBreakdown.getAirFareWithTaxAmount());
+		assertEquals(new BigDecimal(3550), priceBreakdown.getTotalAmount());
 		
-		
-//		FOP Amount = (Base Fare + Total Taxes + Markup Amount) - Commission Rebate Amount
-//				Merchant Fee Amount = ((Charged Fare + Mark-Up Amount) - Commission Rebate Amount) * Merchant Fee Percentage 
 
 	}
 	
+	@Test
+	public void shouldCalculateAirCommission() {
+		PriceCalculationInput input = new PriceCalculationInput();
+
+		input.setBaseFare(new BigDecimal(2000));
+		input.setTotalTaxes(new BigDecimal(200));
+		input.setObFee(new BigDecimal(350));
+		input.setMarkupPercentage(15D);
+		input.setCommissionRebatePercentage(5D);
+		input.setMerchantFeePercentage(10D);
+		input.setTransactionFeeAmount(new BigDecimal(50));
+		input.setFuelSurcharge(new BigDecimal(620));
+		
+		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
+
+		assertNotNull(priceBreakdown);
+		assertEquals(new BigDecimal(100), priceBreakdown.getCommissionRebateAmount());
+
+	}
 
 	@Test
 	public void shouldUseNetFare() {
