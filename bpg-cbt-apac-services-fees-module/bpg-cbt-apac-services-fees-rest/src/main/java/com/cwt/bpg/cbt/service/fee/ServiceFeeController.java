@@ -18,18 +18,14 @@ import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
 @RequestMapping("/servicefee")
 public class ServiceFeeController {
 	
+	@Autowired
 	private ServiceFeeApi serviceFee;
 	
-	@Autowired
-	public ServiceFeeController(ServiceFeeApi serviceFee) {
-		this.serviceFee = serviceFee;
-	}
-
 	@PostMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody ResponseEntity<PriceBreakdown> calculatePriceInput(@RequestBody PriceCalculationInput input) {
-		PriceBreakdown sf = new PriceBreakdown();
-		return new ResponseEntity<>(sf, HttpStatus.OK);
+		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
+		return new ResponseEntity<>(priceBreakdown, HttpStatus.OK);
 	}
 
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
