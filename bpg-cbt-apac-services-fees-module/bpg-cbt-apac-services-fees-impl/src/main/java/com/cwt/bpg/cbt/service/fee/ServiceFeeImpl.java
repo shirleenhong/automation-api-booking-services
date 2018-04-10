@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.service.fee.model.PriceBreakdown;
 import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
-import com.cwt.bpg.cbt.service.fee.util.ServiceFeeUtil;
+import static com.cwt.bpg.cbt.service.fee.util.ServiceFeeUtil.*;
 
 @Service
 public class ServiceFeeImpl implements ServiceFeeApi {
@@ -21,25 +21,27 @@ public class ServiceFeeImpl implements ServiceFeeApi {
 			input.setBaseFare(input.getNettFare());
 		}
 		
-		BigDecimal transactionFeeAmount = ServiceFeeUtil.calTransactionFeeAmount(input.getBaseFare(), input.getTransactionFeeAmount(), input.getTransactionFeePercentage());
-		priceBreakdown.setTransactionFeeAmount(transactionFeeAmount);
+		BigDecimal transactionFeeAmount = calTransactionFeeAmount(input.getBaseFare(), input.getTransactionFeeAmount(), input.getTransactionFeePercentage());
+		priceBreakdown.setTransactionFeeAmount(round(transactionFeeAmount));
 		
-		BigDecimal markupAmount = ServiceFeeUtil.calMarkupAmount(input.getBaseFare(), input.getMarkupAmount(), input.getMarkupPercentage());
-		priceBreakdown.setMarkupAmount(markupAmount);
+		BigDecimal markupAmount = calMarkupAmount(input.getBaseFare(), input.getMarkupAmount(), input.getMarkupPercentage());
+		priceBreakdown.setMarkupAmount(round(markupAmount));
 		
-		BigDecimal commissionRebateAmount = ServiceFeeUtil.calCommissionRebateAmount(input.getBaseFare(), input.getCommissionRebateAmount(), input.getCommissionRebatePercentage());
-		priceBreakdown.setCommissionRebateAmount(commissionRebateAmount);
+		BigDecimal commissionRebateAmount = calCommissionRebateAmount(input.getBaseFare(), input.getCommissionRebateAmount(), input.getCommissionRebatePercentage());
+		priceBreakdown.setCommissionRebateAmount(round(commissionRebateAmount));
 		
-		BigDecimal fopAmount = ServiceFeeUtil.calFopAmount(input.getBaseFare(), input.getTotalTaxes(), markupAmount, commissionRebateAmount);
-		priceBreakdown.setFopAmount(fopAmount);
+		BigDecimal fopAmount = calFopAmount(input.getBaseFare(), input.getTotalTaxes(), markupAmount, commissionRebateAmount);
+		priceBreakdown.setFopAmount(round(fopAmount));
 		
-		BigDecimal merchantFeeAmount = ServiceFeeUtil.calMerchantFeeAmount(fopAmount, input.getMerchantFeeAmount(), input.getMerchantFeePercentage());
-		priceBreakdown.setMerchantFeeAmount(merchantFeeAmount);
+		BigDecimal merchantFeeAmount = calMerchantFeeAmount(fopAmount, input.getMerchantFeeAmount(), input.getMerchantFeePercentage());
+		priceBreakdown.setMerchantFeeAmount(round(merchantFeeAmount));
 		
-		BigDecimal airFareWithTaxAmount = ServiceFeeUtil.calFareWithAirlineTax(input.getBaseFare(), input.getTotalTaxes(), input.getObFee(), markupAmount, commissionRebateAmount);
-		priceBreakdown.setAirFareWithTaxAmount(airFareWithTaxAmount);
+		BigDecimal airFareWithTaxAmount = calFareWithAirlineTax(input.getBaseFare(), input.getTotalTaxes(), input.getObFee(), markupAmount, commissionRebateAmount);
+		priceBreakdown.setAirFareWithTaxAmount(round(airFareWithTaxAmount));
 		
-		priceBreakdown.setTotalAmount(ServiceFeeUtil.calTotalAmount(airFareWithTaxAmount, transactionFeeAmount, merchantFeeAmount, input.getFuelSurcharge()));
+		priceBreakdown.setTotalAmount(round(calTotalAmount(airFareWithTaxAmount, transactionFeeAmount, merchantFeeAmount, input.getFuelSurcharge())));
+		
+		
 		
 		return priceBreakdown;
 	}
