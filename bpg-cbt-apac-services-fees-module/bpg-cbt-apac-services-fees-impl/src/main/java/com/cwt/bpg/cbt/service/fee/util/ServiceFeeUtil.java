@@ -12,20 +12,20 @@ public final class ServiceFeeUtil {
 //	Merchant Fee Amount = ((Charged Fare + Mark-Up Amount) - Commission Rebate Amount) * Merchant Fee Percentage
 //		     Where: Charged Fare = Base Fare + Total Taxes
 	public static BigDecimal calMerchantFeeAmount(BigDecimal fopAmount, BigDecimal merchantFeeAmountInput, Double merchantFeePercentage) {
-		return merchantFeeAmountInput != null ? merchantFeeAmountInput : fopAmount.multiply(new BigDecimal(merchantFeePercentage));
+		return merchantFeeAmountInput != null ? merchantFeeAmountInput : fopAmount.multiply(new BigDecimal(merchantFeePercentage)).divide(new BigDecimal(100));
 	}
 //	Transaction Fee Amount = Base Fare * Transaction Fee Percentage
 	public static BigDecimal calTransactionFeeAmount(BigDecimal baseFare, BigDecimal transactionFeeAmountInput, Double transactionFeePercentage) {
-		BigDecimal transactionFee = baseFare.multiply(new BigDecimal(transactionFeePercentage));
+		BigDecimal transactionFee = baseFare.multiply(new BigDecimal(transactionFeePercentage)).divide(new BigDecimal(100));
 		return transactionFee.compareTo(transactionFeeAmountInput) == 1? transactionFee : transactionFeeAmountInput;
 	}
 //	Markup Amount = Base Fare * Mark Up Percentage
 	public static BigDecimal calMarkupAmount(BigDecimal baseFare, BigDecimal markupAmountInput, Double markupPercentage) {
-		return markupAmountInput != null ? markupAmountInput : baseFare.multiply(new BigDecimal(markupPercentage));
+		return markupAmountInput != null ? markupAmountInput : baseFare.multiply(new BigDecimal(markupPercentage)).divide(new BigDecimal(100));
 	}
 //	Airline Commission/Commission Rebate Amount = Base Fare * Airline Commission/Commission Rebate Percentage
 	public static BigDecimal calCommissionRebateAmount(BigDecimal baseFare, BigDecimal commissionRebateAmountInput, Double commissionRebatePercentage) {
-		return commissionRebateAmountInput != null ? commissionRebateAmountInput : baseFare.multiply(new BigDecimal(commissionRebatePercentage));
+		return commissionRebateAmountInput != null ? commissionRebateAmountInput : baseFare.multiply(new BigDecimal(commissionRebatePercentage)).divide(new BigDecimal(100));
 	}
 //	Fare Including Airline Taxes = (Base Fare + Taxes + OB Fee + Markup Amount) - Airline Commission Amount
 	public static BigDecimal calFareWithAirlineTax(BigDecimal baseFare, 

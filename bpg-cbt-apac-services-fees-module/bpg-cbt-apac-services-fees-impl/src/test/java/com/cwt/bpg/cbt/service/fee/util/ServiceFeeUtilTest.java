@@ -15,7 +15,8 @@ public class ServiceFeeUtilTest {
 	}
 
 	@Test
-	public void test() {
+	public void calMerchantFeeAmountTest() {
+		
 	}
 
 }
