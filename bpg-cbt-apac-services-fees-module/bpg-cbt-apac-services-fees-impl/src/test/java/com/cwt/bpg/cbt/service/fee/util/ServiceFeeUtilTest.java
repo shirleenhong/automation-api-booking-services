@@ -107,4 +107,26 @@ public class ServiceFeeUtilTest {
 		BigDecimal totalAmount = ServiceFeeUtil.calTotalAmount(fareIncludingTaxes, transactionFee, merchantFee, fuelSurcharge);
 		assertEquals(new BigDecimal(40000), totalAmount);
 	}
+	
+	@Test
+	public void shouldReturnRoundOffCalculatedTotalAmount() {
+		BigDecimal fareIncludingTaxes = new BigDecimal(10000);
+		BigDecimal transactionFee = new BigDecimal(10000);
+		BigDecimal merchantFee = new BigDecimal(10000);
+		BigDecimal fuelSurcharge = new BigDecimal(10000);
+		BigDecimal totalAmount = ServiceFeeUtil.calTotalAmount(fareIncludingTaxes, transactionFee, merchantFee, fuelSurcharge);
+		assertEquals(new BigDecimal(40000), totalAmount);
+	}
+	
+	@Test
+	public void shouldRoundUp() {
+		assertEquals(new BigDecimal(4), ServiceFeeUtil.round(new BigDecimal(3.5)));
+		assertEquals(new BigDecimal(4), ServiceFeeUtil.round(new BigDecimal(3.51)));
+	}
+	
+	@Test
+	public void shouldRoundDown() {
+		assertEquals(new BigDecimal(3), ServiceFeeUtil.round(new BigDecimal(3.4)));
+		assertEquals(new BigDecimal(3), ServiceFeeUtil.round(new BigDecimal(3.49)));
+	}
 }

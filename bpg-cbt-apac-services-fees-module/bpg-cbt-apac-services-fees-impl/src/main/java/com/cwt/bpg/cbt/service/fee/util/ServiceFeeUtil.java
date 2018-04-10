@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.service.fee.util;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public final class ServiceFeeUtil {
 	
@@ -35,5 +36,9 @@ public final class ServiceFeeUtil {
 //	Total Amount = Fare Including Taxes + Transaction Fee + Merchant Fee + Fuel Surcharge
 	public static BigDecimal calTotalAmount(BigDecimal fareIncludingTaxes, BigDecimal transactionFee, BigDecimal merchantFee, BigDecimal fuelSurcharge) {
 		return fareIncludingTaxes.add(transactionFee).add(merchantFee).add(fuelSurcharge);
+	}
+
+	public static BigDecimal round(BigDecimal d) {
+		return d.setScale(0, RoundingMode.HALF_UP);
 	}
 }
