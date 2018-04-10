@@ -41,7 +41,7 @@ public class ServiceFeeUtilTest {
 		BigDecimal transactionFeeAmountInput = new BigDecimal(10000);
 		Double transactionFeePercentage = 30D;
 		BigDecimal transactionFeeAmount = ServiceFeeUtil.calTransactionFeeAmount(baseFare, transactionFeeAmountInput, transactionFeePercentage);
-		assertEquals(new BigDecimal(10000), transactionFeeAmount);
+		assertEquals(new BigDecimal(3000), transactionFeeAmount);
 	}
 	
 	@Test
@@ -50,7 +50,7 @@ public class ServiceFeeUtilTest {
 		BigDecimal transactionFeeAmountInput = new BigDecimal(1000);
 		Double transactionFeePercentage = 30D;
 		BigDecimal transactionFeeAmount = ServiceFeeUtil.calTransactionFeeAmount(baseFare, transactionFeeAmountInput, transactionFeePercentage);
-		assertEquals(new BigDecimal(3000), transactionFeeAmount);
+		assertEquals(new BigDecimal(1000), transactionFeeAmount);
 	}
 
 	@Test
