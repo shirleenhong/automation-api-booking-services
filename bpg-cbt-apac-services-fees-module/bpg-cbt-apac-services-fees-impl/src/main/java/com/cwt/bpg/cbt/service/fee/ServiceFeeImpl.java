@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.service.fee.model.PriceBreakdown;
 import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
+import com.cwt.bpg.cbt.service.fee.util.ServiceFeeUtil;
+
 import static com.cwt.bpg.cbt.service.fee.util.ServiceFeeUtil.*;
 
 @Service
@@ -36,25 +38,34 @@ public class ServiceFeeImpl implements ServiceFeeApi {
 		
 		
 		BigDecimal transactionFeeAmount = calTransactionFeeAmount(input.getBaseFare(), input.getTransactionFeeAmount(), input.getTransactionFeePercentage());
-		priceBreakdown.setTransactionFeeAmount(round(transactionFeeAmount));
+		priceBreakdown.setTransactionFeeAmount(roundAmount(transactionFeeAmount,input.getCountryCode()));
 		
 		BigDecimal markupAmount = calMarkupAmount(input.getBaseFare(), input.getMarkupAmount(), input.getMarkupPercentage());
-		priceBreakdown.setMarkupAmount(round(markupAmount));
+		priceBreakdown.setMarkupAmount(roundAmount(markupAmount,input.getCountryCode()));
 		
 		BigDecimal commissionRebateAmount = calCommissionRebateAmount(input.getBaseFare(), input.getCommissionRebateAmount(), input.getCommissionRebatePercentage());
-		priceBreakdown.setCommissionRebateAmount(round(commissionRebateAmount));
+		priceBreakdown.setCommissionRebateAmount(roundAmount(commissionRebateAmount,input.getCountryCode()));
 		
 		BigDecimal fopAmount = calFopAmount(input.getBaseFare(), input.getTotalTaxes(), markupAmount, commissionRebateAmount);
-		priceBreakdown.setFopAmount(round(fopAmount));
+		priceBreakdown.setFopAmount(roundAmount(fopAmount,input.getCountryCode()));
 		
 		BigDecimal merchantFeeAmount = calMerchantFeeAmount(fopAmount, input.getMerchantFeeAmount(), input.getMerchantFeePercentage());
-		priceBreakdown.setMerchantFeeAmount(round(merchantFeeAmount));
+		priceBreakdown.setMerchantFeeAmount(roundAmount(merchantFeeAmount,input.getCountryCode()));
 		
 		BigDecimal airFareWithTaxAmount = calFareWithAirlineTax(input.getBaseFare(), input.getTotalTaxes(), input.getObFee(), markupAmount, commissionRebateAmount);
-		priceBreakdown.setAirFareWithTaxAmount(round(airFareWithTaxAmount));
+		priceBreakdown.setAirFareWithTaxAmount(roundAmount(airFareWithTaxAmount,input.getCountryCode()));
 		
-		priceBreakdown.setTotalAmount(round(calTotalAmount(airFareWithTaxAmount, transactionFeeAmount, merchantFeeAmount, input.getFuelSurcharge())));
+		priceBreakdown.setTotalAmount(roundAmount(calTotalAmount(airFareWithTaxAmount, transactionFeeAmount, merchantFeeAmount, input.getFuelSurcharge()),input.getCountryCode()));
 		
 		return priceBreakdown;
+	}
+	
+	private BigDecimal roundAmount(BigDecimal amount , String countryCode) {
+		if (countryCode != null && (countryCode.equals(PriceCalculationInput.COUNTRY_CODE_INDIA) || countryCode.equals(PriceCalculationInput.COUNTRY_CODE_HONGKONG))) {
+			return ServiceFeeUtil.round(amount, 0);
+		}else {
+			return ServiceFeeUtil.round(amount, 2);
+		}
+		
 	}
 }

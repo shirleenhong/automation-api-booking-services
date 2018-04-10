@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 
 import com.cwt.bpg.cbt.service.fee.model.PriceBreakdown;
 import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
@@ -38,7 +37,7 @@ public class ServiceFeeImplTest {
 		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
 
 		assertNotNull(priceBreakdown);
-		assertEquals(new BigDecimal(2441), priceBreakdown.getAirFareWithTaxAmount());
+		assertEquals(new BigDecimal("2441.00"), priceBreakdown.getAirFareWithTaxAmount());
 
 	}
 	
@@ -56,7 +55,7 @@ public class ServiceFeeImplTest {
 		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
 
 		assertNotNull(priceBreakdown);
-		assertEquals(new BigDecimal(209), priceBreakdown.getMerchantFeeAmount());
+		assertEquals(new BigDecimal("209.10"), priceBreakdown.getMerchantFeeAmount());
 
 	}
 	
@@ -76,7 +75,7 @@ public class ServiceFeeImplTest {
 		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
 
 		assertNotNull(priceBreakdown);
-		assertEquals(new BigDecimal(15), priceBreakdown.getTransactionFeeAmount());
+		assertEquals(new BigDecimal("15.00"), priceBreakdown.getTransactionFeeAmount());
 
 	}
 	
@@ -96,7 +95,7 @@ public class ServiceFeeImplTest {
 		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
 
 		assertNotNull(priceBreakdown);
-		assertEquals(new BigDecimal(40), priceBreakdown.getTransactionFeeAmount());
+		assertEquals(new BigDecimal("40.00"), priceBreakdown.getTransactionFeeAmount());
 
 	}
 	
@@ -118,11 +117,11 @@ public class ServiceFeeImplTest {
 		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
 
 		assertNotNull(priceBreakdown);
-		assertEquals(new BigDecimal(300), priceBreakdown.getMarkupAmount());
-		assertEquals(new BigDecimal(2300), priceBreakdown.getFopAmount());
-		assertEquals(new BigDecimal(230), priceBreakdown.getMerchantFeeAmount());
-		assertEquals(new BigDecimal(2650), priceBreakdown.getAirFareWithTaxAmount());
-		assertEquals(new BigDecimal(3550), priceBreakdown.getTotalAmount());
+		assertEquals(new BigDecimal("300.00"), priceBreakdown.getMarkupAmount());
+		assertEquals(new BigDecimal("2300.00"), priceBreakdown.getFopAmount());
+		assertEquals(new BigDecimal("230.00"), priceBreakdown.getMerchantFeeAmount());
+		assertEquals(new BigDecimal("2650.00"), priceBreakdown.getAirFareWithTaxAmount());
+		assertEquals(new BigDecimal("3550.00"), priceBreakdown.getTotalAmount());
 		
 
 	}
@@ -143,7 +142,7 @@ public class ServiceFeeImplTest {
 		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
 
 		assertNotNull(priceBreakdown);
-		assertEquals(new BigDecimal(100), priceBreakdown.getCommissionRebateAmount());
+		assertEquals(new BigDecimal("100.00"), priceBreakdown.getCommissionRebateAmount());
 
 	}
 

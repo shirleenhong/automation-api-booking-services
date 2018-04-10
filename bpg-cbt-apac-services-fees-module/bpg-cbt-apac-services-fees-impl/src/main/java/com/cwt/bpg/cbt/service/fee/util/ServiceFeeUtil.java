@@ -38,7 +38,8 @@ public final class ServiceFeeUtil {
 		return fareIncludingTaxes.add(transactionFee).add(merchantFee).add(fuelSurcharge);
 	}
 
-	public static BigDecimal round(BigDecimal d) {
-		return d.setScale(0, RoundingMode.HALF_UP);
+	public static BigDecimal round(BigDecimal d, int scale) {
+		return d.setScale(scale, RoundingMode.HALF_UP);
 	}
+	
 }
