@@ -55,8 +55,6 @@ public class ServiceFeeImpl implements ServiceFeeApi {
 		
 		priceBreakdown.setTotalAmount(round(calTotalAmount(airFareWithTaxAmount, transactionFeeAmount, merchantFeeAmount, input.getFuelSurcharge())));
 		
-		
-		
 		return priceBreakdown;
 	}
 }
