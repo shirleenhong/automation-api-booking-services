@@ -8,7 +8,7 @@ Calculate Commission Amount
     Set Test Variable    ${commission_amount}    ${calculated_value}
 
 Calculate FOP Amount
-    [Arguments]    ${decimal_place}    ${base_fare}    ${taxes}= ${taxes}    ${markup_amount}=${markup_amount}    ${commission}=${commission_amount}
+    [Arguments]    ${decimal_place}    ${base_fare}    ${taxes}= ${taxes_value}    ${markup_amount}=${markup_amount}    ${commission}=${commission_amount}
     ${calculated_value}    Evaluate    round(((${base_fare}+${taxes}+${markup_amount})-${commission}), ${decimal_place})
     Set Test Variable    ${fop_amount}    ${calculated_value}
 
@@ -40,18 +40,6 @@ Calculate Transaction Fee Amount
     ${calculated_value}    Evaluate    round((${base_fare_value}*${transaction_percentage_value}), ${decimal_place})
     Set Test Variable    ${transaction_amount}    ${calculated_value}
 
-Parse Service Fees List
-    [Arguments]    ${fees_list}    ${country}
-    [Documentation]    sample data: fees_list=base_fare;1|taxes;2|ob_fee;3|merchant_amount;null|merchant_percentage;6|transaction_amount;7|transaction_percentage;null|markup_amount;9|markup_percentage;null|commission_amount;11|commission_percentage;12|fuel_surcharge;13|nett_fare;14
-    ...
-    ...    country=sg
-    ${fees_list}    Split String    ${fees_list}    |
-    : FOR    ${fees}    IN    @{fees_list}
-    \    ${fees_item}    Split String    ${fees}    ,
-    \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
-    Set Test Variable    ${fees_list}
-    Set Test Variable    ${country}
-
 Generate Test Variables For Calculate Fees
     [Arguments]    ${fees_list}    ${country}=SG
     Parse Service Fees List    ${fees_list}    ${country}
@@ -66,8 +54,10 @@ Generate Test Variables For Calculate Fees
     ...    ELSE IF    "${transaction_amount_value}" == "null" and "${merchant_percentage_value}" == "null"    Set Test Variable    ${transaction_amount}    0
     Run Keyword If    "${commission_amount_value}" == "null" and "${commission_percentage_value}" != "null"    Calculate Commission Amount    ${decimal_place}    ${fare}    ${commission_percentage_value}
     ...    ELSE IF    "${commission_amount_value}" == "null" and "${commission_percentage_value}" == "null"    Set Test Variable    ${commission_amount}    0
+    Calculate FOP Amount    ${decimal_place}    ${fare}
     Calculate Fare Incuding Air Taxes    ${decimal_place}    ${fare}
     Calculate Total Amount    ${decimal_place}
+    Run Keyword If    "${country.upper()}" != "SG"    Remove Decimal Places
 
 Parse Fees List
     [Arguments]    ${fees_list}
@@ -75,6 +65,41 @@ Parse Fees List
     : FOR    ${item}    IN    @{fees_list}
     \    ${details_list}    Split String    ${item}    ,
     \    Set Test Variable    ${${details_list[0]}}    ${details_list[1]}
+
+Parse Service Fees List
+    [Arguments]    ${fees_list}    ${country}
+    [Documentation]    sample data: fees_list=base_fare;1|taxes;2|ob_fee;3|merchant_amount;null|merchant_percentage;6|transaction_amount;7|transaction_percentage;null|markup_amount;9|markup_percentage;null|commission_amount;11|commission_percentage;12|fuel_surcharge;13|nett_fare;14
+    ...
+    ...    country=sg
+    ${fees_list}    Split String    ${fees_list}    |
+    : FOR    ${fees}    IN    @{fees_list}
+    \    ${fees_item}    Split String    ${fees}    ,
+    \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
+    Set Test Variable    ${fees_list}
+    Set Test Variable    ${country}
+
+Remove Decimal Places
+    ${commission_amount}    Convert To String    ${commission_amount}
+    ${fop_amount}    Convert To String    ${fop_amount}
+    ${fare_including_air_taxes}    Convert To String    ${fare_including_air_taxes}
+    ${markup_amount}    Convert To String    ${markup_amount}
+    ${merchant_amount}    Convert To String    ${merchant_amount}
+    ${transaction_amount}    Convert To String    ${transaction_amount}
+    ${calculated_total_amount_value}    Convert To String    ${calculated_total_amount_value}
+    ${commission_amount}    Remove String    ${commission_amount}    .0
+    ${fop_amount}    Remove String    ${fop_amount}    .0
+    ${fare_including_air_taxes}    Remove String    ${fare_including_air_taxes}    .0
+    ${markup_amount}    Remove String    ${markup_amount}    .0
+    ${merchant_amount}    Remove String    ${merchant_amount}    .0
+    ${transaction_amount}    Remove String    ${transaction_amount}    .0
+    ${calculated_total_amount_value}    Remove String    ${calculated_total_amount_value}    .0
+    Set Test Variable    ${commission_amount}
+    Set Test Variable    ${fop_amount}
+    Set Test Variable    ${fare_including_air_taxes}
+    Set Test Variable    ${markup_amount}
+    Set Test Variable    ${merchant_amount}
+    Set Test Variable    ${transaction_amount}
+    Set Test Variable    ${calculated_total_amount_value}
 
 Send Service Fees Post Request
     Create Session    fees    ${${env}_base_url}    verify=True
@@ -115,19 +140,3 @@ Verify Calculated Fees Are Returned Correctly
     Verify Json Value Is Correct    /fees/markupAmount    ${markup_amount}
     Verify Json Value Is Correct    /fees/commissionRebateAmount    ${commission_amount}
     Verify Json Value Is Correct    /fees/totalAmount    ${calculated_total_amount_value}
-
-Remove Decimal Places
-    ${commission_amount}    Remove String    .0
-    ${fop_amount}    Remove String    .0
-    ${fare_including_air_taxes}    Remove String    .0
-    ${markup_amount}    Remove String    .0
-    ${merchant_amount}    Remove String    .0
-    ${transaction_amount}    Remove String    .0
-    ${calculated_total_amount_value}    Remove String    .0
-    Set Test Variable    ${commission_amount}
-    Set Test Variable    ${fop_amount}
-    Set Test Variable    ${fare_including_air_taxes}
-    Set Test Variable    ${markup_amount}
-    Set Test Variable    ${merchant_amount}
-    Set Test Variable    ${transaction_amount}
-    Set Test Variable    ${calculated_total_amount_value}
