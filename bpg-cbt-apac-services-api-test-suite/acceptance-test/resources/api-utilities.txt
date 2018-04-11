@@ -38,7 +38,7 @@ Generate UUID
 
 Verify Response Status Code Is Correct
     [Arguments]    ${status_code}
-    Verify That Actual Value Matches Expected Value    ${response.status_code}    ${status_code}
+    Verify Actual Value Matches Expected Value    ${response.status_code}    ${status_code}
 
 Verify Actual Value Does Not Match Expected Value
     [Arguments]    ${actual_value}    ${expected_value}
@@ -93,10 +93,6 @@ Verify List Contains Value
     Log    Actual List: ${list}
     Log    Expected Value: ${value}
     Run Keyword And Continue On Failure    List Should Contain Value    ${list}    ${value}    List "${list}" does not contain value "${value}"
-
-Verify Response Status Code Is Correct
-    [Arguments]    ${status_code}
-    Verify That Actual Value Matches Expected Value    ${response.status_code}    ${status_code}
 
 Verify String Contains Substring
     [Arguments]    ${string}    ${substring}
