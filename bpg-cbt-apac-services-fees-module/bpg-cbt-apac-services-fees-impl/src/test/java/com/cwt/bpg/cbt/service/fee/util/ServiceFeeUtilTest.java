@@ -120,13 +120,13 @@ public class ServiceFeeUtilTest {
 	
 	@Test
 	public void shouldRoundUp() {
-		assertEquals(new BigDecimal(4), ServiceFeeUtil.round(new BigDecimal(3.5)));
-		assertEquals(new BigDecimal(4), ServiceFeeUtil.round(new BigDecimal(3.51)));
+		assertEquals(new BigDecimal(4), ServiceFeeUtil.round(new BigDecimal(3.5),0));
+		assertEquals(new BigDecimal(4), ServiceFeeUtil.round(new BigDecimal(3.51),0));
 	}
 	
 	@Test
 	public void shouldRoundDown() {
-		assertEquals(new BigDecimal(3), ServiceFeeUtil.round(new BigDecimal(3.4)));
-		assertEquals(new BigDecimal(3), ServiceFeeUtil.round(new BigDecimal(3.49)));
+		assertEquals(new BigDecimal(3), ServiceFeeUtil.round(new BigDecimal(3.4),0));
+		assertEquals(new BigDecimal(3), ServiceFeeUtil.round(new BigDecimal(3.49),0));
 	}
 }

@@ -23,3 +23,10 @@ class ApacSvcLibrary:
             return int(math.ceil(n * d)/d)
         else:
             return math.ceil(n * d)/d
+
+    def fix_decimal_places(self, n):
+        f = n[::-1].find('.')
+        if f == 1:
+            return str(n) + '0'
+        else:
+            return n

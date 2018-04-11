@@ -18,7 +18,7 @@ public final class ServiceFeeUtil {
 //	Transaction Fee Amount = Base Fare * Transaction Fee Percentage
 	public static BigDecimal calTransactionFeeAmount(BigDecimal baseFare, BigDecimal transactionFeeAmountInput, Double transactionFeePercentage) {
 		BigDecimal transactionFee = baseFare.multiply(new BigDecimal(transactionFeePercentage)).divide(new BigDecimal(100));
-		return transactionFee.compareTo(transactionFeeAmountInput) == -1? transactionFee : transactionFeeAmountInput;
+		return transactionFeeAmountInput == null || transactionFee.compareTo(transactionFeeAmountInput) == -1? transactionFee : transactionFeeAmountInput;
 	}
 //	Markup Amount = Base Fare * Mark Up Percentage
 	public static BigDecimal calMarkupAmount(BigDecimal baseFare, BigDecimal markupAmountInput, Double markupPercentage) {
@@ -38,7 +38,8 @@ public final class ServiceFeeUtil {
 		return fareIncludingTaxes.add(transactionFee).add(merchantFee).add(fuelSurcharge);
 	}
 
-	public static BigDecimal round(BigDecimal d) {
-		return d.setScale(0, RoundingMode.HALF_UP);
+	public static BigDecimal round(BigDecimal d, int scale) {
+		return d.setScale(scale, RoundingMode.HALF_UP);
 	}
+	
 }
