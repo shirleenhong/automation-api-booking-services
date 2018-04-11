@@ -104,13 +104,13 @@ Remove Decimal Places
     Comment    ${merchant_amount}    Convert To String    ${merchant_amount}
     Comment    ${transaction_amount}    Convert To String    ${transaction_amount}
     Comment    ${calculated_total_amount_value}    Convert To String    ${calculated_total_amount_value}
-    ${commission_amount}    Remove String    ${commission_amount}    .0
-    ${fop_amount}    Remove String    ${fop_amount}    .0
-    ${fare_including_air_taxes}    Remove String    ${fare_including_air_taxes}    .0
-    ${markup_amount}    Remove String    ${markup_amount}    .0
-    ${merchant_amount}    Remove String    ${merchant_amount}    .0
-    ${transaction_amount}    Remove String    ${transaction_amount}    .0
-    ${calculated_total_amount_value}    Remove String    ${calculated_total_amount_value}    .0
+    ${commission_amount}    Remove String    ${commission_amount}    .00
+    ${fop_amount}    Remove String    ${fop_amount}    .00
+    ${fare_including_air_taxes}    Remove String    ${fare_including_air_taxes}    .00
+    ${markup_amount}    Remove String    ${markup_amount}    .00
+    ${merchant_amount}    Remove String    ${merchant_amount}    .00
+    ${transaction_amount}    Remove String    ${transaction_amount}    .00
+    ${calculated_total_amount_value}    Remove String    ${calculated_total_amount_value}    .00
     Set Test Variable    ${commission_amount}
     Set Test Variable    ${fop_amount}
     Set Test Variable    ${fare_including_air_taxes}
@@ -161,17 +161,17 @@ Verify Calculated Fees Are Not Returned
     Verify String Does Not Contain Substring    ${response.content}    /totalAmount
 
 Verify Calculated Fees Are Returned Correctly
-    Run Keyword If    "${fop_amount}" != "0"    Verify Json Value Is Correct    /fopAmount    ${fop_amount}
+    Run Keyword If    "${fop_amount}" != "0"    Verify Json Value Is Correct    /fopAmount    ${fop_amount}    int
     ...    ELSE    Verify Json Element Does Not Exist    /fopAmount
-    Run Keyword If    "${merchant_amount}" != "0"    Verify Json Value Is Correct    /merchantFeeAmount    ${merchant_amount}
+    Run Keyword If    "${merchant_amount}" != "0"    Verify Json Value Is Correct    /merchantFeeAmount    ${merchant_amount}    int
     ...    ELSE    Verify Json Element Does Not Exist    /merchantFeeAmount
-    Run Keyword If    "${transaction_amount}" != "0"    Verify Json Value Is Correct    /transactionFeeAmount    ${transaction_amount}
+    Run Keyword If    "${transaction_amount}" != "0"    Verify Json Value Is Correct    /transactionFeeAmount    ${transaction_amount}    int
     ...    ELSE    Verify Json Element Does Not Exist    /transactionFeeAmount
-    Run Keyword If    "${markup_amount}" != "0"    Verify Json Value Is Correct    /markupAmount    ${markup_amount}
+    Run Keyword If    "${markup_amount}" != "0"    Verify Json Value Is Correct    /markupAmount    ${markup_amount}    int
     ...    ELSE    Verify Json Element Does Not Exist    /markupAmount
-    Run Keyword If    "${commission_amount}" != "0"    Verify Json Value Is Correct    /commissionRebateAmount    ${commission_amount}
+    Run Keyword If    "${commission_amount}" != "0"    Verify Json Value Is Correct    /commissionRebateAmount    ${commission_amount}    int
     ...    ELSE    Verify Json Element Does Not Exist    /commissionRebateAmount
-    Run Keyword If    "${fare_including_air_taxes}" != "0"    Verify Json Value Is Correct    /airFareWithTaxAmount    ${fare_including_air_taxes}
+    Run Keyword If    "${fare_including_air_taxes}" != "0"    Verify Json Value Is Correct    /airFareWithTaxAmount    ${fare_including_air_taxes}    int
     ...    ELSE    Verify Json Element Does Not Exist    /airFareWithTaxAmount
-    Run Keyword If    "${calculated_total_amount_value}" != "0"    Verify Json Value Is Correct    /totalAmount    ${calculated_total_amount_value}
+    Run Keyword If    "${calculated_total_amount_value}" != "0"    Verify Json Value Is Correct    /totalAmount    ${calculated_total_amount_value}    int
     ...    ELSE    Verify Json Element Does Not Exist    /totalAmount
