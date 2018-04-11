@@ -120,6 +120,7 @@ Remove Decimal Places
     Set Test Variable    ${calculated_total_amount_value}
 
 Send Service Fees Post Request
+    [Arguments]    ${token}=${default_token}
     Create Session    fees    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
@@ -150,11 +151,27 @@ Send Service Fees Post Request
     Log    ${response.content}
     Set Test Variable    ${api_flag}    fees
 
+Verify Calculated Fees Are Not Returned
+    Verify String Does Not Contain Substring    ${response.content}    /fopAmount
+    Verify String Does Not Contain Substring    ${response.content}    /merchantFeeAmount
+    Verify String Does Not Contain Substring    ${response.content}    /transactionFeeAmount
+    Verify String Does Not Contain Substring    ${response.content}    /markupAmount
+    Verify String Does Not Contain Substring    ${response.content}    /commissionRebateAmount
+    Verify String Does Not Contain Substring    ${response.content}    /airFareWithTaxAmount
+    Verify String Does Not Contain Substring    ${response.content}    /totalAmount
+
 Verify Calculated Fees Are Returned Correctly
-    Verify Json Value Is Correct    /fopAmount    ${fop_amount}
-    Verify Json Value Is Correct    /airFareWithTaxAmount    ${fare_including_air_taxes}
-    Verify Json Value Is Correct    /merchantFeeAmount    ${merchant_amount}
-    Verify Json Value Is Correct    /transactionFeeAmount    ${transaction_amount}
-    Verify Json Value Is Correct    /markupAmount    ${markup_amount}
-    Verify Json Value Is Correct    /commissionRebateAmount    ${commission_amount}
-    Verify Json Value Is Correct    /totalAmount    ${calculated_total_amount_value}
+    Run Keyword If    "${fop_amount}" != "0"    Verify Json Value Is Correct    /fopAmount    ${fop_amount}
+    ...    ELSE    Verify Json Element Does Not Exist    /fopAmount
+    Run Keyword If    "${merchant_amount}" != "0"    Verify Json Value Is Correct    /merchantFeeAmount    ${merchant_amount}
+    ...    ELSE    Verify Json Element Does Not Exist    /merchantFeeAmount
+    Run Keyword If    "${transaction_amount}" != "0"    Verify Json Value Is Correct    /transactionFeeAmount    ${transaction_amount}
+    ...    ELSE    Verify Json Element Does Not Exist    /transactionFeeAmount
+    Run Keyword If    "${markup_amount}" != "0"    Verify Json Value Is Correct    /markupAmount    ${markup_amount}
+    ...    ELSE    Verify Json Element Does Not Exist    /markupAmount
+    Run Keyword If    "${commission_amount}" != "0"    Verify Json Value Is Correct    /commissionRebateAmount    ${commission_amount}
+    ...    ELSE    Verify Json Element Does Not Exist    /commissionRebateAmount
+    Run Keyword If    "${fare_including_air_taxes}" != "0"    Verify Json Value Is Correct    /airFareWithTaxAmount    ${fare_including_air_taxes}
+    ...    ELSE    Verify Json Element Does Not Exist    /airFareWithTaxAmount
+    Run Keyword If    "${calculated_total_amount_value}" != "0"    Verify Json Value Is Correct    /totalAmount    ${calculated_total_amount_value}
+    ...    ELSE    Verify Json Element Does Not Exist    /totalAmount
