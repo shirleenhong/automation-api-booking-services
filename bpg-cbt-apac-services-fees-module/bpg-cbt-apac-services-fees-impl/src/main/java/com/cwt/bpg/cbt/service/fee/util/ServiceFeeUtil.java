@@ -49,7 +49,6 @@ public final class ServiceFeeUtil {
 	}
 	
 	private static BigDecimal getPercentageAmount(BigDecimal baseAmount, BigDecimal amountInput, Double percentage) {
-		if(percentage == null) percentage = 0D;
 		return amountInput != null ? amountInput : baseAmount.multiply(new BigDecimal(percentage)).divide(new BigDecimal(100));
 	}
 }

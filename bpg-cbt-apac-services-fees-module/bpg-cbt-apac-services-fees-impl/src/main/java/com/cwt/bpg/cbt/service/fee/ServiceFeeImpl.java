@@ -15,15 +15,7 @@ public class ServiceFeeImpl implements ServiceFeeApi {
 	
 	@Override
 	public PriceBreakdown calculate(PriceCalculationInput input) {
-		
-		input.setBaseFare(input.getBaseFare()!=null? input.getBaseFare():BigDecimal.ZERO);
-		input.setTotalTaxes(input.getTotalTaxes()!=null? input.getTotalTaxes():BigDecimal.ZERO);
-//		input.setMarkupPercentage(input.getMarkupPercentage()!=null? input.getMarkupPercentage():0D);
-//		input.setCommissionRebatePercentage(input.getCommissionRebatePercentage()!=null? input.getCommissionRebatePercentage():0D);
-//		input.setMerchantFeePercentage(input.getMerchantFeePercentage()!=null? input.getMerchantFeePercentage():0D);
-		input.setObFee(input.getObFee()!=null? input.getObFee():BigDecimal.ZERO);
-		input.setFuelSurcharge(input.getFuelSurcharge()!=null? input.getFuelSurcharge():BigDecimal.ZERO);
-		
+
 		PriceBreakdown priceBreakdown = new PriceBreakdown();
 		if(input.getNettFare() != null)
 		{
