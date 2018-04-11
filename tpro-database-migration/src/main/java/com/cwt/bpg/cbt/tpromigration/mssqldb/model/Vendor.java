@@ -5,6 +5,7 @@ import java.util.List;
 public class Vendor {
 
 	public static final String COLLECTION = "_vendors";
+	
 	private String countryCode;
 	
 	private String vendorNumber;
