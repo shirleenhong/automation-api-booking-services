@@ -36,7 +36,6 @@ public class CustomFilter extends GenericFilterBean {
 		}
 
 		String token = authHeader.substring(7).trim();
-		System.out.println("token: " + token);
 		if (!tokenApi.isTokenExist(token)) {
 			httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token.");
 			return;
