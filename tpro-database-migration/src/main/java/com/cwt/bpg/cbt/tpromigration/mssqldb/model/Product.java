@@ -1,8 +1,14 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.model;
 
-public class ProductCode {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Product {
 
 	public static final String COLLECTION = "_productCodes";
+	
+	private List<Vendor> vendors = new ArrayList<Vendor>();
+	
 	private String countryCode;
 	
 	private String productCode;
@@ -112,5 +118,15 @@ public class ProductCode {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	public List<Vendor> getVendors() {
+		return vendors;
+	}
+
+	public void setVendors(List<Vendor> vendors) {
+		this.vendors = vendors;
+	}
+	
+	
 
 }

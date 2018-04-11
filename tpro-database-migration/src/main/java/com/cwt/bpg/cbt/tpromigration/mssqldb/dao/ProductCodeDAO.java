@@ -2,10 +2,10 @@ package com.cwt.bpg.cbt.tpromigration.mssqldb.dao;
 
 import java.util.List;
 
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductCode;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Product;
 
 public interface ProductCodeDAO {
 
-	List<ProductCode> listProductCodes();
+	List<Product> listProductCodes();
 
 }

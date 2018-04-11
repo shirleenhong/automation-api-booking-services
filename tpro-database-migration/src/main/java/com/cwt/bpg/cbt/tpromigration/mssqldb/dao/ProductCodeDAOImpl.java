@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductCode;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Product;
 
 @Repository
 public class ProductCodeDAOImpl implements ProductCodeDAO {
@@ -25,8 +25,8 @@ public class ProductCodeDAOImpl implements ProductCodeDAO {
 	private DataSource dataSource;
 
 	@Override
-	public List<ProductCode> listProductCodes() {
-		List<ProductCode> productCodeList = new ArrayList<ProductCode>();
+	public List<Product> listProductCodes() {
+		List<Product> productCodeList = new ArrayList<Product>();
 		String sql = "SELECT * FROM tblProductCodes";
 		
 		Connection conn = null;
@@ -48,7 +48,7 @@ public class ProductCodeDAOImpl implements ProductCodeDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				ProductCode productCode = new ProductCode();
+				Product productCode = new Product();
 				productCode.setProductCode(rs.getString("ProductCode"));
 				productCode.setDescription(rs.getString("Description"));
 				productCode.setEnableCCFOP(rs.getObject("EnableCCFOP") == null ? null : rs.getBoolean("EnableCCFOP"));
