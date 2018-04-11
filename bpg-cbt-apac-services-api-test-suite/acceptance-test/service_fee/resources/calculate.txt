@@ -57,7 +57,7 @@ Calculate Transaction Fee Amount
 Generate Test Variables For Calculate Fees
     [Arguments]    ${fees_list}    ${country}=SG
     Parse Service Fees List    ${fees_list}    ${country}
-    ${fare}    Set Variable If    "${base_fare_value} " == "null"    ${nett_fare_value}    ${base_fare_value}
+    ${fare}    Set Variable If    "${base_fare_value}" == "null"    ${nett_fare_value}    ${base_fare_value}
     ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
     Run Keyword If    "${fuel_surcharge_value}" == "null"    Set Test Variable    ${fuel_surcharge_value}    0
     Run Keyword If    "${commission_amount_value}" == "null" and "${commission_percentage_value}" != "null"    Calculate Commission Amount    ${decimal_place}    ${fare}    ${commission_percentage_value}
