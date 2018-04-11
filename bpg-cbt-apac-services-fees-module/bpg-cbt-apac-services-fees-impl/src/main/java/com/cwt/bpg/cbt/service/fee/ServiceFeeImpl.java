@@ -15,20 +15,7 @@ public class ServiceFeeImpl implements ServiceFeeApi {
 	
 	@Override
 	public PriceBreakdown calculate(PriceCalculationInput input) {
-		
-		input.setBaseFare(input.getBaseFare()!=null? input.getBaseFare():BigDecimal.ZERO);
-		input.setTotalTaxes(input.getTotalTaxes()!=null? input.getTotalTaxes():BigDecimal.ZERO);
-		input.setMarkupPercentage(input.getMarkupPercentage()!=null? input.getMarkupPercentage():100D);
-		//input.setMarkupAmount(input.getMarkupAmount()!=null? input.getMarkupAmount():BigDecimal.ZERO);
-		//input.setCommissionRebateAmount(input.getCommissionRebateAmount()!=null? input.getCommissionRebateAmount():BigDecimal.ZERO);
-		input.setCommissionRebatePercentage(input.getCommissionRebatePercentage()!=null? input.getCommissionRebatePercentage():100D);
-		//input.setMerchantFeeAmount(input.getMerchantFeeAmount()!=null? input.getMerchantFeeAmount():BigDecimal.ZERO);
-		input.setMerchantFeePercentage(input.getMerchantFeePercentage()!=null? input.getMerchantFeePercentage():100D);
-		//input.setTransactionFeeAmount(input.getTransactionFeeAmount()!=null? input.getTransactionFeeAmount():BigDecimal.ZERO);
-		input.setTransactionFeePercentage(input.getTransactionFeePercentage()!=null? input.getTransactionFeePercentage():100D);
-		input.setObFee(input.getObFee()!=null? input.getObFee():BigDecimal.ZERO);
-		input.setFuelSurcharge(input.getFuelSurcharge()!=null? input.getFuelSurcharge():BigDecimal.ZERO);
-		
+
 		PriceBreakdown priceBreakdown = new PriceBreakdown();
 		if(input.getNettFare() != null)
 		{
@@ -61,6 +48,9 @@ public class ServiceFeeImpl implements ServiceFeeApi {
 	}
 	
 	private BigDecimal roundAmount(BigDecimal amount , String countryCode) {
+		if(amount == null || amount.compareTo(BigDecimal.ZERO) == 0) {
+			return null;
+		}
 		if (countryCode != null && (countryCode.equals(PriceCalculationInput.COUNTRY_CODE_INDIA) || countryCode.equals(PriceCalculationInput.COUNTRY_CODE_HONGKONG))) {
 			return ServiceFeeUtil.round(amount, 0);
 		}else {

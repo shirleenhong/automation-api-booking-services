@@ -22,7 +22,18 @@ public class PriceCalculationInput implements Serializable {
 //	obFee
 //	fuelSurcharge
 	
+	
 	private String countryCode;
+
+	public PriceCalculationInput() {
+		this.baseFare = BigDecimal.ZERO;
+		this.totalTaxes = BigDecimal.ZERO;
+		this.obFee = BigDecimal.ZERO;
+		this.fuelSurcharge = BigDecimal.ZERO;
+		this.commissionRebatePercentage = 0D;
+		this.markupPercentage = 0D;
+		this.merchantFeePercentage = 0D;
+	}
 
 	private BigDecimal baseFare;
 	
