@@ -151,10 +151,10 @@ Send Service Fees Post Request
     Set Test Variable    ${api_flag}    fees
 
 Verify Calculated Fees Are Returned Correctly
-    Verify Json Value Is Correct    /fees/fopAmount    ${fop_amount}
-    Verify Json Value Is Correct    /fees/airFareWithTaxAmount    ${fare_including_air_taxes}
-    Verify Json Value Is Correct    /fees/merchantFeeAmount    ${merchant_amount}
-    Verify Json Value Is Correct    /fees/transactionFeeAmount    ${transaction_amount}
-    Verify Json Value Is Correct    /fees/markupAmount    ${markup_amount}
-    Verify Json Value Is Correct    /fees/commissionRebateAmount    ${commission_amount}
-    Verify Json Value Is Correct    /fees/totalAmount    ${calculated_total_amount_value}
+    Verify Json Value Is Correct    /fopAmount    ${fop_amount}
+    Verify Json Value Is Correct    /airFareWithTaxAmount    ${fare_including_air_taxes}
+    Verify Json Value Is Correct    /merchantFeeAmount    ${merchant_amount}
+    Verify Json Value Is Correct    /transactionFeeAmount    ${transaction_amount}
+    Verify Json Value Is Correct    /markupAmount    ${markup_amount}
+    Verify Json Value Is Correct    /commissionRebateAmount    ${commission_amount}
+    Verify Json Value Is Correct    /totalAmount    ${calculated_total_amount_value}
