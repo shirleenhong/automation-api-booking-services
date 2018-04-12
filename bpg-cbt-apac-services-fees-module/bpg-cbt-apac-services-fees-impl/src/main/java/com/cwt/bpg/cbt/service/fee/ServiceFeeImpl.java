@@ -24,27 +24,40 @@ public class ServiceFeeImpl implements ServiceFeeApi {
 		 
 		
 		
-		BigDecimal transactionFeeAmount = calTransactionFeeAmount(input.getBaseFare(), input.getTransactionFeeAmount(), input.getTransactionFeePercentage());
-		priceBreakdown.setTransactionFeeAmount(roundAmount(transactionFeeAmount,input.getCountryCode()));
+		BigDecimal transactionFeeAmount = roundAmount(calTransactionFeeAmount(input.getBaseFare(), input.getTransactionFeeAmount(), input.getTransactionFeePercentage()),input.getCountryCode());
+		priceBreakdown.setTransactionFeeAmount(transactionFeeAmount);
+		transactionFeeAmount = safeValue(transactionFeeAmount);
 		
-		BigDecimal markupAmount = calMarkupAmount(input.getBaseFare(), input.getMarkupAmount(), input.getMarkupPercentage());
-		priceBreakdown.setMarkupAmount(roundAmount(markupAmount,input.getCountryCode()));
+		BigDecimal markupAmount = roundAmount(calMarkupAmount(input.getBaseFare(), input.getMarkupAmount(), input.getMarkupPercentage()),input.getCountryCode());
+		priceBreakdown.setMarkupAmount(markupAmount);
+		markupAmount = safeValue(markupAmount);
 		
-		BigDecimal commissionRebateAmount = calCommissionRebateAmount(input.getBaseFare(), input.getCommissionRebateAmount(), input.getCommissionRebatePercentage());
-		priceBreakdown.setCommissionRebateAmount(roundAmount(commissionRebateAmount,input.getCountryCode()));
+		BigDecimal commissionRebateAmount = roundAmount(calCommissionRebateAmount(input.getBaseFare(), input.getCommissionRebateAmount(), input.getCommissionRebatePercentage()),input.getCountryCode());
+		priceBreakdown.setCommissionRebateAmount(commissionRebateAmount);
+		commissionRebateAmount = safeValue(commissionRebateAmount);
 		
-		BigDecimal fopAmount = calFopAmount(input.getBaseFare(), input.getTotalTaxes(), markupAmount, commissionRebateAmount);
-		priceBreakdown.setFopAmount(roundAmount(fopAmount,input.getCountryCode()));
+		BigDecimal fopAmount = roundAmount(calFopAmount(input.getBaseFare(), input.getTotalTaxes(), markupAmount, commissionRebateAmount),input.getCountryCode());
+		priceBreakdown.setFopAmount(fopAmount);
+		fopAmount = safeValue(fopAmount);
 		
-		BigDecimal merchantFeeAmount = calMerchantFeeAmount(fopAmount, input.getMerchantFeeAmount(), input.getMerchantFeePercentage());
-		priceBreakdown.setMerchantFeeAmount(roundAmount(merchantFeeAmount,input.getCountryCode()));
+		BigDecimal merchantFeeAmount = roundAmount(calMerchantFeeAmount(fopAmount, input.getMerchantFeeAmount(), input.getMerchantFeePercentage()),input.getCountryCode());
+		priceBreakdown.setMerchantFeeAmount(merchantFeeAmount);
+		merchantFeeAmount = safeValue(merchantFeeAmount);
 		
-		BigDecimal airFareWithTaxAmount = calFareWithAirlineTax(input.getBaseFare(), input.getTotalTaxes(), input.getObFee(), markupAmount, commissionRebateAmount);
-		priceBreakdown.setAirFareWithTaxAmount(roundAmount(airFareWithTaxAmount,input.getCountryCode()));
+		BigDecimal airFareWithTaxAmount = roundAmount(calFareWithAirlineTax(input.getBaseFare(), input.getTotalTaxes(), input.getObFee(), markupAmount, commissionRebateAmount),input.getCountryCode());
+		priceBreakdown.setAirFareWithTaxAmount(airFareWithTaxAmount);
+		airFareWithTaxAmount = safeValue(airFareWithTaxAmount);
 		
 		priceBreakdown.setTotalAmount(roundAmount(calTotalAmount(airFareWithTaxAmount, transactionFeeAmount, merchantFeeAmount, input.getFuelSurcharge()),input.getCountryCode()));
 		
 		return priceBreakdown;
+	}
+	
+	private BigDecimal safeValue(BigDecimal value) {
+		if(value == null) {
+			return BigDecimal.ZERO;
+		}
+		return value;
 	}
 	
 	private BigDecimal roundAmount(BigDecimal amount , String countryCode) {
