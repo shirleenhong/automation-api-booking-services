@@ -60,7 +60,7 @@ Verify Json Element Does Not Exist
     [Arguments]    ${json_object}
     Log    Json Object: ${json_object}
     ${status}    Run Keyword And Return Status    Get Json Value    ${response.content}    ${json_object}
-    Verify That Actual Value Matches Expected Value    ${status}    False
+    Verify Actual Value Matches Expected Value    ${status}    False
 
 Verify Json Element Exists
     [Arguments]    ${json_object}
