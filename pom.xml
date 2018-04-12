@@ -20,6 +20,7 @@
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.boot.version>1.5.10.RELEASE</spring.boot.version>
+		<artifact.repo.url>https://ci1.carlsonwagonlit.com/nexus/content/repositories</artifact.repo.url>
 		<commons-pool2.version>2.5.0</commons-pool2.version>
 		<apache.commons.version>2.6</apache.commons.version>
 		<javax.inject.version>1</javax.inject.version>
@@ -122,6 +123,19 @@
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
 	</dependencies>
+
+	<distributionManagement>
+	    <repository>
+	      <id>Insight_Releases</id>
+	      <name>Insight_Releases</name>
+	      <url>${artifact.repo.url}/Insight_Releases</url>
+	    </repository>
+	    <snapshotRepository>
+	      <id>Insight_Snapshot</id>
+	      <name>Insight_Snapshot</name>
+	      <url>${artifact.repo.url}/Insight_Snapshot</url>
+	    </snapshotRepository>
+	</distributionManagement>
 	
 	
 	
