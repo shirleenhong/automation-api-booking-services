@@ -33,7 +33,7 @@ Calculate Markup Amount
 Calculate Merchant Fee Amount
     [Arguments]    ${decimal_place}    ${base_fare_value}=${base_fare_value}    ${taxes_value}=${taxes_value}    ${merchant_percentage_value}=${merchant_percentage_value}    ${markupAmount_value}=${markupAmount_value}    ${commissionRebateAmount_value}=${commissionRebateAmount_value}
     ${charged_fare_value}    Evaluate    ${base_fare_value}+${taxes_value}
-    ${calculated_value}    Evaluate    ((${charged_fare_value}+${markupAmount_value})-${commissionRebateAmount_value})*(${merchant_percentage_value}/100)
+    ${calculated_value}    Evaluate    round(((${charged_fare_value}+${markupAmount_value})-${commissionRebateAmount_value})*(${merchant_percentage_value}/100),${decimal_place})
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
@@ -52,12 +52,21 @@ Calculate Transaction Fee Amount
     ${calculated_value}    Evaluate    round((${base_fare_value}*(${transaction_percentage_value}/100)), ${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${transactionFeeAmount_value}    ${calculated_value}
+    [Return]    ${calculated_value}
+
+Determine Transaction Fee CAP
+    [Arguments]    ${decimal_place}    ${base_fare_value}    ${transaction_amount_value}=${transaction_amount_value}    ${transaction_percentage_value}=${transaction_percentage_value}
+    ${transaction_amount_value}    Set Variable If    "${transaction_amount_value}"=="null"    0    ${transaction_amount_value}
+    ${transaction_percentage_value}    Set Variable If    "${transaction_percentage_value}"=="null"    0    ${transaction_percentage_value}
+    ${returned_transaction_amount_value}    Calculate Transaction Fee Amount    ${decimal_place}    ${base_fare_value}    ${transaction_percentage_value}
+    ${transaction_fee_amount_value}    Set Variable If    ${transaction_amount_value} <= ${returned_transaction_amount_value} and ${transaction_amount_value}!=0    ${transaction_amount_value}    ${returned_transaction_amount_value}
+    Set Test Variable    ${transactionFeeAmount_value}    ${transaction_fee_amount_value}
 
 Generate Test Variables For Calculate Fees
     [Arguments]    ${fees_list}    ${country}=SG
     Parse Service Fees List    ${fees_list}    ${country}
-    ${fare}    Set Variable If    "${base_fare_value}" == "null"    ${nett_fare_value}    ${base_fare_value}
+    Comment    ${fare}    Set Variable If    "${base_fare_value}" == "null"    ${nett_fare_value}    ${base_fare_value}
+    ${fare}    Set Variable If    "${nett_fare_value}" != "null"    ${nett_fare_value}    ${base_fare_value}
     ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
     Run Keyword If    "${fuel_surcharge_value}" == "null"    Set Test Variable    ${fuel_surcharge_value}    0
     Run Keyword If    "${commission_amount_value}" == "null" and "${commission_percentage_value}" != "null"    Calculate Commission Amount    ${decimal_place}    ${fare}    ${commission_percentage_value}
@@ -69,9 +78,9 @@ Generate Test Variables For Calculate Fees
     Run Keyword If    "${merchant_amount_value}" == "null" and "${merchant_percentage_value}" != "null"    Calculate Merchant Fee Amount    ${decimal_place}    ${fare}    ${taxes_value}    ${merchant_percentage_value}
     ...    ELSE IF    "${merchant_amount_value}" == "null" and "${merchant_percentage_value}" == "null"    Set Test Variable    ${merchantFeeAmount_value}    0
     ...    ELSE    Set Test Variable    ${merchantFeeAmount_value}    ${merchant_amount_value}
-    Run Keyword If    "${transaction_amount_value}" == "null" and "${transaction_percentage_value}" != "null"    Calculate Transaction Fee Amount    ${decimal_place}    ${fare}    ${transaction_percentage_value}
-    ...    ELSE IF    "${transaction_amount_value}" == "null" and "${transaction_percentage_value}" == "null"    Set Test Variable    ${transactionFeeAmount_value}    0
-    ...    ELSE    Set Test Variable    ${transactionFeeAmount_value}    ${transaction_amount_value}
+    Run Keyword If    "${transaction_amount_value}" == "null" and "${transaction_percentage_value}" == "null"    Set Test Variable    ${transactionFeeAmount_value}    0
+    ...    ELSE IF    "${transaction_amount_value}" != "null" and "${transaction_percentage_value}" == "null"    Set Test Variable    ${transactionFeeAmount_value}    ${transaction_amount_value}
+    ...    ELSE    Determine Transaction Fee CAP    ${decimal_place}    ${fare}    ${transaction_amount_value}    ${transaction_percentage_value}
     Calculate FOP Amount    ${decimal_place}    ${fare}
     Calculate Fare Incuding Air Taxes    ${decimal_place}    ${fare}
     Calculate Total Amount    ${decimal_place}
@@ -97,20 +106,13 @@ Parse Service Fees List
     Set Test Variable    ${country}
 
 Remove Decimal Places
-    Comment    ${commission_amount}    Convert To String    ${commission_amount}
-    Comment    ${fop_amount}    Convert To String    ${fop_amount}
-    Comment    ${fare_including_air_taxes}    Convert To String    ${fare_including_air_taxes}
-    Comment    ${markup_amt}    Convert To String    ${markup_amt}
-    Comment    ${merchant_amount}    Convert To String    ${merchant_amount}
-    Comment    ${transaction_amount}    Convert To String    ${transaction_amount}
-    Comment    ${calculated_total_amount_value}    Convert To String    ${calculated_total_amount_value}
-    ${commission_amount}    Remove String    ${commission_amount}    .0
-    ${fop_amount}    Remove String    ${fop_amount}    .0
-    ${fare_including_air_taxes}    Remove String    ${fare_including_air_taxes}    .0
-    ${markup_amt}    Remove String    ${markup_amt}    .0
-    ${merchant_amount}    Remove String    ${merchant_amount}    .0
-    ${transaction_amount}    Remove String    ${transaction_amount}    .0
-    ${calculated_total_amount_value}    Remove String    ${calculated_total_amount_value}    .0
+    ${commission_amount}    Remove String    ${commission_amount}    .00
+    ${fop_amount}    Remove String    ${fop_amount}    .00
+    ${fare_including_air_taxes}    Remove String    ${fare_including_air_taxes}    .00
+    ${markup_amt}    Remove String    ${markup_amt}    .00
+    ${merchant_amount}    Remove String    ${merchant_amount}    .00
+    ${transaction_amount}    Remove String    ${transaction_amount}    .00
+    ${calculated_total_amount_value}    Remove String    ${calculated_total_amount_value}    .00
     Set Test Variable    ${commission_amount}
     Set Test Variable    ${fop_amount}
     Set Test Variable    ${fare_including_air_taxes}
