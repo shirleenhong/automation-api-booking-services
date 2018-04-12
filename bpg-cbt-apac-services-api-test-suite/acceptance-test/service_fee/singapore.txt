@@ -5,633 +5,865 @@ Resource          ../resources/api-variables.txt
 
 *** Test Cases ***
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes Only
-    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount, Merchant Amount, Transaction Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,200.00|taxes,30.00|ob_fee,8.00|merchant_amount,7.00|merchant_percentage,null|transaction_amount,7.00|transaction_percentage,null|markup_amount,7.00|markup_percentage,null|commission_amount,5.00|commission_percentage,null|fuel_surcharge,4.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,200.00|taxes,30.00|ob_fee,8.00|merchant_amount,7.00|merchant_percentage,null|transaction_amount,7.00|transaction_percentage,null|markup_amt,7.00|markup_percentage,null|commission_amount,5.00|commission_percentage,null|fuel_surcharge,4.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,300.10|taxes,80.10|ob_fee,10.00|merchant_amount,null|merchant_percentage,5.00|transaction_amount,null|transaction_percentage,8.00|markup_amount,null|markup_percentage,5.00|commission_amount,null|commission_percentage,6.00|fuel_surcharge,4.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,300.10|taxes,80.10|ob_fee,10.00|merchant_amount,null|merchant_percentage,5.00|transaction_amount,null|transaction_percentage,8.00|markup_amt,null|markup_percentage,5.00|commission_amount,null|commission_percentage,6.00|fuel_surcharge,4.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,1000.15|taxes,150.99|ob_fee,20.00|merchant_amount,10.00|merchant_percentage,null|transaction_amount,null|transaction_percentage,8.00|markup_amount,null|markup_percentage,5.00|commission_amount,null|commission_percentage,8.00|fuel_surcharge,7.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,1000.15|taxes,150.99|ob_fee,20.00|merchant_amount,10.00|merchant_percentage,null|transaction_amount,null|transaction_percentage,8.00|markup_amt,null|markup_percentage,5.00|commission_amount,null|commission_percentage,8.00|fuel_surcharge,7.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Merchant Amount, Transaction Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,1000.15|taxes,150.99|ob_fee,20.00|merchant_amount,11.00|merchant_percentage,null|transaction_amount,13.00|transaction_percentage,null|markup_amount,15.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,10.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,1000.15|taxes,150.99|ob_fee,20.00|merchant_amount,11.00|merchant_percentage,null|transaction_amount,13.00|transaction_percentage,null|markup_amt,15.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,10.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,900.15|taxes,240.99|ob_fee,20.00|merchant_amount,null|merchant_percentage,12.50|transaction_amount,null|transaction_percentage,8.50|markup_amount,null|markup_percentage,10.00|commission_amount,null|commission_percentage,null|fuel_surcharge,15.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,900.15|taxes,240.99|ob_fee,20.00|merchant_amount,null|merchant_percentage,12.50|transaction_amount,null|transaction_percentage,8.50|markup_amt,null|markup_percentage,10.00|commission_amount,null|commission_percentage,null|fuel_surcharge,15.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,1500.15|taxes,400.76|ob_fee,20.00|merchant_amount,null|merchant_percentage,12.50|transaction_amount,25.00|transaction_percentage,null|markup_amount,18.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,14.13|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,1500.15|taxes,400.76|ob_fee,20.00|merchant_amount,null|merchant_percentage,12.50|transaction_amount,25.00|transaction_percentage,null|markup_amt,18.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,14.13|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount, Transaction Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,19500.44|taxes,2800.55|ob_fee,50.33|merchant_amount,null|merchant_percentage,null|transaction_amount,90.08|transaction_percentage,null|markup_amount,50.00|markup_percentage,null|commission_amount,40.86|commission_percentage,null|fuel_surcharge,50.77|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,19500.44|taxes,2800.55|ob_fee,50.33|merchant_amount,null|merchant_percentage,null|transaction_amount,90.08|transaction_percentage,null|markup_amt,50.00|markup_percentage,null|commission_amount,40.86|commission_percentage,null|fuel_surcharge,50.77|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,15500.36|taxes,2000.95|ob_fee,50.33|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,18.45|markup_amount,null|markup_percentage,7.89|commission_amount,null|commission_percentage,8.50|fuel_surcharge,30.02|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,15500.36|taxes,2000.95|ob_fee,50.33|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,18.45|markup_amt,null|markup_percentage,7.89|commission_amount,null|commission_percentage,8.50|fuel_surcharge,30.02|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,15000.88|taxes,1000.05|ob_fee,150.33|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,12.09|markup_amount,33.01|markup_percentage,null|commission_amount,20.00|commission_percentage,null|fuel_surcharge,35.23|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,15000.88|taxes,1000.05|ob_fee,150.33|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,12.09|markup_amt,33.01|markup_percentage,null|commission_amount,20.00|commission_percentage,null|fuel_surcharge,35.23|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount, Merchant Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,35000.88|taxes,4300.56|ob_fee,950.00|merchant_amount,25.00|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,45.00|markup_percentage,null|commission_amount,60.00|commission_percentage,null|fuel_surcharge,40.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,35000.88|taxes,4300.56|ob_fee,950.00|merchant_amount,25.00|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,45.00|markup_percentage,null|commission_amount,60.00|commission_percentage,null|fuel_surcharge,40.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,30000.88|taxes,4000.56|ob_fee,950|merchant_amount,null|merchant_percentage,20.00|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,13.88|commission_amount,null|commission_percentage,10.54|fuel_surcharge,33|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,30000.88|taxes,4000.56|ob_fee,950|merchant_amount,null|merchant_percentage,20.00|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,13.88|commission_amount,null|commission_percentage,10.54|fuel_surcharge,33|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,20000.88|taxes,3000.56|ob_fee,950.00|merchant_amount,null|merchant_percentage,10.00|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,14.43|commission_amount,19.77|commission_percentage,null|fuel_surcharge,33.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,20000.88|taxes,3000.56|ob_fee,950.00|merchant_amount,null|merchant_percentage,10.00|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,14.43|commission_amount,19.77|commission_percentage,null|fuel_surcharge,33.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount, Merchant Amount And Transaction Amount
-    Generate Test Variables For Calculate Fees    base_fare,22010.88|taxes,4020.65|ob_fee,1013.00|merchant_amount,10.00|merchant_percentage,null|transaction_amount,70.00|transaction_percentage,null|markup_amount,34.50|markup_percentage,null|commission_amount,20.00|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,22010.88|taxes,4020.65|ob_fee,1013.00|merchant_amount,10.00|merchant_percentage,null|transaction_amount,70.00|transaction_percentage,null|markup_amt,34.50|markup_percentage,null|commission_amount,20.00|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,22010.88|taxes,4020.65|ob_fee,1013.00|merchant_amount,null|merchant_percentage,10.05|transaction_amount,null|transaction_percentage,15.50|markup_amount,null|markup_percentage,9.99|commission_amount,null|commission_percentage,13.33|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,22010.88|taxes,4020.65|ob_fee,1013.00|merchant_amount,null|merchant_percentage,10.05|transaction_amount,null|transaction_percentage,15.50|markup_amt,null|markup_percentage,9.99|commission_amount,null|commission_percentage,13.33|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,24010.88|taxes,4020.65|ob_fee,1500.98|merchant_amount,null|merchant_percentage,10.05|transaction_amount,null|transaction_percentage,15.50|markup_amount,null|markup_percentage,9.99|commission_amount,13.43|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,24010.88|taxes,4020.65|ob_fee,1500.98|merchant_amount,null|merchant_percentage,10.05|transaction_amount,null|transaction_percentage,15.50|markup_amt,null|markup_percentage,9.99|commission_amount,13.43|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Transaction Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,14010.78|taxes,3220.65|ob_fee,999.98|merchant_amount,null|merchant_percentage,null|transaction_amount,30.55|transaction_percentage,null|markup_amount,17.45|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,20.02|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,14010.78|taxes,3220.65|ob_fee,999.98|merchant_amount,null|merchant_percentage,null|transaction_amount,30.55|transaction_percentage,null|markup_amt,17.45|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,20.02|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,24410.78|taxes,3333.33|ob_fee,999.98|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,26.66|markup_amount,null|markup_percentage,19.89|commission_amount,null|commission_percentage,null|fuel_surcharge,20.02|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,24410.78|taxes,3333.33|ob_fee,999.98|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,26.66|markup_amt,null|markup_percentage,19.89|commission_amount,null|commission_percentage,null|fuel_surcharge,20.02|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,11410.78|taxes,1003.33|ob_fee,299.98|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,26.66|markup_amount,19.89|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,40.44|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,11410.78|taxes,1003.33|ob_fee,299.98|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,26.66|markup_amt,19.89|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,40.44|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,11111.11|taxes,2003.33|ob_fee,300.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,19.89|markup_percentage,null|commission_amount,33.33|commission_percentage,null|fuel_surcharge,50.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,11111.11|taxes,2003.33|ob_fee,300.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,19.89|markup_percentage,null|commission_amount,33.33|commission_percentage,null|fuel_surcharge,50.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,11222.11|taxes,3003.33|ob_fee,300.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,21.11|commission_amount,null|commission_percentage,20.01|fuel_surcharge,50.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,11222.11|taxes,3003.33|ob_fee,300.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,21.11|commission_amount,null|commission_percentage,20.01|fuel_surcharge,50.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,11222.11|taxes,3003.33|ob_fee,400.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,30.00|markup_percentage,null|commission_amount,null|commission_percentage,20.01|fuel_surcharge,50.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,11222.11|taxes,3003.33|ob_fee,400.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,30.00|markup_percentage,null|commission_amount,null|commission_percentage,20.01|fuel_surcharge,50.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount And Merchant Amount
-    Generate Test Variables For Calculate Fees    base_fare,11222.11|taxes,3003.33|ob_fee,400.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,30.00|markup_percentage,null|commission_amount,30.00|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,11222.11|taxes,3003.33|ob_fee,400.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,30.00|markup_percentage,null|commission_amount,30.00|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,1000.00|taxes,200.00|ob_fee,33.42|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,20.00|commission_amount,null|commission_percentage,20.00|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,1000.00|taxes,200.00|ob_fee,33.42|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,20.00|commission_amount,null|commission_percentage,20.00|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,1000.00|taxes,200.00|ob_fee,33.42|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,20.00|commission_amount,30.00|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,1000.00|taxes,200.00|ob_fee,33.42|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,20.00|commission_amount,30.00|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount And Transaction Amount
-    Generate Test Variables For Calculate Fees    base_fare,10000.99|taxes,2000.03|ob_fee,400.00|merchant_amount,null|merchant_percentage,null|transaction_amount,55.55|transaction_percentage,null|markup_amount,88.88|markup_percentage,null|commission_amount,44.44|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,10000.99|taxes,2000.03|ob_fee,400.00|merchant_amount,null|merchant_percentage,null|transaction_amount,55.55|transaction_percentage,null|markup_amt,88.88|markup_percentage,null|commission_amount,44.44|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,10000.99|taxes,2000.03|ob_fee,400.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,13.33|markup_amount,null|markup_percentage,21.21|commission_amount,null|commission_percentage,23.23|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,10000.99|taxes,2000.03|ob_fee,400.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,13.33|markup_amt,null|markup_percentage,21.21|commission_amount,null|commission_percentage,23.23|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,10000.99|taxes,2000.03|ob_fee,400.00|merchant_amount,null|merchant_percentage,null|transaction_amount,45.55|transaction_percentage,null|markup_amount,86.01|markup_percentage,null|commission_amount,null|commission_percentage,23.23|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,10000.99|taxes,2000.03|ob_fee,400.00|merchant_amount,null|merchant_percentage,null|transaction_amount,45.55|transaction_percentage,null|markup_amt,86.01|markup_percentage,null|commission_amount,null|commission_percentage,23.23|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Merchant Amount And Transaction Amount
-    Generate Test Variables For Calculate Fees    base_fare,30000.99|taxes,9000.03|ob_fee,999.99|merchant_amount,45.66|merchant_percentage,null|transaction_amount,66.77|transaction_percentage,null|markup_amount,89.99|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,30000.99|taxes,9000.03|ob_fee,999.99|merchant_amount,45.66|merchant_percentage,null|transaction_amount,66.77|transaction_percentage,null|markup_amt,89.99|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,30000.99|taxes,9000.03|ob_fee,999.99|merchant_amount,null|merchant_percentage,8.88|transaction_amount,null|transaction_percentage,7.77|markup_amount,null|markup_percentage,8.89|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,30000.99|taxes,9000.03|ob_fee,999.99|merchant_amount,null|merchant_percentage,8.88|transaction_amount,null|transaction_percentage,7.77|markup_amt,null|markup_percentage,8.89|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,30000.99|taxes,9000.03|ob_fee,999.99|merchant_amount,null|merchant_percentage,3.33|transaction_amount,1000.01|transaction_percentage,null|markup_amount,null|markup_percentage,8.89|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,30000.99|taxes,9000.03|ob_fee,999.99|merchant_amount,null|merchant_percentage,3.33|transaction_amount,1000.01|transaction_percentage,null|markup_amt,null|markup_percentage,8.89|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Merchant Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,32000.99|taxes,9000.03|ob_fee,899.99|merchant_amount,333.33|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,200.99|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,30.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,32000.99|taxes,9000.03|ob_fee,899.99|merchant_amount,333.33|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,200.99|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,30.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,32000.99|taxes,9000.03|ob_fee,899.99|merchant_amount,null|merchant_percentage,3.33|transaction_amount,null|transaction_percentage,null|markup_amount,200.99|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,30.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,32000.99|taxes,9000.03|ob_fee,899.99|merchant_amount,null|merchant_percentage,3.33|transaction_amount,null|transaction_percentage,null|markup_amt,200.99|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,30.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,32000.99|taxes,9000.03|ob_fee,899.99|merchant_amount,null|merchant_percentage,3.33|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,2.33|commission_amount,null|commission_percentage,null|fuel_surcharge,30.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,32000.99|taxes,9000.03|ob_fee,899.99|merchant_amount,null|merchant_percentage,3.33|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,2.33|commission_amount,null|commission_percentage,null|fuel_surcharge,30.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount And Commission Amount
-    Generate Test Variables For Calculate Fees    base_fare,131.00|taxes,22.50|ob_fee,15.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,22.00|markup_percentage,null|commission_amount,20.00|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,131.00|taxes,22.50|ob_fee,15.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,22.00|markup_percentage,null|commission_amount,20.00|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,150.00|taxes,28.50|ob_fee,17.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,3.6|commission_amount,null|commission_percentage,6.5|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,150.00|taxes,28.50|ob_fee,17.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,3.6|commission_amount,null|commission_percentage,6.5|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,250.00|taxes,38.50|ob_fee,27.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,25.25|markup_percentage,7.5|commission_amount,14.00|commission_percentage,3.45|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,250.00|taxes,38.50|ob_fee,27.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,25.25|markup_percentage,7.5|commission_amount,14.00|commission_percentage,3.45|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount And Merchant Amount
-    Generate Test Variables For Calculate Fees    base_fare,131.00|taxes,22.50|ob_fee,15.00|merchant_amount,20.00|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,22.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,131.00|taxes,22.50|ob_fee,15.00|merchant_amount,20.00|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,22.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,150.00|taxes,28.50|ob_fee,17.00|merchant_amount,null|merchant_percentage,5.6|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,3.6|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,150.00|taxes,28.50|ob_fee,17.00|merchant_amount,null|merchant_percentage,5.6|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,3.6|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,250.00|taxes,38.50|ob_fee,27.00|merchant_amount,19.85|merchant_percentage,7.6|transaction_amount,null|transaction_percentage,null|markup_amount,25.25|markup_percentage,7.5|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,250.00|taxes,38.50|ob_fee,27.00|merchant_amount,19.85|merchant_percentage,7.6|transaction_amount,null|transaction_percentage,null|markup_amt,25.25|markup_percentage,7.5|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount And Transaction Amount
-    Generate Test Variables For Calculate Fees    base_fare,121.00|taxes,21.50|ob_fee,14.00|merchant_amount,null|merchant_percentage,null|transaction_amount,15.812|transaction_percentage,null|markup_amount,22.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,121.00|taxes,21.50|ob_fee,14.00|merchant_amount,null|merchant_percentage,null|transaction_amount,15.812|transaction_percentage,null|markup_amt,22.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,140.00|taxes,27.50|ob_fee,16.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,2.5|markup_amount,null|markup_percentage,3.6|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,140.00|taxes,27.50|ob_fee,16.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,2.5|markup_amt,null|markup_percentage,3.6|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,240.00|taxes,37.50|ob_fee,26.00|merchant_amount,null|merchant_percentage,null|transaction_amount,32.00|transaction_percentage,6.9|markup_amount,25.25|markup_percentage,7.5|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,240.00|taxes,37.50|ob_fee,26.00|merchant_amount,null|merchant_percentage,null|transaction_amount,32.00|transaction_percentage,6.9|markup_amt,25.25|markup_percentage,7.5|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,75.99|taxes,12.75|ob_fee,17.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,10.70|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,12.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,75.99|taxes,12.75|ob_fee,17.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,10.70|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,12.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,75.99|taxes,12.75|ob_fee,17.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,3.1|commission_amount,null|commission_percentage,null|fuel_surcharge,15.77|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,75.99|taxes,12.75|ob_fee,17.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,3.1|commission_amount,null|commission_percentage,null|fuel_surcharge,15.77|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,80.99|taxes,14.75|ob_fee,15.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,13.45|markup_percentage,3.1|commission_amount,null|commission_percentage,null|fuel_surcharge,20.75|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,80.99|taxes,14.75|ob_fee,15.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,13.45|markup_percentage,3.1|commission_amount,null|commission_percentage,null|fuel_surcharge,20.75|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Markup Amount
-    Generate Test Variables For Calculate Fees    base_fare,75.99|taxes,12.75|ob_fee,17.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,10.70|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,75.99|taxes,12.75|ob_fee,17.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,10.70|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,75.99|taxes,12.75|ob_fee,17.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,3.1|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,75.99|taxes,12.75|ob_fee,17.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,3.1|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,80.99|taxes,14.75|ob_fee,15.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,13.45|markup_percentage,3.1|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,80.99|taxes,14.75|ob_fee,15.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,13.45|markup_percentage,3.1|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount, Merchant Amount, Transaction Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,105.55|taxes,25.85|ob_fee,17.75|merchant_amount,10.00|merchant_percentage,null|transaction_amount,15.95|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,15.15|commission_percentage,null|fuel_surcharge,20.20|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,105.55|taxes,25.85|ob_fee,17.75|merchant_amount,10.00|merchant_percentage,null|transaction_amount,15.95|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,15.15|commission_percentage,null|fuel_surcharge,20.20|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,122.55|taxes,20.00|ob_fee,17.00|merchant_amount,null|merchant_percentage,3.1|transaction_amount,null|transaction_percentage,2.4|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,1.5|fuel_surcharge,15.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,122.55|taxes,20.00|ob_fee,17.00|merchant_amount,null|merchant_percentage,3.1|transaction_amount,null|transaction_percentage,2.4|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,1.5|fuel_surcharge,15.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,90.55|taxes,10.00|ob_fee,12.00|merchant_amount,14.56|merchant_percentage,2.7|transaction_amount,12.00|transaction_percentage,3.4|markup_amount,null|markup_percentage,null|commission_amount,14.00|commission_percentage,1.5|fuel_surcharge,15.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,90.55|taxes,10.00|ob_fee,12.00|merchant_amount,14.56|merchant_percentage,2.7|transaction_amount,12.00|transaction_percentage,3.4|markup_amt,null|markup_percentage,null|commission_amount,14.00|commission_percentage,1.5|fuel_surcharge,15.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount, Transaction Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,105.55|taxes,25.85|ob_fee,17.75|merchant_amount,null|merchant_percentage,null|transaction_amount,15.95|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,15.15|commission_percentage,null|fuel_surcharge,20.20|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,105.55|taxes,25.85|ob_fee,17.75|merchant_amount,null|merchant_percentage,null|transaction_amount,15.95|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,15.15|commission_percentage,null|fuel_surcharge,20.20|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,122.55|taxes,20.00|ob_fee,17.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,2.4|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,1.5|fuel_surcharge,15.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,122.55|taxes,20.00|ob_fee,17.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,2.4|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,1.5|fuel_surcharge,15.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,90.55|taxes,10.00|ob_fee,12.00|merchant_amount,null|merchant_percentage,null|transaction_amount,12.00|transaction_percentage,3.4|markup_amount,null|markup_percentage,null|commission_amount,14.00|commission_percentage,1.5|fuel_surcharge,15.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,90.55|taxes,10.00|ob_fee,12.00|merchant_amount,null|merchant_percentage,null|transaction_amount,12.00|transaction_percentage,3.4|markup_amt,null|markup_percentage,null|commission_amount,14.00|commission_percentage,1.5|fuel_surcharge,15.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount, Merchant Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,86.90|taxes,12.25|ob_fee,10.05|merchant_amount,12.95|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,11.00|commission_percentage,null|fuel_surcharge,12.95|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,86.90|taxes,12.25|ob_fee,10.05|merchant_amount,12.95|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,11.00|commission_percentage,null|fuel_surcharge,12.95|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,105.00|taxes,12.05|ob_fee,20.05|merchant_amount,null|merchant_percentage,3.3|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,2.3|fuel_surcharge,18.99|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,105.00|taxes,12.05|ob_fee,20.05|merchant_amount,null|merchant_percentage,3.3|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,2.3|fuel_surcharge,18.99|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,305.00|taxes,33.05|ob_fee,23.25|merchant_amount,12.95|merchant_percentage,5.3|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,23.00|commission_percentage,2.3|fuel_surcharge,18.99|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,305.00|taxes,33.05|ob_fee,23.25|merchant_amount,12.95|merchant_percentage,5.3|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,23.00|commission_percentage,2.3|fuel_surcharge,18.99|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount, Merchant Amount And Transaction Amount
-    Generate Test Variables For Calculate Fees    base_fare,100.00|taxes,15.00|ob_fee,8.40|merchant_amount,10.90|merchant_percentage,null|transaction_amount,14.00|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,5.5|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.00|taxes,15.00|ob_fee,8.40|merchant_amount,10.90|merchant_percentage,null|transaction_amount,14.00|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,5.5|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,200.00|taxes,35.00|ob_fee,15.00|merchant_amount,null|merchant_percentage,2.2|transaction_amount,null|transaction_percentage,3.3|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,4.4|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,200.00|taxes,35.00|ob_fee,15.00|merchant_amount,null|merchant_percentage,2.2|transaction_amount,null|transaction_percentage,3.3|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,4.4|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,200.00|taxes,35.00|ob_fee,15.00|merchant_amount,10.90|merchant_percentage,2.2|transaction_amount,14.00|transaction_percentage,3.3|markup_amount,null|markup_percentage,null|commission_amount,5.5|commission_percentage,4.4|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,200.00|taxes,35.00|ob_fee,15.00|merchant_amount,10.90|merchant_percentage,2.2|transaction_amount,14.00|transaction_percentage,3.3|markup_amt,null|markup_percentage,null|commission_amount,5.5|commission_percentage,4.4|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount And Merchant Amount
-    Generate Test Variables For Calculate Fees    base_fare,103.90|taxes,15.00|ob_fee,8.85|merchant_amount,10.90|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,5.5|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,103.90|taxes,15.00|ob_fee,8.85|merchant_amount,10.90|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,5.5|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,123.90|taxes,31.00|ob_fee,11.85|merchant_amount,null|merchant_percentage,3.6|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,4.2|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,123.90|taxes,31.00|ob_fee,11.85|merchant_amount,null|merchant_percentage,3.6|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,4.2|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,119.90|taxes,20.00|ob_fee,15.25|merchant_amount,12.00|merchant_percentage,3.6|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,14.12|commission_percentage,4.2|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,119.90|taxes,20.00|ob_fee,15.25|merchant_amount,12.00|merchant_percentage,3.6|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,14.12|commission_percentage,4.2|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount And Transaction Amount
-    Generate Test Variables For Calculate Fees    base_fare,100.456|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,15.812|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,5.40|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.456|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,15.812|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,5.40|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,100.456|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,3.50|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,4.20|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.456|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,3.50|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,4.20|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,100.456|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,3.8|transaction_percentage,3.5|markup_amount,null|markup_percentage,null|commission_amount,21.45|commission_percentage,3.70|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.456|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,3.8|transaction_percentage,3.5|markup_amt,null|markup_percentage,null|commission_amount,21.45|commission_percentage,3.70|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,100.35|taxes,21.33|ob_fee,40.90|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,9.55|commission_percentage,null|fuel_surcharge,5.90|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.35|taxes,21.33|ob_fee,40.90|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,9.55|commission_percentage,null|fuel_surcharge,5.90|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,95.45|taxes,15.00|ob_fee,30.89|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,10.90|fuel_surcharge,10.99|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,95.45|taxes,15.00|ob_fee,30.89|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,10.90|fuel_surcharge,10.99|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,200.09|taxes,20.890|ob_fee,10.555|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,20.75|commission_percentage,10.90|fuel_surcharge,17.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,200.09|taxes,20.890|ob_fee,10.555|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,20.75|commission_percentage,10.90|fuel_surcharge,17.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Commission Amount
-    Generate Test Variables For Calculate Fees    base_fare,100.00|taxes,20.00|ob_fee,37.45|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,13.00|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.00|taxes,20.00|ob_fee,37.45|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,13.00|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,100.00|taxes,20.00|ob_fee,37.45|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,15.90|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.00|taxes,20.00|ob_fee,37.45|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,15.90|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,100.00|taxes,20.00|ob_fee,37.45|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,20.00|commission_percentage,15.90|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.00|taxes,20.00|ob_fee,37.45|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,20.00|commission_percentage,15.90|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Merchant Amount, Transaction Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,223.56|taxes,20.88|ob_fee,10.89|merchant_amount,12.78|merchant_percentage,null|transaction_amount,15.00|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,10.55|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,223.56|taxes,20.88|ob_fee,10.89|merchant_amount,12.78|merchant_percentage,null|transaction_amount,15.00|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,10.55|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,224.00|taxes,21.47|ob_fee,11.98|merchant_amount,null|merchant_percentage,2.3|transaction_amount,null|transaction_percentage,2.7|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,18.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,224.00|taxes,21.47|ob_fee,11.98|merchant_amount,null|merchant_percentage,2.3|transaction_amount,null|transaction_percentage,2.7|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,18.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,224.00|taxes,21.47|ob_fee,11.98|merchant_amount,10.34|merchant_percentage,2.3|transaction_amount,8.75|transaction_percentage,2.7|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,20.55|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,224.00|taxes,21.47|ob_fee,11.98|merchant_amount,10.34|merchant_percentage,2.3|transaction_amount,8.75|transaction_percentage,2.7|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,20.55|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Merchant Amount And Transaction Amount
-    Generate Test Variables For Calculate Fees    base_fare,223.56|taxes,20.88|ob_fee,10.89|merchant_amount,12.78|merchant_percentage,null|transaction_amount,15.00|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,223.56|taxes,20.88|ob_fee,10.89|merchant_amount,12.78|merchant_percentage,null|transaction_amount,15.00|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,224.00|taxes,21.47|ob_fee,11.98|merchant_amount,null|merchant_percentage,2.3|transaction_amount,null|transaction_percentage,2.7|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,224.00|taxes,21.47|ob_fee,11.98|merchant_amount,null|merchant_percentage,2.3|transaction_amount,null|transaction_percentage,2.7|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,224.00|taxes,21.47|ob_fee,11.98|merchant_amount,10.34|merchant_percentage,2.3|transaction_amount,8.75|transaction_percentage,2.7|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,224.00|taxes,21.47|ob_fee,11.98|merchant_amount,10.34|merchant_percentage,2.3|transaction_amount,8.75|transaction_percentage,2.7|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Merchant Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,180.05|taxes,34.22|ob_fee,21.15|merchant_amount,12.35|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,25.15|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,180.05|taxes,34.22|ob_fee,21.15|merchant_amount,12.35|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,25.15|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,145.55|taxes,12.00|ob_fee,21.00|merchant_amount,null|merchant_percentage,2.20|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,32.25|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,145.55|taxes,12.00|ob_fee,21.00|merchant_amount,null|merchant_percentage,2.20|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,32.25|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,152.00|taxes,10.15|ob_fee,23.35|merchant_amount,22.25|merchant_percentage,2.24|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,40.50|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,152.00|taxes,10.15|ob_fee,23.35|merchant_amount,22.25|merchant_percentage,2.24|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,40.50|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Merchant Amount
-    Generate Test Variables For Calculate Fees    base_fare,79.789|taxes,27.998|ob_fee,31.6|merchant_amount,14.90|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,79.789|taxes,27.998|ob_fee,31.6|merchant_amount,14.90|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,79.789|taxes,27.998|ob_fee,31.6|merchant_amount,null|merchant_percentage,5.7|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,79.789|taxes,27.998|ob_fee,31.6|merchant_amount,null|merchant_percentage,5.7|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,79.789|taxes,27.998|ob_fee,31.6|merchant_amount,14.90|merchant_percentage,5.7|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,79.789|taxes,27.998|ob_fee,31.6|merchant_amount,14.90|merchant_percentage,5.7|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Transaction Amount And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,101.50|taxes,22.00|ob_fee,31.15|merchant_amount,null|merchant_percentage,null|transaction_amount,12.76|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,12.45|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,101.50|taxes,22.00|ob_fee,31.15|merchant_amount,null|merchant_percentage,null|transaction_amount,12.76|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,12.45|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,209.00|taxes,26.15|ob_fee,31.75|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,2.45|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,17.00|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,209.00|taxes,26.15|ob_fee,31.75|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,2.45|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,17.00|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,334.00|taxes,45.456|ob_fee,21.50|merchant_amount,null|merchant_percentage,null|transaction_amount,15.10|transaction_percentage,4.60|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,21.35|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,334.00|taxes,45.456|ob_fee,21.50|merchant_amount,null|merchant_percentage,null|transaction_amount,15.10|transaction_percentage,4.60|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,21.35|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Transaction Amount
-    Generate Test Variables For Calculate Fees    base_fare,100.456|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,15.812|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.456|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,15.812|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,100.456|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,3.5|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.456|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,3.5|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,100.456|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,3.8 |transaction_percentage,3.5|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.456|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,3.8 |transaction_percentage,3.5|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Fuel Surcharge
-    Generate Test Variables For Calculate Fees    base_fare,100.00|taxes,21.25|ob_fee,35.25|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,15.50|nett_fare,null
+    Generate Test Variables For Calculate Fees    base_fare,100.00|taxes,21.25|ob_fee,35.25|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,15.50|nett_fare,null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes Only Using Nett Fare
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,100.55
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,100.55
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount, Merchant Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,30.00|ob_fee,8.00|merchant_amount,7.00|merchant_percentage,null|transaction_amount,7.00|transaction_percentage,null|markup_amount,7.00|markup_percentage,null|commission_amount,5.00|commission_percentage,null|fuel_surcharge,4.00|nett_fare,200.00
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,30.00|ob_fee,8.00|merchant_amount,7.00|merchant_percentage,null|transaction_amount,7.00|transaction_percentage,null|markup_amt,7.00|markup_percentage,null|commission_amount,5.00|commission_percentage,null|fuel_surcharge,4.00|nett_fare,200.00
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,80.10|ob_fee,10.00|merchant_amount,null|merchant_percentage,5.00|transaction_amount,null|transaction_percentage,8.00|markup_amount,null|markup_percentage,5.00|commission_amount,null|commission_percentage,6.00|fuel_surcharge,4.00|nett_fare,300.10
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,80.10|ob_fee,10.00|merchant_amount,null|merchant_percentage,5.00|transaction_amount,null|transaction_percentage,8.00|markup_amt,null|markup_percentage,5.00|commission_amount,null|commission_percentage,6.00|fuel_surcharge,4.00|nett_fare,300.10
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,150.99|ob_fee,20.00|merchant_amount,10.00|merchant_percentage,null|transaction_amount,null|transaction_percentage,8.00|markup_amount,null|markup_percentage,5.00|commission_amount,null|commission_percentage,8.00|fuel_surcharge,7.00|nett_fare,1000.15
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,150.99|ob_fee,20.00|merchant_amount,10.00|merchant_percentage,null|transaction_amount,null|transaction_percentage,8.00|markup_amt,null|markup_percentage,5.00|commission_amount,null|commission_percentage,8.00|fuel_surcharge,7.00|nett_fare,1000.15
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Taxes, Markup Amount, Merchant Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,150.99|ob_fee,20.00|merchant_amount,11.00|merchant_percentage,null|transaction_amount,13.00|transaction_percentage,null|markup_amount,15.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,10.00|nett_fare,1000.15
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,150.99|ob_fee,20.00|merchant_amount,11.00|merchant_percentage,null|transaction_amount,13.00|transaction_percentage,null|markup_amt,15.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,10.00|nett_fare,1000.15
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,240.99|ob_fee,20.00|merchant_amount,null|merchant_percentage,12.50|transaction_amount,null|transaction_percentage,8.50|markup_amount,null|markup_percentage,10.00|commission_amount,null|commission_percentage,null|fuel_surcharge,15.00|nett_fare,900.15
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,240.99|ob_fee,20.00|merchant_amount,null|merchant_percentage,12.50|transaction_amount,null|transaction_percentage,8.50|markup_amt,null|markup_percentage,10.00|commission_amount,null|commission_percentage,null|fuel_surcharge,15.00|nett_fare,900.15
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,400.76|ob_fee,20.00|merchant_amount,null|merchant_percentage,12.50|transaction_amount,25.00|transaction_percentage,null|markup_amount,18.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,14.13|nett_fare,1500.15
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,400.76|ob_fee,20.00|merchant_amount,null|merchant_percentage,12.50|transaction_amount,25.00|transaction_percentage,null|markup_amt,18.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,14.13|nett_fare,1500.15
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Taxes, Markup Amount, Commission Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,2800.55|ob_fee,50.33|merchant_amount,null|merchant_percentage,null|transaction_amount,90.08|transaction_percentage,null|markup_amount,50.00|markup_percentage,null|commission_amount,40.86|commission_percentage,null|fuel_surcharge,50.77|nett_fare,19500.44
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,2800.55|ob_fee,50.33|merchant_amount,null|merchant_percentage,null|transaction_amount,90.08|transaction_percentage,null|markup_amt,50.00|markup_percentage,null|commission_amount,40.86|commission_percentage,null|fuel_surcharge,50.77|nett_fare,19500.44
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,2000.95|ob_fee,50.33|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,18.45|markup_amount,null|markup_percentage,7.89|commission_amount,null|commission_percentage,8.50|fuel_surcharge,30.02|nett_fare,15500.36
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,2000.95|ob_fee,50.33|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,18.45|markup_amt,null|markup_percentage,7.89|commission_amount,null|commission_percentage,8.50|fuel_surcharge,30.02|nett_fare,15500.36
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,1000.05|ob_fee,150.33|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,12.09|markup_amount,33.01|markup_percentage,null|commission_amount,20.00|commission_percentage,null|fuel_surcharge,35.23|nett_fare,15000.88
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,1000.05|ob_fee,150.33|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,12.09|markup_amt,33.01|markup_percentage,null|commission_amount,20.00|commission_percentage,null|fuel_surcharge,35.23|nett_fare,15000.88
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Taxes, Markup Amount, Commission Amount, Merchant Amount And Fuel Surcharge Using Nett Fare
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,4300.56|ob_fee,950.00|merchant_amount,25.00|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,45.00|markup_percentage,null|commission_amount,60.00|commission_percentage,null|fuel_surcharge,40.00|nett_fare,35000.88
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,4300.56|ob_fee,950.00|merchant_amount,25.00|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,45.00|markup_percentage,null|commission_amount,60.00|commission_percentage,null|fuel_surcharge,40.00|nett_fare,35000.88
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,4000.56|ob_fee,950|merchant_amount,null|merchant_percentage,20.00|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,13.88|commission_amount,null|commission_percentage,10.54|fuel_surcharge,33|nett_fare,30000.88
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,4000.56|ob_fee,950|merchant_amount,null|merchant_percentage,20.00|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,13.88|commission_amount,null|commission_percentage,10.54|fuel_surcharge,33|nett_fare,30000.88
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,3000.56|ob_fee,950.00|merchant_amount,null|merchant_percentage,10.00|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,14.43|commission_amount,19.77|commission_percentage,null|fuel_surcharge,33.00|nett_fare,20000.88
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,3000.56|ob_fee,950.00|merchant_amount,null|merchant_percentage,10.00|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,14.43|commission_amount,19.77|commission_percentage,null|fuel_surcharge,33.00|nett_fare,20000.88
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount, Merchant Amount And Transaction Amount Using Nett Fare
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,4020.65|ob_fee,1013.00|merchant_amount,10.00|merchant_percentage,null|transaction_amount,70.00|transaction_percentage,null|markup_amount,34.50|markup_percentage,null|commission_amount,20.00|commission_percentage,null|fuel_surcharge,null|nett_fare,22010.88
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,4020.65|ob_fee,1013.00|merchant_amount,10.00|merchant_percentage,null|transaction_amount,70.00|transaction_percentage,null|markup_amt,34.50|markup_percentage,null|commission_amount,20.00|commission_percentage,null|fuel_surcharge,null|nett_fare,22010.88
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,4020.65|ob_fee,1013.00|merchant_amount,null|merchant_percentage,10.05|transaction_amount,null|transaction_percentage,15.50|markup_amount,null|markup_percentage,9.99|commission_amount,null|commission_percentage,13.33|fuel_surcharge,null|nett_fare,22010.88
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,4020.65|ob_fee,1013.00|merchant_amount,null|merchant_percentage,10.05|transaction_amount,null|transaction_percentage,15.50|markup_amt,null|markup_percentage,9.99|commission_amount,null|commission_percentage,13.33|fuel_surcharge,null|nett_fare,22010.88
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,4020.65|ob_fee,1500.98|merchant_amount,null|merchant_percentage,10.05|transaction_amount,null|transaction_percentage,15.50|markup_amount,null|markup_percentage,9.99|commission_amount,13.43|commission_percentage,null|fuel_surcharge,null|nett_fare,24010.88
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,4020.65|ob_fee,1500.98|merchant_amount,null|merchant_percentage,10.05|transaction_amount,null|transaction_percentage,15.50|markup_amt,null|markup_percentage,9.99|commission_amount,13.43|commission_percentage,null|fuel_surcharge,null|nett_fare,24010.88
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,3220.65|ob_fee,999.98|merchant_amount,null|merchant_percentage,null|transaction_amount,30.55|transaction_percentage,null|markup_amount,17.45|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,20.02|nett_fare,14010.78
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,3220.65|ob_fee,999.98|merchant_amount,null|merchant_percentage,null|transaction_amount,30.55|transaction_percentage,null|markup_amt,17.45|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,20.02|nett_fare,14010.78
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,3333.33|ob_fee,999.98|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,26.66|markup_amount,null|markup_percentage,19.89|commission_amount,null|commission_percentage,null|fuel_surcharge,20.02|nett_fare,24410.78
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,3333.33|ob_fee,999.98|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,26.66|markup_amt,null|markup_percentage,19.89|commission_amount,null|commission_percentage,null|fuel_surcharge,20.02|nett_fare,24410.78
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,1003.33|ob_fee,299.98|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,26.66|markup_amount,19.89|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,40.44|nett_fare,11410.78
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,1003.33|ob_fee,299.98|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,26.66|markup_amt,19.89|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,40.44|nett_fare,11410.78
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount And Fuel Surcharge Using Nett Fare
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,2003.33|ob_fee,300.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,19.89|markup_percentage,null|commission_amount,33.33|commission_percentage,null|fuel_surcharge,50.00|nett_fare,11111.11
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,2003.33|ob_fee,300.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,19.89|markup_percentage,null|commission_amount,33.33|commission_percentage,null|fuel_surcharge,50.00|nett_fare,11111.11
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,3003.33|ob_fee,300.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,21.11|commission_amount,null|commission_percentage,20.01|fuel_surcharge,50.00|nett_fare,11222.11
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,3003.33|ob_fee,300.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,21.11|commission_amount,null|commission_percentage,20.01|fuel_surcharge,50.00|nett_fare,11222.11
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,3003.33|ob_fee,400.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,30.00|markup_percentage,null|commission_amount,null|commission_percentage,20.01|fuel_surcharge,50.00|nett_fare,11222.11
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,3003.33|ob_fee,400.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,30.00|markup_percentage,null|commission_amount,null|commission_percentage,20.01|fuel_surcharge,50.00|nett_fare,11222.11
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount And Merchant Amount Using Nett Fare
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,3003.33|ob_fee,400.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,30.00|markup_percentage,null|commission_amount,30.00|commission_percentage,null|fuel_surcharge,null|nett_fare,11222.11
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,3003.33|ob_fee,400.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,30.00|markup_percentage,null|commission_amount,30.00|commission_percentage,null|fuel_surcharge,null|nett_fare,11222.11
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,200.00|ob_fee,33.42|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,20.00|commission_amount,null|commission_percentage,20.00|fuel_surcharge,null|nett_fare,1000.00
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,200.00|ob_fee,33.42|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,20.00|commission_amount,null|commission_percentage,20.00|fuel_surcharge,null|nett_fare,1000.00
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,200.00|ob_fee,33.42|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,20.00|commission_amount,30.00|commission_percentage,null|fuel_surcharge,null|nett_fare,1000.00
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,200.00|ob_fee,33.42|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,20.00|commission_amount,30.00|commission_percentage,null|fuel_surcharge,null|nett_fare,1000.00
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Commission Amount And Transaction Amount Using Nett Fare
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,2000.03|ob_fee,400.00|merchant_amount,null|merchant_percentage,null|transaction_amount,55.55|transaction_percentage,null|markup_amount,88.88|markup_percentage,null|commission_amount,44.44|commission_percentage,null|fuel_surcharge,null|nett_fare,10000.99
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,2000.03|ob_fee,400.00|merchant_amount,null|merchant_percentage,null|transaction_amount,55.55|transaction_percentage,null|markup_amt,88.88|markup_percentage,null|commission_amount,44.44|commission_percentage,null|fuel_surcharge,null|nett_fare,10000.99
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,2000.03|ob_fee,400.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,13.33|markup_amount,null|markup_percentage,21.21|commission_amount,null|commission_percentage,23.23|fuel_surcharge,null|nett_fare,10000.99
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,2000.03|ob_fee,400.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,13.33|markup_amt,null|markup_percentage,21.21|commission_amount,null|commission_percentage,23.23|fuel_surcharge,null|nett_fare,10000.99
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,2000.03|ob_fee,400.00|merchant_amount,null|merchant_percentage,null|transaction_amount,45.55|transaction_percentage,null|markup_amount,86.01|markup_percentage,null|commission_amount,null|commission_percentage,23.23|fuel_surcharge,null|nett_fare,10000.99
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,2000.03|ob_fee,400.00|merchant_amount,null|merchant_percentage,null|transaction_amount,45.55|transaction_percentage,null|markup_amt,86.01|markup_percentage,null|commission_amount,null|commission_percentage,23.23|fuel_surcharge,null|nett_fare,10000.99
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Merchant Amount And Transaction Amount Using Nett Fare
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,9000.03|ob_fee,999.99|merchant_amount,45.66|merchant_percentage,null|transaction_amount,66.77|transaction_percentage,null|markup_amount,89.99|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,30000.99
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,9000.03|ob_fee,999.99|merchant_amount,45.66|merchant_percentage,null|transaction_amount,66.77|transaction_percentage,null|markup_amt,89.99|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,30000.99
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,9000.03|ob_fee,999.99|merchant_amount,null|merchant_percentage,8.88|transaction_amount,null|transaction_percentage,7.77|markup_amount,null|markup_percentage,8.89|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,30000.99
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,9000.03|ob_fee,999.99|merchant_amount,null|merchant_percentage,8.88|transaction_amount,null|transaction_percentage,7.77|markup_amt,null|markup_percentage,8.89|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,30000.99
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,9000.03|ob_fee,999.99|merchant_amount,null|merchant_percentage,3.33|transaction_amount,1000.01|transaction_percentage,null|markup_amount,null|markup_percentage,8.89|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,30000.99
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,9000.03|ob_fee,999.99|merchant_amount,null|merchant_percentage,3.33|transaction_amount,1000.01|transaction_percentage,null|markup_amt,null|markup_percentage,8.89|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,30000.99
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount, Merchant Amount And Fuel Surcharge Using Nett Fare
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,9000.03|ob_fee,899.99|merchant_amount,333.33|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amount,200.99|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,30.00|nett_fare,32000.99
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,9000.03|ob_fee,899.99|merchant_amount,333.33|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,200.99|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,30.00|nett_fare,32000.99
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,9000.03|ob_fee,899.99|merchant_amount,null|merchant_percentage,3.33|transaction_amount,null|transaction_percentage,null|markup_amount,200.99|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,30.00|nett_fare,32000.99
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,9000.03|ob_fee,899.99|merchant_amount,null|merchant_percentage,3.33|transaction_amount,null|transaction_percentage,null|markup_amt,200.99|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,30.00|nett_fare,32000.99
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
-    Generate Test Variables For Calculate Fees    base_fare,null|taxes,9000.03|ob_fee,899.99|merchant_amount,null|merchant_percentage,3.33|transaction_amount,null|transaction_percentage,null|markup_amount,null|markup_percentage,2.33|commission_amount,null|commission_percentage,null|fuel_surcharge,30.00|nett_fare,32000.99
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,9000.03|ob_fee,899.99|merchant_amount,null|merchant_percentage,3.33|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,2.33|commission_amount,null|commission_percentage,null|fuel_surcharge,30.00|nett_fare,32000.99
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount And Commission Amount Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,22.50|ob_fee,15.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,22.00|markup_percentage,null|commission_amount,20.00|commission_percentage,null|fuel_surcharge,null|nett_fare,140.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,28.50|ob_fee,17.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,3.6|commission_amount,null|commission_percentage,6.5|fuel_surcharge,null|nett_fare,140.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,38.50|ob_fee,27.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,25.25|markup_percentage,7.5|commission_amount,14.00|commission_percentage,3.45|fuel_surcharge,null|nett_fare,255.50
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount And Merchant Amount Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,22.50|ob_fee,15.00|merchant_amount,20.00|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,22.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,230.90
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,28.50|ob_fee,17.00|merchant_amount,null|merchant_percentage,5.6|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,3.6|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,190.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,38.50|ob_fee,27.00|merchant_amount,19.85|merchant_percentage,7.6|transaction_amount,null|transaction_percentage,null|markup_amt,25.25|markup_percentage,7.5|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,300.50
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount And Transaction Amount Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,21.50|ob_fee,14.00|merchant_amount,null|merchant_percentage,null|transaction_amount,15.812|transaction_percentage,null|markup_amt,22.00|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,190.56
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,27.50|ob_fee,16.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,2.5|markup_amt,null|markup_percentage,3.6|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,200.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,37.50|ob_fee,26.00|merchant_amount,null|merchant_percentage,null|transaction_amount,32.00|transaction_percentage,6.9|markup_amt,25.25|markup_percentage,7.5|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,210.50
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Markup Amount And Fuel Surcharge Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,12.75|ob_fee,17.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,10.70|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,12.00|nett_fare,160.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,12.75|ob_fee,17.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,3.1|commission_amount,null|commission_percentage,null|fuel_surcharge,15.77|nett_fare,130.90
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,14.75|ob_fee,15.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,13.45|markup_percentage,3.1|commission_amount,null|commission_percentage,null|fuel_surcharge,20.75|nett_fare,145.25
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Markup Amount Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,12.75|ob_fee,17.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,10.70|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,145.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,12.75|ob_fee,17.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,3.1|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,150.75
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,14.75|ob_fee,15.55|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,13.45|markup_percentage,3.1|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,130.25
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount, Merchant Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,25.85|ob_fee,17.75|merchant_amount,10.00|merchant_percentage,null|transaction_amount,15.95|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,15.15|commission_percentage,null|fuel_surcharge,20.20|nett_fare,230.35
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.00|ob_fee,17.00|merchant_amount,null|merchant_percentage,3.1|transaction_amount,null|transaction_percentage,2.4|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,1.5|fuel_surcharge,15.00|nett_fare,210.25
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,10.00|ob_fee,12.00|merchant_amount,14.56|merchant_percentage,2.7|transaction_amount,12.00|transaction_percentage,3.4|markup_amt,null|markup_percentage,null|commission_amount,14.00|commission_percentage,1.5|fuel_surcharge,15.00|nett_fare,108.50
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,25.85|ob_fee,17.75|merchant_amount,null|merchant_percentage,null|transaction_amount,15.95|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,15.15|commission_percentage,null|fuel_surcharge,20.20|nett_fare,280.99
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.00|ob_fee,17.00|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,2.4|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,1.5|fuel_surcharge,15.00|nett_fare,205.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,10.00|ob_fee,12.00|merchant_amount,null|merchant_percentage,null|transaction_amount,12.00|transaction_percentage,3.4|markup_amt,null|markup_percentage,null|commission_amount,14.00|commission_percentage,1.5|fuel_surcharge,15.00|nett_fare,110.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount, Merchant Amount And Fuel Surcharge Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,12.25|ob_fee,10.05|merchant_amount,12.95|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,11.00|commission_percentage,null|fuel_surcharge,12.95|nett_fare,135.90
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,12.05|ob_fee,20.05|merchant_amount,null|merchant_percentage,3.3|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,2.3|fuel_surcharge,18.99|nett_fare,150.90
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,33.05|ob_fee,23.25|merchant_amount,12.95|merchant_percentage,5.3|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,23.00|commission_percentage,2.3|fuel_surcharge,18.99|nett_fare,270.75
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount, Merchant Amount And Transaction Amount Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,15.00|ob_fee,8.40|merchant_amount,10.90|merchant_percentage,null|transaction_amount,14.00|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,5.5|commission_percentage,null|fuel_surcharge,null|nett_fare,151.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,35.00|ob_fee,15.00|merchant_amount,null|merchant_percentage,2.2|transaction_amount,null|transaction_percentage,3.3|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,4.4|fuel_surcharge,null|nett_fare,160.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,35.00|ob_fee,15.00|merchant_amount,10.90|merchant_percentage,2.2|transaction_amount,14.00|transaction_percentage,3.3|markup_amt,null|markup_percentage,null|commission_amount,5.5|commission_percentage,4.4|fuel_surcharge,null|nett_fare,180.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount And Merchant Amount Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,15.00|ob_fee,8.85|merchant_amount,10.90|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,5.5|commission_percentage,null|fuel_surcharge,null|nett_fare,190.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,31.00|ob_fee,11.85|merchant_amount,null|merchant_percentage,3.6|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,4.2|fuel_surcharge,null|nett_fare,130.90
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.00|ob_fee,15.25|merchant_amount,12.00|merchant_percentage,3.6|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,14.12|commission_percentage,4.2|fuel_surcharge,null|nett_fare,210.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount And Transaction Amount Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,15.812|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,5.40|commission_percentage,null|fuel_surcharge,null|nett_fare,205.80
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,3.50|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,4.20|fuel_surcharge,null|nett_fare,220.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,3.8|transaction_percentage,3.5|markup_amt,null|markup_percentage,null|commission_amount,21.45|commission_percentage,3.70|fuel_surcharge,null|nett_fare,222.10
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Commission Amount And Fuel Surcharge Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,21.33|ob_fee,40.90|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,9.55|commission_percentage,null|fuel_surcharge,5.90|nett_fare,215.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,15.00|ob_fee,30.89|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,10.90|fuel_surcharge,10.99|nett_fare,180.70
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.890|ob_fee,10.555|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,20.75|commission_percentage,10.90|fuel_surcharge,17.00|nett_fare,210.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Commission Amount Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.00|ob_fee,37.45|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,13.00|commission_percentage,null|fuel_surcharge,null|nett_fare,190.80
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.00|ob_fee,37.45|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,15.90|fuel_surcharge,null|nett_fare,170.76
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.00|ob_fee,37.45|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,20.00|commission_percentage,15.90|fuel_surcharge,null|nett_fare,300.80
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Merchant Amount, Transaction Amount And Fuel Surcharge Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.88|ob_fee,10.89|merchant_amount,12.78|merchant_percentage,null|transaction_amount,15.00|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,10.55|nett_fare,230.90
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,21.47|ob_fee,11.98|merchant_amount,null|merchant_percentage,2.3|transaction_amount,null|transaction_percentage,2.7|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,18.00|nett_fare,350.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,21.47|ob_fee,11.98|merchant_amount,10.34|merchant_percentage,2.3|transaction_amount,8.75|transaction_percentage,2.7|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,20.55|nett_fare,239.80
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Merchant Amount And Transaction Amount Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.88|ob_fee,10.89|merchant_amount,12.78|merchant_percentage,null|transaction_amount,15.00|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,350.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,21.47|ob_fee,11.98|merchant_amount,null|merchant_percentage,2.3|transaction_amount,null|transaction_percentage,2.7|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,390.89
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,21.47|ob_fee,11.98|merchant_amount,10.34|merchant_percentage,2.3|transaction_amount,8.75|transaction_percentage,2.7|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,400.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Merchant Amount And Fuel Surcharge Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,34.22|ob_fee,21.15|merchant_amount,12.35|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,25.15|nett_fare,450.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,12.00|ob_fee,21.00|merchant_amount,null|merchant_percentage,2.20|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,32.25|nett_fare,390.80
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,10.15|ob_fee,23.35|merchant_amount,22.25|merchant_percentage,2.24|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,40.50|nett_fare,210.99
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Merchant Amount Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,27.998|ob_fee,31.6|merchant_amount,14.90|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,310.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,27.998|ob_fee,31.6|merchant_amount,null|merchant_percentage,5.7|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,270.67
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,27.998|ob_fee,31.6|merchant_amount,14.90|merchant_percentage,5.7|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,190.76
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes, Transaction Amount And Fuel Surcharge Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,22.00|ob_fee,31.15|merchant_amount,null|merchant_percentage,null|transaction_amount,12.76|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,12.45|nett_fare,360.70
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,26.15|ob_fee,31.75|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,2.45|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,17.00|nett_fare,400.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,45.456|ob_fee,21.50|merchant_amount,null|merchant_percentage,null|transaction_amount,15.10|transaction_percentage,4.60|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,21.35|nett_fare,290.79
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Transaction Amount Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,15.812|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,260.68
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,3.5|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,300.00
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,20.80|ob_fee,37.89|merchant_amount,null|merchant_percentage,null|transaction_amount,3.8 |transaction_percentage,3.5|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,300.40
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes And Fuel Surcharge Using Nett Fare
+    Generate Test Variables For Calculate Fees    base_fare,null|taxes,21.25|ob_fee,35.25|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,15.50|nett_fare,180.60
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Returned Correctly
