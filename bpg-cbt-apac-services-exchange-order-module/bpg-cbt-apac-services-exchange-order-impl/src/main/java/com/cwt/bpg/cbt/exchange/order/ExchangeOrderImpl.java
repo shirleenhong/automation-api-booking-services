@@ -30,7 +30,9 @@ public class ExchangeOrderImpl implements ExchangeOrderApi {
 		FindIterable iterable = mongoDbConnection.getCollection(Product.COLLECTION).find(new Document("countryCode",countryCode));
 		try {
 			ProductList productList = dBObjectMapper.mapDocumentToBean((Document) iterable.first(), ProductList.class);
-			products = productList.getProducts();
+			if (productList != null) {
+				products.addAll(productList.getProducts());
+			}
 		} catch (IOException e) {
 			System.out.println("error");
 			// TODO Auto-generated catch block
