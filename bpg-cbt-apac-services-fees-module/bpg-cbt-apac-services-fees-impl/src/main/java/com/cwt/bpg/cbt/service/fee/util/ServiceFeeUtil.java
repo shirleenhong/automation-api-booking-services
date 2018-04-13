@@ -1,7 +1,10 @@
 package com.cwt.bpg.cbt.service.fee.util;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
+
+import org.springframework.mail.MailAuthenticationException;
 
 public final class ServiceFeeUtil {
 	
@@ -49,6 +52,6 @@ public final class ServiceFeeUtil {
 	}
 	
 	private static BigDecimal getPercentageAmount(BigDecimal baseAmount, BigDecimal amountInput, Double percentage) {
-		return amountInput != null ? amountInput : baseAmount.multiply(new BigDecimal(percentage)).divide(new BigDecimal(100));
+		return amountInput != null ? amountInput : baseAmount.multiply(new BigDecimal(percentage, MathContext.DECIMAL64)).divide(new BigDecimal(100));
 	}
 }
