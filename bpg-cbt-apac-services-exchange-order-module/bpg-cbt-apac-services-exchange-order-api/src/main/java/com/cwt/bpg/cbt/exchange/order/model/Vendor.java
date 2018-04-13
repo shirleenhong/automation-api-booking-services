@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Vendor implements Serializable {
 
@@ -31,7 +30,7 @@ public class Vendor implements Serializable {
 
 	private Boolean misc;
 
-	private List<String> productCodes;
+//	private List<String> productCodes;
 
 	private String raiseType;
 
@@ -127,13 +126,13 @@ public class Vendor implements Serializable {
 		this.misc = misc;
 	}
 
-	public List<String> getProductCodes() {
-		return productCodes;
-	}
-
-	public void setProductCodes(List<String> productCodes) {
-		this.productCodes = productCodes;
-	}
+//	public List<String> getProductCodes() {
+//		return productCodes;
+//	}
+//
+//	public void setProductCodes(List<String> productCodes) {
+//		this.productCodes = productCodes;
+//	}
 
 	public String getRaiseType() {
 		return raiseType;
