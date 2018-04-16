@@ -869,7 +869,7 @@ Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes 
     Verify Calculated Fees Are Returned Correctly
 
 Verify That Service Fees Are Calculated Correctly When Base Fare And Nett Fare Both Present
-    Generate Test Variables For Calculate Fees    base_fare,200.00|taxes,30.00|ob_fee,8.00|merchant_amount,7.00|merchant_percentage,null|transaction_amount,7.00|transaction_percentage,null|markup_amt,7.00|markup_percentage,null|commission_amount,5.00|commission_percentage,null|fuel_surcharge,4.00|nett_fare,300.00
+    Generate Test Variables For Calculate Fees    base_fare,200.00|taxes,30.00|ob_fee,8.90|merchant_amount,7.57|merchant_percentage,null|transaction_amount,7.67|transaction_percentage,null|markup_amt,7.55|markup_percentage,null|commission_amount,5.23|commission_percentage,null|fuel_surcharge,4|nett_fare,300.34
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Fees Are Returned Correctly
