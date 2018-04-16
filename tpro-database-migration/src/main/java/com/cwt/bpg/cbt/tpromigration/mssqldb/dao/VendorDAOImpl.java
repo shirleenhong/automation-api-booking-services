@@ -67,12 +67,12 @@ public class VendorDAOImpl implements VendorDAO {
 				tblVendor.setMisc(rs.getObject("MISC") == null ? null : rs.getBoolean("MISC"));
 				String productCodesStr = rs.getString("ProductCodes");
 				if(StringUtils.isNotBlank(productCodesStr)) {
-					List<String> productCodes = Arrays.asList(productCodesStr.split(";"));
+					List<String> productCodes = Arrays.asList(productCodesStr.replaceAll(" ", "").split(";"));
 					tblVendor.setProductCodes(productCodes);
 				}
 				tblVendor.setRaiseType(rs.getString("RaiseType"));
 				tblVendor.setSortKey(rs.getString("SortKey"));
-				tblVendor.setVendorName(rs.getString("VendorName"));
+				tblVendor.setVendorName(rs.getString("VendorName").trim().replaceAll(" +", " "));
 				vendorList.add(tblVendor);
 			}
 			rs.close();
