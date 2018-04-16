@@ -4,21 +4,43 @@ Resource          ../../resources/api-imports.txt
 *** Keywords ***
 Calculate Commission Amount
     [Arguments]    ${decimal_place}    ${base_fare_value}    ${commission_percentage_value}=${commission_percentage_value}
-    ${calculated_value}    Evaluate    round((${base_fare_value}*(${commission_percentage_value}/100)), ${decimal_place})
+    ${commission_percentage_value}    Convert To Number    ${commission_percentage_value}
+    ${calculated_value}    Evaluate    (${base_fare_value}*(${commission_percentage_value}/100))
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${commissionRebateAmount_value}    ${calculated_value}
 
+Calculate Decimal Place
+    [Arguments]    ${calculated_value}
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${decimals}    Split String    ${calculated_value}    .
+    ${decimal_length}    Get Length    ${decimals[1]}
+    ${last_decimal}    Run Keyword If    ${decimal_length} == 3    Get Substring    ${decimals[1]}    2
+    ...    ELSE    Set Variable    0
+    ${last_decimal}    Run Keyword If    ${last_decimal}>4    Get Substring    ${decimals[1]}    \    -1
+    ...    ELSE    Set Variable    0
+    ${last_decimal}    Run Keyword If    ${decimal_length} == 3    Evaluate    ${last_decimal}+1
+    ...    ELSE    Set Variable    ${decimals[1]}
+    ${calculated_value}    Set Variable    ${decimals[0]}.${last_decimal}
+    ${calculated_value}    Convert To Number    ${calculated_value}
+    [Return]    ${calculated_value}
+
 Calculate FOP Amount
     [Arguments]    ${decimal_place}    ${base_fare}    ${taxes}= ${taxes_value}    ${markupAmount_value}=${markupAmount_value}    ${commissionRebateAmount_value}=${commissionRebateAmount_value}
-    ${calculated_value}    Evaluate    round(((${base_fare}+${taxes}+${markupAmount_value})-${commissionRebateAmount_value}), ${decimal_place})
+    ${calculated_value}    Evaluate    ${base_fare}+${taxes}+${markupAmount_value}
+    ${calculated_value}    Evaluate    ${calculated_value}-${commissionRebateAmount_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${fopAmount_value}    ${calculated_value}
 
 Calculate Fare Incuding Air Taxes
     [Arguments]    ${decimal_place}    ${base_fare_value}    ${taxes_value}=${taxes_value}    ${ob_fee_value}=${ob_fee_value}    ${markupAmount_value}=${markupAmount_value}    ${commissionRebateAmount_value}=${commissionRebateAmount_value}
-    ${calculated_value}    Evaluate    round(((${base_fare_value}+${taxes_value}+${ob_fee_value}+${markupAmount_value})-${commissionRebateAmount_value}), ${decimal_place})
+    ${calculated_value}    Evaluate    ((${base_fare_value}+${taxes_value}+${ob_fee_value}+${markupAmount_value})-${commissionRebateAmount_value})
+    ${calculated_value}    Run Keyword If    "${country.upper()}"=="SG"    Calculate Decimal Place    ${calculated_value}
+    ...    ELSE    Set Variable    ${calculated_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${airFareWithTaxAmount_value}    ${calculated_value}
@@ -33,8 +55,8 @@ Calculate Markup Amount
 Calculate Merchant Fee Amount
     [Arguments]    ${decimal_place}    ${base_fare_value}=${base_fare_value}    ${taxes_value}=${taxes_value}    ${merchant_percentage_value}=${merchant_percentage_value}    ${markupAmount_value}=${markupAmount_value}    ${commissionRebateAmount_value}=${commissionRebateAmount_value}
     ${charged_fare_value}    Evaluate    ${base_fare_value}+${taxes_value}
+    ${merchant_percentage_value}    Convert To Number    ${merchant_percentage_value}
     ${calculated_value}    Evaluate    round(((${charged_fare_value}+${markupAmount_value})-${commissionRebateAmount_value})*(${merchant_percentage_value}/100),${decimal_place})
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${merchantFeeAmount_value}    ${calculated_value}
@@ -65,7 +87,6 @@ Determine Transaction Fee CAP
 Generate Test Variables For Calculate Fees
     [Arguments]    ${fees_list}    ${country}=SG
     Parse Service Fees List    ${fees_list}    ${country}
-    Comment    ${fare}    Set Variable If    "${base_fare_value}" == "null"    ${nett_fare_value}    ${base_fare_value}
     ${fare}    Set Variable If    "${nett_fare_value}" != "null"    ${nett_fare_value}    ${base_fare_value}
     ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
     Run Keyword If    "${fuel_surcharge_value}" == "null"    Set Test Variable    ${fuel_surcharge_value}    0
@@ -103,23 +124,23 @@ Parse Service Fees List
     \    ${fees_item}    Split String    ${fees}    ,
     \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
     Set Test Variable    ${fees_list}
-    Set Test Variable    ${country}
+    Set Test Variable    ${country}    ${country.upper()}
 
 Remove Decimal Places
-    ${commission_amount}    Remove String    ${commission_amount}    .00
-    ${fop_amount}    Remove String    ${fop_amount}    .00
-    ${fare_including_air_taxes}    Remove String    ${fare_including_air_taxes}    .00
-    ${markup_amt}    Remove String    ${markup_amt}    .00
-    ${merchant_amount}    Remove String    ${merchant_amount}    .00
-    ${transaction_amount}    Remove String    ${transaction_amount}    .00
-    ${calculated_total_amount_value}    Remove String    ${calculated_total_amount_value}    .00
-    Set Test Variable    ${commission_amount}
-    Set Test Variable    ${fop_amount}
-    Set Test Variable    ${fare_including_air_taxes}
-    Set Test Variable    ${markup_amt}
-    Set Test Variable    ${merchant_amount}
-    Set Test Variable    ${transaction_amount}
-    Set Test Variable    ${calculated_total_amount_value}
+    ${commissionRebateAmount_value}    Remove String    ${commissionRebateAmount_value}    .00
+    ${fopAmount_value}    Remove String    ${fopAmount_value}    .00
+    ${airFareWithTaxAmount_value}    Remove String    ${airFareWithTaxAmount_value}    .00
+    ${markupAmount_value}    Remove String    ${markupAmount_value}    .00
+    ${merchantFeeAmount_value}    Remove String    ${merchantFeeAmount_value}    .00
+    ${transactionFeeAmount_value}    Remove String    ${transactionFeeAmount_value}    .00
+    ${totalAmount_value}    Remove String    ${totalAmount_value}    .00
+    Set Test Variable    ${commissionRebateAmount_value}
+    Set Test Variable    ${fopAmount_value}
+    Set Test Variable    ${airFareWithTaxAmount_value}
+    Set Test Variable    ${markupAmount_value}
+    Set Test Variable    ${merchantFeeAmount_value}
+    Set Test Variable    ${transactionFeeAmount_value}
+    Set Test Variable    ${totalAmount_value}
 
 Send Service Fees Post Request
     [Arguments]    ${token}=${default_token}
@@ -154,13 +175,13 @@ Send Service Fees Post Request
     Set Test Variable    ${api_flag}    fees
 
 Verify Calculated Fees Are Not Returned
-    Verify String Does Not Contain Substring    ${response.content}    /fopAmount
-    Verify String Does Not Contain Substring    ${response.content}    /merchantFeeAmount
-    Verify String Does Not Contain Substring    ${response.content}    /transactionFeeAmount
-    Verify String Does Not Contain Substring    ${response.content}    /markupAmount
-    Verify String Does Not Contain Substring    ${response.content}    /commissionRebateAmount
-    Verify String Does Not Contain Substring    ${response.content}    /airFareWithTaxAmount
-    Verify String Does Not Contain Substring    ${response.content}    /totalAmount
+    Verify String Does Not Contain Substring    ${response.content}    "fopAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "merchantFeeAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "transactionFeeAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "markupAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "commissionRebateAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "airFareWithTaxAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "totalAmount"
 
 Verify Calculated Fees Are Returned Correctly
     ${data}    Remove String    ${response.content}    {

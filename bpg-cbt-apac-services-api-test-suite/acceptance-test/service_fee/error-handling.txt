@@ -1,0 +1,140 @@
+*** Settings ***
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-variables.txt
+Resource          resources/calculate.txt
+
+*** Test Cases ***
+Verify That Error Is Encountered When Invalid Input Is Used
+    [Tags]    functional
+    Parse Service Fees List    base_fare,a|taxes,b|ob_fee,c|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=sg
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+    Parse Service Fees List    base_fare,!|taxes,@|ob_fee,#|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=hk
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+    Parse Service Fees List    base_fare,1!|taxes,2@|ob_fee,3#|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=in
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+
+Verify That No Error Is Encountered When Null Input Is Used
+    [Tags]    functional
+    Parse Service Fees List    base_fare,null|taxes,null|ob_fee,null|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=sg
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Not Returned
+    Parse Service Fees List    base_fare,null|taxes,null|ob_fee,null|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=hk
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Not Returned
+    Parse Service Fees List    base_fare,null|taxes,null|ob_fee,null|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=in
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Fees Are Not Returned
+
+Verify That Error Is Encountered When Empty Input Is Used
+    [Tags]    functional
+    Parse Service Fees List    base_fare,${EMPTY}|taxes,${EMPTY}|ob_fee,${EMPTY}|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=sg
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+    Parse Service Fees List    base_fare,${EMPTY}|taxes,${EMPTY}|ob_fee,${EMPTY}|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=hk
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+    Parse Service Fees List    base_fare,${EMPTY}|taxes,${EMPTY}|ob_fee,${EMPTY}|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=in
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+
+Verify That Error Is Encountered When No Input Is Used
+    [Tags]    functional
+    Parse Service Fees List    base_fare,None|taxes,None|ob_fee,None|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=sg
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+    Parse Service Fees List    base_fare,None|taxes,None|ob_fee,None|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=hk
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+    Parse Service Fees List    base_fare,None|taxes,None|ob_fee,None|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=in
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+
+Verify That Error Is Encountered When Invalid Token Is Used
+    [Tags]    functional
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=sg
+    Send Service Fees Post Request    token=!@#$%^&*().!@#$%^&*().@#$%^&*()_
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Fees Are Not Returned
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|mmarkup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=hk
+    Send Service Fees Post Request    token=!@#$%^&*().!@#$%^&*().@#$%^&*()_
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Fees Are Not Returned
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=in
+    Send Service Fees Post Request    token=!@#$%^&*().!@#$%^&*().@#$%^&*()_
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Fees Are Not Returned
+
+Verify That Error Is Encountered When Null Token Is Used
+    [Tags]    functional
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=sg
+    Send Service Fees Post Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Fees Are Not Returned
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=hk
+    Send Service Fees Post Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Fees Are Not Returned
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=in
+    Send Service Fees Post Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Fees Are Not Returned
+
+Verify That Error Is Encountered When Empty Token Is Used
+    [Tags]    functional
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=sg
+    Send Service Fees Post Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=hk
+    Send Service Fees Post Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=in
+    Send Service Fees Post Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+
+Verify That Error Is Encountered When No Token Is Used
+    [Tags]    functional
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=sg
+    Send Service Fees Post Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=hk
+    Send Service Fees Post Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+    Generate Test Variables For Calculate Fees    base_fare,100.55|taxes,40.66|ob_fee,5.40|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=in
+    Send Service Fees Post Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Fees Are Not Returned
+
+Verify That Error Is Encountered When Invalid Token And Input Is Used
+    [Tags]    functional
+    Parse Service Fees List    base_fare,a|taxes,b|ob_fee,c|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=sg
+    Send Service Fees Post Request    token=!@#$%^&*().!@#$%^&*().@#$%^&*()_
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Fees Are Not Returned
+    Parse Service Fees List    base_fare,!|taxes,@|ob_fee,#|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=hk
+    Send Service Fees Post Request    token=!@#$%^&*().!@#$%^&*().@#$%^&*()_
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Fees Are Not Returned
+    Parse Service Fees List    base_fare,1!|taxes,2@|ob_fee,3#|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=in
+    Send Service Fees Post Request    token=!@#$%^&*().!@#$%^&*().@#$%^&*()_
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Fees Are Not Returned
