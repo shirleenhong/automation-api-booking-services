@@ -46,9 +46,15 @@ public class ExchangeOrderImpl implements ExchangeOrderApi {
 	}
 	
 	private void sort(List<Product> products) {
-		for(Product product: products) {
-			product.getVendors().sort(Comparator.comparing(Vendor::getVendorName));
+		if(products != null && !products.isEmpty()) {
+			for(Product product: products) {
+				if(product.getVendors()!=null && !product.getVendors().isEmpty()) {
+					product.getVendors().sort(Comparator.comparing(Vendor::getVendorNumber));
+				}
+				
+			}
+			products.sort(Comparator.comparing(Product::getProductCode));
 		}
-		products.sort(Comparator.comparing(Product::getProductName));
+		
 	}
 }
