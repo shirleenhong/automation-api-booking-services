@@ -61,7 +61,8 @@ Verify Products And Vendors Are Retrieved Correctly
     \    ${item_product_code}    Get Substring    ${item_product_code}    1    -1
     \    Verify Json Value Is Correct    /${index}/description    ${product_code_${item_product_code}}
     \    Verify Vendors Are Retrieved Correctly    ${index}    ${product_code_${item_product_code}_list}
-    Verify Json Element Does Not Exist    /${index}/
+    ${index}    Evaluate    ${index}+1
+    Verify Json Element Does Not Exist    /${index}/description
 
 Verify Vendors Are Retrieved Correctly
     [Arguments]    ${index}    ${item_vendor_list}
@@ -72,4 +73,5 @@ Verify Vendors Are Retrieved Correctly
     \    ${item_vendor_number}    Get Substring    ${item_vendor_number}    1    -1
     \    Should Contain X Times    ${item_vendor_list}    ${item_vendor_number}    1
     \    Verify Json Value Is Correct    /${index}/vendors/${vendor_index}/vendorName    ${vendor_code_${item_vendor_number}}
-    Verify Json Element Does Not Exist    /${index}/vendors/${vendor_index}/
+    ${vendor_index}    Evaluate    ${vendor_index}+1
+    Verify Json Element Does Not Exist    /${index}/vendors/${vendor_index}/vendorName
