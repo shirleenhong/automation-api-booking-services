@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.bson.Document;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.model.ProductList;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.mongodb.config.mapper.DBObjectMapper;
 import com.mongodb.client.FindIterable;
@@ -32,6 +34,7 @@ public class ExchangeOrderImpl implements ExchangeOrderApi {
 			ProductList productList = dBObjectMapper.mapDocumentToBean((Document) iterable.first(), ProductList.class);
 			if (productList != null) {
 				products.addAll(productList.getProducts());
+				sort(products);
 			}
 		} catch (IOException e) {
 			System.out.println("error");
@@ -41,5 +44,17 @@ public class ExchangeOrderImpl implements ExchangeOrderApi {
 		
 		return products;
 	}
-
+	
+	private void sort(List<Product> products) {
+		if(products != null && !products.isEmpty()) {
+			for(Product product: products) {
+				if(product.getVendors()!=null && !product.getVendors().isEmpty()) {
+					product.getVendors().sort(Comparator.comparing(Vendor::getVendorNumber));
+				}
+				
+			}
+			products.sort(Comparator.comparing(Product::getProductCode));
+		}
+		
+	}
 }
