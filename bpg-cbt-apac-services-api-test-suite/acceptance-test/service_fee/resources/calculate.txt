@@ -175,13 +175,13 @@ Send Service Fees Post Request
     Set Test Variable    ${api_flag}    fees
 
 Verify Calculated Fees Are Not Returned
-    Verify String Does Not Contain Substring    ${response.content}    /fopAmount
-    Verify String Does Not Contain Substring    ${response.content}    /merchantFeeAmount
-    Verify String Does Not Contain Substring    ${response.content}    /transactionFeeAmount
-    Verify String Does Not Contain Substring    ${response.content}    /markupAmount
-    Verify String Does Not Contain Substring    ${response.content}    /commissionRebateAmount
-    Verify String Does Not Contain Substring    ${response.content}    /airFareWithTaxAmount
-    Verify String Does Not Contain Substring    ${response.content}    /totalAmount
+    Verify String Does Not Contain Substring    ${response.content}    "fopAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "merchantFeeAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "transactionFeeAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "markupAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "commissionRebateAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "airFareWithTaxAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "totalAmount"
 
 Verify Calculated Fees Are Returned Correctly
     ${data}    Remove String    ${response.content}    {
