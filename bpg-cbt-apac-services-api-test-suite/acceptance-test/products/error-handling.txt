@@ -1,0 +1,50 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/products.txt
+
+*** Test Cases ***
+Verify That Error Is Encountered When Invalid Token Is Used
+    [Tags]    functional
+    Create Test Variables For Products And Vendors    country=sg
+    Send Product Get Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Products And Vendors Are Not Retrieved
+    Create Test Variables For Products And Vendors    country=hk
+    Send Product Get Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Products And Vendors Are Not Retrieved
+
+Verify That Error Is Encountered When Null Token Is Used
+    [Tags]    functional
+    Create Test Variables For Products And Vendors    country=sg
+    Send Product Get Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Products And Vendors Are Not Retrieved
+    Create Test Variables For Products And Vendors    country=hk
+    Send Product Get Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Products And Vendors Are Not Retrieved
+
+Verify That Error Is Encountered When Empty Token Is Used
+    [Tags]    functional
+    Create Test Variables For Products And Vendors    country=sg
+    Send Product Get Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Products And Vendors Are Not Retrieved
+    Create Test Variables For Products And Vendors    country=hk
+    Send Product Get Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Products And Vendors Are Not Retrieved
+
+Verify That Error Is Encountered When No Token Is Used
+    [Tags]    functional
+    Create Test Variables For Products And Vendors    country=sg
+    Send Product Get Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Products And Vendors Are Not Retrieved
+    Create Test Variables For Products And Vendors    country=hk
+    Send Product Get Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Products And Vendors Are Not Retrieved
