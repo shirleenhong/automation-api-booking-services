@@ -34,6 +34,7 @@ public class TokenImplTest {
 	@InjectMocks
 	private TokenApi tokenApi = new TokenImpl();
 	
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldExist() throws IOException {
 		

@@ -36,6 +36,7 @@ public class ExchangeOrderImplTest {
 	@InjectMocks
 	private ExchangeOrderApi exchangeOrderApi = new ExchangeOrderImpl();
 	
+	@SuppressWarnings("rawtypes")
 	@Before
 	public void setUp() throws Exception {
 		FindIterable iterable = Mockito.mock(FindIterable.class);
@@ -140,7 +141,6 @@ public class ExchangeOrderImplTest {
 	@Test
 	public void shouldGetNoProductListWhenException() throws IOException{
 		
-		Document doc = Mockito.mock(Document.class);
 		Mockito.when(dBObjectMapper.mapDocumentToBean(Mockito.any(),Mockito.any())).thenThrow(IOException.class);
 		
 		List<Product> products = exchangeOrderApi.getProducts("IN");

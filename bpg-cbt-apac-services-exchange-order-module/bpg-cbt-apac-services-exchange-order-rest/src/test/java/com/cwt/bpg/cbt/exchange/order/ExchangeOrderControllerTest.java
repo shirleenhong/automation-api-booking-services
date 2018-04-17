@@ -1,13 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-
 import org.junit.Test;
-import org.springframework.http.ResponseEntity;
-
-import com.cwt.bpg.cbt.exchange.order.model.Product;
 
 public class ExchangeOrderControllerTest {
 	

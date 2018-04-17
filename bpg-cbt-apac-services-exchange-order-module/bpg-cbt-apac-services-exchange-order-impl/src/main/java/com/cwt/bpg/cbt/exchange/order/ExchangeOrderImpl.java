@@ -29,7 +29,7 @@ public class ExchangeOrderImpl implements ExchangeOrderApi {
 	public List<Product> getProducts(String countryCode) {
 		List<Product> products = new ArrayList<Product>();
 		
-		FindIterable iterable = mongoDbConnection.getCollection(Product.COLLECTION).find(new Document("countryCode",countryCode));
+		FindIterable<?> iterable = mongoDbConnection.getCollection(Product.COLLECTION).find(new Document("countryCode",countryCode));
 		try {
 			ProductList productList = dBObjectMapper.mapDocumentToBean((Document) iterable.first(), ProductList.class);
 			if (productList != null) {
