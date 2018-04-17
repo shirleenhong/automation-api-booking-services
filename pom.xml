@@ -137,6 +137,23 @@
 	    </snapshotRepository>
 	</distributionManagement>
 	
-	
+        <build>
+	    <plugins>
+		<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-jar-plugin</artifactId>
+		<version>3.0.2</version>
+		<configuration>
+		  <archive>
+		    <manifestEntries>
+		      <Implementation-Title>${project.artifactId}</Implementation-Title>
+		      <Implementation-Version>${project.version}</Implementation-Version>
+		      <Git-Revision>${buildNumber}</Git-Revision>
+		    </manifestEntries>
+		  </archive>
+		</configuration>
+		</plugin>
+	    </plugins>
+        </build>
 	
 </project>

@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ import com.mongodb.client.FindIterable;
 @Service
 public class ExchangeOrderImpl implements ExchangeOrderApi {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderImpl.class);
+	
 	@Autowired
 	private MongoDbConnection mongoDbConnection;
 
@@ -29,7 +33,8 @@ public class ExchangeOrderImpl implements ExchangeOrderApi {
 	public List<Product> getProducts(String countryCode) {
 		List<Product> products = new ArrayList<Product>();
 		
-		FindIterable<?> iterable = mongoDbConnection.getCollection(Product.COLLECTION).find(new Document("countryCode",countryCode));
+		FindIterable<?> iterable = mongoDbConnection.getCollection(Product.COLLECTION).find(new Document("countryCode", countryCode));
+
 		try {
 			ProductList productList = dBObjectMapper.mapDocumentToBean((Document) iterable.first(), ProductList.class);
 			if (productList != null) {
@@ -37,9 +42,7 @@ public class ExchangeOrderImpl implements ExchangeOrderApi {
 				sort(products);
 			}
 		} catch (IOException e) {
-			System.out.println("error");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error("Unable to parse product list for {}", countryCode);
 		}
 		
 		return products;
