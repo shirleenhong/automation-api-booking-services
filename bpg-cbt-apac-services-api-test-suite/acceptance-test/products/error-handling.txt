@@ -48,3 +48,9 @@ Verify That Error Is Encountered When No Token Is Used
     Send Product Get Request    token=None
     Verify Response Status Code Is Correct    400
     Verify Products And Vendors Are Not Retrieved
+
+Verify That No Error Is Encountered When Invalid Country Is Used
+    [Tags]    functional
+    Send Product Get Request    country=xyz
+    Verify Response Status Code Is Correct    200
+    Verify Products And Vendors Are Not Retrieved

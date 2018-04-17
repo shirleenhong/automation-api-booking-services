@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().addFilterBefore(new CustomFilter(tokenApi), BasicAuthenticationFilter.class);
+        http.csrf().disable().addFilterBefore(new AuthenticationFilter(tokenApi), BasicAuthenticationFilter.class);
     }
 	
 	@Override

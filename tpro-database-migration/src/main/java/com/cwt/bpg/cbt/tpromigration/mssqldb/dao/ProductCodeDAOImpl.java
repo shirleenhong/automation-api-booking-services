@@ -50,7 +50,7 @@ public class ProductCodeDAOImpl implements ProductCodeDAO {
 			while (rs.next()) {
 				Product productCode = new Product();
 				productCode.setProductCode(rs.getString("ProductCode"));
-				productCode.setDescription(rs.getString("Description"));
+				productCode.setDescription(rs.getString("Description").trim().replaceAll(" +", " "));
 				productCode.setEnableCCFOP(rs.getObject("EnableCCFOP") == null ? null : rs.getBoolean("EnableCCFOP"));
 				productCode.setFullComm(rs.getObject("FullComm") == null ? null : rs.getBoolean("FullComm"));
 				productCode.setGst(rs.getObject("GST") == null ? null : rs.getInt("GST"));

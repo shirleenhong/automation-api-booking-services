@@ -31,11 +31,11 @@ Create Test Variables For Products And Vendors
     Set Test Variable    ${all_product_list}
 
 Send Product Get Request
-    [Arguments]    ${token}=${default_token}
+    [Arguments]    ${token}=${default_token}    ${country}=${country}
     Create Session    product    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${response}    Get Request    product    /bpg-cbt-apac-services-rest/api/products?countryCode=${country}    headers=${headers}
+    ${response}    Get Request    product    /apac-services-rest/api/products?countryCode=${country}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}

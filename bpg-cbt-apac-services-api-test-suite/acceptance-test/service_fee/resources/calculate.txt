@@ -168,7 +168,7 @@ Send Service Fees Post Request
     \    ${fees_list}    Set Variable    ${fees_list}${calculate_request_list[${i}]}
     ${data}    Set Variable    {${fees_list}}
     Log    ${data}
-    ${response}    Post Request    fees    /bpg-cbt-apac-services-rest/api/servicefee    data=${data}    headers=${headers}
+    ${response}    Post Request    fees    /apac-services-rest/api/servicefee    data=${data}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}

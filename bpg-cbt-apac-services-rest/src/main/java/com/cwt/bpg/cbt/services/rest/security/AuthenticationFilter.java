@@ -14,11 +14,12 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import com.cwt.bpg.cbt.security.api.TokenApi;
 
-public class CustomFilter extends GenericFilterBean {
+public class AuthenticationFilter extends GenericFilterBean {
 
+	private static final String BEARER = "Bearer ";
 	private TokenApi tokenApi;
 
-	public CustomFilter(TokenApi tokenApi) {
+	public AuthenticationFilter(TokenApi tokenApi) {
 		this.tokenApi = tokenApi;
 	}
 
@@ -30,12 +31,12 @@ public class CustomFilter extends GenericFilterBean {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
 		String authHeader = httpRequest.getHeader("Authorization");
-		if (StringUtils.isBlank(authHeader) || !authHeader.startsWith("Bearer ")) {
+		if (StringUtils.isBlank(authHeader) || !authHeader.startsWith(BEARER)) {
 			httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Authorization header needed");
 			return;
 		}
 
-		String token = authHeader.substring(7).trim();
+		String token = authHeader.replace(BEARER, "").trim();
 		if (!tokenApi.isTokenExist(token)) {
 			httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token.");
 			return;

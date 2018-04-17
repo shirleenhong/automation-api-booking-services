@@ -27,12 +27,12 @@ import com.cwt.bpg.cbt.security.impl.TokenImpl;
 public class CustomFilterTest {
 
 	private TokenImpl tokenApi;
-	private CustomFilter customFilter;
+	private AuthenticationFilter customFilter;
 
 	@Before
 	public void setUp() throws Exception {
 		tokenApi = mock(TokenImpl.class);
-		customFilter = new CustomFilter(tokenApi);
+		customFilter = new AuthenticationFilter(tokenApi);
 
 	}
 
@@ -78,7 +78,7 @@ public class CustomFilterTest {
 		request.addHeader("Authorization", "Bearer 1234567890");
 		MockedTokenImpl tokenApi = new MockedTokenImpl();
 		tokenApi.setTokenExists(true);
-		CustomFilter customFilter = new CustomFilter(tokenApi);
+		AuthenticationFilter customFilter = new AuthenticationFilter(tokenApi);
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		FilterChain chain = mock(FilterChain.class);
 		customFilter.doFilter(request, response, chain);
