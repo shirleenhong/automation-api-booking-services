@@ -106,7 +106,7 @@ public class ServiceFeeImplTest {
 		input.setBaseFare(new BigDecimal(2000));
 		input.setTotalTaxes(new BigDecimal(200));
 		input.setObFee(new BigDecimal(350));
-//		input.setMarkupAmount(new BigDecimal(91));
+		//input.setMarkupAmount(new BigDecimal(91));
 		input.setMarkupPercentage(15D);
 		input.setCommissionRebateAmount(new BigDecimal(200));
 		input.setMerchantFeePercentage(10D);
@@ -121,8 +121,7 @@ public class ServiceFeeImplTest {
 		assertEquals(new BigDecimal("2300.00"), priceBreakdown.getFopAmount());
 		assertEquals(new BigDecimal("230.00"), priceBreakdown.getMerchantFeeAmount());
 		assertEquals(new BigDecimal("2650.00"), priceBreakdown.getAirFareWithTaxAmount());
-		assertEquals(new BigDecimal("3550.00"), priceBreakdown.getTotalAmount());
-		
+		assertEquals(new BigDecimal("3550.00"), priceBreakdown.getTotalAmount());		
 
 	}
 	

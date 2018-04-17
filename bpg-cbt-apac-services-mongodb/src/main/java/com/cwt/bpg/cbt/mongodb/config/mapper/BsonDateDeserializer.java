@@ -5,8 +5,8 @@ import java.time.Instant;
 import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 public class BsonDateDeserializer extends StdDeserializer<Date>
 {
 
-//    private static final Logger LOGGER = LoggerFactory.getLogger(BsonDateDeserializer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BsonDateDeserializer.class);
     private static final long serialVersionUID = 1L;
 
     public BsonDateDeserializer()
@@ -55,7 +55,7 @@ public class BsonDateDeserializer extends StdDeserializer<Date>
             }
             catch (Exception e)
             {
-//                LOGGER.error("Incorrect datetime format. {}", e);
+                LOGGER.error("Incorrect datetime format. {}", e);
             }
         }
 

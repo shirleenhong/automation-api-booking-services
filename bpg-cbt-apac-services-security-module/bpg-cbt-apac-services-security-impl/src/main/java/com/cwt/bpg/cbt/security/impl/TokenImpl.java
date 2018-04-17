@@ -32,8 +32,6 @@ public class TokenImpl implements TokenApi {
 		try {
 			tokenResult = dBObjectMapper.mapDocumentToBean((Document) iterable.first(), Token.class);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
 		if(tokenResult != null) {

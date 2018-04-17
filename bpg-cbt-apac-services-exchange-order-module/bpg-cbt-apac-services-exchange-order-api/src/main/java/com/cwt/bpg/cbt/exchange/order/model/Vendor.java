@@ -30,8 +30,6 @@ public class Vendor implements Serializable {
 
 	private Boolean misc;
 
-//	private List<String> productCodes;
-
 	private String raiseType;
 
 	private String sortKey;
@@ -126,14 +124,6 @@ public class Vendor implements Serializable {
 		this.misc = misc;
 	}
 
-//	public List<String> getProductCodes() {
-//		return productCodes;
-//	}
-//
-//	public void setProductCodes(List<String> productCodes) {
-//		this.productCodes = productCodes;
-//	}
-
 	public String getRaiseType() {
 		return raiseType;
 	}
@@ -157,7 +147,5 @@ public class Vendor implements Serializable {
 	public void setVendorName(String vendorName) {
 		this.vendorName = vendorName;
 	}
-	
-	
 
 }

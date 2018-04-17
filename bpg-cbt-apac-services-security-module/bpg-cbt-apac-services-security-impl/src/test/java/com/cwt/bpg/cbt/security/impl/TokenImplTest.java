@@ -56,6 +56,7 @@ public class TokenImplTest {
 		assertTrue(tokenApi.isTokenExist("tokenkey"));
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldNotExist() throws IOException {
 		

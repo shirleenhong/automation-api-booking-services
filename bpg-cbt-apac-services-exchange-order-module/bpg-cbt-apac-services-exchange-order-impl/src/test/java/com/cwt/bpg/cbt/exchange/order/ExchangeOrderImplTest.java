@@ -138,6 +138,7 @@ public class ExchangeOrderImplTest {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldGetNoProductListWhenException() throws IOException{
 		

@@ -19,8 +19,7 @@ public class ExchangeOrderController {
 	ExchangeOrderApi exchangeOrderApi;
 
 	@GetMapping(path="/products")
-	public @ResponseBody ResponseEntity<List<Product>> getProducts(@RequestParam String countryCode) {
-		
+	public @ResponseBody ResponseEntity<List<Product>> getProducts(@RequestParam String countryCode) {		
 		
 		return new ResponseEntity<List<Product>>(exchangeOrderApi.getProducts(countryCode), HttpStatus.OK);
 	}
