@@ -25,7 +25,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Indexes;
 
-@Lazy
 @Component
 public class MongoDbConnection
 {
@@ -48,7 +47,16 @@ public class MongoDbConnection
 
     @Value("${com.cwt.mongodb.database.invalidhostnameallowed}")
     private Boolean invalidHostNameAllowed;
-
+    
+    @Value("${com.cwt.mongodb.database.maxConnectionIdleTime}")
+    private int maxConnectionIdleTime;
+    
+    @Value("${com.cwt.mongodb.database.minConnectionsPerHost}")
+    private int minConnectionsPerHost;
+    
+    @Value("${com.cwt.mongodb.database.connectionsPerHost}")
+    private int connectionsPerHost;
+    
     @Autowired
     private Encryptor encryptor;
 
@@ -78,6 +86,9 @@ public class MongoDbConnection
             credentials.add(credential);
             MongoClientOptions.Builder options = new MongoClientOptions.Builder().sslEnabled(sslEnabled)
                     .sslInvalidHostNameAllowed(invalidHostNameAllowed)
+                    .maxConnectionIdleTime(maxConnectionIdleTime)
+                    .minConnectionsPerHost(minConnectionsPerHost)
+                    .connectionsPerHost(connectionsPerHost)
                     .socketFactory(MongoSSLCertificateUtility.mongoDbSocketFactory())
                     ;
             List<ServerAddress> hosts = new ArrayList<>();
