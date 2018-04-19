@@ -36,6 +36,19 @@
 		<tag>HEAD</tag>
 	</scm>
 
+	<distributionManagement>
+		<repository>
+			<id>Insight_Releases</id>
+			<name>Insight_Releases</name>
+			<url>${artifact.repo.url}/Insight_Releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>Insight_Snapshot</id>
+			<name>Insight_Snapshot</name>
+			<url>${artifact.repo.url}/Insight_Snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -120,19 +133,6 @@
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
 	</dependencies>
-
-	<distributionManagement>
-		<repository>
-			<id>Insight_Releases</id>
-			<name>Insight_Releases</name>
-			<url>${artifact.repo.url}/Insight_Releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>Insight_Snapshot</id>
-			<name>Insight_Snapshot</name>
-			<url>${artifact.repo.url}/Insight_Snapshot</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<build>
 		<resources>
