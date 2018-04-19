@@ -17,6 +17,7 @@ import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.mongodb.config.mapper.DBObjectMapper;
 import com.mongodb.client.FindIterable;
+import static com.mongodb.client.model.Filters.*;
 
 @Service
 public class ProductsImpl implements ProductsApi {
@@ -33,10 +34,10 @@ public class ProductsImpl implements ProductsApi {
 	public List<Product> getProducts(String countryCode) {
 		List<Product> products = new ArrayList<>();
 		
-		FindIterable<?> iterable = mongoDbConnection.getCollection(Product.COLLECTION).find(new Document("countryCode", countryCode));
+		FindIterable<Document> iterable = mongoDbConnection.getCollection(Product.COLLECTION).find(new Document("countryCode", countryCode));
 
 		try {
-			ProductList productList = dBObjectMapper.mapDocumentToBean((Document) iterable.first(), ProductList.class);
+			ProductList productList = dBObjectMapper.mapDocumentToBean(iterable.first(), ProductList.class);
 			if (productList != null) {
 				products.addAll(productList.getProducts());
 				sort(products);
