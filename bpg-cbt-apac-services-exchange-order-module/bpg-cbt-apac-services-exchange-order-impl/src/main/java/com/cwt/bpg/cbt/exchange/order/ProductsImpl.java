@@ -2,7 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
+import static java.util.Comparator.*;
 import java.util.List;
 
 import org.bson.Document;
@@ -17,7 +17,7 @@ import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.mongodb.config.mapper.DBObjectMapper;
 import com.mongodb.client.FindIterable;
-import static com.mongodb.client.model.Filters.*;
+
 
 @Service
 public class ProductsImpl implements ProductsApi {
@@ -42,7 +42,8 @@ public class ProductsImpl implements ProductsApi {
 				products.addAll(productList.getProducts());
 				sort(products);
 			}
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			LOGGER.error("Unable to parse product list for {} {}", countryCode, e.getMessage());
 		}
 		
@@ -52,12 +53,12 @@ public class ProductsImpl implements ProductsApi {
 	private void sort(List<Product> products) {
 		if(products != null && !products.isEmpty()) {
 			for(Product product: products) {
-				if(product.getVendors()!=null && !product.getVendors().isEmpty()) {
-					product.getVendors().sort(Comparator.comparing(Vendor::getVendorNumber));
+				if(product.getVendors() != null && !product.getVendors().isEmpty()) {
+					product.getVendors().sort(comparing(Vendor::getVendorNumber));
 				}
 				
 			}
-			products.sort(Comparator.comparing(Product::getProductCode));
+			products.sort(comparing(Product::getProductCode));
 		}
 		
 	}
