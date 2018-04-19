@@ -20,10 +20,8 @@ public class ServiceFeeImpl implements ServiceFeeApi {
 		if(input.getNettFare() != null)
 		{
 			input.setBaseFare(input.getNettFare());
-		}
-		 
-		
-		
+		} 
+			
 		BigDecimal transactionFeeAmount = roundAmount(calTransactionFeeAmount(input.getBaseFare(), input.getTransactionFeeAmount(), input.getTransactionFeePercentage()),input.getCountryCode());
 		priceBreakdown.setTransactionFeeAmount(transactionFeeAmount);
 		transactionFeeAmount = safeValue(transactionFeeAmount);

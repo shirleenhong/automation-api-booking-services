@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -28,9 +27,9 @@ public class BsonDateDeserializer extends StdDeserializer<Date>
     }
 
     @Override
-    public Date deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException
+    public Date deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException
     {
-        Date date = null;
+        Date date;
         if (jp.getCurrentToken() == JsonToken.VALUE_STRING)
         {
             date = parseStringValue(jp.getText());

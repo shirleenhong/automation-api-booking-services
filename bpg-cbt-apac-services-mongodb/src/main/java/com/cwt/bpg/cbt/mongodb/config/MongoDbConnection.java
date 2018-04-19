@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.mongodb.config;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -12,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.encryptor.impl.Encryptor;
@@ -23,7 +21,6 @@ import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Indexes;
 
 @Component
 public class MongoDbConnection
@@ -63,8 +60,6 @@ public class MongoDbConnection
     private MongoClient mongoClient;
 
     private MongoDatabase database;
-
-    private ConcurrentHashMap<String, String> indexMap;
 
     public MongoDatabase getDatabase()
     {
@@ -116,46 +111,7 @@ public class MongoDbConnection
         this.mongoClient.close();
     }
 
-    public boolean addIndex(final MongoCollection<Document> collection, String field)
-    {
-        final String indexMapKey = buildIndexMapKey(collection.getNamespace().getCollectionName(), field);
-
-        if (getIndexMap().containsKey(indexMapKey))
-        {
-            return true;
-        }
-
-        try
-        {
-            final String indexName = collection.createIndex(Indexes.text(field));
-            getIndexMap().put(indexMapKey, indexName);
-            return true;
-        }
-        catch (Exception e)
-        {
-            LOGGER.error("Exception while creating an index", e);
-        }
-
-        return false;
-
-    }
-
-    private ConcurrentHashMap<String, String> getIndexMap()
-    {
-        if (this.indexMap == null)
-        {
-            this.indexMap = new ConcurrentHashMap<>(4, 0.9f);
-        }
-
-        return this.indexMap;
-    }
-
-    private String buildIndexMapKey(String collectionName, String field)
-    {
-        return new StringBuilder(collectionName).append("-").append(field).toString();
-    }
-
-	public MongoCollection getCollection(String collection) {
+	public MongoCollection<Document> getCollection(String collection) {
 		return this.getDatabase().getCollection(collection);
 	}
 }

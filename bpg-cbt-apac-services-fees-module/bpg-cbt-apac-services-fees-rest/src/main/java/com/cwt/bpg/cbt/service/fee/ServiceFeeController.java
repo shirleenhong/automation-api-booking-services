@@ -14,7 +14,7 @@ import com.cwt.bpg.cbt.service.fee.model.PriceBreakdown;
 import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
 
 @RestController
-@RequestMapping("/service-fee")
+@RequestMapping("/service-fees")
 public class ServiceFeeController {
 	
 	@Autowired

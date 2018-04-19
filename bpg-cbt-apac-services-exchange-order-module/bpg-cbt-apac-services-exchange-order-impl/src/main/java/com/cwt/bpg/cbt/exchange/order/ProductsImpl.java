@@ -19,9 +19,9 @@ import com.cwt.bpg.cbt.mongodb.config.mapper.DBObjectMapper;
 import com.mongodb.client.FindIterable;
 
 @Service
-public class ExchangeOrderImpl implements ExchangeOrderApi {
+public class ProductsImpl implements ProductsApi {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductsImpl.class);
 	
 	@Autowired
 	private MongoDbConnection mongoDbConnection;
@@ -31,7 +31,7 @@ public class ExchangeOrderImpl implements ExchangeOrderApi {
 	
 	@Override
 	public List<Product> getProducts(String countryCode) {
-		List<Product> products = new ArrayList<Product>();
+		List<Product> products = new ArrayList<>();
 		
 		FindIterable<?> iterable = mongoDbConnection.getCollection(Product.COLLECTION).find(new Document("countryCode", countryCode));
 
@@ -42,7 +42,7 @@ public class ExchangeOrderImpl implements ExchangeOrderApi {
 				sort(products);
 			}
 		} catch (IOException e) {
-			LOGGER.error("Unable to parse product list for {}", countryCode);
+			LOGGER.error("Unable to parse product list for {} {}", countryCode, e.getMessage());
 		}
 		
 		return products;

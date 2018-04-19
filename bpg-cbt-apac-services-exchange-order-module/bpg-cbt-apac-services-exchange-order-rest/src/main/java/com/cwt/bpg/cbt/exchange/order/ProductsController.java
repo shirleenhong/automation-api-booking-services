@@ -13,15 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 
 @RestController
-public class ExchangeOrderController {
+public class ProductsController {
 	
 	@Autowired
-	ExchangeOrderApi exchangeOrderApi;
+	ProductsApi exchangeOrderApi;
 
 	@GetMapping(path="/products")
-	public @ResponseBody ResponseEntity<List<Product>> getProducts(@RequestParam String countryCode) {		
+	@ResponseBody
+	public ResponseEntity<List<Product>> getProducts(
+			@RequestParam(required = true) String countryCode) {		
 		
-		return new ResponseEntity<List<Product>>(exchangeOrderApi.getProducts(countryCode), HttpStatus.OK);
+		return new ResponseEntity<>(exchangeOrderApi.getProducts(countryCode), HttpStatus.OK);
 	}
 	
 }
