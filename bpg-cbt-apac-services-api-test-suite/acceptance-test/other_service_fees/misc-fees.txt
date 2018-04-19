@@ -1,0 +1,106 @@
+*** Settings ***
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-variables.txt
+Resource          resources/other-service-fees.txt
+Resource          ../resources/api-imports.txt
+
+*** Test Cases ***
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage And Merchant Fee Percentage
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Nett Cost, GST Percentage And Merchant Fee Percentage
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost And GST Percentage
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost And Merchant Fee Percentage
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, GST Percentage And Merchant Fee Percentage
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price And Nett Cost
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price And GST Percentage
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price And Merchant Fee Percentage
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage, Merchant Fee Percentage, GST Absorb And Merchant Fee Absorb
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Nett Cost, GST Percentage, Merchant Fee Percentage, GST Absorb And Merchant Fee Absorb
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage And GST Absorb
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost, Merchant Fee Percentage And Merchant Fee Absorb
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage, Merchant Fee Percentage And Merchant Fee Absorb
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage, Merchant Fee Percentage And GST Absorb
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, GST Percentage And GST Absorb
+
+Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Merchant Fee Percentage And Merchant Fee Absorb
+
+Verify That Other Service Fees With GST Are Calculated Correctly For Product Despatch Change
+
+Verify That Other Service Fees With GST Are Calculated Correctly For Product Meet And Greet
+
+Verify That Other Service Fees With GST Are Calculated Correctly For Product 24 Hours Emergency Svcs
+
+Verify That Other Service Fees With GST Are Calculated Correctly For Product MICE – GST
+
+Verify That Other Service Fees With GST Are Calculated Correctly For Product Hotel – Local Booking Fee
+
+Verify That Other Service Fees With GST Are Calculated Correctly For Product Car – Local Booking Fee
+
+Verify That Other Service Fees With GST Are Calculated Correctly For Product MISC – Local Booking Fee
+
+Verify That Other Service Fees With GST Are Calculated Correctly For Product Management Fee
+
+Verify That Other Service Fees With GST Are Calculated Correctly For Product CWT Refund Admin Fee
+
+Verify That Other Service Fees With GST Are Calculated Correctly For Product MICE – Activities
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Air Penalty Fee
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Car – Overseas Booking Fee
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product CWT To Go Hotel Fee
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Deposit
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Hotel – Overseas Booking Fee
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product MISC – Overseas Booking Fee
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Miscellaneous - MICE
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Tour Package
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Documentation Fee
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Reissue – Revalidation Fee
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product 24 Emergency Service Fee
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product AEL Ticket
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Air Refund
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product C2G Hotel Fee
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Certificate Deposit
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Cruise
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Handling Fee
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Local Emergency Service
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Low Cost Carrier Service Fee
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Meet and Greet Service
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Meeting and Events
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Other
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Referral
+
+Verify That Other Service Fees Without GST Are Calculated Correctly For Product Tour Package
