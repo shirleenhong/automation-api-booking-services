@@ -64,6 +64,7 @@ public class ServiceFeeImpl implements ServiceFeeApi {
 		if(amount == null || amount.compareTo(BigDecimal.ZERO) == 0) {
 			return null;
 		}
+		// TODO: move precision to mongo config
 		if (countryCode != null && (countryCode.equals(PriceCalculationInput.COUNTRY_CODE_INDIA) || countryCode.equals(PriceCalculationInput.COUNTRY_CODE_HONGKONG))) {
 			return ServiceFeeUtil.round(amount, 0);
 		}else {
