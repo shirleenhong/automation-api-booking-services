@@ -2,7 +2,14 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
-public class Currency implements Serializable {
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
+
+@Entity("apacCurrency")
+@Indexes(@Index(fields = @Field("currencyCode")))
+public class CurrencyCodeRoundRule implements Serializable {
 	
 	private static final long serialVersionUID = 3562863330210125375L;
 
@@ -14,7 +21,7 @@ public class Currency implements Serializable {
     
 	private String roundRule;
     
-	private String roundUnit;
+	private Double roundUnit;
 
 	public String getCurrencyCode() {
 		return currencyCode;
@@ -48,12 +55,11 @@ public class Currency implements Serializable {
 		this.roundRule = roundRule;
 	}
 
-	public String getRoundUnit() {
+	public Double getRoundUnit() {
 		return roundUnit;
 	}
 
-	public void setRoundUnit(String roundUnit) {
+	public void setRoundUnit(Double roundUnit) {
 		this.roundUnit = roundUnit;
 	}
-
 }

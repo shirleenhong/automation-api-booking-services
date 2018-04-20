@@ -17,7 +17,7 @@ import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
 public class MerchantFeeControllerTest {
 	
 	@Mock
-	private MerchantFeeApi mechantFeeApi;
+	private ExchangeOrderService service;
 	
 	@InjectMocks
 	private MerchantFeeController controller = new MerchantFeeController();
@@ -30,7 +30,7 @@ public class MerchantFeeControllerTest {
 	@Test
 	public void canPutMerchantFee() {
 		ClientMerchantFee merchantFee = new ClientMerchantFee();
-		Mockito.when(mechantFeeApi.putMerchantFee(merchantFee)).thenReturn(merchantFee);
+		Mockito.when(service.putMerchantFee(merchantFee)).thenReturn(merchantFee);
 		
 		ResponseEntity<ClientMerchantFee> result = controller.updateMerchantFee("SG", merchantFee);
 

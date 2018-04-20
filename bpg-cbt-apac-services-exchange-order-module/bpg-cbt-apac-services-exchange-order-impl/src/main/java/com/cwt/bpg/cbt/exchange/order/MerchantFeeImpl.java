@@ -8,13 +8,14 @@ import org.mongodb.morphia.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.WriteResult;
 
-@Service
+@Repository
 public class MerchantFeeImpl implements MerchantFeeApi {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MerchantFeeImpl.class);
