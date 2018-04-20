@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
 
 @RestController
 public class MerchantFeeController {
 	
 	@Autowired
-	private MerchantFeeApi mechantFeeApi;
+	private ExchangeOrderService exchangeOrderService;
 	
 	// TODO: for testing only, remove this, will not expose outside
 	@GetMapping(path="/merchant/{countryCode}")
@@ -24,7 +25,16 @@ public class MerchantFeeController {
 	public ResponseEntity<ClientMerchantFee> getMerchantFee(
 			@PathVariable String countryCode) {		
 		
-		return new ResponseEntity<>(mechantFeeApi.getMerchantFee(countryCode), HttpStatus.OK);
+		return new ResponseEntity<>(exchangeOrderService.getMerchantFee(countryCode), HttpStatus.OK);
+	}
+	
+	// TODO: for testing only, remove this, will not expose outside
+	@GetMapping(path="/merchant/currency/{currencyCode}")
+	@ResponseBody
+	public ResponseEntity<CurrencyCodeRoundRule> getCurrency(
+			@PathVariable String currencyCode) {		
+		
+		return new ResponseEntity<>(exchangeOrderService.getRoundingRule(currencyCode), HttpStatus.OK);
 	}
 	
 	
@@ -38,7 +48,7 @@ public class MerchantFeeController {
 	public ResponseEntity<ClientMerchantFee> updateMerchantFee(
 			@PathVariable String countryCode, @RequestBody ClientMerchantFee merchantFee) {		
 		
-		return new ResponseEntity<>(mechantFeeApi.putMerchantFee(merchantFee), HttpStatus.OK);
+		return new ResponseEntity<>(exchangeOrderService.putMerchantFee(merchantFee), HttpStatus.OK);
 	}
 
 }
