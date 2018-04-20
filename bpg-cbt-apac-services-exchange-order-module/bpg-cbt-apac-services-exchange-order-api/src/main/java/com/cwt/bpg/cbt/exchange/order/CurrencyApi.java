@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-public interface CurrencyRoundingRuleApi<T> {
+public interface CurrencyApi<T> {
 	
 	T getRoundingRule(String currencyCode);
 
