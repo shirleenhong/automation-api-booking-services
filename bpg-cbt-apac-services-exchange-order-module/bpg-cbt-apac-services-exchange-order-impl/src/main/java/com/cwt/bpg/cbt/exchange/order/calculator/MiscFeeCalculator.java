@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.FOPTypes;
@@ -27,32 +28,32 @@ public class MiscFeeCalculator extends CommonCalculator {
 		
 		if(!input.isGstAbsorb()) {
 			
-			gstAmount = getValue(input.getSellingPrice(), input.getGstPercent());			
-			nettCostGst = getValue(nettCost, input.getGstPercent());
+			gstAmount = round(applyPercentage(input.getSellingPrice(), input.getGstPercent()), input.getCountryCode());			
+			nettCostGst = round(applyPercentage(nettCost, input.getGstPercent()), input.getCountryCode());
 		}
 		
 		if(!input.isMerchantFeeAbsorb() 
 			&& FOPTypes.CX.getCode().equals(input.getFopType())
 			&& !input.isMerchantFeeWaive()) 
 		{			
-			merchantFeeAmount = roundAmount(
-						getValue(input.getSellingPrice().multiply(getValue(1D).add(getPercentage(input.getGstPercent()))), 
+			merchantFeeAmount = round(
+						applyPercentage(input.getSellingPrice().multiply(getValue(1D).add(getPercentage(input.getGstPercent()))), 
 									  merchantFeePct), 
 								input.getCountryCode());
 		}		
 		
-		sellingPriceInDi = input.getSellingPrice().add(gstAmount).add(safeValue(merchantFeeAmount))
-								.divide(getValue(1D).add(getPercentage(input.getGstPercent())), getMc());
+		sellingPriceInDi = input.getSellingPrice().add(safeValue(gstAmount)).add(safeValue(merchantFeeAmount))
+								.divide(getValue(1D).add(getPercentage(input.getGstPercent())), 2, RoundingMode.HALF_UP);
 
 		if(sellingPriceInDi.compareTo(safeValue(nettCost)) > 0) {
-			commission = sellingPriceInDi.subtract(safeValue(nettCost));
+			commission = round(sellingPriceInDi.subtract(safeValue(nettCost)), input.getCountryCode());
 		}
 		
-		result.setNettCostGst(roundUp(nettCostGst));
-		result.setCommission(roundUp(commission));
-		result.setGstAmount(roundUp(gstAmount));
-		result.setMerchantFee(roundUp(merchantFeeAmount));
-		result.setSellingPriceInDi(roundUp(sellingPriceInDi));
+		result.setNettCostGst(round(nettCostGst, input.getCountryCode()));
+		result.setCommission(round(commission, input.getCountryCode()));
+		result.setGstAmount(round(gstAmount, input.getCountryCode()));
+		result.setMerchantFee(round(merchantFeeAmount, input.getCountryCode()));
+		result.setSellingPriceInDi(round(sellingPriceInDi, input.getCountryCode()));
 		
 		return result;
 	}
