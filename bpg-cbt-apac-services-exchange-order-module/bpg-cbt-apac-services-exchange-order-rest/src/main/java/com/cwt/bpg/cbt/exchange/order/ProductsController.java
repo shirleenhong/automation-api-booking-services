@@ -16,7 +16,7 @@ import com.cwt.bpg.cbt.exchange.order.model.Product;
 public class ProductsController {
 	
 	@Autowired
-	ProductsApi exchangeOrderApi;
+	private ProductsApi exchangeOrderApi;
 
 	@GetMapping(path="/products/{countryCode}")
 	@ResponseBody
