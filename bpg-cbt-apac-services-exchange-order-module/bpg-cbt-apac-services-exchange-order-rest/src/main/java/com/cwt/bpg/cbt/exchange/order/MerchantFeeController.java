@@ -18,6 +18,7 @@ public class MerchantFeeController {
 	@Autowired
 	private MerchantFeeApi mechantFeeApi;
 	
+	// TODO: for testing only, remove this, will not expose outside
 	@GetMapping(path="/merchant/{countryCode}")
 	@ResponseBody
 	public ResponseEntity<ClientMerchantFee> getMerchantFee(
