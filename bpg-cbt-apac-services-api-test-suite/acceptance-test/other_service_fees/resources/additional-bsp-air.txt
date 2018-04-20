@@ -1,0 +1,64 @@
+*** Keywords ***
+Calculate BSP Air Commission
+    ${nett_fare_commision_condition}    Evaluate    (${nett_fare_value}/(1-${commission_percentage_value}*0.01))-${nett_fare_value}
+    ${commission_formula}    Set Variable If    ${nett_fare_commision_condition}>0 and "${client_type_value.upper()}" == "DU"    round((${nett_fare_value}/(1-${commission_percentage_value}*0.01) -${nett_fare_value})+10, 2)    round((${nett_fare_value}/(1-${commission_percentage_value}*0.01) -${nett_fare_value}), 2)
+    ${calculated_value}    Evaluate    ${commission_formula}
+    Set Test Variable    ${commission}    ${calculated_value}
+
+Calculate BSP Air Discount
+    [Arguments]    ${decimal_place}
+    ${discount_formula}    Set Variable If    "${client_type_value.upper()}" == "DU" or "${client_type_value.upper()}" == "DB"    ${nett_fare_value}+${commission}*(${discount_percentage_value}*0.01)    "${client_type_value.upper()}" == "MN" or "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "TP"     ${commission}    0
+    ${calculated_value}    Evaluate    ${discount_formula}
+    ${rounded_value}    Run Keyword If    "${client_type_value.upper()}" == "DU" or "${client_type_value.upper()}" == "DB" or "${client_type_value.upper()}" == "MN" or "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "TP"    Round Down    ${calculated_value}    ${decimal_place}
+    ...    ELSE    Set Variable    ${calculated_value}
+    Set Test Variable    ${discount}    ${rounded_value}
+
+Calculate BSP Air Merchant Fee
+    Run Keyword If    "${uatp_value}" == "true"    Calculate BSP Air Merchant Fee With UATP
+    ...    ELSE    Calculate BSP Air Merchant Fee Without UATP
+
+Calculate BSP Air Merchant Fee With UATP
+    ${merchant_fee_formula}    Set Variable If    "${country_code_value}" == "HK" and "${client_type_value.upper()}" == "TF"    ${tranx_value}/${service_fee_value}*(${merchant_fee_percentage_value}*0.01)    "${country_code_value}" == "HK" and "${client_type_value.upper()}" != "TF"    ${nett_fare}-$[nett_fare_value}-${tax1_value}-${tax2_value}*(${merchant_fee_percentage_value}*0.01)
+    ${calculated_value}    Evaluate    ${merchant_fee_formula}
+    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
+    Set Test Variable    ${merchant_fee}    ${calculated_value}
+
+Calculate BSP Air Merchant Fee Without UATP
+    ${merchant_fee_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" and "${tfincmf_value}" == "true"    (${nett_fare + ${tranx_value}/${service_fee_value})*(${merchant_fee_percentage_value}*0.01)    ${nett_fare*(${merchant_fee_percentage_value}*0.01)
+    ${calculated_value}    Evaluate    ${merchant_fee_formula}
+    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
+    Set Test Variable    ${merchant_fee}    ${calculated_value}
+
+Calculate BSP Air Nett Fare
+    ${nett_fare_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    ${selling_price}+${tax1_value}+${tax2_value}    ${selling_price}+${tax1_value}+${tax2_value}-${discount}
+    ${calculated_value}    Evaluate    ${nett_fare_formula}
+    Set Test Variable    ${nett_fare}    ${calculated_value}
+
+Calculate BSP Air Selling Price With Commission Amount
+    [Arguments]    ${decimal_place}
+    ${selling_price_formula}    Set Variable If    "${web_fare_selected_flag}" == "true"    ${nett_fare_value}+${commission_amount_value}
+    ${calculated_value}    Evaluate    ${selling_price_formula}
+    ${rounded_value}    Run Keyword If    "${web_fare_selected_flag}" == "true"    Round Up    ${calculated_value}    ${decimal_place}
+    ...    ELSE    Set Variable    ${calculated_value}
+    Set Test Variable    ${selling_price}    ${rounded_value}
+
+Calculate BSP Air Selling Price With Commission Percentage
+    [Arguments]    ${decimal_place}
+    ${client_type_flag}    Set Variable If    "${client_type_value.upper()}" == "MG" or "${client_type_value.upper()}" == "DB" or "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    true    false
+    ${selling_price_formula}    Set Variable If    "${client_type_flag}" == "true" and "${web_fare_selected_flag}" == "true"    ${nett_fare_value}/(1-(${commission_percentage_value}*0.01)    "${client_type_flag}" == "false" and "${web_fare_selected_flag}" == "true"    ${nett_fare_value}/(1-(${commission_percentage_value}*0.01)+10    "${client_type_flag}" == "true" and "${web_fare_selected_flag}" == "false"
+    ...    ${nett_fare_value}/(1-(${commission_percentage_value}*0.01))    ${nett_fare_value}/(1-(${commission_percentage_value}*0.01))+10
+    ${calculated_value}    Evaluate    ${selling_price_formula}
+    ${rounded_value}    Run Keyword If    "${web_fare_selected_flag}" == "true"    Round Up    ${calculated_value}    ${decimal_place}
+    ...    ELSE    Set Variable    ${calculated_value}
+    Set Test Variable    ${selling_price}    ${rounded_value}
+
+Calculate Total Selling Fare
+    Run Keyword If    "${apply_formula_value}" == "true"    Calculate Total Selling Fare With Formula
+    ...    ELSE    Calculate Total Selling Fare Without Formula
+
+Calculate Total Selling Fare With Formula
+    ${total_selling_fare_formula}    Set Variable If
+
+Calculate Total Selling Fare Without Formula
+
+Generate Test Variables For BSP Air
