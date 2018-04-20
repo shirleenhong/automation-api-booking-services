@@ -24,31 +24,31 @@ public class ServiceFeeImpl implements ServiceFeeApi {
 			input.setBaseFare(input.getNettFare());
 		} 
 			
-		BigDecimal transactionFeeAmount = c.roundAmount(c.calTransactionFeeAmount(input.getBaseFare(), input.getTransactionFeeAmount(), input.getTransactionFeePercentage()),input.getCountryCode());
+		BigDecimal transactionFeeAmount = c.round(c.calTransactionFeeAmount(input.getBaseFare(), input.getTransactionFeeAmount(), input.getTransactionFeePercentage()),input.getCountryCode());
 		priceBreakdown.setTransactionFeeAmount(transactionFeeAmount);
 		transactionFeeAmount = c.safeValue(transactionFeeAmount);
 		
-		BigDecimal markupAmount = c.roundAmount(c.calMarkupAmount(input.getBaseFare(), input.getMarkupAmount(), input.getMarkupPercentage()),input.getCountryCode());
+		BigDecimal markupAmount = c.round(c.calMarkupAmount(input.getBaseFare(), input.getMarkupAmount(), input.getMarkupPercentage()),input.getCountryCode());
 		priceBreakdown.setMarkupAmount(markupAmount);
 		markupAmount = c.safeValue(markupAmount);
 		
-		BigDecimal commissionRebateAmount = c.roundAmount(c.calCommissionRebateAmount(input.getBaseFare(), input.getCommissionRebateAmount(), input.getCommissionRebatePercentage()),input.getCountryCode());
+		BigDecimal commissionRebateAmount = c.round(c.calCommissionRebateAmount(input.getBaseFare(), input.getCommissionRebateAmount(), input.getCommissionRebatePercentage()),input.getCountryCode());
 		priceBreakdown.setCommissionRebateAmount(commissionRebateAmount);
 		commissionRebateAmount = c.safeValue(commissionRebateAmount);
 		
-		BigDecimal fopAmount = c.roundAmount(c.calFopAmount(input.getBaseFare(), input.getTotalTaxes(), markupAmount, commissionRebateAmount),input.getCountryCode());
+		BigDecimal fopAmount = c.round(c.calFopAmount(input.getBaseFare(), input.getTotalTaxes(), markupAmount, commissionRebateAmount),input.getCountryCode());
 		priceBreakdown.setFopAmount(fopAmount);
 		fopAmount = c.safeValue(fopAmount);
 		
-		BigDecimal merchantFeeAmount = c.roundAmount(c.calMerchantFeeAmount(fopAmount, input.getMerchantFeeAmount(), input.getMerchantFeePercentage()),input.getCountryCode());
+		BigDecimal merchantFeeAmount = c.round(c.calMerchantFeeAmount(fopAmount, input.getMerchantFeeAmount(), input.getMerchantFeePercentage()),input.getCountryCode());
 		priceBreakdown.setMerchantFeeAmount(merchantFeeAmount);
 		merchantFeeAmount = c.safeValue(merchantFeeAmount);
 		
-		BigDecimal airFareWithTaxAmount = c.roundAmount(c.calFareWithAirlineTax(input.getBaseFare(), input.getTotalTaxes(), input.getObFee(), markupAmount, commissionRebateAmount),input.getCountryCode());
+		BigDecimal airFareWithTaxAmount = c.round(c.calFareWithAirlineTax(input.getBaseFare(), input.getTotalTaxes(), input.getObFee(), markupAmount, commissionRebateAmount),input.getCountryCode());
 		priceBreakdown.setAirFareWithTaxAmount(airFareWithTaxAmount);
 		airFareWithTaxAmount = c.safeValue(airFareWithTaxAmount);
 		
-		priceBreakdown.setTotalAmount(c.roundAmount(c.calTotalAmount(airFareWithTaxAmount, transactionFeeAmount, merchantFeeAmount, input.getFuelSurcharge()),input.getCountryCode()));
+		priceBreakdown.setTotalAmount(c.round(c.calTotalAmount(airFareWithTaxAmount, transactionFeeAmount, merchantFeeAmount, input.getFuelSurcharge()),input.getCountryCode()));
 		
 		return priceBreakdown;
 	}	

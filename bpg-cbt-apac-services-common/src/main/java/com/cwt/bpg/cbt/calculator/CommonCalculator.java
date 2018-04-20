@@ -6,9 +6,7 @@ import java.math.RoundingMode;
 
 public class CommonCalculator {
 	
-	private static final int DEFAULT_SCALE = 2;
-
-	private MathContext mc = new MathContext(4, RoundingMode.HALF_UP);
+	private MathContext mc = new MathContext(2, RoundingMode.HALF_UP);
 
 	public final String COUNTRY_CODE_INDIA = "IN";
 	public final String COUNTRY_CODE_HONGKONG = "HK";
@@ -20,7 +18,7 @@ public class CommonCalculator {
 		return value;
 	}
 
-	public BigDecimal roundAmount(BigDecimal amount, String countryCode) {
+	public BigDecimal round(BigDecimal amount, String countryCode) {
 		if (amount == null || amount.compareTo(BigDecimal.ZERO) == 0) {
 			return null;
 		}
@@ -61,7 +59,7 @@ public class CommonCalculator {
 	 * @param percent
 	 * @return
 	 */
-	public BigDecimal getValue(BigDecimal input, Double percent) {
+	public BigDecimal applyPercentage(BigDecimal input, Double percent) {
 		return safeValue(input).multiply(getPercentage(percent));				
 	}
 
@@ -90,9 +88,4 @@ public class CommonCalculator {
 	public MathContext getMc() {
 		return mc;
 	}
-
-	public BigDecimal roundUp(BigDecimal value) {
-		return value.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP);
-	}	
-
 }
