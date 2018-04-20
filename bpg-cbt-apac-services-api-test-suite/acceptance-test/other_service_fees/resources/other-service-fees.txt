@@ -1,4 +1,49 @@
 *** Keywords ***
+Append Additional Fields For BSP
+    [Arguments]    ${other_service_fees_request_list}
+    Run Keyword If    "${nett_fare_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettFareAmount":${nett_fare_value}
+    Run Keyword If    "${gross_fare_value}"!="null"    Append To List    ${other_service_fees_request_list}    "grossFareAmount":${gross_fare_value}
+    Run Keyword If    "${tax1_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax1Amount":${tax1_value}
+    Run Keyword If    "${tax1_code_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax1Code":"${tax1_code_value}"
+    Run Keyword If    "${tax2_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax2Amount":${tax2_value}
+    Run Keyword If    "${tax2_code_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax2Code":"${tax2_code_value}"
+    Run Keyword If    "${commission_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionRebatePercentage":${commission_percentage_value}
+    Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountPercentage":${discount_percentage_value}
+    Run Keyword If    "${apply_formula_value}"!="null"    Append To List    ${other_service_fees_request_list}    "applyFormula":${apply_formula_value}
+    Run Keyword If    "${uatp_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "uatpFlag":${uatp_flag_value}
+    Run Keyword If    "${waive_merchant_value}"!="null"    Append To List    ${other_service_fees_request_list}    "waiveMerchant":${waive_merchant_value}
+    [Return]    ${other_service_fees_request_list}
+
+Append Additional Fields For Miscellaneous Fees
+    [Arguments]    ${other_service_fees_request_list}
+    Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPriceAmount":${merchant_amount_value}
+    Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCostAmount":"${nett_cost_value}"
+    Run Keyword If    "${gst_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercentage":${gst_percentage_value}
+    Run Keyword If    "${gst_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAmount":"${gst_amount_value}"
+    Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAbsorb":${gst_absorb_value}
+    [Return]    ${other_service_fees_request_list}
+
+Calculate Other Service Fees Commission
+    ${calculated_value}    Evaluate    ${selling_price_in_di}-${nett_cost_value}
+    Set Test Variable    ${commission}    ${calculated_value}
+
+Calculate Other Service Fees GST
+    ${calculated_value}    Evaluate    ${selling_price_value}*(${gst_percent_value}*0.01)
+    Set Test Variable    ${gst}    ${calculated_value}
+
+Calculate Other Service Fees Mechant Fee
+    ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percent_value}*0.01}
+    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
+    Set Test Variable    ${merchant_fee}    ${calculated_value}
+
+Calculate Other Service Fees Nett Cost GST
+    ${calculated_value}    Evaluate    ${nett_cost_value}*(${gst_percent_value}*0.01)
+    Set Test Variable    ${nett_cost_gst}    ${calculated_value}
+
+Calculate Other Service Fees Selling Price In DI
+    ${calculated_value}    Evaluate    (${selling_price_value}+${gst_percent_value}+${merchant_fee})/(1+${gst_percent_value}*0.01}
+    Set Test Variable    ${selling_price_in_di}    ${calculated_value}
+
 Create Test Variables For Other Service Fee
     [Arguments]    ${fees_list}    ${country}=sg    ${service_fee_name}=misc-fees
     [Documentation]    service fee names:
@@ -22,6 +67,25 @@ Create Test Variables For Other Service Fee
     Set Test Variable    ${fees_list}
     Set Test Variable    ${country}    ${country.upper()}
     Set Test Variable    ${service_fee_name}
+
+Generate Test Variables For Other Service Fees
+
+Get Rounding Rules
+    Send Currency Get Request
+    ${decimal_value}    Get Json Value    ${response.content}    /decimal
+    ${round_rule_value}    Get Json Value    ${response.content}    /roundRule
+    Set Test Variable    ${decimal_place}    ${decimal_value}
+
+Send Currency Get Request
+    [Arguments]    ${token}=${default_token}    ${currency_code}=${currency_code_value}
+    Create Session    fees    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    fees    apac-services-rest/api/merchant/currency/${currency_code}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    fees
 
 Send Other Service Fees Post Request
     [Arguments]    ${token}=${default_token}
@@ -49,27 +113,3 @@ Send Other Service Fees Post Request
     Log    ${response.headers}
     Log    ${response.content}
     Set Test Variable    ${api_flag}    fees
-
-Append Additional Fields For BSP
-    [Arguments]    ${other_service_fees_request_list}
-    Run Keyword If    "${nett_fare_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettFareAmount":${nett_fare_value}
-    Run Keyword If    "${gross_fare_value}"!="null"    Append To List    ${other_service_fees_request_list}    "grossFareAmount":${gross_fare_value}
-    Run Keyword If    "${tax1_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax1Amount":${tax1_value}
-    Run Keyword If    "${tax1_code_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax1Code":"${tax1_code_value}"
-    Run Keyword If    "${tax2_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax2Amount":${tax2_value}
-    Run Keyword If    "${tax2_code_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax2Code":"${tax2_code_value}"
-    Run Keyword If    "${commission_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionRebatePercentage":${commission_percentage_value}
-    Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountPercentage":${discount_percentage_value}
-    Run Keyword If    "${apply_formula_value}"!="null"    Append To List    ${other_service_fees_request_list}    "applyFormula":${apply_formula_value}
-    Run Keyword If    "${uatp_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "uatpFlag":${uatp_flag_value}
-    Run Keyword If    "${waive_merchant_value}"!="null"    Append To List    ${other_service_fees_request_list}    "waiveMerchant":${waive_merchant_value}
-    [Return]    ${other_service_fees_request_list}
-
-Append Additional Fields For Miscellaneous Fees
-    [Arguments]    ${other_service_fees_request_list}
-    Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPriceAmount":${merchant_amount_value}
-    Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCostAmount":"${nett_cost_value}"
-    Run Keyword If    "${gst_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercentage":${gst_percentage_value}
-    Run Keyword If    "${gst_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAmount":"${gst_amount_value}"
-    Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAbsorb":${gst_absorb_value}
-    [Return]    ${other_service_fees_request_list}

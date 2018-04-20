@@ -16,5 +16,6 @@ test
     Comment    ${rounded_value}    Run Keyword If    "${fare_flag}" == "true"    Round Up    5.611    2
     ...    ELSE    Set Variable    ${calculated_value}
     Comment    Set Test Variable    ${selling_fare}    ${rounded_value}
-    ${value}    Round Down    0    2
-    ${value}    Round Down    ${value}    2
+    Comment    ${value}    Round Down    0    2
+    Comment    ${value}    Round Down    ${value}    2
+    ${value}    Evaluate    213.00
