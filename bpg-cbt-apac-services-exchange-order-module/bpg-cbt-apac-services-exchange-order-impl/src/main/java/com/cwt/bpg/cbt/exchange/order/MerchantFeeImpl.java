@@ -3,9 +3,8 @@ package com.cwt.bpg.cbt.exchange.order;
 import java.util.List;
 
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.UpdateOperations;
-import org.mongodb.morphia.query.UpdateResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
+import com.mongodb.WriteResult;
 
 @Service
 public class MerchantFeeImpl implements MerchantFeeApi {
@@ -34,22 +34,13 @@ public class MerchantFeeImpl implements MerchantFeeApi {
 	@Override
 	public ClientMerchantFee putMerchantFee(ClientMerchantFee fee) {
 		final Datastore datastore = morphia.getDatastore();
-
+		final String countryCode = fee.getCountryCode();
 		final Query<ClientMerchantFee> clientMerchantFee = datastore.createQuery(ClientMerchantFee.class)
-                .filter("countryCode", fee.getCountryCode());
-		
-		final UpdateOperations<ClientMerchantFee> removeOperations = datastore.createUpdateOperations(ClientMerchantFee.class)
-                .removeAll("merchantFees", clientMerchantFee.asList().get(0).getMerchantFees());
-
-		final UpdateResults removeResults = datastore.update(clientMerchantFee, removeOperations);
-		LOGGER.info("Remove results: {}", removeResults.toString());
-		
-		final UpdateOperations<ClientMerchantFee> updateOperations = datastore.createUpdateOperations(ClientMerchantFee.class)
-				.addToSet("merchantFees", fee.getMerchantFees());
-		final UpdateResults results = datastore.update(clientMerchantFee, updateOperations);
-		
-		LOGGER.info("Update results: {}", results.toString());
-		
+                .filter("countryCode", countryCode);
+		WriteResult delete = datastore.delete(clientMerchantFee);
+		LOGGER.info("Put Result: {}", delete.toString());
+		Key<ClientMerchantFee> save = datastore.save(fee);
+		LOGGER.info("Put Result: {}", save.toString());
 		return fee;
 	}
 
