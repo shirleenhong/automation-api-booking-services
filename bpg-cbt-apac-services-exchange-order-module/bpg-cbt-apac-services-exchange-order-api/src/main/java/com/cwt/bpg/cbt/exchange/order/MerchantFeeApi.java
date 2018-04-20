@@ -1,9 +1,11 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-public interface MerchantFeeApi<T> {
+import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
+
+public interface MerchantFeeApi {
 	
-	T getMerchantFee();
+	ClientMerchantFee getMerchantFee(String countryCode);
 	
-	T putMerchantFee();
+	ClientMerchantFee putMerchantFee(ClientMerchantFee fee);
 
 }
