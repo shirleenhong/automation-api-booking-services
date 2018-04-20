@@ -104,6 +104,10 @@ public class MongoDbConnection
             LOGGER.error("Exception while creating mongodb connection", e);
         }
     }
+    
+    public final MongoClient getMongoClient() {
+    	return mongoClient;
+    }
 
     @PreDestroy
     public void preDestroy()

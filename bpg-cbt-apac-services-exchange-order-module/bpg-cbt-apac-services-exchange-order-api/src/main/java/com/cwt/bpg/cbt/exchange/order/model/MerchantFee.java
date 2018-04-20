@@ -2,6 +2,8 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
+import org.mongodb.morphia.annotations.Property;
+
 public class MerchantFee implements Serializable {
 
 	private static final long serialVersionUID = -1922100420586710851L;
