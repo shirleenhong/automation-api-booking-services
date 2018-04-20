@@ -1,7 +1,9 @@
 package com.cwt.bpg.cbt.tpromigration.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,15 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientMerchantFeeDAO;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.CurrencyDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductCodeDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAO;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientMerchantFee;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Currency;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.CurrencyList;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ListHolder;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.MerchantFeeList;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Product;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
@@ -29,6 +38,10 @@ public class MigrationService {
     private VendorDAO vendorDAO;
     @Autowired
     private ProductCodeDAO productCodeDAO;
+    @Autowired
+    private ClientMerchantFeeDAO clientMerchantFeeDAO;
+    @Autowired
+    private CurrencyDAO currencyDAO;
 
     @Value("${com.cwt.tpromigration.mongodb.dbuser}")
     private String dbUser;
@@ -69,4 +82,40 @@ public class MigrationService {
 		
 		mongoDbConnection.getCollection("apacproductlist").insertOne(dBObjectMapper.mapAsDbDocument(productList));
 	}
+	
+	
+	public void migrateMerchantFees() throws JsonProcessingException {
+		
+		logger.info("started merchant fee migration...");
+		
+		List<ClientMerchantFee> merchantFees = clientMerchantFeeDAO.listMerchantFees();
+		
+		MerchantFeeList merchantFeeList = new MerchantFeeList();
+		String countryCode = System.getProperty("spring.profiles.default");
+		merchantFeeList.setCountryCode(countryCode);
+		merchantFeeList.setMerchantFees(merchantFees);
+	
+		mongoDbConnection.getCollection("apacClientMerchantFee").insertOne(dBObjectMapper.mapAsDbDocument(merchantFeeList));
+		
+		logger.info("end of merchant fee migration...");
+		
+	}
+	
+	public void migrateCurrencies() throws JsonProcessingException {
+		
+		logger.info("started currency migration...");
+		List<Currency> currencies = currencyDAO.listCurrencies();
+		List<Document> currDocs = new ArrayList<Document>();
+		for(Currency currency:currencies) {
+			currDocs.add(dBObjectMapper.mapAsDbDocument(currency));
+		}
+		
+		mongoDbConnection.getCollection("apacCurrency").insertMany(currDocs);
+		
+		logger.info("end of currency migration...");
+		
+	}
+	
+	
+	
 }
