@@ -12,7 +12,7 @@ public class Product implements Serializable {
 	
 	private String productName;
 	
-	private List<Vendor> vendors = new ArrayList<Vendor>();
+	private List<Vendor> vendors = new ArrayList<>();
 	
 	private String countryCode;
 	

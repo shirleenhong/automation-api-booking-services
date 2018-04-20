@@ -17,10 +17,10 @@ import org.springframework.http.ResponseEntity;
 
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 
-public class ExchangeOrderControllerTest {
+public class ProductsControllerTest {
 
 	@Mock
-	private ExchangeOrderApi api;
+	private ProductsApi api;
 
 	@Before
 	public void setUp() {
@@ -28,7 +28,7 @@ public class ExchangeOrderControllerTest {
 	}
 
 	@InjectMocks
-	private ExchangeOrderController controller = new ExchangeOrderController();
+	private ProductsController controller = new ProductsController();
 
 	@Test
 	public void shouldReturnProduct() {

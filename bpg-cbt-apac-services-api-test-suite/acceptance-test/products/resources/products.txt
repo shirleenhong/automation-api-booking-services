@@ -35,7 +35,7 @@ Send Product Get Request
     Create Session    product    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${response}    Get Request    product    /apac-services-rest/api/products?countryCode=${country}    headers=${headers}
+    ${response}    Get Request    product    /apac-services-rest/api/products/${country}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}

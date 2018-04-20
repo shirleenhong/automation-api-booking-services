@@ -1,0 +1,20 @@
+*** Settings ***
+Resource          resources/additional-bsp-air.txt
+Resource          ../resources/api-imports.txt
+
+*** Test Cases ***
+test
+    Comment    ${nett_fare_value}    Set Variable    100
+    Comment    ${commission_percentage_value}    Set Variable    5
+    Comment    ${client_type_value}    Set Variable    tp
+    Comment    ${nett_fare_commision_condition}    Evaluate    (${nett_fare_value}/(1-${commission_percentage_value}*0.01))-${nett_fare_value}
+    Comment    ${default}    Set Variable If    ${nett_fare_commision_condition}>0    test    0
+    Comment    ${formula}    Set Variable If    ${nett_fare_commision_condition}>0 and "${client_type_value.upper()}" == "DU"    round((${nett_fare_value}/(1-${commission_percentage_value}*0.01) -${nett_fare_value})+10, 2)    round((${nett_fare_value}/(1-${commission_percentage_value}*0.01) -${nett_fare_value}), 2)
+    Comment    ${commission}    Evaluate    ${formula}
+    Comment    ${fare_flag}    Set Variable    false
+    Comment    ${calculated_value}    Set Variable    5.611
+    Comment    ${rounded_value}    Run Keyword If    "${fare_flag}" == "true"    Round Up    5.611    2
+    ...    ELSE    Set Variable    ${calculated_value}
+    Comment    Set Test Variable    ${selling_fare}    ${rounded_value}
+    ${value}    Round Down    0    2
+    ${value}    Round Down    ${value}    2

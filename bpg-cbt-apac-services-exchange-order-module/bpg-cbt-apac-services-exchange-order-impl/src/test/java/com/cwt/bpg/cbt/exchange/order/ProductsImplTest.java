@@ -25,7 +25,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExchangeOrderImplTest {
+public class ProductsImplTest {
 	
 	@Mock
 	private MongoDbConnection mongoDbConnection;
@@ -34,9 +34,9 @@ public class ExchangeOrderImplTest {
 	private DBObjectMapper dBObjectMapper;
 	
 	@InjectMocks
-	private ExchangeOrderApi exchangeOrderApi = new ExchangeOrderImpl();
+	private ProductsApi exchangeOrderApi = new ProductsImpl();
 	
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Before
 	public void setUp() throws Exception {
 		FindIterable iterable = Mockito.mock(FindIterable.class);

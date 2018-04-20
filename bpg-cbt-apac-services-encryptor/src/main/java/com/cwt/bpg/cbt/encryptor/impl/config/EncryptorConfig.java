@@ -8,7 +8,7 @@ import org.springframework.core.env.Environment;
 
 import com.cwt.bpg.cbt.encryptor.impl.Encryptor;
 
-@Configuration("com.cwt.ct.encryptor.impl.config.encryptor")
+@Configuration("com.cwt.bpg.cbt.encryptor.impl.config.encryptor")
 @Import({ PropertyConfig.class })
 public class EncryptorConfig
 {

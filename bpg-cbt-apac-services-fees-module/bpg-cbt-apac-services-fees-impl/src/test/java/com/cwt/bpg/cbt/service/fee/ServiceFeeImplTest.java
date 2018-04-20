@@ -8,16 +8,25 @@ import java.math.BigDecimal;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.service.fee.model.PriceBreakdown;
 import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
+import com.cwt.bpg.cbt.service.fee.util.ServiceFeeCalculator;
 
 public class ServiceFeeImplTest {
 
-	private ServiceFeeApi serviceFee = new ServiceFeeImpl();
+	ServiceFeeCalculator c = new ServiceFeeCalculator();
+	
+	@InjectMocks
+	private ServiceFeeApi serviceFeeImpl = new ServiceFeeImpl();
 
 	@Before
 	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		ReflectionTestUtils.setField(serviceFeeImpl, "c", c);
 	}
 
 	@After
@@ -34,7 +43,7 @@ public class ServiceFeeImplTest {
 		input.setMarkupAmount(new BigDecimal(91));
 		input.setCommissionRebateAmount(new BigDecimal(200));
 
-		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
+		PriceBreakdown priceBreakdown = serviceFeeImpl.calculate(input);
 
 		assertNotNull(priceBreakdown);
 		assertEquals(new BigDecimal("2441.00"), priceBreakdown.getAirFareWithTaxAmount());
@@ -52,7 +61,7 @@ public class ServiceFeeImplTest {
 		input.setCommissionRebateAmount(new BigDecimal(200));
 		input.setMerchantFeePercentage(10D);
 
-		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
+		PriceBreakdown priceBreakdown = serviceFeeImpl.calculate(input);
 
 		assertNotNull(priceBreakdown);
 		assertEquals(new BigDecimal("209.10"), priceBreakdown.getMerchantFeeAmount());
@@ -72,7 +81,7 @@ public class ServiceFeeImplTest {
 		input.setTransactionFeeAmount(new BigDecimal(15));
 		input.setTransactionFeePercentage(2D);
 
-		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
+		PriceBreakdown priceBreakdown = serviceFeeImpl.calculate(input);
 
 		assertNotNull(priceBreakdown);
 		assertEquals(new BigDecimal("15.00"), priceBreakdown.getTransactionFeeAmount());
@@ -92,7 +101,7 @@ public class ServiceFeeImplTest {
 		input.setTransactionFeeAmount(new BigDecimal(50));
 		input.setTransactionFeePercentage(2D);
 
-		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
+		PriceBreakdown priceBreakdown = serviceFeeImpl.calculate(input);
 
 		assertNotNull(priceBreakdown);
 		assertEquals(new BigDecimal("40.00"), priceBreakdown.getTransactionFeeAmount());
@@ -114,7 +123,7 @@ public class ServiceFeeImplTest {
 		//input.setTransactionFeePercentage(2D);
 		input.setFuelSurcharge(new BigDecimal(620));
 		
-		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
+		PriceBreakdown priceBreakdown = serviceFeeImpl.calculate(input);
 
 		assertNotNull(priceBreakdown);
 		assertEquals(new BigDecimal("300.00"), priceBreakdown.getMarkupAmount());
@@ -138,7 +147,7 @@ public class ServiceFeeImplTest {
 		input.setTransactionFeeAmount(new BigDecimal(50));
 		input.setFuelSurcharge(new BigDecimal(620));
 		
-		PriceBreakdown priceBreakdown = serviceFee.calculate(input);
+		PriceBreakdown priceBreakdown = serviceFeeImpl.calculate(input);
 
 		assertNotNull(priceBreakdown);
 		assertEquals(new BigDecimal("100.00"), priceBreakdown.getCommissionRebateAmount());

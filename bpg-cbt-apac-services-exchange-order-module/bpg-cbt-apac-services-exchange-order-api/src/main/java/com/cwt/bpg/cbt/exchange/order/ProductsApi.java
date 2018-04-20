@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 
-public interface ExchangeOrderApi {
+public interface ProductsApi {
 	
 	List<Product> getProducts(String countryCode);
 

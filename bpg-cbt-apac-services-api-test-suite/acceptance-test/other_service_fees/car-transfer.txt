@@ -1,0 +1,38 @@
+*** Settings ***
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-variables.txt
+Resource          resources/other-service-fees.txt
+Resource          ../resources/api-imports.txt
+
+*** Test Cases ***
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage And Merchant Fee Percentage
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Nett Cost, GST Percentage And Merchant Fee Percentage
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price, Nett Cost And GST Percentage
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price, Nett Cost And Merchant Fee Percentage
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price, GST Percentage And Merchant Fee Percentage
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price And Nett Cost
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price And GST Percentage
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price And Merchant Fee Percentage
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage, Merchant Fee Percentage, GST Absorb And Merchant Fee Absorb
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Nett Cost, GST Percentage, Merchant Fee Percentage, GST Absorb And Merchant Fee Absorb
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage And GST Absorb
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price, Nett Cost, Merchant Fee Percentage And Merchant Fee Absorb
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage, Merchant Fee Percentage And Merchant Fee Absorb
+
+Verify That Other Service Fees Are For Car Transfer Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage, Merchant Fee Percentage And GST Absorb
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price, GST Percentage And GST Absorb
+
+Verify That Other Service Fees For Car Transfer Are Calculated Correctly Using CC, Selling Price, Merchant Fee Percentage And Merchant Fee Absorb
