@@ -1,0 +1,62 @@
+<configuration>
+
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator" />
+
+  <property name="PATTERN" value="[%d{ISO8601}] [%X{UUID}] [%t] [%p] [%c{1}] [%m]%n" />
+  <property name="APPLICATION" value="bpg-cbt-apac-services" />
+  <property name="LOG_DIR" value="${LOG_DIR}" />
+
+  <appender name="WARNINGS" class="ch.qos.logback.core.rolling.RollingFileAppender">    
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>DEBUG</level>
+    </filter>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="ch.qos.logback.classic.PatternLayout">
+        <pattern>${PATTERN}</pattern>
+      </layout>
+    </encoder>
+    <param name="File" value="${LOG_DIR}/${APPLICATION}.log" />
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>${LOG_DIR}/${APPLICATION}.%d{yyyy-MM-dd-HH}.log</FileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+  </appender>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>${PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="ASYNC-WARNINGS" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="WARNINGS" />
+  </appender>
+
+  <logger name="org.apache.http.wire" level="DEBUG" additivity="false">
+    <appender-ref ref="ASYNC-WARNINGS" />
+  </logger>
+  
+  <logger name="org.mongodb.driver" level="DEBUG" additivity="false">
+    <appender-ref ref="ASYNC-WARNINGS" />
+  </logger>
+  
+  <logger name="org.apache.camel.component.mongodb.converters.MongoDbBasicConverters" level="INFO" additivity="false">
+  </logger>
+
+  <logger name="org.mongodb.driver.cluster" level="INFO" additivity="false">
+    <appender-ref ref="ASYNC-WARNINGS" />
+  </logger>
+
+  <logger name="org.apache.coyote" level="INFO" additivity="true">
+    <appender-ref ref="STDOUT" />
+  </logger>
+
+  <logger name="org.apache.catalina" level="INFO" additivity="true">
+    <appender-ref ref="STDOUT" />
+  </logger>
+
+  <root level="INFO">
+    <appender-ref ref="ASYNC-WARNINGS" />
+  </root>
+
+</configuration>

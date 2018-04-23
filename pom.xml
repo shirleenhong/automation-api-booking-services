@@ -10,11 +10,11 @@
 	</parent>
 
 	<groupId>com.cwt.bpg.cbt</groupId>
-	<artifactId>bpg-cbt-apac-services</artifactId>
+	<artifactId>apac-services</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>bpg-cbt-apac-services</name>
+	<name>apac-services</name>
 
 	<properties>
 		<target.jdk.version>1.8</target.jdk.version>
@@ -399,14 +399,14 @@
 
 
 	<modules>
-		<module>bpg-cbt-apac-services-fees-module</module>
-		<module>bpg-cbt-apac-services-exchange-order-module</module>
-		<module>bpg-cbt-apac-services-security-module</module>
-		<module>bpg-cbt-apac-services-rest</module>
-		<module>bpg-cbt-apac-services-main</module>
-		<module>bpg-cbt-apac-services-mongodb</module>
-		<module>bpg-cbt-apac-services-common</module>
-		<module>bpg-cbt-apac-services-encryptor</module>
+		<module>apac-services-fees-module</module>
+		<module>apac-services-exchange-order-module</module>
+		<module>apac-services-security-module</module>
+		<module>apac-services-rest</module>
+		<module>apac-services-main</module>
+		<module>apac-services-mongodb</module>
+		<module>apac-services-common</module>
+		<module>apac-services-encryptor</module>
 	</modules>
 
 </project>
