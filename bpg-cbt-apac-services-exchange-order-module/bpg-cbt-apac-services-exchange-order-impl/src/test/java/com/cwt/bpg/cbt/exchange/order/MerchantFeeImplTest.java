@@ -36,6 +36,7 @@ public class MerchantFeeImplTest {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void canGetMerchantFee() {
 		final String countryCode = "SG";
@@ -46,7 +47,7 @@ public class MerchantFeeImplTest {
 		Mockito.when(q.filter("countryCode", "SG")).thenReturn(q);
 		//Mockito.when(q.equal("SG")).thenReturn(f);
 		
-		impl.getMerchantFee(countryCode);
+		impl.getMerchantFee(countryCode, "TF", "ALCATEL SG");
 		
 		Mockito.verify(morphia, Mockito.times(1)).getDatastore();
 	}
