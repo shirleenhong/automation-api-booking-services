@@ -69,12 +69,25 @@ Create Test Variables For Other Service Fee
     Set Test Variable    ${service_fee_name}
 
 Generate Test Variables For Other Service Fees
+    [Arguments]    ${fees_list}    ${country}=sg    ${service_fee_name}=misc-fees
+    Create Test Variables For Other Service Fee    ${fees_list}    ${country}=${country}    ${service_fee_name}=${service_fee_name}
+    Get Rounding Rules
+    Run Keyword If    "${isGstAbsorb}" == "false"    Run Keywords    Calculate Other Service Fees GST
+    ...    AND    Calculate Other Service Fees Nett Cost GST
+    ...    ELSE    Run Keywords    Set Test Variable    ${gst}    0
+    ...    AND    Set Test Variable    ${nett_cost_gst}    0
+    Run Keyword If    "${isMerchantFeeAbsorb}" == "false" and "${fopType.upper()}" == "CX" and "${isMerchantFeeWaive}" == "false"    Calculate Other Service Fees Mechant Fee
+    ...    ELSE    Set Test Variable    ${merchant_fee}    0
+    Calculate Other Service Fees Selling Price In DI
+    Run Keyword If    ${selling_price_in_di}>${nett_cost_value}    Calculate Other Service Fees Commission
+    ...    ELSE    Set Test Variable    ${commission}    0
 
 Get Rounding Rules
     Send Currency Get Request
     ${decimal_value}    Get Json Value    ${response.content}    /decimal
     ${round_rule_value}    Get Json Value    ${response.content}    /roundRule
     Set Test Variable    ${decimal_place}    ${decimal_value}
+    Set Test Variable    ${rounding_rule}    ${round_rule_value}
 
 Send Currency Get Request
     [Arguments]    ${token}=${default_token}    ${currency_code}=${currency_code_value}
