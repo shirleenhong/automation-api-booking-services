@@ -28,7 +28,8 @@
 		<commons-lang.version>2.6</commons-lang.version>
 		<hamcrest.version>1.3</hamcrest.version>
 		<javax.validation.version>1.1.0.Final</javax.validation.version>
-        <hibernate.validator.version>5.4.1.Final</hibernate.validator.version>
+		<hibernate.validator.version>5.4.1.Final</hibernate.validator.version>
+		<springfox.swagger.version>2.8.0</springfox.swagger.version>
 	</properties>
 
 	<scm>
@@ -88,12 +89,12 @@
 			<dependency>
 				<groupId>io.springfox</groupId>
 				<artifactId>springfox-swagger2</artifactId>
-				<version>2.8.0</version>
+				<version>${springfox.swagger.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>io.springfox</groupId>
 				<artifactId>springfox-swagger-ui</artifactId>
-				<version>2.7.0</version>
+				<version>${springfox.swagger.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -406,6 +407,7 @@
 		<module>bpg-cbt-apac-services-mongodb</module>
 		<module>bpg-cbt-apac-services-common</module>
 		<module>bpg-cbt-apac-services-encryptor</module>
+		<module>bpg-cbt-apac-services-documentation</module>
 	</modules>
 
 </project>
