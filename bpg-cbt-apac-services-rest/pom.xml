@@ -27,7 +27,7 @@
     </dependency>
     <dependency>
       <groupId>com.cwt.bpg.cbt</groupId>
-      <artifactId>bpg-cbt-apac-services-security-impl</artifactId>
+      <artifactId>bpg-cbt-apac-services-security-service</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

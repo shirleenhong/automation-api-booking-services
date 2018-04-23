@@ -15,6 +15,7 @@
   <modules>
   	<module>bpg-cbt-apac-services-fees-rest</module>
   	<module>bpg-cbt-apac-services-fees-api</module>
-  	<module>bpg-cbt-apac-services-fees-impl</module>
+  	<module>bpg-cbt-apac-services-fees-service</module>
+  	<module>bpg-cbt-apac-services-fees-repository</module>
   </modules>
 </project>

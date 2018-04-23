@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.cwt.bpg.cbt.security.api.TokenApi;
+import com.cwt.bpg.cbt.security.api.TokenServiceApi;
 
 public class AuthenticationFilter extends GenericFilterBean {
 
 	private static final String BEARER = "Bearer ";
-	private TokenApi tokenApi;
+	private TokenServiceApi tokenApi;
 
-	public AuthenticationFilter(TokenApi tokenApi) {
+	public AuthenticationFilter(TokenServiceApi tokenApi) {
 		this.tokenApi = tokenApi;
 	}
 

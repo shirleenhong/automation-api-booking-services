@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.cwt.bpg.cbt.security.api.TokenApi;
+import com.cwt.bpg.cbt.security.api.TokenServiceApi;
 
 @Configuration
 @EnableWebSecurity
@@ -16,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
 
     @Autowired
-    private TokenApi tokenApi;
+    private TokenServiceApi tokenApi;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception

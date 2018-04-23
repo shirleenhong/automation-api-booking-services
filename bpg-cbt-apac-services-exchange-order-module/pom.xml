@@ -15,6 +15,7 @@
   <modules>
   	<module>bpg-cbt-apac-services-exchange-order-rest</module>
   	<module>bpg-cbt-apac-services-exchange-order-api</module>
-  	<module>bpg-cbt-apac-services-exchange-order-impl</module>
+  	<module>bpg-cbt-apac-services-exchange-order-service</module>
+  	<module>bpg-cbt-apac-services-exchange-order-repository</module>
   </modules>
 </project>

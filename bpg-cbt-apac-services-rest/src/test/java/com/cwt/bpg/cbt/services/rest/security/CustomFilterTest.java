@@ -22,16 +22,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.security.impl.TokenImpl;
+import com.cwt.bpg.cbt.security.service.TokenService;
 
 public class CustomFilterTest {
 
-	private TokenImpl tokenApi;
+	private TokenService tokenApi;
 	private AuthenticationFilter customFilter;
 
 	@Before
 	public void setUp() throws Exception {
-		tokenApi = mock(TokenImpl.class);
+		tokenApi = mock(TokenService.class);
 		customFilter = new AuthenticationFilter(tokenApi);
 
 	}
@@ -89,7 +89,7 @@ public class CustomFilterTest {
 	}
 }
 
-class MockedTokenImpl extends TokenImpl {
+class MockedTokenImpl extends TokenService {
 	private boolean tokenExists;
 
 	public boolean isTokenExists() {
