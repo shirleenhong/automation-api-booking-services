@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/app-info")
+@Api(tags = "App Info")
 public class AppInfoResource {
 	
 	private Properties props = new Properties();
@@ -25,7 +29,9 @@ public class AppInfoResource {
     }
     
     @GetMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-    public @ResponseBody Map<String, String> appInfo()
+    @ResponseBody
+    @ApiOperation(value = "Displays application build number and version")
+    public Map<String, String> appInfo()
     {
         final Map<String, String> result = new HashMap<>();
         for (Entry<Object, Object> entry : props.entrySet())

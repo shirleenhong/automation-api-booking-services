@@ -12,17 +12,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.service.fee.model.PriceBreakdown;
 import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/service-fees")
-public class ServiceFeeController {
-	
-	@Autowired
-	private ServiceFeeApi serviceFee;
-	
-	@PostMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public @ResponseBody ResponseEntity<PriceBreakdown> calculatePriceInput(@RequestBody PriceCalculationInput input) {
-		return new ResponseEntity<>(serviceFee.calculate(input), HttpStatus.OK);
-	}
+@Api(value = "/service-fees", description = "Operations related to service fees", tags = "Service Fees")
+public class ServiceFeeController
+{
+
+    @Autowired
+    private ServiceFeeApi serviceFee;
+
+    @PostMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+            consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+    @ResponseBody
+    @ApiOperation(value = "Calculates different service fees")
+    public ResponseEntity<PriceBreakdown> calculatePriceInput(
+            @RequestBody
+            @ApiParam(value = "Values needed for calculation") PriceCalculationInput input)
+    {
+        return new ResponseEntity<>(serviceFee.calculate(input), HttpStatus.OK);
+    }
 }

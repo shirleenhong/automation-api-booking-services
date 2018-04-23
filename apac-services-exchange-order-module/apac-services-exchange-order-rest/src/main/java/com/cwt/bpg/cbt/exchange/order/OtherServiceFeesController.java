@@ -14,9 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping(path="/other-service-fees")
+@Api(tags = "Exchange Order")
 public class OtherServiceFeesController {
 	
 	@Autowired
@@ -27,8 +31,11 @@ public class OtherServiceFeesController {
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, 
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
+    @ApiOperation(value = "Computes miscellaneous fee")
 	public ResponseEntity<FeesBreakdown> computeMiscellaneousFee(
-			@Valid @RequestBody OtherServiceFeesInput input) {		
+			@Valid
+            @RequestBody
+            @ApiParam(value = "Values needed for calculation") OtherServiceFeesInput input) {
 		
 		return new ResponseEntity<>(otherServiceFeesApi.calculateMiscFee(input), HttpStatus.OK);
 	}	

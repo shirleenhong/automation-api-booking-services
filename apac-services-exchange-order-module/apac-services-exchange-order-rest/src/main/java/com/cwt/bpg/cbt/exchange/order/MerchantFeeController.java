@@ -10,19 +10,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
+@Api(tags = "Merchant Fee")
 public class MerchantFeeController {
 	
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
 	
-	// TODO: for testing only, remove this, will not expose outside
+	@Internal
 	@GetMapping(path="/merchant/{countryCode}/{clientType}/{productName}")
 	@ResponseBody
+    @ApiOperation(value = "Pulls merchant fee based on a [country code | client type | product name] combination")
 	public ResponseEntity<MerchantFee> getMerchantFee(
 			@PathVariable String countryCode,
 			@PathVariable String clientType,
@@ -31,9 +36,10 @@ public class MerchantFeeController {
 		return new ResponseEntity<>(exchangeOrderService.getMerchantFee(countryCode, clientType, productName), HttpStatus.OK);
 	}
 	
-	// TODO: for testing only, remove this, will not expose outside
+    @Internal
 	@GetMapping(path="/merchant/currency/{currencyCode}")
 	@ResponseBody
+    @ApiOperation(value = "Pulls currency info based on currency code")
 	public ResponseEntity<CurrencyCodeRoundRule> getCurrency(
 			@PathVariable String currencyCode) {		
 		
@@ -41,13 +47,10 @@ public class MerchantFeeController {
 	}
 	
 	
-	/**
-	 * Internal use, for QA's only
-	 * @param countryCode
-	 * @return
-	 */
+	@Internal
 	@PostMapping(path="/merchant/{countryCode}")
 	@ResponseBody
+    @ApiOperation(value = "Updates merchant fee configuration of a given market")
 	public ResponseEntity<ClientMerchantFee> updateMerchantFee(
 			@PathVariable String countryCode, @RequestBody ClientMerchantFee merchantFee) {		
 		
