@@ -41,8 +41,8 @@ public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
 				merchantFee.setIncludeTransactionFee(rs.getObject("tfincmf") == null ? null : rs.getBoolean("tfincmf"));
 				merchantFee.setMerchantFeePct(rs.getObject("merchfeepct") == null ? null : rs.getDouble("merchfeepct"));
 				merchantFee.setClientName(rs.getObject("clientname") == null ? null : rs.getString("clientname").trim());
-				merchantFee.setClientType(rs.getObject("proname") == null ? null : rs.getString("proname").trim());
-				merchantFee.setProductName(rs.getObject("clientType") == null ? null : rs.getString("clientType").trim());
+				merchantFee.setClientType(rs.getObject("clientType") == null ? null : rs.getString("clientType").trim());
+				merchantFee.setProductName(rs.getObject("proname") == null ? null : rs.getString("proname").trim());
 				merchantFeeList.add(merchantFee);
 			}
 			rs.close();
