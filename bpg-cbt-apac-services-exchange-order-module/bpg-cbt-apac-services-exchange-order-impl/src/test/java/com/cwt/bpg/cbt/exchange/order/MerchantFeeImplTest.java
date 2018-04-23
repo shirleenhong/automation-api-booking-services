@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -13,11 +12,10 @@ import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
 import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.WriteResult;
 
-// TODO: merchant fee impl is in changing state
-@Ignore
 public class MerchantFeeImplTest {
 
 	@Mock
@@ -41,11 +39,15 @@ public class MerchantFeeImplTest {
 	public void canGetMerchantFee() {
 		final String countryCode = "SG";
 		
-		Query<ClientMerchantFee> q = Mockito.mock(Query.class);
-		FieldEnd<ClientMerchantFee> f = Mockito.mock(FieldEnd.class);
-		Mockito.when(dataStore.createQuery(ClientMerchantFee.class)).thenReturn(q);
-		Mockito.when(q.filter("countryCode", "SG")).thenReturn(q);
-		//Mockito.when(q.equal("SG")).thenReturn(f);
+
+		Query<MerchantFee> query = Mockito.mock(Query.class);
+		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
+		Mockito.when(dataStore.createQuery(MerchantFee.class)).thenReturn(query);
+		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
+		Mockito.when(fieldEnd.equal(Mockito.anyString())).thenReturn(query);
+		Mockito.when(query.get()).thenReturn(new MerchantFee());
+		
+		
 		
 		impl.getMerchantFee(countryCode, "TF", "ALCATEL SG");
 		
@@ -64,7 +66,7 @@ public class MerchantFeeImplTest {
 		Mockito.when(dataStore.createQuery(ClientMerchantFee.class)).thenReturn(q);
 		Mockito.when(q.filter("countryCode", countryCode)).thenReturn(q);
 		
-		WriteResult r = new WriteResult(1, true, null); //Mockito.mock(WriteResult.class);;
+		WriteResult r = new WriteResult(1, true, null); 
 		Mockito.when(dataStore.delete(q)).thenReturn(r);
 		
 		Key<ClientMerchantFee> save = new Key<>(ClientMerchantFee.class, "testCollection", "1234567890");

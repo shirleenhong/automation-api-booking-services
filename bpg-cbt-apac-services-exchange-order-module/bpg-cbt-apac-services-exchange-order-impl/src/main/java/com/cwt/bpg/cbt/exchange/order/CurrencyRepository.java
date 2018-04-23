@@ -18,10 +18,10 @@ public class CurrencyRepository implements CurrencyApi {
 	
 	@Override
 	public CurrencyCodeRoundRule getRoundingRule(String currencyCode) {
-		List<CurrencyCodeRoundRule> roundingRule = morphia.getDatastore().createQuery(CurrencyCodeRoundRule.class)
+		CurrencyCodeRoundRule roundingRule = morphia.getDatastore().createQuery(CurrencyCodeRoundRule.class)
 				.field("currencyCode")
 				.equal(currencyCode)
-				.asList();
-		return roundingRule.get(0);
+				.get();
+		return roundingRule;
 	}
 }

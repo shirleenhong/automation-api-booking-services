@@ -45,11 +45,12 @@ public class CurrencyRepositoryTest {
 		Mockito.when(dataStore.createQuery(CurrencyCodeRoundRule.class)).thenReturn(query);
 		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
 		Mockito.when(fieldEnd.equal(currencyCode)).thenReturn(query);
-		Mockito.when(query.asList()).thenReturn(Arrays.asList(new CurrencyCodeRoundRule()));
+		Mockito.when(query.get()).thenReturn(new CurrencyCodeRoundRule());
 		
 		
 		CurrencyCodeRoundRule roundingRule = currencyApi.getRoundingRule(currencyCode);
 		
+		Mockito.verify(morphia, Mockito.times(1)).getDatastore();
 		Mockito.verify(dataStore, Mockito.times(1)).createQuery(CurrencyCodeRoundRule.class);
 		
 		assertNotNull(roundingRule);
