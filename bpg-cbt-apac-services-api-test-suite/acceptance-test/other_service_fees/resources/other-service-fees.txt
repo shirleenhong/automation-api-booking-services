@@ -24,23 +24,28 @@ Append Additional Fields For Miscellaneous Fees
 
 Calculate Other Service Fees Commission
     ${calculated_value}    Evaluate    ${selling_price_in_di}-${nett_cost_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${commission}    ${calculated_value}
 
 Calculate Other Service Fees GST
     ${calculated_value}    Evaluate    ${selling_price_value}*(${gst_percent_value}*0.01)
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${gst}    ${calculated_value}
 
 Calculate Other Service Fees Mechant Fee
     ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percent_value}*0.01}
-    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
+    Comment    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${merchant_fee}    ${calculated_value}
 
 Calculate Other Service Fees Nett Cost GST
     ${calculated_value}    Evaluate    ${nett_cost_value}*(${gst_percent_value}*0.01)
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${nett_cost_gst}    ${calculated_value}
 
 Calculate Other Service Fees Selling Price In DI
     ${calculated_value}    Evaluate    (${selling_price_value}+${gst_percent_value}+${merchant_fee})/(1+${gst_percent_value}*0.01}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${selling_price_in_di}    ${calculated_value}
 
 Create Test Variables For Other Service Fee
