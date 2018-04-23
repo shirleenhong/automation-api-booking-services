@@ -16,32 +16,36 @@ Append Additional Fields For BSP
 
 Append Additional Fields For Miscellaneous Fees
     [Arguments]    ${other_service_fees_request_list}
-    Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPriceAmount":${merchant_amount_value}
-    Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCostAmount":"${nett_cost_value}"
-    Run Keyword If    "${gst_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercentage":${gst_percentage_value}
-    Run Keyword If    "${gst_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAmount":"${gst_amount_value}"
-    Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAbsorb":${gst_absorb_value}
+    Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPrice":${selling_price_value}
+    Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCost":"${nett_cost_value}"
+    Run Keyword If    "${gst_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercent":${gst_percentage_value}
+    Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "isGstAbsorb":${gst_absorb_value}
     [Return]    ${other_service_fees_request_list}
 
 Calculate Other Service Fees Commission
     ${calculated_value}    Evaluate    ${selling_price_in_di}-${nett_cost_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${commission}    ${calculated_value}
 
 Calculate Other Service Fees GST
     ${calculated_value}    Evaluate    ${selling_price_value}*(${gst_percent_value}*0.01)
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${gst}    ${calculated_value}
 
 Calculate Other Service Fees Mechant Fee
     ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percent_value}*0.01}
-    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
+    Comment    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${merchant_fee}    ${calculated_value}
 
 Calculate Other Service Fees Nett Cost GST
     ${calculated_value}    Evaluate    ${nett_cost_value}*(${gst_percent_value}*0.01)
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${nett_cost_gst}    ${calculated_value}
 
 Calculate Other Service Fees Selling Price In DI
     ${calculated_value}    Evaluate    (${selling_price_value}+${gst_percent_value}+${merchant_fee})/(1+${gst_percent_value}*0.01}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${selling_price_in_di}    ${calculated_value}
 
 Create Test Variables For Other Service Fee
@@ -53,10 +57,10 @@ Create Test Variables For Other Service Fee
     ...    bsp-air
     ...
     ...    fees_list fields:
-    ...    cc,(cc, cx or inv)|client_type,aa|pro_name,aaa|merchant_amount,nn.nn|merchant_percentage,nn.nn|merchant_absorb,boolean
+    ...    cc,(cc, cx or inv)|client_type,aa|pro_name,aaa|merchant_absorb,boolean|merchant_waive,boolean
     ...
     ...    additional fields for misc-fees ad car
-    ...    selling_price,nn.nn|nett_cost,nn.nn|gst_amoun,nn.nn|gst_percentage,nn.nn|gst_absorb,boolean
+    ...    selling_price,nn.nn|nett_cost,nn.nn|gst_percentage,nn.nn|gst_absorb,boolean
     ...
     ...    additional fields for bsp/bsp-air:
     ...    nett_fare,nn.nn|gross_fare,nn.nn|tax1,nn.nn|tax1_code,aa|tax2,nn.nn|tax2_code,aa|commission_percentage,nn.nn|discount_percentage,nn.nn|apply_formula,boolean|uatp_flag,boolean|waive_merchant,boolean
@@ -107,10 +111,9 @@ Send Other Service Fees Post Request
     ...    ELSE    Create Dictionary    Content-Type=application/json
     ${other_service_fees_request_list}    Create List
     Run Keyword If    "${country}"!="null"    Append To List    ${other_service_fees_request_list}    "countryCode":"${country}"
-    Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "creditCard":${cc_value}
-    Run Keyword If    "${merchant_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeAmount":${merchant_amount_value}
-    Run Keyword If    "${merchant_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeePercentage":${merchant_percentage_value}
-    Run Keyword If    "${merchant_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantAbsorb":${merchant_absorb_value}
+    Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":${cc_value}
+    Run Keyword If    "${merchant_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "isMerchantFeeAbsorb":${merchant_absorb_value}
+    Run Keyword If    "${merchant_waive_value}"!="null"    Append To List    ${other_service_fees_request_list}    "isMerchantFeeWaive":${merchant_waive_value}
     Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":"${client_type_value}"
     Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productName":"${pro_name_value}"
     ${other_service_fees_request_list}    Run Keyword If    "${service_fee_name}"=="misc-fees" or "${service_fee_name}"=="car"    Append Additional Fields For Miscellaneous Fees    ${other_service_fees_request_list}
