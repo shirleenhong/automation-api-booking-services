@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>org.mongodb.morphia</groupId>
 			<artifactId>morphia</artifactId>
-			<version>1.3.2</version>
+			<version>${mongodb.morphia.version}</version>
 		</dependency>
 	</dependencies>
 </project>

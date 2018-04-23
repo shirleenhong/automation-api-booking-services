@@ -27,7 +27,7 @@ public class MorphiaComponent {
 	public void init() {
 		morphia = new Morphia();
 		
-		// Todo: make configurable?
+		// TODO: make configurable?
 		morphia.mapPackage("com.cwt.bpg.cbt.exchange.order.model", true);
 		
 		datastore = morphia.createDatastore(mongodbConnection.getMongoClient(), dbName);
@@ -35,7 +35,7 @@ public class MorphiaComponent {
 		
 	}
 	
-	public final Datastore getDatastore() {
+	public Datastore getDatastore() {
 		return datastore;
 	}
 }

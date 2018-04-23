@@ -2,8 +2,13 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
-import org.mongodb.morphia.annotations.Property;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 
+@Entity("apacClientMerchantFee")
+@Indexes(@Index(fields = {@Field("countryCode"), @Field("clientType"), @Field("productName")}))
 public class MerchantFee implements Serializable {
 
 	private static final long serialVersionUID = -1922100420586710851L;
@@ -15,6 +20,8 @@ public class MerchantFee implements Serializable {
 	private String clientType;
 	
 	private String clientName;
+	
+	private String countryCode;
 	
 	/**
 	 * proname
@@ -59,5 +66,13 @@ public class MerchantFee implements Serializable {
 
 	public void setMerchantFeePct(Double merchantFeePct) {
 		this.merchantFeePct = merchantFeePct;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 }
