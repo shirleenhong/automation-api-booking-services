@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
@@ -39,7 +38,7 @@ public class MerchantFeeImpl implements MerchantFeeApi {
 		final Query<ClientMerchantFee> clientMerchantFee = datastore.createQuery(ClientMerchantFee.class)
                 .filter("countryCode", countryCode);
 		WriteResult delete = datastore.delete(clientMerchantFee);
-		LOGGER.info("Put Result: {}", delete.toString());
+		LOGGER.info("Delete Result: {}", delete.toString());
 		Key<ClientMerchantFee> save = datastore.save(fee);
 		LOGGER.info("Put Result: {}", save.toString());
 		return fee;
