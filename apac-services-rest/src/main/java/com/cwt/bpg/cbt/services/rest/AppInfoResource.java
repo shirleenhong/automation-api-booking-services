@@ -1,12 +1,9 @@
 package com.cwt.bpg.cbt.services.rest;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
 
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,24 +18,23 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "App Info")
 public class AppInfoResource {
 	
-	private Properties props = new Properties();
+	@Value("${com.bpg.cbt.apac.service.buildNumber}")
+	private String buildNumer;
 
-    public AppInfoResource() throws IOException
-    {
-        this.props.load(new ClassPathResource("apac-services.build.properties").getInputStream());
-    }
+	@Value("${com.bpg.cbt.apac.service.version}")
+	private String applicationVersion;
+
+    
     
     @GetMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
     @ApiOperation(value = "Displays application build number and version")
     public Map<String, String> appInfo()
     {
-        final Map<String, String> result = new HashMap<>();
-        for (Entry<Object, Object> entry : props.entrySet())
-        {
-            result.put((String) entry.getKey(), (String) entry.getValue());
-        }
-        return result;
+    	 final Map<String, String> result = new HashMap<>();
+         result.put("com.bpg.cbt.apac.service.buildNumber", buildNumer);
+         result.put("com.bpg.cbt.apac.service.version", applicationVersion);
+         return result;
     }
 
 }
