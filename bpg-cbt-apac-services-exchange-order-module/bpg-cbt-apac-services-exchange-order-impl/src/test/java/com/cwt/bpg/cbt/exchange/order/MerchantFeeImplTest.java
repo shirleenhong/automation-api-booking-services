@@ -72,6 +72,4 @@ public class MerchantFeeImplTest {
 		impl.putMerchantFee(fee);
 		Mockito.verify(morphia, Mockito.times(1)).getDatastore();
 	}
-
-
 }
