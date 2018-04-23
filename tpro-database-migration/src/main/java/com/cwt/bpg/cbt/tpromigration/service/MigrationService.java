@@ -90,12 +90,14 @@ public class MigrationService {
 		
 		List<ClientMerchantFee> merchantFees = clientMerchantFeeDAO.listMerchantFees();
 		
-		MerchantFeeList merchantFeeList = new MerchantFeeList();
-		String countryCode = System.getProperty("spring.profiles.default");
-		merchantFeeList.setCountryCode(countryCode);
-		merchantFeeList.setMerchantFees(merchantFees);
+//		MerchantFeeList merchantFeeList = new MerchantFeeList();
+//		String countryCode = System.getProperty("spring.profiles.default");
+//		merchantFeeList.setCountryCode(countryCode);
+//		merchantFeeList.setMerchantFees(merchantFees);
 	
-		mongoDbConnection.getCollection("apacClientMerchantFee").insertOne(dBObjectMapper.mapAsDbDocument(merchantFeeList));
+		for(ClientMerchantFee merchantFee: merchantFees) {
+			mongoDbConnection.getCollection("apacClientMerchantFee").insertOne(dBObjectMapper.mapAsDbDocument(merchantFee));
+		}
 		
 		logger.info("end of merchant fee migration...");
 		
