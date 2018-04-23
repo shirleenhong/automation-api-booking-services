@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 /**
  * service facade for Exchange Order module
@@ -19,8 +20,8 @@ public class ExchangeOrderService {
 	private CurrencyApi currencyApi;
 
 	// TODO: annotate if Cache needed
-	public ClientMerchantFee getMerchantFee(String countryCode) {
-		return merchantFeeApi.getMerchantFee(countryCode);
+	public MerchantFee getMerchantFee(String countryCode, String clienType, String productName) {
+		return merchantFeeApi.getMerchantFee(countryCode, clienType, productName);
 	}
 
 	// TODO: annotate if Cache needed

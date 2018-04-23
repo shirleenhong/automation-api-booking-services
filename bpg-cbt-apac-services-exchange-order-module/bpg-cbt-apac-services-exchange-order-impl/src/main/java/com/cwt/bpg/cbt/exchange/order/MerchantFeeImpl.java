@@ -9,9 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.WriteResult;
 
@@ -24,12 +24,14 @@ public class MerchantFeeImpl implements MerchantFeeApi {
 	private MorphiaComponent morphia;
 
 	@Override
-	public ClientMerchantFee getMerchantFee(String countryCode) {
-		List<ClientMerchantFee> merchantFees = morphia.getDatastore().createQuery(ClientMerchantFee.class)
+	public MerchantFee getMerchantFee(String countryCode, String clienType, String productName) {
+		return morphia.getDatastore().createQuery(MerchantFee.class)
 			.field("countryCode")
 			.equal(countryCode)
-			.asList();
-		return merchantFees.get(0);
+			.field("clientType")
+			.equal(clienType)
+			.field("productName")
+			.equal(productName).get();
 	}
 	
 	@Override

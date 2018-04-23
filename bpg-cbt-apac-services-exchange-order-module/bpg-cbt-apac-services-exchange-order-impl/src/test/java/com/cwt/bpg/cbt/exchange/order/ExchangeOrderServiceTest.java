@@ -1,7 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.junit.Assert.fail;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -27,8 +25,10 @@ public class ExchangeOrderServiceTest {
 	@Test
 	public void canGetMerchantFee() {
 		String countryCode = "SG";
-		service.getMerchantFee(countryCode);
-		Mockito.verify(merchantFeeApi, Mockito.times(1)).getMerchantFee(countryCode);
+		String clientType = "CL";
+		String productName = "PN";
+		service.getMerchantFee(countryCode, clientType, productName);
+		Mockito.verify(merchantFeeApi, Mockito.times(1)).getMerchantFee(countryCode, clientType, productName);
 	}
 	
 	

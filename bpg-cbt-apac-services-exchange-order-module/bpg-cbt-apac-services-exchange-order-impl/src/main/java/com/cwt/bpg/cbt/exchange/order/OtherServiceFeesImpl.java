@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.calculator.MiscFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 
 @Service
@@ -15,19 +16,31 @@ public class OtherServiceFeesImpl implements OtherServiceFeesApi {
 	@Autowired
 	MiscFeeCalculator calculator;
 	
+	@Autowired 
+	MerchantFeeApi merchantFeeApi;
+	
 	@Override
 	public FeesBreakdown calculateMiscFee(OtherServiceFeesInput input) {
 				
-		//TODO From DB
-		Double merchantFeePct = getMerchantFeePct();
+		//TODO From DB?
 		BigDecimal nettCost = getNettCost();
 		
-		return calculator.calMiscFee(input, merchantFeePct, nettCost);
+		return calculator.calMiscFee(input, getMerchantFeePct(input), nettCost);
 	}
 
-	private Double getMerchantFeePct() {
+	private Double getMerchantFeePct(OtherServiceFeesInput input) {
 		
-		return 2D;
+		MerchantFee merchantFeePct = merchantFeeApi.getMerchantFee(
+				input.getCountryCode(), 
+				input.getClientType(), 
+				input.getProductName());
+		
+		if(merchantFeePct != null) 
+		{
+			return merchantFeePct.getMerchantFeePct();
+		}
+		
+		return 0D;
 	}	
 
 	private BigDecimal getNettCost() {
