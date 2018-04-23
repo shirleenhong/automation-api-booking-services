@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public class MerchantFeeControllerTest {
 	
@@ -33,6 +35,28 @@ public class MerchantFeeControllerTest {
 		Mockito.when(service.putMerchantFee(merchantFee)).thenReturn(merchantFee);
 		
 		ResponseEntity<ClientMerchantFee> result = controller.updateMerchantFee("SG", merchantFee);
+
+		assertNotNull(result.getBody());
+		assertEquals(HttpStatus.OK, result.getStatusCode());
+	}
+	
+	@Test
+	public void canGetMerchantFee() {
+		MerchantFee merchantFee = new MerchantFee();
+		Mockito.when(service.getMerchantFee(Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(merchantFee);
+		
+		ResponseEntity<MerchantFee> result = controller.getMerchantFee("SG", "TF", "product");
+
+		assertNotNull(result.getBody());
+		assertEquals(HttpStatus.OK, result.getStatusCode());
+	}
+	
+	@Test
+	public void canGetCurrency() {
+		CurrencyCodeRoundRule roundingRule = new CurrencyCodeRoundRule();
+		Mockito.when(service.getRoundingRule(Mockito.anyString())).thenReturn(roundingRule);
+		
+		ResponseEntity<CurrencyCodeRoundRule> result = controller.getCurrency("SGD");
 
 		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());
