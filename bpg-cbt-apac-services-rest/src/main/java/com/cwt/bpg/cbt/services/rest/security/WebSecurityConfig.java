@@ -12,18 +12,21 @@ import com.cwt.bpg.cbt.security.api.TokenApi;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter
+{
 
-	@Autowired
-	private TokenApi tokenApi;
-	
-	@Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Autowired
+    private TokenApi tokenApi;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception
+    {
         http.csrf().disable().addFilterBefore(new AuthenticationFilter(tokenApi), BasicAuthenticationFilter.class);
     }
-	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-	    web.ignoring().antMatchers("/app-info");
-	}
+
+    @Override
+    public void configure(WebSecurity web) throws Exception
+    {
+        web.ignoring().antMatchers("/app-info", "/v2/api-docs", "/configuration/**", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**");
+    }
 }
