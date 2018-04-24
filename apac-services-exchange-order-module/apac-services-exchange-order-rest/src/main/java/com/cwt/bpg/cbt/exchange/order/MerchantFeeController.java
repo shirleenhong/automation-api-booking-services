@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
-import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import io.swagger.annotations.Api;
@@ -51,8 +50,8 @@ public class MerchantFeeController {
 	@PostMapping(path="/merchant/{countryCode}")
 	@ResponseBody
     @ApiOperation(value = "Updates merchant fee configuration of a given market")
-	public ResponseEntity<ClientMerchantFee> updateMerchantFee(
-			@PathVariable String countryCode, @RequestBody ClientMerchantFee merchantFee) {		
+	public ResponseEntity<MerchantFee> updateMerchantFee(
+			@PathVariable String countryCode, @RequestBody MerchantFee merchantFee) {		
 		
 		return new ResponseEntity<>(exchangeOrderService.putMerchantFee(merchantFee), HttpStatus.OK);
 	}

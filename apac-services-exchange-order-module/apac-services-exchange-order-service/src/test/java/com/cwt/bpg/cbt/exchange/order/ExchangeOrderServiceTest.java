@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public class ExchangeOrderServiceTest {
 
@@ -34,7 +34,7 @@ public class ExchangeOrderServiceTest {
 	
 	@Test
 	public void canPutMerchantFee() {
-		ClientMerchantFee fee = new ClientMerchantFee();
+		MerchantFee fee = new MerchantFee();
 		service.putMerchantFee(fee);
 		Mockito.verify(merchantFeeApi, Mockito.times(1)).putMerchantFee(fee);
 	}

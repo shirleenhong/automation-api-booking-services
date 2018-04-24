@@ -24,15 +24,15 @@ import org.junit.Test;
 
 import com.cwt.bpg.cbt.security.service.TokenService;
 
-public class CustomFilterTest {
+public class AuthenticationFilterTest {
 
 	private TokenService tokenApi;
-	private AuthenticationFilter customFilter;
+	private AuthenticationFilter authFilter;
 
 	@Before
 	public void setUp() throws Exception {
 		tokenApi = mock(TokenService.class);
-		customFilter = new AuthenticationFilter(tokenApi);
+		authFilter = new AuthenticationFilter(tokenApi);
 
 	}
 
@@ -41,7 +41,7 @@ public class CustomFilterTest {
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		FilterChain chain = mock(FilterChain.class);
-		customFilter.doFilter(request, response, chain);
+		authFilter.doFilter(request, response, chain);
 
 		verify(response, times(1)).sendError(eq(HttpServletResponse.SC_BAD_REQUEST), anyString());
 		verify(chain, never()).doFilter(any(HttpServletRequest.class), any(HttpServletResponse.class));
@@ -53,7 +53,7 @@ public class CustomFilterTest {
 		request.addHeader("Authorization", "Invalid 1234567890");
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		FilterChain chain = mock(FilterChain.class);
-		customFilter.doFilter(request, response, chain);
+		authFilter.doFilter(request, response, chain);
 
 		verify(response, times(1)).sendError(eq(HttpServletResponse.SC_BAD_REQUEST), anyString());
 		verify(chain, never()).doFilter(any(HttpServletRequest.class), any(HttpServletResponse.class));
@@ -65,7 +65,7 @@ public class CustomFilterTest {
 		request.addHeader("Authorization", "Bearer 1234567890");
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		FilterChain chain = mock(FilterChain.class);
-		customFilter.doFilter(request, response, chain);
+		authFilter.doFilter(request, response, chain);
 		when(tokenApi.isTokenExist(anyString())).thenReturn(false);
 
 		verify(response, times(1)).sendError(eq(HttpServletResponse.SC_UNAUTHORIZED), anyString());

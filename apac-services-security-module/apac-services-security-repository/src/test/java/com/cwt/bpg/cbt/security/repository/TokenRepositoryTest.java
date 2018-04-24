@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.exchange.order;
+package com.cwt.bpg.cbt.security.repository;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -12,11 +12,11 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
-import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
+import com.cwt.bpg.cbt.security.api.model.Token;
 
-public class CurrencyRepositoryTest {
-	
+public class TokenRepositoryTest {
+
 	@Mock
 	private Datastore dataStore;
 	
@@ -24,7 +24,7 @@ public class CurrencyRepositoryTest {
 	private MorphiaComponent morphia;
 	
 	@InjectMocks
-	private CurrencyRepository currencyApi;
+	private TokenRepository repository;
 	
 	@Before
 	public void setUp() {
@@ -32,27 +32,24 @@ public class CurrencyRepositoryTest {
 		Mockito.when(morphia.getDatastore()).thenReturn(dataStore);
 	}
 	
-
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
-	public void canGetCurrency() {
-		final String currencyCode = "USD";
+	public void shoulGetToken() {
 		
-		Query<CurrencyCodeRoundRule> query = Mockito.mock(Query.class);
-		@SuppressWarnings("rawtypes")
+		String token = "token";
+		Query query = Mockito.mock(Query.class);
 		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-		Mockito.when(dataStore.createQuery(CurrencyCodeRoundRule.class)).thenReturn(query);
+		Mockito.when(dataStore.createQuery(Token.class)).thenReturn(query);
 		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
-		Mockito.when(fieldEnd.equal(currencyCode)).thenReturn(query);
-		Mockito.when(query.get()).thenReturn(new CurrencyCodeRoundRule());
+		Mockito.when(fieldEnd.equal(token)).thenReturn(query);
+		Mockito.when(query.get()).thenReturn(new Token());
 		
-		
-		CurrencyCodeRoundRule roundingRule = currencyApi.getRoundingRule(currencyCode);
+		Token result = repository.getToken(token);
 		
 		Mockito.verify(morphia, Mockito.times(1)).getDatastore();
-		Mockito.verify(dataStore, Mockito.times(1)).createQuery(CurrencyCodeRoundRule.class);
+		Mockito.verify(dataStore, Mockito.times(1)).createQuery(Token.class);
 		
-		assertNotNull(roundingRule);
+		assertNotNull(result);
 	}
 
 }

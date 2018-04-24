@@ -24,10 +24,6 @@ public class OtherServiceFeesInput implements Serializable {
 	private boolean isGstAbsorb;
 	private boolean isMerchantFeeAbsorb;
 	private boolean isMerchantFeeWaive;	
-	@NotEmpty
-	private String marketCode;
-	@NotEmpty
-	private String currencyCode;
 	private String countryCode;
 	@NotEmpty
 	private String clientType;
@@ -66,19 +62,7 @@ public class OtherServiceFeesInput implements Serializable {
 	}
 	public void setMerchantFeeWaive(boolean isMerchantFeeWaive) {
 		this.isMerchantFeeWaive = isMerchantFeeWaive;
-	}
-	public String getMarketCode() {
-		return marketCode;
-	}
-	public void setMarketCode(String marketCode) {
-		this.marketCode = marketCode;
-	}
-	public String getCurrencyCode() {
-		return currencyCode;
-	}
-	public void setCurrencyCode(String currencyCode) {
-		this.currencyCode = currencyCode;
-	}
+	}	
 	public String getCountryCode() {
 		return countryCode;
 	}

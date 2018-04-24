@@ -32,7 +32,7 @@ public class MiscFeeCalculator extends CommonCalculator {
 		}
 		
 		if(!input.isMerchantFeeAbsorb() 
-			&& FOPTypes.CX.getCode().equals(input.getFopType())
+			&& FOPTypes.CWT.getCode().equals(input.getFopType())
 			&& !input.isMerchantFeeWaive()) 
 		{			
 			merchantFeeAmount = round(

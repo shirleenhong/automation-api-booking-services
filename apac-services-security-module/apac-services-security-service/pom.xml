@@ -18,7 +18,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.cwt.bpg.cbt</groupId>
-			<artifactId>apac-services-mongodb</artifactId>
+			<artifactId>apac-services-security-repository</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

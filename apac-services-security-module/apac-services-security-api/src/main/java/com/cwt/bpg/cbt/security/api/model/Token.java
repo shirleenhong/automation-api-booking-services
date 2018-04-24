@@ -2,9 +2,17 @@ package com.cwt.bpg.cbt.security.api.model;
 
 import java.util.Date;
 
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
+
+@Entity("apacTokens")
+@Indexes(@Index(fields = @Field("_id")))
 public class Token {
-	public static final String COLLECTION = "nxtgen_tokens";
-	private String key;
+	
+	@Id private String key;
     private Date creationTime;
     private Date expirationTime;
     private Date validity;
