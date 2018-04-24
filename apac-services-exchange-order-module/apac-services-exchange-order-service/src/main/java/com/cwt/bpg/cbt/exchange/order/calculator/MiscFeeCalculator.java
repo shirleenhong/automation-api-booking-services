@@ -8,9 +8,10 @@ import com.cwt.bpg.cbt.exchange.order.model.FOPTypes;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 
-public class MiscFeeCalculator extends CommonCalculator {
+public class MiscFeeCalculator extends CommonCalculator  implements Calculator{
 	
-	public FeesBreakdown calMiscFee(OtherServiceFeesInput input, 
+	@Override
+	public FeesBreakdown calculateFee(OtherServiceFeesInput input, 
 			Double merchantFeePct) {		
 
 		FeesBreakdown result = new FeesBreakdown();
