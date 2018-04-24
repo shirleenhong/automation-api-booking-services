@@ -2,6 +2,13 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.util.List;
 
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
+
+@Entity("apacProductList")
+@Indexes(@Index(fields = @Field("countryCode")))
 public class ProductList {
 	
 	private String countryCode;

@@ -13,23 +13,23 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 public class ExchangeOrderService {
 
 	@Autowired
-	private MerchantFeeApi merchantFeeApi;
+	private MerchantFeeRepository merchantFeeRepo;
 	
 	@Autowired
-	private CurrencyApi currencyApi;
+	private CurrencyRepository currencyRepo;
 
 	// TODO: annotate if Cache needed
 	public MerchantFee getMerchantFee(String countryCode, String clienType, String productName) {
-		return merchantFeeApi.getMerchantFee(countryCode, clienType, productName);
+		return merchantFeeRepo.getMerchantFee(countryCode, clienType, productName);
 	}
 
 	// TODO: annotate if Cache needed
 	public MerchantFee putMerchantFee(MerchantFee fee) {
-		return merchantFeeApi.putMerchantFee(fee);
+		return merchantFeeRepo.putMerchantFee(fee);
 	}
 	
 	// TODO: annotate if Cache needed
 	public CurrencyCodeRoundRule getRoundingRule(String currencyCode) {
-		return currencyApi.getRoundingRule(currencyCode);
+		return currencyRepo.getRoundingRule(currencyCode);
 	}
 }

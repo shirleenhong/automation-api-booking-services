@@ -8,8 +8,8 @@ public class CommonCalculator {
 	
 	private MathContext mc = new MathContext(2, RoundingMode.HALF_UP);
 
-	public final String COUNTRY_CODE_INDIA = "IN";
-	public final String COUNTRY_CODE_HONGKONG = "HK";
+	public static final String COUNTRY_CODE_INDIA = "IN";
+	public static final String COUNTRY_CODE_HONGKONG = "HK";
 
 	public BigDecimal safeValue(BigDecimal value) {
 		if (value == null) {

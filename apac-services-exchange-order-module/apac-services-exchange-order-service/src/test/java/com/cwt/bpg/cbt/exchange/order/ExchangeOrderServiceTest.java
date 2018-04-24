@@ -12,7 +12,7 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 public class ExchangeOrderServiceTest {
 
 	@Mock
-	private MerchantFeeApi merchantFeeApi;
+	private MerchantFeeRepository merchantFeeApi;
 	
 	@InjectMocks
 	private ExchangeOrderService service;

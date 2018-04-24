@@ -10,7 +10,7 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 
 @Service
-public class OtherServiceFeesService implements OtherServiceFeesApi {
+public class OtherServiceFeesService {
 
 	@Autowired
 	MiscFeeCalculator miscFeeCalculator;
@@ -19,21 +19,19 @@ public class OtherServiceFeesService implements OtherServiceFeesApi {
 	BspAirCalculator bspAirCalculator;
 	
 	@Autowired 
-	MerchantFeeApi merchantFeeApi;
+	MerchantFeeRepository merchantFeeRepo;
 
-	@Override
 	public FeesBreakdown calculateMiscFee(OtherServiceFeesInput input) {
 		return miscFeeCalculator.calMiscFee(input, getMerchantFeePct(input));
 	}
 
-	@Override
 	public FeesBreakdown calculateBspAirFee(OtherServiceFeesInput input) {
 		return bspAirCalculator.calBspAirFee(input, getMerchantFeePct(input));
 	}
 
 	private Double getMerchantFeePct(OtherServiceFeesInput input) {
 		
-		MerchantFee merchantFeePct = merchantFeeApi.getMerchantFee(
+		MerchantFee merchantFeePct = merchantFeeRepo.getMerchantFee(
 				input.getCountryCode(), 
 				input.getClientType(), 
 				input.getProductName());

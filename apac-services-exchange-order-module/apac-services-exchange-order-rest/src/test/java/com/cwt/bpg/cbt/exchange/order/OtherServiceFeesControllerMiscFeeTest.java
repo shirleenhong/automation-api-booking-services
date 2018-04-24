@@ -29,6 +29,9 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	private MockMvc mockMvc;
 	
 	@Mock
+	private OtherServiceFeesService service;
+	
+	@Mock
 	private OtherServiceFeesApi api;
 	
 	@InjectMocks

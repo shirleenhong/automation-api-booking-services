@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -24,7 +25,7 @@ import io.swagger.annotations.ApiParam;
 public class OtherServiceFeesController {
 	
 	@Autowired
-	private OtherServiceFeesApi otherServiceFeesApi;
+	private OtherServiceFeesService service;
 	
 	/**
 	 * Applicable car, hotel and other ticket
@@ -42,7 +43,7 @@ public class OtherServiceFeesController {
             @RequestBody
             @ApiParam(value = "Values needed for calculation") OtherServiceFeesInput input) {
 		
-		return new ResponseEntity<>(otherServiceFeesApi.calculateMiscFee(input), HttpStatus.OK);
+		return new ResponseEntity<>(service.calculateMiscFee(input), HttpStatus.OK);
 	}	
 	
 	/**
@@ -58,6 +59,6 @@ public class OtherServiceFeesController {
 	public ResponseEntity<FeesBreakdown> computeAirFees(
 			@Valid @RequestBody OtherServiceFeesInput input) {		
 		
-		return new ResponseEntity<>(otherServiceFeesApi.calculateMiscFee(input), HttpStatus.OK);
+		return new ResponseEntity<>(service.calculateMiscFee(input), HttpStatus.OK);
 	}	
 }
