@@ -5,57 +5,22 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
-import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
-import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig
+public class SwaggerConfigBase
 {
     @Bean
-    public Docket swaggerForDev()
+    UiConfiguration uiConfig()
     {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                    .apis(RequestHandlerSelectors.any())
-                    .paths(Predicates.not(PathSelectors.regex("/error.*")))
-                    .build()
-                .groupName("dev")
-                .apiInfo(apiInfo())
-                .tags(appInfo(), exchangeOrder(), merchantFee(), serviceFees())
-                .securitySchemes(Lists.newArrayList(securityScheme()))
-                .securityContexts(Lists.newArrayList(securityContext()));
-    }
-
-    @Bean
-    public Docket swaggerForConsumer()
-    {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                    .apis(Predicates.not(RequestHandlerSelectors.withMethodAnnotation(Internal.class)))
-                    .paths(Predicates.not(PathSelectors.regex(
-                            "/(error|auditevents|autoconfig|configprops|dump|info|mappings|springbeans|trace|env|health|heapdump|loggers|metrics).*")))
-                    .build()
-                .apiInfo(apiInfo())
-                .tags(appInfo(), exchangeOrder(), serviceFees())
-                .securitySchemes(Lists.newArrayList(securityScheme()))
-                .securityContexts(Lists.newArrayList(securityContext()));
-    }
-
-    @Bean
-    public UiConfiguration uiConfig()
-    {
-        new UiConfiguration(false, false, 0, 1, ModelRendering.EXAMPLE, false, DocExpansion.LIST, true, 10, OperationsSorter.ALPHA, false, TagsSorter.ALPHA, "");
         return UiConfigurationBuilder.builder()
                 .deepLinking(false)
                 .displayOperationId(false)
@@ -71,7 +36,7 @@ public class SwaggerConfig
                 .build();
     }
 
-    private SecurityContext securityContext()
+    SecurityContext securityContext()
     {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
@@ -79,7 +44,7 @@ public class SwaggerConfig
                 .build();
     }
 
-    private List<SecurityReference> defaultAuth() {
+    List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope
                 = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
@@ -88,32 +53,32 @@ public class SwaggerConfig
                 new SecurityReference("Power Express Token", authorizationScopes));
     }
 
-    private ApiKey securityScheme()
+    ApiKey securityScheme()
     {
         return new ApiKey("Power Express Token", "Authorization", "header");
     }
 
-    private Tag merchantFee()
+    Tag merchantFee()
     {
         return new Tag("Merchant Fee", "Services related to Merchant Fee");
     }
 
-    private Tag serviceFees()
+    Tag serviceFees()
     {
         return new Tag("Service Fees", "Services related to Service Fees");
     }
 
-    private Tag exchangeOrder()
+    Tag exchangeOrder()
     {
         return new Tag("Exchange Order", "Services related to Exchange Order");
     }
 
-    private Tag appInfo()
+    Tag appInfo()
     {
         return new Tag("App Info", "Services that display application info");
     }
 
-    private ApiInfo apiInfo()
+    ApiInfo apiInfo()
     {
         return new ApiInfoBuilder()
                 .title("APAC Services API")
