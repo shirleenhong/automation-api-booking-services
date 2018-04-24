@@ -129,3 +129,5 @@ Send Other Service Fees Post Request
     Log    ${response.headers}
     Log    ${response.content}
     Set Test Variable    ${api_flag}    fees
+
+Verify Calculated Other Service Fees BSP Air Are Returned Correctly

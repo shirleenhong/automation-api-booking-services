@@ -1,21 +1,1211 @@
 *** Settings ***
 Resource          resources/additional-bsp-air.txt
 Resource          ../resources/api-imports.txt
+Resource          resources/other-service-fees.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-variables.txt
 
 *** Test Cases ***
-test
-    Comment    ${nett_fare_value}    Set Variable    100
-    Comment    ${commission_percentage_value}    Set Variable    5
-    Comment    ${client_type_value}    Set Variable    tp
-    Comment    ${nett_fare_commision_condition}    Evaluate    (${nett_fare_value}/(1-${commission_percentage_value}*0.01))-${nett_fare_value}
-    Comment    ${default}    Set Variable If    ${nett_fare_commision_condition}>0    test    0
-    Comment    ${formula}    Set Variable If    ${nett_fare_commision_condition}>0 and "${client_type_value.upper()}" == "DU"    round((${nett_fare_value}/(1-${commission_percentage_value}*0.01) -${nett_fare_value})+10, 2)    round((${nett_fare_value}/(1-${commission_percentage_value}*0.01) -${nett_fare_value}), 2)
-    Comment    ${commission}    Evaluate    ${formula}
-    Comment    ${fare_flag}    Set Variable    false
-    Comment    ${calculated_value}    Set Variable    5.611
-    Comment    ${rounded_value}    Run Keyword If    "${fare_flag}" == "true"    Round Up    5.611    2
-    ...    ELSE    Set Variable    ${calculated_value}
-    Comment    Set Test Variable    ${selling_fare}    ${rounded_value}
-    Comment    ${value}    Round Down    0    2
-    Comment    ${value}    Round Down    ${value}    2
-    ${value}    Evaluate    213.00
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using CC, Nett Fare, Commission, Discount, Tax1, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax1, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, CC, Nett Fare, Commission, Discount, Tax1, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax1, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, CC, Nett Fare, Commission Percentage, Discount, Tax1, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, CC, Nett Fare, Commission, Discount Percentage, Tax1, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage, Tax1, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount, Tax1, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage, Tax1, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Tax1, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Discount Percentage, Tax1, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Commission
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Commission Percentage
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Discount
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Discount Percentage
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Tax1
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Tax2
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Discount
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Discount Percentage
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Tax1
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Tax2
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Discount
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Discount Percentage
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Tax1
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Tax2
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount And Tax1
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount And Tax2
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount And Tax1
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount And Tax2
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage And Tax1
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage And Tax2
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage And Tax1
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage And Tax2
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax1 And Tax2
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax1 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount, Tax1 And Tax2
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount, Tax1 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage, Tax1 And Tax2
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage, Tax1 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage, Tax1 And Tax2
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage, Tax1 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage, Tax2 And Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With FOPType CX, UATP And ClientType TF
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With FOPType CX, And UATP
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With FOPType CX, ClientType TF And TFIncMF
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With FOPType CX
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With CWT Absorb And FOPType CX
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With CWT Absorb, FOPType CX And Waive Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With CWT Absorb And Waive Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With FOPType CX And Waive Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With CWT Absorb
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With Waive Merchant Fee
+    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
