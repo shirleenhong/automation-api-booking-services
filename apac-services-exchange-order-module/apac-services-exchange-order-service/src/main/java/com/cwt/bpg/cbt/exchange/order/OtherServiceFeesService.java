@@ -3,37 +3,34 @@ package com.cwt.bpg.cbt.exchange.order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cwt.bpg.cbt.exchange.order.calculator.BspAirCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.MiscFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 
 @Service
-public class OtherServiceFeesService implements OtherServiceFeesApi {
+public class OtherServiceFeesService {
 
 	@Autowired
-	MiscFeeCalculator miscFeeCalculator;
+	Calculator miscFeeCalculator;
 	
 	@Autowired
-	BspAirCalculator bspAirCalculator;
+	Calculator hkBspAirCalculator;
 	
 	@Autowired 
-	MerchantFeeApi merchantFeeApi;
+	MerchantFeeRepository merchantFeeRepo;
 
-	@Override
 	public FeesBreakdown calculateMiscFee(OtherServiceFeesInput input) {
-		return miscFeeCalculator.calMiscFee(input, getMerchantFeePct(input));
+		return miscFeeCalculator.calculateFee(input, getMerchantFeePct(input));
 	}
 
-	@Override
 	public FeesBreakdown calculateBspAirFee(OtherServiceFeesInput input) {
-		return bspAirCalculator.calBspAirFee(input, getMerchantFeePct(input));
+		return hkBspAirCalculator.calculateFee(input, getMerchantFeePct(input));
 	}
 
 	private Double getMerchantFeePct(OtherServiceFeesInput input) {
 		
-		MerchantFee merchantFeePct = merchantFeeApi.getMerchantFee(
+		MerchantFee merchantFeePct = merchantFeeRepo.getMerchantFee(
 				input.getCountryCode(), 
 				input.getClientType(), 
 				input.getProductName());

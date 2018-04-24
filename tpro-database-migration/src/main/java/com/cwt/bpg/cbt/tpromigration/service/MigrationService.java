@@ -18,9 +18,6 @@ import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductCodeDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientMerchantFee;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Currency;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.CurrencyList;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ListHolder;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.MerchantFeeList;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Product;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
@@ -90,10 +87,6 @@ public class MigrationService {
 		
 		List<ClientMerchantFee> merchantFees = clientMerchantFeeDAO.listMerchantFees();
 		
-//		MerchantFeeList merchantFeeList = new MerchantFeeList();
-//		String countryCode = System.getProperty("spring.profiles.default");
-//		merchantFeeList.setCountryCode(countryCode);
-//		merchantFeeList.setMerchantFees(merchantFees);
 	
 		for(ClientMerchantFee merchantFee: merchantFees) {
 			mongoDbConnection.getCollection("apacClientMerchantFee").insertOne(dBObjectMapper.mapAsDbDocument(merchantFee));

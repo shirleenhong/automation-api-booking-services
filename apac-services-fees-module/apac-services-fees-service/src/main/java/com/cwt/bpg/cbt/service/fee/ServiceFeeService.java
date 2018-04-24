@@ -10,12 +10,11 @@ import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
 import com.cwt.bpg.cbt.service.fee.util.ServiceFeeCalculator;
 
 @Service
-public class ServiceFeeImpl implements ServiceFeeApi {
+public class ServiceFeeService {
 	
 	@Autowired 
 	ServiceFeeCalculator c;
 	
-	@Override
 	public PriceBreakdown calculate(PriceCalculationInput input) {
 
 		PriceBreakdown priceBreakdown = new PriceBreakdown();

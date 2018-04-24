@@ -11,13 +11,6 @@ public class OtherServiceFeesInput implements Serializable {
 	
 	private static final long serialVersionUID = -5237125856544162255L;
 	
-	public static final String INDIA = "IN";
-	public static final String HONG_KONG = "HK";
-	
-	public OtherServiceFeesInput() {
-		this.sellingPrice = BigDecimal.ZERO;
-	}
-	
 	@NotEmpty
 	private String fopType; 
 	private BigDecimal sellingPrice;
@@ -33,6 +26,11 @@ public class OtherServiceFeesInput implements Serializable {
 	private Double gstPercent;
 	private BigDecimal nettCost;
 
+	public OtherServiceFeesInput() {
+		this.sellingPrice = BigDecimal.ZERO;
+		this.gstPercent = 0D;
+	}
+	
 	public String getFopType() {
 		return fopType;
 	}

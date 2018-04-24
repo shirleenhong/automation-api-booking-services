@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.exchange.order.model.Product;
+import com.cwt.bpg.cbt.exchange.order.products.ProductsService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -20,9 +22,8 @@ import io.swagger.annotations.ApiParam;
 @Api(tags = "Exchange Order")
 public class ProductsController
 {
-
     @Autowired
-    private ProductsApi exchangeOrderApi;
+    private ProductsService service;
 
     @GetMapping(path = "/products/{countryCode}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
@@ -31,8 +32,7 @@ public class ProductsController
             @PathVariable
             @ApiParam(value = "Country code of the requested market") String countryCode)
     {
-
-        return new ResponseEntity<>(exchangeOrderApi.getProducts(countryCode), HttpStatus.OK);
+        return new ResponseEntity<>(service.getProducts(countryCode), HttpStatus.OK);
     }
 
 }

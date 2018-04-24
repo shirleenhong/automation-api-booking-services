@@ -17,7 +17,7 @@ import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
 public class ServiceFeeControllerTest {
 
 	@Mock
-	private ServiceFeeApi serviceFee;
+	private ServiceFeeService service;
 
 	@InjectMocks
 	private ServiceFeeController controller;
@@ -32,7 +32,7 @@ public class ServiceFeeControllerTest {
 		PriceCalculationInput input = new PriceCalculationInput();
 		ResponseEntity<PriceBreakdown> calculatePriceInput = controller.calculatePriceInput(input);
 
-		Mockito.verify(serviceFee, Mockito.times(1)).calculate(input);
+		Mockito.verify(service, Mockito.times(1)).calculate(input);
 		
 		assertEquals(HttpStatus.OK, calculatePriceInput.getStatusCode());
 	}
