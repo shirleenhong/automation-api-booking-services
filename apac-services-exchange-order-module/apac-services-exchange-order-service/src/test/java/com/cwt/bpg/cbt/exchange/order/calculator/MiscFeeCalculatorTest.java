@@ -26,7 +26,7 @@ public class MiscFeeCalculatorTest {
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1528.27));
 
-		FeesBreakdown result = calculator.calMiscFee(input, 6D);
+		FeesBreakdown result = calculator.calculateFee(input, 6D);
 
 		assertNull(result.getCommission());
 		assertEquals(round(new BigDecimal(60.03), 2), result.getGstAmount());
@@ -54,7 +54,7 @@ public class MiscFeeCalculatorTest {
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1228.27));
 		
-		FeesBreakdown result = calculator.calMiscFee(input, 6D);
+		FeesBreakdown result = calculator.calculateFee(input, 6D);
 
 		assertEquals(round(new BigDecimal(362.68)), result.getCommission());
 		assertEquals(round(new BigDecimal(75.025)), result.getGstAmount());
@@ -76,7 +76,7 @@ public class MiscFeeCalculatorTest {
 		input.setMerchantFeeAbsorb(true);
 		input.setNettCost(new BigDecimal(1528.27));
 		
-		FeesBreakdown result = calculator.calMiscFee(input, 6D);
+		FeesBreakdown result = calculator.calculateFee(input, 6D);
 
 		assertNull(result.getCommission());
 		assertNull(result.getGstAmount());
@@ -87,7 +87,7 @@ public class MiscFeeCalculatorTest {
 
 	@Test
 	public void shouldNotFailOnNullInput() {
-		FeesBreakdown result = calculator.calMiscFee(null, null);
+		FeesBreakdown result = calculator.calculateFee(null, null);
 
 		assertEquals(BigDecimal.ZERO, result.getCommission());
 		assertEquals(BigDecimal.ZERO, result.getGstAmount());
@@ -99,7 +99,7 @@ public class MiscFeeCalculatorTest {
 	@Test
 	public void shouldNotFailOnEmptyInput() {
 		
-		FeesBreakdown result = calculator.calMiscFee(new OtherServiceFeesInput(), null);
+		FeesBreakdown result = calculator.calculateFee(new OtherServiceFeesInput(), null);
 
 		assertNull(result.getCommission());
 		assertNull(result.getGstAmount());

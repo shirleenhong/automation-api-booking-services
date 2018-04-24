@@ -59,6 +59,6 @@ public class OtherServiceFeesController {
 	public ResponseEntity<FeesBreakdown> computeAirFees(
 			@Valid @RequestBody OtherServiceFeesInput input) {		
 		
-		return new ResponseEntity<>(service.calculateMiscFee(input), HttpStatus.OK);
+		return new ResponseEntity<>(service.calculateBspAirFee(input), HttpStatus.OK);
 	}	
 }
