@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.service.fee.model.PriceBreakdown;
 import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/service-fees")
-@Api(value = "/service-fees", description = "Operations related to service fees", tags = "Service Fees")
+@Api(tags = "Service Fees")
 public class ServiceFeeController
 {
-
     @Autowired
-    private ServiceFeeApi serviceFee;
+    private ServiceFeeService service;
 
     @PostMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
             consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -33,6 +33,6 @@ public class ServiceFeeController
             @RequestBody
             @ApiParam(value = "Values needed for calculation") PriceCalculationInput input)
     {
-        return new ResponseEntity<>(serviceFee.calculate(input), HttpStatus.OK);
+        return new ResponseEntity<>(service.calculate(input), HttpStatus.OK);
     }
 }

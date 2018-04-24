@@ -1,65 +1,60 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.io.IOException;
+import static java.util.Comparator.comparing;
+
 import java.util.ArrayList;
-import static java.util.Comparator.*;
 import java.util.List;
 
-import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.model.ProductList;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
-import com.cwt.bpg.cbt.mongodb.config.MongoDbConnection;
-import com.cwt.bpg.cbt.mongodb.config.mapper.DBObjectMapper;
-import com.mongodb.client.FindIterable;
+import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
+@Repository
+public class ProductsRepository {
 
-@Service
-public class ProductsRepository implements ProductsApi {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductsRepository.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductsRepository.class); 
 	
 	@Autowired
-	private MongoDbConnection mongoDbConnection;
+	private MorphiaComponent morphia;
 
-	@Autowired
-	private DBObjectMapper dBObjectMapper;
-	
-	@Override
 	public List<Product> getProducts(String countryCode) {
-		List<Product> products = new ArrayList<>();
 		
-		FindIterable<Document> iterable = mongoDbConnection.getCollection(Product.COLLECTION).find(new Document("countryCode", countryCode));
-
+		List<Product> products = new ArrayList<>();
+		ProductList productList = null;
 		try {
-			ProductList productList = dBObjectMapper.mapDocumentToBean(iterable.first(), ProductList.class);
-			if (productList != null) {
-				products.addAll(productList.getProducts());
-				sort(products);
-			}
-		} 
-		catch (IOException e) {
-			LOGGER.error("Unable to parse product list for {} {}", countryCode, e.getMessage());
+					
+			productList =  morphia.getDatastore().createQuery(ProductList.class)
+					.field("countryCode")
+					.equal(countryCode)
+					.get();
+		
+		} catch(Exception e) {
+			LOGGER.error("Unable to parse product list for {} {}", countryCode, e.getMessage()); 
 		}
 		
+		if (productList != null) {
+			products.addAll(productList.getProducts());
+			sort(products);
+		}
+	
 		return products;
 	}
-	
+
 	private void sort(List<Product> products) {
-		if(products != null && !products.isEmpty()) {
-			for(Product product: products) {
-				if(product.getVendors() != null && !product.getVendors().isEmpty()) {
+		if (products != null && !products.isEmpty()) {
+			for (Product product : products) {
+				if (product.getVendors() != null && !product.getVendors().isEmpty()) {
 					product.getVendors().sort(comparing(Vendor::getVendorNumber));
 				}
-				
 			}
 			products.sort(comparing(Product::getProductCode));
 		}
-		
+
 	}
 }

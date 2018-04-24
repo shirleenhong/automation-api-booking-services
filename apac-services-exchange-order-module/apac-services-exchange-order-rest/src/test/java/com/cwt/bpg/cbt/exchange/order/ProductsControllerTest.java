@@ -16,11 +16,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.cwt.bpg.cbt.exchange.order.model.Product;
+import com.cwt.bpg.cbt.exchange.order.products.ProductsService;
 
 public class ProductsControllerTest {
 
 	@Mock
-	private ProductsApi api;
+	private ProductsService service;
 
 	@Before
 	public void setUp() {
@@ -35,7 +36,7 @@ public class ProductsControllerTest {
 						
 		ResponseEntity<List<Product>> result = controller.getProducts("HK");
 		
-		Mockito.when(api.getProducts("HK")).thenReturn(new ArrayList<>());
+		Mockito.when(service.getProducts("HK")).thenReturn(new ArrayList<>());
 		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());
 	}

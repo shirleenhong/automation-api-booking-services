@@ -13,14 +13,13 @@ import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.WriteResult;
 
 @Repository
-public class MerchantFeeRepository implements MerchantFeeApi {
+public class MerchantFeeRepository {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MerchantFeeRepository.class);
 	
 	@Autowired
 	private MorphiaComponent morphia;
 
-	@Override
 	public MerchantFee getMerchantFee(String countryCode, String clienType, String productName) {
 		return morphia.getDatastore().createQuery(MerchantFee.class)
 			.field("countryCode")
@@ -31,7 +30,6 @@ public class MerchantFeeRepository implements MerchantFeeApi {
 			.equal(productName).get();
 	}
 	
-	@Override
 	public MerchantFee putMerchantFee(MerchantFee fee) {
 		final Datastore datastore = morphia.getDatastore();
 		

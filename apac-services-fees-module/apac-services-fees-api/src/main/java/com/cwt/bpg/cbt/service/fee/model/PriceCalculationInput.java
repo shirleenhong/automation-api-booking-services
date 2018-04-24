@@ -5,9 +5,6 @@ import java.math.BigDecimal;
 
 public class PriceCalculationInput implements Serializable {
 	
-	public static final String COUNTRY_CODE_INDIA = "IN";
-	public static final String COUNTRY_CODE_HONGKONG = "HK";
-
 	private static final long serialVersionUID = 8501281316064680814L;
 	
 	private String countryCode;

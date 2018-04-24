@@ -7,17 +7,15 @@ import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
-public class CurrencyRepository implements CurrencyApi {
+public class CurrencyRepository {
 
 	@Autowired
 	private MorphiaComponent morphia;
 	
-	@Override
 	public CurrencyCodeRoundRule getRoundingRule(String currencyCode) {
-		CurrencyCodeRoundRule roundingRule = morphia.getDatastore().createQuery(CurrencyCodeRoundRule.class)
+		return morphia.getDatastore().createQuery(CurrencyCodeRoundRule.class)
 				.field("currencyCode")
 				.equal(currencyCode)
 				.get();
-		return roundingRule;
 	}
 }
