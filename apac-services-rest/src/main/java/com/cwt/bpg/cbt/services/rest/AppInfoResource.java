@@ -34,7 +34,6 @@ public class AppInfoResource {
     	 final Map<String, String> result = new HashMap<>();
          result.put("com.bpg.cbt.apac.service.buildNumber", buildNumer);
          result.put("com.bpg.cbt.apac.service.version", applicationVersion);
-         result.put("test.check", "Ok");
          return result;
     }
 
