@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
+import java.math.BigDecimal;
+
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
@@ -8,7 +10,27 @@ import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 public class HkBspAirCalculator extends CommonCalculator implements Calculator{
 	@Override
 	public FeesBreakdown calculateFee(OtherServiceFeesInput input, Double merchantFeePct) {
+
+		FeesBreakdown result = new FeesBreakdown();
 		
+		if(input == null) {
+			return result;
+		}
+		
+//		BigDecimal nettFare =  BigDecimal.ZERO;
+//		BigDecimal sellingPrice = BigDecimal.ZERO;
+//		BigDecimal commission =  BigDecimal.ZERO;
+//		BigDecimal merchantFeeAmount =  BigDecimal.ZERO;
+//		BigDecimal sellingPriceInDi =  BigDecimal.ZERO;
+
+		BigDecimal nettFare =  BigDecimal.ZERO;
+		BigDecimal sellingPrice =  BigDecimal.ZERO;
+		BigDecimal commission =  BigDecimal.ZERO;
+//		BigDecimal Commission Percent =  BigDecimal.ZERO;
+//		BigDecimal sngDiscountPct =  BigDecimal.ZERO;
+		BigDecimal discount =  BigDecimal.ZERO;
+		BigDecimal mFTotal =  BigDecimal.ZERO;
+//
 //		Dim Nett Fare As Single
 //		Dim Selling Price As Single
 //		Dim Client Type As String
@@ -28,6 +50,7 @@ public class HkBspAirCalculator extends CommonCalculator implements Calculator{
 //				Nett Cost in EO = Round UP(Nett Fare, gstrAgcyCurrCode)
 //			End If
 //		Else
+		
 		return new FeesBreakdown();
 	}
 }

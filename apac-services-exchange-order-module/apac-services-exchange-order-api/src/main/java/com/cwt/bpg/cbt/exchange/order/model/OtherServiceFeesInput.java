@@ -12,19 +12,18 @@ public class OtherServiceFeesInput implements Serializable {
 	private static final long serialVersionUID = -5237125856544162255L;
 	
 	@NotEmpty
-	private String fopType; 
-	private BigDecimal sellingPrice;
-	private boolean isGstAbsorb;
-	private boolean isMerchantFeeAbsorb;
-	private boolean isMerchantFeeWaive;	
+	protected String fopType; 
+	protected BigDecimal sellingPrice;
+	protected boolean isMerchantFeeAbsorb;
+	protected boolean isMerchantFeeWaive;	
 	private String countryCode;
 	@NotEmpty
-	private String clientType;
+	protected String clientType;
 	@NotEmpty
-	private String productName;
+	protected String productName;
 	@NotNull
-	private Double gstPercent;
-	private BigDecimal nettCost;
+	protected Double gstPercent;
+	protected BigDecimal nettCost;
 
 	public OtherServiceFeesInput() {
 		this.sellingPrice = BigDecimal.ZERO;
@@ -42,12 +41,6 @@ public class OtherServiceFeesInput implements Serializable {
 	}
 	public void setSellingPrice(BigDecimal sellingPrice) {
 		this.sellingPrice = sellingPrice;
-	}
-	public boolean isGstAbsorb() {
-		return isGstAbsorb;
-	}
-	public void setGstAbsorb(boolean isGstAbsorb) {
-		this.isGstAbsorb = isGstAbsorb;
 	}
 	public boolean isMerchantFeeAbsorb() {
 		return isMerchantFeeAbsorb;

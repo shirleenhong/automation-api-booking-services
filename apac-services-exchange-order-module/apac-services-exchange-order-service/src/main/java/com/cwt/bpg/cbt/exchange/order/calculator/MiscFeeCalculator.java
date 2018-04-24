@@ -6,14 +6,15 @@ import java.math.RoundingMode;
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.FOPTypes;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 
 public class MiscFeeCalculator extends CommonCalculator  implements Calculator{
 	
 	@Override
-	public FeesBreakdown calculateFee(OtherServiceFeesInput input, 
+	public FeesBreakdown calculateFee(OtherServiceFeesInput genericInput, 
 			Double merchantFeePct) {		
-
+		MiscFeesInput input = (MiscFeesInput)genericInput;
 		FeesBreakdown result = new FeesBreakdown();
 		
 		if(input == null) {
