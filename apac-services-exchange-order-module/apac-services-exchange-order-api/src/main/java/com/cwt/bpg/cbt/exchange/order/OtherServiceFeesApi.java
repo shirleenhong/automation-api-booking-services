@@ -7,4 +7,6 @@ public interface OtherServiceFeesApi {
 	
 	FeesBreakdown calculateMiscFee(OtherServiceFeesInput input);
 
+	FeesBreakdown calculateBspAirFee(OtherServiceFeesInput input);
+
 }
