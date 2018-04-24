@@ -12,7 +12,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.cwt.bpg.cbt.exchange.order.model.ClientMerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
@@ -31,10 +30,10 @@ public class MerchantFeeControllerTest {
 
 	@Test
 	public void canPutMerchantFee() {
-		ClientMerchantFee merchantFee = new ClientMerchantFee();
+		MerchantFee merchantFee = new MerchantFee();
 		Mockito.when(service.putMerchantFee(merchantFee)).thenReturn(merchantFee);
 		
-		ResponseEntity<ClientMerchantFee> result = controller.updateMerchantFee("SG", merchantFee);
+		ResponseEntity<MerchantFee> result = controller.updateMerchantFee("SG", merchantFee);
 
 		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());

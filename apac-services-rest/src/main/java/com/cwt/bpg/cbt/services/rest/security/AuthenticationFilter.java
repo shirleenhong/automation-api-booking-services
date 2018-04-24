@@ -12,15 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.cwt.bpg.cbt.security.api.TokenServiceApi;
+import com.cwt.bpg.cbt.security.service.TokenService;
 
 public class AuthenticationFilter extends GenericFilterBean {
 
 	private static final String BEARER = "Bearer ";
-	private TokenServiceApi tokenApi;
+	private TokenService tokenService;
 
-	public AuthenticationFilter(TokenServiceApi tokenApi) {
-		this.tokenApi = tokenApi;
+	public AuthenticationFilter(TokenService tokenService) {
+		this.tokenService = tokenService;
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class AuthenticationFilter extends GenericFilterBean {
 		}
 
 		String token = authHeader.replace(BEARER, "").trim();
-		if (!tokenApi.isTokenExist(token)) {
+		if (!tokenService.isTokenExist(token)) {
 			httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token.");
 			return;
 		}

@@ -15,5 +15,6 @@
   <modules>
   	<module>apac-services-security-api</module>
   	<module>apac-services-security-service</module>
+  	<module>apac-services-security-repository</module>
   </modules>
 </project>

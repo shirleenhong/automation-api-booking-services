@@ -22,12 +22,33 @@ public class OtherServiceFeesController {
 	@Autowired
 	private OtherServiceFeesApi otherServiceFeesApi;
 	
+	/**
+	 * Applicable car, hotel and other ticket
+	 * @param input
+	 * @return
+	 */
 	@PostMapping(
 			path="/misc-fees", 
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, 
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	public ResponseEntity<FeesBreakdown> computeMiscellaneousFee(
+			@Valid @RequestBody OtherServiceFeesInput input) {		
+		
+		return new ResponseEntity<>(otherServiceFeesApi.calculateMiscFee(input), HttpStatus.OK);
+	}	
+	
+	/**
+	 * Applicable for air
+	 * @param input
+	 * @return
+	 */
+	@PostMapping(
+			path="/air-fees", 
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, 
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	public ResponseEntity<FeesBreakdown> computeAirFees(
 			@Valid @RequestBody OtherServiceFeesInput input) {		
 		
 		return new ResponseEntity<>(otherServiceFeesApi.calculateMiscFee(input), HttpStatus.OK);

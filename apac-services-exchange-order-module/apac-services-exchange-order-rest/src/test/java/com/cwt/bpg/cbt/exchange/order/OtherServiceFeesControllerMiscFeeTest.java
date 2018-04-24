@@ -52,9 +52,7 @@ public class OtherServiceFeesControllerMiscFeeTest {
 						
 		OtherServiceFeesInput input = new OtherServiceFeesInput();
 		
-		input.setMarketCode("HK");
-	    input.setCurrencyCode("HKD");
-	    input.setFopType("CX");	  
+		input.setFopType("CX");	  
 	    input.setClientType("CT");
 	    input.setGstPercent(2D);
 	    input.setProductName("PN");
@@ -65,60 +63,12 @@ public class OtherServiceFeesControllerMiscFeeTest {
                 .andExpect(status().isOk());
 	}
 
-	@Test
-	public void shouldReturnBadRequestOnEmptyMarketCode() throws Exception {
-						
-		OtherServiceFeesInput input = new OtherServiceFeesInput();
-		
-	    input.setCurrencyCode("HKD");
-	    input.setFopType("CX");
-	    input.setClientType("CT");
-	    input.setGstPercent(2D);
-	    input.setProductName("PN");
-				
-		mockMvc.perform(post("/other-service-fees/misc-fees")
-	                .contentType(APPLICATION_JSON_UTF8)
-	                .content(convertObjectToJsonBytes(input)))
-	                .andExpect(status().isBadRequest());
-		
-		input.setMarketCode("");	
-		
-		mockMvc.perform(post("/other-service-fees/misc-fees")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
-	}
-	
-	@Test
-	public void shouldReturnBadRequestOnEmptyCurrencyCode() throws Exception {
-						
-		OtherServiceFeesInput input = new OtherServiceFeesInput();
-		
-	    input.setMarketCode("HK");
-	    input.setFopType("CX");
-	    input.setClientType("CT");
-	    input.setGstPercent(2D);
-	    input.setProductName("PN");
-	    
-	    mockMvc.perform(post("/other-service-fees/misc-fees")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
-		
-		input.setCurrencyCode("");
-		mockMvc.perform(post("/other-service-fees/misc-fees")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
-	}
 	
 	@Test
 	public void shouldReturnBadRequestOnEmptyFOPType() throws Exception {
 						
 		OtherServiceFeesInput input = new OtherServiceFeesInput();
 		
-	    input.setMarketCode("HK");
-	    input.setCurrencyCode("HKD");
 	    input.setClientType("CT");
 	    input.setGstPercent(2D);
 	    input.setProductName("PN");
@@ -141,8 +91,6 @@ public class OtherServiceFeesControllerMiscFeeTest {
 						
 		OtherServiceFeesInput input = new OtherServiceFeesInput();
 		
-	    input.setMarketCode("HK");
-	    input.setCurrencyCode("HKD");
 	    input.setFopType("CX");
 	    input.setGstPercent(2D);
 	    input.setProductName("PN");
@@ -165,8 +113,6 @@ public class OtherServiceFeesControllerMiscFeeTest {
 						
 		OtherServiceFeesInput input = new OtherServiceFeesInput();
 		
-	    input.setMarketCode("HK");
-	    input.setCurrencyCode("HKD");
 	    input.setFopType("CX");
 	    input.setProductName("PN");
 	    
@@ -182,8 +128,6 @@ public class OtherServiceFeesControllerMiscFeeTest {
 						
 		OtherServiceFeesInput input = new OtherServiceFeesInput();
 		
-	    input.setMarketCode("HK");
-	    input.setCurrencyCode("HKD");
 	    input.setFopType("CX");
 	    input.setGstPercent(2D);
 	    

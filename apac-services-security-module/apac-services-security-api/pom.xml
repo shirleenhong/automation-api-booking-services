@@ -10,4 +10,12 @@
 	<artifactId>apac-services-security-api</artifactId>
 	<name>apac-services-security-api</name>
 	<description>apac-services-security-api</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.mongodb.morphia</groupId>
+			<artifactId>morphia</artifactId>
+			<version>${mongodb.morphia.version}</version>
+		</dependency>
+	</dependencies>
 </project>

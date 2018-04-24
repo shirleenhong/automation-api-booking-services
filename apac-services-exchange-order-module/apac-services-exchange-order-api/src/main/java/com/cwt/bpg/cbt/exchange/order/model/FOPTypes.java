@@ -2,7 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 public enum FOPTypes {
 
-	CX("CX"), 
+	CWT("CX"), 
 	CREDIT_CARD("CC"), 
 	INVOICE("INV");
 
