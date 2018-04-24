@@ -18,7 +18,7 @@ public class Application {
 		{
 			MigrationService service = context.getBean(MigrationService.class);
 			//service.startMigration();
-			service.migrateMerchantFees();
+			//service.migrateMerchantFees();
 			//service.migrateCurrencies();
 		}
 	}

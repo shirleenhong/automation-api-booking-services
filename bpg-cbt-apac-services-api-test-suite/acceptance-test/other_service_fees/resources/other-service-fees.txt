@@ -1,55 +1,4 @@
 *** Keywords ***
-Create Test Variables For Other Service Fee
-    [Arguments]    ${fees_list}    ${country}=sg    ${service_fee_name}=misc-fees
-    [Documentation]    service fee names:
-    ...    misc-fees
-    ...    car
-    ...    bsp
-    ...    bsp-air
-    ...
-    ...    fees_list fields:
-    ...    cc,(cc, cx or inv)|client_type,aa|pro_name,aaa|merchant_amount,nn.nn|merchant_percentage,nn.nn|merchant_absorb,boolean
-    ...
-    ...    additional fields for misc-fees ad car
-    ...    selling_price,nn.nn|nett_cost,nn.nn|gst_amoun,nn.nn|gst_percentage,nn.nn|gst_absorb,boolean
-    ...
-    ...    additional fields for bsp/bsp-air:
-    ...    nett_fare,nn.nn|gross_fare,nn.nn|tax1,nn.nn|tax1_code,aa|tax2,nn.nn|tax2_code,aa|commission_percentage,nn.nn|discount_percentage,nn.nn|apply_formula,boolean|uatp_flag,boolean|waive_merchant,boolean
-    ${fees_list}    Split String    ${fees_list}    |
-    : FOR    ${fees}    IN    @{fees_list}
-    \    ${fees_item}    Split String    ${fees}    ,
-    \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
-    Set Test Variable    ${fees_list}
-    Set Test Variable    ${country}    ${country.upper()}
-    Set Test Variable    ${service_fee_name}
-
-Send Other Service Fees Post Request
-    [Arguments]    ${token}=${default_token}
-    Create Session    fees    ${${env}_base_url}    verify=True
-    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
-    ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${other_service_fees_request_list}    Create List
-    Run Keyword If    "${country}"!="null"    Append To List    ${other_service_fees_request_list}    "countryCode":"${country}"
-    Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "creditCard":${cc_value}
-    Run Keyword If    "${merchant_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeAmount":${merchant_amount_value}
-    Run Keyword If    "${merchant_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeePercentage":${merchant_percentage_value}
-    Run Keyword If    "${merchant_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantAbsorb":${merchant_absorb_value}
-    Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":"${client_type_value}"
-    Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productName":"${pro_name_value}"
-    ${other_service_fees_request_list}    Run Keyword If    "${service_fee_name}"=="misc-fees" or "${service_fee_name}"=="car"    Append Additional Fields For Miscellaneous Fees    ${other_service_fees_request_list}
-    ...    ELSE IF    "${service_fee_name}"=="bsp-air" or "${service_fee_name}"=="bsp"    Append Additional Fields For BSP    ${other_service_fees_request_list}
-    ${list_count}    Get Length    ${other_service_fees_request_list}
-    : FOR    ${i}    IN RANGE    0    ${list_count}
-    \    ${fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${fees_list},
-    \    ${fees_list}    Set Variable    ${fees_list}${other_service_fees_request_list[${i}]}
-    ${data}    Set Variable    {${fees_list}}
-    Log    ${data}
-    ${response}    Post Request    fees    /apac-services-rest/api/other-service-fees/${service_fee_name}    data=${data}    headers=${headers}
-    Set Test Variable    ${response}
-    Log    ${response.headers}
-    Log    ${response.content}
-    Set Test Variable    ${api_flag}    fees
-
 Append Additional Fields For BSP
     [Arguments]    ${other_service_fees_request_list}
     Run Keyword If    "${nett_fare_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettFareAmount":${nett_fare_value}
@@ -67,9 +16,116 @@ Append Additional Fields For BSP
 
 Append Additional Fields For Miscellaneous Fees
     [Arguments]    ${other_service_fees_request_list}
-    Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPriceAmount":${merchant_amount_value}
-    Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCostAmount":"${nett_cost_value}"
-    Run Keyword If    "${gst_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercentage":${gst_percentage_value}
-    Run Keyword If    "${gst_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAmount":"${gst_amount_value}"
-    Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAbsorb":${gst_absorb_value}
+    Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPrice":${selling_price_value}
+    Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCost":"${nett_cost_value}"
+    Run Keyword If    "${gst_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercent":${gst_percentage_value}
+    Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "isGstAbsorb":${gst_absorb_value}
     [Return]    ${other_service_fees_request_list}
+
+Calculate Other Service Fees Commission
+    ${calculated_value}    Evaluate    ${selling_price_in_di}-${nett_cost_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    Set Test Variable    ${commission}    ${calculated_value}
+
+Calculate Other Service Fees GST
+    ${calculated_value}    Evaluate    ${selling_price_value}*(${gst_percent_value}*0.01)
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    Set Test Variable    ${gst}    ${calculated_value}
+
+Calculate Other Service Fees Mechant Fee
+    ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percent_value}*0.01}
+    Comment    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    Set Test Variable    ${merchant_fee}    ${calculated_value}
+
+Calculate Other Service Fees Nett Cost GST
+    ${calculated_value}    Evaluate    ${nett_cost_value}*(${gst_percent_value}*0.01)
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    Set Test Variable    ${nett_cost_gst}    ${calculated_value}
+
+Calculate Other Service Fees Selling Price In DI
+    ${calculated_value}    Evaluate    (${selling_price_value}+${gst_percent_value}+${merchant_fee})/(1+${gst_percent_value}*0.01}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    Set Test Variable    ${selling_price_in_di}    ${calculated_value}
+
+Create Test Variables For Other Service Fee
+    [Arguments]    ${fees_list}    ${country}=sg    ${service_fee_name}=misc-fees
+    [Documentation]    service fee names:
+    ...    misc-fees
+    ...    car
+    ...    bsp
+    ...    bsp-air
+    ...
+    ...    fees_list fields:
+    ...    cc,(cc, cx or inv)|client_type,aa|pro_name,aaa|merchant_absorb,boolean|merchant_waive,boolean
+    ...
+    ...    additional fields for misc-fees ad car
+    ...    selling_price,nn.nn|nett_cost,nn.nn|gst_percentage,nn.nn|gst_absorb,boolean
+    ...
+    ...    additional fields for bsp/bsp-air:
+    ...    nett_fare,nn.nn|gross_fare,nn.nn|tax1,nn.nn|tax1_code,aa|tax2,nn.nn|tax2_code,aa|commission_percentage,nn.nn|discount_percentage,nn.nn|apply_formula,boolean|uatp_flag,boolean|waive_merchant,boolean
+    ${fees_list}    Split String    ${fees_list}    |
+    : FOR    ${fees}    IN    @{fees_list}
+    \    ${fees_item}    Split String    ${fees}    ,
+    \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
+    Set Test Variable    ${fees_list}
+    Set Test Variable    ${country}    ${country.upper()}
+    Set Test Variable    ${service_fee_name}
+
+Generate Test Variables For Other Service Fees
+    [Arguments]    ${fees_list}    ${country}=sg    ${service_fee_name}=misc-fees
+    Create Test Variables For Other Service Fee    ${fees_list}    ${country}=${country}    ${service_fee_name}=${service_fee_name}
+    Get Rounding Rules
+    Run Keyword If    "${isGstAbsorb}" == "false"    Run Keywords    Calculate Other Service Fees GST
+    ...    AND    Calculate Other Service Fees Nett Cost GST
+    ...    ELSE    Run Keywords    Set Test Variable    ${gst}    0
+    ...    AND    Set Test Variable    ${nett_cost_gst}    0
+    Run Keyword If    "${isMerchantFeeAbsorb}" == "false" and "${fopType.upper()}" == "CX" and "${isMerchantFeeWaive}" == "false"    Calculate Other Service Fees Mechant Fee
+    ...    ELSE    Set Test Variable    ${merchant_fee}    0
+    Calculate Other Service Fees Selling Price In DI
+    Run Keyword If    ${selling_price_in_di}>${nett_cost_value}    Calculate Other Service Fees Commission
+    ...    ELSE    Set Test Variable    ${commission}    0
+
+Get Rounding Rules
+    Send Currency Get Request
+    ${decimal_value}    Get Json Value    ${response.content}    /decimal
+    ${round_rule_value}    Get Json Value    ${response.content}    /roundRule
+    Set Test Variable    ${decimal_place}    ${decimal_value}
+    Set Test Variable    ${rounding_rule}    ${round_rule_value}
+
+Send Currency Get Request
+    [Arguments]    ${token}=${default_token}    ${currency_code}=${currency_code_value}
+    Create Session    fees    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    fees    apac-services-rest/api/merchant/currency/${currency_code}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    fees
+
+Send Other Service Fees Post Request
+    [Arguments]    ${token}=${default_token}
+    Create Session    fees    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${other_service_fees_request_list}    Create List
+    Run Keyword If    "${country}"!="null"    Append To List    ${other_service_fees_request_list}    "countryCode":"${country}"
+    Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":${cc_value}
+    Run Keyword If    "${merchant_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "isMerchantFeeAbsorb":${merchant_absorb_value}
+    Run Keyword If    "${merchant_waive_value}"!="null"    Append To List    ${other_service_fees_request_list}    "isMerchantFeeWaive":${merchant_waive_value}
+    Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":"${client_type_value}"
+    Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productName":"${pro_name_value}"
+    ${other_service_fees_request_list}    Run Keyword If    "${service_fee_name}"=="misc-fees" or "${service_fee_name}"=="car"    Append Additional Fields For Miscellaneous Fees    ${other_service_fees_request_list}
+    ...    ELSE IF    "${service_fee_name}"=="bsp-air" or "${service_fee_name}"=="bsp"    Append Additional Fields For BSP    ${other_service_fees_request_list}
+    ${list_count}    Get Length    ${other_service_fees_request_list}
+    : FOR    ${i}    IN RANGE    0    ${list_count}
+    \    ${fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${fees_list},
+    \    ${fees_list}    Set Variable    ${fees_list}${other_service_fees_request_list[${i}]}
+    ${data}    Set Variable    {${fees_list}}
+    Log    ${data}
+    ${response}    Post Request    fees    /apac-services-rest/api/other-service-fees/${service_fee_name}    data=${data}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    fees

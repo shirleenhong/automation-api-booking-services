@@ -11,7 +11,7 @@ public class ClientMerchantFee {
 	private Double merchantFeePct;
 	
 	private Boolean includeTransactionFee;
-	
+
 	private String countryCode;
 
 	public String getClientName() {
@@ -53,7 +53,7 @@ public class ClientMerchantFee {
 	public void setIncludeTransactionFee(Boolean includeTransactionFee) {
 		this.includeTransactionFee = includeTransactionFee;
 	}
-
+	
 	public String getCountryCode() {
 		return countryCode;
 	}

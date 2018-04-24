@@ -36,11 +36,13 @@ public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
+			String countryCode = System.getProperty("spring.profiles.default");
 			while (rs.next()) {
 				ClientMerchantFee merchantFee = new ClientMerchantFee();
 				merchantFee.setIncludeTransactionFee(rs.getObject("tfincmf") == null ? null : rs.getBoolean("tfincmf"));
 				merchantFee.setMerchantFeePct(rs.getObject("merchfeepct") == null ? null : rs.getDouble("merchfeepct"));
 				merchantFee.setClientName(rs.getObject("clientname") == null ? null : rs.getString("clientname").trim());
+				merchantFee.setCountryCode(countryCode);
 				if(rs.getObject("clientType") != null) {
 					merchantFee.setClientType(rs.getString("clientType").trim());
 				}

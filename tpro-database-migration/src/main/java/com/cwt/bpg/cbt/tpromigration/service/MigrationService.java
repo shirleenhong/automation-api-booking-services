@@ -18,9 +18,6 @@ import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductCodeDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientMerchantFee;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Currency;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.CurrencyList;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ListHolder;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.MerchantFeeList;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Product;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
@@ -89,14 +86,11 @@ public class MigrationService {
 		logger.info("started merchant fee migration...");
 		
 		List<ClientMerchantFee> merchantFees = clientMerchantFeeDAO.listMerchantFees();
-		List<Document> merchantFeeDocs = new ArrayList<Document>();
-		String countryCode = System.getProperty("spring.profiles.default");
-		for(ClientMerchantFee merchantFee:merchantFees) {
-			merchantFee.setCountryCode(countryCode);
-			merchantFeeDocs.add(dBObjectMapper.mapAsDbDocument(merchantFee));
-		}
 		
-		mongoDbConnection.getCollection("apacClientMerchantFee").insertMany(merchantFeeDocs);
+	
+		for(ClientMerchantFee merchantFee: merchantFees) {
+			mongoDbConnection.getCollection("apacClientMerchantFee").insertOne(dBObjectMapper.mapAsDbDocument(merchantFee));
+		}
 		
 		logger.info("end of merchant fee migration...");
 		
