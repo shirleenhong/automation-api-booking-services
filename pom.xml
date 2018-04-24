@@ -421,6 +421,7 @@
 		<module>apac-services-common</module>
 		<module>apac-services-encryptor</module>
 		<module>apac-services-documentation</module>
+		<module>apac-services-exception-handler</module>
 	</modules>
 
 </project>
