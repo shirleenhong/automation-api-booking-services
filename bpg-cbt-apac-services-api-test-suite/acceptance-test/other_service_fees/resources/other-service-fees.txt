@@ -17,9 +17,9 @@ Append Additional Fields For BSP
 Append Additional Fields For Miscellaneous Fees
     [Arguments]    ${other_service_fees_request_list}
     Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPrice":${selling_price_value}
-    Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCost":"${nett_cost_value}"
-    Run Keyword If    "${gst_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercent":${gst_percentage_value}
-    Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "isGstAbsorb":${gst_absorb_value}
+    Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCost":${nett_cost_value}
+    Run Keyword If    "${gst_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercent":${gst_percent_value}
+    Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAbsorb":${gst_absorb_value}
     [Return]    ${other_service_fees_request_list}
 
 Calculate Other Service Fees Commission
@@ -33,8 +33,7 @@ Calculate Other Service Fees GST
     Set Test Variable    ${gst}    ${calculated_value}
 
 Calculate Other Service Fees Mechant Fee
-    ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percent_value}*0.01}
-    Comment    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
+    ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percent_value}*0.01)
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${merchant_fee}    ${calculated_value}
 
@@ -44,7 +43,7 @@ Calculate Other Service Fees Nett Cost GST
     Set Test Variable    ${nett_cost_gst}    ${calculated_value}
 
 Calculate Other Service Fees Selling Price In DI
-    ${calculated_value}    Evaluate    (${selling_price_value}+${gst_percent_value}+${merchant_fee})/(1+${gst_percent_value}*0.01}
+    ${calculated_value}    Evaluate    (${selling_price_value}+${gst}+${merchant_fee})/(1+${gst_percent_value}*0.01)
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${selling_price_in_di}    ${calculated_value}
 
@@ -74,17 +73,19 @@ Create Test Variables For Other Service Fee
 
 Generate Test Variables For Other Service Fees
     [Arguments]    ${fees_list}    ${country}=sg    ${service_fee_name}=misc-fees
-    Create Test Variables For Other Service Fee    ${fees_list}    ${country}=${country}    ${service_fee_name}=${service_fee_name}
-    Get Rounding Rules
-    Run Keyword If    "${isGstAbsorb}" == "false"    Run Keywords    Calculate Other Service Fees GST
+    Create Test Variables For Other Service Fee    ${fees_list}    ${country}    ${service_fee_name}
+    ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
+    Set Test Variable    ${decimal_place}
+    Run Keyword If    "${gst_absorb_value}" == "false"    Run Keywords    Calculate Other Service Fees GST
     ...    AND    Calculate Other Service Fees Nett Cost GST
     ...    ELSE    Run Keywords    Set Test Variable    ${gst}    0
     ...    AND    Set Test Variable    ${nett_cost_gst}    0
-    Run Keyword If    "${isMerchantFeeAbsorb}" == "false" and "${fopType.upper()}" == "CX" and "${isMerchantFeeWaive}" == "false"    Calculate Other Service Fees Mechant Fee
+    Run Keyword If    "${merchant_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_waive_value}" == "false"    Calculate Other Service Fees Mechant Fee
     ...    ELSE    Set Test Variable    ${merchant_fee}    0
     Calculate Other Service Fees Selling Price In DI
     Run Keyword If    ${selling_price_in_di}>${nett_cost_value}    Calculate Other Service Fees Commission
     ...    ELSE    Set Test Variable    ${commission}    0
+    Run Keyword If    "${country.upper()}" != "SG"    Remove Decimal Places
 
 Get Rounding Rules
     Send Currency Get Request
@@ -92,6 +93,23 @@ Get Rounding Rules
     ${round_rule_value}    Get Json Value    ${response.content}    /roundRule
     Set Test Variable    ${decimal_place}    ${decimal_value}
     Set Test Variable    ${rounding_rule}    ${round_rule_value}
+
+Remove Decimal Places
+    ${selling_price_in_di}    Convert To String    ${selling_price_in_di}
+    ${gst}    Convert To String    ${gst}
+    ${merchant_fee}    Convert To String    ${merchant_fee}
+    ${commission}    Convert To String    ${commission}
+    ${nett_cost_gst}    Convert To String    ${nett_cost_gst}
+    ${selling_price_in_di}    Remove String    ${selling_price_in_di}    .0
+    ${gst}    Remove String    ${gst}    .0
+    ${merchant_fee}    Remove String    ${merchant_fee}    .0
+    ${commission}    Remove String    ${commission}    .0
+    ${nett_cost_gst}    Remove String    ${nett_cost_gst}    .0
+    Set Test Variable    ${selling_price_in_di}
+    Set Test Variable    ${gst}
+    Set Test Variable    ${merchant_fee}
+    Set Test Variable    ${commission}
+    Set Test Variable    ${nett_cost_gst}
 
 Send Currency Get Request
     [Arguments]    ${token}=${default_token}    ${currency_code}=${currency_code_value}
@@ -111,11 +129,12 @@ Send Other Service Fees Post Request
     ...    ELSE    Create Dictionary    Content-Type=application/json
     ${other_service_fees_request_list}    Create List
     Run Keyword If    "${country}"!="null"    Append To List    ${other_service_fees_request_list}    "countryCode":"${country}"
-    Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":${cc_value}
-    Run Keyword If    "${merchant_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "isMerchantFeeAbsorb":${merchant_absorb_value}
-    Run Keyword If    "${merchant_waive_value}"!="null"    Append To List    ${other_service_fees_request_list}    "isMerchantFeeWaive":${merchant_waive_value}
+    Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
+    Run Keyword If    "${merchant_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeAbsorb":${merchant_absorb_value}
+    Run Keyword If    "${merchant_waive_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeWaive":${merchant_waive_value}
     Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":"${client_type_value}"
     Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productName":"${pro_name_value}"
+    Set Test Variable    ${other_service_fees_request_list}
     ${other_service_fees_request_list}    Run Keyword If    "${service_fee_name}"=="misc-fees" or "${service_fee_name}"=="car"    Append Additional Fields For Miscellaneous Fees    ${other_service_fees_request_list}
     ...    ELSE IF    "${service_fee_name}"=="bsp-air" or "${service_fee_name}"=="bsp"    Append Additional Fields For BSP    ${other_service_fees_request_list}
     ${list_count}    Get Length    ${other_service_fees_request_list}
@@ -130,4 +149,21 @@ Send Other Service Fees Post Request
     Log    ${response.content}
     Set Test Variable    ${api_flag}    fees
 
+Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Verify Json Value Is Correct    /sellingPriceInDi    ${selling_price_in_di}    int
+    Verify Json Value Is Correct    /commission    ${commission}    int
+    Run Keyword If    "${gst_absorb_value}"=="false"    Verify Json Value Is Correct    /gstAmount    ${gst}    int
+    ...    ELSE    Verify Json Element Does Not Exist    /gstAmount
+    Run Keyword If    "${merchant_absorb_value}"=="false"    Verify Json Value Is Correct    /merchantFee    ${merchant_fee}    int
+    ...    ELSE    Verify Json Element Does Not Exist    /merchantFee
+    Run Keyword If    "${gst_absorb_value}"=="false" and "${nett_cost_value}"!="0"    Verify Json Value Is Correct    /nettCostGst    ${nett_cost_gst}    int
+    ...    ELSE    Verify Json Element Does Not Exist    /nettCostGst
+
 Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+
+Verify Calculated Other Service Fees Are Not Returned
+    Verify String Does Not Contain Substring    ${response.content}    "sellingPriceInDi"
+    Verify String Does Not Contain Substring    ${response.content}    "merchantFeeAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "gstAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "nettCostGst"
+    Verify String Does Not Contain Substring    ${response.content}    "commission"
