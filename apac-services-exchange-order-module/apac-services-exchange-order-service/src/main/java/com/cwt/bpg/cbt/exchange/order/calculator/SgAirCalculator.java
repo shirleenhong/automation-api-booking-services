@@ -13,8 +13,11 @@ public class SgAirCalculator extends CommonCalculator implements Calculator{
 	
 	@Override
 	public FeesBreakdown calculateFee(OtherServiceFeesInput genericInput, MerchantFee merchantFeeObj) {
+		
 		AirFeesBreakdown result = new AirFeesBreakdown();
+		
 		AirFeesInput input = (AirFeesInput)genericInput;
+		
 		if(genericInput == null) {
 			return result;
 		}
@@ -63,6 +66,12 @@ public class SgAirCalculator extends CommonCalculator implements Calculator{
 			
 			totalSellingFare = totalNettFare.add(merchantFee);
 		}
+		
+		result.setCommission(commission);
+		result.setDiscount(discount);
+		result.setNettCostInEO(nettCostInEO);
+		result.setTotalSellingFare(totalSellingFare);
+		
 		return result;
 	}
 	
