@@ -6,11 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -52,9 +58,9 @@ public class OtherServiceFeesController {
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, 
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	public ResponseEntity<FeesBreakdown> computeAirFees(
+	public ResponseEntity<AirFeesBreakdown> computeAirFees(
 			@Valid @RequestBody AirFeesInput input) {
 		
-		return new ResponseEntity<>(service.calculateBspAirFee(input), HttpStatus.OK);
+		return new ResponseEntity<>((AirFeesBreakdown)service.calculateAirFee(input), HttpStatus.OK);
 	}	
 }

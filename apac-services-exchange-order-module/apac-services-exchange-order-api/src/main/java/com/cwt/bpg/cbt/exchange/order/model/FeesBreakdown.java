@@ -7,11 +7,11 @@ public class FeesBreakdown implements Serializable {
 		
 	private static final long serialVersionUID = 5067269385200872058L;
 	
-	private BigDecimal sellingPriceInDi;
-	private BigDecimal gstAmount;
-	private BigDecimal merchantFee;
-	private BigDecimal commission;
-	private BigDecimal nettCostGst;
+	protected BigDecimal sellingPriceInDi;
+	protected BigDecimal gstAmount;
+	protected BigDecimal merchantFee;
+	protected BigDecimal commission;
+	protected BigDecimal nettCostGst;
 	
 	public FeesBreakdown () {
 		
