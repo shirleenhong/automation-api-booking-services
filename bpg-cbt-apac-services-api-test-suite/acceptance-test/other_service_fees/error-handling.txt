@@ -1,1 +1,43 @@
+*** Settings ***
+Suite Setup
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/other-service-fees.txt
+
 *** Test Cases ***
+Verify That Error Is Encountered When Invalid Token Is Used
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request    token=12345.12345.12345.
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Other Service Fees Are Not Returned
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request    token=aaa.bbb.ccc
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Other Service Fees Are Not Returned
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request    token=!@#$%^&.!@#$%^&*.!@#$%^
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Other Service Fees Are Not Returned
+
+Verify That Error Is Encountered When Null Token Is Used
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Calculated Other Service Fees Are Not Returned
+
+Verify That Error Is Encountered When Empty Token Is Used
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Other Service Fees Are Not Returned
+
+Verify That Error Is Encountered When No Token Is Used
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Calculated Other Service Fees Are Not Returned

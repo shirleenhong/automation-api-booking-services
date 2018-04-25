@@ -6,101 +6,221 @@ Resource          ../resources/api-imports.txt
 
 *** Test Cases ***
 Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage And Merchant Fee Percentage
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100|nett_cost,75|gst_percent,7|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100.78|nett_cost,0|gst_percent,7.50|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,178.89|nett_cost,75.90|gst_percent,8.50|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
 
 Verify That Other Service Fees Are Calculated Correctly Using CC, Nett Cost, GST Percentage And Merchant Fee Percentage
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,0|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,0|nett_cost,45|gst_percent,7|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,0|nett_cost,0|gst_percent,5.90|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,0|nett_cost,59.90|gst_percent,7.76|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
 
 Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost And GST Percentage
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,MG|pro_name,ALBOHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,0|selling_price,150|nett_cost,0|gst_percent,9|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,MG|pro_name,ALBOHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,0|selling_price,150|nett_cost,121|gst_percent,9|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACA INVESTMENTS SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,0|selling_price,200.45|nett_cost,0|gst_percent,9.50|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACA INVESTMENTS SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,0|selling_price,150.55|nett_cost,145.99|gst_percent,11.5|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
 
 Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost And Merchant Fee Percentage
-
-Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, GST Percentage And Merchant Fee Percentage
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100|nett_cost,0|gst_percent,0|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100|nett_cost,88|gst_percent,0|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100.11|nett_cost,0|gst_percent,0|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100.11|nett_cost,99.00|gst_percent,0|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
 
 Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price And Nett Cost
-
-Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price And GST Percentage
-
-Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price And Merchant Fee Percentage
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,MG|pro_name,ALBOHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,0|selling_price,279|nett_cost,0|gst_percent,0|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,MG|pro_name,ALBOHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,0|selling_price,279|nett_cost,250|gst_percent,0|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACA INVESTMENTS SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,0|selling_price,279.50|nett_cost,0|gst_percent,0|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACA INVESTMENTS SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,0|selling_price,279.99|nett_cost,250.89|gst_percent,0|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
 
 Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage, Merchant Fee Percentage, GST Absorb And Merchant Fee Absorb
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,100|nett_cost,85|gst_percent,7|gst_absorb,true    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,250.78|nett_cost,0|gst_percent,5.8|gst_absorb,true    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,250.78|nett_cost,221.45|gst_percent,5.8|gst_absorb,true    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
 
 Verify That Other Service Fees Are Calculated Correctly Using CC, Nett Cost, GST Percentage, Merchant Fee Percentage, GST Absorb And Merchant Fee Absorb
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,0|nett_cost,0|gst_percent,7|gst_absorb,true    country=hk
+    Send Other Service Fees Post Request
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,0|nett_cost,75|gst_percent,7|gst_absorb,true    country=hk
+    Send Other Service Fees Post Request
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,0|nett_cost,0|gst_percent,7.50|gst_absorb,true    country=sg
+    Send Other Service Fees Post Request
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,0|nett_cost,75.45|gst_percent,7.60|gst_absorb,true    country=sg
+    Send Other Service Fees Post Request
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
 
 Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage And GST Absorb
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,MG|pro_name,ALBOHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,0|selling_price,399|nett_cost,0|gst_percent,9|gst_absorb,true    country=hk
+    Send Other Service Fees Post Request
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,MG|pro_name,ALBOHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,0|selling_price,399|nett_cost,370|gst_percent,9|gst_absorb,true    country=hk
+    Send Other Service Fees Post Request
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACA INVESTMENTS SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,0|selling_price,399.99|nett_cost,0|gst_percent,9.0|gst_absorb,true    country=sg
+    Send Other Service Fees Post Request
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACA INVESTMENTS SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,0|selling_price,400.50|nett_cost,390.00|gst_percent,9.00|gst_absorb,true    country=sg
+    Send Other Service Fees Post Request
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
 
 Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost, Merchant Fee Percentage And Merchant Fee Absorb
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,789|nett_cost,0|gst_percent,0|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,789|nett_cost,0|gst_percent,0|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,789.50|nett_cost,0|gst_percent,0|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,789.89|nett_cost,700.50|gst_percent,0|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
 
 Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage, Merchant Fee Percentage And Merchant Fee Absorb
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,1050|nett_cost,0|gst_percent,9|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,1050|nett_cost,1000|gst_percent,9|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,1050.99|nett_cost,0|gst_percent,9.45|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,true|merchant_waive,true|merchant_fee_percent,2|selling_price,1050.00|nett_cost,1000.50|gst_percent,8.9|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
 
 Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost, GST Percentage, Merchant Fee Percentage And GST Absorb
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,88|nett_cost,0|gst_percent,11|gst_absorb,true    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,88|nett_cost,75|gst_percent,11|gst_absorb,true    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,88.88|nett_cost,0|gst_percent,11.50|gst_absorb,true    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,88.99|nett_cost,80.00|gst_percent,11.99|gst_absorb,true    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
 
-Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, GST Percentage And GST Absorb
-
-Verify That Other Service Fees Are Calculated Correctly Using CC, Selling Price, Merchant Fee Percentage And Merchant Fee Absorb
-
-Verify That Other Service Fees With GST Are Calculated Correctly For Product Despatch Change
-
-Verify That Other Service Fees With GST Are Calculated Correctly For Product Meet And Greet
-
-Verify That Other Service Fees With GST Are Calculated Correctly For Product 24 Hours Emergency Svcs
-
-Verify That Other Service Fees With GST Are Calculated Correctly For Product MICE – GST
-
-Verify That Other Service Fees With GST Are Calculated Correctly For Product Hotel – Local Booking Fee
-
-Verify That Other Service Fees With GST Are Calculated Correctly For Product Car – Local Booking Fee
-
-Verify That Other Service Fees With GST Are Calculated Correctly For Product MISC – Local Booking Fee
-
-Verify That Other Service Fees With GST Are Calculated Correctly For Product Management Fee
-
-Verify That Other Service Fees With GST Are Calculated Correctly For Product CWT Refund Admin Fee
-
-Verify That Other Service Fees With GST Are Calculated Correctly For Product MICE – Activities
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Air Penalty Fee
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Car – Overseas Booking Fee
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product CWT To Go Hotel Fee
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Deposit
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Hotel – Overseas Booking Fee
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product MISC – Overseas Booking Fee
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Miscellaneous - MICE
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Tour Package
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Documentation Fee
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Reissue – Revalidation Fee
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product 24 Emergency Service Fee
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product AEL Ticket
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Air Refund
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product C2G Hotel Fee
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Certificate Deposit
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Cruise
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Handling Fee
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Local Emergency Service
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Low Cost Carrier Service Fee
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Meet and Greet Service
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Meeting and Events
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Other
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Referral
-
-Verify That Other Service Fees Without GST Are Calculated Correctly For Product Tour Package
+Verify That Other Service Fees Are Calculated Correctly When FOP Is Not Set To CX
+    [Tags]    functional
+    Generate Test Variables For Other Service Fees    cc,CC|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CC|client_type,TF|pro_name,ACCEHK|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100|nett_cost,75|gst_percent,7|gst_absorb,false    country=hk
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CC|client_type,TF|pro_name,2NEXT SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100.55|nett_cost,0|gst_percent,4.6|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly
+    Generate Test Variables For Other Service Fees    cc,CC|client_type,TF|pro_name,2NEXT SG|merchant_absorb,false|merchant_waive,false|merchant_fee_percent,2|selling_price,100.45|nett_cost,95.65|gst_percent,7.8|gst_absorb,false    country=sg
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Miscellaneous Fees Are Returned Correctly

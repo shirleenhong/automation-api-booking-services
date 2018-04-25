@@ -72,7 +72,7 @@ public class CommonCalculator {
 		return BigDecimal.valueOf(safeValue(value) * 0.01);
 	}
 	
-	private double safeValue(Double value) {
+	public double safeValue(Double value) {
 		return value == null ? 0D : value ;
 	}
 
