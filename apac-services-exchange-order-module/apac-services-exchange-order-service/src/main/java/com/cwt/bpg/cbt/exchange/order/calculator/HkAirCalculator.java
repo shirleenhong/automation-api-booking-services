@@ -4,24 +4,23 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 
 
-public class HkBspAirCalculator extends CommonCalculator implements Calculator{
+public class HkAirCalculator extends CommonCalculator implements Calculator{
 	
 	@Override
 	public FeesBreakdown calculateFee(OtherServiceFeesInput genericInput, MerchantFee merchantFee) {
 
-		FeesBreakdown result = new FeesBreakdown();
+		AirFeesBreakdown result = new AirFeesBreakdown();
 		AirFeesInput input = (AirFeesInput)genericInput;
 		if(genericInput == null) {
 			return result;
 		}
-
-		
 
 		BigDecimal totalSellingFare =  BigDecimal.ZERO;
 		BigDecimal nettCostInEO =  BigDecimal.ZERO;
@@ -35,9 +34,8 @@ public class HkBspAirCalculator extends CommonCalculator implements Calculator{
 			totalSellingFare.add(input.getNettFare()).add(input.getCommission()).subtract(input.getDiscount()).add(input.getTax1()).add(input.getTax2());
 			nettCostInEO.add(input.getNettFare());
 			if(input.isWebFareSelected()) {
-				//round up
-				//totalSellingFare
-				//nettCostInEO
+				totalSellingFare = round(totalSellingFare, input.getCountryCode());
+				nettCostInEO = round(nettCostInEO, input.getCountryCode());
 			}
 		}
 //		If chkformula.value = 0 Then
@@ -56,15 +54,14 @@ public class HkBspAirCalculator extends CommonCalculator implements Calculator{
 				if(commission.compareTo(BigDecimal.ZERO) > 1) {
 					commission.add(BigDecimal.TEN);
 				}
-//				Commission = Round(Commission)
+				commission = round(commission, input.getCountryCode());
 			}
 			sellingPrice.add(input.getNettFare().divide(BigDecimal.ONE.subtract(getPercentage(input.getCommissionPct()))));
 			if(!Arrays.asList(new String[] {"MG","DB","TF","MN"}).contains(input.getClientType())) {
 				sellingPrice.add(BigDecimal.TEN);
 			}
 			if(input.isWebFareSelected()) {
-				//round up
-				//sellingPrice
+				sellingPrice = round(sellingPrice, input.getCountryCode());
 			}
 		}else {
 			sellingPrice.add(input.getNettFare()).add(input.getCommission());
@@ -106,7 +103,7 @@ public class HkBspAirCalculator extends CommonCalculator implements Calculator{
 		}
 		
 		//round down
-		//discount
+		discount = round(discount, input.getCountryCode());
 		nettCostInEO.add(input.getNettFare());
 		nettFare.add(sellingPrice).add(input.getTax1()).add(input.getTax2()).subtract(discount);
 		
@@ -151,8 +148,7 @@ public class HkBspAirCalculator extends CommonCalculator implements Calculator{
 		}
 		totalSellingFare = input.getNettFare().add(merchantFeeAmount);
 		if(input.isWebFareSelected()) {
-			//round up
-			//totalSellingFare
+			totalSellingFare = round(totalSellingFare, input.getCountryCode());
 		}
 //		If CWT Absorb is unchecked And FOP Type = "CX" And Waive Merchant Fee is Unchecked
 //			If UATP checked Then
@@ -178,6 +174,6 @@ public class HkBspAirCalculator extends CommonCalculator implements Calculator{
 //		Else
 //			Total Selling Fare = Round UP(Nett Fare + Merchant Fee, gstrAgcyCurrCode, "UP")
 //		End If
-		return new FeesBreakdown();
+		return result;
 	}
 }

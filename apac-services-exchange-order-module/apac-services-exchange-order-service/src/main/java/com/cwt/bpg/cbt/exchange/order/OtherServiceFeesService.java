@@ -15,7 +15,7 @@ public class OtherServiceFeesService {
 	Calculator miscFeeCalculator;
 	
 	@Autowired
-	Calculator hkBspAirCalculator;
+	Calculator hkAirCalculator;
 	
 	@Autowired 
 	MerchantFeeRepository merchantFeeRepo;
@@ -24,8 +24,8 @@ public class OtherServiceFeesService {
 		return miscFeeCalculator.calculateFee(input, getMerchantFeePct(input));
 	}
 
-	public FeesBreakdown calculateBspAirFee(OtherServiceFeesInput input) {
-		return hkBspAirCalculator.calculateFee(input, getMerchantFeePct(input));
+	public FeesBreakdown calculateAirFee(OtherServiceFeesInput input) {
+		return hkAirCalculator.calculateFee(input, getMerchantFeePct(input));
 	}
 
 	private MerchantFee getMerchantFeePct(OtherServiceFeesInput input) {
