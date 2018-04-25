@@ -27,6 +27,7 @@ public class SwaggerConfigInt extends SwaggerConfigBase
                 .paths(Predicates.not(PathSelectors.regex(
                         "/(error|auditevents|autoconfig|configprops|dump|info|mappings|springbeans|trace|env|health|heapdump|loggers|metrics).*")))
                 .build()
+                .groupName("apac-services")
                 .apiInfo(apiInfo())
                 .tags(appInfo(), exchangeOrder(), serviceFees())
                 .securitySchemes(Lists.newArrayList(securityScheme()))
