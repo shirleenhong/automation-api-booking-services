@@ -1,0 +1,63 @@
+*** Settings ***
+Suite Setup
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/merchant.txt
+
+*** Test Cases ***
+Verify That Error Is Encountered When Invalid Token Is Used
+    [Tags]    functional
+    Create Test Variables For Merchant Fee Percentage    country=sg_invalid
+    Send Get Request For Merchant Fee Percentage    token=12345.12345.12345
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    401
+    Verify Merchant Fee Percentages Are Not Returned
+    Send Get Request For Merchant Fee Percentage    token=aaa.bbb.ccc
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    401
+    Verify Merchant Fee Percentages Are Not Returned
+    Send Get Request For Merchant Fee Percentage    token=@#$%^.!@#$%^&.@#$%^&*
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    401
+    Verify Merchant Fee Percentages Are Not Returned
+    Create Test Variables For Merchant Fee Percentage    country=hk_invalid
+    Send Get Request For Merchant Fee Percentage    token=12345.12345.12345
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    401
+    Verify Merchant Fee Percentages Are Not Returned
+    Send Get Request For Merchant Fee Percentage    token=aaa.bbb.ccc
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    401
+    Verify Merchant Fee Percentages Are Not Returned
+    Send Get Request For Merchant Fee Percentage    token=@#$%^.!@#$%^&.@#$%^&*
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    401
+    Verify Merchant Fee Percentages Are Not Returned
+
+Verify That Error Is Encountered When Null Token Is Used
+    [Tags]    functional
+    Create Test Variables For Merchant Fee Percentage    country=sg_invalid
+    Send Get Request For Merchant Fee Percentage    token=null
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    401
+    Verify Merchant Fee Percentages Are Not Returned
+    Create Test Variables For Merchant Fee Percentage    country=hk_invalid
+    Send Get Request For Merchant Fee Percentage    token=null
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    401
+    Verify Merchant Fee Percentages Are Not Returned
+
+Verify That Error Is Encountered When Empty Token Is Used
+    [Tags]    functional
+    Create Test Variables For Merchant Fee Percentage    country=sg_invalid
+    Send Get Request For Merchant Fee Percentage    token=${EMPTY}
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    400
+    Verify Merchant Fee Percentages Are Not Returned
+    Create Test Variables For Merchant Fee Percentage    country=hk_invalid
+    Send Get Request For Merchant Fee Percentage    token=${EMPTY}
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    400
+    Verify Merchant Fee Percentages Are Not Returned
+
+Verify That Error Is Encountered When No Token Is Used
+    [Tags]    functional
+    Create Test Variables For Merchant Fee Percentage    country=sg_invalid
+    Send Get Request For Merchant Fee Percentage    token=None
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    400
+    Verify Merchant Fee Percentages Are Not Returned
+    Create Test Variables For Merchant Fee Percentage    country=hk_invalid
+    Send Get Request For Merchant Fee Percentage    token=None
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    400
+    Verify Merchant Fee Percentages Are Not Returned

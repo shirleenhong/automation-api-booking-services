@@ -1,0 +1,20 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/merchant.txt
+
+*** Test Cases ***
+Verify That Merchant Fee Percentages Are Correctly Retrieved For Singapore
+    [Tags]    functional
+    Create Test Variables For Merchant Fee Percentage
+    Send Get Request For Merchant Fee Percentage
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    200
+    Verify Merchant Fee Percentage Is Correctly Retrieved
+
+Verify That Merchant Fee Percentages Are Correctly Retrieved For Hong Kong
+    [Tags]    functional
+    Create Test Variables For Merchant Fee Percentage    country=hk
+    Send Get Request For Merchant Fee Percentage
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    200
+    Verify Merchant Fee Percentage Is Correctly Retrieved
