@@ -9,16 +9,16 @@ import java.math.RoundingMode;
 import org.junit.Test;
 
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
 
 public class MiscFeeCalculatorTest {
 
-	MiscFeeCalculator calculator = new MiscFeeCalculator();
+	private MiscFeeCalculator calculator = new MiscFeeCalculator();
 
 	@Test
 	public void shouldCalculateFees2DScale() {
 
-		OtherServiceFeesInput input = new OtherServiceFeesInput();
+		MiscFeesInput input = new MiscFeesInput();
 
 		input.setFopType("CX");
 		input.setCountryCode("SG");
@@ -46,7 +46,7 @@ public class MiscFeeCalculatorTest {
 	@Test
 	public void shouldCalculateFees0DScale() {
 
-		OtherServiceFeesInput input = new OtherServiceFeesInput();
+		MiscFeesInput input = new MiscFeesInput();
 
 		input.setFopType("CX");
 		input.setCountryCode("HK");
@@ -65,8 +65,7 @@ public class MiscFeeCalculatorTest {
 
 	@Test
 	public void shouldCalculateFeesFlagsTrue() {
-
-		OtherServiceFeesInput input = new OtherServiceFeesInput();
+		MiscFeesInput input = new MiscFeesInput();
 
 		input.setFopType("CX");
 		input.setCountryCode("HK");
@@ -99,7 +98,7 @@ public class MiscFeeCalculatorTest {
 	@Test
 	public void shouldNotFailOnEmptyInput() {
 		
-		FeesBreakdown result = calculator.calculateFee(new OtherServiceFeesInput(), null);
+		FeesBreakdown result = calculator.calculateFee(new MiscFeesInput(), null);
 
 		assertNull(result.getCommission());
 		assertNull(result.getGstAmount());
