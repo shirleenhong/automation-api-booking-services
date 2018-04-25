@@ -6,14 +6,14 @@ import java.math.RoundingMode;
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.FOPTypes;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 
 public class MiscFeeCalculator extends CommonCalculator  implements Calculator{
 	
 	@Override
-	public FeesBreakdown calculateFee(OtherServiceFeesInput genericInput, 
-			Double merchantFeePct) {		
+	public FeesBreakdown calculateFee(OtherServiceFeesInput genericInput, MerchantFee merchantFee) {		
 		MiscFeesInput input = (MiscFeesInput)genericInput;
 		FeesBreakdown result = new FeesBreakdown();
 		
@@ -39,7 +39,7 @@ public class MiscFeeCalculator extends CommonCalculator  implements Calculator{
 		{			
 			merchantFeeAmount = round(
 						applyPercentage(input.getSellingPrice().multiply(getValue(1D).add(getPercentage(input.getGstPercent()))), 
-									  merchantFeePct), 
+									  merchantFee.getMerchantFeePct()), 
 								input.getCountryCode());
 		}		
 		

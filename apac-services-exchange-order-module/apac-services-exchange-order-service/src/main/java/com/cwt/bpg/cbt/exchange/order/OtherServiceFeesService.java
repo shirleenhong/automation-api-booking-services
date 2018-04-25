@@ -28,18 +28,13 @@ public class OtherServiceFeesService {
 		return hkBspAirCalculator.calculateFee(input, getMerchantFeePct(input));
 	}
 
-	private Double getMerchantFeePct(OtherServiceFeesInput input) {
+	private MerchantFee getMerchantFeePct(OtherServiceFeesInput input) {
 		
-		MerchantFee merchantFeePct = merchantFeeRepo.getMerchantFee(
+		MerchantFee merchantFee = merchantFeeRepo.getMerchantFee(
 				input.getCountryCode(), 
 				input.getClientType(), 
 				input.getProductName());
 		
-		if(merchantFeePct != null) 
-		{
-			return merchantFeePct.getMerchantFeePct();
-		}
-		
-		return 0D;
+		return merchantFee;
 	}	
 }
