@@ -36,6 +36,11 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
+      <groupId>com.cwt.bpg.cbt</groupId>
+      <artifactId>apac-services-exception-handler</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
