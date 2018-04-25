@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.documentation;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,6 +19,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfigBase
 {
+    @Value("${com.bpg.cbt.apac.service.version}")
+    private String applicationVersion;
+
     @Bean
     UiConfiguration uiConfig()
     {
@@ -33,6 +37,7 @@ public class SwaggerConfigBase
                 .maxDisplayedTags(10)
                 .operationsSorter(OperationsSorter.ALPHA)
                 .tagsSorter(TagsSorter.ALPHA)
+                .validatorUrl(null)
                 .build();
     }
 
@@ -44,7 +49,7 @@ public class SwaggerConfigBase
                 .build();
     }
 
-    List<SecurityReference> defaultAuth() {
+    private List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope
                 = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
@@ -84,7 +89,7 @@ public class SwaggerConfigBase
                 .title("APAC Services API")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE")
-                .version("2.0")
+                .version(applicationVersion)
                 .build();
     }
 }
