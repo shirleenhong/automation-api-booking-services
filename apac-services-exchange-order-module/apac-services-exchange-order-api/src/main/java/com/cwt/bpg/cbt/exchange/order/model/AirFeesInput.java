@@ -25,6 +25,8 @@ public class AirFeesInput extends OtherServiceFeesInput implements Serializable 
 	private BigDecimal commission;
 	private BigDecimal transactionFee;
 	private Double commissionPct;
+	private String productType; 
+	
 	public boolean isApplyFormula() {
 		return applyFormula;
 	}
@@ -115,4 +117,11 @@ public class AirFeesInput extends OtherServiceFeesInput implements Serializable 
 	public void setCommissionPct(Double commissionPct) {
 		this.commissionPct = commissionPct;
 	}
+	public String getProductType() {
+		return productType;
+	}
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+	
 }

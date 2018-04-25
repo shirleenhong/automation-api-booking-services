@@ -17,15 +17,27 @@ public class OtherServiceFeesService {
 	@Autowired
 	Calculator hkAirCalculator;
 	
+	@Autowired
+	Calculator airCalculator;
+	
 	@Autowired 
 	MerchantFeeRepository merchantFeeRepo;
 
 	public FeesBreakdown calculateMiscFee(OtherServiceFeesInput input) {
 		return miscFeeCalculator.calculateFee(input, getMerchantFeePct(input));
 	}
-
+	
 	public FeesBreakdown calculateAirFee(OtherServiceFeesInput input) {
-		return hkAirCalculator.calculateFee(input, getMerchantFeePct(input));
+		if(input.getCountryCode().equals("HK")) {
+			return hkAirCalculator.calculateFee(input, getMerchantFeePct(input));
+			
+		}else if(input.getCountryCode().equals("SG") && 
+				input.getCountryCode().equals("AU") && 
+				input.getCountryCode().equals("NZ")) {
+			return airCalculator.calculateFee(input, getMerchantFeePct(input));
+		}else {
+			return null;
+		}
 	}
 
 	private MerchantFee getMerchantFeePct(OtherServiceFeesInput input) {
