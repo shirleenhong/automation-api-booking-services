@@ -6,20 +6,27 @@ import org.springframework.context.annotation.Configuration;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.HkAirCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.MiscFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.SgAirCalculator;
 
 @Configuration("com.cwt.bpg.cbt.exchange.order.config")
 public class ExchangeOrderConfig {
 
-	@Bean
+	@Bean(name="miscFeeCalculator")
     public Calculator miscFeeCalculator()
     {
         return new MiscFeeCalculator();
     }
 	
-	@Bean
+	@Bean(name="hkAirCalculator")
     public Calculator hkAirCalculator()
     {
         return new HkAirCalculator();
+    }
+	
+	@Bean(name="sgAirCalculator")
+    public Calculator sgAirCalculator()
+    {
+        return new SgAirCalculator();
     }
 }
 

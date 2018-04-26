@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
@@ -12,12 +13,15 @@ import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 public class OtherServiceFeesService {
 
 	@Autowired
+	@Qualifier(value="miscFeeCalculator")
 	Calculator miscFeeCalculator;
 	
 	@Autowired
+	@Qualifier(value="hkAirCalculator")
 	Calculator hkAirCalculator;
 	
 	@Autowired
+	@Qualifier(value="sgAirCalculator")
 	Calculator airCalculator;
 	
 	@Autowired 
