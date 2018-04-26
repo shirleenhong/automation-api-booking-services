@@ -12,7 +12,6 @@ public class AirFeesBreakdown extends FeesBreakdown implements Serializable {
 	private static final long serialVersionUID = 8544229065892237666L;
 
 	public AirFeesBreakdown() {
-		super();
 	}
 
 	private BigDecimal totalSellingFare;

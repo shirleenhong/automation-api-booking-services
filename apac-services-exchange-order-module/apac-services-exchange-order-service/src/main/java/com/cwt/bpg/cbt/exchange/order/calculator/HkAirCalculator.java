@@ -55,13 +55,13 @@ public class HkAirCalculator extends CommonCalculator implements Calculator{
 				if(!"TP".equals(input.getClientType())) {
 					commission = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct()))).subtract(nettFare);
 					if(commission.compareTo(BigDecimal.ZERO) > 0 && "DU".equals(input.getClientType())) {
-						commission.add(BigDecimal.TEN);
+						commission = commission.add(BigDecimal.TEN);
 					}
 					commission = round(commission, input.getCountryCode());
 				}
 				sellingPrice = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())));
 				if(!Arrays.asList(new String[] {"MG","DB","TF","MN"}).contains(input.getClientType())) {
-					sellingPrice.add(BigDecimal.TEN);
+					sellingPrice = sellingPrice.add(BigDecimal.TEN);
 				}
 				if(!input.isWebFareSelected()) {
 					sellingPrice = round(sellingPrice, input.getCountryCode());
@@ -145,7 +145,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator{
 				}else {
 					mFTotal = nettFare;
 					if("TF".equals(input.getClientType()) && merchantFee.isIncludeTransactionFee()) {
-						mFTotal.add(transactionFee);
+						mFTotal = mFTotal.add(transactionFee);
 					}
 				}
 				merchantFeeAmount = calculatePercentage(mFTotal, merchantFee.getMerchantFeePct());
@@ -178,15 +178,17 @@ public class HkAirCalculator extends CommonCalculator implements Calculator{
 //			Else
 //				Total Selling Fare = Round UP(Nett Fare + Merchant Fee, gstrAgcyCurrCode, "UP")
 //			End If
+			result.setSellingPrice(sellingPrice);
+			result.setMerchantFee(merchantFeeAmount);
+			
+			result.setCommission(commission);
+			result.setDiscount(discount);
+			result.setNettFare(nettFare);
 		}
 		
 		result.setTotalSellingFare(totalSellingFare);
 		result.setNettCostInEO(nettCostInEO);
-		result.setSellingPrice(sellingPrice);
-		result.setMerchantFee(merchantFeeAmount);
-		result.setCommission(commission);
-		result.setDiscount(discount);
-		result.setNettFare(nettFare);
+		
 		return result;
 	}
 }
