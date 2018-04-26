@@ -28,19 +28,11 @@ public class MiscFeeCalculatorTest {
 
 		FeesBreakdown result = calculator.calculateFee(input, 6D);
 
-		assertNull(result.getCommission());
+		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(new BigDecimal(60.03), 2), result.getGstAmount());
 		assertEquals(round(new BigDecimal(75.63), 2), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(76.4135), 2), result.getNettCostGst());
 		assertEquals(round(new BigDecimal(1272.53), 2), result.getSellingPriceInDi());
-	}
-
-	private BigDecimal round(BigDecimal value, int scale) {
-		return value.setScale(scale, RoundingMode.HALF_UP);
-	}
-
-	private BigDecimal round(BigDecimal value) {
-		return value.setScale(0, RoundingMode.HALF_UP);
 	}
 
 	@Test
@@ -53,7 +45,7 @@ public class MiscFeeCalculatorTest {
 		input.setSellingPrice(new BigDecimal(1500.50));
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1228.27));
-		
+
 		FeesBreakdown result = calculator.calculateFee(input, 6D);
 
 		assertEquals(round(new BigDecimal(362.68)), result.getCommission());
@@ -74,10 +66,10 @@ public class MiscFeeCalculatorTest {
 		input.setGstAbsorb(true);
 		input.setMerchantFeeAbsorb(true);
 		input.setNettCost(new BigDecimal(1528.27));
-		
+
 		FeesBreakdown result = calculator.calculateFee(input, 6D);
 
-		assertNull(result.getCommission());
+		assertEquals(round(BigDecimal.ZERO), result.getCommission());
 		assertNull(result.getGstAmount());
 		assertNull(result.getMerchantFee());
 		assertNull(result.getNettCostGst());
@@ -97,13 +89,20 @@ public class MiscFeeCalculatorTest {
 
 	@Test
 	public void shouldNotFailOnEmptyInput() {
-		
 		FeesBreakdown result = calculator.calculateFee(new MiscFeesInput(), null);
 
-		assertNull(result.getCommission());
-		assertNull(result.getGstAmount());
+		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
+		assertEquals(round(BigDecimal.ZERO, 2), result.getGstAmount());
 		assertNull(result.getMerchantFee());
-		assertNull(result.getNettCostGst());
-		assertNull(result.getSellingPriceInDi());
+		assertEquals(round(BigDecimal.ZERO, 2), result.getNettCostGst());
+		assertEquals(round(BigDecimal.ZERO, 2), result.getSellingPriceInDi());
+	}
+
+	private BigDecimal round(BigDecimal value, int scale) {
+		return value.setScale(scale, RoundingMode.HALF_UP);
+	}
+
+	private BigDecimal round(BigDecimal value) {
+		return value.setScale(0, RoundingMode.HALF_UP);
 	}
 }

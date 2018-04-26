@@ -5,11 +5,11 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 public class CommonCalculator {
-	
+
 	private MathContext mc = new MathContext(2, RoundingMode.HALF_UP);
 
-	public static final String COUNTRY_CODE_INDIA = "IN";
-	public static final String COUNTRY_CODE_HONGKONG = "HK";
+	private static final String COUNTRY_CODE_INDIA = "IN";
+	private static final String COUNTRY_CODE_HONGKONG = "HK";
 
 	public BigDecimal safeValue(BigDecimal value) {
 		if (value == null) {
@@ -19,69 +19,40 @@ public class CommonCalculator {
 	}
 
 	public BigDecimal round(BigDecimal amount, String countryCode) {
-		if (amount == null || amount.compareTo(BigDecimal.ZERO) == 0) {
+		if (amount == null) {
 			return null;
 		}
-		// TODO: move precision to mongo config
+
 		if (countryCode != null && (countryCode.equals(COUNTRY_CODE_INDIA)
 				|| countryCode.equals(COUNTRY_CODE_HONGKONG))) {
 			return round(amount, 0);
-		} else {
+		}
+		else {
 			return round(amount, 2);
 		}
-	}
-	
-	public BigDecimal roundAmount(BigDecimal amount, int scale) {
-		
-		if (amount == null || amount.compareTo(BigDecimal.ZERO) == 0) {
-			return null;
-		}
-		
-		return round(amount, scale);
-		
 	}
 
 	public BigDecimal round(BigDecimal d, int scale) {
 		return d.setScale(scale, RoundingMode.HALF_UP);
 	}
-	
-	public BigDecimal getPercentageAmount(
-			BigDecimal baseAmount, BigDecimal amountInput, Double percentage) {
-		
-		return amountInput != null 
-				? amountInput 
-				: baseAmount.multiply(new BigDecimal(percentage, MathContext.DECIMAL64)).divide(new BigDecimal(100));
-	}
-	
-	/**
-	 * Get percentage value given the percent value
-	 * @param input
-	 * @param percent
-	 * @return
-	 */
-	public BigDecimal applyPercentage(BigDecimal input, Double percent) {
-		return safeValue(input).multiply(getPercentage(percent));				
+
+	protected BigDecimal getPercentageAmount(BigDecimal baseAmount, BigDecimal amountInput, Double percent) {
+		return amountInput != null ? amountInput : baseAmount.multiply(new BigDecimal(percent, MathContext.DECIMAL64)).divide(new BigDecimal(100));
 	}
 
-	/**
-	 * Get value in percent
-	 * @param value
-	 * @return
-	 */
-	public BigDecimal getPercentage(Double value) {
+	protected BigDecimal calculatePercentage(BigDecimal input, Double percent) {
+		return safeValue(input).multiply(percentDecimal(percent));
+	}
+
+	protected BigDecimal percentDecimal(Double value) {
 		return BigDecimal.valueOf(safeValue(value) * 0.01);
 	}
-	
+
 	private double safeValue(Double value) {
-		return value == null ? 0D : value ;
+		return value == null ? 0D : value;
 	}
 
-	/**
-	 * Get Big Decimal value from Double input
-	 * @param value
-	 * @return
-	 */
-	public BigDecimal getValue(Double value) {
+	protected BigDecimal getValue(Double value) {
 		return new BigDecimal(value, MathContext.DECIMAL64);
 	}
 
