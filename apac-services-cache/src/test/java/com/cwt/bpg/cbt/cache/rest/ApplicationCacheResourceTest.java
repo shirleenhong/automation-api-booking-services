@@ -57,4 +57,15 @@ public class ApplicationCacheResourceTest {
 		verify(cacheManager, times(1)).getCache(Mockito.anyString());
 		verify(cache, times(1)).getNativeCache();
 	}
+	
+	@Test
+	@SuppressWarnings("rawtypes")
+	public void canEvictCache() {
+		Cache cache = Mockito.mock(Cache.class);
+		Mockito.when(cacheManager.getCache(Mockito.anyString())).thenReturn(cache);
+		
+		List list = cacheResource.evict("products-cache");
+		
+		verify(cacheManager, times(1)).getCache(Mockito.anyString());
+	}
 }
