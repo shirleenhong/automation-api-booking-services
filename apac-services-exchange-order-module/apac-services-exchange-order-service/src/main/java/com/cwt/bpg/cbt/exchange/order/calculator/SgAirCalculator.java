@@ -21,52 +21,67 @@ public class SgAirCalculator extends CommonCalculator implements Calculator{
 		if(genericInput == null) {
 			return result;
 		}
-		BigDecimal totalTax = input.getTax1().add(input.getTax2());
+		
 		BigDecimal totalSellingFare;
 		BigDecimal nettCostInEO = BigDecimal.ZERO;
-		Boolean isConstTkt = input.getProductType().equals("CT");
+		
 		BigDecimal commission = BigDecimal.ZERO;
 		BigDecimal discount = BigDecimal.ZERO;
 		BigDecimal merchantFee = BigDecimal.ZERO;
-		 
+		
+		BigDecimal inTax1 = setZeroWhenNull(input.getTax1());
+		BigDecimal inTax2 = setZeroWhenNull(input.getTax2());
+		BigDecimal totalTax = inTax1.add(inTax2);
+		BigDecimal inMerchantFee = setZeroWhenNull(input.getMerchantFee());
+		BigDecimal inNettFare = setZeroWhenNull(input.getNettFare());
+		BigDecimal inDiscount = setZeroWhenNull(input.getDiscount());
+		BigDecimal inCommission = setZeroWhenNull(input.getCommission());
+		Boolean isConstTkt = setBlankWhenNull(input.getProductType()).equals("CT");
+		Boolean isFopTypeCX = setBlankWhenNull(input.getFopType()).equals("CX");
+		String inClientType = setBlankWhenNull(input.getClientType());
 		
 		if(!input.isApplyFormula()) {
 			
 			if(isConstTkt) {
-				totalSellingFare = input.getNettFare().subtract(input.getDiscount()).add(totalTax).add(input.getMerchantFee());
+				totalSellingFare = inNettFare.subtract(inDiscount).add(totalTax).add(inMerchantFee);
 			}else {
-				totalSellingFare = input.getSellingPrice().subtract(input.getDiscount()).add(totalTax).add(input.getMerchantFee());
+				totalSellingFare = input.getSellingPrice().subtract(inDiscount).add(totalTax).add(inMerchantFee);
 			}
-			nettCostInEO = input.getNettFare().subtract(input.getCommission());
+			nettCostInEO = inNettFare.subtract(inCommission);
 			
 		}else {
 			
 			if (input.isCommissionByPercent()){
 				commission = format(input.getNettFare().multiply(percentDecimal(input.getCommissionPct())));
+			}else {
+				commission = inCommission;
 			}
 			
 			if(input.isDiscountByPercent()) {
-				discount = getDiscAmt(input.getNettFare(), input.getDiscountPct(), input.getClientType());
+				discount = getDiscAmt(input.getNettFare(), input.getDiscountPct(), inClientType);
+			}else {
+				discount = inDiscount;
 			}
 			
-			nettCostInEO = input.getNettFare().subtract(input.getCommission());
+			nettCostInEO = input.getNettFare().subtract(commission);
 			
 			BigDecimal totalNettFare;
 			if(isConstTkt) {
-				totalNettFare = input.getNettFare().subtract(discount).add(totalTax);
+				totalNettFare = inNettFare.subtract(discount).add(totalTax);
 			}else {
 				totalNettFare = input.getSellingPrice().subtract(discount).add(totalTax);
 			}
 			
 			BigDecimal totalPlusTF;
-			if(!input.isCwtAbsorb() && input.getFopType().equals("CX") && !input.isMerchantFeeWaive()) {
-				totalPlusTF = getTotal(totalNettFare, input.getTransactionFee(), input.getClientType(), merchantFeeObj.isIncludeTransactionFee());
+			if(!input.isCwtAbsorb() && isFopTypeCX && !input.isMerchantFeeWaive()) {
+				totalPlusTF = getTotal(totalNettFare, input.getTransactionFee(), inClientType, merchantFeeObj.isIncludeTransactionFee());
 				merchantFee = getMerchantFee(totalPlusTF, merchantFeeObj.getMerchantFeePct());
 			}
 			
 			totalSellingFare = totalNettFare.add(merchantFee);
 		}
 		
+		result.setMerchantFee(merchantFee);
 		result.setCommission(commission);
 		result.setDiscount(discount);
 		result.setNettCostInEO(nettCostInEO);
@@ -105,5 +120,27 @@ public class SgAirCalculator extends CommonCalculator implements Calculator{
 		return round(amount, "SG");
 	}
 	
+	private BigDecimal setZeroWhenNull(BigDecimal amount) {
+		
+		BigDecimal val = BigDecimal.ZERO;
+		
+		if(amount !=null) {
+			val = amount;
+		}
+		
+		return val;
+		
+	}
+	private String setBlankWhenNull(String value) {
+		
+		String val = "";
+		
+		if(value !=null) {
+			val = value;
+		}
+		
+		return val;
+		
+	}
 	
 }
