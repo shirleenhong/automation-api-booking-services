@@ -35,8 +35,8 @@ public class MerchantFeeRepository {
 		
 		final Query<MerchantFee> clientMerchantFee = datastore.createQuery(MerchantFee.class)
                 .filter("countryCode", fee.getCountryCode())
-                .filter("countryCode", fee.getClientType())
-                .filter("countryCode", fee.getProductName());
+                .filter("clientType", fee.getClientType())
+                .filter("productName", fee.getProductName());
 		
 		WriteResult delete = datastore.delete(clientMerchantFee);
 		

@@ -3,7 +3,10 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
@@ -11,17 +14,23 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 
 
-public class HkAirCalculator extends CommonCalculator implements Calculator{
+public class HkAirCalculator extends CommonCalculator implements Calculator {
+	
+	@Autowired
+	ScaleConfig scaleConfig;
 	
 	@Override
 	public FeesBreakdown calculateFee(OtherServiceFeesInput genericInput, MerchantFee merchantFee) {
 
 		AirFeesBreakdown result = new AirFeesBreakdown();
 		AirFeesInput input = (AirFeesInput)genericInput;
+		
 		if(input == null) {
 			return result;
 		}
 
+		int scale = scaleConfig.getScale(input.getCountryCode());
+		
 		BigDecimal totalSellingFare =  BigDecimal.ZERO;
 		BigDecimal nettCostInEO =  BigDecimal.ZERO;
 		BigDecimal sellingPrice =  BigDecimal.ZERO;
@@ -36,8 +45,8 @@ public class HkAirCalculator extends CommonCalculator implements Calculator{
 			totalSellingFare = nettFare.add(commission).subtract(discount).add(tax1).add(tax2);
 			nettCostInEO = nettFare;
 			if(!input.isWebFareSelected()) {
-				totalSellingFare = round(totalSellingFare, input.getCountryCode());
-				nettCostInEO = round(nettCostInEO, input.getCountryCode());
+				totalSellingFare = round(totalSellingFare, scale);
+				nettCostInEO = round(nettCostInEO, scale);
 			}
 		}else {
 //		If chkformula.value = 0 Then
@@ -57,14 +66,14 @@ public class HkAirCalculator extends CommonCalculator implements Calculator{
 					if(commission.compareTo(BigDecimal.ZERO) > 0 && "DU".equals(input.getClientType())) {
 						commission = commission.add(BigDecimal.TEN);
 					}
-					commission = round(commission, input.getCountryCode());
+					commission = round(commission, scale);
 				}
 				sellingPrice = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())));
 				if(!Arrays.asList(new String[] {"MG","DB","TF","MN"}).contains(input.getClientType())) {
 					sellingPrice = sellingPrice.add(BigDecimal.TEN);
 				}
 				if(!input.isWebFareSelected()) {
-					sellingPrice = round(sellingPrice, input.getCountryCode());
+					sellingPrice = round(sellingPrice, scale);
 				}
 			}else {
 				sellingPrice = nettFare.add(commission);
@@ -105,7 +114,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator{
 				discount = BigDecimal.ZERO;
 			}
 			
-			discount = round(discount, input.getCountryCode());
+			discount = round(discount, scale);
 			nettCostInEO = nettFare;
 			nettFare = sellingPrice.add(tax1).add(tax2).subtract(discount);
 		
@@ -152,7 +161,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator{
 			}
 			totalSellingFare = nettFare.add(merchantFeeAmount);
 			if(!input.isWebFareSelected()) {
-				totalSellingFare = round(totalSellingFare, input.getCountryCode());
+				totalSellingFare = round(totalSellingFare, scale);
 			}		
 //			If CWT Absorb is unchecked And FOP Type = "CX" And Waive Merchant Fee is Unchecked
 //				If UATP checked Then

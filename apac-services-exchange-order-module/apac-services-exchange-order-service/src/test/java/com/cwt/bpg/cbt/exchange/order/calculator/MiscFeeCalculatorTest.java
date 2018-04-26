@@ -8,18 +8,36 @@ import java.math.RoundingMode;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
 
 public class MiscFeeCalculatorTest {
-
+	
+	@InjectMocks
 	private MiscFeeCalculator calculator = new MiscFeeCalculator();
+	
+	@Mock
+	private ScaleConfig scaleConfig;
+	
 	private MerchantFee merchantFee;
-
+	
 	@Before
 	public void setup() {
+		MockitoAnnotations.initMocks(this);
+				
+		Mockito.when(scaleConfig.getScale(Mockito.eq("SG"))).thenReturn(2);
+		Mockito.when(scaleConfig.getScale(Mockito.eq("HK"))).thenReturn(0);
+		
+		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
+		
 		merchantFee = new MerchantFee();
 		merchantFee.setMerchantFeePct(6D);
 	}
@@ -43,7 +61,7 @@ public class MiscFeeCalculatorTest {
 		assertEquals(round(new BigDecimal(76.4135), 2), result.getNettCostGst());
 		assertEquals(round(new BigDecimal(1272.53), 2), result.getSellingPriceInDi());
 	}
-
+	
 	@Test
 	public void shouldCalculateFees0DScale() {
 
@@ -98,7 +116,9 @@ public class MiscFeeCalculatorTest {
 
 	@Test
 	public void shouldNotFailOnEmptyInput() {
-		FeesBreakdown result = calculator.calculateFee(new MiscFeesInput(), null);
+		MiscFeesInput input = new MiscFeesInput();
+		input.setCountryCode("SG");
+		FeesBreakdown result = calculator.calculateFee(input, null);
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(BigDecimal.ZERO, 2), result.getGstAmount());
@@ -106,7 +126,7 @@ public class MiscFeeCalculatorTest {
 		assertEquals(round(BigDecimal.ZERO, 2), result.getNettCostGst());
 		assertEquals(round(BigDecimal.ZERO, 2), result.getSellingPriceInDi());
 	}
-
+	
 	private BigDecimal round(BigDecimal value, int scale) {
 		return value.setScale(scale, RoundingMode.HALF_UP);
 	}
