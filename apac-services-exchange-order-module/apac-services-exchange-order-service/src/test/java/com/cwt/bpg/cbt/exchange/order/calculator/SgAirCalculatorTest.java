@@ -5,8 +5,14 @@ import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
@@ -14,6 +20,19 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 public class SgAirCalculatorTest {
 	
 	private Calculator calculator = new SgAirCalculator();
+	
+	@Mock
+	private ScaleConfig scaleConfig;
+	
+	@Before
+	public void setup() {
+		MockitoAnnotations.initMocks(this);
+				
+		Mockito.when(scaleConfig.getScale(Mockito.eq("SG"))).thenReturn(2);
+		Mockito.when(scaleConfig.getScale(Mockito.eq("HK"))).thenReturn(0);
+		
+		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
+	}
 	
 	@Test
 	public void shouldCalculate() {
@@ -31,6 +50,7 @@ public class SgAirCalculatorTest {
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommission(bigDecimal("15"));
 		input.setNettFare(bigDecimal("300"));
+		input.setCountryCode("HK");
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculateFee(input, null);
 		assertNotNull(afb);
 		assertEquals(afb.getTotalSellingFare(),bigDecimal("417"));
@@ -68,6 +88,7 @@ public class SgAirCalculatorTest {
 		input.setCommissionPct(Double.parseDouble("20"));
 		input.setDiscountByPercent(true);
 		input.setDiscountPct(Double.parseDouble("15"));
+		input.setCountryCode("SG");
 
 		
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculateFee(input, null);
@@ -103,7 +124,7 @@ public class SgAirCalculatorTest {
 		merchantFee.setIncludeTransactionFee(true);
 		merchantFee.setMerchantFeePct(Double.parseDouble("25"));
 		input.setTransactionFee(bigDecimal("75"));
-		
+		input.setCountryCode("SG");
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		
 		assertNotNull(afb);
@@ -138,6 +159,7 @@ public class SgAirCalculatorTest {
 		merchantFee.setIncludeTransactionFee(false);
 		merchantFee.setMerchantFeePct(Double.parseDouble("25"));
 		input.setTransactionFee(bigDecimal("75"));
+		input.setCountryCode("SG");
 		
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		

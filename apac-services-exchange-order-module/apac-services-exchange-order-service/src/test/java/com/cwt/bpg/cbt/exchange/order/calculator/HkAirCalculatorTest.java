@@ -1,21 +1,40 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public class HkAirCalculatorTest {
+	
 	private Calculator calculator = new HkAirCalculator();
 	
+	@Mock
+	private ScaleConfig scaleConfig;
 
+	@Before
+	public void setup() {
+		MockitoAnnotations.initMocks(this);
+				
+		Mockito.when(scaleConfig.getScale(Mockito.eq("SG"))).thenReturn(2);
+		Mockito.when(scaleConfig.getScale(Mockito.eq("HK"))).thenReturn(0);
+		
+		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
+	}
+	
 	@Test
 	public void shouldHandleNullInput() {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(null, null);
@@ -23,9 +42,9 @@ public class HkAirCalculatorTest {
 		assertNull(airFeesBreakdown.getNettCostInEO());
 		assertNull(airFeesBreakdown.getTotalSellingFare());
 		assertNull(airFeesBreakdown.getSellingPrice());
-		
+
 	}
-	
+
 	@Test
 	public void shouldHandleNullFieldsFromInput() {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(new AirFeesInput(), null);
@@ -47,8 +66,9 @@ public class HkAirCalculatorTest {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		assertEquals(2510D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12510D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
-		
+
 	}
+
 	@Test
 	public void shouldCalculateWithComissionByPercentageClientTypeTP() {
 		MerchantFee merchantFee = new MerchantFee();
@@ -61,8 +81,9 @@ public class HkAirCalculatorTest {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		assertEquals(0D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12510D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
-		
+
 	}
+
 	@Test
 	public void shouldCalculateWithComissionByPercentageClientTypeDB() {
 		MerchantFee merchantFee = new MerchantFee();
@@ -75,8 +96,9 @@ public class HkAirCalculatorTest {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		assertEquals(2500D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12500D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
-		
+
 	}
+
 	@Test
 	public void shouldCalculateWithComissionNotByPercentageClientTypeAny() {
 		MerchantFee merchantFee = new MerchantFee();
@@ -90,6 +112,7 @@ public class HkAirCalculatorTest {
 		assertEquals(0D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(10000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
 	}
+
 	@Test
 	public void shouldCalculateWithDiscountByPercentageClientTypeDU() {
 		MerchantFee merchantFee = new MerchantFee();
@@ -104,6 +127,7 @@ public class HkAirCalculatorTest {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		assertEquals(10400D, airFeesBreakdown.getDiscount().doubleValue(), 0D);
 	}
+
 	@Test
 	public void shouldCalculateWithDiscountByPercentageClientTypeMN() {
 		MerchantFee merchantFee = new MerchantFee();
@@ -118,6 +142,7 @@ public class HkAirCalculatorTest {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		assertEquals(0D, airFeesBreakdown.getDiscount().doubleValue(), 0D);
 	}
+
 	@Test
 	public void shouldCalculateWithDiscountByPercentageClientTypeMG() {
 		MerchantFee merchantFee = new MerchantFee();
@@ -132,6 +157,7 @@ public class HkAirCalculatorTest {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		assertEquals(0D, airFeesBreakdown.getDiscount().doubleValue(), 0D);
 	}
+
 	@Test
 	public void shouldCalculateMerchantFeeClientTypeTF() {
 		MerchantFee merchantFee = new MerchantFee();
@@ -152,6 +178,7 @@ public class HkAirCalculatorTest {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		assertEquals(2800D, airFeesBreakdown.getMerchantFee().doubleValue(), 0D);
 	}
+
 	@Test
 	public void shouldCalculateMerchantFeeClientTypeTFWithTransactionFeeIncluded() {
 		MerchantFee merchantFee = new MerchantFee();
@@ -173,6 +200,7 @@ public class HkAirCalculatorTest {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		assertEquals(3800D, airFeesBreakdown.getMerchantFee().doubleValue(), 0D);
 	}
+
 	@Test
 	public void shouldCalculateMerchantFeeClientTypeNonTFAndUATP() {
 		MerchantFee merchantFee = new MerchantFee();
@@ -194,6 +222,7 @@ public class HkAirCalculatorTest {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		assertEquals(1000D, airFeesBreakdown.getMerchantFee().doubleValue(), 0D);
 	}
+
 	@Test
 	public void shouldCalculateMerchantFeeClientTypeTFAndUATP() {
 		MerchantFee merchantFee = new MerchantFee();
@@ -216,5 +245,4 @@ public class HkAirCalculatorTest {
 		assertEquals(400D, airFeesBreakdown.getMerchantFee().doubleValue(), 0D);
 	}
 
-	
 }

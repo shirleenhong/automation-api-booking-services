@@ -32,7 +32,7 @@ public class CommonCalculatorTest
     @Test
     public void roundShouldReturnNullWhenAmountIsNull()
     {
-        BigDecimal roundedDecimal = calculator.round(null, "SG");
+        BigDecimal roundedDecimal = calculator.round(null, 2);
         assertThat(roundedDecimal, nullValue(BigDecimal.class));
     }
 
@@ -40,7 +40,7 @@ public class CommonCalculatorTest
     public void roundShouldSetScaleTo2WhenCountryCodeIsSG()
     {
         BigDecimal decimal = new BigDecimal("10");
-        BigDecimal roundedDecimal = calculator.round(decimal, "SG");
+        BigDecimal roundedDecimal = calculator.round(decimal, 2);
         assertThat(roundedDecimal, is(equalTo(new BigDecimal("10.00"))));
     }
 
@@ -48,7 +48,7 @@ public class CommonCalculatorTest
     public void roundShouldSetScaleTo0WhenCountryCodeIsHK()
     {
         BigDecimal decimal = new BigDecimal("10.49");
-        BigDecimal roundedDecimal = calculator.round(decimal, "HK");
+        BigDecimal roundedDecimal = calculator.round(decimal, 0);
         assertThat(roundedDecimal, is(equalTo(new BigDecimal("10"))));
     }
 
@@ -56,7 +56,7 @@ public class CommonCalculatorTest
     public void roundShouldSetScaleTo0WhenCountryCodeIsIN()
     {
         BigDecimal decimal = new BigDecimal("10.51");
-        BigDecimal roundedDecimal = calculator.round(decimal, "IN");
+        BigDecimal roundedDecimal = calculator.round(decimal, 0);
         assertThat(roundedDecimal, is(equalTo(new BigDecimal("11"))));
     }
 
@@ -73,4 +73,17 @@ public class CommonCalculatorTest
         BigDecimal percentDecimal = calculator.percentDecimal(5D);
         assertThat(percentDecimal.doubleValue(), is(equalTo(0.05)));
     }
+    
+    @Test
+	public void shouldRoundUp() {
+		assertEquals(new BigDecimal(4), calculator.round(new BigDecimal(3.5), 0));
+		assertEquals(new BigDecimal(4), calculator.round(new BigDecimal(3.51), 0));
+	}
+	
+	@Test
+	public void shouldRoundDown() {
+		assertEquals(new BigDecimal(3), calculator.round(new BigDecimal(3.4), 0));
+		assertEquals(new BigDecimal(3), calculator.round(new BigDecimal(3.49), 0));
+	}
+	
 }
