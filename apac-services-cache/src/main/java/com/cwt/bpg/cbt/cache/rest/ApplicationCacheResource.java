@@ -52,11 +52,13 @@ public class ApplicationCacheResource {
 	public List<CacheResult> fetch(@PathVariable("cacheName") String cacheName) {
 		final List<CacheResult> result = new ArrayList<>();
 		final Cache cache = cacheManager.getCache(cacheName);
-		
-		final ConcurrentMap<Object, Object> concurrentMap = (ConcurrentMap<Object, Object>) cache
-				.getNativeCache();
-		
-		concurrentMap.forEach((k, v) -> result.add(new CacheResult(k, v)));
+
+		if (cache != null) {
+			final ConcurrentMap<Object, Object> concurrentMap = (ConcurrentMap<Object, Object>) cache
+					.getNativeCache();
+			
+			concurrentMap.forEach((k, v) -> result.add(new CacheResult(k, v)));
+		}
 
 		return result;
 	}
