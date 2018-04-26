@@ -5,74 +5,62 @@ import java.math.BigDecimal;
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
 
 public class ServiceFeeCalculator extends CommonCalculator {
-	
+
 	/**
-	 * FOP Amount = (Base Fare + Total Taxes + Markup Amount) - Commission Rebate Amount 
+	 * FOP Amount = (Base Fare + Total Taxes + Markup Amount) - Commission Rebate Amount
 	 * @param baseFare Base Fare
 	 * @param totalTaxes Taxes
 	 * @param markupAmount Markup Amount
 	 * @param commissionRebateAmount Commission Rebate Amount
 	 * @return Computed FOP Amount
 	 */
-	public BigDecimal calFopAmount(BigDecimal baseFare, BigDecimal totalTaxes, BigDecimal markupAmount, BigDecimal commissionRebateAmount) {
+	public BigDecimal calculateFopAmount(BigDecimal baseFare, BigDecimal totalTaxes, BigDecimal markupAmount, BigDecimal commissionRebateAmount) {
 		return baseFare.add(totalTaxes).add(markupAmount).subtract(commissionRebateAmount);
-	}
-	
-	/**
-	 * Merchant Fee Amount = ((Charged Fare + Mark-Up Amount) - Commission Rebate Amount) * Merchant Fee Percentage
-	 * Where: Charged Fare = Base Fare + Total Taxes 
-	 * @param fopAmount FOP Amount
-	 * @param merchantFeeAmountInput Merchant Fee Amount
-	 * @param merchantFeePercentage Merchant Fee Percentage of FOP Amount
-	 * @return Merchant Fee Amount input if it's given. Otherwise, computed Merchant Fee Amount based on given percentage
-	 */
-	public BigDecimal calMerchantFeeAmount(BigDecimal fopAmount, BigDecimal merchantFeeAmountInput, Double merchantFeePercentage) {
-		return getPercentageAmount(fopAmount, merchantFeeAmountInput, merchantFeePercentage);
 	}
 
 	/**
-	 * Transaction Fee Amount = Base Fare * Transaction Fee Percentage 
+	 * Merchant Fee Amount = ((Charged Fare + Mark-Up Amount) - Commission Rebate Amount) * Merchant Fee Percentage
+	 * Where: Charged Fare = Base Fare + Total Taxes
+	 * @param merchantFeeAmountInput Merchant Fee Amount
+	 * @param fopAmount FOP Amount
+	 * @param merchantFeePercentage Merchant Fee Percentage of FOP Amount
+	 * @return Merchant Fee Amount input if it's given. Otherwise, computed Merchant Fee Amount based on given percentage
+	 */
+	public BigDecimal calculateMerchantFeeAmount(BigDecimal merchantFeeAmountInput, BigDecimal fopAmount, Double merchantFeePercentage) {
+		return merchantFeeAmountInput != null ? merchantFeeAmountInput : calculatePercentage(fopAmount, merchantFeePercentage);
+	}
+
+	/**
+	 * Transaction Fee Amount = Base Fare * Transaction Fee Percentage
 	 * @param baseFare Base Fare
 	 * @param transactionFeeAmountInput Transaction Fee Amount
 	 * @param transactionFeePercentage Transaction Fee Percentage
 	 * @return Transaction Fee Amount input if it's given. Otherwise, computed Transaction Fee Amount based on given percentage
 	 */
-	public BigDecimal calTransactionFeeAmount(BigDecimal baseFare, BigDecimal transactionFeeAmountInput, Double transactionFeePercentage) {
-		return transfactionFeeAmount(baseFare, transactionFeeAmountInput, transactionFeePercentage);
-		
-	}
-
-	private BigDecimal transfactionFeeAmount(BigDecimal baseFare, BigDecimal transactionFeeAmountInput,
-			Double transactionFeePercentage) {
-		if(transactionFeePercentage != null) {
-			BigDecimal transactionFee = baseFare.multiply(new BigDecimal(transactionFeePercentage)).divide(new BigDecimal(100));
-			return transactionFeeAmountInput == null || transactionFee.compareTo(transactionFeeAmountInput) == -1? transactionFee : transactionFeeAmountInput;
-		}else if(transactionFeeAmountInput != null) {
-			return transactionFeeAmountInput;
-		}
-		return new BigDecimal(0);
+	public BigDecimal calculateTransactionFeeAmount(BigDecimal baseFare, BigDecimal transactionFeeAmountInput, Double transactionFeePercentage) {
+        return transactionFeeAmountInput != null ? transactionFeeAmountInput : calculatePercentage(baseFare, transactionFeePercentage);
 	}
 
 	/**
-	 * Markup Amount = Base Fare * Mark Up Percentage 
-	 * @param baseFare Base Fare
+	 * Markup Amount = Base Fare * Mark Up Percentage
 	 * @param markupAmountInput Markup Amount
+	 * @param baseFare Base Fare
 	 * @param markupPercentage Markup Percentage
 	 * @return Markup Amount input if it's given. Otherwise, computed Markup Amount based on given percentage
 	 */
-	public BigDecimal calMarkupAmount(BigDecimal baseFare, BigDecimal markupAmountInput, Double markupPercentage) {
-		return getPercentageAmount(baseFare, markupAmountInput, markupPercentage);
+	public BigDecimal calculateMarkupAmount(BigDecimal markupAmountInput, BigDecimal baseFare, Double markupPercentage) {
+		return markupAmountInput != null ? markupAmountInput : calculatePercentage(baseFare, markupPercentage);
 	}
-	
+
 	/**
-	 * Airline Commission/Commission Rebate Amount = Base Fare * Airline Commission/Commission Rebate Percentage 
-	 * @param baseFare Base Fare
+	 * Airline Commission/Commission Rebate Amount = Base Fare * Airline Commission/Commission Rebate Percentage
 	 * @param commissionRebateAmountInput Commission Rebate Amount
+	 * @param baseFare Base Fare
 	 * @param commissionRebatePercentage Commission Rebate Percentage
 	 * @return Commission Rebate Amount input if it's given. Otherwise, Commission Rebate Amount based on given percentage
 	 */
-	public BigDecimal calCommissionRebateAmount(BigDecimal baseFare, BigDecimal commissionRebateAmountInput, Double commissionRebatePercentage) {
-		return getPercentageAmount(baseFare, commissionRebateAmountInput, commissionRebatePercentage);
+	public BigDecimal calculateCommissionRebateAmount(BigDecimal commissionRebateAmountInput, BigDecimal baseFare, Double commissionRebatePercentage) {
+		return commissionRebateAmountInput != null ? commissionRebateAmountInput : calculatePercentage(baseFare, commissionRebatePercentage);
 	}
 
 	/**
@@ -84,20 +72,19 @@ public class ServiceFeeCalculator extends CommonCalculator {
 	 * @param airlineCommissionAmount Airline Commission Amount
 	 * @return Fare including Airline Taxes
 	 */
-	public BigDecimal calFareWithAirlineTax(BigDecimal baseFare, 
-			BigDecimal taxes, BigDecimal obFee, BigDecimal markupAmount, BigDecimal airlineCommissionAmount) {
+	public BigDecimal calculateFareWithAirlineTax(BigDecimal baseFare, BigDecimal taxes, BigDecimal obFee, BigDecimal markupAmount, BigDecimal airlineCommissionAmount) {
 		return baseFare.add(taxes).add(obFee).add(markupAmount).subtract(airlineCommissionAmount);
 	}
 
 	/**
-	 * Total Amount = Fare Including Taxes + Transaction Fee + Merchant Fee + Fuel Surcharge 
+	 * Total Amount = Fare Including Taxes + Transaction Fee + Merchant Fee + Fuel Surcharge
 	 * @param fareIncludingTaxes Fare including Taxes
 	 * @param transactionFee Transaction Fee
 	 * @param merchantFee Merchant Fee
 	 * @param fuelSurcharge Fuel Surcharge
 	 * @return Total Amount
 	 */
-	public BigDecimal calTotalAmount(BigDecimal fareIncludingTaxes, BigDecimal transactionFee, BigDecimal merchantFee, BigDecimal fuelSurcharge) {
+	public BigDecimal calculateTotalAmount(BigDecimal fareIncludingTaxes, BigDecimal transactionFee, BigDecimal merchantFee, BigDecimal fuelSurcharge) {
 		return fareIncludingTaxes.add(transactionFee).add(merchantFee).add(fuelSurcharge);
 	}
 }
