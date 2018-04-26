@@ -46,4 +46,29 @@ public class CommonCalculator {
 		return new BigDecimal(value, MathContext.DECIMAL64);
 	}
 	
+	public BigDecimal setZeroWhenNull(BigDecimal amount) {
+		
+		BigDecimal val = BigDecimal.ZERO;
+		
+		if(amount != null) {
+			val = amount;
+		}
+		
+		return val;
+		
+	}
+
+	public String setBlankWhenNull(String value) {
+		
+		String val = "";
+		
+		if(value != null) {
+			val = value;
+		}
+		
+		return val;
+		
+	}
+
+	
 }
