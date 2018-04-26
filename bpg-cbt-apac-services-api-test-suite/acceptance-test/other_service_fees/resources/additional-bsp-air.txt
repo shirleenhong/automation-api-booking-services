@@ -93,8 +93,8 @@ Create Test Variables For BSP Air
 Generate Test Variables For BSP Air
     [Arguments]    ${fees_list}    ${country}
     Create Test Variables For BSP Air    ${fees_list}    ${country}
-    Get Rounding Rules
     ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
+    Set Test Variable    ${decimal_place}
     Run Keyword If    "${apply_formula_value}" == "true"    Generate Test Variables For BSP Air With Formula
     ...    ELSE    Generate Test Variables For BSP Air Without Formula
 
