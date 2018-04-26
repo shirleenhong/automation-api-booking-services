@@ -1,90 +1,89 @@
 *** Keywords ***
 Append Additional Fields For BSP
     [Arguments]    ${other_service_fees_request_list}
-    Run Keyword If    "${nett_fare_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettFareAmount":${nett_fare_value}
-    Run Keyword If    "${gross_fare_value}"!="null"    Append To List    ${other_service_fees_request_list}    "grossFareAmount":${gross_fare_value}
-    Run Keyword If    "${tax1_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax1Amount":${tax1_value}
-    Run Keyword If    "${tax1_code_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax1Code":"${tax1_code_value}"
-    Run Keyword If    "${tax2_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax2Amount":${tax2_value}
-    Run Keyword If    "${tax2_code_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax2Code":"${tax2_code_value}"
-    Run Keyword If    "${commission_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionRebatePercentage":${commission_percentage_value}
-    Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountPercentage":${discount_percentage_value}
     Run Keyword If    "${apply_formula_value}"!="null"    Append To List    ${other_service_fees_request_list}    "applyFormula":${apply_formula_value}
-    Run Keyword If    "${uatp_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "uatpFlag":${uatp_flag_value}
-    Run Keyword If    "${waive_merchant_value}"!="null"    Append To List    ${other_service_fees_request_list}    "waiveMerchant":${waive_merchant_value}
+    Run Keyword If    "${merchant_fee_percent}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFee":${merchant_fee_percent}
+    Run Keyword If    "${commission_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commission":${commission_value}
+    Run Keyword If    "${commission_percent_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionByPercent":${commission_percent_flag_value}
+    Run Keyword If    "${commission_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionPct":${commission_percentage_value}
+    Run Keyword If    "${cwt_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "cwtAbsorb":${cwt_absorb_value}
+    Run Keyword If    "${discount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discount":${discount_value}
+    Run Keyword If    "${discount_percent_flag}"!="null"    Append To List    ${other_service_fees_request_list}    "discountByPercent":${discount_percent_flag_value}
+    Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountPct":${discount_percentage_value}
+    Run Keyword If    "${nett_fare_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettFare":${nett_fare_value}
+    Run Keyword If    "${product_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productType":"${product_type_value}"
+    Run Keyword If    "${tax_1_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax1":${tax_1_value}
+    Run Keyword If    "${tax_2_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax2":${tax_2_value}
+    Run Keyword If    "${transaction_fee_value}"!="null"    Append To List    ${other_service_fees_request_list}    "transactionFee":${transaction_fee_value}
+    Run Keyword If    "${uatp_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "uatp":${uatp_flag_value}
+    Run Keyword If    "${web_fare_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "webFareSelected":${web_fare_flag_value}
     [Return]    ${other_service_fees_request_list}
 
 Append Additional Fields For Miscellaneous Fees
     [Arguments]    ${other_service_fees_request_list}
-    Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPrice":${selling_price_value}
-    Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCost":${nett_cost_value}
-    Run Keyword If    "${gst_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercent":${gst_percent_value}
     Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAbsorb":${gst_absorb_value}
     [Return]    ${other_service_fees_request_list}
 
 Calculate Other Service Fees Commission
-    ${calculated_value}    Evaluate    ${selling_price_in_di}-${nett_cost_value}
+    ${calculated_value}    Evaluate    ${selling_price_in_di_value}-${nett_cost_value}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    Set Test Variable    ${commission}    ${calculated_value}
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${commission_value}    ${calculated_value}
 
 Calculate Other Service Fees GST
     ${calculated_value}    Evaluate    ${selling_price_value}*(${gst_percent_value}*0.01)
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    Set Test Variable    ${gst}    ${calculated_value}
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${gst_amount_value}    ${calculated_value}
 
 Calculate Other Service Fees Mechant Fee
     ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percent_value}*0.01)
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    Set Test Variable    ${merchant_fee}    ${calculated_value}
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${merchant_fee_value}    ${calculated_value}
 
 Calculate Other Service Fees Nett Cost GST
     ${calculated_value}    Evaluate    ${nett_cost_value}*(${gst_percent_value}*0.01)
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    Set Test Variable    ${nett_cost_gst}    ${calculated_value}
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${nett_cost_gst_value}    ${calculated_value}
 
 Calculate Other Service Fees Selling Price In DI
-    ${calculated_value}    Evaluate    (${selling_price_value}+${gst}+${merchant_fee})/(1+${gst_percent_value}*0.01)
+    ${calculated_value}    Evaluate    (${selling_price_value}+${gst_amount_value}+${merchant_fee_value})/(1+${gst_percent_value}*0.01)
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    Set Test Variable    ${selling_price_in_di}    ${calculated_value}
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${selling_price_in_di_value}    ${calculated_value}
 
 Create Test Variables For Other Service Fee
-    [Arguments]    ${fees_list}    ${country}=sg    ${service_fee_name}=misc-fees
-    [Documentation]    service fee names:
-    ...    misc-fees
-    ...    car
-    ...    bsp
-    ...    bsp-air
-    ...
-    ...    fees_list fields:
-    ...    cc,(cc, cx or inv)|client_type,aa|pro_name,aaa|merchant_absorb,boolean|merchant_waive,boolean
-    ...
-    ...    additional fields for misc-fees ad car
-    ...    selling_price,nn.nn|nett_cost,nn.nn|gst_percentage,nn.nn|gst_absorb,boolean
-    ...
-    ...    additional fields for bsp/bsp-air:
-    ...    nett_fare,nn.nn|gross_fare,nn.nn|tax1,nn.nn|tax1_code,aa|tax2,nn.nn|tax2_code,aa|commission_percentage,nn.nn|discount_percentage,nn.nn|apply_formula,boolean|uatp_flag,boolean|waive_merchant,boolean
+    [Arguments]    ${fees_list}    ${country}=sg
+    [Documentation]    fees_list fields:
+    ...    cc,(cc, cx or inv)|client_type,aa|pro_name,aaa|merchant_absorb,boolean|merchant_waive,boolean|selling_price,nn.nn|nett_cost,nn.nn|gst_percentage,nn.nn|gst_absorb,boolean
     ${fees_list}    Split String    ${fees_list}    |
     : FOR    ${fees}    IN    @{fees_list}
     \    ${fees_item}    Split String    ${fees}    ,
     \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
     Set Test Variable    ${fees_list}
     Set Test Variable    ${country}    ${country.upper()}
-    Set Test Variable    ${service_fee_name}
+    Set Test Variable    ${service_fee_name}    misc-fees
 
 Generate Test Variables For Other Service Fees
-    [Arguments]    ${fees_list}    ${country}=sg    ${service_fee_name}=misc-fees
-    Create Test Variables For Other Service Fee    ${fees_list}    ${country}    ${service_fee_name}
+    [Arguments]    ${fees_list}    ${country}=sg
+    Create Test Variables For Other Service Fee    ${fees_list}    ${country}
     ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
     Set Test Variable    ${decimal_place}
     Run Keyword If    "${gst_absorb_value}" == "false"    Run Keywords    Calculate Other Service Fees GST
     ...    AND    Calculate Other Service Fees Nett Cost GST
-    ...    ELSE    Run Keywords    Set Test Variable    ${gst}    0
-    ...    AND    Set Test Variable    ${nett_cost_gst}    0
+    ...    ELSE    Set GST And Nett Cost GST
     Run Keyword If    "${merchant_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_waive_value}" == "false"    Calculate Other Service Fees Mechant Fee
-    ...    ELSE    Set Test Variable    ${merchant_fee}    0
+    ...    ELSE    Set Merchant Fee
     Calculate Other Service Fees Selling Price In DI
-    Run Keyword If    ${selling_price_in_di}>${nett_cost_value}    Calculate Other Service Fees Commission
-    ...    ELSE    Set Test Variable    ${commission}    0
+    Run Keyword If    ${selling_price_in_di_value}>${nett_cost_value}    Calculate Other Service Fees Commission
+    ...    ELSE    Set Commission Value
     Run Keyword If    "${country.upper()}" != "SG"    Remove Decimal Places
 
 Get Rounding Rules
@@ -95,21 +94,21 @@ Get Rounding Rules
     Set Test Variable    ${rounding_rule}    ${round_rule_value}
 
 Remove Decimal Places
-    ${selling_price_in_di}    Convert To String    ${selling_price_in_di}
-    ${gst}    Convert To String    ${gst}
-    ${merchant_fee}    Convert To String    ${merchant_fee}
-    ${commission}    Convert To String    ${commission}
-    ${nett_cost_gst}    Convert To String    ${nett_cost_gst}
-    ${selling_price_in_di}    Remove String    ${selling_price_in_di}    .0
-    ${gst}    Remove String    ${gst}    .0
-    ${merchant_fee}    Remove String    ${merchant_fee}    .0
-    ${commission}    Remove String    ${commission}    .0
-    ${nett_cost_gst}    Remove String    ${nett_cost_gst}    .0
-    Set Test Variable    ${selling_price_in_di}
-    Set Test Variable    ${gst}
-    Set Test Variable    ${merchant_fee}
-    Set Test Variable    ${commission}
-    Set Test Variable    ${nett_cost_gst}
+    ${selling_price_in_di_value}    Convert To String    ${selling_price_in_di_value}
+    ${gst_amount_value}    Convert To String    ${gst_amount_value}
+    ${merchant_fee_value}    Convert To String    ${merchant_fee_value}
+    ${commission_value}    Convert To String    ${commission_value}
+    ${nett_cost_gst_value}    Convert To String    ${nett_cost_gst_value}
+    ${selling_price_in_di_value}    Remove String    ${selling_price_in_di_value}    .00
+    ${gst_amount_value}    Remove String    ${gst_amount_value}    .00
+    ${merchant_fee_value}    Remove String    ${merchant_fee_value}    .00
+    ${commission_value}    Remove String    ${commission_value}    .00
+    ${nett_cost_gst_value}    Remove String    ${nett_cost_gst_value}    .00
+    Set Test Variable    ${selling_price_in_di_value}
+    Set Test Variable    ${gst_amount_value}
+    Set Test Variable    ${merchant_fee_value}
+    Set Test Variable    ${commission_value}
+    Set Test Variable    ${nett_cost_gst_value}
 
 Send Currency Get Request
     [Arguments]    ${token}=${default_token}    ${currency_code}=${currency_code_value}
@@ -134,9 +133,12 @@ Send Other Service Fees Post Request
     Run Keyword If    "${merchant_waive_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeWaive":${merchant_waive_value}
     Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":"${client_type_value}"
     Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productName":"${pro_name_value}"
+    Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPrice":${selling_price_value}
+    Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCost":${nett_cost_value}
+    Run Keyword If    "${gst_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercent":${gst_percent_value}
     Set Test Variable    ${other_service_fees_request_list}
-    ${other_service_fees_request_list}    Run Keyword If    "${service_fee_name}"=="misc-fees" or "${service_fee_name}"=="car"    Append Additional Fields For Miscellaneous Fees    ${other_service_fees_request_list}
-    ...    ELSE IF    "${service_fee_name}"=="bsp-air" or "${service_fee_name}"=="bsp"    Append Additional Fields For BSP    ${other_service_fees_request_list}
+    ${other_service_fees_request_list}    Run Keyword If    "${service_fee_name}"=="misc-fees"    Append Additional Fields For Miscellaneous Fees    ${other_service_fees_request_list}
+    ...    ELSE IF    "${service_fee_name}"=="bsp-air"    Append Additional Fields For BSP    ${other_service_fees_request_list}
     ${list_count}    Get Length    ${other_service_fees_request_list}
     : FOR    ${i}    IN RANGE    0    ${list_count}
     \    ${fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${fees_list},
@@ -149,17 +151,28 @@ Send Other Service Fees Post Request
     Log    ${response.content}
     Set Test Variable    ${api_flag}    fees
 
-Verify Calculated Miscellaneous Fees Are Returned Correctly
-    Verify Json Value Is Correct    /sellingPriceInDi    ${selling_price_in_di}    int
-    Verify Json Value Is Correct    /commission    ${commission}    int
-    Run Keyword If    "${gst_absorb_value}"=="false"    Verify Json Value Is Correct    /gstAmount    ${gst}    int
-    ...    ELSE    Verify Json Element Does Not Exist    /gstAmount
-    Run Keyword If    "${merchant_absorb_value}"=="false"    Verify Json Value Is Correct    /merchantFee    ${merchant_fee}    int
-    ...    ELSE    Verify Json Element Does Not Exist    /merchantFee
-    Run Keyword If    "${gst_absorb_value}"=="false" and "${nett_cost_value}"!="0"    Verify Json Value Is Correct    /nettCostGst    ${nett_cost_gst}    int
-    ...    ELSE    Verify Json Element Does Not Exist    /nettCostGst
+Set Commission Value
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${commission_value}    0.00
+    ...    ELSE    Set Test Variable    ${commission_value}    0
 
-Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+Set GST And Nett Cost GST
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${gst_amount_value}    0.00
+    ...    ELSE    Set Test Variable    ${gst_amount_value}    0
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${nett_cost_gst_value}    0.00
+    ...    ELSE    Set Test Variable    ${nett_cost_gst_value}    0
+
+Set Merchant Fee
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${merchant_fee_value}    0.00
+    ...    ELSE    Set Test Variable    ${merchant_fee_value}    0
+
+Verify Calculated Miscellaneous Fees Are Returned Correctly
+    ${data}    Remove String    ${response.content}    {
+    ${data}    Remove String    ${data}    }
+    ${data}    Remove String    ${data}    "
+    ${data_list}    Split String    ${data}    ,
+    :FOR    ${item}    IN    @{data_list}
+    \    ${items}    Split String    ${item}    :
+    \    Verify Actual Value Matches Expected Value    ${items[1]}    ${${items[0]}_value}
 
 Verify Calculated Other Service Fees Are Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "sellingPriceInDi"
@@ -167,3 +180,5 @@ Verify Calculated Other Service Fees Are Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "gstAmount"
     Verify String Does Not Contain Substring    ${response.content}    "nettCostGst"
     Verify String Does Not Contain Substring    ${response.content}    "commission"
+
+Verify Calculated Other Service Fees BSP Air Are Returned Correctly
