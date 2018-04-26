@@ -6,14 +6,23 @@ import static org.junit.Assert.assertNull;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
 
 public class MiscFeeCalculatorTest {
 
 	private MiscFeeCalculator calculator = new MiscFeeCalculator();
+	private MerchantFee merchantFee;
+
+	@Before
+	public void setup() {
+		merchantFee = new MerchantFee();
+		merchantFee.setMerchantFeePct(6D);
+	}
 
 	@Test
 	public void shouldCalculateFees2DScale() {
@@ -26,7 +35,7 @@ public class MiscFeeCalculatorTest {
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1528.27));
 
-		FeesBreakdown result = calculator.calculateFee(input, 6D);
+		FeesBreakdown result = calculator.calculateFee(input, merchantFee);
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(new BigDecimal(60.03), 2), result.getGstAmount());
@@ -45,8 +54,8 @@ public class MiscFeeCalculatorTest {
 		input.setSellingPrice(new BigDecimal(1500.50));
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1228.27));
-
-		FeesBreakdown result = calculator.calculateFee(input, 6D);
+		
+		FeesBreakdown result = calculator.calculateFee(input, merchantFee);
 
 		assertEquals(round(new BigDecimal(362.68)), result.getCommission());
 		assertEquals(round(new BigDecimal(75.025)), result.getGstAmount());
@@ -66,8 +75,8 @@ public class MiscFeeCalculatorTest {
 		input.setGstAbsorb(true);
 		input.setMerchantFeeAbsorb(true);
 		input.setNettCost(new BigDecimal(1528.27));
-
-		FeesBreakdown result = calculator.calculateFee(input, 6D);
+		
+		FeesBreakdown result = calculator.calculateFee(input, merchantFee);
 
 		assertEquals(round(BigDecimal.ZERO), result.getCommission());
 		assertNull(result.getGstAmount());

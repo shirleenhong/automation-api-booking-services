@@ -15,7 +15,10 @@ public class OtherServiceFeesService {
 	Calculator miscFeeCalculator;
 	
 	@Autowired
-	Calculator hkBspAirCalculator;
+	Calculator hkAirCalculator;
+	
+	@Autowired
+	Calculator airCalculator;
 	
 	@Autowired 
 	MerchantFeeRepository merchantFeeRepo;
@@ -23,23 +26,27 @@ public class OtherServiceFeesService {
 	public FeesBreakdown calculateMiscFee(OtherServiceFeesInput input) {
 		return miscFeeCalculator.calculateFee(input, getMerchantFeePct(input));
 	}
-
-	public FeesBreakdown calculateBspAirFee(OtherServiceFeesInput input) {
-		return hkBspAirCalculator.calculateFee(input, getMerchantFeePct(input));
+	
+	public FeesBreakdown calculateAirFee(OtherServiceFeesInput input) {
+		if(input.getCountryCode().equals("HK")) {
+			return hkAirCalculator.calculateFee(input, getMerchantFeePct(input));
+			
+		}else if(input.getCountryCode().equals("SG") && 
+				input.getCountryCode().equals("AU") && 
+				input.getCountryCode().equals("NZ")) {
+			return airCalculator.calculateFee(input, getMerchantFeePct(input));
+		}else {
+			return null;
+		}
 	}
 
-	private Double getMerchantFeePct(OtherServiceFeesInput input) {
+	private MerchantFee getMerchantFeePct(OtherServiceFeesInput input) {
 		
-		MerchantFee merchantFeePct = merchantFeeRepo.getMerchantFee(
+		MerchantFee merchantFee = merchantFeeRepo.getMerchantFee(
 				input.getCountryCode(), 
 				input.getClientType(), 
 				input.getProductName());
 		
-		if(merchantFeePct != null) 
-		{
-			return merchantFeePct.getMerchantFeePct();
-		}
-		
-		return 0D;
+		return merchantFee;
 	}	
 }
