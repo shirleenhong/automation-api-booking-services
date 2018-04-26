@@ -36,10 +36,6 @@ public class CommonCalculator {
 		return d.setScale(scale, RoundingMode.HALF_UP);
 	}
 
-	protected BigDecimal getPercentageAmount(BigDecimal baseAmount, BigDecimal amountInput, Double percent) {
-		return amountInput != null ? amountInput : baseAmount.multiply(new BigDecimal(percent, MathContext.DECIMAL64)).divide(new BigDecimal(100));
-	}
-
 	protected BigDecimal calculatePercentage(BigDecimal input, Double percent) {
 		return safeValue(input).multiply(percentDecimal(percent));
 	}
