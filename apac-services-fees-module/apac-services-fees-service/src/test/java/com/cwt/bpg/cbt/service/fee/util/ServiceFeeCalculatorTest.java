@@ -41,12 +41,12 @@ public class ServiceFeeCalculatorTest {
 	}
 	
 	@Test
-	public void shouldReturnTransactionFeeInput() {
+	public void shouldReturnCalculatedTransactionFeeWhenItIsLessThanTransactionFeeAmountInput() {
 		BigDecimal baseFare = new BigDecimal(10000);
 		BigDecimal transactionFeeAmountInput = new BigDecimal(10000);
 		Double transactionFeePercentage = 30D;
 		BigDecimal transactionFeeAmount = calculator.calculateTransactionFeeAmount(baseFare, transactionFeeAmountInput, transactionFeePercentage);
-		assertThat(transactionFeeAmount.doubleValue(), is(equalTo(10000D)));
+		assertThat(transactionFeeAmount.doubleValue(), is(equalTo(3000D)));
 	}
 	
 	@Test

@@ -38,7 +38,13 @@ public class ServiceFeeCalculator extends CommonCalculator {
 	 * @return Transaction Fee Amount input if it's given. Otherwise, computed Transaction Fee Amount based on given percentage
 	 */
 	public BigDecimal calculateTransactionFeeAmount(BigDecimal baseFare, BigDecimal transactionFeeAmountInput, Double transactionFeePercentage) {
-        return transactionFeeAmountInput != null ? transactionFeeAmountInput : calculatePercentage(baseFare, transactionFeePercentage);
+	    BigDecimal transactionFee = calculatePercentage(baseFare, transactionFeePercentage);
+	    if (transactionFeeAmountInput == null) {
+	        return transactionFee;
+        }
+        else {
+            return transactionFeePercentage != null && transactionFee.compareTo(transactionFeeAmountInput) < 0 ? transactionFee : safeValue(transactionFeeAmountInput);
+        }
 	}
 
 	/**
