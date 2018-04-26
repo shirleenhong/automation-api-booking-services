@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiOperation;
 public class AppInfoResource {
 	
 	@Value("${com.bpg.cbt.apac.service.buildNumber}")
-	private String buildNumer;
+	private String buildNumber;
 
 	@Value("${com.bpg.cbt.apac.service.version}")
 	private String applicationVersion;
@@ -32,7 +32,7 @@ public class AppInfoResource {
     public Map<String, String> appInfo()
     {
     	 final Map<String, String> result = new HashMap<>();
-         result.put("com.bpg.cbt.apac.service.buildNumber", buildNumer);
+         result.put("com.bpg.cbt.apac.service.buildNumber", buildNumber);
          result.put("com.bpg.cbt.apac.service.version", applicationVersion);
          return result;
     }

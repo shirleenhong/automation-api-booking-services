@@ -7,6 +7,7 @@ import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.HkAirCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.MiscFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.SgAirCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 
 @Configuration("com.cwt.bpg.cbt.exchange.order.config")
 public class ExchangeOrderConfig {
@@ -27,6 +28,12 @@ public class ExchangeOrderConfig {
     public Calculator sgAirCalculator()
     {
         return new SgAirCalculator();
+    }
+	
+	@Bean(name="otherServiceCalculatorFactory")
+    public OtherServiceCalculatorFactory otherServiceCalculatorFactory()
+    {
+        return new OtherServiceCalculatorFactory();
     }
 }
 
