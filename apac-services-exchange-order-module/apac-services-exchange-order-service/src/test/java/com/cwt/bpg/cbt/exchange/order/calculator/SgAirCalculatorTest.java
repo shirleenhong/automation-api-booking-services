@@ -58,15 +58,15 @@ public class SgAirCalculatorTest {
 	public void shouldCalculateWithApplyFormula() {
 		
 		AirFeesInput input = new AirFeesInput();
-		input.setApplyFormula(Boolean.TRUE);
+		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
 		input.setSellingPrice(bigDecimal("200"));
 		input.setTax1(bigDecimal("23"));
 		input.setTax2(bigDecimal("14"));
 		input.setMerchantFee(bigDecimal("30"));
-		input.setCommissionByPercent(Boolean.TRUE);
+		input.setCommissionByPercent(true);
 		input.setCommissionPct(Double.parseDouble("20"));
-		input.setDiscountByPercent(Boolean.TRUE);
+		input.setDiscountByPercent(true);
 		input.setDiscountPct(Double.parseDouble("15"));
 
 		
@@ -85,13 +85,13 @@ public class SgAirCalculatorTest {
 		
 		AirFeesInput input = new AirFeesInput();
 		MerchantFee merchantFee = new MerchantFee();
-		input.setApplyFormula(Boolean.TRUE);
+		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
 		input.setSellingPrice(bigDecimal("200"));
 		input.setTax1(bigDecimal("23"));
 		input.setTax2(bigDecimal("14"));
 		input.setMerchantFee(bigDecimal("30"));
-		input.setCommissionByPercent(Boolean.FALSE);
+		input.setCommissionByPercent(false);
 		input.setCommission(bigDecimal("15"));
 		input.setDiscountByPercent(true);
 		input.setDiscountPct(Double.parseDouble("15"));
@@ -120,13 +120,13 @@ public class SgAirCalculatorTest {
 		
 		AirFeesInput input = new AirFeesInput();
 		MerchantFee merchantFee = new MerchantFee();
-		input.setApplyFormula(Boolean.TRUE);
+		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
 		input.setSellingPrice(bigDecimal("200"));
 		input.setTax1(bigDecimal("23"));
 		input.setTax2(bigDecimal("14"));
 		input.setMerchantFee(bigDecimal("30"));
-		input.setCommissionByPercent(Boolean.FALSE);
+		input.setCommissionByPercent(false);
 		input.setCommission(bigDecimal("15"));
 		input.setDiscountByPercent(true);
 		input.setDiscountPct(Double.parseDouble("15"));
