@@ -42,7 +42,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator{
 		}else {
 			
 			if (input.isCommissionByPercent()){
-				commission = format(input.getNettFare().multiply(getPercentage(input.getCommissionPct())));
+				commission = format(input.getNettFare().multiply(percentDecimal(input.getCommissionPct())));
 			}
 			
 			if(input.isDiscountByPercent()) {
@@ -79,7 +79,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator{
 		
 		BigDecimal discAmt = BigDecimal.ZERO;
 		if(clientType.equals("DU")||clientType.equals("DB")||clientType.equals("MN")||clientType.equals("TF")||clientType.equals("TP")) {
-			discAmt = format(sellFare.multiply(getPercentage(discountPct)));
+			discAmt = format(sellFare.multiply(percentDecimal(discountPct)));
 		}
 		return discAmt;
 	}
@@ -98,7 +98,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator{
 	
 	private BigDecimal getMerchantFee(BigDecimal totalCharge,Double mercFeePct) {
 		
-		return format(totalCharge.multiply(getPercentage(mercFeePct)));
+		return format(totalCharge.multiply(percentDecimal(mercFeePct)));
 	}
 	
 	private BigDecimal format(BigDecimal amount) {

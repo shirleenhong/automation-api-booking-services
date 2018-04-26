@@ -53,13 +53,13 @@ public class HkAirCalculator extends CommonCalculator implements Calculator{
 			
 			if(input.isCommissionByPercent()) {
 				if(!"TP".equals(input.getClientType())) {
-					commission = nettFare.divide(BigDecimal.ONE.subtract(getPercentage(input.getCommissionPct()))).subtract(nettFare);
+					commission = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct()))).subtract(nettFare);
 					if(commission.compareTo(BigDecimal.ZERO) > 0 && "DU".equals(input.getClientType())) {
 						commission.add(BigDecimal.TEN);
 					}
 					commission = round(commission, input.getCountryCode());
 				}
-				sellingPrice = nettFare.divide(BigDecimal.ONE.subtract(getPercentage(input.getCommissionPct())));
+				sellingPrice = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())));
 				if(!Arrays.asList(new String[] {"MG","DB","TF","MN"}).contains(input.getClientType())) {
 					sellingPrice.add(BigDecimal.TEN);
 				}
@@ -96,7 +96,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator{
 		
 			if(input.isDiscountByPercent()) {
 				if(Arrays.asList(new String[] {"DU", "DB"}).contains(input.getClientType())) {
-					discount = nettFare.add(applyPercentage(commission, input.getDiscountPct()));
+					discount = nettFare.add(calculatePercentage(commission, input.getDiscountPct()));
 				}else if(Arrays.asList(new String[] {"MN", "TF", "TP"}).contains(input.getClientType())) {
 					discount = commission;
 				}
@@ -148,7 +148,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator{
 						mFTotal.add(transactionFee);
 					}
 				}
-				merchantFeeAmount = applyPercentage(mFTotal, merchantFee.getMerchantFeePct());
+				merchantFeeAmount = calculatePercentage(mFTotal, merchantFee.getMerchantFeePct());
 			}
 			totalSellingFare = nettFare.add(merchantFeeAmount);
 			if(!input.isWebFareSelected()) {
