@@ -8,7 +8,6 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
-@EnableCaching
 public class Application {
 	
 	public static void main(String[] args)
