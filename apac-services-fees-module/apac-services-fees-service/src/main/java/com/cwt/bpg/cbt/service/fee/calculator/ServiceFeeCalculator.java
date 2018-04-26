@@ -1,11 +1,67 @@
-package com.cwt.bpg.cbt.service.fee.util;
+package com.cwt.bpg.cbt.service.fee.calculator;
 
 import java.math.BigDecimal;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.service.fee.model.PriceBreakdown;
+import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
 
 public class ServiceFeeCalculator extends CommonCalculator {
+
+//	@Autowired
+//	Environment env;
 	
+	@Autowired
+	ScaleConfig scaleConfig;
+	
+	public PriceBreakdown calculateFee(PriceCalculationInput input) {
+		PriceBreakdown priceBreakdown = new PriceBreakdown();
+		if(input.getNettFare() != null)
+		{
+			input.setBaseFare(input.getNettFare());
+		} 
+			
+		//ServiceFeeCalculator c = factory.getCalculator(input.getCountryCode());
+		//setCountryCode(input.getCountryCode());
+		int scale = scaleConfig.getScale(input.getCountryCode());
+		
+		BigDecimal transactionFeeAmount = round(calTransactionFeeAmount(input.getBaseFare(), input.getTransactionFeeAmount(), input.getTransactionFeePercentage()), scale);
+		priceBreakdown.setTransactionFeeAmount(transactionFeeAmount);
+		transactionFeeAmount = safeValue(transactionFeeAmount);
+		
+		BigDecimal markupAmount = round(calMarkupAmount(input.getBaseFare(), input.getMarkupAmount(), input.getMarkupPercentage()), scale);
+		priceBreakdown.setMarkupAmount(markupAmount);
+		markupAmount = safeValue(markupAmount);
+		
+		BigDecimal commissionRebateAmount = round(calCommissionRebateAmount(input.getBaseFare(), input.getCommissionRebateAmount(), input.getCommissionRebatePercentage()), scale);
+		priceBreakdown.setCommissionRebateAmount(commissionRebateAmount);
+		commissionRebateAmount = safeValue(commissionRebateAmount);
+		
+		BigDecimal fopAmount = round(calFopAmount(input.getBaseFare(), input.getTotalTaxes(), markupAmount, commissionRebateAmount), scale);
+		priceBreakdown.setFopAmount(fopAmount);
+		fopAmount = safeValue(fopAmount);
+		
+		BigDecimal merchantFeeAmount = round(calMerchantFeeAmount(fopAmount, input.getMerchantFeeAmount(), input.getMerchantFeePercentage()), scale);
+		priceBreakdown.setMerchantFeeAmount(merchantFeeAmount);
+		merchantFeeAmount = safeValue(merchantFeeAmount);
+		
+		BigDecimal airFareWithTaxAmount = round(calFareWithAirlineTax(input.getBaseFare(), input.getTotalTaxes(), input.getObFee(), markupAmount, commissionRebateAmount), scale);
+		priceBreakdown.setAirFareWithTaxAmount(airFareWithTaxAmount);
+		airFareWithTaxAmount = safeValue(airFareWithTaxAmount);
+		
+		priceBreakdown.setTotalAmount(round(calTotalAmount(airFareWithTaxAmount, transactionFeeAmount, merchantFeeAmount, input.getFuelSurcharge()), scale));
+		
+		return priceBreakdown;
+		
+	}
+	
+	//@A
+	
+	//public String countryCode;
+
 	/**
 	 * FOP Amount = (Base Fare + Total Taxes + Markup Amount) - Commission Rebate Amount 
 	 * @param baseFare Base Fare
@@ -14,6 +70,7 @@ public class ServiceFeeCalculator extends CommonCalculator {
 	 * @param commissionRebateAmount Commission Rebate Amount
 	 * @return Computed FOP Amount
 	 */
+	//TODO Should be private
 	public BigDecimal calFopAmount(BigDecimal baseFare, BigDecimal totalTaxes, BigDecimal markupAmount, BigDecimal commissionRebateAmount) {
 		return baseFare.add(totalTaxes).add(markupAmount).subtract(commissionRebateAmount);
 	}
@@ -42,7 +99,7 @@ public class ServiceFeeCalculator extends CommonCalculator {
 		
 	}
 
-	private BigDecimal transfactionFeeAmount(BigDecimal baseFare, BigDecimal transactionFeeAmountInput,
+	public BigDecimal transfactionFeeAmount(BigDecimal baseFare, BigDecimal transactionFeeAmountInput,
 			Double transactionFeePercentage) {
 		if(transactionFeePercentage != null) {
 			BigDecimal transactionFee = baseFare.multiply(new BigDecimal(transactionFeePercentage)).divide(new BigDecimal(100));
@@ -100,4 +157,19 @@ public class ServiceFeeCalculator extends CommonCalculator {
 	public BigDecimal calTotalAmount(BigDecimal fareIncludingTaxes, BigDecimal transactionFee, BigDecimal merchantFee, BigDecimal fuelSurcharge) {
 		return fareIncludingTaxes.add(transactionFee).add(merchantFee).add(fuelSurcharge);
 	}
+	
+//	public int getScale(String countryCode) {
+//		Integer scaleProp = env.getProperty("com.cwt.bpg.cbt.calc.scale.".concat(countryCode), Integer.class);
+//		return scaleProp != null ? scaleProp.intValue() : 0 ;		
+//	}
+
+//	public void setCountryCode(String countryCode) {
+//		this.countryCode = countryCode;		
+//	}
+//
+//	@Override
+//	public int getScale() {
+//		Integer scaleProp = env.getProperty("com.cwt.bpg.cbt.calc.scale.".concat(countryCode), Integer.class);
+//		return scaleProp != null ? scaleProp.intValue() : 0 ;
+//	}
 }

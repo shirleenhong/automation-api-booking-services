@@ -5,11 +5,6 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 public class CommonCalculator {
-	
-	private MathContext mc = new MathContext(2, RoundingMode.HALF_UP);
-
-	public static final String COUNTRY_CODE_INDIA = "IN";
-	public static final String COUNTRY_CODE_HONGKONG = "HK";
 
 	public BigDecimal safeValue(BigDecimal value) {
 		if (value == null) {
@@ -17,32 +12,14 @@ public class CommonCalculator {
 		}
 		return value;
 	}
-
-	public BigDecimal round(BigDecimal amount, String countryCode) {
-		if (amount == null || amount.compareTo(BigDecimal.ZERO) == 0) {
-			return null;
-		}
-		// TODO: move precision to mongo config
-		if (countryCode != null && (countryCode.equals(COUNTRY_CODE_INDIA)
-				|| countryCode.equals(COUNTRY_CODE_HONGKONG))) {
-			return round(amount, 0);
-		} else {
-			return round(amount, 2);
-		}
-	}
 	
-	public BigDecimal roundAmount(BigDecimal amount, int scale) {
+	public BigDecimal round(BigDecimal amount, int scale) {
 		
 		if (amount == null || amount.compareTo(BigDecimal.ZERO) == 0) {
 			return null;
 		}
 		
-		return round(amount, scale);
-		
-	}
-
-	public BigDecimal round(BigDecimal d, int scale) {
-		return d.setScale(scale, RoundingMode.HALF_UP);
+		return amount.setScale(scale, RoundingMode.HALF_UP);
 	}
 	
 	public BigDecimal getPercentageAmount(
@@ -84,8 +61,5 @@ public class CommonCalculator {
 	public BigDecimal getValue(Double value) {
 		return new BigDecimal(value, MathContext.DECIMAL64);
 	}
-
-	public MathContext getMc() {
-		return mc;
-	}
+	
 }

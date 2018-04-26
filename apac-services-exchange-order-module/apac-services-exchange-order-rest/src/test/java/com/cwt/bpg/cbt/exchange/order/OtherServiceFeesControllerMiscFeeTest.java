@@ -31,9 +31,6 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Mock
 	private OtherServiceFeesService service;
 	
-	@Mock
-	private OtherServiceFeesApi api;
-	
 	@InjectMocks
 	private OtherServiceFeesController controller = new OtherServiceFeesController();
 

@@ -6,11 +6,11 @@ import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 
-
-public class HkBspAirCalculator extends CommonCalculator implements Calculator{
+public class HkBspAirCalculator extends CommonCalculator implements Calculator {
+		
 	@Override
 	public FeesBreakdown calculateFee(OtherServiceFeesInput input, Double merchantFeePct) {
-
+		
 		FeesBreakdown result = new FeesBreakdown();
 		
 		if(input == null) {

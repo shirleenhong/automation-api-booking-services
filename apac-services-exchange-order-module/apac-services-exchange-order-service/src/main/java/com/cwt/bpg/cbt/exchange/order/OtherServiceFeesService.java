@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
-
 @Service
 public class OtherServiceFeesService {
 
@@ -15,17 +15,18 @@ public class OtherServiceFeesService {
 	Calculator miscFeeCalculator;
 	
 	@Autowired
-	Calculator hkBspAirCalculator;
+	OtherServiceCalculatorFactory osFactory;
 	
 	@Autowired 
 	MerchantFeeRepository merchantFeeRepo;
 
 	public FeesBreakdown calculateMiscFee(OtherServiceFeesInput input) {
-		return miscFeeCalculator.calculateFee(input, getMerchantFeePct(input));
+		return this.miscFeeCalculator.calculateFee(input, getMerchantFeePct(input));
 	}
 
 	public FeesBreakdown calculateBspAirFee(OtherServiceFeesInput input) {
-		return hkBspAirCalculator.calculateFee(input, getMerchantFeePct(input));
+		return this.osFactory.getCalculator(
+							input.getCountryCode()).calculateFee(input, getMerchantFeePct(input));
 	}
 
 	private Double getMerchantFeePct(OtherServiceFeesInput input) {

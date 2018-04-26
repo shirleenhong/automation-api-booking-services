@@ -3,23 +3,29 @@ package com.cwt.bpg.cbt.exchange.order.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.HkBspAirCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.MiscFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 
 @Configuration("com.cwt.bpg.cbt.exchange.order.config")
 public class ExchangeOrderConfig {
 
-	@Bean
-    public Calculator miscFeeCalculator()
+	@Bean(name="miscFeeCalculator")
+    public MiscFeeCalculator miscFeeCalculator()
     {
         return new MiscFeeCalculator();
     }
 	
-	@Bean
-    public Calculator hkBspAirCalculator()
+	@Bean(name="hkBspAirCalculator")
+    public HkBspAirCalculator hkBspAirCalculator()
     {
         return new HkBspAirCalculator();
+    }
+	
+	@Bean(name="otherServiceCalculatorFactory")
+    public OtherServiceCalculatorFactory otherServiceCalculatorFactory()
+    {
+        return new OtherServiceCalculatorFactory();
     }
 }
 
