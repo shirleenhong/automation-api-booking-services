@@ -89,17 +89,17 @@ Generate Test Variables For Calculate Fees
     Parse Service Fees List    ${fees_list}    ${country}
     ${fare}    Set Variable If    "${nett_fare_value}" != "null"    ${nett_fare_value}    ${base_fare_value}
     ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
-    Run Keyword If    "${fuel_surcharge_value}" == "null"    Set Test Variable    ${fuel_surcharge_value}    0
+    Run Keyword If    "${fuel_surcharge_value}" == "null"    Set Fuel Surcharge
     Run Keyword If    "${commission_amount_value}" == "null" and "${commission_percentage_value}" != "null"    Calculate Commission Amount    ${decimal_place}    ${fare}    ${commission_percentage_value}
-    ...    ELSE IF    "${commission_amount_value}" == "null" and "${commission_percentage_value}" == "null"    Set Test Variable    ${commissionRebateAmount_value}    0
+    ...    ELSE IF    "${commission_amount_value}" == "null" and "${commission_percentage_value}" == "null"    Set Commission Rebate
     ...    ELSE    Set Test Variable    ${commissionRebateAmount_value}    ${commission_amount_value}
     Run Keyword If    "${markup_amt_value}" == "null" and "${markup_percentage_value}" != "null"    Calculate Markup Amount    ${decimal_place}    ${fare}    ${markup_percentage_value}
-    ...    ELSE IF    "${markup_amt_value}" == "null" and "${markup_percentage_value}" == "null"    Set Test Variable    ${markupAmount_value}    0
+    ...    ELSE IF    "${markup_amt_value}" == "null" and "${markup_percentage_value}" == "null"    Set Markup Amount
     ...    ELSE    Set Test Variable    ${markupAmount_value}    ${markup_amt_value}
     Run Keyword If    "${merchant_amount_value}" == "null" and "${merchant_percentage_value}" != "null"    Calculate Merchant Fee Amount    ${decimal_place}    ${fare}    ${taxes_value}    ${merchant_percentage_value}
-    ...    ELSE IF    "${merchant_amount_value}" == "null" and "${merchant_percentage_value}" == "null"    Set Test Variable    ${merchantFeeAmount_value}    0
+    ...    ELSE IF    "${merchant_amount_value}" == "null" and "${merchant_percentage_value}" == "null"    Set Merchant Fee
     ...    ELSE    Set Test Variable    ${merchantFeeAmount_value}    ${merchant_amount_value}
-    Run Keyword If    "${transaction_amount_value}" == "null" and "${transaction_percentage_value}" == "null"    Set Test Variable    ${transactionFeeAmount_value}    0
+    Run Keyword If    "${transaction_amount_value}" == "null" and "${transaction_percentage_value}" == "null"    Set Transaction Fee
     ...    ELSE IF    "${transaction_amount_value}" != "null" and "${transaction_percentage_value}" == "null"    Set Test Variable    ${transactionFeeAmount_value}    ${transaction_amount_value}
     ...    ELSE    Determine Transaction Fee CAP    ${decimal_place}    ${fare}    ${transaction_amount_value}    ${transaction_percentage_value}
     Calculate FOP Amount    ${decimal_place}    ${fare}
@@ -191,3 +191,23 @@ Verify Calculated Fees Are Returned Correctly
     : FOR    ${item}    IN    @{data_list}
     \    ${items}    Split String    ${item}    :
     \    Verify Actual Value Matches Expected Value    ${items[1]}    ${${items[0]}_value}
+
+Set Fuel Surcharge
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${fuel_surcharge_value}    0.00
+    ...    ELSE    Set Test Variable    ${fuel_surcharge_value}    0
+
+Set Commission Rebate
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${commissionRebateAmount_value}    0.00
+    ...    ELSE    Set Test Variable    ${commissionRebateAmount_value}    0
+
+Set Markup Amount
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${markupAmount_value}    0.00
+    ...    ELSE    Set Test Variable    ${markupAmount_value}    0
+
+Set Merchant Fee
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${merchantFeeAmount_value}    0.00
+    ...    ELSE    Set Test Variable    ${merchantFeeAmount_value}    0
+
+Set Transaction Fee
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${transactionFeeAmount_value}    0.00
+    ...    ELSE    Set Test Variable    ${transactionFeeAmount_value}    0
