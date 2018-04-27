@@ -24,15 +24,41 @@ Verify That No Error Is Encountered When Null Input Is Used
     Parse Service Fees List    base_fare,null|taxes,null|ob_fee,null|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=sg
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
-    Verify Calculated Fees Are Not Returned
+    Set Merchant Fee
+    Set Commission Rebate
+    Set Markup Amount
+    Set Merchant Fee
+    Set Transaction Fee
+    Calculate FOP Amount    decimal_place=2    base_fare=0    taxes=0
+    Calculate Fare Incuding Air Taxes    decimal_place=2    base_fare_value=0    taxes_value=0    ob_fee_value=0
+    Calculate Total Amount    decimal_place=2    fuel_surcharge=0
+    Verify Calculated Fees Are Returned Correctly
     Parse Service Fees List    base_fare,null|taxes,null|ob_fee,null|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=hk
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
-    Verify Calculated Fees Are Not Returned
+    Set Merchant Fee
+    Set Commission Rebate
+    Set Markup Amount
+    Set Merchant Fee
+    Set Transaction Fee
+    Calculate FOP Amount    decimal_place=2    base_fare=0    taxes=0
+    Calculate Fare Incuding Air Taxes    decimal_place=2    base_fare_value=0    taxes_value=0    ob_fee_value=0
+    Calculate Total Amount    decimal_place=2    fuel_surcharge=0
+    Remove Decimal Places
+    Verify Calculated Fees Are Returned Correctly
     Parse Service Fees List    base_fare,null|taxes,null|ob_fee,null|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=in
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    200
-    Verify Calculated Fees Are Not Returned
+    Set Merchant Fee
+    Set Commission Rebate
+    Set Markup Amount
+    Set Merchant Fee
+    Set Transaction Fee
+    Calculate FOP Amount    decimal_place=2    base_fare=0    taxes=0
+    Calculate Fare Incuding Air Taxes    decimal_place=2    base_fare_value=0    taxes_value=0    ob_fee_value=0
+    Calculate Total Amount    decimal_place=2    fuel_surcharge=0
+    Remove Decimal Places
+    Verify Calculated Fees Are Returned Correctly
 
 Verify That Error Is Encountered When Empty Input Is Used
     [Tags]    functional
