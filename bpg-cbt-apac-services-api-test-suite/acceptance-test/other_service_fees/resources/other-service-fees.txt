@@ -133,12 +133,12 @@ Send Other Service Fees Post Request
     Run Keyword If    "${merchant_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeAbsorb":${merchant_absorb_value}
     Run Keyword If    "${merchant_waive_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeWaive":${merchant_waive_value}
     Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":"${client_type_value}"
-    Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productName":"${pro_name_value}"
+    Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "profileName":"${pro_name_value}"
     Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCost":${nett_cost_value}
     Run Keyword If    "${gst_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercent":${gst_percent_value}
     Set Test Variable    ${other_service_fees_request_list}
     ${other_service_fees_request_list}    Run Keyword If    "${service_fee_name}"=="misc-fees"    Append Additional Fields For Miscellaneous Fees    ${other_service_fees_request_list}
-    ...    ELSE IF    "${service_fee_name}"=="bsp-air"    Append Additional Fields For BSP    ${other_service_fees_request_list}
+    ...    ELSE IF    "${service_fee_name}"=="air-fees"    Append Additional Fields For BSP    ${other_service_fees_request_list}
     ${list_count}    Get Length    ${other_service_fees_request_list}
     : FOR    ${i}    IN RANGE    0    ${list_count}
     \    ${fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${fees_list},
