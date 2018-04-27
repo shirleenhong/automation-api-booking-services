@@ -535,617 +535,505 @@ Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly 
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Discount Percentage
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,226|commission,0|commission_percent_flag,true|commission_percentage,4|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,336|commission,0|commission_percent_flag,true|commission_percentage,5|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,276|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,350|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Tax1
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,297|commission,0|commission_percent_flag,true|commission_percentage,5|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,29|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,387|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,44|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,195|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,35|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,287|commission,0|commission_percent_flag,true|commission_percentage,8|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Tax2
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,258|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,25|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,208|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,55|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,308|commission,0|commission_percent_flag,true|commission_percentage,8|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,45|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,398|commission,0|commission_percent_flag,true|commission_percentage,10|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,35|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,359|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,309|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,209|commission,0|commission_percent_flag,true|commission_percentage,10|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,199|commission,0|commission_percent_flag,true|commission_percentage,9|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount And Tax1
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,190|commission,100|commission_percent_flag,false|commission_percentage,0|discount,35|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,410|commission,200|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,310|commission,100|commission_percent_flag,false|commission_percentage,0|discount,45|discount_percent_flag,false|discount_percentage,0|tax_1,41|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,210|commission,140|commission_percent_flag,false|commission_percentage,0|discount,55|discount_percent_flag,false|discount_percentage,0|tax_1,40|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount And Tax2
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,211|commission,101|commission_percent_flag,false|commission_percentage,0|discount,96|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,191|commission,121|commission_percent_flag,false|commission_percentage,0|discount,86|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,42|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,182|commission,105|commission_percent_flag,false|commission_percentage,0|discount,76|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,50|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,179|commission,131|commission_percent_flag,false|commission_percentage,0|discount,56|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,40|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,112|commission,102|commission_percent_flag,false|commission_percentage,0|discount,45|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,212|commission,132|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,312|commission,142|commission_percent_flag,false|commission_percentage,0|discount,67|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,412|commission,135|commission_percent_flag,false|commission_percentage,0|discount,57|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount And Tax1
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,413|commission,0|commission_percent_flag,true|commission_percentage,10|discount,75|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,313|commission,0|commission_percent_flag,true|commission_percentage,12|discount,40|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,513|commission,0|commission_percent_flag,true|commission_percentage,10|discount,50|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,493|commission,0|commission_percent_flag,true|commission_percentage,7|discount,58|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount And Tax2
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,214|commission,0|commission_percent_flag,true|commission_percentage,11|discount,40|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,304|commission,0|commission_percent_flag,true|commission_percentage,10|discount,70|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,134|commission,0|commission_percent_flag,true|commission_percentage,9|discount,49|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,254|commission,0|commission_percent_flag,true|commission_percentage,8|discount,59|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,115|commission,0|commission_percent_flag,true|commission_percentage,11|discount,29|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,135|commission,0|commission_percent_flag,true|commission_percentage,7|discount,35|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,158|commission,0|commission_percent_flag,true|commission_percentage,11|discount,49|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,215|commission,0|commission_percent_flag,true|commission_percentage,9|discount,60|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage And Tax1
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,116|commission,0|commission_percent_flag,true|commission_percentage,10|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,176|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,28|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,166|commission,0|commission_percent_flag,true|commission_percentage,12|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,35|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,167|commission,0|commission_percent_flag,true|commission_percentage,13|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,25|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage And Tax2
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,117|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,0|tax_2,28|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,117|commission,0|commission_percent_flag,true|commission_percentage,12|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,33|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,117|commission,0|commission_percent_flag,true|commission_percentage,13|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,42|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,117|commission,0|commission_percent_flag,true|commission_percentage,14|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,248|commission,0|commission_percent_flag,true|commission_percentage,12|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,238|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,218|commission,0|commission_percent_flag,true|commission_percentage,13|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,118|commission,0|commission_percent_flag,true|commission_percentage,9|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage And Tax1
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,219|commission,143|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,119|commission,141|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,30|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,319|commission,131|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,40|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,329|commission,120|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage And Tax2
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,420|commission,1501|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,11|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,320|commission,143|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,10|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,200|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,120|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,145|commission,67|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,210|commission,102|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,280|commission,130|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,300|commission,133|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax1 And Tax2
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,212|commission,103|commission_percent_flag,false|commission_percentage,0|discount,59|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,42|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,132|commission,123|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,31|tax_2,45|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,222|commission,113|commission_percent_flag,false|commission_percentage,0|discount,70|discount_percent_flag,false|discount_percentage,0|tax_1,23|tax_2,35|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,122|commission,93|commission_percent_flag,false|commission_percentage,0|discount,60|discount_percent_flag,false|discount_percentage,0|tax_1,30|tax_2,40|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax1 And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,123|commission,66|commission_percent_flag,false|commission_percentage,0|discount,61|discount_percent_flag,false|discount_percentage,0|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,223|commission,77|commission_percent_flag,false|commission_percentage,0|discount,72|discount_percent_flag,false|discount_percentage,0|tax_1,50|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,323|commission,88|commission_percent_flag,false|commission_percentage,0|discount,73|discount_percent_flag,false|discount_percentage,0|tax_1,19|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,423|commission,104|commission_percent_flag,false|commission_percentage,0|discount,80|discount_percent_flag,false|discount_percentage,0|tax_1,23|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax2 And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,124|commission,95|commission_percent_flag,false|commission_percentage,0|discount,62|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,35|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,224|commission,115|commission_percent_flag,false|commission_percentage,0|discount,75|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,29|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,314|commission,200|commission_percent_flag,false|commission_percentage,0|discount,49|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,28|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,334|commission,105|commission_percent_flag,false|commission_percentage,0|discount,55|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount, Tax1 And Tax2
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,125|commission,0|commission_percent_flag,true|commission_percentage,12|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,29|tax_2,31|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,365|commission,0|commission_percent_flag,true|commission_percentage,14|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,27|tax_2,43|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,285|commission,0|commission_percent_flag,true|commission_percentage,13|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,32|tax_2,33|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,195|commission,0|commission_percent_flag,true|commission_percentage,15|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,13|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount, Tax1 And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,180|commission,0|commission_percent_flag,true|commission_percentage,15|discount,64|discount_percent_flag,false|discount_percentage,0|tax_1,19|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,280|commission,0|commission_percent_flag,true|commission_percentage,14|discount,70|discount_percent_flag,false|discount_percentage,0|tax_1,42|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,380|commission,0|commission_percent_flag,true|commission_percentage,15|discount,55|discount_percent_flag,false|discount_percentage,0|tax_1,38|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,480|commission,0|commission_percent_flag,true|commission_percentage,13|discount,79|discount_percent_flag,false|discount_percentage,0|tax_1,23|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount, Tax2 And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,127|commission,0|commission_percent_flag,true|commission_percentage,14|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,63|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,227|commission,0|commission_percent_flag,true|commission_percentage,15|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,53|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,327|commission,0|commission_percent_flag,true|commission_percentage,16|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,43|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,427|commission,0|commission_percent_flag,true|commission_percentage,17|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,33|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage, Tax1 And Tax2
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,128|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,28|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,128|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,32|tax_2,55|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,128|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,16|tax_2,44|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,128|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,35|tax_2,20|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage, Tax1 And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,250|commission,0|commission_percent_flag,true|commission_percentage,16|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,20|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,350|commission,0|commission_percent_flag,true|commission_percentage,16|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,30|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,450commission,0|commission_percent_flag,true|commission_percentage,16|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,40|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,150|commission,0|commission_percent_flag,true|commission_percentage,16|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,50|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage, Tax2 And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,130|commission,0|commission_percent_flag,true|commission_percentage,19|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,35|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,40 30 HK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,230|commission,0|commission_percent_flag,true|commission_percentage,18|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,50|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,330|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,34|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,430|commission,0|commission_percent_flag,true|commission_percentage,17|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,40|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage, Tax1 And Tax2
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,100|commission,110|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,ALBOHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,200|commission,120|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACAPHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,300|commission,130|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,ASPAHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,400|commission,140|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,BATHHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage, Tax1 And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,132|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,15|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,100|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,35|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,250|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,45|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,199|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,23|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees With Additional BSP Air Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage, Tax2 And Merchant Fee
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,133|commission,102|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,0|tax_2,34|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,233|commission,102|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,44|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|pro_name,40 30 SG|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,333|commission,102|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,0|tax_2,54|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    nett_fare,100|    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,433|commission,102|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,10|tax_1,0|tax_2,64|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|pro_name,BALYHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
