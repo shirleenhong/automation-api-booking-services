@@ -21,6 +21,7 @@ Append Additional Fields For BSP
 
 Append Additional Fields For Miscellaneous Fees
     [Arguments]    ${other_service_fees_request_list}
+    Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPrice":${selling_price_value}
     Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAbsorb":${gst_absorb_value}
     [Return]    ${other_service_fees_request_list}
 
@@ -133,7 +134,6 @@ Send Other Service Fees Post Request
     Run Keyword If    "${merchant_waive_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeWaive":${merchant_waive_value}
     Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":"${client_type_value}"
     Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productName":"${pro_name_value}"
-    Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPrice":${selling_price_value}
     Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCost":${nett_cost_value}
     Run Keyword If    "${gst_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercent":${gst_percent_value}
     Set Test Variable    ${other_service_fees_request_list}
@@ -170,7 +170,7 @@ Verify Calculated Miscellaneous Fees Are Returned Correctly
     ${data}    Remove String    ${data}    }
     ${data}    Remove String    ${data}    "
     ${data_list}    Split String    ${data}    ,
-    :FOR    ${item}    IN    @{data_list}
+    : FOR    ${item}    IN    @{data_list}
     \    ${items}    Split String    ${item}    :
     \    Verify Actual Value Matches Expected Value    ${items[1]}    ${${items[0]}_value}
 
