@@ -37,16 +37,16 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 		BigDecimal discount = BigDecimal.ZERO;
 		BigDecimal merchantFee = BigDecimal.ZERO;
 		
-		BigDecimal inTax1 = setZeroWhenNull(input.getTax1());
-		BigDecimal inTax2 = setZeroWhenNull(input.getTax2());
+		BigDecimal inTax1 = safeValue(input.getTax1());
+		BigDecimal inTax2 = safeValue(input.getTax2());
 		BigDecimal totalTax = inTax1.add(inTax2);
-		BigDecimal inMerchantFee = setZeroWhenNull(input.getMerchantFee());
-		BigDecimal inNettFare = setZeroWhenNull(input.getNettFare());
-		BigDecimal inDiscount = setZeroWhenNull(input.getDiscount());
-		BigDecimal inCommission = setZeroWhenNull(input.getCommission());
-		Boolean isConstTkt = setBlankWhenNull(input.getProductType()).equals("CT");
-		Boolean isFopTypeCX = setBlankWhenNull(input.getFopType()).equals("CX");
-		String inClientType = setBlankWhenNull(input.getClientType());
+		BigDecimal inMerchantFee = safeValue(input.getMerchantFee());
+		BigDecimal inNettFare = safeValue(input.getNettFare());
+		BigDecimal inDiscount = safeValue(input.getDiscount());
+		BigDecimal inCommission = safeValue(input.getCommission());
+		Boolean isConstTkt = safeValue(input.getProductType()).equals("CT");
+		Boolean isFopTypeCX = safeValue(input.getFopType()).equals("CX");
+		String inClientType = safeValue(input.getClientType());
 		
 		if(!input.isApplyFormula()) {
 			
