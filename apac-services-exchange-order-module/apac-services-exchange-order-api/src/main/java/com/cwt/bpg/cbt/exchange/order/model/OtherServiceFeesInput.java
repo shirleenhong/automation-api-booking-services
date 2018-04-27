@@ -20,7 +20,7 @@ public class OtherServiceFeesInput implements Serializable {
 	@NotEmpty
 	protected String clientType;
 	@NotEmpty
-	protected String productName;
+	protected String profileName;
 	@NotNull
 	protected Double gstPercent;
 	protected BigDecimal nettCost;
@@ -66,11 +66,11 @@ public class OtherServiceFeesInput implements Serializable {
 	public void setClientType(String clientType) {
 		this.clientType = clientType;
 	}
-	public String getProductName() {
-		return productName;
+	public String getProfileName() {
+		return profileName;
 	}
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
 	}
 	public Double getGstPercent() {
 		return gstPercent;

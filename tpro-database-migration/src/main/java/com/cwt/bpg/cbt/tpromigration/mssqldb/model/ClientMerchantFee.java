@@ -4,7 +4,7 @@ public class ClientMerchantFee {
 	
 	private String clientName;
 	
-	private String productName;
+	private String profileName;
 	
 	private String clientType;
 	
@@ -22,12 +22,12 @@ public class ClientMerchantFee {
 		this.clientName = clientName;
 	}
 
-	public String getProductName() {
-		return productName;
+	public String getProfileName() {
+		return profileName;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
 	}
 
 	public String getClientType() {

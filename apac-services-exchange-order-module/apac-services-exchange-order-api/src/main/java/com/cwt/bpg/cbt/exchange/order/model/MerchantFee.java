@@ -7,8 +7,8 @@ import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
-@Entity("apacClientMerchantFee")
-@Indexes(@Index(fields = {@Field("countryCode"), @Field("clientType"), @Field("productName")}))
+@Entity("clientMerchantFee")
+@Indexes(@Index(fields = {@Field("countryCode"), @Field("clientType"), @Field("profileName")}))
 public class MerchantFee implements Serializable {
 
 	private static final long serialVersionUID = -1922100420586710851L;
@@ -26,7 +26,7 @@ public class MerchantFee implements Serializable {
 	/**
 	 * proname
 	 */
-	private String productName;
+	private String profileName;
 
 	public boolean isIncludeTransactionFee() {
 		return includeTransactionFee;
@@ -52,12 +52,12 @@ public class MerchantFee implements Serializable {
 		this.clientName = clientName;
 	}
 
-	public String getProductName() {
-		return productName;
+	public String getProfileName() {
+		return profileName;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
 	}
 
 	public Double getMerchantFeePct() {

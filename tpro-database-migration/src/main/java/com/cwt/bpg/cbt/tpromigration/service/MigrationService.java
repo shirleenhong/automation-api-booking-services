@@ -49,6 +49,7 @@ public class MigrationService {
     @Value("${com.cwt.tpromigration.mongodb.dbname}")
     private String dbName;
     
+	@SuppressWarnings("unchecked")
 	public void startMigration() throws JsonProcessingException {
 		
 		logger.info("start migration...");
@@ -77,10 +78,11 @@ public class MigrationService {
 		
 		productList.setCountryCode(countryCode);
 		
-		mongoDbConnection.getCollection("apacproductlist").insertOne(dBObjectMapper.mapAsDbDocument(productList));
+		mongoDbConnection.getCollection("productList").insertOne(dBObjectMapper.mapAsDbDocument(productList));
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public void migrateMerchantFees() throws JsonProcessingException {
 		
 		logger.info("started merchant fee migration...");
@@ -89,13 +91,14 @@ public class MigrationService {
 		
 	
 		for(ClientMerchantFee merchantFee: merchantFees) {
-			mongoDbConnection.getCollection("apacClientMerchantFee").insertOne(dBObjectMapper.mapAsDbDocument(merchantFee));
+			mongoDbConnection.getCollection("clientMerchantFee").insertOne(dBObjectMapper.mapAsDbDocument(merchantFee));
 		}
 		
 		logger.info("end of merchant fee migration...");
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void migrateCurrencies() throws JsonProcessingException {
 		
 		logger.info("started currency migration...");
@@ -105,7 +108,7 @@ public class MigrationService {
 			currDocs.add(dBObjectMapper.mapAsDbDocument(currency));
 		}
 		
-		mongoDbConnection.getCollection("apacCurrency").insertMany(currDocs);
+		mongoDbConnection.getCollection("currency").insertMany(currDocs);
 		
 		logger.info("end of currency migration...");
 		

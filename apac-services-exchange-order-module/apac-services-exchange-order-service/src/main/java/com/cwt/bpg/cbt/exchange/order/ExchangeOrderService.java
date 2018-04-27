@@ -21,11 +21,11 @@ public class ExchangeOrderService {
 	private CurrencyRepository currencyRepo;
 
 	@Cacheable("merchant-fee")
-	public MerchantFee getMerchantFee(String countryCode, String clienType, String productName) {
-		return merchantFeeRepo.getMerchantFee(countryCode, clienType, productName);
+	public MerchantFee getMerchantFee(String countryCode, String clienType, String profileName) {
+		return merchantFeeRepo.getMerchantFee(countryCode, clienType, profileName);
 	}
 
-	@CachePut(cacheNames="mechant-fee", key="{#fee.countryCode, #fee.clientType, #fee.productName}")
+	@CachePut(cacheNames="mechant-fee", key="{#fee.countryCode, #fee.clientType, #fee.profileName}")
 	public MerchantFee putMerchantFee(MerchantFee fee) {
 		return merchantFeeRepo.putMerchantFee(fee);
 	}

@@ -26,9 +26,9 @@ public class ExchangeOrderServiceTest {
 	public void canGetMerchantFee() {
 		String countryCode = "SG";
 		String clientType = "CL";
-		String productName = "PN";
-		service.getMerchantFee(countryCode, clientType, productName);
-		Mockito.verify(merchantFeeApi, Mockito.times(1)).getMerchantFee(countryCode, clientType, productName);
+		String profileName = "PN";
+		service.getMerchantFee(countryCode, clientType, profileName);
+		Mockito.verify(merchantFeeApi, Mockito.times(1)).getMerchantFee(countryCode, clientType, profileName);
 	}
 	
 	

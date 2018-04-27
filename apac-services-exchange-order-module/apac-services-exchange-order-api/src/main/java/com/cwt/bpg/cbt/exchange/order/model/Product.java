@@ -8,7 +8,7 @@ public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String productName;
+	private String profileName;
 	
 	private List<Vendor> vendors = new ArrayList<>();
 	
@@ -35,14 +35,6 @@ public class Product implements Serializable {
 	private String type;
 	
 	public Product() {
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
 	}
 
 	public List<Vendor> getVendors() {
@@ -140,7 +132,13 @@ public class Product implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
 
+	public String getProfileName() {
+		return profileName;
+	}
+
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
+	}
+	
 }

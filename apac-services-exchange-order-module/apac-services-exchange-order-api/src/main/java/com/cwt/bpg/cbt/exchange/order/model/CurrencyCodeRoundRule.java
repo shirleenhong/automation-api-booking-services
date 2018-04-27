@@ -7,7 +7,7 @@ import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
-@Entity("apacCurrency")
+@Entity("currency")
 @Indexes(@Index(fields = @Field("currencyCode")))
 public class CurrencyCodeRoundRule implements Serializable {
 	

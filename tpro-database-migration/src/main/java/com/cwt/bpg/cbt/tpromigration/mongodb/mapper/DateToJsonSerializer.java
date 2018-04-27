@@ -9,8 +9,9 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 public class DateToJsonSerializer extends StdSerializer<Date>
 {
+	private static final long serialVersionUID = 2934854050852316123L;
 
-    public DateToJsonSerializer()
+	public DateToJsonSerializer()
     {
         super(Date.class);
     }

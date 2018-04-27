@@ -24,15 +24,15 @@ public class MerchantFeeController {
 	private ExchangeOrderService exchangeOrderService;
 	
 	@Internal
-	@GetMapping(path="/merchant/{countryCode}/{clientType}/{productName}")
+	@GetMapping(path="/merchant/{countryCode}/{clientType}/{profileName}")
 	@ResponseBody
-    @ApiOperation(value = "Pulls merchant fee based on a [country code | client type | product name] combination")
+    @ApiOperation(value = "Pulls merchant fee based on a [country code | client type | profile name] combination")
 	public ResponseEntity<MerchantFee> getMerchantFee(
 			@PathVariable String countryCode,
 			@PathVariable String clientType,
-			@PathVariable String productName) {		
+			@PathVariable String profileName) {		
 		
-		return new ResponseEntity<>(exchangeOrderService.getMerchantFee(countryCode, clientType, productName), HttpStatus.OK);
+		return new ResponseEntity<>(exchangeOrderService.getMerchantFee(countryCode, clientType, profileName), HttpStatus.OK);
 	}
 	
     @Internal

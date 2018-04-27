@@ -8,7 +8,7 @@ import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
-@Entity("apacTokens")
+@Entity("tokens")
 @Indexes(@Index(fields = @Field("_id")))
 public class Token {
 	

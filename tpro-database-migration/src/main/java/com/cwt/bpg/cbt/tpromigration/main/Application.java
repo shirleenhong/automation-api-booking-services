@@ -17,7 +17,7 @@ public class Application {
 		try(ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");)
 		{
 			MigrationService service = context.getBean(MigrationService.class);
-			//service.startMigration();
+			service.startMigration();
 			service.migrateMerchantFees();
 			//service.migrateCurrencies();
 		}

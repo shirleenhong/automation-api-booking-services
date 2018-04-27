@@ -47,7 +47,7 @@ public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
 					merchantFee.setClientType(rs.getString("clientType").trim());
 				}
 				if(rs.getObject("proname") != null) {
-					merchantFee.setProductName(rs.getObject("proname") == null ? null : rs.getString("proname").trim().replaceAll(" +", " "));
+					merchantFee.setProfileName(rs.getObject("proname") == null ? null : rs.getString("proname").trim().replaceAll(" +", " "));
 				}else {
 					continue;
 				}

@@ -7,7 +7,7 @@ import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
-@Entity("apacProductList")
+@Entity("productList")
 @Indexes(@Index(fields = @Field("countryCode")))
 public class ProductList {
 	
