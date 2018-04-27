@@ -84,11 +84,11 @@ Create Test Variables For BSP Air
     [Arguments]    ${fees_list}    ${country}
     ${fees_list}    Split String    ${fees_list}    |
     : FOR    ${fees}    IN    @{fees_list}
-    \    ${fees_item}    Split String    ${fees}
+    \    ${fees_item}    Split String    ${fees}    ,
     \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
     Set Test Variable    ${fees_list}
     Set Test Variable    ${country}    ${country.upper()}
-    Set Test Variable    ${service_fee_name}
+    Set Test Variable    ${service_fee_name}    air-fees
 
 Generate Test Variables For BSP Air
     [Arguments]    ${fees_list}    ${country}
