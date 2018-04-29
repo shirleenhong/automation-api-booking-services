@@ -1,9 +1,8 @@
 package com.cwt.bpg.cbt.calculator;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.isEmptyString;
+import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
 
@@ -15,10 +14,27 @@ public class CommonCalculatorTest
     private CommonCalculator calculator = new CommonCalculator();
 
     @Test
-    public void safeValueShouldReturnZeroWhenValueIsNull()
+    public void shouldReturnSafeBigDecimal()
     {
-        BigDecimal safeValue = calculator.safeValue(null);
+        BigDecimal input = null;
+        BigDecimal safeValue = calculator.safeValue(input);
         assertThat(safeValue, is(equalTo(BigDecimal.ZERO)));
+
+        input = new BigDecimal(10.00);
+        safeValue = calculator.safeValue(input);
+        assertThat(safeValue, is(equalTo(input)));
+    }
+
+    @Test
+    public void shouldReturnSafeString()
+    {
+        String input = null;
+        String safeValue = calculator.safeValue(input);
+        assertThat(safeValue, isEmptyString());
+
+        input = "abc";
+        safeValue = calculator.safeValue(input);
+        assertThat(safeValue, is(equalTo(input)));
     }
 
     @Test
@@ -73,17 +89,34 @@ public class CommonCalculatorTest
         BigDecimal percentDecimal = calculator.percentDecimal(5D);
         assertThat(percentDecimal.doubleValue(), is(equalTo(0.05)));
     }
-    
+
+    @Test
+    public void calculatePercentageShouldReturnZeroWhenInputIsNullOrPercentIsNull()
+    {
+        BigDecimal decimal = calculator.calculatePercentage(null, 2D);
+        assertThat(decimal.doubleValue(), is(equalTo(0D)));
+
+        decimal = calculator.calculatePercentage(new BigDecimal(20), null);
+        assertThat(decimal.doubleValue(), is(equalTo(0D)));
+    }
+
+    @Test
+    public void shouldCalculatePercentage()
+    {
+        BigDecimal decimal = calculator.calculatePercentage(new BigDecimal(20), 20D);
+        assertThat(decimal.doubleValue(), is(equalTo(4D)));
+    }
+
     @Test
 	public void shouldRoundUp() {
-		assertEquals(new BigDecimal(4), calculator.round(new BigDecimal(3.5), 0));
-		assertEquals(new BigDecimal(4), calculator.round(new BigDecimal(3.51), 0));
+		assertThat(calculator.round(new BigDecimal(3.5), 0).doubleValue(), is(equalTo(4D)));
+		assertThat(calculator.round(new BigDecimal(3.51), 0).doubleValue(), is(equalTo(4D)));
 	}
 	
 	@Test
 	public void shouldRoundDown() {
-		assertEquals(new BigDecimal(3), calculator.round(new BigDecimal(3.4), 0));
-		assertEquals(new BigDecimal(3), calculator.round(new BigDecimal(3.49), 0));
+        assertThat(calculator.round(new BigDecimal(3.4), 0).doubleValue(), is(equalTo(3D)));
+        assertThat(calculator.round(new BigDecimal(3.49), 0).doubleValue(), is(equalTo(3D)));
 	}
 	
 }

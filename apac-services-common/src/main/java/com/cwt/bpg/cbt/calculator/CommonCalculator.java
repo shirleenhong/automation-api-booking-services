@@ -1,33 +1,27 @@
 package com.cwt.bpg.cbt.calculator;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 
 public class CommonCalculator {
 
-	public BigDecimal safeValue(BigDecimal value) {
-		if (value == null) {
-			return BigDecimal.ZERO;
-		}
-		return value;
+	protected BigDecimal safeValue(BigDecimal value) {
+		return value == null ? BigDecimal.ZERO : value;
 	}
-		
-	public BigDecimal round(BigDecimal amount, int scale) {
-		
+
+	private double safeValue(Double value) {
+		return value == null ? 0D : value;
+	}
+
+	protected String safeValue(String value) {
+		return value == null ? "" : value;
+	}
+
+	protected BigDecimal round(BigDecimal amount, int scale) {
 		if (amount == null) {
 			return null;
 		}
-		
 		return amount.setScale(scale, RoundingMode.HALF_UP);
-	}
-	
-	public BigDecimal getPercentageAmount(
-			BigDecimal baseAmount, BigDecimal amountInput, Double percentage) {
-		
-		return amountInput != null 
-				? amountInput 
-				: baseAmount.multiply(new BigDecimal(percentage, MathContext.DECIMAL64)).divide(new BigDecimal(100));
 	}
 
 	protected BigDecimal calculatePercentage(BigDecimal input, Double percent) {
@@ -38,37 +32,4 @@ public class CommonCalculator {
 		return BigDecimal.valueOf(safeValue(value) * 0.01);
 	}
 
-	private double safeValue(Double value) {
-		return value == null ? 0D : value;
-	}
-
-	protected BigDecimal getValue(Double value) {
-		return new BigDecimal(value, MathContext.DECIMAL64);
-	}
-	
-	public BigDecimal setZeroWhenNull(BigDecimal amount) {
-		
-		BigDecimal val = BigDecimal.ZERO;
-		
-		if(amount != null) {
-			val = amount;
-		}
-		
-		return val;
-		
-	}
-
-	public String setBlankWhenNull(String value) {
-		
-		String val = "";
-		
-		if(value != null) {
-			val = value;
-		}
-		
-		return val;
-		
-	}
-
-	
 }

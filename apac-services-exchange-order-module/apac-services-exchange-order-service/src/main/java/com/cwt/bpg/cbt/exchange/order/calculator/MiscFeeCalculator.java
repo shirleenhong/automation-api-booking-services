@@ -47,7 +47,7 @@ public class MiscFeeCalculator extends CommonCalculator implements Calculator {
 			merchantFeeAmount = round(
                     calculatePercentage(
                             input.getSellingPrice()
-                                    .multiply(getValue(1D)
+                                    .multiply(BigDecimal.ONE
                                             .add(percentDecimal(input.getGstPercent()))),
                             merchantFee.getMerchantFeePct()),
                     		scale);
@@ -55,7 +55,7 @@ public class MiscFeeCalculator extends CommonCalculator implements Calculator {
 
         BigDecimal sellingPriceInDi = round(input.getSellingPrice()
                         .add(safeValue(gstAmount)).add(safeValue(merchantFeeAmount))
-                        .divide(getValue(1D).add(percentDecimal(input.getGstPercent())), 2,
+                        .divide(BigDecimal.ONE.add(percentDecimal(input.getGstPercent())), 2,
                                 RoundingMode.HALF_UP),
                         			scale);
 
