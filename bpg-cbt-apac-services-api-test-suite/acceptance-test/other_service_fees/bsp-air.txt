@@ -947,7 +947,7 @@ Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,155|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ATMLHK|cwt_absorb,false|product_type,BT|uatp_flag,true|transaction_fee,305    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,155|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,1.75|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ATMLHK|cwt_absorb,false|product_type,BT|uatp_flag,true|transaction_fee,305    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
@@ -963,11 +963,11 @@ Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With FOPType CX, ClientType TF And TFIncMF
-    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,310|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|uatp_flag,false|tfincmf_flag,true|transaction_fee,350    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,310|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,AFFIHK|cwt_absorb,false|product_type,BT|uatp_flag,false|tfincmf_flag,true|transaction_fee,350    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3415|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ATMLHK|cwt_absorb,false|product_type,BT|uatp_flag,false|tfincmf_flag,true|transaction_fee,340    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3415|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,AFFIHK|cwt_absorb,false|product_type,BT|uatp_flag,false|tfincmf_flag,true|transaction_fee,340    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
@@ -977,7 +977,7 @@ Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2815|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,515|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,STAFF TRVL|cwt_absorb,false|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2815|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,515|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.5|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,STAFF TRVL|cwt_absorb,false|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
@@ -997,7 +997,7 @@ Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,255|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,MN|pro_name,STAFF TRVL|cwt_absorb,true|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,255|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.5|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,MN|pro_name,STAFF TRVL|cwt_absorb,true|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
@@ -1007,7 +1007,7 @@ Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,140|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,TF|pro_name,ATMLHK|cwt_absorb,true|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,140|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,1.75|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,TF|pro_name,ATMLHK|cwt_absorb,true|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
@@ -1023,17 +1023,17 @@ Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With CWT Absorb
-    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,6115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,455|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,STAFF TRVL|cwt_absorb,true|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,6115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,455|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.5|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,STAFF TRVL|cwt_absorb,true|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
-    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,7215|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,755|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ATMLHK|cwt_absorb,true|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,7215|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,755|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,1.75|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ATMLHK|cwt_absorb,true|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
 
 Verify That Other Service Fees BSP Air Merchant Fee Is Calculated Correctly With Waive Merchant Fee
-    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,8115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,765|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,TF|pro_name,ATMLHK|cwt_absorb,false|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
+    Generate Test Variables For BSP Air    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,8115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,765|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,1.75|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,TF|pro_name,ATMLHK|cwt_absorb,false|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Other Service Fees BSP Air Are Returned Correctly
