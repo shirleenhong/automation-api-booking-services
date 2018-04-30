@@ -76,7 +76,7 @@ Calculate Total Selling Fare With Formula
     Set Test Variable    ${total_selling_fare}    ${calculated_value}
 
 Calculate Total Selling Fare Without Formula
-    ${calculated_value}    Evaluate    ${nett_fare}+${commission_value}-${discount_value}+${tax_1_value}+${tax_2_value}+${${merchant_fee}
+    ${calculated_value}    Evaluate    ${nett_fare_value}+${commission_value}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}
     Comment    ${rounded_value}    Run Keyword If    "${web_fare_selected_flag}" == "true"    Round Up    ${calculated_value}    ${decimal_place}
     ...    ELSE    Set Variable    ${calculated_value}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
@@ -90,7 +90,7 @@ Create Test Variables For BSP Air
     \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
     Set Test Variable    ${fees_list}
     Set Test Variable    ${country}    ${country.upper()}
-    Comment    Set Test Variable    ${service_fee_name}
+    Set Test Variable    ${service_fee_name}    air-fees
 
 Generate Test Variables For BSP Air
     [Arguments]    ${fees_list}    ${country}
