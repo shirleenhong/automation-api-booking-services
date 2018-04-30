@@ -65,8 +65,8 @@ Calculate BSP Air Nett Fare
     Set Test Variable    ${nett_fare_amount}    ${calculated_value}
 
 Calculate BSP Air Selling Price With Commission Amount
-    ${selling_price_formula}    Set Variable If    "${web_fare_flag_value}" == "true"    ${nett_fare_value}+${commission_value}
-    ${calculated_value}    Evaluate    ${selling_price_formula}
+    Comment    ${selling_price_formula}    Set Variable If    "${web_fare_flag_value}" == "true"    ${nett_fare_value}+${commission_value}
+    ${calculated_value}    Evaluate    ${nett_fare_value}+${commission_value}
     Comment    ${rounded_value}    Run Keyword If    "${web_fare_selected_flag}" == "true"    Round Up    ${calculated_value}    ${decimal_place}
     ...    ELSE    Set Variable    ${calculated_value}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
