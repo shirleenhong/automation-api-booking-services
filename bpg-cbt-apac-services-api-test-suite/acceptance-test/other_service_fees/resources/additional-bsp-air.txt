@@ -117,3 +117,12 @@ Generate Test Variables For BSP Air With Formula
 Generate Test Variables For BSP Air Without Formula
     Calculate Total Selling Fare Without Formula
     Calculate BSP Air Nett Cost In EO
+
+Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    ${data}    Remove String    ${response.content}    {
+    ${data}    Remove String    ${data}    }
+    ${data}    Remove String    ${data}    "
+    ${data_list}    Split String    ${data}    ,
+    :FOR    ${item}    IN    @{data_list}
+    \    ${items}    Split String    ${item}    :
+    \    Verify Actual Value Matches Expected Value    ${items[1]}    ${${items[0]}_value}

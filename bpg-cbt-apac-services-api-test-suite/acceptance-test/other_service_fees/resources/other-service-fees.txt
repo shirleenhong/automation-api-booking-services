@@ -181,5 +181,3 @@ Verify Calculated Other Service Fees Are Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "gstAmount"
     Verify String Does Not Contain Substring    ${response.content}    "nettCostGst"
     Verify String Does Not Contain Substring    ${response.content}    "commission"
-
-Verify Calculated Other Service Fees BSP Air Are Returned Correctly
