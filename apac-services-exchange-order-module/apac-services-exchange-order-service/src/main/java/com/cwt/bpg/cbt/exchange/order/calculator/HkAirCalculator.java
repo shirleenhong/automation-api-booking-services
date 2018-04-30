@@ -67,7 +67,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 					if(commission.compareTo(BigDecimal.ZERO) > 0 && "DU".equals(input.getClientType())) {
 						commission = commission.add(BigDecimal.TEN);
 					}
-//					commission = round(commission, scale);
+					commission = round(commission, scale);
 				}
 				sellingPrice = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), MathContext.DECIMAL128);
 				if(!Arrays.asList(new String[] {"MG","DB","TF","MN"}).contains(input.getClientType())) {
@@ -77,8 +77,12 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 //					sellingPrice = round(sellingPrice, scale);
 //				}
 			}else {
+				commission = round(commission, scale);
 				sellingPrice = nettFare.add(commission);
 			}
+			result.setCommission(commission);
+			sellingPrice = round(sellingPrice, scale);
+			result.setSellingPrice(sellingPrice);
 //			If CommissionByPercent Then
 //				if Client Type = TP
 //					Commission = 0
@@ -115,10 +119,12 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 				discount = BigDecimal.ZERO;
 			}
 			
-//			discount = round(discount, scale);
+			discount = round(discount, scale);
+			result.setDiscount(discount);
 			nettCostInEO = nettFare;
-			nettFare = sellingPrice.add(tax1).add(tax2).subtract(discount);
-		
+			nettFare = round(sellingPrice.add(tax1).add(tax2).subtract(discount), scale);
+
+			result.setNettFare(nettFare);
 		
 //			If DiscountByPercent Then
 //				IF Client Type IN "DU", "DB"
@@ -158,7 +164,8 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 						mFTotal = mFTotal.add(transactionFee);
 					}
 				}
-				merchantFeeAmount = calculatePercentage(mFTotal, merchantFee.getMerchantFeePct());
+				merchantFeeAmount = round(calculatePercentage(mFTotal, merchantFee.getMerchantFeePct()), scale);
+				result.setMerchantFee(merchantFeeAmount);
 			}
 			totalSellingFare = nettFare.add(merchantFeeAmount);
 //			if(!input.isWebFareSelected()) {
@@ -188,12 +195,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 //			Else
 //				Total Selling Fare = Round UP(Nett Fare + Merchant Fee, gstrAgcyCurrCode, "UP")
 //			End If
-			result.setSellingPrice(round(sellingPrice, scale));
-			result.setMerchantFee(round(merchantFeeAmount, scale));
 			
-			result.setCommission(round(commission, scale));
-			result.setDiscount(round(discount, scale));
-			result.setNettFare(round(nettFare, scale));
 		}
 		
 		result.setTotalSellingFare(round(totalSellingFare, scale));
