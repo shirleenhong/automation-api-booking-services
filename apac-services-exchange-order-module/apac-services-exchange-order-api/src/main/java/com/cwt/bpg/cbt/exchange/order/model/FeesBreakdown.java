@@ -22,6 +22,16 @@ public class FeesBreakdown implements Serializable {
 		this.commission =  BigDecimal.ZERO;		
 	}
 	
+	public FeesBreakdown(BigDecimal sellingPriceInDi, BigDecimal gstAmount, BigDecimal merchantFee,
+			BigDecimal commission, BigDecimal nettCostGst) {
+		super();
+		this.sellingPriceInDi = sellingPriceInDi;
+		this.gstAmount = gstAmount;
+		this.merchantFee = merchantFee;
+		this.commission = commission;
+		this.nettCostGst = nettCostGst;
+	}
+
 	public BigDecimal getSellingPriceInDi() {
 		return sellingPriceInDi;
 	}
