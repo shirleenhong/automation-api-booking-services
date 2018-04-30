@@ -12,12 +12,14 @@ Create Test Variables For Merchant Fee Percentage
     ${merchant_fee_list_length}    Get Length    ${merchant_fee_list}
     Set Test Variable    ${merchant_fee_list_length}
     Log    ${merchant_fee_list_length}
-    :FOR    ${data}    IN    @{merchant_fee_list}
+    : FOR    ${data}    IN    @{merchant_fee_list}
     \    ${data_item}    Split String    ${data}    ,
     \    Set Test Variable    ${client_name_${index}}    ${data_item[0]}
-    \    Set Test Variable    ${product_name_${index}}    ${data_item[1]}
+    \    Set Test Variable    ${profile_name_${index}}    ${data_item[1]}
     \    Set Test Variable    ${client_type_${index}}    ${data_item[2]}
-    \    ${merchant_fee_percent}    Convert To Number    ${data_item[3]}
+    \    ${value_with_decimal}    Run Keyword And Return Status    Should Contain    ${data_item[3]}    .
+    \    ${merchant_fee_percent}    Run Keyword If    "${value_with_decimal}"=="True"    Set Variable    ${data_item[3]}
+    \    ...    ELSE    Convert To Number    ${data_item[3]}
     \    Set Test Variable    ${merchant_fee_percent_${index}}    ${merchant_fee_percent}
     \    ${merchant_fee_flag}    Set Variable If    "${data_item[4]}"=="0"    false    true
     \    Set Test Variable    ${merchant_fee_flag_${index}}    ${merchant_fee_flag}
@@ -31,7 +33,7 @@ Send Get Request For Merchant Fee Percentage
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
     : FOR    ${index}    IN RANGE    0    ${merchant_fee_list_length}
-    \    ${response}    Get Request    merchant    /apac-services-rest/api/merchant/${country}/${client_type_${index}}/${product_name_${index}}    headers=${headers}
+    \    ${response}    Get Request    merchant    /apac-services-rest/api/merchant/${country}/${client_type_${index}}/${profile_name_${index}}    headers=${headers}
     \    Set Test Variable    ${response_${index}}    ${response}
     \    Log    ${response_${index}.headers}
     \    Log    ${response_${index}.content}
@@ -42,7 +44,7 @@ Verify Merchant Fee Percentage Is Correctly Retrieved
     \    Set Test Variable    ${response}    ${response_${index}}
     \    Verify Json Value Is Correct    /countryCode    ${country}
     \    Verify Json Value Is Correct    /clientName    ${client_name_${index}}
-    \    Verify Json Value Is Correct    /productName    ${product_name_${index}}
+    \    Verify Json Value Is Correct    /profileName    ${profile_name_${index}}
     \    Verify Json Value Is Correct    /clientType    ${client_type_${index}}
     \    Verify Json Value Is Correct    /merchantFeePct    ${merchant_fee_percent_${index}}    float
     \    Verify Json Value Is Correct    /includeTransactionFee    ${merchant_fee_flag_${index}}    boolean
@@ -50,7 +52,7 @@ Verify Merchant Fee Percentage Is Correctly Retrieved
 Verify Merchant Fee Percentages Are Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "countryCode"
     Verify String Does Not Contain Substring    ${response.content}    "clientName"
-    Verify String Does Not Contain Substring    ${response.content}    "productName"
+    Verify String Does Not Contain Substring    ${response.content}    "profileName"
     Verify String Does Not Contain Substring    ${response.content}    "clientType"
     Verify String Does Not Contain Substring    ${response.content}    "merchantFeePct"
     Verify String Does Not Contain Substring    ${response.content}    "includeTransactionFee"
