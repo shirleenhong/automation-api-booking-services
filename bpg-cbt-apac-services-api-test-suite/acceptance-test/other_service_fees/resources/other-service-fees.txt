@@ -2,7 +2,7 @@
 Append Additional Fields For BSP
     [Arguments]    ${other_service_fees_request_list}
     Run Keyword If    "${apply_formula_value}"!="null"    Append To List    ${other_service_fees_request_list}    "applyFormula":${apply_formula_value}
-    Run Keyword If    "${merchant_fee_percentageage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFee":${merchant_fee_percentageage_value}
+    Run Keyword If    "${merchant_fee_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFee":${merchant_fee_percentage_value}
     Run Keyword If    "${commission_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commission":${commission_value}
     Run Keyword If    "${commission_percent_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionByPercent":${commission_percent_flag_value}
     Run Keyword If    "${commission_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionPct":${commission_percentage_value}
