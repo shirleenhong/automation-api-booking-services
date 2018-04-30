@@ -25,7 +25,7 @@ Calculate BSP Air Merchant Fee
     ...    ELSE    Calculate BSP Air Merchant Fee Without UATP
 
 Calculate BSP Air Merchant Fee With UATP
-    ${merchant_fee_formula}    Set Variable If    "${country}" == "HK" and "${client_type_value.upper()}" == "TF"    ${transaction_fee_value}*(${merchant_fee_percentage_value}*0.01)    "${country}" == "HK" and "${client_type_value.upper()}" != "TF"    ${nett_fare}-${nett_fare_value}-${tax_1_value}-${tax_2_value}*(${merchant_fee_percentage_value}*0.01)
+    ${merchant_fee_formula}    Set Variable If    "${country}" == "HK" and "${client_type_value.upper()}" == "TF"    ${transaction_fee_value}*(${merchant_fee_percentage_value}*0.01)    "${country}" == "HK" and "${client_type_value.upper()}" != "TF"    ${nett_fare_value}-${nett_fare_original_value}-${tax_1_value}-${tax_2_value}*(${merchant_fee_percentage_value}*0.01)
     ${calculated_value}    Evaluate    ${merchant_fee_formula}
     Comment    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
@@ -48,6 +48,7 @@ Calculate BSP Air Nett Fare
     ${nett_fare_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    ${selling_price_value}+${tax_1_value}+${tax_2_value}    ${selling_price_value}+${tax_1_value}+${tax_2_value}-${discount}
     ${calculated_value}    Evaluate    ${nett_fare_formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    Set Test Variable    ${nett_fare_original_value}    ${nett_fare_value}
     Set Test Variable    ${nett_fare_value}    ${calculated_value}
 
 Calculate BSP Air Selling Price With Commission Amount
