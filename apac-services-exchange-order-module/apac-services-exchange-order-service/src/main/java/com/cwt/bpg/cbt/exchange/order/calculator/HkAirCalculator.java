@@ -45,10 +45,10 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 		if(!input.isApplyFormula()) {
 			totalSellingFare = nettFare.add(commission).subtract(discount).add(tax1).add(tax2);
 			nettCostInEO = nettFare;
-			if(!input.isWebFareSelected()) {
-				totalSellingFare = round(totalSellingFare, scale);
-				nettCostInEO = round(nettCostInEO, scale);
-			}
+//			if(!input.isWebFareSelected()) {
+//				totalSellingFare = round(totalSellingFare, scale);
+//				nettCostInEO = round(nettCostInEO, scale);
+//			}
 		}else {
 //		If chkformula.value = 0 Then
 //			Discount = Round Down(Discount, gstrAgcyCurrCode)
@@ -67,15 +67,15 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 					if(commission.compareTo(BigDecimal.ZERO) > 0 && "DU".equals(input.getClientType())) {
 						commission = commission.add(BigDecimal.TEN);
 					}
-					commission = round(commission, scale);
+//					commission = round(commission, scale);
 				}
 				sellingPrice = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), MathContext.DECIMAL128);
 				if(!Arrays.asList(new String[] {"MG","DB","TF","MN"}).contains(input.getClientType())) {
 					sellingPrice = sellingPrice.add(BigDecimal.TEN);
 				}
-				if(!input.isWebFareSelected()) {
-					sellingPrice = round(sellingPrice, scale);
-				}
+//				if(!input.isWebFareSelected()) {
+//					sellingPrice = round(sellingPrice, scale);
+//				}
 			}else {
 				sellingPrice = nettFare.add(commission);
 			}
@@ -115,7 +115,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 				discount = BigDecimal.ZERO;
 			}
 			
-			discount = round(discount, scale);
+//			discount = round(discount, scale);
 			nettCostInEO = nettFare;
 			nettFare = sellingPrice.add(tax1).add(tax2).subtract(discount);
 		
@@ -161,9 +161,9 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 				merchantFeeAmount = calculatePercentage(mFTotal, merchantFee.getMerchantFeePct());
 			}
 			totalSellingFare = nettFare.add(merchantFeeAmount);
-			if(!input.isWebFareSelected()) {
-				totalSellingFare = round(totalSellingFare, scale);
-			}		
+//			if(!input.isWebFareSelected()) {
+//				totalSellingFare = round(totalSellingFare, scale);
+//			}		
 //			If CWT Absorb is unchecked And FOP Type = "CX" And Waive Merchant Fee is Unchecked
 //				If UATP checked Then
 //					If Client Type = "TF" Then
@@ -188,16 +188,16 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 //			Else
 //				Total Selling Fare = Round UP(Nett Fare + Merchant Fee, gstrAgcyCurrCode, "UP")
 //			End If
-			result.setSellingPrice(sellingPrice);
-			result.setMerchantFee(merchantFeeAmount);
+			result.setSellingPrice(round(sellingPrice, scale));
+			result.setMerchantFee(round(merchantFeeAmount, scale));
 			
-			result.setCommission(commission);
-			result.setDiscount(discount);
-			result.setNettFare(nettFare);
+			result.setCommission(round(commission, scale));
+			result.setDiscount(round(discount, scale));
+			result.setNettFare(round(nettFare, scale));
 		}
 		
-		result.setTotalSellingFare(totalSellingFare);
-		result.setNettCostInEO(nettCostInEO);
+		result.setTotalSellingFare(round(totalSellingFare, scale));
+		result.setNettCostInEO(round(nettCostInEO, scale));
 		
 		return result;
 	}
