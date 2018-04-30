@@ -45,7 +45,7 @@ Calculate BSP Air Nett Cost In EO
     Set Test Variable    ${nett_cost_in_eo_value}    ${calculated_value}
 
 Calculate BSP Air Nett Fare
-    ${nett_fare_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    ${selling_price}+${tax_1_value}+${tax_2_value}    ${selling_price}+${tax_1_value}+${tax_2_value}-${discount}
+    ${nett_fare_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    ${selling_price_value}+${tax_1_value}+${tax_2_value}    ${selling_price_value}+${tax_1_value}+${tax_2_value}-${discount}
     ${calculated_value}    Evaluate    ${nett_fare_formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Set Test Variable    ${nett_fare_value}    ${calculated_value}
@@ -69,7 +69,7 @@ Calculate BSP Air Selling Price With Commission Percentage
     Set Test Variable    ${selling_price_value}    ${calculated_value}
 
 Calculate Total Selling Fare With Formula
-    ${calculated_value}    Evaluate    ${nett_fare}+${merchant_fee}
+    ${calculated_value}    Evaluate    ${nett_fare_value}+${merchant_fee_value}
     Comment    ${rounded_value}    Run Keyword If    "${web_fare_selected_flag}" == "true"    Round Up    ${calculated_value}    ${decimal_place}
     ...    ELSE    Set Variable    ${calculated_value}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
