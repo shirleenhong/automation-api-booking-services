@@ -1,7 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.math.MathContext;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,15 +63,13 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 			
 			if(input.isCommissionByPercent()) {
 				if(!"TP".equals(input.getClientType())) {
-					commission = nettFare.divide(BigDecimal.ONE.add(percentDecimal(input.getCommissionPct())), 2,
-                            RoundingMode.HALF_UP).subtract(nettFare);
+					commission = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), MathContext.DECIMAL128).subtract(nettFare);
 					if(commission.compareTo(BigDecimal.ZERO) > 0 && "DU".equals(input.getClientType())) {
 						commission = commission.add(BigDecimal.TEN);
 					}
 					commission = round(commission, scale);
 				}
-				sellingPrice = nettFare.divide(BigDecimal.ONE.add(percentDecimal(input.getCommissionPct())), 2,
-                        RoundingMode.HALF_UP);
+				sellingPrice = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), MathContext.DECIMAL128);
 				if(!Arrays.asList(new String[] {"MG","DB","TF","MN"}).contains(input.getClientType())) {
 					sellingPrice = sellingPrice.add(BigDecimal.TEN);
 				}
