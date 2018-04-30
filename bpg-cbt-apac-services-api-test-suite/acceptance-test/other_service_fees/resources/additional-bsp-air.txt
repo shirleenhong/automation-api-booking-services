@@ -55,7 +55,7 @@ Calculate BSP Air Nett Cost In EO
     Set Test Variable    ${nett_cost_in_eo_value}    ${calculated_value}
 
 Calculate BSP Air Nett Fare
-    ${nett_fare_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    ${selling_price_amount}+${tax_1_value}+${tax_2_value}    ${selling_price_amount}+${tax_1_value}+${tax_2_value}-${discount}
+    ${nett_fare_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    ${selling_price_amount}+${tax_1_value}+${tax_2_value}    ${selling_price_amount}+${tax_1_value}+${tax_2_value}-${discount_amount}
     ${calculated_value}    Evaluate    ${nett_fare_formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
