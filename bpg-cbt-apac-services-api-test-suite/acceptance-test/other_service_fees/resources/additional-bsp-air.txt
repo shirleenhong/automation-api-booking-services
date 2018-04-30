@@ -130,7 +130,7 @@ Generate Test Variables For BSP Air With Formula
     ...    AND    Set Test Variable    ${commission_amount}    ${commission_value}
     Run Keyword If    "${discount_percent_flag_value}" == "true"    Calculate BSP Air Discount
     ...    ELSE    Set Test Variable    ${discount_amount}    ${discount_value}
-    Run Keyword If    "${discount_percent_flag_value}" != "true" or "${discount_value}" == "${EMPTY}" or"${client_type_value}" == "TF" or"${client_type_value}" == "MN"    Set Test Variable    ${discount_amount}    0
+    Run Keyword If    "${discount_value}" == "${EMPTY}" or"${client_type_value}" == "TF" or"${client_type_value}" == "MN"    Set Test Variable    ${discount_amount}    0
     Set Test Variable    ${nett_cost_in_eo_amount}    ${nett_fare_value}
     Calculate BSP Air Nett Fare
     Run Keyword If    "${cwt_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate BSP Air Merchant Fee
