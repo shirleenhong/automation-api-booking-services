@@ -19,8 +19,8 @@ Calculate BSP Air Discount
     Set Test Variable    ${discount}    ${calculated_value}
 
 Calculate BSP Air Merchant Fee
-    ${uatp_exists}    Run Keyword And Return Status    Variable Should Not Exist    ${uatp_flag_value}
-    Run Keyword If    "${uatp_exists}" != "True"    Set Test Variable    ${uatp_flag_value}    true
+    ${uatp_not_exists}    Run Keyword And Return Status    Variable Should Not Exist    ${uatp_flag_value}
+    Run Keyword If    "${uatp_not_exists}" == "True"    Set Test Variable    ${uatp_flag_value}    true
     Run Keyword If    "${uatp_flag_value}" == "true"    Calculate BSP Air Merchant Fee With UATP
     ...    ELSE    Calculate BSP Air Merchant Fee Without UATP
 
@@ -123,6 +123,6 @@ Verify Calculated Other Service Fees BSP Air Are Returned Correctly
     ${data}    Remove String    ${data}    }
     ${data}    Remove String    ${data}    "
     ${data_list}    Split String    ${data}    ,
-    :FOR    ${item}    IN    @{data_list}
+    : FOR    ${item}    IN    @{data_list}
     \    ${items}    Split String    ${item}    :
     \    Verify Actual Value Matches Expected Value    ${items[1]}    ${${items[0]}_value}
