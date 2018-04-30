@@ -53,7 +53,7 @@ Calculate BSP Air Nett Cost In EO
     ${calculated_value}    Evaluate    round(${nett_fare_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${nett_cost_in_eo_value}    ${calculated_value}
+    Set Test Variable    ${nett_cost_in_eo_amount}    ${calculated_value}
 
 Calculate BSP Air Nett Fare
     ${nett_fare_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    ${selling_price_amount}+${tax_1_value}+${tax_2_value}    ${selling_price_amount}+${tax_1_value}+${tax_2_value}-${discount_amount}
@@ -140,6 +140,11 @@ Generate Test Variables For BSP Air With Formula
 Generate Test Variables For BSP Air Without Formula
     Calculate Total Selling Fare Without Formula
     Calculate BSP Air Nett Cost In EO
+    Set Test Variable    ${commission_amount}    ${commission_value}
+    Set Test Variable    ${merchant_fee_amount}    ${merchant_fee_value}
+    Set Test Variable    ${selling_price_amount}    0
+    Set Test Variable    ${discount_amount}    ${discount_value}
+    Set Test Variable    ${nett_fare_amount}    ${nett_fare_value}
 
 Remove Decimal Places For BSP Air
     ${commission_amount}    Remove String    ${commission_amount}    .00
