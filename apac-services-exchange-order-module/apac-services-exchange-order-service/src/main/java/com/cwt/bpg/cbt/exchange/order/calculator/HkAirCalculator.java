@@ -35,7 +35,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 		BigDecimal totalSellingFare =  BigDecimal.ZERO;
 		BigDecimal nettCostInEO =  BigDecimal.ZERO;
 		BigDecimal sellingPrice =  BigDecimal.ZERO;
-		BigDecimal merchantFeeAmount = BigDecimal.ZERO;
+		BigDecimal merchantFeeAmount = safeValue(input.getMerchantFee());
 		BigDecimal commission =  safeValue(input.getCommission());
 		BigDecimal discount =  safeValue(input.getDiscount());
 		BigDecimal nettFare = safeValue(input.getNettFare());
@@ -43,7 +43,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 		BigDecimal tax2 = safeValue(input.getTax2());
 
 		if(!input.isApplyFormula()) {
-			totalSellingFare = nettFare.add(commission).subtract(discount).add(tax1).add(tax2);
+			totalSellingFare = nettFare.add(commission).subtract(discount).add(tax1).add(tax2).add(merchantFeeAmount);
 			nettCostInEO = nettFare;
 //			if(!input.isWebFareSelected()) {
 //				totalSellingFare = round(totalSellingFare, scale);
