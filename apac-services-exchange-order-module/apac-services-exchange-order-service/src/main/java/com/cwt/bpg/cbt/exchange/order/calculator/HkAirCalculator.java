@@ -142,7 +142,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 		
 		
 
-			if(!input.isCwtAbsorb() && "CX".equals(input.getFopType()) && input.isMerchantFeeWaive()) {
+			if(!input.isCwtAbsorb() && "CX".equals(input.getFopType()) && !input.isMerchantFeeWaive()) {
 				BigDecimal mFTotal = BigDecimal.ZERO;
 				BigDecimal transactionFee = safeValue(input.getTransactionFee());
 				if(input.isUatp()) {

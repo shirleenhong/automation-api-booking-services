@@ -167,7 +167,7 @@ public class HkAirCalculatorTest {
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(false);
 		input.setCwtAbsorb(false);
-		input.setMerchantFeeWaive(true);
+		input.setMerchantFeeWaive(false);
 		input.setFopType("CX");
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
@@ -189,7 +189,7 @@ public class HkAirCalculatorTest {
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(false);
 		input.setCwtAbsorb(false);
-		input.setMerchantFeeWaive(true);
+		input.setMerchantFeeWaive(false);
 		input.setFopType("CX");
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
@@ -210,7 +210,7 @@ public class HkAirCalculatorTest {
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(false);
 		input.setCwtAbsorb(false);
-		input.setMerchantFeeWaive(true);
+		input.setMerchantFeeWaive(false);
 		input.setUatp(true);
 		input.setFopType("CX");
 		input.setCommission(new BigDecimal(2000));
@@ -232,7 +232,7 @@ public class HkAirCalculatorTest {
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(false);
 		input.setCwtAbsorb(false);
-		input.setMerchantFeeWaive(true);
+		input.setMerchantFeeWaive(false);
 		input.setUatp(true);
 		input.setFopType("CX");
 		input.setCommission(new BigDecimal(2000));
