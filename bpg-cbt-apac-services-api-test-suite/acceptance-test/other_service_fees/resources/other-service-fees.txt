@@ -14,8 +14,9 @@ Append Additional Fields For BSP
     Run Keyword If    "${product_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productType":"${product_type_value}"
     Run Keyword If    "${tax_1_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax1":${tax_1_value}
     Run Keyword If    "${tax_2_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax2":${tax_2_value}
-    Run Keyword If    "${transaction_fee_value}"!="null"    Append To List    ${other_service_fees_request_list}    "transactionFee":${transaction_fee_value}
     Run Keyword If    "${web_fare_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "webFareSelected":${web_fare_flag_value}
+    ${transaction_fee_exists}    Run Keyword And Return Status    Variable Should Exist    ${transaction_fee_value}
+    Run Keyword If    "${transaction_fee_exists}"=="True"    Append To List    ${other_service_fees_request_list}    "transactionFee":${transaction_fee_value}
     ${uatp_exists}    Run Keyword And Return Status    Variable Should Exist    ${uatp_flag_value}
     Run Keyword If    "${uatp_exists}"=="True"    Append To List    ${other_service_fees_request_list}    "uatp":${uatp_flag_value}
     [Return]    ${other_service_fees_request_list}
