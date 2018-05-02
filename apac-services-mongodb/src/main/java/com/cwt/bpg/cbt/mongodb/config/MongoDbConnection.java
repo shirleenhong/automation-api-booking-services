@@ -88,9 +88,9 @@ public class MongoDbConnection
                     ;
             List<ServerAddress> hosts = new ArrayList<>();
 
-            String[] adresses = this.dbAddresses.split(",");
+            String[] addresses = this.dbAddresses.split(",");
 
-            for (String address : adresses)
+            for (String address : addresses)
             {
                 hosts.add(new ServerAddress(address));
             }
