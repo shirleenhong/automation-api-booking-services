@@ -227,6 +227,7 @@
 				<configuration>
 					<doCheck>false</doCheck>
 					<doUpdate>false</doUpdate>
+					<inherited>false</inherited>
 					<revisionOnScmFailure>unavailable</revisionOnScmFailure>
 					<getRevisionOnlyOnce>true</getRevisionOnlyOnce>
 					<useLastCommittedRevision>true</useLastCommittedRevision>
