@@ -34,7 +34,7 @@ Calculate BSP Air Merchant Fee With UATP
     Comment    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     Comment    ${calculated_value}    Evaluate    abs(${calculated_value})
-    ${calculated_value}    Set Variable If    ${calculated_value} < 0    0    ${calculated_value}
+    ${calculated_value}    Set Variable If    ${calculated_value} < 0    0    ${calculated_value} == -0    0    ${calculated_value}
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${merchant_fee_amount}    ${calculated_value}
@@ -171,3 +171,7 @@ Verify Calculated Other Service Fees BSP Air Are Returned Correctly
     : FOR    ${item}    IN    @{data_list}
     \    ${items}    Split String    ${item}    :
     \    Verify Actual Value Matches Expected Value    ${items[1]}    ${${items[0]}_amount}
+
+Verify Response Does Not Contain Calculated Fee
+    [Arguments]    ${element}
+    Verify String Does Not Contain Substring    ${response.content}    "${element}"
