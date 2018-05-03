@@ -116,6 +116,7 @@ Calculate Air Fees-SG Commission
 Calculate Air Fees-SG Discount
     ${client_type_flag}    Set Variable If    "${client_type_value.upper()}" == "DU" or "${client_type_value.upper()}" == "DB" or "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    true    false
     ${discount_formula}    Set Variable If    "${client_type_flag}" == "true" and "${discount_percent_flag_value}" == "true"    ${nett_fare_value}*(${discount_percentage_value}*0.01)    "${client_type_flag}" == "true" and "${discount_percent_flag_value}" == "true"    0    ${discount_value}
+    ${calculated_value}    Evaluate    ${discount_formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
@@ -141,7 +142,14 @@ Calculate Air Fees-SG Merchant Fee For Product Type CT
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${merchant_fee_amount}    ${calculated_value}
 
-Calculate Air Fees-SG Nett Cost In EO
+Calculate Air Fees-SG Nett Cost In EO With Formula
+    ${calculated_value}    Evaluate    ${nett_fare_value}-${commission_amount}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${nett_cost_in_eo_amount}    ${calculated_value}
+
+Calculate Air Fees-SG Nett Cost In EO Without Formula
     ${calculated_value}    Evaluate    ${nett_fare_value}-${commission_value}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
@@ -211,20 +219,20 @@ Generate Test Variables For Air Fees-SG
     Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
     ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
     Set Test Variable    ${decimal_place}
-    Run Keyword If    "${apply_formula_value}" == "true"    Calculate Air Fees-SG Total Selling Fare With Formula
-    ...    ELSE    Calculate Air Fees-SG Total Selling Fare Without Formula
+    Run Keyword If    "${apply_formula_value}" == "true"    Generate Test Variables For Air Fees-SG With Formula
+    ...    ELSE    Generate Test Variables For Air Fees-SG Without Formula
 
 Generate Test Variables For Air Fees-SG With Formula
     Calculate Air Fees-SG Commission
     Calculate Air Fees-SG Discount
-    Calculate Air Fees-SG Nett Cost In EO
+    Calculate Air Fees-SG Nett Cost In EO With Formula
     Run Keyword If    "${cwt_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Air Fees-SG Merchant Fee
     ...    ELSE    Set Test Variable    ${merchant_fee_amount}    0
     Calculate Air Fees-SG Total Selling Fare With Formula
 
 Generate Test Variables For Air Fees-SG Without Formula
     Calculate Air Fees-SG Total Selling Fare Without Formula
-    Calculate Air Fees-SG Nett Cost In EO
+    Calculate Air Fees-SG Nett Cost In EO Without Formula
 
 Remove Decimal Places For Air Fees-HK
     ${commission_amount}    Remove String    ${commission_amount}    .00
