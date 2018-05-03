@@ -181,7 +181,7 @@ Generate Test Variables For Air Fees-HK
     Set Test Variable    ${decimal_place}
     Run Keyword If    "${apply_formula_value}" == "true"    Generate Test Variables For Air Fees-HK With Formula
     ...    ELSE    Generate Test Variables For Air Fees-HK Without Formula
-    Run Keyword If    "${country.upper()}" != "SG"    Remove Decimal Places For BSP Air
+    Run Keyword If    "${country.upper()}" != "SG"    Remove Decimal Places For Air Fees-HK
 
 Generate Test Variables For Air Fees-HK With Formula
     Run Keyword If    "${commission_percent_flag_value}" == "true"    Run Keywords    Calculate Air Fees-HK Commission
@@ -226,7 +226,7 @@ Generate Test Variables For Air Fees-SG Without Formula
     Calculate Air Fees-SG Total Selling Fare Without Formula
     Calculate Air Fees-SG Nett Cost In EO
 
-Remove Decimal Places For BSP Air
+Remove Decimal Places For Air Fees-HK
     ${commission_amount}    Remove String    ${commission_amount}    .00
     ${merchant_fee_amount}    Remove String    ${merchant_fee_amount}    .00
     ${total_selling_fare_amount}    Remove String    ${total_selling_fare_amount}    .00
@@ -242,7 +242,7 @@ Remove Decimal Places For BSP Air
     Set Test Variable    ${discount_amount}
     Set Test Variable    ${nett_fare_amount}
 
-Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+Verify Calculated Air Fees Are Returned Correctly
     ${data}    Remove String    ${response.content}    {
     ${data}    Remove String    ${data}    }
     ${data}    Remove String    ${data}    "

@@ -98,7 +98,7 @@ Verify That Calculated Values Are Complete For Air Fees Hong Kong
     Verify Response Does Not Contain Calculated Fee    element=nettFare
     Verify Response Does Not Contain Calculated Fee    element=sellingPrice
     Verify Response Does Not Contain Calculated Fee    element=sellingPriceInDi
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Verify Calculated Air Fees Are Returned Correctly
     Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3800|commission,300|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,true|merchant_fee_waive,true|client_type,TF|pro_name,ACCEHK|cwt_absorb,true|product_type,BT|transaction_fee,350    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
@@ -106,7 +106,7 @@ Verify That Calculated Values Are Complete For Air Fees Hong Kong
     Verify Response Does Not Contain Calculated Fee    element=gstAmount
     Verify Response Does Not Contain Calculated Fee    element=nettCostGst
     Verify Response Does Not Contain Calculated Fee    element=sellingPriceInDi
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Calculated Values Are Complete For Air Fees Singapore
     [Tags]    functional
@@ -121,7 +121,7 @@ Verify That Calculated Values Are Complete For Air Fees Singapore
     Verify Response Does Not Contain Calculated Fee    element=nettFare
     Verify Response Does Not Contain Calculated Fee    element=sellingPrice
     Verify Response Does Not Contain Calculated Fee    element=sellingPriceInDi
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Verify Calculated Air Fees Are Returned Correctly
     Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3800|commission,300|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,true|merchant_fee_waive,true|client_type,TF|pro_name,ACCEHK|cwt_absorb,true|product_type,BT|transaction_fee,350    country=sg
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
@@ -129,4 +129,4 @@ Verify That Calculated Values Are Complete For Air Fees Singapore
     Verify Response Does Not Contain Calculated Fee    element=gstAmount
     Verify Response Does Not Contain Calculated Fee    element=nettCostGst
     Verify Response Does Not Contain Calculated Fee    element=sellingPriceInDi
-    Verify Calculated Other Service Fees BSP Air Are Returned Correctly
+    Verify Calculated Air Fees Are Returned Correctly
