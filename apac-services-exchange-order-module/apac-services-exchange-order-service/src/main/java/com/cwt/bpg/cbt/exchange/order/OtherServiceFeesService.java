@@ -14,13 +14,13 @@ public class OtherServiceFeesService {
 
 	@Autowired
 	@Qualifier(value="miscFeeCalculator")
-	Calculator miscFeeCalculator;
+	private Calculator miscFeeCalculator;
 	
 	@Autowired
-	OtherServiceCalculatorFactory osFactory;
+	private OtherServiceCalculatorFactory osFactory;
 	
 	@Autowired 
-	MerchantFeeRepository merchantFeeRepo;
+	private MerchantFeeRepository merchantFeeRepo;
 
 	public FeesBreakdown calculateMiscFee(OtherServiceFeesInput input) {
 		return this.miscFeeCalculator.calculateFee(input, getMerchantFeePct(input));
