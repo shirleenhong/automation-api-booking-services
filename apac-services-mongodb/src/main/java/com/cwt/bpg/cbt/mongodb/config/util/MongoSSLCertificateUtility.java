@@ -25,12 +25,13 @@ public class MongoSSLCertificateUtility {
 
 			@Override
 			public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				// Do nothing
 
 			}
 
 			@Override
 			public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-
+				// Do nothing
 			} 
 		} };
 
