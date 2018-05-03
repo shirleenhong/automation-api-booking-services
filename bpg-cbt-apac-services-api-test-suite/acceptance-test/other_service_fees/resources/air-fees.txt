@@ -1,9 +1,9 @@
 *** Keywords ***
-Calculate BSP Air Commission
+Calculate Air Fees-HK Commission
     Run Keyword If    "${client_type_value.upper()}" == "TP"    Set Test Variable    ${commission_amount}    0
-    ...    ELSE    Calculate BSP Air Commission With Client Type
+    ...    ELSE    Calculate Air Fees-HK Commission With Client Type
 
-Calculate BSP Air Commission With Client Type
+Calculate Air Fees-HK Commission With Client Type
     ${nett_fare_commision_condition}    Evaluate    (${nett_fare_value}/(1-${commission_percentage_value}*0.01))-${nett_fare_value}
     ${commission_formula}    Set Variable If    ${nett_fare_commision_condition}>0 and "${client_type_value.upper()}" == "DU"    ((${nett_fare_value}/(1-${commission_percentage_value}*0.01)) -${nett_fare_value})+10    ((${nett_fare_value}/(1-${commission_percentage_value}*0.01)) -${nett_fare_value})
     ${calculated_value}    Evaluate    ${commission_formula}
@@ -12,7 +12,7 @@ Calculate BSP Air Commission With Client Type
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${commission_amount}    ${calculated_value}
 
-Calculate BSP Air Discount
+Calculate Air Fees-HK Discount
     ${discount_formula}    Set Variable If    "${client_type_value.upper()}" == "DU" or "${client_type_value.upper()}" == "DB"    (${nett_fare_value}+${commission_amount})*(${discount_percentage_value}*0.01)    "${client_type_value.upper()}" == "MN" or "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "TP"    ${discount_value}    0
     ${calculated_value}    Evaluate    ${discount_formula}
     Comment    ${rounded_value}    Run Keyword If    "${client_type_value.upper()}" == "DU" or "${client_type_value.upper()}" == "DB" or "${client_type_value.upper()}" == "MN" or "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "TP"    Round Down    ${calculated_value}    ${decimal_place}
@@ -22,13 +22,13 @@ Calculate BSP Air Discount
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${discount_amount}    ${calculated_value}
 
-Calculate BSP Air Merchant Fee
+Calculate Air Fees-HK Merchant Fee
     ${uatp_not_exists}    Run Keyword And Return Status    Variable Should Not Exist    ${uatp_flag_value}
     Run Keyword If    "${uatp_not_exists}" == "True"    Set Test Variable    ${uatp_flag_value}    true
-    Run Keyword If    "${uatp_flag_value}" == "true"    Calculate BSP Air Merchant Fee With UATP
-    ...    ELSE    Calculate BSP Air Merchant Fee Without UATP
+    Run Keyword If    "${uatp_flag_value}" == "true"    Calculate Air Fees-HK Merchant Fee With UATP
+    ...    ELSE    Calculate Air Fees-HK Merchant Fee Without UATP
 
-Calculate BSP Air Merchant Fee With UATP
+Calculate Air Fees-HK Merchant Fee With UATP
     ${merchant_fee_formula}    Set Variable If    "${country}" == "HK" and "${client_type_value.upper()}" == "TF"    ${transaction_fee_value}*(${merchant_fee_percentage_value}*0.01)    "${country}" == "HK" and "${client_type_value.upper()}" != "TF"    (${nett_fare_amount}-${nett_fare_original_value}-${tax_1_value}-${tax_2_value})*(${merchant_fee_percentage_value}*0.01)
     ${calculated_value}    Evaluate    ${merchant_fee_formula}
     Comment    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
@@ -39,7 +39,7 @@ Calculate BSP Air Merchant Fee With UATP
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${merchant_fee_amount}    ${calculated_value}
 
-Calculate BSP Air Merchant Fee Without UATP
+Calculate Air Fees-HK Merchant Fee Without UATP
     ${merchant_fee_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" and "${tfincmf_flag_value}" == "true"    (${nett_fare_amount}+${transaction_fee_value})*(${merchant_fee_percentage_value}*0.01)    ${nett_fare_amount}*(${merchant_fee_percentage_value}*0.01)
     ${calculated_value}    Evaluate    ${merchant_fee_formula}
     Comment    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
@@ -48,7 +48,7 @@ Calculate BSP Air Merchant Fee Without UATP
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${merchant_fee_amount}    ${calculated_value}
 
-Calculate BSP Air Nett Cost In EO
+Calculate Air Fees-HK Nett Cost In EO
     Comment    ${rounded_value}    Run Keyword If    "${web_fare_selected_flag}" == "true"    Round Up    ${nett_fare_value}    ${decimal_place}
     ...    ELSE    Set Variable    ${nett_fare_value}
     ${calculated_value}    Evaluate    round(${nett_fare_value},${decimal_place})
@@ -56,7 +56,7 @@ Calculate BSP Air Nett Cost In EO
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${nett_cost_in_eo_amount}    ${calculated_value}
 
-Calculate BSP Air Nett Fare
+Calculate Air Fees-HK Nett Fare
     ${nett_fare_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    ${selling_price_amount}+${tax_1_value}+${tax_2_value}    ${selling_price_amount}+${tax_1_value}+${tax_2_value}-${discount_amount}
     ${calculated_value}    Evaluate    ${nett_fare_formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
@@ -65,7 +65,7 @@ Calculate BSP Air Nett Fare
     Set Test Variable    ${nett_fare_original_value}    ${nett_fare_value}
     Set Test Variable    ${nett_fare_amount}    ${calculated_value}
 
-Calculate BSP Air Selling Price With Commission Amount
+Calculate Air Fees-HK Selling Price With Commission Amount
     Comment    ${selling_price_formula}    Set Variable If    "${web_fare_flag_value}" == "true"    ${nett_fare_value}+${commission_value}
     ${calculated_value}    Evaluate    ${nett_fare_value}+${commission_value}
     Comment    ${rounded_value}    Run Keyword If    "${web_fare_selected_flag}" == "true"    Round Up    ${calculated_value}    ${decimal_place}
@@ -75,7 +75,7 @@ Calculate BSP Air Selling Price With Commission Amount
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${selling_price_amount}    ${calculated_value}
 
-Calculate BSP Air Selling Price With Commission Percentage
+Calculate Air Fees-HK Selling Price With Commission Percentage
     ${client_type_flag}    Set Variable If    "${client_type_value.upper()}" == "MG" or "${client_type_value.upper()}" == "DB" or "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    true    false
     ${selling_price_formula}    Set Variable If    "${client_type_flag}" == "true" and "${web_fare_flag_value}" == "true"    ${nett_fare_value}/(1-(${commission_percentage_value}*0.01))    "${client_type_flag}" == "false" and "${web_fare_flag_value}" == "true"    ${nett_fare_value}/(1-(${commission_percentage_value}*0.01))+10    "${client_type_flag}" == "true" and "${web_fare_flag_value}" == "false"
     ...    ${nett_fare_value}/(1-(${commission_percentage_value}*0.01))    ${nett_fare_value}/(1-(${commission_percentage_value}*0.01))+10
@@ -87,7 +87,7 @@ Calculate BSP Air Selling Price With Commission Percentage
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${selling_price_amount}    ${calculated_value}
 
-Calculate Total Selling Fare With Formula
+Calculate Air Fees-HK Total Selling Fare With Formula
     ${calculated_value}    Evaluate    ${nett_fare_amount}+${merchant_fee_amount}
     Comment    ${rounded_value}    Run Keyword If    "${web_fare_selected_flag}" == "true"    Round Up    ${calculated_value}    ${decimal_place}
     ...    ELSE    Set Variable    ${calculated_value}
@@ -96,7 +96,7 @@ Calculate Total Selling Fare With Formula
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}
 
-Calculate Total Selling Fare Without Formula
+Calculate Air Fees-HK Total Selling Fare Without Formula
     ${calculated_value}    Evaluate    ${nett_fare_value}+${commission_value}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}
     Comment    ${rounded_value}    Run Keyword If    "${web_fare_selected_flag}" == "true"    Round Up    ${calculated_value}    ${decimal_place}
     ...    ELSE    Set Variable    ${calculated_value}
@@ -105,7 +105,66 @@ Calculate Total Selling Fare Without Formula
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}
 
-Create Test Variables For BSP Air
+Calculate Air Fees-SG Commission
+    ${commission_formula}    Set Variable If    "${commission_percent_flag_value}" == "true"    ${nett_fare_value}*(${commission_percentage_value}*0.01)    ${commission_value}
+    ${calculated_value}    Evaluate    ${commission_formula}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${commission_amount}    ${calculated_value}
+
+Calculate Air Fees-SG Discount
+    ${client_type_flag}    Set Variable If    "${client_type_value.upper()}" == "DU" or "${client_type_value.upper()}" == "DB" or "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    true    false
+    ${discount_formula}    Set Variable If    "${client_type_flag}" == "true" and "${discount_percent_flag_value}" == "true"    ${nett_fare_value}*(${discount_percentage_value}*0.01)    "${client_type_flag}" == "true" and "${discount_percent_flag_value}" == "true"    0    ${discount_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${discount_amount}    ${calculated_value}
+
+Calculate Air Fees-SG Merchant Fee
+    Run Keyword If    "${product_type_value.upper()}" == "CT"    Calculate Air Fees-SG Merchant Fee For Product Type CT
+    ...    ELSE    Calculate Air Fees-SG Merchant Fee For Non-Product Type CT
+
+Calculate Air Fees-SG Merchant Fee For Non-Product Type CT
+    ${merchant_fee_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" and "${tfincmf_flag_value}" == "true"    (${selling_price_value}-${discount_amount}+${tax_1_value}+${tax_2_value}+${transaction_fee_value})*(${merchant_fee_percentage_value}*0.01)    (${selling_price_value}-${discount_amount}+${tax_1_value}+${tax_2_value})*(${merchant_fee_percentage_value}*0.01)
+    ${calculated_value}    Evaluate    ${merchant_fee_formula}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${merchant_fee_amount}    ${calculated_value}
+
+Calculate Air Fees-SG Merchant Fee For Product Type CT
+    ${merchant_fee_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" and "${tfincmf_flag_value}" == "true"    (${nett_cost_in_eo_amount}+${commission_amount}-${discount_amount}+${tax_1_value}+${tax_2_value}+${transaction_fee_value})*(${merchant_fee_percentage_value}*0.01)    (${nett_cost_in_eo_amount}+${commission_amount}-${discount_amount}+${tax_1_value}+${tax_2_value})*(${merchant_fee_percentage_value}*0.01)
+    ${calculated_value}    Evaluate    ${merchant_fee_formula}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${merchant_fee_amount}    ${calculated_value}
+
+Calculate Air Fees-SG Nett Cost In EO
+    ${calculated_value}    Evaluate    ${nett_fare_value}-${commission_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${nett_cost_in_eo_amount}    ${calculated_value}
+
+Calculate Air Fees-SG Total Selling Fare With Formula
+    ${total_selling_fare_formula}    Set Variable If    "${product_type_value.upper()}" == "CT"    ${nett_cost_in_eo_amount}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}    ${selling_price_value}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}
+    ${calculated_value}    Evaluate    ${total_selling_fare_formula}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}
+
+Calculate Air Fees-SG Total Selling Fare Without Formula
+    ${total_selling_fare_formula}    Set Variable If    "${product_type_value.upper()}" == "CT"    ${nett_fare_value}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}    ${selling_price_value}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}
+    ${calculated_value}    Evaluate    ${total_selling_fare_formula}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}
+
+Create Test Variables For Air Fees-HK
     [Arguments]    ${fees_list}    ${country}
     ${fees_list}    Split String    ${fees_list}    |
     : FOR    ${fees}    IN    @{fees_list}
@@ -115,37 +174,57 @@ Create Test Variables For BSP Air
     Set Test Variable    ${country}    ${country.upper()}
     Set Test Variable    ${service_fee_name}    air-fees
 
-Generate Test Variables For BSP Air
+Generate Test Variables For Air Fees-HK
     [Arguments]    ${fees_list}    ${country}
-    Create Test Variables For BSP Air    ${fees_list}    ${country}
+    Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
     ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
     Set Test Variable    ${decimal_place}
-    Run Keyword If    "${apply_formula_value}" == "true"    Generate Test Variables For BSP Air With Formula
-    ...    ELSE    Generate Test Variables For BSP Air Without Formula
+    Run Keyword If    "${apply_formula_value}" == "true"    Generate Test Variables For Air Fees-HK With Formula
+    ...    ELSE    Generate Test Variables For Air Fees-HK Without Formula
     Run Keyword If    "${country.upper()}" != "SG"    Remove Decimal Places For BSP Air
 
-Generate Test Variables For BSP Air With Formula
-    Run Keyword If    "${commission_percent_flag_value}" == "true"    Run Keywords    Calculate BSP Air Commission
-    ...    AND    Calculate BSP Air Selling Price With Commission Percentage
-    ...    ELSE    Run Keywords    Calculate BSP Air Selling Price With Commission Amount
+Generate Test Variables For Air Fees-HK With Formula
+    Run Keyword If    "${commission_percent_flag_value}" == "true"    Run Keywords    Calculate Air Fees-HK Commission
+    ...    AND    Calculate Air Fees-HK Selling Price With Commission Percentage
+    ...    ELSE    Run Keywords    Calculate Air Fees-HK Selling Price With Commission Amount
     ...    AND    Set Test Variable    ${commission_amount}    ${commission_value}
-    Run Keyword If    "${discount_percent_flag_value}" == "true"    Calculate BSP Air Discount
+    Run Keyword If    "${discount_percent_flag_value}" == "true"    Calculate Air Fees-HK Discount
     ...    ELSE    Set Test Variable    ${discount_amount}    ${discount_value}
     Run Keyword If    "${discount_value}" == "${EMPTY}" or"${client_type_value}" == "TF" or"${client_type_value}" == "MN"    Set Test Variable    ${discount_amount}    0
     Set Test Variable    ${nett_cost_in_eo_amount}    ${nett_fare_value}
-    Calculate BSP Air Nett Fare
-    Run Keyword If    "${cwt_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate BSP Air Merchant Fee
+    Calculate Air Fees-HK Nett Fare
+    Run Keyword If    "${cwt_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Air Fees-HK Merchant Fee
     ...    ELSE    Set Test Variable    ${merchant_fee_amount}    0
-    Calculate Total Selling Fare With Formula
+    Calculate Air Fees-HK Total Selling Fare With Formula
 
-Generate Test Variables For BSP Air Without Formula
-    Calculate Total Selling Fare Without Formula
-    Calculate BSP Air Nett Cost In EO
+Generate Test Variables For Air Fees-HK Without Formula
+    Calculate Air Fees-HK Total Selling Fare Without Formula
+    Calculate Air Fees-HK Nett Cost In EO
     Set Test Variable    ${commission_amount}    ${commission_value}
     Set Test Variable    ${merchant_fee_amount}    ${merchant_fee_value}
     Set Test Variable    ${selling_price_amount}    0
     Set Test Variable    ${discount_amount}    ${discount_value}
     Set Test Variable    ${nett_fare_amount}    ${nett_fare_value}
+
+Generate Test Variables For Air Fees-SG
+    [Arguments]    ${fees_list}    ${country}
+    Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
+    ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
+    Set Test Variable    ${decimal_place}
+    Run Keyword If    "${apply_formula_value}" == "true"    Calculate Air Fees-SG Total Selling Fare With Formula
+    ...    ELSE    Calculate Air Fees-SG Total Selling Fare Without Formula
+
+Generate Test Variables For Air Fees-SG With Formula
+    Calculate Air Fees-SG Commission
+    Calculate Air Fees-SG Discount
+    Calculate Air Fees-SG Nett Cost In EO
+    Run Keyword If    "${cwt_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Air Fees-SG Merchant Fee
+    ...    ELSE    Set Test Variable    ${merchant_fee_amount}    0
+    Calculate Air Fees-SG Total Selling Fare With Formula
+
+Generate Test Variables For Air Fees-SG Without Formula
+    Calculate Air Fees-SG Total Selling Fare Without Formula
+    Calculate Air Fees-SG Nett Cost In EO
 
 Remove Decimal Places For BSP Air
     ${commission_amount}    Remove String    ${commission_amount}    .00

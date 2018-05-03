@@ -1,7 +1,7 @@
 *** Settings ***
 Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-variables.txt
-Resource          resources/other-service-fees.txt
+Resource          resources/misc-fees.txt
 Resource          ../resources/api-imports.txt
 
 *** Test Cases ***
