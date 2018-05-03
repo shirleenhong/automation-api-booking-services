@@ -10,6 +10,8 @@ import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.ClientTypes;
+import com.cwt.bpg.cbt.exchange.order.model.FOPTypes;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
@@ -18,7 +20,7 @@ import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 public class HkAirCalculator extends CommonCalculator implements Calculator {
 	
 	@Autowired
-	ScaleConfig scaleConfig;
+	private ScaleConfig scaleConfig;
 	
 	@Override
 	public FeesBreakdown calculateFee(OtherServiceFeesInput genericInput, MerchantFee merchantFee) {
@@ -62,15 +64,15 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 //		Else
 			
 			if(input.isCommissionByPercent()) {
-				if(!"TP".equals(input.getClientType())) {
+				if(!ClientTypes.TP.getCode().equals(input.getClientType())) {
 					commission = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), MathContext.DECIMAL128).subtract(nettFare);
-					if(commission.compareTo(BigDecimal.ZERO) > 0 && "DU".equals(input.getClientType())) {
+					if(commission.compareTo(BigDecimal.ZERO) > 0 && ClientTypes.DU.getCode().equals(input.getClientType())) {
 						commission = commission.add(BigDecimal.TEN);
 					}
 					commission = round(commission, scale);
 				}
 				sellingPrice = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), MathContext.DECIMAL128);
-				if(!Arrays.asList(new String[] {"MG","DB","TF","MN"}).contains(input.getClientType())) {
+				if(!Arrays.asList(new String[] {ClientTypes.MG.getCode(),ClientTypes.DB.getCode(),ClientTypes.TF.getCode(),ClientTypes.MN.getCode()}).contains(input.getClientType())) {
 					sellingPrice = sellingPrice.add(BigDecimal.TEN);
 				}
 //				if(!input.isWebFareSelected()) {
@@ -109,13 +111,13 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 //		    End If
 		
 			if(input.isDiscountByPercent()) {
-				if(Arrays.asList(new String[] {"DU", "DB"}).contains(input.getClientType())) {
+				if(Arrays.asList(new String[] {ClientTypes.DU.getCode(), ClientTypes.DB.getCode()}).contains(input.getClientType())) {
 					discount = nettFare.add(calculatePercentage(commission, input.getDiscountPct()));
-				}else if(Arrays.asList(new String[] {"MN", "TF", "TP"}).contains(input.getClientType())) {
+				}else if(Arrays.asList(new String[] {ClientTypes.MN.getCode(), ClientTypes.TF.getCode(), ClientTypes.TP.getCode()}).contains(input.getClientType())) {
 					discount = commission;
 				}
 			}
-			if(Arrays.asList(new String[] {"MN", "TF"}).contains(input.getClientType())) {
+			if(Arrays.asList(new String[] {ClientTypes.MN.getCode(), ClientTypes.TF.getCode()}).contains(input.getClientType())) {
 				discount = BigDecimal.ZERO;
 			}
 			
@@ -148,11 +150,11 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 		
 		
 
-			if(!input.isCwtAbsorb() && "CX".equals(input.getFopType()) && !input.isMerchantFeeWaive()) {
+			if(!input.isCwtAbsorb() && FOPTypes.CWT.getCode().equals(input.getFopType()) && !input.isMerchantFeeWaive()) {
 				BigDecimal mFTotal = BigDecimal.ZERO;
 				BigDecimal transactionFee = safeValue(input.getTransactionFee());
 				if(input.isUatp()) {
-					if("TF".equals(input.getClientType())) {
+					if(ClientTypes.TF.getCode().equals(input.getClientType())) {
 						mFTotal = transactionFee ;
 					}else {
 						//TotalCharge - NetFare - Tax
@@ -160,7 +162,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 					}
 				}else {
 					mFTotal = nettFare;
-					if("TF".equals(input.getClientType()) && merchantFee.isIncludeTransactionFee()) {
+					if(ClientTypes.TF.getCode().equals(input.getClientType()) && merchantFee.isIncludeTransactionFee()) {
 						mFTotal = mFTotal.add(transactionFee);
 					}
 				}

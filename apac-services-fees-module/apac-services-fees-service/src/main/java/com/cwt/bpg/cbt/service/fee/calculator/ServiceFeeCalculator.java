@@ -137,7 +137,8 @@ public class ServiceFeeCalculator extends CommonCalculator {
 	 * @param fuelSurcharge Fuel Surcharge
 	 * @return Total Amount
 	 */
-	public BigDecimal calculateTotalAmount(BigDecimal fareIncludingTaxes, BigDecimal transactionFee, BigDecimal merchantFee, BigDecimal fuelSurcharge) {
+	public BigDecimal calculateTotalAmount(BigDecimal fareIncludingTaxes,
+			BigDecimal transactionFee, BigDecimal merchantFee, BigDecimal fuelSurcharge) {
 		return fareIncludingTaxes.add(transactionFee).add(merchantFee).add(fuelSurcharge);
 	}
 }
