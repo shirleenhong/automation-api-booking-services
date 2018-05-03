@@ -109,7 +109,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 			merchantFeeAmount = applyMerchantFee(merchantFee, input, scale, nettFare, tax1, tax2);
 			
 			result.setMerchantFee(merchantFeeAmount);
-			totalSellingFare = nettFare.add(merchantFeeAmount);
+			totalSellingFare = nettFare.add(safeValue(merchantFeeAmount));
 		}
 		result.setTotalSellingFare(round(totalSellingFare, scale));
 		result.setNettCostInEO(round(nettCostInEO, scale));
@@ -119,7 +119,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 	private BigDecimal applyMerchantFee(MerchantFee merchantFee, AirFeesInput input,
 			int scale, BigDecimal nettFare, BigDecimal tax1, BigDecimal tax2) {
 		
-		BigDecimal merchantFeeAmount = BigDecimal.ZERO;
+		BigDecimal merchantFeeAmount = null;
 		
 		if(!input.isCwtAbsorb() && FOPTypes.CWT.getCode().equals(input.getFopType()) && !input.isMerchantFeeWaive()) {
 			BigDecimal mFTotal = BigDecimal.ZERO;
@@ -145,9 +145,6 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 			if(merchantFeeAmount.compareTo(BigDecimal.ZERO) < 0) {
 				merchantFeeAmount = BigDecimal.ZERO;
 			}
-		}
-		else {
-			merchantFeeAmount = BigDecimal.ZERO;
 		}
 		return merchantFeeAmount;
 	}
