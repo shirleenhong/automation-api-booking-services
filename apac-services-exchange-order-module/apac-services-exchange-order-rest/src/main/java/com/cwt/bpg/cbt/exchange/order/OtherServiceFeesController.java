@@ -30,7 +30,7 @@ public class OtherServiceFeesController {
 	private OtherServiceFeesService service;
 	
 	/**
-	 * Applicable car, hotel and other ticket
+	 * Applicable car, hotel and other ticket (train and ferry)
 	 * @param input
 	 * @return
 	 */
