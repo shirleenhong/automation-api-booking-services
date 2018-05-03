@@ -165,6 +165,9 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 					}
 				}
 				merchantFeeAmount = round(calculatePercentage(mFTotal, merchantFee.getMerchantFeePct()), scale);
+				if(merchantFeeAmount.compareTo(BigDecimal.ZERO) < 0) {
+					merchantFeeAmount = BigDecimal.ZERO;
+				}
 				result.setMerchantFee(merchantFeeAmount);
 			}
 			totalSellingFare = nettFare.add(merchantFeeAmount);
