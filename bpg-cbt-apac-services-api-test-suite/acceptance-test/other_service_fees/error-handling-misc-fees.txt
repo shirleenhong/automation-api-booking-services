@@ -9,55 +9,55 @@ Resource          resources/misc-fees.txt
 *** Test Cases ***
 Verify That Error Is Encountered When Invalid Token Is Used
     [Tags]    functional
-    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
+    Generate Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
     Send Other Service Fees Post Request    token=12345.12345.12345.
     Verify Response Status Code Is Correct    401
-    Verify Calculated Other Service Fees Are Not Returned
-    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=sg
+    Verify Calculated Miscellaneous Fees Are Not Returned
+    Generate Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=sg
     Send Other Service Fees Post Request    token=aaa.bbb.ccc
     Verify Response Status Code Is Correct    401
-    Verify Calculated Other Service Fees Are Not Returned
-    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=sg
+    Verify Calculated Miscellaneous Fees Are Not Returned
+    Generate Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=sg
     Send Other Service Fees Post Request    token=!@#$%^&.!@#$%^&*.!@#$%^
     Verify Response Status Code Is Correct    401
-    Verify Calculated Other Service Fees Are Not Returned
+    Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Null Token Is Used
     [Tags]    functional
-    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
+    Generate Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
     Send Other Service Fees Post Request    token=null
     Verify Response Status Code Is Correct    401
-    Verify Calculated Other Service Fees Are Not Returned
+    Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Empty Token Is Used
     [Tags]    functional
-    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=sg
+    Generate Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=sg
     Send Other Service Fees Post Request    token=${EMPTY}
     Verify Response Status Code Is Correct    400
-    Verify Calculated Other Service Fees Are Not Returned
+    Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When No Token Is Used
     [Tags]    functional
-    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
+    Generate Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
     Send Other Service Fees Post Request    token=None
     Verify Response Status Code Is Correct    400
-    Verify Calculated Other Service Fees Are Not Returned
+    Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Calculated Values Are Complete For Miscellaneous Fees Singapore
     [Tags]    functional
-    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,250.78|nett_cost,0|gst_percent,5.8|gst_absorb,true
+    Generate Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,250.78|nett_cost,0|gst_percent,5.8|gst_absorb,true
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Miscellaneous Fees Are Returned Correctly
     Verify Response Does Not Contain Calculated Fee    element=gstAmount
     Verify Response Does Not Contain Calculated Fee    element=nettCostGst
     Verify Response Does Not Contain Calculated Fee    element=merchantFee
-    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,250.78|nett_cost,0|gst_percent,5.8|gst_absorb,false
+    Generate Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,250.78|nett_cost,0|gst_percent,5.8|gst_absorb,false
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Miscellaneous Fees Are Returned Correctly
     Verify Response Does Not Contain Calculated Fee    element=merchantFee
-    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,250.78|nett_cost,0|gst_percent,5.8|gst_absorb,true
+    Generate Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,2NEXT SG|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,250.78|nett_cost,0|gst_percent,5.8|gst_absorb,true
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Miscellaneous Fees Are Returned Correctly
@@ -66,19 +66,19 @@ Verify That Calculated Values Are Complete For Miscellaneous Fees Singapore
 
 Verify That Calculated Values Are Complete For Miscellaneous Fees Hong Kong
     [Tags]    functional
-    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=hk
+    Generate Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Miscellaneous Fees Are Returned Correctly
     Verify Response Does Not Contain Calculated Fee    element=gstAmount
     Verify Response Does Not Contain Calculated Fee    element=nettCostGst
     Verify Response Does Not Contain Calculated Fee    element=merchantFee
-    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
+    Generate Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,false    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Miscellaneous Fees Are Returned Correctly
     Verify Response Does Not Contain Calculated Fee    element=merchantFee
-    Generate Test Variables For Other Service Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=hk
+    Generate Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Miscellaneous Fees Are Returned Correctly
