@@ -15,17 +15,20 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 @EnableCaching
 public class CacheConfiguration {
-	
-    private static final Logger logger = LoggerFactory.getLogger(CacheConfiguration.class);
-	
-	private final static String[] cacheNames = new String[] { "products", "merchant-fee", "currency-rounding-rule" };
-	
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(CacheConfiguration.class);
+
+	private static final String[] cacheNames = new String[] { "products", "merchant-fee",
+			"currency-rounding-rule" };
+
 	@Bean
-    public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager(cacheNames);
-    }
-	
-	@CacheEvict(allEntries = true, cacheNames = { "products", "merchant-fee", "currency-rounding-rule" })
+	public CacheManager cacheManager() {
+		return new ConcurrentMapCacheManager(cacheNames);
+	}
+
+	@CacheEvict(allEntries = true, cacheNames = { "products", "merchant-fee",
+			"currency-rounding-rule" })
 	@Scheduled(cron = "0 0 0,12 * * *")
 	public void evictAllCache() {
 		logger.info("Cache Evicted!");
