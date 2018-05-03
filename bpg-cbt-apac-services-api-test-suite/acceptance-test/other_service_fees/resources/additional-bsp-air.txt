@@ -33,7 +33,8 @@ Calculate BSP Air Merchant Fee With UATP
     ${calculated_value}    Evaluate    ${merchant_fee_formula}
     Comment    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    ${calculated_value}    Evaluate    abs(${calculated_value})
+    Comment    ${calculated_value}    Evaluate    abs(${calculated_value})
+    ${calculated_value}    Set Variable If    ${calculated_value} < 0    0    ${calculated_value}
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${merchant_fee_amount}    ${calculated_value}
