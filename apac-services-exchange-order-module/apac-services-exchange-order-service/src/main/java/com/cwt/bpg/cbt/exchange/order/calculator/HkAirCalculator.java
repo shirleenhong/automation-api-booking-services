@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,24 +23,39 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 	@Autowired
 	private ScaleConfig scaleConfig;
 	
+	private final List<String> clientsWithAdditionalSellPrice = Arrays.asList(ClientTypes.MG.getCode()
+			, ClientTypes.DB.getCode()
+			, ClientTypes.TF.getCode()
+			, ClientTypes.MN.getCode());
+	
+	private final List<String> clientsWithPercentageDiscount = Arrays.asList(ClientTypes.DU.getCode()
+			, ClientTypes.DB.getCode());
+	
+	private final List<String> clientsWithCommisionDiscount = Arrays.asList(ClientTypes.MN.getCode()
+			, ClientTypes.TF.getCode()
+			, ClientTypes.TP.getCode());
+	
+	private final List<String> clientsWithNoDiscount = Arrays.asList(ClientTypes.MN.getCode()
+			, ClientTypes.TF.getCode());
+	
 	@Override
 	public FeesBreakdown calculateFee(OtherServiceFeesInput genericInput, MerchantFee merchantFee) {
 
 		AirFeesBreakdown result = new AirFeesBreakdown();
-		AirFeesInput input = (AirFeesInput)genericInput;
+		AirFeesInput input = (AirFeesInput) genericInput;
 		
-		if(input == null) {
+		if (input == null) {
 			return result;
 		}
-
+		
 		int scale = scaleConfig.getScale(input.getCountryCode());
 		
-		BigDecimal totalSellingFare =  BigDecimal.ZERO;
-		BigDecimal nettCostInEO =  BigDecimal.ZERO;
-		BigDecimal sellingPrice =  BigDecimal.ZERO;
+		BigDecimal totalSellingFare = BigDecimal.ZERO;
+		BigDecimal nettCostInEO = BigDecimal.ZERO;
+		BigDecimal sellingPrice = BigDecimal.ZERO;
 		BigDecimal merchantFeeAmount = safeValue(input.getMerchantFee());
-		BigDecimal commission =  safeValue(input.getCommission());
-		BigDecimal discount =  safeValue(input.getDiscount());
+		BigDecimal commission = safeValue(input.getCommission());
+		BigDecimal discount = safeValue(input.getDiscount());
 		BigDecimal nettFare = safeValue(input.getNettFare());
 		BigDecimal tax1 = safeValue(input.getTax1());
 		BigDecimal tax2 = safeValue(input.getTax2());
@@ -47,77 +63,44 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 		if(!input.isApplyFormula()) {
 			totalSellingFare = nettFare.add(commission).subtract(discount).add(tax1).add(tax2).add(merchantFeeAmount);
 			nettCostInEO = nettFare;
-//			if(!input.isWebFareSelected()) {
-//				totalSellingFare = round(totalSellingFare, scale);
-//				nettCostInEO = round(nettCostInEO, scale);
-//			}
-		}else {
-//		If chkformula.value = 0 Then
-//			Discount = Round Down(Discount, gstrAgcyCurrCode)
-//			If mbolWebFareSelected = True Then
-//				Total Selling Fare = Nett Fare + Commission - Discount + tax-1 + tax-2) + Merchant Fee
-//				Nett Cost in EO = Nett Fare
-//			Else
-//				Total Selling Fare = Round UP(Nett Fare + Commission - Discount + tax-1 + tax-2) + Merchant Fee, gstrAgcyCurrCode)
-//				Nett Cost in EO = Round UP(Nett Fare, gstrAgcyCurrCode)
-//			End If
-//		Else
-			
+		}
+		else {
 			if(input.isCommissionByPercent()) {
 				if(!ClientTypes.TP.getCode().equals(input.getClientType())) {
-					commission = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), MathContext.DECIMAL128).subtract(nettFare);
+					
+					commission = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), 
+							MathContext.DECIMAL128).subtract(nettFare);
+					
 					if(commission.compareTo(BigDecimal.ZERO) > 0 && ClientTypes.DU.getCode().equals(input.getClientType())) {
 						commission = commission.add(BigDecimal.TEN);
 					}
 					commission = round(commission, scale);
 				}
 				sellingPrice = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), MathContext.DECIMAL128);
-				if(!Arrays.asList(new String[] {ClientTypes.MG.getCode(),ClientTypes.DB.getCode(),ClientTypes.TF.getCode(),ClientTypes.MN.getCode()}).contains(input.getClientType())) {
+				
+				if(!clientsWithAdditionalSellPrice.contains(input.getClientType())) {
 					sellingPrice = sellingPrice.add(BigDecimal.TEN);
 				}
-//				if(!input.isWebFareSelected()) {
-//					sellingPrice = round(sellingPrice, scale);
-//				}
-			}else {
+			}
+			else {
 				commission = round(commission, scale);
 				sellingPrice = nettFare.add(commission);
 			}
 			result.setCommission(commission);
 			sellingPrice = round(sellingPrice, scale);
 			result.setSellingPrice(sellingPrice);
-//			If CommissionByPercent Then
-//				if Client Type = TP
-//					Commission = 0
-//				else
-//					Commission = (Nett Fare / (1 - (Commission Percent  * 0.01))) - Nett Fare;
-//					if(Commission > 0 and Client Type = DU)
-//						Commission = Commission + 10
-//					end if
-//					Commission = Round(Commission)
-//				end if
-//							
-//				Selling Price = Nett Fare / (1 - (Commission Percent * 0.01))
-//							
-//				If Client Type NOT IN "MG","DB","TF","MN"  Then
-//					Selling Price = Selling Price + 10
-//				End If				
-//		
-//				If mbolWebFareSelected = False Then
-//					Selling Price = Round UP(Selling Price)
-//				end if
-//					
-//		    Else
-//				Selling Price = Nett Fare + Commission
-//		    End If
-		
+
 			if(input.isDiscountByPercent()) {
-				if(Arrays.asList(new String[] {ClientTypes.DU.getCode(), ClientTypes.DB.getCode()}).contains(input.getClientType())) {
+				if(clientsWithPercentageDiscount.contains(input.getClientType())) {
 					discount = nettFare.add(calculatePercentage(commission, input.getDiscountPct()));
-				}else if(Arrays.asList(new String[] {ClientTypes.MN.getCode(), ClientTypes.TF.getCode(), ClientTypes.TP.getCode()}).contains(input.getClientType())) {
-					discount = commission;
+				}
+				else {
+					if(clientsWithCommisionDiscount.contains(input.getClientType())) {
+						discount = commission;
+					}
 				}
 			}
-			if(Arrays.asList(new String[] {ClientTypes.MN.getCode(), ClientTypes.TF.getCode()}).contains(input.getClientType())) {
+			if(clientsWithNoDiscount.contains(input.getClientType())) {
 				discount = BigDecimal.ZERO;
 			}
 			
@@ -170,9 +153,13 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 				if(merchantFeeAmount.compareTo(BigDecimal.ZERO) < 0) {
 					merchantFeeAmount = BigDecimal.ZERO;
 				}
-				result.setMerchantFee(merchantFeeAmount);
 			}
+			else {
+				merchantFeeAmount = BigDecimal.ZERO;
+			}
+			result.setMerchantFee(merchantFeeAmount);
 			totalSellingFare = nettFare.add(merchantFeeAmount);
+
 //			if(!input.isWebFareSelected()) {
 //				totalSellingFare = round(totalSellingFare, scale);
 //			}		
