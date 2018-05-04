@@ -77,9 +77,9 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 
 			if (!input.isCwtAbsorb() && isFopTypeCX && !input.isMerchantFeeWaive()) {
 				BigDecimal totalPlusTF = getTotal(totalNettFare, input.getTransactionFee(),
-						inClientType, merchantFeeObj.isIncludeTransactionFee());
+						inClientType, getTransactionFeeFlag(merchantFeeObj));
 				merchantFee = getMerchantFee(totalPlusTF,
-						merchantFeeObj.getMerchantFeePct(), scale);
+						getMerchantFeePct(merchantFeeObj), scale);
 			}
 
 			totalSellingFare = totalNettFare.add(merchantFee);
@@ -93,6 +93,14 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 		result.setTotalSellingFare(totalSellingFare);
 
 		return result;
+	}
+
+	private Double getMerchantFeePct(MerchantFee merchantFee) {
+		return (merchantFee != null) ? merchantFee.getMerchantFeePct() : 0D;
+	}
+
+	private Boolean getTransactionFeeFlag(MerchantFee merchantFee) {
+		return (merchantFee != null) ? merchantFee.isIncludeTransactionFee() : Boolean.FALSE;
 	}
 
 	private BigDecimal getTotalNettFare(AirFeesInput input, BigDecimal discount,
@@ -151,6 +159,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 			String clientType, Boolean incMF) {
 		BigDecimal total;
 
+		System.out.println(clientType + " "+ incMF);
 		if (ClientTypes.TF.getCode().equals(clientType) && incMF) {
 			total = totalCharge.add(transFee);
 		}
