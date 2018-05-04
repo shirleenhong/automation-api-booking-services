@@ -1,17 +1,26 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.anyObject;
+import static org.mockito.Mockito.anyString;
+
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
+import com.mongodb.WriteResult;
 
 public class MerchantFeeRepositoryTest {
 
@@ -27,7 +36,7 @@ public class MerchantFeeRepositoryTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		Mockito.when(morphia.getDatastore()).thenReturn(dataStore);
+		when(morphia.getDatastore()).thenReturn(dataStore);
 	}
 	
 	
@@ -37,15 +46,36 @@ public class MerchantFeeRepositoryTest {
 		final String countryCode = "SG";
 		
 
-		Query<MerchantFee> query = Mockito.mock(Query.class);
-		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-		Mockito.when(dataStore.createQuery(MerchantFee.class)).thenReturn(query);
-		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
-		Mockito.when(fieldEnd.equal(Mockito.anyString())).thenReturn(query);
-		Mockito.when(query.get()).thenReturn(new MerchantFee());
+		Query<MerchantFee> query = mock(Query.class);
+		FieldEnd fieldEnd = mock(FieldEnd.class);
+		when(dataStore.createQuery(MerchantFee.class)).thenReturn(query);
+		when(query.field(anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equal(anyString())).thenReturn(query);
+		when(query.get()).thenReturn(new MerchantFee());
 		
 		impl.getMerchantFee(countryCode, "TF", "ALCATEL SG");
 		
-		Mockito.verify(morphia, Mockito.times(1)).getDatastore();
+		verify(morphia, times(1)).getDatastore();
+	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void canPutMerchantFee() {
+		
+		MerchantFee fee = new MerchantFee();
+		Query<MerchantFee> query = mock(Query.class);
+		Key<MerchantFee> key = mock(Key.class);
+		WriteResult wr = mock(WriteResult.class);
+		when(dataStore.createQuery(MerchantFee.class)).thenReturn(query);
+		when(query.filter(anyString(), anyObject())).thenReturn(query);
+		when(dataStore.delete(query)).thenReturn(wr);
+		when(dataStore.save(fee)).thenReturn(key);
+		
+		impl.putMerchantFee(fee);
+		
+		verify(query, times(3)).filter(anyString(), anyObject());
+		verify(morphia, times(1)).getDatastore();
+		verify(dataStore, times(1)).delete(query);
+		verify(dataStore, times(1)).save(fee);
 	}
 }
