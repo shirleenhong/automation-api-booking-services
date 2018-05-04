@@ -47,11 +47,11 @@ public class MerchantFeeController {
 	
 	
 	@Internal
-	@PostMapping(path="/merchant/{countryCode}")
+	@PostMapping(path="/merchant")
 	@ResponseBody
     @ApiOperation(value = "Updates merchant fee configuration of a given market")
 	public ResponseEntity<MerchantFee> updateMerchantFee(
-			@PathVariable String countryCode, @RequestBody MerchantFee merchantFee) {		
+			@RequestBody MerchantFee merchantFee) {		
 		
 		return new ResponseEntity<>(exchangeOrderService.putMerchantFee(merchantFee), HttpStatus.OK);
 	}
