@@ -31,7 +31,7 @@
 		<hibernate.validator.version>5.4.1.Final</hibernate.validator.version>
 		<mongodb.morphia.version>1.3.2</mongodb.morphia.version>
 		<springfox.swagger.version>2.8.0</springfox.swagger.version>
-		<sonar.coverage.exclusions>**/PropertyConfig.java</sonar.coverage.exclusions>
+		<sonar.coverage.exclusions>**/*PropertyConfig.java</sonar.coverage.exclusions>
 	</properties>
 
 	<scm>
