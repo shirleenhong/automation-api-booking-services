@@ -11,7 +11,7 @@ import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
 public class ServiceFeeService {
 		
 	@Autowired
-	ServiceFeeCalculator calculator;
+	private ServiceFeeCalculator calculator;
 	
 	public PriceBreakdown calculate(PriceCalculationInput input) {
 

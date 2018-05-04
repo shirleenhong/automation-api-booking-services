@@ -12,7 +12,7 @@ import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
 public class ServiceFeeCalculator extends CommonCalculator {
 
 	@Autowired
-	ScaleConfig scaleConfig;	
+	private ScaleConfig scaleConfig;	
 	
 	public PriceBreakdown calculateFee(PriceCalculationInput input) {
 
