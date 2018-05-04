@@ -41,5 +41,9 @@ public class OtherServiceCalculatorFactoryTest {
 		assertTrue(factory.getCalculator(Country.NEW_ZEALAND.getCode()) instanceof SgAirCalculator);
 	}
 	
-	
+
+	@Test(expected=IllegalArgumentException.class)
+	public void shouldThrowException() {
+		factory.getCalculator("XX");
+	}
 }
