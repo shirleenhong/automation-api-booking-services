@@ -14,4 +14,9 @@ public class CacheConfigurationTest {
 		CacheManager cacheManager = cacheConfig.cacheManager();
 		assertNotNull(cacheManager);
 	}
+	
+	@Test
+	public void canEvictCaches() {
+		cacheConfig.evictAllCache();
+	}
 }
