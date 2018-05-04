@@ -153,7 +153,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 			BigDecimal discount, BigDecimal nettFare) {
 		if(input.isDiscountByPercent()) {
 			if(clientsWithPercentageDiscount.contains(input.getClientType())) {
-				discount = nettFare.add(calculatePercentage(commission, input.getDiscountPct()));
+				discount = calculatePercentage(commission.add(nettFare), input.getDiscountPct());
 			}
 			else {
 				if(clientsWithCommisionDiscount.contains(input.getClientType())) {
