@@ -33,7 +33,7 @@ public class MerchantFeeControllerTest {
 		MerchantFee merchantFee = new MerchantFee();
 		Mockito.when(service.putMerchantFee(merchantFee)).thenReturn(merchantFee);
 		
-		ResponseEntity<MerchantFee> result = controller.updateMerchantFee("SG", merchantFee);
+		ResponseEntity<MerchantFee> result = controller.updateMerchantFee(merchantFee);
 
 		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());
