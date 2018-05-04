@@ -21,12 +21,11 @@ public class DBObjectMapper
 
     public DBObjectMapper()
     {
-        final ObjectMapper mapper = new ObjectMapper();
+        mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.setSerializationInclusion(Include.NON_NULL);
-        mapper.registerModules(new CustomModule());
-        this.mapper = mapper;
+        mapper.registerModules(new CustomModule());        
     }
 
     public Document mapAsDbDocument(Object object) throws JsonProcessingException

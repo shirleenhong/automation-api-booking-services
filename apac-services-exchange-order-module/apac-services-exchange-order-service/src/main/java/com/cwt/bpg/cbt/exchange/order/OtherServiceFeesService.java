@@ -33,11 +33,9 @@ public class OtherServiceFeesService {
 
 	private MerchantFee getMerchantFeePct(OtherServiceFeesInput input) {
 		
-		MerchantFee merchantFee = merchantFeeRepo.getMerchantFee(
+		return merchantFeeRepo.getMerchantFee(
 				input.getCountryCode(), 
 				input.getClientType(), 
 				input.getProfileName());
-		
-		return merchantFee;
 	}	
 }

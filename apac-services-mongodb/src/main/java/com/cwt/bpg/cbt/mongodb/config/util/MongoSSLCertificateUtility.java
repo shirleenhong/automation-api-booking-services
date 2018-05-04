@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.mongodb.config.util;
 
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
+import java.security.GeneralSecurityException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
@@ -37,7 +36,7 @@ public class MongoSSLCertificateUtility {
 
 	}
 	
-	public static SocketFactory mongoDbSocketFactory() throws NoSuchAlgorithmException, KeyManagementException{
+	public static SocketFactory mongoDbSocketFactory() throws GeneralSecurityException {
 		final SSLContext sc = SSLContext.getInstance("SSL");
 		sc.init(null, passThroughTrustManager(), new java.security.SecureRandom());
 		return sc.getSocketFactory();

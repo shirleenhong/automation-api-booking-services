@@ -25,7 +25,8 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),
 				error);
-		return new ResponseEntity<Object>(apiError, new HttpHeaders(),
+		
+		return new ResponseEntity<>(apiError, new HttpHeaders(),
 				apiError.getStatus());
 	}
 
@@ -36,7 +37,7 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		Throwable mostSpecificCause = ex.getMostSpecificCause();
 		 
-		List<String> errors = new ArrayList<String>();
+		List<String> errors = new ArrayList<>();
 		errors.add(mostSpecificCause.getMessage());
 		
 		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),
