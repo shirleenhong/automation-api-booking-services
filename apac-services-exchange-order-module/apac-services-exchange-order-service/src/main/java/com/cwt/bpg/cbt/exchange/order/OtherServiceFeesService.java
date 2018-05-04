@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 @Service
 public class OtherServiceFeesService {
@@ -16,6 +19,10 @@ public class OtherServiceFeesService {
 	@Qualifier(value="miscFeeCalculator")
 	private Calculator miscFeeCalculator;
 	
+	@Autowired
+	@Qualifier(value="nettCostCalculator")
+	private NettCostCalculator nettCostCalculator;
+		
 	@Autowired
 	private OtherServiceCalculatorFactory osFactory;
 	
@@ -37,5 +44,9 @@ public class OtherServiceFeesService {
 				input.getCountryCode(), 
 				input.getClientType(), 
 				input.getProfileName());
+	}
+
+	public AirFeesBreakdown calculateNettCost(NettCostInput input) {
+		return nettCostCalculator.calculateFee(input.getSellingPrice(), input.getCommissionPct());
 	}	
 }

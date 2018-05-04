@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.cwt.bpg.cbt.exchange.order.calculator.HkAirCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.MiscFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.SgAirCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 
@@ -32,6 +33,11 @@ public class ExchangeOrderConfigTest {
 	@Test
 	public void shouldCreateSgAirCalculator() {
 		assertTrue(config.sgAirCalculator() instanceof SgAirCalculator);
+	}
+	
+	@Test
+	public void shouldNettCostCalculator() {
+		assertTrue(config.nettCostCalculator() instanceof NettCostCalculator);
 	}
 	
 	@Test

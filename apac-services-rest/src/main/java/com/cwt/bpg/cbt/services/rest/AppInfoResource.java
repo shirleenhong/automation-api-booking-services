@@ -23,8 +23,6 @@ public class AppInfoResource {
 
 	@Value("${com.bpg.cbt.apac.service.version}")
 	private String applicationVersion;
-
-    
     
     @GetMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
