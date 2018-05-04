@@ -16,6 +16,7 @@ import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,7 +40,7 @@ public class OtherServiceFeesController {
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, 
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-    @ApiOperation(value = "Computes miscellaneous fee")
+    @ApiOperation(value = "Computes miscellaneous fees")
 	public ResponseEntity<FeesBreakdown> computeMiscellaneousFee(
 			@Valid
             @RequestBody
@@ -58,9 +59,26 @@ public class OtherServiceFeesController {
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, 
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
+	@ApiOperation(value = "Computes air fees")
 	public ResponseEntity<AirFeesBreakdown> computeAirFees(
-			@Valid @RequestBody AirFeesInput input) {
+			@Valid 
+			@RequestBody 
+			@ApiParam(value = "Values needed for calculation") AirFeesInput input) {
 		
 		return new ResponseEntity<>((AirFeesBreakdown)service.calculateAirFee(input), HttpStatus.OK);
+	}
+	
+	@PostMapping(
+			path="/nett-cost", 
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, 
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Computes nett cost")
+	public ResponseEntity<AirFeesBreakdown> computeNettCost(
+			@Valid 
+			@RequestBody 
+			@ApiParam(value = "Values needed for calculation") NettCostInput input) {
+		
+		return new ResponseEntity<>((AirFeesBreakdown)service.calculateNettCost(input), HttpStatus.OK);
 	}	
 }

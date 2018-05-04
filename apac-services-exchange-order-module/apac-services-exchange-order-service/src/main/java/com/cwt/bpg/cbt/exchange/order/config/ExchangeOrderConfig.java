@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.HkAirCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.MiscFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.SgAirCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 
@@ -25,6 +26,11 @@ public class ExchangeOrderConfig {
 	@Bean(name = "sgAirCalculator")
 	public Calculator sgAirCalculator() {
 		return new SgAirCalculator();
+	}
+	
+	@Bean(name = "nettCostCalculator")
+	public NettCostCalculator nettCostCalculator() {
+		return new NettCostCalculator();
 	}
 
 	@Bean(name = "otherServiceCalculatorFactory")

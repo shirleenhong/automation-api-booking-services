@@ -10,8 +10,11 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
 import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 
 public class OtherServiceFeesServiceTest {
@@ -24,6 +27,9 @@ public class OtherServiceFeesServiceTest {
 	
 	@Mock
 	private Calculator hkCalculator;
+	
+	@Mock
+	private NettCostCalculator nettCostCalculator;
 	
 	@Mock
 	private MerchantFeeRepository merchantFeeRepo;
@@ -56,4 +62,11 @@ public class OtherServiceFeesServiceTest {
 		assertNotNull(service.calculateAirFee(new OtherServiceFeesInput()));
 	}
 
+	@Test
+	public void shouldReturnNettCost() {
+		
+		Mockito.when(nettCostCalculator.calculateFee(Mockito.anyObject(), Mockito.anyObject()))
+			.thenReturn(new AirFeesBreakdown());
+		assertNotNull(service.calculateNettCost(new NettCostInput()));
+	}
 }
