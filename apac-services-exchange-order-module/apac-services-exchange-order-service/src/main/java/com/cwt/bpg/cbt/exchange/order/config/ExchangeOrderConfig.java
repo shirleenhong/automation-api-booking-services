@@ -12,28 +12,23 @@ import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorF
 @Configuration("com.cwt.bpg.cbt.exchange.order.config")
 public class ExchangeOrderConfig {
 
-	@Bean(name="miscFeeCalculator")
-    public Calculator miscFeeCalculator()
-    {
-        return new MiscFeeCalculator();
-    }
-	
-	@Bean(name="hkAirCalculator")
-    public Calculator hkAirCalculator()
-    {
-        return new HkAirCalculator();
-    }
-	
-	@Bean(name="sgAirCalculator")
-    public Calculator sgAirCalculator()
-    {
-        return new SgAirCalculator();
-    }
-	
-	@Bean(name="otherServiceCalculatorFactory")
-    public OtherServiceCalculatorFactory otherServiceCalculatorFactory()
-    {
-        return new OtherServiceCalculatorFactory();
-    }
-}
+	@Bean(name = "miscFeeCalculator")
+	public Calculator miscFeeCalculator() {
+		return new MiscFeeCalculator();
+	}
 
+	@Bean(name = "hkAirCalculator")
+	public Calculator hkAirCalculator() {
+		return new HkAirCalculator();
+	}
+
+	@Bean(name = "sgAirCalculator")
+	public Calculator sgAirCalculator() {
+		return new SgAirCalculator();
+	}
+
+	@Bean(name = "otherServiceCalculatorFactory")
+	public OtherServiceCalculatorFactory otherServiceCalculatorFactory() {
+		return new OtherServiceCalculatorFactory();
+	}
+}

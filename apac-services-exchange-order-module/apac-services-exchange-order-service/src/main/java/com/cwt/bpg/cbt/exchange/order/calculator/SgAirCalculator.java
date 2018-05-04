@@ -159,7 +159,6 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 			String clientType, Boolean incMF) {
 		BigDecimal total;
 
-		System.out.println(clientType + " "+ incMF);
 		if (ClientTypes.TF.getCode().equals(clientType) && incMF) {
 			total = totalCharge.add(transFee);
 		}
