@@ -909,7 +909,7 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,450commission,0|commission_percent_flag,true|commission_percentage,16|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,40|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,450|commission,0|commission_percent_flag,true|commission_percentage,16|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,40|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|pro_name,ATKEHK|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
