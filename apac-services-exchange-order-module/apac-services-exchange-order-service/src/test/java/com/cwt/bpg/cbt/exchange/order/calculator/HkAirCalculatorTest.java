@@ -202,7 +202,7 @@ public class HkAirCalculatorTest {
 	}
 
 	@Test
-	public void shouldCalculateMerchantFeeClientTypeNonTFAndUATP() {
+	public void shouldCalculateMerchantFeeClientTypeTFAndUATP() {
 		MerchantFee merchantFee = new MerchantFee();
 		merchantFee.setMerchantFeePct(20D);
 		AirFeesInput input = new AirFeesInput();
@@ -224,7 +224,7 @@ public class HkAirCalculatorTest {
 	}
 
 	@Test
-	public void shouldCalculateMerchantFeeClientTypeTFAndUATP() {
+	public void shouldCalculateMerchantFeeClientTypeNonTFAndUATP() {
 		MerchantFee merchantFee = new MerchantFee();
 		merchantFee.setMerchantFeePct(20D);
 		AirFeesInput input = new AirFeesInput();
@@ -244,7 +244,30 @@ public class HkAirCalculatorTest {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		assertEquals(400D, airFeesBreakdown.getMerchantFee().doubleValue(), 0D);
 	}
-	
+
+	@Test
+	public void shouldCalculateMerchantFeeClientTypeNonTFAndUATPAndTaxesGreaterThanNettFare() {
+		MerchantFee merchantFee = new MerchantFee();
+		merchantFee.setMerchantFeePct(20D);
+		AirFeesInput input = new AirFeesInput();
+		input.setApplyFormula(true);
+		input.setCommissionByPercent(false);
+		input.setDiscountByPercent(false);
+		input.setCwtAbsorb(false);
+		input.setMerchantFeeWaive(false);
+		input.setUatp(true);
+		input.setFopType("CX");
+		input.setCommission(new BigDecimal(2000));
+		input.setNettFare(new BigDecimal(1000));
+		input.setTransactionFee(new BigDecimal(5000));
+		input.setTax1(new BigDecimal(1000));
+		input.setTax2(new BigDecimal(1000));
+		input.setClientType("MN");
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		assertEquals(400D, airFeesBreakdown.getMerchantFee().doubleValue(), 0D);
+	}
+
+
 	@Test
 	public void shouldAssignZeroToMerchantFeeForNegative() {
 		MerchantFee merchantFee = new MerchantFee();

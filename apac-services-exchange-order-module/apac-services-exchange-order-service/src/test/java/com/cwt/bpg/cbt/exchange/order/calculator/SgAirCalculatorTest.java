@@ -215,8 +215,8 @@ public class SgAirCalculatorTest {
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommissionByPercent(false);
 		input.setCommission(bigDecimal("15"));
-		input.setDiscountByPercent(true);
-		input.setDiscountPct(Double.parseDouble("15"));
+		input.setDiscountByPercent(false);
+		input.setDiscount(bigDecimal("45.00"));
 		input.setProductType("CT");
 		input.setClientType("TF");
 		input.setFopType("CX");
