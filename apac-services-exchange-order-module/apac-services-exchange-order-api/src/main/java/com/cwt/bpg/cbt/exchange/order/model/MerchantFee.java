@@ -7,7 +7,7 @@ import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
-@Entity("clientMerchantFee")
+@Entity(value = "clientMerchantFee", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("countryCode"), @Field("clientType"), @Field("profileName")}))
 public class MerchantFee implements Serializable {
 

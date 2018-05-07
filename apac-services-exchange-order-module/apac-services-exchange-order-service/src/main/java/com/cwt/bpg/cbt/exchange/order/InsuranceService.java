@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,13 @@ public class InsuranceService {
 		return insuranceRepository.getAll();
 	}
 
-	@CachePut(cacheNames="insurance-types")
+	@CachePut(cacheNames="insurance-types", key="{#insurance.type}")
 	public Insurance putInsurance(Insurance insurance) {
 		return insuranceRepository.putInsurance(insurance);
+	}
+
+	@CacheEvict(cacheNames="insurance-types", key="{#insurance.type}")
+	public Insurance remove(Insurance insurance) {
+		return insuranceRepository.remove(insurance);
 	}
 }
