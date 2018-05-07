@@ -8,7 +8,7 @@ public class AirFeesBreakdown extends FeesBreakdown implements Serializable {
 	private static final long serialVersionUID = 8544229065892237666L;
 
 	private BigDecimal totalSellingFare;
-	private BigDecimal nettCostInEO;
+	private BigDecimal nettCost;
 	private BigDecimal sellingPrice;
 	private BigDecimal discount;
 	private BigDecimal nettFare;
@@ -23,11 +23,11 @@ public class AirFeesBreakdown extends FeesBreakdown implements Serializable {
 	public void setTotalSellingFare(BigDecimal totalSellingFare) {
 		this.totalSellingFare = totalSellingFare;
 	}
-	public BigDecimal getNettCostInEO() {
-		return nettCostInEO;
+	public BigDecimal getNettCost() {
+		return nettCost;
 	}
-	public void setNettCostInEO(BigDecimal nettCostInEO) {
-		this.nettCostInEO = nettCostInEO;
+	public void setNettCost(BigDecimal nettCost) {
+		this.nettCost = nettCost;
 	}
 	public BigDecimal getSellingPrice() {
 		return sellingPrice;

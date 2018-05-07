@@ -39,7 +39,7 @@ public class HkAirCalculatorTest {
 	public void shouldHandleNullInput() {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(null, null);
 		assertNotNull(airFeesBreakdown);
-		assertNull(airFeesBreakdown.getNettCostInEO());
+		assertNull(airFeesBreakdown.getNettCost());
 		assertNull(airFeesBreakdown.getTotalSellingFare());
 		assertNull(airFeesBreakdown.getSellingPrice());
 
@@ -49,7 +49,7 @@ public class HkAirCalculatorTest {
 	public void shouldHandleNullFieldsFromInput() {
 		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(new AirFeesInput(), null);
 		assertNotNull(airFeesBreakdown);
-		assertNotNull(airFeesBreakdown.getNettCostInEO());
+		assertNotNull(airFeesBreakdown.getNettCost());
 		assertNotNull(airFeesBreakdown.getTotalSellingFare());
 		assertNull(airFeesBreakdown.getSellingPrice());
 	}

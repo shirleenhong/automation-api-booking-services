@@ -34,10 +34,8 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 		int scale = scaleConfig.getScale(input.getCountryCode());
 
 		BigDecimal totalSellingFare;
-		BigDecimal nettCostInEO;
-		
+		BigDecimal nettCost;
 		BigDecimal merchantFee = BigDecimal.ZERO;
-		
 		BigDecimal totalTax = safeValue(input.getTax1()).add(safeValue(input.getTax2()));
 		BigDecimal inMerchantFee = safeValue(input.getMerchantFee());
 		BigDecimal inNettFare = safeValue(input.getNettFare());
@@ -61,7 +59,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 						.add(totalTax)
 						.add(inMerchantFee);
 			}
-			nettCostInEO = inNettFare.subtract(inCommission);
+			nettCost = inNettFare.subtract(inCommission);
 
 		}
 		else {
@@ -70,7 +68,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 
 			BigDecimal discount = getDiscount(input, scale, inNettFare, inDiscount, inClientType);
 
-			nettCostInEO = inNettFare.subtract(commission);
+			nettCost = inNettFare.subtract(commission);
 
 			BigDecimal totalNettFare = getTotalNettFare(input, discount, totalTax,
 					inNettFare, isConstTkt);
@@ -89,7 +87,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 		}
 
 		result.setMerchantFee(merchantFee);
-		result.setNettCostInEO(nettCostInEO);
+		result.setNettCost(nettCost);
 		result.setTotalSellingFare(totalSellingFare);
 
 		return result;

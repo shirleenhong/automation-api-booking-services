@@ -57,7 +57,7 @@ public class SgAirCalculatorTest {
 		assertNull(afb.getCommission());
 		assertNull(afb.getDiscount());
 		assertEquals(bigDecimal("0"), afb.getMerchantFee());
-		assertEquals(bigDecimal("285"), afb.getNettCostInEO());
+		assertEquals(bigDecimal("285"), afb.getNettCost());
 		assertEquals(bigDecimal("417"), afb.getTotalSellingFare());
 	}
 	
@@ -79,7 +79,7 @@ public class SgAirCalculatorTest {
 		assertNull(afb.getCommission());
 		assertNull(afb.getDiscount());
 		assertEquals(bigDecimal("0"), afb.getMerchantFee());
-		assertEquals(bigDecimal("285"), afb.getNettCostInEO());
+		assertEquals(bigDecimal("285"), afb.getNettCost());
 		assertEquals(bigDecimal("217"), afb.getTotalSellingFare());
 	}
 	
@@ -102,7 +102,7 @@ public class SgAirCalculatorTest {
 		assertEquals(bigDecimal("15"), afb.getCommission());
 		assertEquals(bigDecimal("150"), afb.getDiscount());
 		assertEquals(bigDecimal("0"), afb.getMerchantFee());
-		assertEquals(bigDecimal("285"), afb.getNettCostInEO());
+		assertEquals(bigDecimal("285"), afb.getNettCost());
 		assertEquals(bigDecimal("-113"), afb.getTotalSellingFare());
 		
 	}
@@ -127,7 +127,7 @@ public class SgAirCalculatorTest {
 		
 		assertEquals(BigDecimal.ZERO, afb.getDiscount());
 		assertEquals(bigDecimal("60.00"), afb.getCommission());
-		assertEquals(bigDecimal("240.00"), afb.getNettCostInEO());
+		assertEquals(bigDecimal("240.00"), afb.getNettCost());
 		assertEquals(BigDecimal.ZERO, afb.getMerchantFee());
 		assertEquals(bigDecimal("237"), afb.getTotalSellingFare());
 		
@@ -161,7 +161,7 @@ public class SgAirCalculatorTest {
 
 		assertEquals(bigDecimal("45.00"), afb.getDiscount());
 		assertEquals(bigDecimal("15"), afb.getCommission());
-		assertEquals(bigDecimal("285"), afb.getNettCostInEO());
+		assertEquals(bigDecimal("285"), afb.getNettCost());
 		assertEquals(bigDecimal("91.75"), afb.getMerchantFee());
 		assertEquals(bigDecimal("383.75"), afb.getTotalSellingFare());
 		
@@ -196,7 +196,7 @@ public class SgAirCalculatorTest {
 		
 		assertEquals(bigDecimal("45.00"), afb.getDiscount());
 		assertEquals(bigDecimal("15"), afb.getCommission());
-		assertEquals(bigDecimal("285"), afb.getNettCostInEO());
+		assertEquals(bigDecimal("285"), afb.getNettCost());
 		assertEquals(bigDecimal("73.00"), afb.getMerchantFee());
 		assertEquals(bigDecimal("365.00"), afb.getTotalSellingFare());
 		
@@ -231,7 +231,7 @@ public class SgAirCalculatorTest {
 		
 		assertEquals(bigDecimal("45.00"), afb.getDiscount());
 		assertEquals(bigDecimal("15"), afb.getCommission());
-		assertEquals(bigDecimal("285"), afb.getNettCostInEO());
+		assertEquals(bigDecimal("285"), afb.getNettCost());
 		assertEquals(bigDecimal("73.00"), afb.getMerchantFee());
 		assertEquals(bigDecimal("365.00"), afb.getTotalSellingFare());
 		
@@ -269,7 +269,7 @@ public class SgAirCalculatorTest {
 		assertEquals(bigDecimal("0.00"),afb.getMerchantFee());
 		assertEquals(BigDecimal.ZERO, afb.getDiscount());
 		assertEquals(bigDecimal("60.00"), afb.getCommission());
-		assertEquals(bigDecimal("240.00"), afb.getNettCostInEO());
+		assertEquals(bigDecimal("240.00"), afb.getNettCost());
 		assertEquals(bigDecimal("237.00"), afb.getTotalSellingFare());		
 	}
 }

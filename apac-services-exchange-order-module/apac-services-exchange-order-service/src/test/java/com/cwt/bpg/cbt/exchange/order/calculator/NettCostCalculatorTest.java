@@ -15,15 +15,15 @@ public class NettCostCalculatorTest {
 	public void shouldCalculateNettCost() {
 		NettCostCalculator calculator = new NettCostCalculator();
 		AirFeesBreakdown result = calculator.calculateFee(new BigDecimal(125), 2.5D);
-		assertEquals(new BigDecimal(121.875), result.getNettCostInEO());
+		assertEquals(new BigDecimal(121.875), result.getNettCost());
 	}
 	
 
 	@Test
-	public void shoulNotFailOnNullInput() {
+	public void shouldNotFailOnNullInput() {
 		NettCostCalculator calculator = new NettCostCalculator();
 		AirFeesBreakdown result = calculator.calculateFee(null, null);
-		assertNotNull(result.getNettCostInEO());
+		assertNotNull(result.getNettCost());
 	}
 
 }

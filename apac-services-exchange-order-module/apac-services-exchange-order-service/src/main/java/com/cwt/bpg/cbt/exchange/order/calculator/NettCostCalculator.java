@@ -11,7 +11,7 @@ public class NettCostCalculator extends CommonCalculator {
 		
 		AirFeesBreakdown result = new AirFeesBreakdown();
 		
-		result.setNettCostInEO(safeValue(sellingPrice)
+		result.setNettCost(safeValue(sellingPrice)
 				.multiply(new BigDecimal(1).subtract(percentDecimal(commissionPct))));
 		
 		return result;
