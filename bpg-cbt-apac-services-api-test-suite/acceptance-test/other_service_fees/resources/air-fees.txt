@@ -54,7 +54,7 @@ Calculate Air Fees-HK Nett Cost In EO
     ${calculated_value}    Evaluate    round(${nett_fare_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${nett_cost_in_eo_amount}    ${calculated_value}
+    Set Test Variable    ${nett_cost_amount}    ${calculated_value}
 
 Calculate Air Fees-HK Nett Fare
     ${nett_fare_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    ${selling_price_amount}+${tax_1_value}+${tax_2_value}    ${selling_price_amount}+${tax_1_value}+${tax_2_value}-${discount_amount}
@@ -135,7 +135,7 @@ Calculate Air Fees-SG Merchant Fee For Non-Product Type CT
     Set Test Variable    ${merchant_fee_amount}    ${calculated_value}
 
 Calculate Air Fees-SG Merchant Fee For Product Type CT
-    ${merchant_fee_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" and "${tfincmf_flag_value}" == "true"    (${nett_cost_in_eo_amount}+${commission_amount}-${discount_amount}+${tax_1_value}+${tax_2_value}+${transaction_fee_value})*(${merchant_fee_percentage_value}*0.01)    (${nett_cost_in_eo_amount}+${commission_amount}-${discount_amount}+${tax_1_value}+${tax_2_value})*(${merchant_fee_percentage_value}*0.01)
+    ${merchant_fee_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" and "${tfincmf_flag_value}" == "true"    (${nett_cost_amount}+${commission_amount}-${discount_amount}+${tax_1_value}+${tax_2_value}+${transaction_fee_value})*(${merchant_fee_percentage_value}*0.01)    (${nett_cost_amount}+${commission_amount}-${discount_amount}+${tax_1_value}+${tax_2_value})*(${merchant_fee_percentage_value}*0.01)
     ${calculated_value}    Evaluate    ${merchant_fee_formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
@@ -147,17 +147,17 @@ Calculate Air Fees-SG Nett Cost In EO With Formula
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${nett_cost_in_eo_amount}    ${calculated_value}
+    Set Test Variable    ${nett_cost_amount}    ${calculated_value}
 
 Calculate Air Fees-SG Nett Cost In EO Without Formula
     ${calculated_value}    Evaluate    ${nett_fare_value}-${commission_value}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${nett_cost_in_eo_amount}    ${calculated_value}
+    Set Test Variable    ${nett_cost_amount}    ${calculated_value}
 
 Calculate Air Fees-SG Total Selling Fare With Formula
-    ${total_selling_fare_formula}    Set Variable If    "${product_type_value.upper()}" == "CT"    ${nett_cost_in_eo_amount}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}    ${selling_price_value}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}
+    ${total_selling_fare_formula}    Set Variable If    "${product_type_value.upper()}" == "CT"    ${nett_cost_amount}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}    ${selling_price_value}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}
     ${calculated_value}    Evaluate    ${total_selling_fare_formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
@@ -199,7 +199,7 @@ Generate Test Variables For Air Fees-HK With Formula
     Run Keyword If    "${discount_percent_flag_value}" == "true"    Calculate Air Fees-HK Discount
     ...    ELSE    Set Test Variable    ${discount_amount}    ${discount_value}
     Run Keyword If    "${discount_value}" == "${EMPTY}" or"${client_type_value}" == "TF" or"${client_type_value}" == "MN"    Set Test Variable    ${discount_amount}    0
-    Set Test Variable    ${nett_cost_in_eo_amount}    ${nett_fare_value}
+    Set Test Variable    ${nett_cost_amount}    ${nett_fare_value}
     Calculate Air Fees-HK Nett Fare
     Run Keyword If    "${cwt_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Air Fees-HK Merchant Fee
     ...    ELSE    Set Test Variable    ${merchant_fee_amount}    0
@@ -233,19 +233,20 @@ Generate Test Variables For Air Fees-SG With Formula
 Generate Test Variables For Air Fees-SG Without Formula
     Calculate Air Fees-SG Total Selling Fare Without Formula
     Calculate Air Fees-SG Nett Cost In EO Without Formula
+    Set Test Variable    ${merchant_fee_amount}    ${merchant_fee_value}
 
 Remove Decimal Places For Air Fees-HK
     ${commission_amount}    Remove String    ${commission_amount}    .00
     ${merchant_fee_amount}    Remove String    ${merchant_fee_amount}    .00
     ${total_selling_fare_amount}    Remove String    ${total_selling_fare_amount}    .00
-    ${nett_cost_in_eo_amount}    Remove String    ${nett_cost_in_eo_amount}    .00
+    ${nett_cost_amount}    Remove String    ${nett_cost_amount}    .00
     ${selling_price_amount}    Remove String    ${selling_price_amount}    .00
     ${discount_amount}    Remove String    ${discount_amount}    .00
     ${nett_fare_amount}    Remove String    ${nett_fare_amount}    .00
     Set Test Variable    ${commission_amount}
     Set Test Variable    ${merchant_fee_amount}
     Set Test Variable    ${total_selling_fare_amount}
-    Set Test Variable    ${nett_cost_in_eo_amount}
+    Set Test Variable    ${nett_cost_amount}
     Set Test Variable    ${selling_price_amount}
     Set Test Variable    ${discount_amount}
     Set Test Variable    ${nett_fare_amount}
@@ -257,7 +258,7 @@ Verify Calculated Air Fees Are Returned Correctly
     ${data_list}    Split String    ${data}    ,
     : FOR    ${item}    IN    @{data_list}
     \    ${items}    Split String    ${item}    :
-    \    Verify Actual Value Matches Expected Value    ${items[1]}    ${${items[0]}_amount}
+    \    Verify Actual Numerical Value Matches Expected Numerical Value    ${items[1]}    ${${items[0]}_amount}
 
 Verify Response Does Not Contain Calculated Fee
     [Arguments]    ${element}

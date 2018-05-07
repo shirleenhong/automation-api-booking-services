@@ -36,9 +36,13 @@ Generate UUID
     ${uuid}    Evaluate    str(${epoch_datetime}-1400000000).replace(".","${unique_key}")
     [Return]    ${uuid}
 
-Verify Response Status Code Is Correct
-    [Arguments]    ${status_code}
-    Verify Actual Value Matches Expected Value    ${response.status_code}    ${status_code}
+Verify Actual Numerical Value Matches Expected Numerical Value
+    [Arguments]    ${actual_value}    ${expected_value}
+    Log    Actual Value: ${actual_value}
+    Log    Expected Value: ${expected_value}
+    ${actual_value}    Convert To Number    ${actual_value}
+    ${expected_value}    Convert To Number    ${expected_value}
+    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${actual_value}    ${expected_value}    Actual value "${actual_value}" matches expected value "${expected_value}"    FALSE
 
 Verify Actual Value Does Not Match Expected Value
     [Arguments]    ${actual_value}    ${expected_value}
@@ -93,6 +97,10 @@ Verify List Contains Value
     Log    Actual List: ${list}
     Log    Expected Value: ${value}
     Run Keyword And Continue On Failure    List Should Contain Value    ${list}    ${value}    List "${list}" does not contain value "${value}"
+
+Verify Response Status Code Is Correct
+    [Arguments]    ${status_code}
+    Verify Actual Value Matches Expected Value    ${response.status_code}    ${status_code}
 
 Verify String Contains Substring
     [Arguments]    ${string}    ${substring}
