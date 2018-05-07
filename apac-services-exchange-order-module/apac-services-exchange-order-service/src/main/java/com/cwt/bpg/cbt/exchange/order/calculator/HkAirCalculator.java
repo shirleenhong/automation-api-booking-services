@@ -31,7 +31,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 	private final List<String> clientsWithPercentageDiscount = Arrays.asList(ClientTypes.DU.getCode()
 			, ClientTypes.DB.getCode());
 	
-	private final List<String> clientsWithCommisionDiscount = Arrays.asList(ClientTypes.MN.getCode()
+	private final List<String> clientsWithCommissionDiscount = Arrays.asList(ClientTypes.MN.getCode()
 			, ClientTypes.TF.getCode()
 			, ClientTypes.TP.getCode());
 	
@@ -156,7 +156,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 				discount = calculatePercentage(commission.add(nettFare), input.getDiscountPct());
 			}
 			else {
-				if(clientsWithCommisionDiscount.contains(input.getClientType())) {
+				if(clientsWithCommissionDiscount.contains(input.getClientType())) {
 					discount = commission;
 				}
 			}

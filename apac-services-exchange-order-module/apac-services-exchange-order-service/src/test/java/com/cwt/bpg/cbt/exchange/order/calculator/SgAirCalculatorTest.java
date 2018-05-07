@@ -1,8 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 
@@ -54,11 +55,11 @@ public class SgAirCalculatorTest {
 		input.setCountryCode("HK");
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculateFee(input, null);
 		
-		assertNull(afb.getCommission());
-		assertNull(afb.getDiscount());
-		assertEquals(bigDecimal("0"), afb.getMerchantFee());
-		assertEquals(bigDecimal("285"), afb.getNettCost());
-		assertEquals(bigDecimal("417"), afb.getTotalSellingFare());
+		assertThat(afb.getCommission(), nullValue());
+		assertThat(afb.getDiscount(), nullValue());
+		assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(30D)));
+		assertThat(afb.getNettCost().doubleValue(), is(equalTo(285D)));
+		assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(417D)));
 	}
 	
 	@Test
@@ -76,11 +77,11 @@ public class SgAirCalculatorTest {
 		
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculateFee(input, null);
 		
-		assertNull(afb.getCommission());
-		assertNull(afb.getDiscount());
-		assertEquals(bigDecimal("0"), afb.getMerchantFee());
-		assertEquals(bigDecimal("285"), afb.getNettCost());
-		assertEquals(bigDecimal("217"), afb.getTotalSellingFare());
+		assertThat(afb.getCommission(), nullValue());
+		assertThat(afb.getDiscount(), nullValue());
+		assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(30D)));
+		assertThat(afb.getNettCost().doubleValue(), is(equalTo(285D)));
+		assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(217D)));
 	}
 	
 	@Test
@@ -99,12 +100,11 @@ public class SgAirCalculatorTest {
 		
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculateFee(input, null);
 		
-		assertEquals(bigDecimal("15"), afb.getCommission());
-		assertEquals(bigDecimal("150"), afb.getDiscount());
-		assertEquals(bigDecimal("0"), afb.getMerchantFee());
-		assertEquals(bigDecimal("285"), afb.getNettCost());
-		assertEquals(bigDecimal("-113"), afb.getTotalSellingFare());
-		
+		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
+		assertThat(afb.getDiscount().doubleValue(), is(equalTo(150D)));
+		assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(0D)));
+		assertThat(afb.getNettCost().doubleValue(), is(equalTo(285D)));
+		assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(0D)));
 	}
 	
 	@Test
@@ -125,12 +125,11 @@ public class SgAirCalculatorTest {
 		
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculateFee(input, null);
 		
-		assertEquals(BigDecimal.ZERO, afb.getDiscount());
-		assertEquals(bigDecimal("60.00"), afb.getCommission());
-		assertEquals(bigDecimal("240.00"), afb.getNettCost());
-		assertEquals(BigDecimal.ZERO, afb.getMerchantFee());
-		assertEquals(bigDecimal("237"), afb.getTotalSellingFare());
-		
+		assertThat(afb.getDiscount().doubleValue(), is(equalTo(0D)));
+		assertThat(afb.getCommission().doubleValue(), is(equalTo(60D)));
+		assertThat(afb.getNettCost().doubleValue(), is(equalTo(240D)));
+		assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(0D)));
+		assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(237D)));
 	}
 	
 	@Test
@@ -159,12 +158,11 @@ public class SgAirCalculatorTest {
 		input.setCountryCode("SG");
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 
-		assertEquals(bigDecimal("45.00"), afb.getDiscount());
-		assertEquals(bigDecimal("15"), afb.getCommission());
-		assertEquals(bigDecimal("285"), afb.getNettCost());
-		assertEquals(bigDecimal("91.75"), afb.getMerchantFee());
-		assertEquals(bigDecimal("383.75"), afb.getTotalSellingFare());
-		
+		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
+		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
+		assertThat(afb.getNettCost().doubleValue(), is(equalTo(285D)));
+		assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(91.75D)));
+		assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(383.75)));
 	}
 	
 	@Test
@@ -193,13 +191,12 @@ public class SgAirCalculatorTest {
 		input.setCountryCode("SG");
 		
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
-		
-		assertEquals(bigDecimal("45.00"), afb.getDiscount());
-		assertEquals(bigDecimal("15"), afb.getCommission());
-		assertEquals(bigDecimal("285"), afb.getNettCost());
-		assertEquals(bigDecimal("73.00"), afb.getMerchantFee());
-		assertEquals(bigDecimal("365.00"), afb.getTotalSellingFare());
-		
+
+		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
+		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
+		assertThat(afb.getNettCost().doubleValue(), is (equalTo(285D)));
+		assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(73D)));
+		assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(365D)));
 	}
 
 	@Test
@@ -229,12 +226,11 @@ public class SgAirCalculatorTest {
 		
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
 		
-		assertEquals(bigDecimal("45.00"), afb.getDiscount());
-		assertEquals(bigDecimal("15"), afb.getCommission());
-		assertEquals(bigDecimal("285"), afb.getNettCost());
-		assertEquals(bigDecimal("73.00"), afb.getMerchantFee());
-		assertEquals(bigDecimal("365.00"), afb.getTotalSellingFare());
-		
+		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
+		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
+		assertThat(afb.getNettCost().doubleValue(), is(equalTo(285D)));
+		assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(73D)));
+		assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(365D)));
 	}
 	
 	private BigDecimal bigDecimal(String amount) {
@@ -263,14 +259,13 @@ public class SgAirCalculatorTest {
 		input.setDiscountPct(Double.parseDouble("15"));
 		input.setCountryCode("SG");
 
-		
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculateFee(input, null);
 		
-		assertEquals(bigDecimal("0.00"),afb.getMerchantFee());
-		assertEquals(BigDecimal.ZERO, afb.getDiscount());
-		assertEquals(bigDecimal("60.00"), afb.getCommission());
-		assertEquals(bigDecimal("240.00"), afb.getNettCost());
-		assertEquals(bigDecimal("237.00"), afb.getTotalSellingFare());		
+		assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(0D)));
+		assertThat(afb.getDiscount().doubleValue(), is(equalTo(0D)));
+		assertThat(afb.getCommission().doubleValue(), is(equalTo(60D)));
+		assertThat(afb.getNettCost().doubleValue(), is(equalTo(240D)));
+		assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(237D)));
 	}
 }
 
