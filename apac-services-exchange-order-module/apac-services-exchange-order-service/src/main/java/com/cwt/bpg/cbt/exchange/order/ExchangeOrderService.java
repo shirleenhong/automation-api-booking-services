@@ -25,7 +25,7 @@ public class ExchangeOrderService {
 		return merchantFeeRepo.getMerchantFee(countryCode, clienType, profileName);
 	}
 
-	@CachePut(cacheNames="mechant-fee", key="{#fee.countryCode, #fee.clientType, #fee.profileName}")
+	@CachePut(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.clientType, #fee.profileName}")
 	public MerchantFee putMerchantFee(MerchantFee fee) {
 		return merchantFeeRepo.putMerchantFee(fee);
 	}
