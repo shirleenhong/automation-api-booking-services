@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
 
-@Entity("insurance")
+@Entity(value = "insurance", noClassnameStored = true)
 public class Insurance {
 
 	@NotEmpty

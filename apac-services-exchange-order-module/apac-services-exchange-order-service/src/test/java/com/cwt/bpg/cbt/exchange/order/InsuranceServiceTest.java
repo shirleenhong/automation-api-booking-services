@@ -1,8 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,7 +13,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mongodb.morphia.Key;
 
 import com.cwt.bpg.cbt.exchange.order.model.Insurance;
 
@@ -46,14 +43,23 @@ public class InsuranceServiceTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void canPutInsurance() {
-		
 		Insurance insurance = new Insurance();
 		when(insuranceRepository.putInsurance(insurance)).thenReturn(insurance);
 		
 		Insurance putInsurance = service.putInsurance(insurance);
 		
 		verify(insuranceRepository, times(1)).putInsurance(insurance);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void canRemoveInsurance() {
+		Insurance insurance = new Insurance();
+		when(insuranceRepository.remove(insurance)).thenReturn(insurance);
 		
+		Insurance putInsurance = service.remove(insurance);
+		
+		verify(insuranceRepository, times(1)).remove(putInsurance);
 	}
 
 }
