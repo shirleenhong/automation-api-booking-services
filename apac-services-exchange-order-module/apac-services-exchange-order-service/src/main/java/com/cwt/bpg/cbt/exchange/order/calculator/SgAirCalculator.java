@@ -46,7 +46,6 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 		String inClientType = safeValue(input.getClientType());
 
 		if (!input.isApplyFormula()) {
-			merchantFee = round(inMerchantFee, scale);
 			if (isConstTkt) {
 				totalSellingFare = inNettFare
 						.subtract(inDiscount)
@@ -60,7 +59,6 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 						.add(inMerchantFee);
 			}
 			nettCost = inNettFare.subtract(inCommission);
-
 		}
 		else {
 
@@ -81,12 +79,12 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 			}
 
 			totalSellingFare = totalNettFare.add(merchantFee);
-			
+
+			result.setMerchantFee(merchantFee);
 			result.setCommission(commission);
 			result.setDiscount(discount);
 		}
 
-		result.setMerchantFee(merchantFee);
 		result.setNettCost(nettCost);
 		result.setTotalSellingFare(totalSellingFare);
 
