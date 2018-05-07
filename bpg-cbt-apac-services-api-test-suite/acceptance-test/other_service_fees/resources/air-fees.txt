@@ -157,7 +157,7 @@ Calculate Air Fees-SG Nett Cost In EO Without Formula
     Set Test Variable    ${nett_cost_amount}    ${calculated_value}
 
 Calculate Air Fees-SG Total Selling Fare With Formula
-    ${total_selling_fare_formula}    Set Variable If    "${product_type_value.upper()}" == "CT"    ${nett_cost_amount}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}    ${selling_price_value}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}
+    ${total_selling_fare_formula}    Set Variable If    "${product_type_value.upper()}" == "CT"    ${nett_cost_amount}+${commission_amount}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_amount}    ${selling_price_value}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_amount}
     ${calculated_value}    Evaluate    ${total_selling_fare_formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
