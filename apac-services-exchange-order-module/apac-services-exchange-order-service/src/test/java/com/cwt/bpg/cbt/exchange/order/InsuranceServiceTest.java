@@ -55,11 +55,12 @@ public class InsuranceServiceTest {
 	@Test
 	public void canRemoveInsurance() {
 		Insurance insurance = new Insurance();
-		when(insuranceRepository.remove(insurance)).thenReturn(insurance);
+		final String removeObjectId = "Test";
+		when(insuranceRepository.remove(removeObjectId)).thenReturn(removeObjectId);
 		
-		Insurance putInsurance = service.remove(insurance);
+		String remove = service.remove(removeObjectId);
 		
-		verify(insuranceRepository, times(1)).remove(putInsurance);
+		verify(insuranceRepository, times(1)).remove(removeObjectId);
 	}
 
 }
