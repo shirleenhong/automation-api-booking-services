@@ -55,17 +55,11 @@ public class InsuranceRepositoryTest {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
-	public void canPutInsurance() {
+	public void canInsertOrUpdateInsurance() {
 		Insurance insurance = new Insurance();
 		insurance.setType("insurance-type");
 		
 		Key<Insurance> key = mock(Key.class);
-		Query<Insurance> query = mock(Query.class);
-		when(datastore.createQuery(Insurance.class)).thenReturn(query);
-		FieldEnd fieldEnd = mock(FieldEnd.class);
-		when(query.field("type")).thenReturn(fieldEnd);
-		when(fieldEnd.equal(insurance.getType())).thenReturn(query);
-		
 		when(datastore.save(insurance)).thenReturn(key);
 		
 		repo.putInsurance(insurance);
@@ -75,28 +69,20 @@ public class InsuranceRepositoryTest {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
-	public void canUpdateInsurance() {
-		Insurance insurance = new Insurance();
-		insurance.setType("insurance-type");
+	public void canDeleteInsurance() {
+		final String toDelete = "test";
 		
 		Query<Insurance> query = mock(Query.class);
 		when(datastore.createQuery(Insurance.class)).thenReturn(query);
-		UpdateOperations<Insurance> updateOperations = mock(UpdateOperations.class);
-		when(updateOperations.set("type", insurance.getType())).thenReturn(updateOperations);
-		when(updateOperations.set("commission", insurance.getCommission())).thenReturn(updateOperations);
-		
-		when(datastore.createUpdateOperations(Insurance.class)).thenReturn(updateOperations);
 		FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(query.field("type")).thenReturn(fieldEnd);
-		when(fieldEnd.equal(insurance.getType())).thenReturn(query);
-		when(query.count()).thenReturn(1L);
+		when(fieldEnd.equal(toDelete)).thenReturn(query);
 		
-		UpdateResults updateResult = new UpdateResults(new WriteResult(1, true, null));
-		when(datastore.update(query, updateOperations)).thenReturn(updateResult);
+		WriteResult key = new WriteResult(1, true, null);
+		when(datastore.delete(query)).thenReturn(key);
 		
-		repo.putInsurance(insurance);
+		repo.remove(toDelete);
 		
-		verify(datastore, times(1)).update(query, updateOperations);
+		verify(datastore, times(1)).delete(query);
 	}
-
 }

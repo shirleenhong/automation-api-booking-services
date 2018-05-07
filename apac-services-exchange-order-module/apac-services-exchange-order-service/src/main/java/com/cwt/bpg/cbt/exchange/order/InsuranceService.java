@@ -26,8 +26,8 @@ public class InsuranceService {
 		return insuranceRepository.putInsurance(insurance);
 	}
 
-	@CacheEvict(cacheNames="insurance-types", key="{#insurance.type}")
-	public Insurance remove(Insurance insurance) {
-		return insuranceRepository.remove(insurance);
+	@CacheEvict(cacheNames="insurance-types", key="{#type}")
+	public String remove(String type) {
+		return insuranceRepository.remove(type);
 	}
 }
