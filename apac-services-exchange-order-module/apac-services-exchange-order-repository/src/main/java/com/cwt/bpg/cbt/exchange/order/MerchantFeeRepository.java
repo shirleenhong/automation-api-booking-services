@@ -40,11 +40,11 @@ public class MerchantFeeRepository {
 		
 		WriteResult delete = datastore.delete(clientMerchantFee);
 		
-		LOGGER.debug("Delete Result: {}", delete.toString());
+		LOGGER.info("Delete Result: {}", delete.toString());
 		
 		Key<MerchantFee> save = datastore.save(fee);
 		
-		LOGGER.debug("Put Result: {}", save.toString());
+		LOGGER.info("Put Result: {}", save.toString());
 		
 		return fee;
 	}

@@ -26,7 +26,6 @@ public class InsuranceController {
 	@Autowired
 	private InsuranceService service;
 	
-	@Internal
 	@GetMapping(path="/insurance")
 	@ResponseBody
     @ApiOperation(value = "Pulls insurance list")
