@@ -20,7 +20,7 @@ public class CacheConfiguration {
 			.getLogger(CacheConfiguration.class);
 
 	private static final String[] cacheNames = new String[] { "products", "merchant-fee",
-			"currency-rounding-rule" };
+			"currency-rounding-rule", "insurance-types" };
 
 	@Bean
 	public CacheManager cacheManager() {
@@ -28,7 +28,7 @@ public class CacheConfiguration {
 	}
 
 	@CacheEvict(allEntries = true, cacheNames = { "products", "merchant-fee",
-			"currency-rounding-rule" })
+			"currency-rounding-rule", "insurance-types" })
 	@Scheduled(cron = "0 0 0,12 * * *")
 	public void evictAllCache() {
 		logger.info("Cache Evicted!");

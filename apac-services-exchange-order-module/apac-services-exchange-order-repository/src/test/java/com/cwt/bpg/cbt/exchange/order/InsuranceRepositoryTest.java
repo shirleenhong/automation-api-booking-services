@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
 
 import com.cwt.bpg.cbt.exchange.order.model.Insurance;
@@ -48,5 +49,16 @@ public class InsuranceRepositoryTest {
 		verify(morphia, times(1)).getDatastore();
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void canPutInsurance() {
+		Insurance insurance = new Insurance();
+		Key<Insurance> key = mock(Key.class);
+		when(dataStore.save(insurance)).thenReturn(key );
+		
+		repo.putInsurance(insurance);
+		
+		verify(dataStore, times(1)).save(insurance);
+	}
 
 }

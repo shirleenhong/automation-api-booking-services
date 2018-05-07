@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
