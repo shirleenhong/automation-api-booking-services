@@ -226,6 +226,8 @@ Generate Test Variables For Air Fees-SG With Formula
     Calculate Air Fees-SG Commission
     Calculate Air Fees-SG Discount
     Calculate Air Fees-SG Nett Cost In EO With Formula
+    ${tfincmf_not_exists}    Run Keyword And Return Status    Variable Should Not Exist    ${tfincmf_flag_value}
+    Run Keyword If    "${tfincmf_not_exists}" == "True"    Set Test Variable    ${tfincmf_flag_value}    false
     Run Keyword If    "${cwt_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Air Fees-SG Merchant Fee
     ...    ELSE    Set Test Variable    ${merchant_fee_amount}    0
     Calculate Air Fees-SG Total Selling Fare With Formula
