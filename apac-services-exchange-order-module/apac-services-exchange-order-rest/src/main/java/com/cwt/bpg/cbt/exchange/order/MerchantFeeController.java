@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,7 +48,7 @@ public class MerchantFeeController {
 	
 	
 	@Internal
-	@PostMapping(path="/merchant")
+	@PutMapping(path="/merchant")
 	@ResponseBody
     @ApiOperation(value = "Updates merchant fee configuration of a given market")
 	public ResponseEntity<MerchantFee> updateMerchantFee(
