@@ -1,6 +1,6 @@
 *** keywords ***
 Create Test Variables For Insurance Plans
-    [Arguments]    ${insurance_list}=${hk_insurance_list}
+    [Arguments]    ${insurance_list}=${sg_insurance_list}
     ${insurance_list}    Split String    ${insurance_list}    |
     ${insurance_list_length}    Get Length    ${insurance_list}
     Set Test Variable    ${insurance_list_length}
