@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.Api;
 
@@ -31,7 +30,7 @@ public class ApplicationCacheResource {
 
 	@GetMapping(path = "/caches", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@SuppressWarnings( { "unchecked", "rawtypes" })
+	@SuppressWarnings( { "unchecked"})
 	public List<CacheStatistics> list() {
 		final List<CacheStatistics> result = new ArrayList<>();
 		final Collection<String> cacheNames = cacheManager.getCacheNames();
@@ -66,7 +65,6 @@ public class ApplicationCacheResource {
 	
 	@GetMapping(path = "/caches/evict/{cacheName}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@SuppressWarnings("unchecked")
 	public List<CacheResult> evict(@PathVariable("cacheName") String cacheName) {
 		final List<CacheResult> result = new ArrayList<>();
 		final Cache cache = cacheManager.getCache(cacheName);
@@ -80,7 +78,7 @@ public class ApplicationCacheResource {
 	}
 	
 	private class CacheResult {
-		@JsonIgnore
+		
 		private Object key;
 		private Object result;
 

@@ -15,7 +15,7 @@ public class InsuranceService {
 	@Autowired
 	private InsuranceRepository insuranceRepository;
 
-	@Cacheable(cacheNames = "insurance-types")
+	@Cacheable(cacheNames = "insurance-types", key="{#type}")
 	public List<Insurance> getInsuranceList() {
 		return insuranceRepository.getAll();
 	}
