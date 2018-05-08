@@ -31,22 +31,28 @@ public class MerchantFeeRepository {
 	}
 	
 	public MerchantFee putMerchantFee(MerchantFee fee) {
+
+		removeMerchantFee(fee);
+		
+		final Datastore datastore = morphia.getDatastore();
+		Key<MerchantFee> save = datastore.save(fee);
+		LOGGER.info("Put Result: {}", save.toString());
+		return fee;
+	}
+
+	public MerchantFee removeMerchantFee(MerchantFee merchantFee) {
 		final Datastore datastore = morphia.getDatastore();
 		
 		final Query<MerchantFee> clientMerchantFee = datastore.createQuery(MerchantFee.class)
-                .filter("countryCode", fee.getCountryCode())
-                .filter("clientType", fee.getClientType())
-                .filter("profileName", fee.getProfileName());
+                .filter("countryCode", merchantFee.getCountryCode())
+                .filter("clientType", merchantFee.getClientType())
+                .filter("profileName", merchantFee.getProfileName());
 		
 		WriteResult delete = datastore.delete(clientMerchantFee);
 		
 		LOGGER.info("Delete Result: {}", delete.toString());
 		
-		Key<MerchantFee> save = datastore.save(fee);
-		
-		LOGGER.info("Put Result: {}", save.toString());
-		
-		return fee;
+		return merchantFee;
 	}
 
 }

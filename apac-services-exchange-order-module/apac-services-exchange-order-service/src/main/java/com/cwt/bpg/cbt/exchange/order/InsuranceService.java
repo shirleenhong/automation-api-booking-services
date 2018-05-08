@@ -16,17 +16,16 @@ public class InsuranceService {
 	@Autowired
 	private InsuranceRepository insuranceRepository;
 
-	@Cacheable("insurance-types")
+	@Cacheable(cacheNames="insurance-types")
 	public List<Insurance> getInsuranceList() {
 		return insuranceRepository.getAll();
 	}
 
-	@CachePut(cacheNames="insurance-types", key="{#insurance.type}")
 	public Insurance putInsurance(Insurance insurance) {
 		return insuranceRepository.putInsurance(insurance);
 	}
 
-	@CacheEvict(cacheNames="insurance-types", key="{#type}")
+	@CacheEvict(cacheNames="insurance-types", allEntries=true)
 	public String remove(String type) {
 		return insuranceRepository.remove(type);
 	}

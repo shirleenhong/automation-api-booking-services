@@ -74,7 +74,7 @@ public class MerchantFeeRepositoryTest {
 		impl.putMerchantFee(fee);
 		
 		verify(query, times(3)).filter(anyString(), anyObject());
-		verify(morphia, times(1)).getDatastore();
+		verify(morphia, times(2)).getDatastore();
 		verify(dataStore, times(1)).delete(query);
 		verify(dataStore, times(1)).save(fee);
 	}

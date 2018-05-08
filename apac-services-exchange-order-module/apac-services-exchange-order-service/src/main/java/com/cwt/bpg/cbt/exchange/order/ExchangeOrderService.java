@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class ExchangeOrderService {
 	@Autowired
 	private CurrencyRepository currencyRepo;
 
-	@Cacheable("merchant-fee")
+	@Cacheable(cacheNames="merchant-fee", key="{#countryCode, #clientType, #profileName}")
 	public MerchantFee getMerchantFee(String countryCode, String clienType, String profileName) {
 		return merchantFeeRepo.getMerchantFee(countryCode, clienType, profileName);
 	}
@@ -33,5 +34,10 @@ public class ExchangeOrderService {
 	@Cacheable("currency-rounding-rule")
 	public CurrencyCodeRoundRule getRoundingRule(String currencyCode) {
 		return currencyRepo.getRoundingRule(currencyCode);
+	}
+
+	@CacheEvict(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.clientType, #fee.profileName}")
+	public MerchantFee remove(MerchantFee fee) {
+		return merchantFeeRepo.removeMerchantFee(fee);
 	}
 }
