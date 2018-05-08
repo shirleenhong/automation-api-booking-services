@@ -1,0 +1,11 @@
+*** Keywords ***
+Send Get Request For Insurance Plans
+    [Arguments]    ${token}=${default_token}
+    Create Session    insurance    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    merchant    /apac-services-rest/api/insurance    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    insurance

@@ -1,0 +1,44 @@
+*** Settings ***
+Suite Setup
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/visa-processing.txt
+Resource          resources/misc-fees.txt
+
+*** Test Cases ***
+Verify That Error Is Encountered When Invalid Token Is Used
+    [Tags]    functional    not-ready
+    Generate Test Variables For Visa Processing    cc,CN|client_type,TF|pro_name,ACCEHK|nett_cost,300|vendor_handling,100|cwt_handling,200|mf_nett_check,false|mf_nett_cost,2|mf_cwt_check,false|mf_cwt_handling,2
+    Send Other Service Fees Post Request    token=12345.12345.12345.
+    Verify Response Status Code Is Correct    401
+    Verify Visa Processing Fees Are Returned Correctly
+    Generate Test Variables For Visa Processing    cc,CN|client_type,TF|pro_name,ACCEHK|nett_cost,300|vendor_handling,100|cwt_handling,200|mf_nett_check,false|mf_nett_cost,2|mf_cwt_check,false|mf_cwt_handling,2
+    Send Other Service Fees Post Request    token=aaa.bbb.ccc
+    Verify Response Status Code Is Correct    401
+    Verify Visa Processing Fees Are Returned Correctly
+    Generate Test Variables For Visa Processing    cc,CN|client_type,TF|pro_name,ACCEHK|nett_cost,300|vendor_handling,100|cwt_handling,200|mf_nett_check,false|mf_nett_cost,2|mf_cwt_check,false|mf_cwt_handling,2
+    Send Other Service Fees Post Request    token=!@#$%^&.!@#$%^&*.!@#$%^
+    Verify Response Status Code Is Correct    401
+    Verify Visa Processing Fees Are Returned Correctly
+
+Verify That Error Is Encountered When Null Token Is Used
+    [Tags]    functional    not-ready
+    Generate Test Variables For Visa Processing    cc,CN|client_type,TF|pro_name,ACCEHK|nett_cost,300|vendor_handling,100|cwt_handling,200|mf_nett_check,false|mf_nett_cost,2|mf_cwt_check,false|mf_cwt_handling,2
+    Send Other Service Fees Post Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Visa Processing Fees Are Returned Correctly
+
+Verify That Error Is Encountered When Empty Token Is Used
+    [Tags]    functional    not-ready
+    Generate Test Variables For Visa Processing    cc,CN|client_type,TF|pro_name,ACCEHK|nett_cost,300|vendor_handling,100|cwt_handling,200|mf_nett_check,false|mf_nett_cost,2|mf_cwt_check,false|mf_cwt_handling,2
+    Send Other Service Fees Post Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Visa Processing Fees Are Returned Correctly
+
+Verify That Error Is Encountered When No Token Is Used
+    [Tags]    functional    not-ready
+    Generate Test Variables For Visa Processing    cc,CN|client_type,TF|pro_name,ACCEHK|nett_cost,300|vendor_handling,100|cwt_handling,200|mf_nett_check,false|mf_nett_cost,2|mf_cwt_check,false|mf_cwt_handling,2
+    Send Other Service Fees Post Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Visa Processing Fees Are Returned Correctly

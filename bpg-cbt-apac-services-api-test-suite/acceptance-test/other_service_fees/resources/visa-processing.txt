@@ -1,0 +1,63 @@
+*** keywords ***
+Calculate Visa Processing Commission
+    ${calculated_value}    Evaluate    ${selling_price_in_di_amount}-${nett_cost_value}-${vendor_handling_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${commission_amount}    ${calculated_value}
+
+Calculate Visa Processing Merchant Fee CWT Handling
+    ${calculated_value}    Evaluate    (${cwt_handling_value}+${vendor_handling_value})*(${merchant_fee_percentage}*0.01)
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${merchant_fee_cwt_handling_amount}    ${calculated_value}
+
+Calculate Visa Processing Merchant Fee Nett Cost
+    ${calculated_value}    Evaluate    ${nett_cost_value}*(${merchant_fee_percentage}*0.01)
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${merchant_fee_nett_cost_amount}    ${calculated_value}
+
+Calculate Visa Processing Selling Price For Visa Processing
+    ${calculated_value}    Evaluate    ${nett_cost_value}+${vendor_handling_value}+${cwt_handling_value}+${merchant_fee_nett_cost_amount}+${merchant_fee_cwt_handling_amount}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${selling_price_amount}    ${calculated_value}
+    Set Test Variable    ${selling_price_in_di_amount}    ${calculated_value}
+
+Create Test Variables For Visa Processing
+    [Arguments]    ${fees_list}    ${country}
+    ${fees_list}    Split String    ${fees_list}    |
+    : FOR    ${fees}    IN    @{fees_list}
+    \    ${fees_item}    Split String    ${fees}    ,
+    \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
+    Set Test Variable    ${fees_list}
+    Set Test Variable    ${country}    ${country.upper()}
+    Set Test Variable    ${service_fee_name}    insurance-fees
+
+Generate Test Variables For Visa Processing
+    [Arguments]    ${fees_list}    ${country}=HK
+    Create Test Variables For Visa Processing    ${fees_list}    ${country}
+    ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
+    Set Test Variable    ${decimal_place}
+    Run Keyword If    "${mf_nett_check_value.lower()}"=="true" and "${cc_value.upper()}" == "CX"    Calculate Visa Processing Merchant Fee Nett Cost
+    ...    ELSE    Set Test Variable    ${merchant_fee_nett_cost_amount}    0
+    Run Keyword If    "${mf_cwt_check_value.lower()}"=="true" and "${cc_value.upper()}" == "CX"    Calculate Visa Processing Merchant Fee CWT Handling
+    ...    ELSE    Set Test Variable    ${merchant_fee_cwt_handling_amount}    0
+    Calculate Visa Processing Selling Price For Visa Processing
+    Run Keyword If    ${selling_price_in_di_amount} > ${nett_cost_value}    Calculate Visa Processing Commission
+    ...    ELSE    Set Test Variable    ${commission_amount}    0
+    Run Keyword If    "${country.upper()}" != "SG"    Remove Decimal Places For Visa Processing
+
+Remove Decimal Places For Visa Processing
+    ${commission_amount}    Remove String    ${commission_amount}    .00
+    ${selling_price_amount}    Remove String    ${selling_price_amount}    .00
+    ${selling_price_in_di_amount}    Remove String    ${selling_price_in_di_amount}    .00
+    Set Test Variable    ${commission_amount}
+    Set Test Variable    ${selling_price_amount}
+    Set Test Variable    ${selling_price_in_di_amount}
+
+Verify Visa Processing Fees Are Returned Correctly
