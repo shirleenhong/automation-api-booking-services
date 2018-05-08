@@ -2,12 +2,8 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import javax.validation.constraints.NotNull;
 
-import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity(value = "insurance", noClassnameStored = true)
 public class Insurance {
