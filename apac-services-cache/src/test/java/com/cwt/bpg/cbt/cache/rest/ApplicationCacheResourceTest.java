@@ -4,7 +4,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -45,18 +44,18 @@ public class ApplicationCacheResourceTest {
 		verify(cache, times(1)).getNativeCache();
 	}
 	
-//	@Test
-//	@SuppressWarnings("rawtypes")
-//	public void canFetchCache() {
-//		Cache cache = Mockito.mock(Cache.class);
-//		Mockito.when(cacheManager.getCache(Mockito.anyString())).thenReturn(cache);
-//		Mockito.when(cache.getNativeCache()).thenReturn(new ConcurrentHashMap<>());
-//		
-//		List list = cacheResource.fetch("products-cache");
-//		
-//		verify(cacheManager, times(1)).getCache(Mockito.anyString());
-//		verify(cache, times(1)).getNativeCache();
-//	}
+	@Test
+	@SuppressWarnings("rawtypes")
+	public void canFetchCache() {
+		Cache cache = Mockito.mock(Cache.class);
+		Mockito.when(cacheManager.getCache(Mockito.anyString())).thenReturn(cache);
+		Mockito.when(cache.getNativeCache()).thenReturn(new ConcurrentHashMap<>());
+		
+		List list = cacheResource.fetch("products-cache");
+		
+		verify(cacheManager, times(1)).getCache(Mockito.anyString());
+		verify(cache, times(1)).getNativeCache();
+	}
 	
 	@Test
 	@SuppressWarnings("rawtypes")
