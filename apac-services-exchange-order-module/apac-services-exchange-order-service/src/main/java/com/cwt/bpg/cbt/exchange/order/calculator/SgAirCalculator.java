@@ -76,11 +76,11 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 						inClientType, getTransactionFeeFlag(merchantFeeObj));
 				merchantFee = getMerchantFee(totalPlusTF,
 						getMerchantFeePct(merchantFeeObj), scale);
+				result.setMerchantFee(merchantFee);
 			}
 
 			totalSellingFare = totalNettFare.add(merchantFee);
 
-			result.setMerchantFee(merchantFee);
 			result.setCommission(commission);
 			result.setDiscount(discount);
 		}
