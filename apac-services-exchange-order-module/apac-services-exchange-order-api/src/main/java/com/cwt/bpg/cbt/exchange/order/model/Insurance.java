@@ -17,13 +17,13 @@ public class Insurance {
 	private String type;
 	
 	@NotNull
-	private Integer commission;
+	private Float commission;
 
-	public Integer getCommission() {
+	public Float getCommission() {
 		return commission;
 	}
 
-	public void setCommission(Integer commission) {
+	public void setCommission(Float commission) {
 		this.commission = commission;
 	}
 
