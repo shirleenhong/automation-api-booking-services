@@ -60,11 +60,19 @@ public class InsuranceRepositoryTest {
 		insurance.setType("insurance-type");
 		
 		Key<Insurance> key = mock(Key.class);
+		Query<Insurance> query = mock(Query.class);
+		FieldEnd fieldEnd = mock(FieldEnd.class);
+		when(datastore.createQuery(Insurance.class)).thenReturn(query);
+		when(query.field("type")).thenReturn(fieldEnd);
+		when(fieldEnd.equal(insurance.getType())).thenReturn(query);
 		when(datastore.save(insurance)).thenReturn(key);
+		WriteResult dkey = new WriteResult(1, true, null);
+		when(datastore.delete(query)).thenReturn(dkey);
 		
 		repo.putInsurance(insurance);
 		
 		verify(datastore, times(1)).save(insurance);
+		verify(datastore, times(1)).delete(query);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })

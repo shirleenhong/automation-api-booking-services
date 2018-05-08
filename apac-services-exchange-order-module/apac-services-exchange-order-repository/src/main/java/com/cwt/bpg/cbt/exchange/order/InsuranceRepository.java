@@ -29,8 +29,10 @@ public class InsuranceRepository {
 	}
 	
 	public Insurance putInsurance(Insurance insurance) {
+		
+		remove(insurance.getType());
+		
 		final Datastore datastore = morphia.getDatastore();
-		insurance.setId(new ObjectId(insurance.getType().getBytes()));
 		Key<Insurance> key = datastore.save(insurance);
 		LOGGER.info("Save Result: {}", key.toString());
 		return insurance;
