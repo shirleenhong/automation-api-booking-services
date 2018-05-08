@@ -1,0 +1,63 @@
+*** Settings ***
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/misc-fees.txt
+Resource          resources/visa-processing.txt
+
+*** Test Cases ***
+Verify That Visa Processing Fees Are Calculated Correctly Using CN, Vendor Handling, CWT Handling And Nett Cost
+    [Tags]    functional    not-ready
+    Generate Test Variables For Visa Processing    cc,CN|client_type,TF|pro_name,ACCEHK|nett_cost,300|vendor_handling,100|cwt_handling,200|mf_nett_check,false|mf_nett_cost,2|mf_cwt_check,false|mf_cwt_handling,2
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Visa Processing Fees Are Returned Correctly
+
+Verify That Visa Processing Fees Are Calculated Correctly Using CN, Vendor Handling And CWT Handling
+    [Tags]    functional    not-ready
+    Generate Test Variables For Visa Processing    cc,CN|client_type,TF|pro_name,ACCEHK|nett_cost,0|vendor_handling,100|cwt_handling,200|mf_nett_check,false|mf_nett_cost,2|mf_cwt_check,false|mf_cwt_handling,2
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Visa Processing Fees Are Returned Correctly
+
+Verify That Visa Processing Fees Are Calculated Correctly Using CX, Vendor Handling, CWT Handling, Nett Cost And Merchant Fee For Nett Cost
+    [Tags]    functional    not-ready
+    Generate Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,458|vendor_handling,166|cwt_handling,207|mf_nett_check,true|mf_nett_cost,2|mf_cwt_check,false|mf_cwt_handling,2
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Visa Processing Fees Are Returned Correctly
+
+Verify That Visa Processing Fees Are Calculated Correctly Using CX, Vendor Handling, CWT Handling And Merchant Fee For Nett Cost
+    [Tags]    functional    not-ready
+    Generate Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,0|vendor_handling,266|cwt_handling,307|mf_nett_check,true|mf_nett_cost,2|mf_cwt_check,false|mf_cwt_handling,2
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Visa Processing Fees Are Returned Correctly
+
+Verify That Visa Processing Fees Are Calculated Correctly Using CX, Vendor Handling, CWT Handling, Nett Cost And Merchant Fee For CWT Handling
+    [Tags]    functional    not-ready
+    Generate Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,789|vendor_handling,166|cwt_handling,120|mf_nett_check,false|mf_nett_cost,2|mf_cwt_check,true|mf_cwt_handling,2
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Visa Processing Fees Are Returned Correctly
+
+Verify That Visa Processing Fees Are Calculated Correctly Using CX, Vendor Handling, CWT Handling And Merchant Fee For Nett Cost
+    [Tags]    functional    not-ready
+    Generate Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,0|vendor_handling,280|cwt_handling,450|mf_nett_check,false|mf_nett_cost,2|mf_cwt_check,true|mf_cwt_handling,2
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Visa Processing Fees Are Returned Correctly
+
+Verify That Visa Processing Fees Are Calculated Correctly Using CX, Vendor Handling, CWT Handling, Nett Cost, Merchant Fee For Nett Cost And Merchant Fee For CWT Handling
+    [Tags]    functional    not-ready
+    Generate Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,650|vendor_handling,146|cwt_handling,477|mf_nett_check,true|mf_nett_cost,2|mf_cwt_check,true|mf_cwt_handling,2
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Visa Processing Fees Are Returned Correctly
+
+Verify That Visa Processing Fees Are Calculated Correctly Using CX, Vendor Handling, CWT Handling, Merchant Fee For Nett Cost And Merchant Fee For CWT Handling
+    [Tags]    functional    not-ready
+    Generate Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,0|vendor_handling,346|cwt_handling,657|mf_nett_check,true|mf_nett_cost,2|mf_cwt_check,true|mf_cwt_handling,2
+    Send Other Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Visa Processing Fees Are Returned Correctly
