@@ -1,0 +1,67 @@
+*** Settings ***
+Suite Setup
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/insurance.txt
+
+*** Test Cases ***
+Verify That Insurance Plans Are Correctly Retrieved
+    [Tags]    functional
+    Create Test Variables For Insurance Plans
+    Send Get Request For Insurance Plans
+    Verify Response Status Code Is Correct    200
+    Verify Insurance Plans Are Correctly Retrieved
+    [Teardown]    Evict Insurance Type Cache
+
+Verify That Insurance Plans Are Updated Correctly After Put Request
+    [Tags]    functional
+    Create Test Variables For Insurance Plans
+    Send Get Request For Insurance Plans
+    Verify Response Status Code Is Correct    200
+    Verify Insurance Plans Are Correctly Retrieved
+    Send Put Request For Insurance Plans    type=Single Trip Plan    commission=40.0
+    Verify Response Status Code Is Correct    200
+    Evict Insurance Type Cache    4
+    Create Test Variables For Insurance Plans    Annual Plan,20.0|Single Trip Plan,40.0
+    Send Get Request For Insurance Plans
+    Verify Response Status Code Is Correct    200
+    Verify Insurance Plans Are Correctly Retrieved
+    [Teardown]    Update Insurance Plans To Original Value And Evict Insurance Type Cache
+
+Verify That Insurance Plans Are Added Correctly After Put Request
+    [Tags]    functional
+    Create Test Variables For Insurance Plans
+    Send Get Request For Insurance Plans
+    Verify Response Status Code Is Correct    200
+    Verify Insurance Plans Are Correctly Retrieved
+    Send Put Request For Insurance Plans    type=New Trip Plan    commission=10.0
+    Verify Response Status Code Is Correct    200
+    Evict Insurance Type Cache    4
+    Create Test Variables For Insurance Plans    Annual Plan,20.0|Single Trip Plan,35.0|New Trip Plan,10.0
+    Send Get Request For Insurance Plans
+    Verify Response Status Code Is Correct    200
+    Verify Insurance Plans Are Correctly Retrieved
+    [Teardown]    Delete Insurance Plans And Evict Insurance Type Cache
+
+Verify That Insurance Plans Are Deleted Correctly After Delete Request
+    [Tags]    functional
+    Create Test Variables For Insurance Plans
+    Send Get Request For Insurance Plans
+    Verify Response Status Code Is Correct    200
+    Verify Insurance Plans Are Correctly Retrieved
+    Send Put Request For Insurance Plans    type=New Trip Plan    commission=10.0
+    Verify Response Status Code Is Correct    200
+    Evict Insurance Type Cache    4
+    Create Test Variables For Insurance Plans    Annual Plan,20.0|Single Trip Plan,35.0|New Trip Plan,10.0
+    Send Get Request For Insurance Plans
+    Verify Response Status Code Is Correct    200
+    Verify Insurance Plans Are Correctly Retrieved
+    Send Delete Request For Insurance Plans    type=New Trip Plan
+    Verify Response Status Code Is Correct    200
+    Evict Insurance Type Cache    4
+    Create Test Variables For Insurance Plans
+    Send Get Request For Insurance Plans
+    Verify Response Status Code Is Correct    200
+    Verify Insurance Plans Are Correctly Retrieved
+    [Teardown]    Evict Insurance Type Cache
