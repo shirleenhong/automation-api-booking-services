@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.cache.rest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.Api;
 
@@ -79,6 +81,7 @@ public class ApplicationCacheResource {
 	}
 	
 	private class CacheResult {
+		@JsonIgnore
 		private Object key;
 		private Object result;
 
