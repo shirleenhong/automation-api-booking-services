@@ -22,8 +22,8 @@ public class ExchangeOrderService {
 	private CurrencyRepository currencyRepo;
 
 	@Cacheable(cacheNames="merchant-fee", key="{#countryCode, #clientType, #profileName}")
-	public MerchantFee getMerchantFee(String countryCode, String clienType, String profileName) {
-		return merchantFeeRepo.getMerchantFee(countryCode, clienType, profileName);
+	public MerchantFee getMerchantFee(String countryCode, String clientType, String profileName) {
+		return merchantFeeRepo.getMerchantFee(countryCode, clientType, profileName);
 	}
 
 	@CachePut(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.clientType, #fee.profileName}")

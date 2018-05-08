@@ -20,12 +20,12 @@ public class MerchantFeeRepository {
 	@Autowired
 	private MorphiaComponent morphia;
 
-	public MerchantFee getMerchantFee(String countryCode, String clienType, String profileName) {
+	public MerchantFee getMerchantFee(String countryCode, String clientType, String profileName) {
 		return morphia.getDatastore().createQuery(MerchantFee.class)
 			.field("countryCode")
 			.equal(countryCode)
 			.field("clientType")
-			.equal(clienType)
+			.equal(clientType)
 			.field("profileName")
 			.equal(profileName).get();
 	}
