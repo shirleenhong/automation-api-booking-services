@@ -49,7 +49,7 @@ public class InsuranceController {
 	@Internal
 	@DeleteMapping(path="/insurance/{type}")
 	@ResponseBody
-    @ApiOperation(value = "remove insurance plan")
+    @ApiOperation(value = "Remove insurance plan")
 	public ResponseEntity<String> removeInsurance(
 			@PathVariable String type) {		
 		
