@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.VisaInput;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(tags = "Exchange Order")
-public class VisaFeeController {
+public class VisaFeesController {
 	
 	@PostMapping(
 			path="/visa-fees", 
@@ -30,7 +30,7 @@ public class VisaFeeController {
 	public ResponseEntity<FeesBreakdown> computeVisaFee(
 			@Valid
             @RequestBody
-            @ApiParam(value = "Values needed for calculation") MiscFeesInput input) {
+            @ApiParam(value = "Values needed for calculation") VisaInput input) {
 		
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}	
