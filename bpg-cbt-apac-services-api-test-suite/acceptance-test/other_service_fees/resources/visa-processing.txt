@@ -1,6 +1,6 @@
 *** keywords ***
 Calculate Visa Processing Commission
-    ${calculated_value}    Evaluate    ${selling_price_in_di_amount}-${nett_cost_value}-${vendor_handling_value}
+    ${calculated_value}    Evaluate    ${cwt_handling_value}+${merchant_fee_nett_cost_amount}+${merchant_fee_cwt_handling_amount}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
@@ -48,8 +48,7 @@ Generate Test Variables For Visa Processing
     Run Keyword If    "${mf_cwt_check_value.lower()}"=="true" and "${cc_value.upper()}" == "CX"    Calculate Visa Processing Merchant Fee CWT Handling
     ...    ELSE    Set Test Variable    ${merchant_fee_cwt_handling_amount}    0
     Calculate Visa Processing Selling Price For Visa Processing
-    Run Keyword If    ${selling_price_in_di_amount} > ${nett_cost_value}    Calculate Visa Processing Commission
-    ...    ELSE    Set Test Variable    ${commission_amount}    0
+    Calculate Visa Processing Commission
     Run Keyword If    "${country.upper()}" != "SG"    Remove Decimal Places For Visa Processing
 
 Remove Decimal Places For Visa Processing
