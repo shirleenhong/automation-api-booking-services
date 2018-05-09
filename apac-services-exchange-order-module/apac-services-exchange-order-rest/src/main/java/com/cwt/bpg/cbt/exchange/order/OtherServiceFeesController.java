@@ -17,6 +17,7 @@ import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
+import com.cwt.bpg.cbt.exchange.order.model.VisaInput;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -80,5 +81,20 @@ public class OtherServiceFeesController {
 			@ApiParam(value = "Values needed for calculation") NettCostInput input) {
 		
 		return new ResponseEntity<>((AirFeesBreakdown)service.calculateNettCost(input), HttpStatus.OK);
+	}
+	
+	@PostMapping(
+			path="/visa-fees", 
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, 
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+    @ApiOperation(value = "Computes visa processing fees")
+	public ResponseEntity<FeesBreakdown> computeVisaFee(
+			@Valid
+            @RequestBody
+            @ApiParam(value = "Values needed for calculation") VisaInput input) {
+		
+		return new ResponseEntity<>(null, HttpStatus.OK);
 	}	
+
 }

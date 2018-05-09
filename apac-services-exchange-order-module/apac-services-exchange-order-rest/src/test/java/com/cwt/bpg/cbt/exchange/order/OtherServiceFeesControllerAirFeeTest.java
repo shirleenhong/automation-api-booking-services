@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.VisaInput;
 
 public class OtherServiceFeesControllerAirFeeTest {
 
@@ -42,6 +44,14 @@ public class OtherServiceFeesControllerAirFeeTest {
 		ResponseEntity<AirFeesBreakdown> computeAirFees = controller.computeAirFees(input);		
 		verify(service, times(1)).calculateAirFee(input);
 		assertEquals(HttpStatus.OK, computeAirFees.getStatusCode());
+	}
+	
+	@Test
+	public void canComputeVisaFees() {
+		VisaInput input = new VisaInput();
+		ResponseEntity<FeesBreakdown> computeVisaFee = controller.computeVisaFee(input);
+		
+		assertEquals(HttpStatus.OK, computeVisaFee.getStatusCode());
 	}
 
 }
