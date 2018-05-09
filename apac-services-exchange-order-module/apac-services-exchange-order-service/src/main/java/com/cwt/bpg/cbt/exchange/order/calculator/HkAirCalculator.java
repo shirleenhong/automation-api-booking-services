@@ -72,13 +72,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 			if(input.isCommissionByPercent()) {
 				if(!ClientTypes.TP.getCode().equals(input.getClientType())) {
 					
-					commission = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), 
-							MathContext.DECIMAL128).subtract(nettFare);
-					
-					if(commission.compareTo(BigDecimal.ZERO) > 0 && ClientTypes.DU.getCode().equals(input.getClientType())) {
-						commission = commission.add(BigDecimal.TEN);
-					}
-					commission = round(commission, scale);					
+					commission = getCommission(input, scale, nettFare);					
 				}
 				sellingPrice = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), MathContext.DECIMAL128);
 				
@@ -114,6 +108,17 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 		result.setTotalSellingFare(round(totalSellingFare, scale));
 		result.setNettCost(round(nettCost, scale));
 		return result;
+	}
+
+	private BigDecimal getCommission(AirFeesInput input, int scale, BigDecimal nettFare) {
+		
+		BigDecimal commission = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), 
+				MathContext.DECIMAL128).subtract(nettFare);
+		
+		if(commission.compareTo(BigDecimal.ZERO) > 0 && ClientTypes.DU.getCode().equals(input.getClientType())) {
+			commission = commission.add(BigDecimal.TEN);
+		}
+		return round(commission, scale);
 	}
 
 	private BigDecimal applyMerchantFee(MerchantFee merchantFee, AirFeesInput input,
