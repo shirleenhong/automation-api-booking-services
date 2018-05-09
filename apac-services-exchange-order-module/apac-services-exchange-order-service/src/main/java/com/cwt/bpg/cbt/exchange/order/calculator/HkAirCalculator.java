@@ -94,7 +94,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 			sellingPrice = round(sellingPrice, scale);
 			result.setSellingPrice(sellingPrice);
 
-			discount = applyDiscount(input, commission, nettFare);
+			discount = applyDiscount(input, commission, discount, nettFare);
 			
 			discount = round(discount, scale);
 			result.setDiscount(discount);
@@ -150,9 +150,9 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 	}
 
 	private BigDecimal applyDiscount(AirFeesInput input, BigDecimal commission,
-			BigDecimal nettFare) {
+			BigDecimal discount, BigDecimal nettFare) {
 		
-		BigDecimal result = BigDecimal.ZERO;
+		BigDecimal result = discount;
 		
 		if(input.isDiscountByPercent()) {
 			if(clientsWithPercentageDiscount.contains(input.getClientType())) {

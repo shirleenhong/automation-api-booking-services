@@ -140,7 +140,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 	private BigDecimal getDiscountAmt(BigDecimal sellFare, Double discountPct,
 			String clientType, int scale) {
 
-		if (ClientTypes.discountClients().contains(clientType)) {
+		if (ClientTypes.clientsWithDiscount().contains(clientType)) {
 			return round(sellFare.multiply(percentDecimal(discountPct)), scale);
 		}
 		return BigDecimal.ZERO;

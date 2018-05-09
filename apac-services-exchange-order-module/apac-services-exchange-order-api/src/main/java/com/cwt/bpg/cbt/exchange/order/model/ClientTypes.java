@@ -20,7 +20,7 @@ public enum ClientTypes {
 	
 	private final static List<String> discountClients = new ArrayList<>();
 		
-	public static List<String> discountClients () {
+	public static List<String> clientsWithDiscount () {
 		
 		if(discountClients.isEmpty()) {
 			discountClients.add(DU.getCode());
