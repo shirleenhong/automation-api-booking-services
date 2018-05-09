@@ -19,6 +19,7 @@ public class Insurance implements Serializable {
 	private Float commission;
 	
 	public Insurance() {
+		//Empty constructor
 	}
 
 	public Float getCommission() {

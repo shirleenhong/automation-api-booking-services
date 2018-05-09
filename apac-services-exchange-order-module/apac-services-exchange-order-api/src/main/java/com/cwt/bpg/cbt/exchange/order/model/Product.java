@@ -35,6 +35,7 @@ public class Product implements Serializable {
 	private String type;
 	
 	public Product() {
+		//Empty constructor
 	}
 
 	public List<Vendor> getVendors() {

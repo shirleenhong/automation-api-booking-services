@@ -72,7 +72,13 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 			if(input.isCommissionByPercent()) {
 				if(!ClientTypes.TP.getCode().equals(input.getClientType())) {
 					
-					commission = getCommission(input, scale, nettFare);
+					commission = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), 
+							MathContext.DECIMAL128).subtract(nettFare);
+					
+					if(commission.compareTo(BigDecimal.ZERO) > 0 && ClientTypes.DU.getCode().equals(input.getClientType())) {
+						commission = commission.add(BigDecimal.TEN);
+					}
+					commission = round(commission, scale);					
 				}
 				sellingPrice = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), MathContext.DECIMAL128);
 				
@@ -108,18 +114,6 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 		result.setTotalSellingFare(round(totalSellingFare, scale));
 		result.setNettCost(round(nettCost, scale));
 		return result;
-	}
-
-	private BigDecimal getCommission(AirFeesInput input, int scale, BigDecimal nettFare) {
-		BigDecimal commission;
-		commission = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), 
-				MathContext.DECIMAL128).subtract(nettFare);
-		
-		if(commission.compareTo(BigDecimal.ZERO) > 0 && ClientTypes.DU.getCode().equals(input.getClientType())) {
-			commission = commission.add(BigDecimal.TEN);
-		}
-		commission = round(commission, scale);
-		return commission;
 	}
 
 	private BigDecimal applyMerchantFee(MerchantFee merchantFee, AirFeesInput input,
@@ -158,19 +152,17 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 	private BigDecimal applyDiscount(AirFeesInput input, BigDecimal commission,
 			BigDecimal discount, BigDecimal nettFare) {
 		
-		BigDecimal result = BigDecimal.ZERO;
-		
 		if(input.isDiscountByPercent()) {
 			if(clientsWithPercentageDiscount.contains(input.getClientType())) {
-				result = calculatePercentage(commission.add(nettFare), input.getDiscountPct());
+				discount = calculatePercentage(commission.add(nettFare), input.getDiscountPct());
 			}
 			else if(clientsWithCommissionDiscount.contains(input.getClientType())) {
-				result = commission;
+				discount = commission;
 			}			
 		}
 		if(clientsWithNoDiscount.contains(input.getClientType())) {
-			result = BigDecimal.ZERO;
+			discount = BigDecimal.ZERO;
 		}
-		return result;
+		return discount;
 	}
 }

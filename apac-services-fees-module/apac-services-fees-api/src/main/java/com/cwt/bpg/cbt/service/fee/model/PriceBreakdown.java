@@ -16,6 +16,7 @@ public class PriceBreakdown implements Serializable {
 	private BigDecimal totalAmount;
 	
 	public PriceBreakdown() {
+		//Empty constructor
 	}
 
 	public PriceBreakdown(BigDecimal fopAmount, BigDecimal merchantFeeAmount, BigDecimal transactionFeeAmount, BigDecimal markupAmount,

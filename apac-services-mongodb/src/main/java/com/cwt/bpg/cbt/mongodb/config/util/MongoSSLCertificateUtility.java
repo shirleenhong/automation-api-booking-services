@@ -14,12 +14,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class MongoSSLCertificateUtility {
 
+	private MongoSSLCertificateUtility() {}
+	
 	private static TrustManager[] passThroughTrustManager() {
 		return new TrustManager[] { new X509TrustManager() {
 
 			@Override
 			public X509Certificate[] getAcceptedIssuers() {
-				return null;
+				return new X509Certificate[0];
 			}
 
 			@Override

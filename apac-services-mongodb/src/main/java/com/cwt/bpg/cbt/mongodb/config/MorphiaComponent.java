@@ -17,7 +17,7 @@ public class MorphiaComponent {
 	
     @Value("${com.cwt.mongodb.dbname}")
     private String dbName;
-	
+    	
 	@Autowired
 	private MongoDbConnection mongodbConnection;
 	
@@ -25,7 +25,6 @@ public class MorphiaComponent {
 	public void init() {
 		morphia = new Morphia();
 		
-		// TODO: make configurable?
 		morphia.mapPackage("com.cwt.bpg.cbt.exchange.order.model", true);
 		
 		datastore = morphia.createDatastore(mongodbConnection.getMongoClient(), dbName);

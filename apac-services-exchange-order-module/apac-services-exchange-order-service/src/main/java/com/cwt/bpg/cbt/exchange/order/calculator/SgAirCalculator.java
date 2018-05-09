@@ -140,15 +140,10 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 	private BigDecimal getDiscountAmt(BigDecimal sellFare, Double discountPct,
 			String clientType, int scale) {
 
-		BigDecimal discAmt = BigDecimal.ZERO;
-		if    (ClientTypes.DU.getCode().equals(clientType)
-			|| ClientTypes.DB.getCode().equals(clientType)
-			|| ClientTypes.MN.getCode().equals(clientType)
-			|| ClientTypes.TF.getCode().equals(clientType)
-			|| ClientTypes.TP.getCode().equals(clientType)) {
-			discAmt = round(sellFare.multiply(percentDecimal(discountPct)), scale);
+		if (ClientTypes.discountClients().contains(clientType)) {
+			return round(sellFare.multiply(percentDecimal(discountPct)), scale);
 		}
-		return discAmt;
+		return BigDecimal.ZERO;
 	}
 
 	private BigDecimal getTotal(BigDecimal totalCharge, BigDecimal transFee,
