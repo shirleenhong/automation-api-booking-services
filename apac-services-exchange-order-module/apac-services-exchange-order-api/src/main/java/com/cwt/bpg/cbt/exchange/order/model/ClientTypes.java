@@ -14,8 +14,12 @@ public enum ClientTypes {
 
 	private final String code;
 	
-	private final static List<String> discountClients = new ArrayList<>();
+	private ClientTypes(String code) {
+		this.code = code;
+	}
 	
+	private final static List<String> discountClients = new ArrayList<>();
+		
 	public static List<String> discountClients () {
 		
 		if(discountClients.isEmpty()) {
@@ -27,10 +31,6 @@ public enum ClientTypes {
 		}
 		
 		return discountClients;
-	}
-
-	private ClientTypes(String code) {
-		this.code = code;
 	}
 
 	public String getCode() {
