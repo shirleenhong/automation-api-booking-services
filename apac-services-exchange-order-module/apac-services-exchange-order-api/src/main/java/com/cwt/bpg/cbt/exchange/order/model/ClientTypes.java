@@ -11,15 +11,15 @@ public enum ClientTypes {
 	TF("TF"),
 	MG("MG"),
 	TP("TP");
-
-	private final String code;
 	
+	private final String code;
+
+	private static final List<String> discountClients = new ArrayList<>();
+
 	private ClientTypes(String code) {
 		this.code = code;
 	}
 	
-	private static final List<String> discountClients = new ArrayList<>();
-		
 	public static List<String> clientsWithDiscount () {
 		
 		if(discountClients.isEmpty()) {

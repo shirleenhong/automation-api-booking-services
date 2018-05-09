@@ -27,7 +27,7 @@ public class OtherServiceFeesInput implements Serializable {
 
 	public OtherServiceFeesInput() {
 		this.sellingPrice = BigDecimal.ZERO;
-		this.gstPercent = new Double(0);
+		this.gstPercent = Double.valueOf(0);
 	}
 	
 	public String getFopType() {
