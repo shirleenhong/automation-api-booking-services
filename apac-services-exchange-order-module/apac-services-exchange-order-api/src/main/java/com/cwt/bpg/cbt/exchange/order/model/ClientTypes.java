@@ -18,7 +18,7 @@ public enum ClientTypes {
 		this.code = code;
 	}
 	
-	private final static List<String> discountClients = new ArrayList<>();
+	private static final List<String> discountClients = new ArrayList<>();
 		
 	public static List<String> clientsWithDiscount () {
 		
