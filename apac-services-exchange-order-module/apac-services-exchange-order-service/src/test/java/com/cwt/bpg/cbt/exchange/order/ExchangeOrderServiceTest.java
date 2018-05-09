@@ -52,6 +52,13 @@ public class ExchangeOrderServiceTest {
 	}
 	
 	@Test
+	public void canRemoveMerchantFee() {
+		MerchantFee fee = new MerchantFee();
+		service.remove(fee);
+		Mockito.verify(merchantFeeApi, Mockito.times(1)).removeMerchantFee(fee);
+	}
+	
+	@Test
 	public void canGetRoundingRule() {
 		CurrencyCodeRoundRule ccr = mock(CurrencyCodeRoundRule.class);
 		when(currencyRepo.getRoundingRule(anyString())).thenReturn(ccr);
