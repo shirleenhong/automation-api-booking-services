@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.VisaInput;
 
-public class VisaFeeControllerTest {
+public class VisaFeesControllerTest {
 
-	private VisaFeeController controller = new VisaFeeController();
+	private VisaFeesController controller = new VisaFeesController();
 	
 	@Test
 	public void canComputeVisaFees() {

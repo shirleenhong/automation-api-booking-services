@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(tags = "Exchange Order")
-public class VisaFeeController {
+public class VisaFeesController {
 	
 	@PostMapping(
 			path="/visa-fees", 
