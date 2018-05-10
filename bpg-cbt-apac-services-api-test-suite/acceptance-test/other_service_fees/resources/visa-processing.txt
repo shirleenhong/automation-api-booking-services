@@ -29,7 +29,7 @@ Calculate Visa Processing Selling Price For Visa Processing
     Set Test Variable    ${selling_price_in_di_amount}    ${calculated_value}
 
 Create Test Variables For Visa Processing
-    [Arguments]    ${fees_list}    ${country}
+    [Arguments]    ${fees_list}    ${country}=HK
     ${fees_list}    Split String    ${fees_list}    |
     : FOR    ${fees}    IN    @{fees_list}
     \    ${fees_item}    Split String    ${fees}    ,
