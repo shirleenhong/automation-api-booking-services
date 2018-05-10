@@ -1,27 +1,27 @@
 *** keywords ***
 Calculate Visa Processing Commission
-    ${calculated_value}    Evaluate    ${cwt_handling_value}+${merchant_fee_nett_cost_amount}+${merchant_fee_cwt_handling_amount}
+    ${calculated_value}    Evaluate    ${cwt_handling_value}+${nett_cost_merchant_fee_amount}+${cwt_handling_merchant_fee_amount}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${commission_amount}    ${calculated_value}
 
 Calculate Visa Processing Merchant Fee CWT Handling
-    ${calculated_value}    Evaluate    (${cwt_handling_value}+${vendor_handling_value})*(${merchant_fee_percentage}*0.01)
+    ${calculated_value}    Evaluate    (${cwt_handling_value}+${vendor_handling_value})*(${merchant_fee_percentage_value}*0.01)
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${merchant_fee_cwt_handling_amount}    ${calculated_value}
+    Set Test Variable    ${cwt_handling_merchant_fee_amount}    ${calculated_value}
 
 Calculate Visa Processing Merchant Fee Nett Cost
-    ${calculated_value}    Evaluate    ${nett_cost_value}*(${merchant_fee_percentage}*0.01)
+    ${calculated_value}    Evaluate    ${nett_cost_value}*(${merchant_fee_percentage_value}*0.01)
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${merchant_fee_nett_cost_amount}    ${calculated_value}
+    Set Test Variable    ${nett_cost_merchant_fee_amount}    ${calculated_value}
 
 Calculate Visa Processing Selling Price For Visa Processing
-    ${calculated_value}    Evaluate    ${nett_cost_value}+${vendor_handling_value}+${cwt_handling_value}+${merchant_fee_nett_cost_amount}+${merchant_fee_cwt_handling_amount}
+    ${calculated_value}    Evaluate    ${nett_cost_value}+${vendor_handling_value}+${cwt_handling_value}+${nett_cost_merchant_fee_amount}+${cwt_handling_merchant_fee_amount}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
@@ -36,7 +36,7 @@ Create Test Variables For Visa Processing
     \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
     Set Test Variable    ${fees_list}
     Set Test Variable    ${country}    ${country.upper()}
-    Set Test Variable    ${service_fee_name}    insurance-fees
+    Set Test Variable    ${service_fee_name}    visa-fees
 
 Generate Test Variables For Visa Processing
     [Arguments]    ${fees_list}    ${country}=HK
@@ -44,9 +44,9 @@ Generate Test Variables For Visa Processing
     ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
     Set Test Variable    ${decimal_place}
     Run Keyword If    "${mf_nett_check_value.lower()}"=="true" and "${cc_value.upper()}" == "CX"    Calculate Visa Processing Merchant Fee Nett Cost
-    ...    ELSE    Set Test Variable    ${merchant_fee_nett_cost_amount}    0
+    ...    ELSE    Set Test Variable    ${nett_cost_merchant_fee_amount}    0
     Run Keyword If    "${mf_cwt_check_value.lower()}"=="true" and "${cc_value.upper()}" == "CX"    Calculate Visa Processing Merchant Fee CWT Handling
-    ...    ELSE    Set Test Variable    ${merchant_fee_cwt_handling_amount}    0
+    ...    ELSE    Set Test Variable    ${cwt_handling_merchant_fee_amount}    0
     Calculate Visa Processing Selling Price For Visa Processing
     Calculate Visa Processing Commission
     Run Keyword If    "${country.upper()}" != "SG"    Remove Decimal Places For Visa Processing
@@ -55,8 +55,28 @@ Remove Decimal Places For Visa Processing
     ${commission_amount}    Remove String    ${commission_amount}    .00
     ${selling_price_amount}    Remove String    ${selling_price_amount}    .00
     ${selling_price_in_di_amount}    Remove String    ${selling_price_in_di_amount}    .00
+    ${nett_cost_merchant_fee_amount}    Remove String    ${nett_cost_merchant_fee_amount}    .00
+    ${cwt_handling_merchant_fee_amount}    Remove String    ${cwt_handling_merchant_fee_amount}    .00
     Set Test Variable    ${commission_amount}
     Set Test Variable    ${selling_price_amount}
     Set Test Variable    ${selling_price_in_di_amount}
+    Set Test Variable    ${nett_cost_merchant_fee_amount}
+    Set Test Variable    ${cwt_handling_merchant_fee_amount}
+
+Verify Visa Processing Fees Are Not Returned
+    Verify String Does Not Contain Substring    ${response.content}    "sellingPriceInDi"
+    Verify String Does Not Contain Substring    ${response.content}    "sellingPrice"
+    Verify String Does Not Contain Substring    ${response.content}    "commission"
+    Verify String Does Not Contain Substring    ${response.content}    "cwtHandlingMerchantFee"
+    Verify String Does Not Contain Substring    ${response.content}    "nettCostMerchantFee"
 
 Verify Visa Processing Fees Are Returned Correctly
+    ${data}    Remove String    ${response.content}    {
+    ${data}    Remove String    ${data}    }
+    ${data}    Remove String    ${data}    "
+    ${data_list}    Split String    ${data}    ,
+    : FOR    ${item}    IN    @{data_list}
+    \    ${items}    Split String    ${item}    :
+    \    Verify Actual Value Matches Expected Value    ${items[1]}    ${${items[0]}_amount}
+    Run Keyword If    "${mf_nett_check_value}"=="false"    Verify String Does Not Contain Substring    ${data}    "nettCostMerchantFee"
+    Run Keyword If    "${mf_cwt_check_value}"=="false"    Verify String Does Not Contain Substring    ${data}    "cwtHandlingMerchantFee"
