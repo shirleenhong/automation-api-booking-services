@@ -1,48 +1,47 @@
 package com.cwt.bpg.cbt.exchange.order.config;
 
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.calculator.HkAirCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.MiscFeeCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.SgAirCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.*;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 
 public class ExchangeOrderConfigTest {
 
-	ExchangeOrderConfig config;
-	
-	@Before
-	public void setup() {
-		config = new ExchangeOrderConfig();
-	}
-	
+	private ExchangeOrderConfig config = new ExchangeOrderConfig();
+
 	@Test
-	public void shouldCreateMiscFeeCaclculator() {
-		assertTrue(config.miscFeeCalculator() instanceof MiscFeeCalculator);
+	public void shouldCreateMiscFeeCalculator() {
+		assertThat(config.miscFeeCalculator(), is(instanceOf(MiscFeeCalculator.class)));
 	}
-	
+
 	@Test
 	public void shouldCreateHkAirCalculator() {
-		assertTrue(config.hkAirCalculator() instanceof HkAirCalculator);
+		assertThat(config.hkAirCalculator(), is(instanceOf(HkAirCalculator.class)));
 	}
-	
+
 	@Test
 	public void shouldCreateSgAirCalculator() {
-		assertTrue(config.sgAirCalculator() instanceof SgAirCalculator);
+		assertThat(config.sgAirCalculator(), is(instanceOf(SgAirCalculator.class)));
 	}
-	
+
 	@Test
 	public void shouldNettCostCalculator() {
-		assertTrue(config.nettCostCalculator() instanceof NettCostCalculator);
+		assertThat(config.nettCostCalculator(), is(instanceOf(NettCostCalculator.class)));
 	}
-	
+
+	@Test
+	public void shouldVisaFeesCalculator() {
+		assertThat(config.visaFeesCalculator(), is(instanceOf(VisaFeesCalculator.class)));
+	}
+
 	@Test
 	public void shouldCreateOsFactory() {
-		assertTrue(config.otherServiceCalculatorFactory() instanceof OtherServiceCalculatorFactory);
+		assertThat(config.otherServiceCalculatorFactory(),
+				is(instanceOf(OtherServiceCalculatorFactory.class)));
 	}
 
 }

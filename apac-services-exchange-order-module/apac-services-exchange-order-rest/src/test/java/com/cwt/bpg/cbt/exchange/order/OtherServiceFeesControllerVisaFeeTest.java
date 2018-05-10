@@ -10,8 +10,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.VisaInput;
+import com.cwt.bpg.cbt.exchange.order.model.VisaFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.VisaFeesInput;
 
 public class OtherServiceFeesControllerVisaFeeTest {
 	
@@ -30,8 +30,8 @@ public class OtherServiceFeesControllerVisaFeeTest {
 	
 	@Test
 	public void canComputeVisaFees() {
-		VisaInput input = new VisaInput();
-		ResponseEntity<FeesBreakdown> computeVisaFee = controller.computeVisaFee(input);
+		VisaFeesInput input = new VisaFeesInput();
+		ResponseEntity<VisaFeesBreakdown> computeVisaFee = controller.computeVisaFee(input);
 		
 		assertEquals(HttpStatus.OK, computeVisaFee.getStatusCode());
 	}

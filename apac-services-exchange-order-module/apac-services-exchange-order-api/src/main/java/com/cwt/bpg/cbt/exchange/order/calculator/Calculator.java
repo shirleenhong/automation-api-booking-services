@@ -7,6 +7,6 @@ import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
 @FunctionalInterface
 public interface Calculator {
 
-	FeesBreakdown calculateFee(OtherServiceFeesInput input, MerchantFee merchantFee);	
+	FeesBreakdown calculate(OtherServiceFeesInput input, MerchantFee merchantFee);
 
 }

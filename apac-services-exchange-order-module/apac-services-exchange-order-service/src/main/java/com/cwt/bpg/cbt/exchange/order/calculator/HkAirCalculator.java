@@ -39,7 +39,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 			, ClientTypes.TF.getCode());
 	
 	@Override
-	public FeesBreakdown calculateFee(OtherServiceFeesInput genericInput, MerchantFee merchantFee) {
+	public FeesBreakdown calculate(OtherServiceFeesInput genericInput, MerchantFee merchantFee) {
 
 		AirFeesBreakdown result = new AirFeesBreakdown();
 		AirFeesInput input = (AirFeesInput) genericInput;

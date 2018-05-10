@@ -45,7 +45,7 @@ public class OtherServiceFeesServiceTest {
 	@Test
 	public void shouldReturnFeesBreakdown() {
 		
-		Mockito.when(miscFeeCalculator.calculateFee(Mockito.anyObject(), Mockito.anyObject()))
+		Mockito.when(miscFeeCalculator.calculate(Mockito.anyObject(), Mockito.anyObject()))
 			.thenReturn(new FeesBreakdown());
 		assertNotNull(service.calculateMiscFee(new OtherServiceFeesInput()));
 	}
@@ -56,7 +56,7 @@ public class OtherServiceFeesServiceTest {
 		Mockito.when(factory.getCalculator(Mockito.anyString()))
 			.thenReturn(hkCalculator);
 		
-		Mockito.when(hkCalculator.calculateFee(Mockito.anyObject(), Mockito.anyObject()))
+		Mockito.when(hkCalculator.calculate(Mockito.anyObject(), Mockito.anyObject()))
 			.thenReturn(new FeesBreakdown());
 		
 		assertNotNull(service.calculateAirFee(new OtherServiceFeesInput()));

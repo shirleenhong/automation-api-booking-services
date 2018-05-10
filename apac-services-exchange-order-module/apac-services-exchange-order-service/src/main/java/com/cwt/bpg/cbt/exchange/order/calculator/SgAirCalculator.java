@@ -20,8 +20,8 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 	private ScaleConfig scaleConfig;
 	
 	@Override
-	public FeesBreakdown calculateFee(OtherServiceFeesInput genericInput,
-			MerchantFee merchantFeeObj) {
+	public FeesBreakdown calculate(OtherServiceFeesInput genericInput,
+								   MerchantFee merchantFeeObj) {
 
 		AirFeesBreakdown result = new AirFeesBreakdown();
 

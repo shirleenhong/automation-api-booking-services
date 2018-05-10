@@ -8,26 +8,25 @@ import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
-public class VisaCalculator extends CommonCalculator implements Calculator {
+public class VisaFeesCalculator extends CommonCalculator {
 
 	@Autowired
 	private ScaleConfig scaleConfig;
 
-	@Override
-	public FeesBreakdown calculateFee(OtherServiceFeesInput otherServiceFeesInput,
-			MerchantFee merchantFee) {
+	public VisaFeesBreakdown calculate(VisaFeesInput input, MerchantFee merchantFee) {
+
 		VisaFeesBreakdown result = new VisaFeesBreakdown();
-		VisaInput input = (VisaInput) otherServiceFeesInput;
-		BigDecimal mfNettCost = BigDecimal.ZERO;
-		BigDecimal mfCwtHandling = BigDecimal.ZERO;
 
 		int scale = scaleConfig.getScale(input.getCountryCode());
+
+		BigDecimal mfNettCost = BigDecimal.ZERO;
 		if (input.isNettCostMerchantFeeChecked()) {
 			mfNettCost = round(calculatePercentage(input.getNettCost(),
 					merchantFee.getMerchantFeePct()), scale);
 			result.setNettCostMerchantFee(mfNettCost);
 		}
 
+		BigDecimal mfCwtHandling = BigDecimal.ZERO;
 		if (input.isCwtHandlingMerchantFeeChecked()) {
 			mfCwtHandling = round(calculatePercentage(input.getCwtHandling(),
 					merchantFee.getMerchantFeePct()), scale);

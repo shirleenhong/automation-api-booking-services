@@ -3,11 +3,7 @@ package com.cwt.bpg.cbt.exchange.order.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.HkAirCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.MiscFeeCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.SgAirCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.*;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 
 @Configuration("com.cwt.bpg.cbt.exchange.order.config")
@@ -27,11 +23,16 @@ public class ExchangeOrderConfig {
 	public Calculator sgAirCalculator() {
 		return new SgAirCalculator();
 	}
-	
+
 	@Bean(name = "nettCostCalculator")
 	public NettCostCalculator nettCostCalculator() {
 		return new NettCostCalculator();
 	}
+
+    @Bean(name = "visaFeesCalculator")
+    public VisaFeesCalculator visaFeesCalculator() {
+        return new VisaFeesCalculator();
+    }
 
 	@Bean(name = "otherServiceCalculatorFactory")
 	public OtherServiceCalculatorFactory otherServiceCalculatorFactory() {

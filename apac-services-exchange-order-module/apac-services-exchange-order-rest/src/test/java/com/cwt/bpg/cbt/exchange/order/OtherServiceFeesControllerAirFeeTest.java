@@ -1,10 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.VisaFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.VisaFeesInput;
 
 public class OtherServiceFeesControllerAirFeeTest {
 
@@ -42,6 +41,14 @@ public class OtherServiceFeesControllerAirFeeTest {
 		ResponseEntity<AirFeesBreakdown> computeAirFees = controller.computeAirFees(input);		
 		verify(service, times(1)).calculateAirFee(input);
 		assertEquals(HttpStatus.OK, computeAirFees.getStatusCode());
+	}
+	
+	@Test
+	public void canComputeVisaFees() {
+		VisaFeesInput input = new VisaFeesInput();
+		ResponseEntity<VisaFeesBreakdown> computeVisaFee = controller.computeVisaFee(input);
+		
+		assertEquals(HttpStatus.OK, computeVisaFee.getStatusCode());
 	}
 
 }

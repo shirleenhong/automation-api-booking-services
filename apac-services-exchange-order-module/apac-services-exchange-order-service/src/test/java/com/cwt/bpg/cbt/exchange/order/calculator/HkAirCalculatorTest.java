@@ -37,7 +37,7 @@ public class HkAirCalculatorTest {
 	
 	@Test
 	public void shouldHandleNullInput() {
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(null, null);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(null, null);
 		assertNotNull(airFeesBreakdown);
 		assertNull(airFeesBreakdown.getNettCost());
 		assertNull(airFeesBreakdown.getTotalSellingFare());
@@ -47,7 +47,7 @@ public class HkAirCalculatorTest {
 
 	@Test
 	public void shouldHandleNullFieldsFromInput() {
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(new AirFeesInput(), null);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(new AirFeesInput(), null);
 		assertNotNull(airFeesBreakdown);
 		assertNotNull(airFeesBreakdown.getNettCost());
 		assertNotNull(airFeesBreakdown.getTotalSellingFare());
@@ -63,7 +63,7 @@ public class HkAirCalculatorTest {
 		input.setCommissionPct(20D);
 		input.setNettFare(new BigDecimal(10000));
 		input.setClientType("DU");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 
 		assertEquals(2510D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12510D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
@@ -83,7 +83,7 @@ public class HkAirCalculatorTest {
 		input.setCommissionPct(20D);
 		input.setNettFare(new BigDecimal(10000));
 		input.setClientType("TP");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 		
 		assertEquals(0D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12510D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
@@ -103,7 +103,7 @@ public class HkAirCalculatorTest {
 		input.setCommissionPct(20D);
 		input.setNettFare(new BigDecimal(10000));
 		input.setClientType("DB");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 		
 		assertEquals(2500D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12500D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
@@ -123,7 +123,7 @@ public class HkAirCalculatorTest {
 		input.setCommissionPct(20D);
 		input.setNettFare(new BigDecimal(10000));
 		input.setClientType("DU");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 		
 		assertEquals(0D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(10000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
@@ -145,7 +145,7 @@ public class HkAirCalculatorTest {
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setClientType("DU");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 
 		assertEquals(2000D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
@@ -167,7 +167,7 @@ public class HkAirCalculatorTest {
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setClientType("MN");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 				
 		assertEquals(2000D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
@@ -189,7 +189,7 @@ public class HkAirCalculatorTest {
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setClientType("MG");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 		
 		assertEquals(2000D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
@@ -218,7 +218,7 @@ public class HkAirCalculatorTest {
 		input.setTax1(new BigDecimal(1000));
 		input.setTax2(new BigDecimal(1000));
 		input.setClientType("TF");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 		
 		assertEquals(2000D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
@@ -247,7 +247,7 @@ public class HkAirCalculatorTest {
 		input.setTax1(new BigDecimal(1000));
 		input.setTax2(new BigDecimal(1000));
 		input.setClientType("TF");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 		
 		assertEquals(2000D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
@@ -276,7 +276,7 @@ public class HkAirCalculatorTest {
 		input.setTax1(new BigDecimal(1000));
 		input.setTax2(new BigDecimal(1000));
 		input.setClientType("TF");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 
 		assertEquals(2000D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
@@ -306,7 +306,7 @@ public class HkAirCalculatorTest {
 		input.setTax1(new BigDecimal(1000));
 		input.setTax2(new BigDecimal(1000));
 		input.setClientType("MN");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 
 		assertEquals(2000D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
@@ -335,7 +335,7 @@ public class HkAirCalculatorTest {
 		input.setTax1(new BigDecimal(1000));
 		input.setTax2(new BigDecimal(1000));
 		input.setClientType("MN");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 
 		assertEquals(2000D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(3000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
@@ -364,7 +364,7 @@ public class HkAirCalculatorTest {
 		input.setTax1(new BigDecimal(1000));
 		input.setTax2(new BigDecimal(1000));
 		input.setClientType("MN");
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculateFee(input, merchantFee);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(input, merchantFee);
 
 		assertEquals(-20000D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(-10000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);

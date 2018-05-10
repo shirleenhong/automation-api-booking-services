@@ -2,7 +2,9 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
 
-public class VisaFeesBreakdown extends FeesBreakdown {
+public class VisaFeesBreakdown {
+    private BigDecimal sellingPriceInDi;
+    private BigDecimal commission;
 	private BigDecimal sellingPrice;
 	private BigDecimal nettCostMerchantFee;
 	private BigDecimal cwtHandlingMerchantFee;
@@ -13,7 +15,27 @@ public class VisaFeesBreakdown extends FeesBreakdown {
 		this.sellingPriceInDi = BigDecimal.ZERO;
 	}
 
-	public BigDecimal getSellingPrice() {
+    public BigDecimal getSellingPriceInDi()
+    {
+        return sellingPriceInDi;
+    }
+
+    public void setSellingPriceInDi(BigDecimal sellingPriceInDi)
+    {
+        this.sellingPriceInDi = sellingPriceInDi;
+    }
+
+    public BigDecimal getCommission()
+    {
+        return commission;
+    }
+
+    public void setCommission(BigDecimal commission)
+    {
+        this.commission = commission;
+    }
+
+    public BigDecimal getSellingPrice() {
 		return sellingPrice;
 	}
 

@@ -17,10 +17,10 @@ import org.mockito.MockitoAnnotations;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
-public class VisaCalculatorTest {
+public class VisaFeesCalculatorTest {
 
 	@InjectMocks
-	private VisaCalculator calculator = new VisaCalculator();
+	private VisaFeesCalculator calculator = new VisaFeesCalculator();
 
 	@Mock
 	private ScaleConfig scaleConfig;
@@ -33,15 +33,14 @@ public class VisaCalculatorTest {
 
 	@Test
 	public void shouldCalculateFeeWhenBothNettCostMFAndCwtHandlingMFAreUnchecked() {
-		VisaInput input = new VisaInput();
+		VisaFeesInput input = new VisaFeesInput();
 		input.setNettCostMerchantFeeChecked(false);
 		input.setCwtHandlingMerchantFeeChecked(false);
 		input.setNettCost(new BigDecimal(150));
 		input.setCwtHandling(new BigDecimal(100));
 		input.setVendorHandling(new BigDecimal(50));
 
-		VisaFeesBreakdown result = (VisaFeesBreakdown) calculator.calculateFee(input,
-				createMerchantFee());
+		VisaFeesBreakdown result = calculator.calculate(input, createMerchantFee());
 
 		assertThat(result.getNettCostMerchantFee(), nullValue());
 		assertThat(result.getCwtHandlingMerchantFee(), nullValue());
@@ -52,15 +51,14 @@ public class VisaCalculatorTest {
 
 	@Test
 	public void shouldCalculateFeeWhenNettCostMFIsChecked() {
-		VisaInput input = new VisaInput();
+		VisaFeesInput input = new VisaFeesInput();
 		input.setNettCostMerchantFeeChecked(true);
 		input.setCwtHandlingMerchantFeeChecked(false);
 		input.setNettCost(new BigDecimal(150));
 		input.setCwtHandling(new BigDecimal(100));
 		input.setVendorHandling(new BigDecimal(50));
 
-		VisaFeesBreakdown result = (VisaFeesBreakdown) calculator.calculateFee(input,
-				createMerchantFee());
+		VisaFeesBreakdown result = calculator.calculate(input, createMerchantFee());
 
 		assertThat(result.getNettCostMerchantFee().doubleValue(), is(equalTo(3D)));
 		assertThat(result.getCwtHandlingMerchantFee(), nullValue());
@@ -71,15 +69,14 @@ public class VisaCalculatorTest {
 
 	@Test
 	public void shouldCalculateFeeWhenCwtHandlingMFIsChecked() {
-		VisaInput input = new VisaInput();
+		VisaFeesInput input = new VisaFeesInput();
 		input.setNettCostMerchantFeeChecked(false);
 		input.setCwtHandlingMerchantFeeChecked(true);
 		input.setNettCost(new BigDecimal(150));
 		input.setCwtHandling(new BigDecimal(100));
 		input.setVendorHandling(new BigDecimal(50));
 
-		VisaFeesBreakdown result = (VisaFeesBreakdown) calculator.calculateFee(input,
-				createMerchantFee());
+		VisaFeesBreakdown result = calculator.calculate(input, createMerchantFee());
 
 		assertThat(result.getNettCostMerchantFee(), nullValue());
 		assertThat(result.getCwtHandlingMerchantFee().doubleValue(), is(equalTo(2D)));

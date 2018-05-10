@@ -6,47 +6,53 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
-import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
-import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
-import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.*;
+
 @Service
 public class OtherServiceFeesService {
 
 	@Autowired
-	@Qualifier(value="miscFeeCalculator")
+	@Qualifier(value = "miscFeeCalculator")
 	private Calculator miscFeeCalculator;
-	
+
 	@Autowired
-	@Qualifier(value="nettCostCalculator")
+	@Qualifier(value = "nettCostCalculator")
 	private NettCostCalculator nettCostCalculator;
-		
+
+	@Autowired
+	@Qualifier(value = "visaFeesCalculator")
+	private VisaFeesCalculator visaFeesCalculator;
+
 	@Autowired
 	private OtherServiceCalculatorFactory osFactory;
-	
-	@Autowired 
+
+	@Autowired
 	private MerchantFeeRepository merchantFeeRepo;
 
 	public FeesBreakdown calculateMiscFee(OtherServiceFeesInput input) {
-		return this.miscFeeCalculator.calculateFee(input, getMerchantFeePct(input));
-	}
-	
-	public FeesBreakdown calculateAirFee(OtherServiceFeesInput input) {
-		return this.osFactory.getCalculator(
-							input.getCountryCode()).calculateFee(input, getMerchantFeePct(input));
+		return this.miscFeeCalculator.calculate(input, getMerchantFeePct(input));
 	}
 
-	private MerchantFee getMerchantFeePct(OtherServiceFeesInput input) {
-		
-		return merchantFeeRepo.getMerchantFee(
-				input.getCountryCode(), 
-				input.getClientType(), 
-				input.getProfileName());
+	public FeesBreakdown calculateAirFee(OtherServiceFeesInput input) {
+		return this.osFactory.getCalculator(input.getCountryCode()).calculate(input,
+				getMerchantFeePct(input));
+	}
+
+	public VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {
+		return this.visaFeesCalculator.calculate(input, merchantFeeRepo.getMerchantFee(
+				input.getCountryCode(), input.getClientType(), input.getProfileName()));
 	}
 
 	public AirFeesBreakdown calculateNettCost(NettCostInput input) {
-		return nettCostCalculator.calculateFee(input.getSellingPrice(), input.getCommissionPct());
-	}	
+		return nettCostCalculator.calculateFee(input.getSellingPrice(),
+				input.getCommissionPct());
+	}
+
+	private MerchantFee getMerchantFeePct(OtherServiceFeesInput input) {
+
+		return merchantFeeRepo.getMerchantFee(input.getCountryCode(),
+				input.getClientType(), input.getProfileName());
+	}
 }
