@@ -35,7 +35,7 @@ public class OtherServiceFeesController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Computes miscellaneous fees")
+	@ApiOperation(value = "Computes miscellaneous fees as well as visa cost and visa handling fees")
 	public ResponseEntity<FeesBreakdown> computeMiscellaneousFee(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") MiscFeesInput input) {
 
@@ -63,7 +63,7 @@ public class OtherServiceFeesController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Computes visa processing fees")
+	@ApiOperation(value = "Computes visa processing fees, not be used for visa cost and handling fee")
 	public ResponseEntity<VisaFeesBreakdown> computeVisaFee(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") VisaFeesInput input) {
 

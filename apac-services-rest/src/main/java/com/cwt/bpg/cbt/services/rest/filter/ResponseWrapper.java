@@ -31,6 +31,10 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 	@Override
 	public ServletOutputStream getOutputStream() throws IOException {
 		return new ServletOutputStream() {
+
+			private TeeOutputStream tee = new TeeOutputStream(
+					ResponseWrapper.super.getOutputStream(), bos);
+			
 			@Override
 			public boolean isReady() {
 				return false;
@@ -40,9 +44,6 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 			public void setWriteListener(WriteListener writeListener) {
 				//Do nothing
 			}
-
-			private TeeOutputStream tee = new TeeOutputStream(
-					ResponseWrapper.super.getOutputStream(), bos);
 
 			@Override
 			public void write(int b) throws IOException {

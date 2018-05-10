@@ -29,7 +29,7 @@ public class OtherServiceFeesService {
 	private OtherServiceCalculatorFactory osFactory;
 
 	@Autowired
-	private MerchantFeeRepository merchantFeeRepo;
+	private ExchangeOrderService exchangeOrderService;
 
 	public FeesBreakdown calculateMiscFee(OtherServiceFeesInput input) {
 		return this.miscFeeCalculator.calculate(input, getMerchantFeePct(input));
@@ -41,7 +41,7 @@ public class OtherServiceFeesService {
 	}
 
 	public VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {
-		return this.visaFeesCalculator.calculate(input, merchantFeeRepo.getMerchantFee(
+		return this.visaFeesCalculator.calculate(input, exchangeOrderService.getMerchantFee(
 				input.getCountryCode(), input.getClientType(), input.getProfileName()));
 	}
 
@@ -52,7 +52,7 @@ public class OtherServiceFeesService {
 
 	private MerchantFee getMerchantFeePct(OtherServiceFeesInput input) {
 
-		return merchantFeeRepo.getMerchantFee(input.getCountryCode(),
+		return exchangeOrderService.getMerchantFee(input.getCountryCode(),
 				input.getClientType(), input.getProfileName());
 	}
 }

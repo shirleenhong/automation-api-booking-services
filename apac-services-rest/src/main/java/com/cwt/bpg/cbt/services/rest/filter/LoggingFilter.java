@@ -13,6 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+/**
+ * Reference: https://github.com/isrsal/spring-mvc-logger/
+ *
+ */
 public class LoggingFilter extends OncePerRequestFilter {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(LoggingFilter.class);
@@ -26,15 +30,15 @@ public class LoggingFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		long requestId = id.incrementAndGet();
-		request = new RequestWrapper(requestId, request);
-		response = new ResponseWrapper(requestId, response);
+		RequestWrapper wrappedRequest = new RequestWrapper(requestId, request);
+		ResponseWrapper wrappedResponse = new ResponseWrapper(requestId, response);
 
 		try {
-			filterChain.doFilter(request, response);
+			filterChain.doFilter(wrappedRequest, wrappedResponse);
 		}
 		finally {
-			logRequest(request);
-			logResponse((ResponseWrapper) response);
+			logRequest(wrappedRequest);
+			logResponse((ResponseWrapper) wrappedResponse);
 		}
 
 	}
@@ -83,7 +87,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 	private void logResponse(final ResponseWrapper response) {
 		StringBuilder msg = new StringBuilder();
 		msg.append(RESPONSE_PREFIX);
-		msg.append("request id=").append((response.getId()));
+		msg.append("request id=").append(response.getId());
 		try {
 			msg.append("; payload=").append(
 					new String(response.toByteArray(), response.getCharacterEncoding()));

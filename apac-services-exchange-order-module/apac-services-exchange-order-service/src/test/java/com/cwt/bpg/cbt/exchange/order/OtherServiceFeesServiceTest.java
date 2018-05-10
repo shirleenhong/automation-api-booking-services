@@ -32,7 +32,7 @@ public class OtherServiceFeesServiceTest {
 	private NettCostCalculator nettCostCalculator;
 	
 	@Mock
-	private MerchantFeeRepository merchantFeeRepo;
+	private ExchangeOrderService orderService;
 	
 	@InjectMocks
 	private OtherServiceFeesService service;

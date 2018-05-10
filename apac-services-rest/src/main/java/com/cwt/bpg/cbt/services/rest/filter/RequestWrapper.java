@@ -24,6 +24,10 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 	public ServletInputStream getInputStream() throws IOException {
 		
 		return new ServletInputStream() {
+			
+			private TeeInputStream tee = new TeeInputStream(
+					RequestWrapper.super.getInputStream(), bos);
+			
 			@Override
 			public boolean isFinished() {
 				return false;
@@ -38,9 +42,6 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 			public void setReadListener(ReadListener readListener) {
 				// Do nothing
 			}
-
-			private TeeInputStream tee = new TeeInputStream(
-					RequestWrapper.super.getInputStream(), bos);
 
 			@Override
 			public int read() throws IOException {
