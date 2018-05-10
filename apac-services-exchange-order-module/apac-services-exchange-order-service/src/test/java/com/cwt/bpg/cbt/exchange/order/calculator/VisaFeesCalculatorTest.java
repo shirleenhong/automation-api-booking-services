@@ -79,10 +79,10 @@ public class VisaFeesCalculatorTest {
 		VisaFeesBreakdown result = calculator.calculate(input, createMerchantFee());
 
 		assertThat(result.getNettCostMerchantFee(), nullValue());
-		assertThat(result.getCwtHandlingMerchantFee().doubleValue(), is(equalTo(2D)));
-		assertThat(result.getCommission().doubleValue(), is(equalTo(102D)));
-		assertThat(result.getSellingPrice().doubleValue(), is(equalTo(302D)));
-		assertThat(result.getSellingPriceInDi().doubleValue(), is((equalTo(302D))));
+		assertThat(result.getCwtHandlingMerchantFee().doubleValue(), is(equalTo(3D)));
+		assertThat(result.getCommission().doubleValue(), is(equalTo(103D)));
+		assertThat(result.getSellingPrice().doubleValue(), is(equalTo(303D)));
+		assertThat(result.getSellingPriceInDi().doubleValue(), is((equalTo(303D))));
 	}
 
 	private MerchantFee createMerchantFee() {

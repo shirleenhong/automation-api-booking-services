@@ -28,7 +28,8 @@ public class VisaFeesCalculator extends CommonCalculator {
 
 		BigDecimal mfCwtHandling = BigDecimal.ZERO;
 		if (input.isCwtHandlingMerchantFeeChecked()) {
-			mfCwtHandling = round(calculatePercentage(input.getCwtHandling(),
+			mfCwtHandling = round(calculatePercentage(
+					input.getCwtHandling().add(input.getVendorHandling()),
 					merchantFee.getMerchantFeePct()), scale);
 			result.setCwtHandlingMerchantFee(mfCwtHandling);
 		}
