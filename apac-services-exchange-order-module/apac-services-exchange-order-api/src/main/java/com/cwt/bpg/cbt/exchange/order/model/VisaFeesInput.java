@@ -10,15 +10,14 @@ public class VisaFeesInput implements Serializable {
     private static final long serialVersionUID = -5761273312586606568L;
     private String countryCode;
     @NotEmpty
-    protected String clientType;
+    private String clientType;
     @NotEmpty
-    protected String profileName;
+    private String profileName;
     private boolean nettCostMerchantFeeChecked;
 	private boolean cwtHandlingMerchantFeeChecked;
 	private BigDecimal nettCost;
 	private BigDecimal cwtHandling;
 	private BigDecimal vendorHandling;
-	private BigDecimal commission;
 
     public String getCountryCode()
     {
@@ -92,11 +91,4 @@ public class VisaFeesInput implements Serializable {
 		this.vendorHandling = vendorHandling;
 	}
 
-	public BigDecimal getCommission() {
-		return commission;
-	}
-
-	public void setCommission(BigDecimal commission) {
-		this.commission = commission;
-	}
 }
