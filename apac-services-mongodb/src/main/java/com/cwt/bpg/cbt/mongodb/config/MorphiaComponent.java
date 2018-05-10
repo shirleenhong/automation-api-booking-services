@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MorphiaComponent {
-	
-	private Morphia morphia;
-	
+		
 	private Datastore datastore;
 	
     @Value("${com.cwt.mongodb.dbname}")
@@ -23,7 +21,7 @@ public class MorphiaComponent {
 	
 	@PostConstruct
 	public void init() {
-		morphia = new Morphia();
+		Morphia morphia = new Morphia();
 		
 		morphia.mapPackage("com.cwt.bpg.cbt.exchange.order.model", true);
 		

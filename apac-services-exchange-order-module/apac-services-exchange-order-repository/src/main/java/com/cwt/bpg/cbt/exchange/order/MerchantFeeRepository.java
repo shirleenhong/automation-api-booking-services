@@ -36,7 +36,7 @@ public class MerchantFeeRepository {
 		
 		final Datastore datastore = morphia.getDatastore();
 		Key<MerchantFee> save = datastore.save(fee);
-		LOGGER.info("Put Result: {}", save.toString());
+		LOGGER.info("Put Result: {}", save);
 		return fee;
 	}
 
@@ -50,7 +50,7 @@ public class MerchantFeeRepository {
 		
 		WriteResult delete = datastore.delete(clientMerchantFee);
 		
-		LOGGER.info("Delete Result: {}", delete.toString());
+		LOGGER.info("Delete Result: {}", delete);
 		
 		return merchantFee;
 	}

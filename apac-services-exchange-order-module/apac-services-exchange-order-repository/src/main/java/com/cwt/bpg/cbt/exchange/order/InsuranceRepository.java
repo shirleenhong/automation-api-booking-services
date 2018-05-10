@@ -33,7 +33,7 @@ public class InsuranceRepository {
 		
 		final Datastore datastore = morphia.getDatastore();
 		Key<Insurance> key = datastore.save(insurance);
-		LOGGER.info("Save Result: {}", key.toString());
+		LOGGER.info("Save Result: {}", key);
 		return insurance;
 	}
 
@@ -45,7 +45,7 @@ public class InsuranceRepository {
 								.equal(type);
 		
 		WriteResult delete = datastore.delete(qryInsurance);
-		LOGGER.info("Delete Result: {}", delete.toString());
+		LOGGER.info("Delete Result: {}", delete);
 		
 		return delete.toString();
 	}
