@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.service.fee.model;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -12,7 +13,7 @@ public class PriceCalculationInput implements Serializable {
 	private BigDecimal baseFare;
 	
 	private BigDecimal nettFare;
-	
+	@NotNull
 	private BigDecimal totalTaxes;
 	
 	private BigDecimal markupAmount;
@@ -30,7 +31,7 @@ public class PriceCalculationInput implements Serializable {
 	private BigDecimal transactionFeeAmount;
 	
 	private Double transactionFeePercentage;
-	
+	@NotNull
 	private BigDecimal obFee;
 
 	private BigDecimal fuelSurcharge;

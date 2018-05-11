@@ -17,6 +17,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/service-fees")
 @Api(tags = "Service Fees")
@@ -30,7 +32,7 @@ public class ServiceFeeController
     @ResponseBody
     @ApiOperation(value = "Calculates different service fees")
     public ResponseEntity<PriceBreakdown> calculatePriceInput(
-            @RequestBody
+            @Valid  @RequestBody
             @ApiParam(value = "Values needed for calculation") PriceCalculationInput input)
     {
         return new ResponseEntity<>(service.calculate(input), HttpStatus.OK);
