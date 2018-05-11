@@ -52,4 +52,16 @@ public class InsuranceControllerTest {
 		assertEquals(HttpStatus.OK, result.getStatusCode());
 	}
 	
+	
+	@Test
+	public void canRemoveInsurance() {
+		final String type = "INV";
+		Mockito.when(service.remove(type)).thenReturn("Success");
+		
+		ResponseEntity<String> result = controller.removeInsurance(type);
+
+		assertNotNull(result.getBody());
+		assertEquals(HttpStatus.OK, result.getStatusCode());
+	}
+	
 }
