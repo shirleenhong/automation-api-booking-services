@@ -15,7 +15,7 @@ import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorF
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
-import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
 
 public class OtherServiceFeesServiceTest {
 
@@ -47,7 +47,7 @@ public class OtherServiceFeesServiceTest {
 		
 		Mockito.when(miscFeeCalculator.calculate(Mockito.anyObject(), Mockito.anyObject()))
 			.thenReturn(new FeesBreakdown());
-		assertNotNull(service.calculateMiscFee(new OtherServiceFeesInput()));
+		assertNotNull(service.calculateMiscFee(new FeesInput()));
 	}
 	
 	@Test
@@ -59,7 +59,7 @@ public class OtherServiceFeesServiceTest {
 		Mockito.when(hkCalculator.calculate(Mockito.anyObject(), Mockito.anyObject()))
 			.thenReturn(new FeesBreakdown());
 		
-		assertNotNull(service.calculateAirFee(new OtherServiceFeesInput()));
+		assertNotNull(service.calculateAirFee(new FeesInput()));
 	}
 
 	@Test

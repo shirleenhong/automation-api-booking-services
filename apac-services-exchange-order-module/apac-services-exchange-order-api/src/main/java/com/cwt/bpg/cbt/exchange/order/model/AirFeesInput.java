@@ -2,9 +2,17 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
 
-public class AirFeesInput extends OtherServiceFeesInput {
+import org.hibernate.validator.constraints.NotEmpty;
+
+public class AirFeesInput extends FeesInput
+{
 
 	private static final long serialVersionUID = 4361130224212373736L;
+
+    @NotEmpty
+    private String fopType;
+    private BigDecimal sellingPrice;
+    private boolean isMerchantFeeWaive;
 	private boolean applyFormula;
 	private boolean commissionByPercent;
 	private boolean discountByPercent;
@@ -21,9 +29,44 @@ public class AirFeesInput extends OtherServiceFeesInput {
 	private BigDecimal commission;
 	private BigDecimal transactionFee;
 	private Double commissionPct;
-	private String productType; 
-	
-	public boolean isApplyFormula() {
+	private String productType;
+
+    public AirFeesInput()
+    {
+        this.sellingPrice = BigDecimal.ZERO;
+    }
+
+    public String getFopType()
+    {
+        return fopType;
+    }
+
+    public void setFopType(String fopType)
+    {
+        this.fopType = fopType;
+    }
+
+    public BigDecimal getSellingPrice()
+    {
+        return sellingPrice;
+    }
+
+    public void setSellingPrice(BigDecimal sellingPrice)
+    {
+        this.sellingPrice = sellingPrice;
+    }
+
+    public boolean isMerchantFeeWaive()
+    {
+        return isMerchantFeeWaive;
+    }
+
+    public void setMerchantFeeWaive(boolean merchantFeeWaive)
+    {
+        isMerchantFeeWaive = merchantFeeWaive;
+    }
+
+    public boolean isApplyFormula() {
 		return applyFormula;
 	}
 	public void setApplyFormula(boolean applyFormula) {

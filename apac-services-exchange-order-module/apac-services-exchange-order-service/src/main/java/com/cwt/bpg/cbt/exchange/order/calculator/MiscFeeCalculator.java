@@ -15,7 +15,7 @@ public class MiscFeeCalculator extends CommonCalculator implements Calculator {
 	private ScaleConfig scaleConfig;
 	
 	@Override	
-	public FeesBreakdown calculate(OtherServiceFeesInput genericInput, MerchantFee merchantFee) {
+	public FeesBreakdown calculate(FeesInput genericInput, MerchantFee merchantFee) {
 		MiscFeesInput input = (MiscFeesInput) genericInput;
 		MiscFeesBreakdown result = new MiscFeesBreakdown();
 

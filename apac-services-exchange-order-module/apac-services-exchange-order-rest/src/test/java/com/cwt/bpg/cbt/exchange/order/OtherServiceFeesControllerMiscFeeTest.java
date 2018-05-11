@@ -8,22 +8,17 @@ import java.nio.charset.Charset;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
 public class OtherServiceFeesControllerMiscFeeTest {
 
 	private MockMvc mockMvc;
@@ -49,8 +44,8 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	
 	@Test
 	public void shouldReturnFeesBreakdown() throws Exception {
-						
-		OtherServiceFeesInput input = new OtherServiceFeesInput();
+
+		MiscFeesInput input = new MiscFeesInput();
 		
 		input.setFopType("CX");	  
 	    input.setClientType("CT");
@@ -67,7 +62,7 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnBadRequestOnEmptyFOPType() throws Exception {
 						
-		OtherServiceFeesInput input = new OtherServiceFeesInput();
+		MiscFeesInput input = new MiscFeesInput();
 		
 	    input.setClientType("CT");
 	    input.setGstPercent(2D);
@@ -89,7 +84,7 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnBadRequestOnEmptyClientType() throws Exception {
 						
-		OtherServiceFeesInput input = new OtherServiceFeesInput();
+		MiscFeesInput input = new MiscFeesInput();
 		
 	    input.setFopType("CX");
 	    input.setGstPercent(2D);
@@ -111,7 +106,7 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnBadRequestOnEmptyGst() throws Exception {
 						
-		OtherServiceFeesInput input = new OtherServiceFeesInput();
+		MiscFeesInput input = new MiscFeesInput();
 		
 	    input.setFopType("CX");
 	    input.setProfileName("PN");
@@ -126,7 +121,7 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnBadRequestOnEmptyProdName() throws Exception {
 						
-		OtherServiceFeesInput input = new OtherServiceFeesInput();
+		MiscFeesInput input = new MiscFeesInput();
 		
 	    input.setFopType("CX");
 	    input.setGstPercent(2D);

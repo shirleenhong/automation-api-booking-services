@@ -15,7 +15,7 @@ import com.cwt.bpg.cbt.exchange.order.model.ClientTypes;
 import com.cwt.bpg.cbt.exchange.order.model.FOPTypes;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
-import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
 
 
 public class HkAirCalculator extends CommonCalculator implements Calculator {
@@ -39,7 +39,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 			, ClientTypes.TF.getCode());
 	
 	@Override
-	public FeesBreakdown calculate(OtherServiceFeesInput genericInput, MerchantFee merchantFee) {
+	public FeesBreakdown calculate(FeesInput genericInput, MerchantFee merchantFee) {
 
 		AirFeesBreakdown result = new AirFeesBreakdown();
 		AirFeesInput input = (AirFeesInput) genericInput;

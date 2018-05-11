@@ -31,11 +31,11 @@ public class OtherServiceFeesService {
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
 
-	public FeesBreakdown calculateMiscFee(OtherServiceFeesInput input) {
+	public FeesBreakdown calculateMiscFee(FeesInput input) {
 		return this.miscFeeCalculator.calculate(input, getMerchantFeePct(input));
 	}
 
-	public FeesBreakdown calculateAirFee(OtherServiceFeesInput input) {
+	public FeesBreakdown calculateAirFee(FeesInput input) {
 		return this.osFactory.getCalculator(input.getCountryCode()).calculate(input,
 				getMerchantFeePct(input));
 	}
@@ -50,7 +50,7 @@ public class OtherServiceFeesService {
 				input.getCommissionPct());
 	}
 
-	private MerchantFee getMerchantFeePct(OtherServiceFeesInput input) {
+	private MerchantFee getMerchantFeePct(FeesInput input) {
 
 		return exchangeOrderService.getMerchantFee(input.getCountryCode(),
 				input.getClientType(), input.getProfileName());

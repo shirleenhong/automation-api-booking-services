@@ -12,7 +12,7 @@ import com.cwt.bpg.cbt.exchange.order.model.ClientTypes;
 import com.cwt.bpg.cbt.exchange.order.model.FOPTypes;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
-import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
 
 public class SgAirCalculator extends CommonCalculator implements Calculator {
 
@@ -20,7 +20,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 	private ScaleConfig scaleConfig;
 	
 	@Override
-	public FeesBreakdown calculate(OtherServiceFeesInput genericInput,
+	public FeesBreakdown calculate(FeesInput genericInput,
 								   MerchantFee merchantFeeObj) {
 
 		AirFeesBreakdown result = new AirFeesBreakdown();
