@@ -15,8 +15,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
-import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.MiscFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
 
 public class MiscFeeCalculatorTest {
@@ -53,7 +53,7 @@ public class MiscFeeCalculatorTest {
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1528.27));
 
-		FeesBreakdown result = calculator.calculate(input, merchantFee);
+		MiscFeesBreakdown result = (MiscFeesBreakdown) calculator.calculate(input, merchantFee);
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(new BigDecimal(60.03), 2), result.getGstAmount());
@@ -73,7 +73,7 @@ public class MiscFeeCalculatorTest {
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1228.27));
 		
-		FeesBreakdown result = calculator.calculate(input, merchantFee);
+		MiscFeesBreakdown result = (MiscFeesBreakdown) calculator.calculate(input, merchantFee);
 
 		assertEquals(round(new BigDecimal(362.68)), result.getCommission());
 		assertEquals(round(new BigDecimal(75.025)), result.getGstAmount());
@@ -94,7 +94,7 @@ public class MiscFeeCalculatorTest {
 		input.setMerchantFeeAbsorb(true);
 		input.setNettCost(new BigDecimal(1528.27));
 		
-		FeesBreakdown result = calculator.calculate(input, merchantFee);
+		MiscFeesBreakdown result = (MiscFeesBreakdown) calculator.calculate(input, merchantFee);
 
 		assertEquals(round(BigDecimal.ZERO), result.getCommission());
 		assertNull(result.getGstAmount());
@@ -105,7 +105,7 @@ public class MiscFeeCalculatorTest {
 
 	@Test
 	public void shouldNotFailOnNullInput() {
-		FeesBreakdown result = calculator.calculate(null, null);
+		MiscFeesBreakdown result = (MiscFeesBreakdown) calculator.calculate(null, null);
 
 		assertEquals(BigDecimal.ZERO, result.getCommission());
 		assertEquals(BigDecimal.ZERO, result.getGstAmount());
@@ -118,7 +118,7 @@ public class MiscFeeCalculatorTest {
 	public void shouldNotFailOnEmptyInput() {
 		MiscFeesInput input = new MiscFeesInput();
 		input.setCountryCode("SG");
-		FeesBreakdown result = calculator.calculate(input, null);
+		MiscFeesBreakdown result = (MiscFeesBreakdown) calculator.calculate(input, null);
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(BigDecimal.ZERO, 2), result.getGstAmount());

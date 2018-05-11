@@ -1,12 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import java.io.Serializable;
+public class MiscFeesInput extends OtherServiceFeesInput {
 
-public class MiscFeesInput extends OtherServiceFeesInput implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7271039286429340584L;
 
 	protected boolean isGstAbsorb;
@@ -18,5 +13,5 @@ public class MiscFeesInput extends OtherServiceFeesInput implements Serializable
 	public void setGstAbsorb(boolean isGstAbsorb) {
 		this.isGstAbsorb = isGstAbsorb;
 	}
-	
+
 }

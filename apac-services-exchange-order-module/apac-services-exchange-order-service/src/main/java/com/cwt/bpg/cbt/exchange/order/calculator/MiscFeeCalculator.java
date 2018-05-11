@@ -7,11 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
-import com.cwt.bpg.cbt.exchange.order.model.FOPTypes;
-import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
-import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.OtherServiceFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 
 public class MiscFeeCalculator extends CommonCalculator implements Calculator {
 		
@@ -21,7 +17,7 @@ public class MiscFeeCalculator extends CommonCalculator implements Calculator {
 	@Override	
 	public FeesBreakdown calculate(OtherServiceFeesInput genericInput, MerchantFee merchantFee) {
 		MiscFeesInput input = (MiscFeesInput) genericInput;
-		FeesBreakdown result = new FeesBreakdown();
+		MiscFeesBreakdown result = new MiscFeesBreakdown();
 
 		if (input == null) {
 			return result;

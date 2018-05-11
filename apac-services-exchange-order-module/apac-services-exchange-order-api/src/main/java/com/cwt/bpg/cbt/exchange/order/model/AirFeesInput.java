@@ -1,13 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class AirFeesInput extends OtherServiceFeesInput implements Serializable {
+public class AirFeesInput extends OtherServiceFeesInput {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4361130224212373736L;
 	private boolean applyFormula;
 	private boolean commissionByPercent;

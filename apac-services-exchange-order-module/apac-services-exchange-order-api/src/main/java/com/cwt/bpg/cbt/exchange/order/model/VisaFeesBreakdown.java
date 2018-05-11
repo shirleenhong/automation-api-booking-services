@@ -2,17 +2,19 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
 
-public class VisaFeesBreakdown {
+public class VisaFeesBreakdown extends FeesBreakdown {
+
+    private static final long serialVersionUID = 1879405764903602533L;
+
     private BigDecimal sellingPriceInDi;
-    private BigDecimal commission;
 	private BigDecimal sellingPrice;
 	private BigDecimal nettCostMerchantFee;
 	private BigDecimal cwtHandlingMerchantFee;
 
 	public VisaFeesBreakdown() {
 		this.sellingPrice = BigDecimal.ZERO;
-		this.commission = BigDecimal.ZERO;
 		this.sellingPriceInDi = BigDecimal.ZERO;
+		this.commission = BigDecimal.ZERO;
 	}
 
     public BigDecimal getSellingPriceInDi()
@@ -23,16 +25,6 @@ public class VisaFeesBreakdown {
     public void setSellingPriceInDi(BigDecimal sellingPriceInDi)
     {
         this.sellingPriceInDi = sellingPriceInDi;
-    }
-
-    public BigDecimal getCommission()
-    {
-        return commission;
-    }
-
-    public void setCommission(BigDecimal commission)
-    {
-        this.commission = commission;
     }
 
     public BigDecimal getSellingPrice() {
