@@ -14,7 +14,7 @@ Append Additional Fields For Air Fees
     Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountPct":${discount_percentage_value}
     Run Keyword If    "${nett_fare_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettFare":${nett_fare_value}
     ${product_type}    Set Variable If    "${product_type_value}"=="NULL"    null    "${product_type_value}"=="None"    None    "${product_type_value}"
-    Run Keyword If    "${product_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productType":${product_type_value}
+    Run Keyword If    "${product_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productType":${product_type}
     Run Keyword If    "${tax_1_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax1":${tax_1_value}
     Run Keyword If    "${tax_2_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax2":${tax_2_value}
     Run Keyword If    "${web_fare_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "webFareSelected":${web_fare_flag_value}
