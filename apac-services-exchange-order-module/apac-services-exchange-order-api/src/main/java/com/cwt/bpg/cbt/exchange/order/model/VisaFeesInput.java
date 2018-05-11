@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotNull;
+
 public class VisaFeesInput implements Serializable {
 
     private static final long serialVersionUID = -5761273312586606568L;
@@ -16,6 +18,7 @@ public class VisaFeesInput implements Serializable {
     private boolean nettCostMerchantFeeChecked;
 	private boolean cwtHandlingMerchantFeeChecked;
 	private BigDecimal nettCost;
+    @NotNull
 	private BigDecimal cwtHandling;
 	private BigDecimal vendorHandling;
 
