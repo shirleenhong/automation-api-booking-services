@@ -56,5 +56,17 @@ public class TeePrintWriterTest {
 		verify(branch, times(1)).write(i);
 		verify(branch, times(1)).flush();
 	}
+	
+	@Test
+	public void canFlush() {
+		PrintWriter branch = mock(PrintWriter.class);
+		PrintWriter main = mock(PrintWriter.class);
+		
+		TeePrintWriter tpw = new TeePrintWriter(main, branch);
+		tpw.flush();
+		tpw.close();
+		
+		verify(branch, times(1)).flush();
+	}
 
 }
