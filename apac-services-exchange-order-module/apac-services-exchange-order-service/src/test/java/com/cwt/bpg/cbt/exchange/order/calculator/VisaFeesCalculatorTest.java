@@ -40,7 +40,7 @@ public class VisaFeesCalculatorTest {
 		input.setCwtHandling(new BigDecimal(100));
 		input.setVendorHandling(new BigDecimal(50));
 
-		VisaFeesBreakdown result = calculator.calculate(input, createMerchantFee());
+		VisaFeesBreakdown result = (VisaFeesBreakdown) calculator.calculate(input, createMerchantFee());
 
 		assertThat(result.getNettCostMerchantFee(), nullValue());
 		assertThat(result.getCwtHandlingMerchantFee(), nullValue());
@@ -58,7 +58,7 @@ public class VisaFeesCalculatorTest {
 		input.setCwtHandling(new BigDecimal(100));
 		input.setVendorHandling(new BigDecimal(50));
 
-		VisaFeesBreakdown result = calculator.calculate(input, createMerchantFee());
+		VisaFeesBreakdown result = (VisaFeesBreakdown) calculator.calculate(input, createMerchantFee());
 
 		assertThat(result.getNettCostMerchantFee().doubleValue(), is(equalTo(3D)));
 		assertThat(result.getCwtHandlingMerchantFee(), nullValue());
@@ -76,7 +76,7 @@ public class VisaFeesCalculatorTest {
 		input.setCwtHandling(new BigDecimal(100));
 		input.setVendorHandling(new BigDecimal(50));
 
-		VisaFeesBreakdown result = calculator.calculate(input, createMerchantFee());
+		VisaFeesBreakdown result = (VisaFeesBreakdown) calculator.calculate(input, createMerchantFee());
 
 		assertThat(result.getNettCostMerchantFee(), nullValue());
 		assertThat(result.getCwtHandlingMerchantFee().doubleValue(), is(equalTo(3D)));

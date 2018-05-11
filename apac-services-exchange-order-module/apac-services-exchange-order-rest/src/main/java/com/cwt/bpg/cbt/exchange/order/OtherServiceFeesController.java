@@ -26,61 +26,44 @@ public class OtherServiceFeesController {
 	@Autowired
 	private OtherServiceFeesService service;
 
-	/**
-	 * Applicable car, hotel and other ticket (train and ferry)
-	 * @param input
-	 * @return
-	 */
-	@PostMapping(path = "/misc-fees", produces = {
-			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
-					MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@PostMapping(path = "/misc-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Computes miscellaneous fees as well as visa cost and visa handling fees")
-	public ResponseEntity<FeesBreakdown> computeMiscellaneousFee(
+	@ApiOperation(value = "Computes miscellaneous fees as well as visa cost and visa handling fees. Applicable to car, hotel and other ticket (train and ferry).")
+	public ResponseEntity<MiscFeesBreakdown> computeMiscellaneousFee(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") MiscFeesInput input) {
 
-		return new ResponseEntity<>(service.calculateMiscFee(input), HttpStatus.OK);
+		return new ResponseEntity<>((MiscFeesBreakdown) service.calculateMiscFee(input), HttpStatus.OK);
 	}
 
-	/**
-	 * Applicable for air
-	 * @param input
-	 * @return
-	 */
-	@PostMapping(path = "/air-fees", produces = {
-			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
-					MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@PostMapping(path = "/air-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Computes air fees")
+	@ApiOperation(value = "Computes air fees. Applicable to air products.")
 	public ResponseEntity<AirFeesBreakdown> computeAirFees(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") AirFeesInput input) {
 
-		return new ResponseEntity<>((AirFeesBreakdown) service.calculateAirFee(input),
-				HttpStatus.OK);
+		return new ResponseEntity<>((AirFeesBreakdown) service.calculateAirFee(input), HttpStatus.OK);
 	}
 
-	@PostMapping(path = "/visa-fees", produces = {
-			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
-					MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@PostMapping(path = "/visa-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes visa processing fees, not be used for visa cost and handling fee")
 	public ResponseEntity<VisaFeesBreakdown> computeVisaFee(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") VisaFeesInput input) {
 
-		return new ResponseEntity<>(service.calculateVisaFees(input),
-				HttpStatus.OK);
+		return new ResponseEntity<>((VisaFeesBreakdown) service.calculateVisaFees(input), HttpStatus.OK);
 	}
 
-	@PostMapping(path = "/nett-cost", produces = {
-			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
-					MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@PostMapping(path = "/nett-cost", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes nett cost")
 	public ResponseEntity<AirFeesBreakdown> computeNettCost(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NettCostInput input) {
 
-		return new ResponseEntity<>((AirFeesBreakdown) service.calculateNettCost(input),
-				HttpStatus.OK);
+		return new ResponseEntity<>((AirFeesBreakdown) service.calculateNettCost(input), HttpStatus.OK);
 	}
 
 }

@@ -31,21 +31,20 @@ public class OtherServiceFeesService {
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
 
-	public FeesBreakdown calculateMiscFee(FeesInput input) {
+	FeesBreakdown calculateMiscFee(FeesInput input) {
 		return this.miscFeeCalculator.calculate(input, getMerchantFeePct(input));
 	}
 
-	public FeesBreakdown calculateAirFee(FeesInput input) {
+	FeesBreakdown calculateAirFee(FeesInput input) {
 		return this.osFactory.getCalculator(input.getCountryCode()).calculate(input,
 				getMerchantFeePct(input));
 	}
 
-	public VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {
-		return this.visaFeesCalculator.calculate(input, exchangeOrderService.getMerchantFee(
-				input.getCountryCode(), input.getClientType(), input.getProfileName()));
+	FeesBreakdown calculateVisaFees(FeesInput input) {
+		return this.visaFeesCalculator.calculate(input, getMerchantFeePct(input));
 	}
 
-	public AirFeesBreakdown calculateNettCost(NettCostInput input) {
+	AirFeesBreakdown calculateNettCost(NettCostInput input) {
 		return nettCostCalculator.calculateFee(input.getSellingPrice(),
 				input.getCommissionPct());
 	}

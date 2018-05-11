@@ -1,21 +1,13 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 
-public class VisaFeesInput implements Serializable {
+public class VisaFeesInput extends FeesInput {
 
     private static final long serialVersionUID = -5761273312586606568L;
-    @NotNull
-    private String countryCode;
-    @NotEmpty
-    private String clientType;
-    @NotEmpty
-    private String profileName;
+
     private boolean nettCostMerchantFeeChecked;
 	private boolean cwtHandlingMerchantFeeChecked;
 	private BigDecimal nettCost;
@@ -23,36 +15,6 @@ public class VisaFeesInput implements Serializable {
 	private BigDecimal cwtHandling;
     @NotNull
 	private BigDecimal vendorHandling;
-
-    public String getCountryCode()
-    {
-        return countryCode;
-    }
-
-    public void setCountryCode(String countryCode)
-    {
-        this.countryCode = countryCode;
-    }
-
-    public String getClientType()
-    {
-        return clientType;
-    }
-
-    public void setClientType(String clientType)
-    {
-        this.clientType = clientType;
-    }
-
-    public String getProfileName()
-    {
-        return profileName;
-    }
-
-    public void setProfileName(String profileName)
-    {
-        this.profileName = profileName;
-    }
 
     public BigDecimal getNettCost()
     {
