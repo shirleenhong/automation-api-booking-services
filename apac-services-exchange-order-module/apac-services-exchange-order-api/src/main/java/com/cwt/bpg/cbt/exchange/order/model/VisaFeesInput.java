@@ -18,10 +18,10 @@ public class VisaFeesInput implements Serializable {
     private String profileName;
     private boolean nettCostMerchantFeeChecked;
 	private boolean cwtHandlingMerchantFeeChecked;
-    @NotNull
 	private BigDecimal nettCost;
     @NotNull
 	private BigDecimal cwtHandling;
+    @NotNull
 	private BigDecimal vendorHandling;
 
     public String getCountryCode()
