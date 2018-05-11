@@ -19,7 +19,9 @@ public class ResponseWrapperTest {
 		ServletOutputStream outputStream = wrapper.getOutputStream();
 		
 		assertNotNull(outputStream);
-		assertEquals(1L, wrapper.getId());
 		
+		assertEquals(1L, wrapper.getId());
+		assertNotNull(wrapper.getWriter());
+		assertFalse(outputStream.isReady());
 	}
 }

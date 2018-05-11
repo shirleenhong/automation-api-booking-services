@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.services.rest.filter;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 
@@ -22,5 +23,6 @@ public class RequestWrapperTest {
 		assertNotNull(inputStream);
 		assertEquals(1L, wrapper.getId());
 		
+		assertFalse(inputStream.isReady());
 	}
 }
