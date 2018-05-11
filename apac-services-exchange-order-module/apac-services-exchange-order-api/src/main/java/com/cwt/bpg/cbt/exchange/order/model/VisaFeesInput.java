@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 public class VisaFeesInput implements Serializable {
 
     private static final long serialVersionUID = -5761273312586606568L;
+    @NotNull
     private String countryCode;
     @NotEmpty
     private String clientType;
