@@ -1,6 +1,5 @@
 package com.cwt.bpg.cbt.services.rest.filter;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -23,7 +22,7 @@ public class LoggingFilterTest {
 	private LoggingFilter filter = new LoggingFilter();
 
 	@Test
-	public void test() throws ServletException, IOException {
+	public void canDoFilterChain() throws ServletException, IOException {
 		FilterChain filterChain = mock(FilterChain.class);
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		HttpServletRequest request = mock(HttpServletRequest.class);
