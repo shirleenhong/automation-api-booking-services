@@ -10,38 +10,40 @@ import com.cwt.bpg.cbt.exchange.order.model.*;
 
 public class VisaFeesCalculator extends CommonCalculator {
 
-	@Autowired
-	private ScaleConfig scaleConfig;
+    @Autowired
+    private ScaleConfig scaleConfig;
 
-	public VisaFeesBreakdown calculate(VisaFeesInput input, MerchantFee merchantFee) {
+    public VisaFeesBreakdown calculate(VisaFeesInput input, MerchantFee merchantFee) {
 
-		VisaFeesBreakdown result = new VisaFeesBreakdown();
+        VisaFeesBreakdown result = new VisaFeesBreakdown();
 
-		int scale = scaleConfig.getScale(input.getCountryCode());
+        int scale = scaleConfig.getScale(input.getCountryCode());
 
-		BigDecimal mfNettCost = BigDecimal.ZERO;
-		if (input.isNettCostMerchantFeeChecked()) {
-			mfNettCost = round(calculatePercentage(input.getNettCost(),
-					merchantFee.getMerchantFeePct()), scale);
-			result.setNettCostMerchantFee(mfNettCost);
-		}
+        BigDecimal mfNettCost = BigDecimal.ZERO;
+        Double merchantFeePct = merchantFee != null ? merchantFee.getMerchantFeePct() : 0d;
 
-		BigDecimal mfCwtHandling = BigDecimal.ZERO;
-		if (input.isCwtHandlingMerchantFeeChecked()) {
-			mfCwtHandling = round(calculatePercentage(
-					input.getCwtHandling().add(input.getVendorHandling()),
-					merchantFee.getMerchantFeePct()), scale);
-			result.setCwtHandlingMerchantFee(mfCwtHandling);
-		}
+        if (input.isNettCostMerchantFeeChecked()) {
+            mfNettCost = round(calculatePercentage(input.getNettCost(),
+                    merchantFeePct), scale);
+            result.setNettCostMerchantFee(mfNettCost);
+        }
 
-		BigDecimal sellingPrice = input.getNettCost().add(input.getVendorHandling())
-				.add(input.getCwtHandling()).add(mfNettCost).add(mfCwtHandling);
+        BigDecimal mfCwtHandling = BigDecimal.ZERO;
+        if (input.isCwtHandlingMerchantFeeChecked()) {
+            mfCwtHandling = round(calculatePercentage(
+                    input.getCwtHandling().add(input.getVendorHandling()),
+                    merchantFeePct), scale);
+            result.setCwtHandlingMerchantFee(mfCwtHandling);
+        }
 
-		BigDecimal commission = input.getCwtHandling().add(mfNettCost).add(mfCwtHandling);
+        BigDecimal sellingPrice = input.getNettCost().add(input.getVendorHandling())
+                .add(input.getCwtHandling()).add(mfNettCost).add(mfCwtHandling);
 
-		result.setCommission(commission);
-		result.setSellingPrice(sellingPrice);
-		result.setSellingPriceInDi(sellingPrice);
-		return result;
-	}
+        BigDecimal commission = input.getCwtHandling().add(mfNettCost).add(mfCwtHandling);
+
+        result.setCommission(commission);
+        result.setSellingPrice(sellingPrice);
+        result.setSellingPriceInDi(sellingPrice);
+        return result;
+    }
 }
