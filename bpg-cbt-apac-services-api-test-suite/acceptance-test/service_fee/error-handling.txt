@@ -134,10 +134,6 @@ Verify That Error Is Encountered When Invalid Country Code Value Is Used
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Fees Are Not Returned
-    Parse Service Fees List    base_fare,100|taxes,40|ob_fee,5|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=${EMPTY}
-    Send Service Fees Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Calculated Fees Are Not Returned
     Parse Service Fees List    base_fare,100|taxes,40|ob_fee,5|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=null
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    400
@@ -213,7 +209,7 @@ Verify That Error Is Encountered When Invalid OB Fee Value Is Used
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Fees Are Not Returned
-    Parse Service Fees List    base_fare,100|taxes,30|ob_fee,null|merchant_amount,7|merchant_percentage,null|transaction_amount,7|transaction_percentage,null|markup_amt,7|markup_percentage,null|commission_amount,5|commission_percentage,null|fuel_surcharge,4|nett_fare,null    country=hk
+    Parse Service Fees List    base_fare,100|taxes,30|ob_fee,NULL|merchant_amount,7|merchant_percentage,null|transaction_amount,7|transaction_percentage,null|markup_amt,7|markup_percentage,null|commission_amount,5|commission_percentage,null|fuel_surcharge,4|nett_fare,null    country=hk
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Fees Are Not Returned
@@ -240,7 +236,7 @@ Verify That Error Is Encountered When Invalid Total Taxes Value Is Used
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Fees Are Not Returned
-    Parse Service Fees List    base_fare,100|taxes,null|ob_fee,8|merchant_amount,7|merchant_percentage,null|transaction_amount,7|transaction_percentage,null|markup_amt,7|markup_percentage,null|commission_amount,5|commission_percentage,null|fuel_surcharge,4|nett_fare,null    country=sg
+    Parse Service Fees List    base_fare,100|taxes,NULL|ob_fee,8|merchant_amount,7|merchant_percentage,null|transaction_amount,7|transaction_percentage,null|markup_amt,7|markup_percentage,null|commission_amount,5|commission_percentage,null|fuel_surcharge,4|nett_fare,null    country=sg
     Send Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Fees Are Not Returned

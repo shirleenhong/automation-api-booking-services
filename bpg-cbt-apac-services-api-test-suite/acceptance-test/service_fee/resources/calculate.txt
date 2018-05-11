@@ -148,7 +148,10 @@ Send Service Fees Post Request
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
     @{calculate_request_list}    Create List
-    Run Keyword If    "${country}"!="null"    Append To List    ${calculate_request_list}    "countryCode":"${country}"
+    ${length_country_code}    Get Length    ${country}
+    Run Keyword If    ${length_country_code} > 2    Append To List    ${calculate_request_list}    "countryCode":${country}
+    ...    ELSE    Append To List    ${calculate_request_list}    "countryCode":"${country}"
+    Comment    Run Keyword If    "${country}"!="null"    Append To List    ${calculate_request_list}    "countryCode":"${country}"
     Run Keyword If    "${base_fare_value}"!="null"    Append To List    ${calculate_request_list}    "baseFare":${base_fare_value}
     Run Keyword If    "${taxes_value}"!="null"    Append To List    ${calculate_request_list}    "totalTaxes":${taxes_value}
     Run Keyword If    "${ob_fee_value}"!="null"    Append To List    ${calculate_request_list}    "obFee":${ob_fee_value}

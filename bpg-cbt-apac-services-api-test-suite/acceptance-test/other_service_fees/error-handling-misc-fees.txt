@@ -102,10 +102,6 @@ Verify That Error Is Encountered When Invalid Country Code Value Is Used
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
-    Create Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=${EMPTY}
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=null
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400

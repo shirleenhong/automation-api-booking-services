@@ -60,10 +60,6 @@ Verify That Error Is Encountered When Invalid Country Code Value Is Used
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Visa Processing Fees Are Not Returned
-    Create Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,650|vendor_handling,146|cwt_handling,477|mf_nett_check,true|mf_cwt_check,true|merchant_fee_percentage,2    country=${EMPTY}
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Visa Processing Fees Are Not Returned
     Create Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,650|vendor_handling,146|cwt_handling,477|mf_nett_check,true|mf_cwt_check,true|merchant_fee_percentage,2    country=null
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
@@ -83,7 +79,7 @@ Verify That Error Is Encountered When Invalid CWT Handling Value Is Used
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Visa Processing Fees Are Not Returned
-    Create Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,650|vendor_handling,146|cwt_handling,null|mf_nett_check,true|mf_cwt_check,true|merchant_fee_percentage,2
+    Create Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,650|vendor_handling,146|cwt_handling,NULL|mf_nett_check,true|mf_cwt_check,true|merchant_fee_percentage,2
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Visa Processing Fees Are Not Returned
@@ -125,7 +121,7 @@ Verify That Error Is Encountered When Invalid Nett Cost Value Is Used
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Visa Processing Fees Are Not Returned
-    Create Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,null|vendor_handling,146|cwt_handling,477|mf_nett_check,true|mf_cwt_check,true|merchant_fee_percentage,2
+    Create Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,NULL|vendor_handling,146|cwt_handling,477|mf_nett_check,true|mf_cwt_check,true|merchant_fee_percentage,2
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Visa Processing Fees Are Not Returned
@@ -174,7 +170,7 @@ Verify That Error Is Encountered When Invalid Vendor Handling Value Is Used
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Visa Processing Fees Are Not Returned
-    Create Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,650|vendor_handling,null|cwt_handling,477|mf_nett_check,true|mf_cwt_check,true|merchant_fee_percentage,2
+    Create Test Variables For Visa Processing    cc,CX|client_type,TF|pro_name,ACCEHK|nett_cost,650|vendor_handling,NULL|cwt_handling,477|mf_nett_check,true|mf_cwt_check,true|merchant_fee_percentage,2
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Visa Processing Fees Are Not Returned
