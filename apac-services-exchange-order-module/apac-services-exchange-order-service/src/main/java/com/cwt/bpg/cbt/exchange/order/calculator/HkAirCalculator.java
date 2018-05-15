@@ -17,39 +17,37 @@ import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
 
-
 public class HkAirCalculator extends CommonCalculator implements Calculator {
-	
+
 	@Autowired
 	private ScaleConfig scaleConfig;
-	
-	private final List<String> clientsWithAdditionalSellPrice = Arrays.asList(ClientTypes.MG.getCode()
-			, ClientTypes.DB.getCode()
-			, ClientTypes.TF.getCode()
-			, ClientTypes.MN.getCode());
-	
-	private final List<String> clientsWithPercentageDiscount = Arrays.asList(ClientTypes.DU.getCode()
-			, ClientTypes.DB.getCode());
-	
-	private final List<String> clientsWithCommissionDiscount = Arrays.asList(ClientTypes.MN.getCode()
-			, ClientTypes.TF.getCode()
-			, ClientTypes.TP.getCode());
-	
-	private final List<String> clientsWithNoDiscount = Arrays.asList(ClientTypes.MN.getCode()
-			, ClientTypes.TF.getCode());
-	
+
+	private final List<String> clientsWithAdditionalSellPrice = Arrays.asList(ClientTypes.MG.getCode(),
+			ClientTypes.DB.getCode(),
+			ClientTypes.TF.getCode(),
+			ClientTypes.MN.getCode());
+
+	private final List<String> clientsWithPercentageDiscount = Arrays.asList(ClientTypes.DU.getCode(),
+			ClientTypes.DB.getCode());
+
+	private final List<String> clientsWithCommissionDiscount = Arrays
+			.asList(ClientTypes.MN.getCode(), ClientTypes.TF.getCode(), ClientTypes.TP.getCode());
+
+	private final List<String> clientsWithNoDiscount = Arrays.asList(ClientTypes.MN.getCode(),
+			ClientTypes.TF.getCode());
+
 	@Override
 	public FeesBreakdown calculate(FeesInput genericInput, MerchantFee merchantFee) {
 
 		AirFeesBreakdown result = new AirFeesBreakdown();
 		AirFeesInput input = (AirFeesInput) genericInput;
-		
+
 		if (input == null) {
 			return result;
 		}
-		
+
 		int scale = scaleConfig.getScale(input.getCountryCode());
-		
+
 		BigDecimal totalSellingFare;
 		BigDecimal nettCost;
 		BigDecimal sellingPrice;
@@ -60,23 +58,22 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 		BigDecimal tax1 = safeValue(input.getTax1());
 		BigDecimal tax2 = safeValue(input.getTax2());
 
-		if(!input.isApplyFormula()) {
-			totalSellingFare = nettFare.add(commission)
-									   .subtract(discount)
-									   .add(tax1)
-									   .add(tax2)
-									   .add(merchantFeeAmount);
+		if (!input.isApplyFormula()) {
+			totalSellingFare = nettFare.add(commission).subtract(discount).add(tax1).add(tax2)
+					.add(merchantFeeAmount);
 			nettCost = nettFare;
 		}
 		else {
-			if(input.isCommissionByPercent()) {
-				if(!ClientTypes.TP.getCode().equals(input.getClientType())) {
-					
-					commission = getCommission(input, scale, nettFare);					
+			if (input.isCommissionByPercent()) {
+				if (!ClientTypes.TP.getCode().equals(input.getClientType())) {
+					commission = getCommission(input, scale, nettFare);
 				}
-				sellingPrice = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), MathContext.DECIMAL128);
-				
-				if(!clientsWithAdditionalSellPrice.contains(input.getClientType())) {
+
+				sellingPrice = nettFare.divide(
+						BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())),
+						MathContext.DECIMAL128);
+
+				if (!clientsWithAdditionalSellPrice.contains(input.getClientType())) {
 					sellingPrice = sellingPrice.add(BigDecimal.TEN);
 				}
 			}
@@ -84,92 +81,96 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 				commission = round(commission, scale);
 				sellingPrice = nettFare.add(commission);
 			}
-			result.setCommission(commission);
+
 			sellingPrice = round(sellingPrice, scale);
+			result.setCommission(commission);
 			result.setSellingPrice(sellingPrice);
 
-			discount = applyDiscount(input, commission, discount, nettFare);
-			
-			discount = round(discount, scale);
+			discount = round(applyDiscount(input, commission, discount, nettFare), scale);
 			result.setDiscount(discount);
-			nettCost = nettFare;
-			nettFare = round(sellingPrice.add(tax1)
-										 .add(tax2)
-										 .subtract(discount)
-										 , scale);
 
+			nettCost = nettFare;
+			nettFare = round(sellingPrice.add(tax1).add(tax2).subtract(discount), scale);
 			result.setNettFare(nettFare);
 
 			merchantFeeAmount = applyMerchantFee(merchantFee, input, scale, nettFare, tax1, tax2);
-			
 			result.setMerchantFee(merchantFeeAmount);
+
 			totalSellingFare = nettFare.add(safeValue(merchantFeeAmount));
 		}
+
 		result.setTotalSellingFare(round(totalSellingFare, scale));
 		result.setNettCost(round(nettCost, scale));
+
 		return result;
 	}
 
 	private BigDecimal getCommission(AirFeesInput input, int scale, BigDecimal nettFare) {
-		
-		BigDecimal commission = nettFare.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())), 
-				MathContext.DECIMAL128).subtract(nettFare);
-		
-		if(commission.compareTo(BigDecimal.ZERO) > 0 && ClientTypes.DU.getCode().equals(input.getClientType())) {
+
+		BigDecimal commission = nettFare
+				.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPct())),
+						MathContext.DECIMAL128)
+				.subtract(nettFare);
+
+		if (commission.compareTo(BigDecimal.ZERO) > 0
+				&& ClientTypes.DU.getCode().equals(input.getClientType())) {
 			commission = commission.add(BigDecimal.TEN);
 		}
 		return round(commission, scale);
 	}
 
-	private BigDecimal applyMerchantFee(MerchantFee merchantFee, AirFeesInput input,
-			int scale, BigDecimal nettFare, BigDecimal tax1, BigDecimal tax2) {
-		
+	private BigDecimal applyMerchantFee(MerchantFee merchantFee, AirFeesInput input, int scale,
+			BigDecimal nettFare, BigDecimal tax1, BigDecimal tax2) {
+
 		BigDecimal merchantFeeAmount = null;
-		
-		if(!input.isCwtAbsorb() && FOPTypes.CWT.getCode().equals(input.getFopType()) && !input.isMerchantFeeWaive()) {
+
+		if (!input.isCwtAbsorb() && FOPTypes.CWT.getCode().equals(input.getFopType())
+				&& !input.isMerchantFeeWaive()) {
+
 			BigDecimal mFTotal;
 			BigDecimal transactionFee = safeValue(input.getTransactionFee());
-			if(input.isUatp()) {
-				if(ClientTypes.TF.getCode().equals(input.getClientType())) {
-					mFTotal = transactionFee ;
+
+			if (input.isUatp()) {
+				if (ClientTypes.TF.getCode().equals(input.getClientType())) {
+					mFTotal = transactionFee;
 				}
 				else {
-					//TotalCharge - NetFare - Tax
-					mFTotal = nettFare.subtract(input.getNettFare())
-													 .subtract(tax1)
-													 .subtract(tax2);
+					mFTotal = nettFare.subtract(input.getNettFare()).subtract(tax1).subtract(tax2);
 				}
 			}
 			else {
 				mFTotal = nettFare;
-				if(ClientTypes.TF.getCode().equals(input.getClientType()) && merchantFee.isIncludeTransactionFee()) {
+				if (ClientTypes.TF.getCode().equals(input.getClientType())
+						&& merchantFee.isIncludeTransactionFee()) {
 					mFTotal = mFTotal.add(transactionFee);
 				}
 			}
+
 			merchantFeeAmount = round(calculatePercentage(mFTotal, merchantFee.getMerchantFeePct()), scale);
-			if(merchantFeeAmount.compareTo(BigDecimal.ZERO) < 0) {
+			if (merchantFeeAmount.compareTo(BigDecimal.ZERO) < 0) {
 				merchantFeeAmount = BigDecimal.ZERO;
 			}
 		}
 		return merchantFeeAmount;
 	}
 
-	private BigDecimal applyDiscount(AirFeesInput input, BigDecimal commission,
-			BigDecimal discount, BigDecimal nettFare) {
-		
+	private BigDecimal applyDiscount(AirFeesInput input, BigDecimal commission, BigDecimal discount,
+			BigDecimal nettFare) {
+
 		BigDecimal result = discount;
-		
-		if(input.isDiscountByPercent()) {
-			if(clientsWithPercentageDiscount.contains(input.getClientType())) {
-				result = calculatePercentage(commission.add(nettFare), input.getDiscountPct());
-			}
-			else if(clientsWithCommissionDiscount.contains(input.getClientType())) {
-				result = commission;
-			}			
-		}
-		if(clientsWithNoDiscount.contains(input.getClientType())) {
+
+		if (clientsWithNoDiscount.contains(input.getClientType())) {
 			result = BigDecimal.ZERO;
 		}
+		else if (input.isDiscountByPercent()) {
+			if (clientsWithPercentageDiscount.contains(input.getClientType())) {
+				result = calculatePercentage(commission.add(nettFare), input.getDiscountPct());
+			}
+			else if (clientsWithCommissionDiscount.contains(input.getClientType())) {
+				result = commission;
+			}
+		}
+
 		return result;
 	}
 }

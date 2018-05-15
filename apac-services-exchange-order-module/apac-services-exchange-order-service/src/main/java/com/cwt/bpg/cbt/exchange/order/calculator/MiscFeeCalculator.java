@@ -10,11 +10,11 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 public class MiscFeeCalculator extends CommonCalculator implements Calculator {
-		
+
 	@Autowired
 	private ScaleConfig scaleConfig;
-	
-	@Override	
+
+	@Override
 	public FeesBreakdown calculate(FeesInput genericInput, MerchantFee merchantFee) {
 		MiscFeesInput input = (MiscFeesInput) genericInput;
 		MiscFeesBreakdown result = new MiscFeesBreakdown();
@@ -25,41 +25,34 @@ public class MiscFeeCalculator extends CommonCalculator implements Calculator {
 
 		BigDecimal gstAmount = null;
 		BigDecimal nettCostGst = null;
-		
+
 		int scale = scaleConfig.getScale(input.getCountryCode());
-		
+
 		if (!input.isGstAbsorb()) {
-			gstAmount = round(
-					calculatePercentage(input.getSellingPrice(), input.getGstPercent()), scale);
-			nettCostGst = round(
-					calculatePercentage(input.getNettCost(), input.getGstPercent()),
-					scale);
+			gstAmount = round(calculatePercentage(input.getSellingPrice(), input.getGstPercent()), scale);
+			nettCostGst = round(calculatePercentage(input.getNettCost(), input.getGstPercent()), scale);
 		}
 
 		BigDecimal merchantFeeAmount = null;
-		if (!input.isMerchantFeeAbsorb()
-				&& FOPTypes.CWT.getCode().equals(input.getFopType())
+		if (!input.isMerchantFeeAbsorb() && FOPTypes.CWT.getCode().equals(input.getFopType())
 				&& !input.isMerchantFeeWaive()) {
 			merchantFeeAmount = round(
-                    calculatePercentage(
-                            input.getSellingPrice()
-                                    .multiply(BigDecimal.ONE
-                                            .add(percentDecimal(input.getGstPercent()))),
-                            merchantFee.getMerchantFeePct()),
-                    		scale);
+					calculatePercentage(
+							input.getSellingPrice()
+									.multiply(BigDecimal.ONE.add(percentDecimal(input.getGstPercent()))),
+							merchantFee.getMerchantFeePct()),
+					scale);
 		}
 
-        BigDecimal sellingPriceInDi = round(input.getSellingPrice()
-                        .add(safeValue(gstAmount)).add(safeValue(merchantFeeAmount))
-                        .divide(BigDecimal.ONE.add(percentDecimal(input.getGstPercent())), 2,
-                                RoundingMode.HALF_UP),
-                        			scale);
+		BigDecimal sellingPriceInDi = round(input.getSellingPrice().add(safeValue(gstAmount))
+				.add(safeValue(merchantFeeAmount))
+				.divide(BigDecimal.ONE.add(percentDecimal(input.getGstPercent())), 2, RoundingMode.HALF_UP),
+				scale);
 
 		BigDecimal commission = round(BigDecimal.ZERO, scale);
-		
+
 		if (sellingPriceInDi.compareTo(safeValue(input.getNettCost())) > 0) {
-			commission = round(sellingPriceInDi.subtract(safeValue(input.getNettCost())),
-					scale);
+			commission = round(sellingPriceInDi.subtract(safeValue(input.getNettCost())), scale);
 		}
 
 		result.setNettCostGst(nettCostGst);

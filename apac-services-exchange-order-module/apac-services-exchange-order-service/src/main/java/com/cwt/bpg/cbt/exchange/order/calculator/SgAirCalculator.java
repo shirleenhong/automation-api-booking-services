@@ -18,17 +18,16 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 
 	@Autowired
 	private ScaleConfig scaleConfig;
-	
+
 	@Override
-	public FeesBreakdown calculate(FeesInput genericInput,
-								   MerchantFee merchantFeeObj) {
+	public FeesBreakdown calculate(FeesInput genericInput, MerchantFee merchantFeeObj) {
 
 		AirFeesBreakdown result = new AirFeesBreakdown();
 
 		if (genericInput == null) {
 			return result;
 		}
-		
+
 		AirFeesInput input = (AirFeesInput) genericInput;
 
 		int scale = scaleConfig.getScale(input.getCountryCode());
@@ -47,35 +46,26 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 
 		if (!input.isApplyFormula()) {
 			if (isConstTkt) {
-				totalSellingFare = inNettFare
-						.subtract(inDiscount)
-						.add(totalTax)
-						.add(inMerchantFee);
+				totalSellingFare = inNettFare.subtract(inDiscount).add(totalTax).add(inMerchantFee);
 			}
 			else {
-				totalSellingFare = input.getSellingPrice()
-						.subtract(inDiscount)
-						.add(totalTax)
+				totalSellingFare = input.getSellingPrice().subtract(inDiscount).add(totalTax)
 						.add(inMerchantFee);
 			}
 			nettCost = inNettFare.subtract(inCommission);
 		}
 		else {
-
 			BigDecimal commission = getCommission(input, scale, inNettFare, inCommission);
-
 			BigDecimal discount = getDiscount(input, scale, inNettFare, inDiscount, inClientType);
-
 			nettCost = inNettFare.subtract(commission);
-
-			BigDecimal totalNettFare = getTotalNettFare(input, discount, totalTax,
-					inNettFare, isConstTkt);
+			BigDecimal totalNettFare = getTotalNettFare(input, discount, totalTax, inNettFare, isConstTkt);
 
 			if (!input.isCwtAbsorb() && isFopTypeCX && !input.isMerchantFeeWaive()) {
-				BigDecimal totalPlusTF = getTotal(totalNettFare, input.getTransactionFee(),
-						inClientType, getTransactionFeeFlag(merchantFeeObj));
-				merchantFee = getMerchantFee(totalPlusTF,
-						getMerchantFeePct(merchantFeeObj), scale);
+				BigDecimal totalPlusTF = getTotal(totalNettFare,
+						input.getTransactionFee(),
+						inClientType,
+						getTransactionFeeFlag(merchantFeeObj));
+				merchantFee = getMerchantFee(totalPlusTF, safeMerchantFeePct(merchantFeeObj), scale);
 				result.setMerchantFee(merchantFee);
 			}
 
@@ -91,7 +81,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 		return result;
 	}
 
-	private Double getMerchantFeePct(MerchantFee merchantFee) {
+	private Double safeMerchantFeePct(MerchantFee merchantFee) {
 		return (merchantFee != null) ? merchantFee.getMerchantFeePct() : 0D;
 	}
 
@@ -99,8 +89,8 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 		return (merchantFee != null) ? merchantFee.isIncludeTransactionFee() : Boolean.FALSE;
 	}
 
-	private BigDecimal getTotalNettFare(AirFeesInput input, BigDecimal discount,
-			BigDecimal totalTax, BigDecimal inNettFare, Boolean isConstTkt) {
+	private BigDecimal getTotalNettFare(AirFeesInput input, BigDecimal discount, BigDecimal totalTax,
+			BigDecimal inNettFare, Boolean isConstTkt) {
 		BigDecimal totalNettFare;
 		if (isConstTkt) {
 			totalNettFare = inNettFare.subtract(discount).add(totalTax);
@@ -115,8 +105,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 			BigDecimal inDiscount, String inClientType) {
 		BigDecimal discount;
 		if (input.isDiscountByPercent()) {
-			discount = getDiscountAmt(inNettFare, input.getDiscountPct(),
-					inClientType, scale);
+			discount = getDiscountAmt(inNettFare, input.getDiscountPct(), inClientType, scale);
 		}
 		else {
 			discount = inDiscount;
@@ -128,8 +117,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 			BigDecimal inCommission) {
 		BigDecimal commission;
 		if (input.isCommissionByPercent()) {
-			commission = round(inNettFare
-					.multiply(percentDecimal(input.getCommissionPct())), scale);
+			commission = round(inNettFare.multiply(percentDecimal(input.getCommissionPct())), scale);
 		}
 		else {
 			commission = inCommission;
@@ -137,17 +125,16 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 		return commission;
 	}
 
-	private BigDecimal getDiscountAmt(BigDecimal sellFare, Double discountPct,
-			String clientType, int scale) {
-
+	private BigDecimal getDiscountAmt(BigDecimal sellFare, Double discountPct, String clientType, int scale) {
+		BigDecimal discountAmt = BigDecimal.ZERO;
 		if (ClientTypes.clientsWithDiscount().contains(clientType)) {
-			return round(sellFare.multiply(percentDecimal(discountPct)), scale);
+			discountAmt = round(sellFare.multiply(percentDecimal(discountPct)), scale);
 		}
-		return BigDecimal.ZERO;
+		return discountAmt;
 	}
 
-	private BigDecimal getTotal(BigDecimal totalCharge, BigDecimal transFee,
-			String clientType, Boolean incMF) {
+	private BigDecimal getTotal(BigDecimal totalCharge, BigDecimal transFee, String clientType,
+			Boolean incMF) {
 		BigDecimal total;
 
 		if (ClientTypes.TF.getCode().equals(clientType) && incMF) {
@@ -160,8 +147,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator {
 		return total;
 	}
 
-	private BigDecimal getMerchantFee(BigDecimal totalCharge, Double merchantFeePct,
-			int scale) {
+	private BigDecimal getMerchantFee(BigDecimal totalCharge, Double merchantFeePct, int scale) {
 
 		return round(totalCharge.multiply(percentDecimal(merchantFeePct)), scale);
 	}
