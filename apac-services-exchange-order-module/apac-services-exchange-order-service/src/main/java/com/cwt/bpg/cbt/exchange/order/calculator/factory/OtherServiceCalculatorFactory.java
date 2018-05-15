@@ -38,7 +38,6 @@ public class OtherServiceCalculatorFactory {
 			return this.serviceMap.get(countryCode);
 		}
 		else {
-			
 			throw new IllegalArgumentException("Country not supported");
 		}
 	}

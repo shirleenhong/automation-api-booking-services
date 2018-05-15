@@ -30,6 +30,20 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 				apiError.getStatus());
 	}
 
+	@ExceptionHandler({ IllegalArgumentException.class })
+	public ResponseEntity<Object> handleIllegalArgument(
+			IllegalArgumentException ex, WebRequest request) {
+
+		String error = ex.getMessage();
+
+		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),
+				error);
+
+		return new ResponseEntity<>(apiError, new HttpHeaders(),
+				apiError.getStatus());
+	}
+
+
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(
 			HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status,

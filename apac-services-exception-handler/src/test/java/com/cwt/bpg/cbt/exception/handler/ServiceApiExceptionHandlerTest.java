@@ -51,6 +51,18 @@ public class ServiceApiExceptionHandlerTest {
 		assertNotNull(handleHttpMessageNotReadable);
 		assertTrue(handleHttpMessageNotReadable.getBody() instanceof ApiError);
 	}
+
+	@Test
+	public void canHandleIllegalArgument() {
+		WebRequest request = Mockito.mock(WebRequest.class);
+				;
+		IllegalArgumentException ex = new IllegalArgumentException("Illegal argument");
+
+		ResponseEntity<Object> handleHttpMessageNotReadable = exceptionHandler.handleIllegalArgument(ex, request);
+
+		assertNotNull(handleHttpMessageNotReadable);
+		assertTrue(handleHttpMessageNotReadable.getBody() instanceof ApiError);
+	}
 	
 	static class DummyType {
 		public void testMethod() {
