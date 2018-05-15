@@ -128,10 +128,6 @@ Verify That Error Is Encountered When Invalid GST Absorb Value Is Used
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
-    Create Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,1111    country=sg
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,${EMPTY}    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
@@ -162,10 +158,6 @@ Verify That Error Is Encountered When Invalid Merchant Fee Absorb Value Is Used
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
-    Create Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,111|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=sg
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,${EMPTY}|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
@@ -174,10 +166,6 @@ Verify That Error Is Encountered When Invalid Merchant Fee Absorb Value Is Used
 Verify That Error Is Encountered When Invalid Merchant Fee Waive Value Is Used
     [Tags]    functional
     Create Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,true|merchant_fee_waive,xxxx|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=sg
-    Send Other Service Fees Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Calculated Miscellaneous Fees Are Not Returned
-    Create Test Variables For Miscellaneous Fees    cc,CX|client_type,TF|pro_name,ACCEHK|merchant_fee_absorb,true|merchant_fee_waive,1111|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=hk
     Send Other Service Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
