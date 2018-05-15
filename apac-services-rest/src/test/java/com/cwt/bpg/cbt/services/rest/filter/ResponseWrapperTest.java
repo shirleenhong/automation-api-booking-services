@@ -1,27 +1,43 @@
 package com.cwt.bpg.cbt.services.rest.filter;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-
-import java.io.IOException;
+import org.junit.Before;
+import org.junit.Test;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ResponseWrapperTest {
 
+    ResponseWrapper wrapper;
+    HttpServletResponse response;
+
+    @Before
+    public void setup(){
+        response = mock(HttpServletResponse.class);
+        wrapper = new ResponseWrapper(1L, response);
+
+    }
+
 	@Test
 	public void canReturnOuputStream() throws IOException {
-		HttpServletResponse response = mock(HttpServletResponse.class);
-		ResponseWrapper wrapper = new ResponseWrapper(1L, response);
-		ServletOutputStream outputStream = wrapper.getOutputStream();
+        ServletOutputStream outputStream = wrapper.getOutputStream();
 		
 		assertNotNull(outputStream);
-		
-		assertEquals(1L, wrapper.getId());
-		assertNotNull(wrapper.getWriter());
 		assertFalse(outputStream.isReady());
+	}
+
+	@Test
+	public void canReturnWriter() throws IOException {
+		PrintWriter writer = mock(PrintWriter.class);
+		when(response.getWriter()).thenReturn(writer);
+
+		assertNotNull(wrapper.getWriter());
 	}
 }
