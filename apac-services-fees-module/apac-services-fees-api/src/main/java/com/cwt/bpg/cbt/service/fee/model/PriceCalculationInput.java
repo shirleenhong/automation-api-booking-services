@@ -74,7 +74,7 @@ public class PriceCalculationInput implements Serializable {
 		return totalTaxes;
 	}
 
-	public void setTotalTaxes(BigDecimal totalTaxes) {
+	public void setTotalTaxes(@NotNull BigDecimal totalTaxes) {
 		this.totalTaxes = totalTaxes;
 	}
 
@@ -146,7 +146,7 @@ public class PriceCalculationInput implements Serializable {
 		return obFee;
 	}
 
-	public void setObFee(BigDecimal obFee) {
+	public void setObFee(@NotNull BigDecimal obFee) {
 		this.obFee = obFee;
 	}
 
