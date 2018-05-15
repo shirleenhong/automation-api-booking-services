@@ -17,10 +17,6 @@ public class Insurance implements Serializable {
 	
 	@NotNull
 	private Float commission;
-	
-	public Insurance() {
-		this.commission = 0f;
-	}
 
 	public Float getCommission() {
 		return commission;
