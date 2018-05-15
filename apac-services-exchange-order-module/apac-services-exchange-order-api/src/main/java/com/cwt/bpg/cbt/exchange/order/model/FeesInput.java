@@ -16,9 +16,6 @@ public class FeesInput implements Serializable {
 	@NotEmpty
 	private String profileName;
 
-	public FeesInput() {
-	}
-
 	public String getCountryCode() {
 		return countryCode;
 	}

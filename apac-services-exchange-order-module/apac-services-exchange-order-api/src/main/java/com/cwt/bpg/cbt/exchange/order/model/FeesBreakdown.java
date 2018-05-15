@@ -9,9 +9,6 @@ public class FeesBreakdown implements Serializable {
 
 	BigDecimal commission;
 
-	public FeesBreakdown() {
-	}
-
 	public BigDecimal getCommission() {
 		return commission;
 	}

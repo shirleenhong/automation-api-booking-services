@@ -23,6 +23,7 @@ public class MiscFeesInput extends FeesInput
     public MiscFeesInput()
     {
         this.sellingPrice = BigDecimal.ZERO;
+        this.gstPercent = 0d;
     }
 
     public String getFopType() {

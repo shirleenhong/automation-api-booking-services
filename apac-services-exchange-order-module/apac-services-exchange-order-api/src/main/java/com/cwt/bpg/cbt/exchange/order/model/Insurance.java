@@ -19,7 +19,7 @@ public class Insurance implements Serializable {
 	private Float commission;
 	
 	public Insurance() {
-		//Empty constructor
+		this.commission = 0f;
 	}
 
 	public Float getCommission() {
