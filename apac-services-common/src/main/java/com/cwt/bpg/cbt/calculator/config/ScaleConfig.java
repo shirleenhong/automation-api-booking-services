@@ -9,7 +9,7 @@ public class ScaleConfig {
 	Environment env; 
 	
 	public int getScale(String countryCode) {
-		Integer scaleProp = env.getProperty("com.cwt.bpg.cbt.calc.scale.".concat(countryCode), Integer.class);
+		Integer scaleProp = countryCode == null? null : env.getProperty("com.cwt.bpg.cbt.calc.scale.".concat(countryCode), Integer.class);
 		return scaleProp != null 
 				? scaleProp.intValue() 
 				: env.getRequiredProperty("com.cwt.bpg.cbt.calc.scale.Default", 
