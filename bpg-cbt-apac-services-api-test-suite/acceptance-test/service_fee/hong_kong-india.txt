@@ -4,6 +4,13 @@ Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-variables.txt
 
 *** Test Cases ***
+test
+    Generate Test Variables For Calculate Fees    base_fare,100|taxes,40|ob_fee,5|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=hk
+    Send Service Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Json Element Exists    $.fopAmount
+    Verify Json Value Is Correct    $.fopAmount    140
+
 Verify That Service Fees Are Calculated Correctly With Fare Including Air Taxes Only
     [Tags]    functional
     Generate Test Variables For Calculate Fees    base_fare,100|taxes,40|ob_fee,5|charged_fare,null|merchant_amount,null|merchant_percentage,null|transaction_amount,null|transaction_percentage,null|markup_amt,null|markup_percentage,null|commission_amount,null|commission_percentage,null|fuel_surcharge,null|nett_fare,null    country=hk

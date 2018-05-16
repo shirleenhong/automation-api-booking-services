@@ -1,3 +1,6 @@
+*** Settings ***
+Library           OperatingSystem
+
 *** Keywords ***
 Create New List
     [Arguments]    ${product_number}
@@ -55,14 +58,15 @@ Verify Products And Vendors Are Not Retrieved
     Verify String Does Not Contain Substring    ${response.content}    "type"
 
 Verify Products And Vendors Are Retrieved Correctly
+    Comment    Create File    ${EXECDIR}/file_with_products_vendors.txt    ${response.content}
     ${all_product_list_length}    Get Length    ${all_product_list}
     : FOR    ${index}    IN RANGE    ${all_product_list_length}
     \    ${item_product_code}    Get Json Value    ${response.content}    /${index}/productCode
     \    ${item_product_code}    Get Substring    ${item_product_code}    1    -1
-    \    Verify Json Value Is Correct    /${index}/description    ${product_code_${item_product_code}}
+    \    Verify Json Value Is Correct    $[${index}].description    ${product_code_${item_product_code}}
     \    Verify Vendors Are Retrieved Correctly    ${index}    ${product_code_${item_product_code}_list}
     ${index}    Evaluate    ${index}+1
-    Verify Json Element Does Not Exist    /${index}/description
+    Verify Json Element Does Not Exist    $[${index}].description
 
 Verify Vendors Are Retrieved Correctly
     [Arguments]    ${index}    ${item_vendor_list}
@@ -72,6 +76,6 @@ Verify Vendors Are Retrieved Correctly
     \    ${item_vendor_number}    Get Json Value    ${response.content}    /${index}/vendors/${vendor_index}/vendorNumber
     \    ${item_vendor_number}    Get Substring    ${item_vendor_number}    1    -1
     \    Should Contain X Times    ${item_vendor_list}    ${item_vendor_number}    1
-    \    Verify Json Value Is Correct    /${index}/vendors/${vendor_index}/vendorName    ${vendor_code_${item_vendor_number}}
+    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].vendorName    ${vendor_code_${item_vendor_number}}
     ${vendor_index}    Evaluate    ${vendor_index}+1
-    Verify Json Element Does Not Exist    /${index}/vendors/${vendor_index}/vendorName
+    Verify Json Element Does Not Exist    $[${index}].vendors.[${vendor_index}].vendorName
