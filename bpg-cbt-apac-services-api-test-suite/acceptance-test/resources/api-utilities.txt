@@ -86,16 +86,12 @@ Verify Json Value Is Correct
     [Arguments]    ${json_path}    ${expected_value}    ${data_type}=string    ${handle_null}=true
     Log    Json Object: ${json_path}
     Log    Expected Value: ${expected_value}
-    Comment    ${expected_value}    Set Variable If    "${data_type}" == "string"    "${expected_value}"    ${expected_value}
     ${expected_value}    Set Variable If    "${data_type}" == "array"    [${expected_value}]    ${expected_value}
     ${expected_value}    Convert To String    ${expected_value}
     ${expected_value}    Run Keyword If    "${handle_null}" == "true"    Replace String    ${expected_value}    "null"    null
     ...    ELSE    Set Variable    ${expected_value}
     ${expected_value}    Run Keyword If    "${handle_null}" == "true"    Replace String    ${expected_value}    [null]    null
     ...    ELSE    Set Variable    ${expected_value}
-    Comment    Run Keyword And Continue On Failure    Json Value Should Equal    ${response.content}    ${json_path}    ${expected_value}
-    Comment    ${json_object}    To Json    ${response.content}
-    Comment    ${json_value}    Get Value From Json    ${json_object}    ${json_path}
     ${actual_value}    Get Json Value As String    ${response.content}    ${json_path}
     Run Keyword And Continue On Failure    Should Be Equal As Strings    ${actual_value}    ${expected_value}
 
