@@ -18,7 +18,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 	private PrintWriter writer = new PrintWriter(bos);
 	private long id;
 
-	public ResponseWrapper(Long requestId, HttpServletResponse response) {
+	public ResponseWrapper(long requestId, HttpServletResponse response) {
 		super(response);
 		this.id = requestId;
 	}

@@ -6,6 +6,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Vector;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -17,16 +20,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import com.google.common.collect.Iterators;
+
 public class LoggingFilterTest {
 
 	private LoggingFilter filter = new LoggingFilter();
-
+	
 	@Test
 	public void canDoFilterChain() throws ServletException, IOException {
 		FilterChain filterChain = mock(FilterChain.class);
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		HttpServletRequest request = mock(HttpServletRequest.class);
 
+		when(request.getHeaderNames()).thenReturn(Iterators.asEnumeration(new ArrayList<String>().iterator()));
 		when(response.getCharacterEncoding()).thenReturn("UTF-8");
 
 		filter.doFilterInternal(request, response, filterChain);

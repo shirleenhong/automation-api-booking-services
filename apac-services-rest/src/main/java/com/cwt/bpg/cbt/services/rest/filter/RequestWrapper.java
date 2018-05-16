@@ -15,7 +15,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 	private final ByteArrayOutputStream bos = new ByteArrayOutputStream();
 	private long id;
 
-	public RequestWrapper(Long requestId, HttpServletRequest request) {
+	public RequestWrapper(long requestId, HttpServletRequest request) {
 		super(request);
 		this.id = requestId;
 	}
