@@ -1,3 +1,7 @@
+*** Settings ***
+Resource    ../../resources/api-imports.txt
+Resource    ../../resources/api-utilities.txt
+Resource    ../../resources/api-variables.txt
 *** keywords ***
 Calculate Visa Processing Commission
     ${calculated_value}    Evaluate    ${cwt_handling_value}+${nett_cost_merchant_fee_amount}+${cwt_handling_merchant_fee_amount}

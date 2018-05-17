@@ -1,6 +1,8 @@
 *** Settings ***
 Library           OperatingSystem
-
+Resource    ../../resources/api-imports.txt
+Resource    ../../resources/api-utilities.txt
+Resource    ../../resources/api-variables.txt
 *** Keywords ***
 Create New List
     [Arguments]    ${product_number}
@@ -61,8 +63,7 @@ Verify Products And Vendors Are Retrieved Correctly
     Comment    Create File    ${EXECDIR}/file_with_products_vendors.txt    ${response.content}
     ${all_product_list_length}    Get Length    ${all_product_list}
     : FOR    ${index}    IN RANGE    ${all_product_list_length}
-    \    ${item_product_code}    Get Json Value    ${response.content}    /${index}/productCode
-    \    ${item_product_code}    Get Substring    ${item_product_code}    1    -1
+    \    ${item_product_code}    Get Json Value As String    ${response.content}    $.[${index}].productCode
     \    Verify Json Value Is Correct    $[${index}].description    ${product_code_${item_product_code}}
     \    Verify Vendors Are Retrieved Correctly    ${index}    ${product_code_${item_product_code}_list}
     ${index}    Evaluate    ${index}+1
@@ -73,8 +74,7 @@ Verify Vendors Are Retrieved Correctly
     ${item_vendor_list_length}    Get Length    ${item_vendor_list}
     ${vendor_index}    Set Variable    0
     : FOR    ${vendor_index}    IN RANGE    ${item_vendor_list_length}
-    \    ${item_vendor_number}    Get Json Value    ${response.content}    /${index}/vendors/${vendor_index}/vendorNumber
-    \    ${item_vendor_number}    Get Substring    ${item_vendor_number}    1    -1
+    \    ${item_vendor_number}    Get Json Value As String    ${response.content}    $.[${index}].vendors.[${vendor_index}].vendorNumber
     \    Should Contain X Times    ${item_vendor_list}    ${item_vendor_number}    1
     \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].vendorName    ${vendor_code_${item_vendor_number}}
     ${vendor_index}    Evaluate    ${vendor_index}+1

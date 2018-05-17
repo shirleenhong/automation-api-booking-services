@@ -18,5 +18,3 @@ Verify That Products And Vendors Are Correctly Retrieved For Hong Kong
     Send Product Get Request
     Verify Response Status Code Is Correct    200
     Verify Products And Vendors Are Retrieved Correctly
-
-*** Keywords ***
