@@ -1,7 +1,6 @@
 *** Settings ***
 Library           Collections
 Library           DateTime
-Library           HttpLibrary.HTTP
 Library           RequestsLibrary
 Library           String
 Library           JSONLibrary

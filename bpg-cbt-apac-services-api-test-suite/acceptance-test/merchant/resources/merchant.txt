@@ -1,3 +1,7 @@
+*** Setting ***
+Resource    ../../resources/api-imports.txt
+Resource    ../../resources/api-utilities.txt
+Resource    ../../resources/api-variables.txt
 *** Keywords ***
 Create Test Variables For Merchant Fee Percentage
     [Arguments]    ${country}=sg
@@ -42,12 +46,12 @@ Send Get Request For Merchant Fee Percentage
 Verify Merchant Fee Percentage Is Correctly Retrieved
     : FOR    ${index}    IN RANGE    0    ${merchant_fee_list_length}
     \    Set Test Variable    ${response}    ${response_${index}}
-    \    Verify Json Value Is Correct    /countryCode    ${country}
-    \    Verify Json Value Is Correct    /clientName    ${client_name_${index}}
-    \    Verify Json Value Is Correct    /profileName    ${profile_name_${index}}
-    \    Verify Json Value Is Correct    /clientType    ${client_type_${index}}
-    \    Verify Json Value Is Correct    /merchantFeePct    ${merchant_fee_percent_${index}}    float
-    \    Verify Json Value Is Correct    /includeTransactionFee    ${merchant_fee_flag_${index}}    boolean
+    \    Verify Json Value Is Correct    $.countryCode    ${country}
+    \    Verify Json Value Is Correct    $.clientName    ${client_name_${index}}
+    \    Verify Json Value Is Correct    $.profileName    ${profile_name_${index}}
+    \    Verify Json Value Is Correct    $.clientType    ${client_type_${index}}
+    \    Verify Json Value Is Correct    $.merchantFeePct    ${merchant_fee_percent_${index}}    float
+    \    Verify Json Value Is Correct    $.includeTransactionFee    ${merchant_fee_flag_${index}}    boolean
 
 Verify Merchant Fee Percentages Are Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "countryCode"
