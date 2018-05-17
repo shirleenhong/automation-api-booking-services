@@ -1,6 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
 
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,12 @@ public class FaresShopControllerTest {
 	@Test
 	public void canGetFaresShopOptions() {
 		ResponseEntity<?> faresShopOptions = faresShopController.getFaresShopOptions();
+		assertEquals(HttpStatus.OK, faresShopOptions.getStatusCode());
+	}
+	
+	@Test
+	public void canPutFaresShopOptions() {
+		ResponseEntity<?> faresShopOptions = faresShopController.putFaresShopOptions(ArrayList::new);
 		assertEquals(HttpStatus.OK, faresShopOptions.getStatusCode());
 	}
 }
