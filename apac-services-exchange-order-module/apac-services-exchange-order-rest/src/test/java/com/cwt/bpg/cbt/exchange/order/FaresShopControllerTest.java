@@ -23,4 +23,10 @@ public class FaresShopControllerTest {
 		ResponseEntity<?> faresShopOptions = faresShopController.putFaresShopOptions(ArrayList::new);
 		assertEquals(HttpStatus.OK, faresShopOptions.getStatusCode());
 	}
+	
+	@Test
+	public void canRemoveFaresShopOptions() {
+		ResponseEntity<?> faresShopOptions = faresShopController.removeFaresShopOptions(ArrayList::new);
+		assertEquals(HttpStatus.OK, faresShopOptions.getStatusCode());
+	}
 }

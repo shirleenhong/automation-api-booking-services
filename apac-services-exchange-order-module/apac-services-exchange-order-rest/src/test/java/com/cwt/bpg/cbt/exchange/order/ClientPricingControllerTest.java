@@ -18,10 +18,15 @@ public class ClientPricingControllerTest {
 			assertEquals(HttpStatus.OK,  client.getStatusCode());
 	}
 
-	
 	@Test
 	public void canPutClientPricing() {
-			ResponseEntity<?> client = clientPricingController.putClientPricing(ArrayList::new);
-			assertEquals(HttpStatus.OK,  client.getStatusCode());
+		ResponseEntity<?> client = clientPricingController.putClientPricing(ArrayList::new);
+		assertEquals(HttpStatus.OK, client.getStatusCode());
+	}
+	
+	@Test
+	public void canRemoveClientPricing() {
+		ResponseEntity<?> client = clientPricingController.removeClientPricing(ArrayList::new);
+		assertEquals(HttpStatus.OK, client.getStatusCode());
 	}
 }
