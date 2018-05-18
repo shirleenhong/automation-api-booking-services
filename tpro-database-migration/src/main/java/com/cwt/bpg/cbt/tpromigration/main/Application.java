@@ -9,17 +9,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.cwt.bpg.cbt.tpromigration.service.MigrationService;
 
 public class Application {
-	
-	
+
 	public static void main(String[] args) throws Exception {
 		
 		doCountryCodeSelection();
 		try(ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");)
-		{
-			MigrationService service = context.getBean(MigrationService.class);
-			service.startMigration();
-			service.migrateMerchantFees();
-			//service.migrateCurrencies();
+		{			
+		    MigrationService service = context.getBean(MigrationService.class);		    
 		}
 	}
 

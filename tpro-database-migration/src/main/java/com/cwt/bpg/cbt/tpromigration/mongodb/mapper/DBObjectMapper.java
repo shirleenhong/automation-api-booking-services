@@ -40,6 +40,13 @@ public class DBObjectMapper
         doc.put("_id", id);
         return doc;
     }
+    
+    public Document mapAsDbDocument(Integer id, Object obj) throws JsonProcessingException
+    {
+        final Document doc = mapAsDbDocument(obj);
+        doc.put("_id", id);
+        return doc;
+    }
 
     public Document mapAsDbDocumentWithObjectId(ObjectId id, Object obj) throws JsonProcessingException
     {

@@ -7,8 +7,6 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Vector;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,8 +30,30 @@ public class LoggingFilterTest {
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		HttpServletRequest request = mock(HttpServletRequest.class);
 
-		when(request.getHeaderNames()).thenReturn(Iterators.asEnumeration(new ArrayList<String>().iterator()));
+		ArrayList<String> headerNames = new ArrayList<>();
+		headerNames.add("Authorization");
+		
+		when(request.getHeaderNames()).thenReturn(Iterators.asEnumeration(headerNames.iterator()));
 		when(response.getCharacterEncoding()).thenReturn("UTF-8");
+		when(response.getContentType()).thenReturn("application/json");
+		when(response.getHeaderNames()).thenReturn(headerNames);
+
+		filter.doFilterInternal(request, response, filterChain);
+
+		verify(filterChain, times(1)).doFilter(Mockito.any(ServletRequest.class),
+				Mockito.any(ServletResponse.class));
+
+	}
+	
+	@Test
+	public void canDoFilterChainNonReadable() throws ServletException, IOException {
+		FilterChain filterChain = mock(FilterChain.class);
+		HttpServletResponse response = mock(HttpServletResponse.class);
+		HttpServletRequest request = mock(HttpServletRequest.class);
+
+		when(request.getHeaderNames()).thenReturn((Iterators.asEnumeration(new ArrayList<String>().iterator()))); 
+		when(response.getCharacterEncoding()).thenReturn("UTF-8");
+		when(response.getContentType()).thenReturn("xxx");
 
 		filter.doFilterInternal(request, response, filterChain);
 
