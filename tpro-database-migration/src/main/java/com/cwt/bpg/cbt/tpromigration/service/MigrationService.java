@@ -142,7 +142,7 @@ public class MigrationService {
 		List<AirlineRule> rules = airlineRuleDAO.list();
 		List<Document> docs = new ArrayList<>();
 		for (AirlineRule rule : rules) {
-			docs.add(dBObjectMapper.mapAsDbDocument(rule));
+			docs.add(dBObjectMapper.mapAsDbDocument(rule.getCode(), rule));
 		}
 
 		mongoDbConnection.getCollection("airlineRules").insertMany(docs);
@@ -166,6 +166,7 @@ public class MigrationService {
 
 		List<Document> docs = new ArrayList<>();
 		for (Client client : clients) {
+			
 			docs.add(dBObjectMapper.mapAsDbDocument(client.getClientId(), client));
 		}
 
@@ -234,13 +235,20 @@ public class MigrationService {
 		List<Client> clients = new ArrayList<>();
 		
 		for(Integer clientId : clientIds) {
-			Client client = new Client();
-			client.setClientId(clientId);
-			client.setProducts(productsMap.get(clientId));
-			client.setVendors(vendorsMap.get(clientId));
-			client.setBanks(banksMap.get(clientId));
 			
-			clients.add(client);	
+			if(productsMap.containsKey(clientId) 
+			|| vendorsMap.containsKey(clientId) 
+			|| banksMap.containsKey(clientId)) {
+				
+				Client client = new Client();
+				client.setClientId(clientId);
+				client.setProducts(productsMap.get(clientId));
+				client.setVendors(vendorsMap.get(clientId));
+				client.setBanks(banksMap.get(clientId));
+				
+				clients.add(client);
+			}
+				
 		}
 		
 		return clients;

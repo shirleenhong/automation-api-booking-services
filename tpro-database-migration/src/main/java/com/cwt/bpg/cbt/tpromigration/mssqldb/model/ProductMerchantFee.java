@@ -1,5 +1,8 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(value = { "clientId" })
 public class ProductMerchantFee {
 
 	private int clientId;
