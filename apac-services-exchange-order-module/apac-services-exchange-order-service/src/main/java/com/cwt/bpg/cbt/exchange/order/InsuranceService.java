@@ -21,7 +21,7 @@ public class InsuranceService {
 	}
 
 	public Insurance putInsurance(Insurance insurance) {
-		return insuranceRepository.putInsurance(insurance);
+		return insuranceRepository.put(insurance);
 	}
 
 	@CacheEvict(cacheNames = "insurance-types", allEntries = true)

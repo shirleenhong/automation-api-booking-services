@@ -44,11 +44,11 @@ public class InsuranceServiceTest {
 	@Test
 	public void canPutInsurance() {
 		Insurance insurance = new Insurance();
-		when(insuranceRepository.putInsurance(insurance)).thenReturn(insurance);
+		when(insuranceRepository.put(insurance)).thenReturn(insurance);
 		
 		Insurance putInsurance = service.putInsurance(insurance);
 		
-		verify(insuranceRepository, times(1)).putInsurance(insurance);
+		verify(insuranceRepository, times(1)).put(insurance);
 	}
 	
 	@SuppressWarnings("unchecked")
