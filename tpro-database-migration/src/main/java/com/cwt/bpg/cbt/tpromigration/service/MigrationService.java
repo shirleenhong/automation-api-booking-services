@@ -113,6 +113,11 @@ public class MigrationService {
 		logger.info("end of currency migration...");
 		
 	}
+
+
+	public void migrateClientPricing() {
+		
+	}
 	
 	
 	
