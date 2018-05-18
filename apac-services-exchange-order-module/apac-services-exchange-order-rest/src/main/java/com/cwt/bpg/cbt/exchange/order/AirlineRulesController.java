@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(tags = "Airline Rules")
 public class AirlineRulesController {
+	
 	@Autowired
 	private AirlineRuleService service;
 
