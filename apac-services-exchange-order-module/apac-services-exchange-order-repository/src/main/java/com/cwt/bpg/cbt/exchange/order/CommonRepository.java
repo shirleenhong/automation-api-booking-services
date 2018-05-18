@@ -70,7 +70,7 @@ class CommonRepository<T> {
 		return keyValue;
 	}
 	
-	public void indentity(Consumer<Object[]> i) {
+	public void identity(Consumer<Object[]> i) {
 		i.accept(new Object[] { typeClass, keyColumn });
 	}
 }

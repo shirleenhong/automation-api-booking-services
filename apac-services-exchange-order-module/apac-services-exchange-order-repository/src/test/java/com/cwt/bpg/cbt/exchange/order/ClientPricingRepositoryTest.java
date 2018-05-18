@@ -15,7 +15,7 @@ public class ClientPricingRepositoryTest {
 	public void shouldCreateInsuranceRepository() {
 		ClientPricingRepository repo = new ClientPricingRepository();
 
-		repo.indentity((i) -> {
+		repo.identity((i) -> {
 			assertThat(i[0], is(equalTo(Client.class)));
 			assertThat(i[1], is(equalTo("Key")));
 		});

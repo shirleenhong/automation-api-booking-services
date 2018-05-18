@@ -15,7 +15,7 @@ public class InsuranceRepositoryTest {
 	public void shouldCreateInsuranceRepository() {
 		InsuranceRepository repo = new InsuranceRepository();
 
-		repo.indentity((i) -> {
+		repo.identity((i) -> {
 			assertThat(i[0], is(equalTo(Insurance.class)));
 			assertThat(i[1], is(equalTo(InsuranceRepository.KEY_COLUMN)));
 		});
