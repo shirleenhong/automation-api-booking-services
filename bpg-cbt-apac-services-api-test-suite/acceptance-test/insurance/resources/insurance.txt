@@ -9,12 +9,9 @@ Create Test Variables For Insurance Plans
     ${insurance_list_length}    Get Length    ${insurance_list}
     Set Test Variable    ${insurance_list_length}
     Set Test Variable    ${insurance_list}
-    ${index}    Set Variable    0
     : FOR    ${data}    IN    @{insurance_list}
     \    ${data_item}    Split String    ${data}    ,
-    \    Set Test Variable    ${insurance_type_${index}}    ${data_item[0]}
-    \    Set Test Variable    ${insurance_commission_${index}}    ${data_item[1]}
-    \    ${index}    Evaluate    ${index}+1
+    \    Set Test Variable    ${${data_item[0]}_commission}    ${data_item[1]}
 
 Delete Insurance Plans And Evict Insurance Type Cache
     [Arguments]    ${type}=New Trip Plan    ${number}=2    ${token}=${default_token}
@@ -75,11 +72,21 @@ Update Insurance Plans To Original Value And Evict Insurance Type Cache
     Evict Insurance Type Cache    ${number}    ${token}
 
 Verify Insurance Plans Are Correctly Retrieved
-    : FOR    ${index}    IN RANGE    0    ${insurance_list_length}
-    \    Verify Json Value Is Correct    $.[${index}].commission    ${insurance_commission_${index}}    integer
-    \    Verify Json Value Is Correct    $.[${index}].type    ${insurance_type_${index}}
-    ${index}    Evaluate    ${index}+1
-    Verify Json Element Does Not Exist    $.[${index}].commission
+    #: FOR    ${index}    IN RANGE    0    ${insurance_list_length}
+    #\    Verify Json Value Is Correct    $.[${index}].commission    ${insurance_commission_${index}}    integer
+    #\    Verify Json Value Is Correct    $.[${index}].type    ${insurance_type_${index}}
+    #${index}    Evaluate    ${index}+1
+    #Verify Json Element Does Not Exist    $.[${index}].commission
+    ${data}    Remove String    ${response.text}    [
+    ${data}    Remove String    ${data}    ]
+    ${data_list}    Split String    ${data}    },{
+    : FOR    ${item}    IN    @{data_list}
+    \    ${item}    Remove String    ${item}    "
+    \    ${item}    Remove String    ${item}    {
+    \    ${item}    Remove String    ${item}    }
+    \    ${item}    Replace String    ${item}    :    ,
+    \    ${items}    Split String    ${item}    ,
+    \    Verify Actual Numerical Value Matches Expected Numerical Value    ${items[3]}    ${${items[1]}_commission}
 
 Verify That Insurance Plans Are Not Retrieved
     Verify String Does Not Contain Substring    ${response.content}    "commission"
