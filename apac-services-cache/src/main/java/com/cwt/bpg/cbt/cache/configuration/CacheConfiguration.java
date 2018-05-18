@@ -18,16 +18,25 @@ public class CacheConfiguration {
 
 	private static final Logger logger = LoggerFactory.getLogger(CacheConfiguration.class);
 
-	private static final String[] cacheNames = new String[] { "products", "merchant-fee",
-			"currency-rounding-rule", "insurance-types" };
+	private static final String[] cacheNames = new String[] { "products",
+			"merchant-fee",
+			"currency-rounding-rule",
+			"insurance-types",
+			"airline-rules",
+			"client-pricing"};
 
 	@Bean
 	public CacheManager cacheManager() {
 		return new ConcurrentMapCacheManager(cacheNames);
 	}
 
-	@CacheEvict(allEntries = true, cacheNames = { "products", "merchant-fee",
-			"currency-rounding-rule", "insurance-types" })
+	@CacheEvict(allEntries = true,
+			cacheNames = { "products",
+					"merchant-fee",
+					"currency-rounding-rule",
+					"insurance-types",
+					"airline-rules",
+					"client-pricing"})
 	@Scheduled(cron = "0 0 0,12 * * *")
 	public void evictAllCache() {
 		logger.info("Cache Evicted!");

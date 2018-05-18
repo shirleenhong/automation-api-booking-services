@@ -245,4 +245,12 @@ public class MigrationService {
 		
 		return clients;
 	}
+
+
+	public void migrateClientPricing() {
+		
+	}
+	
+	
+	
 }

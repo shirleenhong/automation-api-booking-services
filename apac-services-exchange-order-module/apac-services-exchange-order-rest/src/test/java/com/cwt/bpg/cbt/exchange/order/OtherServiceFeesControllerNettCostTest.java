@@ -1,12 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.nio.charset.Charset;
-
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,9 +16,14 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.charset.Charset;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -53,12 +55,19 @@ public class OtherServiceFeesControllerNettCostTest {
 						
 		NettCostInput input = new NettCostInput();
 	    input.setCommissionPct(2D);
-	    input.setSellingPrice(new BigDecimal(250));	   
-	    
-        mockMvc.perform(post("/other-service-fees/nett-cost")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isOk());
+	    input.setSellingPrice(new BigDecimal(250));
+
+		AirFeesBreakdown breakdown = new AirFeesBreakdown();
+		when(service.calculateNettCost(input)).thenReturn(breakdown);
+
+		mockMvc.perform(post("/other-service-fees/nett-cost")
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(input)))
+				.andExpect(status().isOk())
+				.andReturn()
+				.getResponse();
+
+		verify(service,times(1)).calculateNettCost(any(NettCostInput.class));
 	}
 	
 	@Test
@@ -77,6 +86,8 @@ public class OtherServiceFeesControllerNettCostTest {
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isBadRequest());
+
+	    verifyZeroInteractions(service);
 	}
 			
 	public static byte[] convertObjectToJsonBytes(Object object) throws IOException {

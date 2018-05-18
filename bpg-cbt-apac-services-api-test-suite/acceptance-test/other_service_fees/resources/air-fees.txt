@@ -1,3 +1,7 @@
+*** Settings ***
+Resource    ../../resources/api-imports.txt
+Resource    ../../resources/api-utilities.txt
+Resource    ../../resources/api-variables.txt
 *** Keywords ***
 Calculate Air Fees-HK Commission
     Run Keyword If    "${client_type_value.upper()}" == "TP"    Set Test Variable    ${commission_amount}    0
@@ -254,7 +258,7 @@ Remove Decimal Places For Air Fees-HK
     Set Test Variable    ${nett_fare_amount}
 
 Verify Calculated Air Fees Are Returned Correctly
-    ${data}    Remove String    ${response.content}    {
+    ${data}    Remove String    ${response.text}    {
     ${data}    Remove String    ${data}    }
     ${data}    Remove String    ${data}    "
     ${data_list}    Split String    ${data}    ,

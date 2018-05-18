@@ -1,3 +1,7 @@
+*** Settings ***
+Resource    ../../resources/api-imports.txt
+Resource    ../../resources/api-utilities.txt
+Resource    ../../resources/api-variables.txt
 *** Keywords ***
 Append Additional Fields For Air Fees
     [Arguments]    ${other_service_fees_request_list}
@@ -194,7 +198,7 @@ Verify Calculated Miscellaneous Fees Are Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "commission"
 
 Verify Calculated Miscellaneous Fees Are Returned Correctly
-    ${data}    Remove String    ${response.content}    {
+    ${data}    Remove String    ${response.text}    {
     ${data}    Remove String    ${data}    }
     ${data}    Remove String    ${data}    "
     ${data_list}    Split String    ${data}    ,
