@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
@@ -24,16 +25,6 @@ class CommonRepository<T> {
 		this.typeClass = typeClass;
 		this.keyColumn = keyColumn;
 	}
-
-    public Class<T> getTypeClass()
-    {
-        return typeClass;
-    }
-
-    public String getKeyColumn()
-    {
-        return keyColumn;
-    }
 
     List<T> getAll() {
 		return morphia.getDatastore().createQuery(typeClass).asList();
@@ -77,5 +68,9 @@ class CommonRepository<T> {
 			LoggerFactory.getLogger(typeClass).error("Unable to get value of key column.", e);
 		}
 		return keyValue;
+	}
+	
+	public void indentity(Consumer<Object[]> i) {
+		i.accept(new Object[] { typeClass, keyColumn });
 	}
 }

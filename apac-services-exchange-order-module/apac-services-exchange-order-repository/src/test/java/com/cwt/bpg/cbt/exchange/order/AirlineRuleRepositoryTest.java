@@ -14,9 +14,11 @@ public class AirlineRuleRepositoryTest
     public void shouldCreateInsuranceRepository()
     {
         AirlineRuleRepository repo = new AirlineRuleRepository();
-
-        assertThat(repo.getKeyColumn(), is(equalTo(AirlineRuleRepository.KEY_COLUMN)));
-        assertThat(repo.getTypeClass(), is(equalTo(AirlineRule.class)));
+        
+        repo.indentity((i) -> {
+        	assertThat(i[0], is(equalTo(AirlineRule.class)));
+        	assertThat(i[1], is(equalTo(AirlineRuleRepository.KEY_COLUMN)));
+        });
     }
 
 }
