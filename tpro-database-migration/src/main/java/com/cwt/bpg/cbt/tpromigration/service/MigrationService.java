@@ -155,6 +155,10 @@ public class MigrationService {
 		Map<Integer, List<BankVendor>> vendorsMap = getVendoMap(clientDAO.getVendors());
 		Map<Integer, List<Bank>> banksMap = getBankMap(clientDAO.getBanks());
 		List<Client> clients = clientDAO.getClients();
+		
+		Client defaultClient = new Client();
+		defaultClient.setClientId(-1);
+		clients.add(defaultClient);
 
 		updateClients(clients, productsMap, vendorsMap, banksMap);
 
@@ -226,20 +230,13 @@ public class MigrationService {
 			Map<Integer, List<BankVendor>> vendorsMap, 
 			Map<Integer, List<Bank>> banksMap) {
 		
-		
 		for(Client client : clients) {
-			
-			if(productsMap.containsKey(client.getClientId()) 
-			|| vendorsMap.containsKey(client.getClientId()) 
-			|| banksMap.containsKey(client.getClientId())) {
-				
-				client.setProducts(productsMap.get(client.getClientId()));
-				client.setVendors(vendorsMap.get(client.getClientId()));
-				client.setBanks(banksMap.get(client.getClientId()));
-				
-			}
-				
-		}
+						
+			client.setProducts(productsMap.get(client.getClientId()));
+			client.setVendors(vendorsMap.get(client.getClientId()));
+			client.setBanks(banksMap.get(client.getClientId()));
+		}		
+		
 		
 		return clients;
 	}
