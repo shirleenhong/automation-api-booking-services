@@ -36,6 +36,24 @@ public class Vendor {
 
 	private String vendorName;
 
+	private String interfaceNumber;
+
+	private String contactPerson;
+
+	private String address;
+
+	private String postalCode;
+
+	private String state;
+
+	private String vendorType;
+
+	private Boolean requireEO;
+
+	private Boolean requireAdvanced;
+
+	private String HotelFee;
+
 	public String getCountryCode() {
 		return countryCode;
 	}
@@ -156,4 +174,75 @@ public class Vendor {
 		this.vendorName = vendorName;
 	}
 
+	public String getInterfaceNumber() {
+		return interfaceNumber;
+	}
+
+	public void setInterfaceNumber(String interfaceNumber) {
+		this.interfaceNumber = interfaceNumber;
+	}
+
+	public String getContactPerson() {
+		return contactPerson;
+	}
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getVendorType() {
+		return vendorType;
+	}
+
+	public void setVendorType(String vendorType) {
+		this.vendorType = vendorType;
+	}
+
+	public Boolean getRequireEO() {
+		return requireEO;
+	}
+
+	public void setRequireEO(Boolean requireEO) {
+		this.requireEO = requireEO;
+	}
+
+	public Boolean getRequireAdvanced() {
+		return requireAdvanced;
+	}
+
+	public void setRequireAdvanced(Boolean requireAdvanced) {
+		this.requireAdvanced = requireAdvanced;
+	}
+
+	public String getHotelFee() {
+		return HotelFee;
+	}
+
+	public void setHotelFee(String hotelFee) {
+		HotelFee = hotelFee;
+	}
 }
