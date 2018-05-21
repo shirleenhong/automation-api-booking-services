@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Bank;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.BankVendor;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientPricing;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductMerchantFee;
 
 @Repository
@@ -32,7 +33,7 @@ public class ClientDAOImpl {
 		List<Client> clients = new ArrayList<>();
 
 		String sql = "select \n" + 
-				"    clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax\n" + 
+				"    clientmaster.clientid, clientmasterpricing.cmpid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax\n" + 
 				"from \n" + 
 				"	tblclientmaster clientmaster left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = clientmaster.clientid,  \n" + 
 				"	tblconfiguration config, \n" + 
@@ -62,6 +63,7 @@ public class ClientDAOImpl {
 				client.setName(rs.getString("name"));
 				client.setProfileName(rs.getString("profilename"));
 				client.setPricingId(rs.getInt("pricingid"));
+				client.setCmpid(rs.getInt("cmpid"));
 				client.setExemptTax(rs.getBoolean("exempttax"));
 				clients.add(client);
 			}
@@ -261,6 +263,60 @@ public class ClientDAOImpl {
 		}
 
 		LOGGER.info("Size of banks from mssqldb: {}", resultList.size());
+
+		return resultList;
+	}
+
+
+	public List<ClientPricing> getClientPricings() {
+
+		List<ClientPricing> resultList = new ArrayList<>();
+
+		String sql = "Select * from tblClientPricing";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			LOGGER.info("Getting client pricing from mssqldb");
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				ClientPricing clientPricing = new ClientPricing();
+				clientPricing.setCmpid(rs.getInt("cmpid"));
+				clientPricing.setGroup(rs.getInt("value"));
+				clientPricing.setTripType(rs.getString("triptype"));
+				clientPricing.setFeeOption(rs.getString("valueoption"));
+				resultList.add(clientPricing);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading client pricing, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+			}
+		}
+
+		LOGGER.info("Size of client pricing from mssqldb: {}", resultList.size());
 
 		return resultList;
 	}

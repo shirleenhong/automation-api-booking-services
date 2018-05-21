@@ -5,6 +5,7 @@ import java.util.List;
 public class Client {
 
 	private int clientId;
+	private int cmpid;
 	private String name;
 	private String profileName;
 	private Integer pricingId;
@@ -12,6 +13,7 @@ public class Client {
 	private List<ProductMerchantFee> products;
 	private List<BankVendor> vendors;
 	private List<Bank> banks;
+	private List<ClientPricing> clientPricings;
 
 	public void setProducts(List<ProductMerchantFee> list) {
 		this.products = list;
@@ -45,6 +47,14 @@ public class Client {
 		this.clientId = clientId;
 	}
 
+	public int getCmpid() {
+		return cmpid;
+	}
+
+	public void setCmpid(int cmpid) {
+		this.cmpid = cmpid;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -75,5 +85,13 @@ public class Client {
 
 	public void setExemptTax(Boolean exemptTax) {
 		this.exemptTax = exemptTax;
+	}
+
+	public List<ClientPricing> getClientPricings() {
+		return clientPricings;
+	}
+
+	public void setClientPricings(List<ClientPricing> clientPricings) {
+		this.clientPricings = clientPricings;
 	}
 }
