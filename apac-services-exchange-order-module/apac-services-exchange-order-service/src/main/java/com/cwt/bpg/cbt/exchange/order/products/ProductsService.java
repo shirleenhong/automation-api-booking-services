@@ -21,9 +21,9 @@ public class ProductsService {
 
 		final List<Product> products = productRepo.getProducts(countryCode);
 
-		final List<Product> filteredProduct = products.stream().filter(f -> f.getVendors().size() > 0)
+		final List<Product> filteredProducts = products.stream().filter(f -> f.getVendors().size() > 0)
 				.collect(Collectors.toList());
 
-		return filteredProduct;
+		return filteredProducts;
 	}
 }

@@ -55,6 +55,7 @@ public class ProductsServiceTest {
 	private static List<Product> createListOfProducts() {
 		Product product1 = new Product();
 		List<Vendor> vendors = Arrays.asList(new Vendor() {
+			private static final long serialVersionUID = -6678379343715153605L;
 			{
 				setVendorName("Pacific West Vendor");
 				setVendorNumber("000012");
