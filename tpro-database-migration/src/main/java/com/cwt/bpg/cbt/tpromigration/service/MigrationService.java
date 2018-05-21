@@ -159,10 +159,9 @@ public class MigrationService {
 		Map<Integer, List<ProductMerchantFee>> productsMap = getProductMap(clientDAO.getProducts());
 		Map<Integer, List<BankVendor>> vendorsMap = getVendoMap(clientDAO.getVendors());
 		Map<Integer, List<Bank>> banksMap = getBankMap(clientDAO.getBanks());
-		List<Integer> clientIds = clientDAO.getClientIds();
+		List<Client> clients = clientDAO.getClients();
 
-		List<Client> clients = new ArrayList<>();
-		clients.addAll(getClients(clientIds, productsMap, vendorsMap, banksMap));
+		clients.addAll(updateClients(clients, productsMap, vendorsMap, banksMap));
 
 		List<Document> docs = new ArrayList<>();
 		for (Client client : clients) {
@@ -227,24 +226,21 @@ public class MigrationService {
 		return result;
 	}
 
-	private Collection<? extends Client> getClients(
-			List<Integer> clientIds, Map<Integer, List<ProductMerchantFee>> productsMap,
+	private Collection<? extends Client> updateClients(
+			List<Client> clients, Map<Integer, List<ProductMerchantFee>> productsMap,
 			Map<Integer, List<BankVendor>> vendorsMap, 
 			Map<Integer, List<Bank>> banksMap) {
 		
-		List<Client> clients = new ArrayList<>();
 		
-		for(Integer clientId : clientIds) {
+		for(Client client : clients) {
 			
-			if(productsMap.containsKey(clientId) 
-			|| vendorsMap.containsKey(clientId) 
-			|| banksMap.containsKey(clientId)) {
+			if(productsMap.containsKey(client.getClientId()) 
+			|| vendorsMap.containsKey(client.getClientId()) 
+			|| banksMap.containsKey(client.getClientId())) {
 				
-				Client client = new Client();
-				client.setClientId(clientId);
-				client.setProducts(productsMap.get(clientId));
-				client.setVendors(vendorsMap.get(clientId));
-				client.setBanks(banksMap.get(clientId));
+				client.setProducts(productsMap.get(client.getClientId()));
+				client.setVendors(vendorsMap.get(client.getClientId()));
+				client.setBanks(banksMap.get(client.getClientId()));
 				
 				clients.add(client);
 			}

@@ -16,38 +16,58 @@ import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Bank;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.BankVendor;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductMerchantFee;
 
 @Repository
 public class ClientDAOImpl {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AirlineRuleDAOImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ClientDAOImpl.class);
 
 	@Autowired
 	private DataSource dataSource;
 	
-	public List<Integer> getClientIds() {
+	public List<Client> getClients() {
 
-		List<Integer> resultList = new ArrayList<>();
+		List<Client> clients = new ArrayList<>();
 
-		String sql = "Select ClientID from tblClientMaster";
+		String sql = "select \n" + 
+				"    clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax\n" + 
+				"from \n" + 
+				"	tblclientmaster clientmaster left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = clientmaster.clientid,  \n" + 
+				"	tblconfiguration config, \n" + 
+				"	cwtstandarddata.dbo.tblcsp_linedefclientmapping clientmapping, \n" + 
+				"	cwtstandarddata.dbo.configinstances configinstance  \n" + 
+				"where clientmaster.configurationid = config.configurationid \n" + 
+				"	and clientmaster.clientid = clientmapping.clientid \n" + 
+				"	and clientmasterpricing.clientid = clientmaster.clientid\n" + 
+				"	and configinstance.countrycode = 'IN'\n" + 
+				"	and clientmapping.configinstancekeyid=configinstance.keyid\n" + 
+				"group by clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax\n" + 
+				"order by clientmaster.clientid";
 
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			LOGGER.info("Getting products from mssqldb");
+			LOGGER.info("Getting clients from mssqldb");
 			conn = dataSource.getConnection();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-
+			
 			while (rs.next()) {
-				resultList.add(rs.getInt("ClientID"));
+				Client client = new Client();
+				client.setClientId(rs.getInt("clientid"));
+				client.setName(rs.getString("name"));
+				client.setProfileName(rs.getString("profilename"));
+				client.setPricingId(rs.getInt("pricingid"));
+				client.setExemptTax(rs.getBoolean("exempttax"));
+				clients.add(client);
 			}
 		}
 		catch (SQLException e) {
-			LOGGER.error("Error reading airline rules, {}", e);
+			LOGGER.error("Error reading clients, {}", e);
 		}
 		finally {
 
@@ -70,9 +90,9 @@ public class ClientDAOImpl {
 			}
 		}
 
-		LOGGER.info("Size of airline rules from mssqldb: {}", resultList.size());
+		LOGGER.info("Size of clients from mssqldb: {}", clients.size());
 
-		return resultList;
+		return clients;
 	}
 
 

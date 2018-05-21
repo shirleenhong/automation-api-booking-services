@@ -5,23 +5,24 @@ import java.util.List;
 public class Client {
 
 	private int clientId;
+	private String name;
+	private String profileName;
+	private Integer pricingId;
+	private Boolean exemptTax;
 	private List<ProductMerchantFee> products;
 	private List<BankVendor> vendors;
 	private List<Bank> banks;
 
 	public void setProducts(List<ProductMerchantFee> list) {
 		this.products = list;
-
 	}
 
 	public void setVendors(List<BankVendor> list) {
 		this.vendors = list;
-
 	}
 
 	public void setBanks(List<Bank> list) {
 		this.banks = list;
-
 	}
 
 	public List<ProductMerchantFee> getProducts() {
@@ -43,7 +44,36 @@ public class Client {
 	public void setClientId(int clientId) {
 		this.clientId = clientId;
 	}
-	
-	
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getProfileName() {
+		return profileName;
+	}
+
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
+	}
+
+	public Integer getPricingId() {
+		return pricingId;
+	}
+
+	public void setPricingId(Integer pricingId) {
+		this.pricingId = pricingId;
+	}
+
+	public Boolean getExemptTax() {
+		return exemptTax;
+	}
+
+	public void setExemptTax(Boolean exemptTax) {
+		this.exemptTax = exemptTax;
+	}
 }
