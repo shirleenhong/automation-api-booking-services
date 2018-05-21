@@ -1,6 +1,8 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.dao;
 
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -27,31 +30,26 @@ public class IndiaVendorDAOImpl implements VendorDAO{
     @Override
     public List<Vendor> listVendors() {
         List<Vendor> vendorList = new ArrayList<Vendor>();
-        String sql = "SELECT * FROM tblVendors";
+        String sql = "SELECT DISTINCT a.*, \n" + 
+        		"    SUBSTRING(\n" + 
+        		"        (\n" + 
+        		"            SELECT ';' + CAST(productid AS varchar)  AS [text()]\n" + 
+        		"            FROM tblVendorProduct b\n" + 
+        		"			WHERE b.VendorNumber COLLATE SQL_LATIN1_GENERAL_CP1_CI_AS = a.VendorNumber\n" + 
+        		"            ORDER BY a.vendornumber\n" + 
+        		"            FOR XML PATH ('')\n" + 
+        		"        ), 2, 1000) [ProductID]\n" + 
+        		"FROM tblVendors a";
 
         Connection conn = null;
-//		@Column(name="VendorNumber")
-//		@Column(name="InterfaceNumber")
-//		@Column(name="VendorName")
-//		@Column(name="ContactPerson")
-//		@Column(name="Address")
-//		@Column(name="City")
-//		@Column(name="PostalCode")
-//		@Column(name="State")
-//		@Column(name="Country")
-//		@Column(name="VendorType")
-//		@Column(name="RequireEO")
-//		@Column(name="RequireAdvanced")
-//		@Column(name="Misc")
-//		@Column(name="HotelFee")
 
         try {
-            logger.info("getting vendors from mssqldb");
+            logger.info("getting vendors from mssqldb india");
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Vendor tblVendor = new Vendor();
+            	Vendor tblVendor = new Vendor();
                 tblVendor.setVendorNumber(rs.getString("VendorNumber"));
                 tblVendor.setInterfaceNumber(rs.getString("InterfaceNumber"));
                 tblVendor.setVendorName(rs.getString("VendorName").trim().replaceAll(" +", " "));
@@ -66,7 +64,14 @@ public class IndiaVendorDAOImpl implements VendorDAO{
                 tblVendor.setRequireAdvanced(rs.getObject("RequireAdvanced") == null ? null : rs.getBoolean("RequireAdvanced"));
                 tblVendor.setMisc(rs.getObject("Misc") == null ? null : rs.getBoolean("MISC"));
                 tblVendor.setHotelFee(rs.getString("HotelFee"));
-                vendorList.add(tblVendor);
+
+                String productCodesStr = rs.getString("ProductID");
+				if(StringUtils.isNotBlank(productCodesStr)) {
+					List<String> productCodes = Arrays.asList(productCodesStr.replaceAll(" ", "").split(";"));
+					tblVendor.setProductCodes(productCodes);
+				}
+                
+            	vendorList.add(tblVendor);
             }
             rs.close();
             ps.close();
