@@ -18,6 +18,7 @@ public class Application {
 		    MigrationService service = context.getBean(MigrationService.class);		
 			if ("IN".equals(System.getProperty("spring.profiles.default"))) {
 				service.migrateClients();
+				//service.startMigration();
 			} else {
 				
 			}

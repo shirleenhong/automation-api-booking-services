@@ -52,7 +52,7 @@ public class IndiaProductCodeDAOImpl implements ProductCodeDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Product productCode = new Product();
-
+                productCode.setProductCode((rs.getObject("Number") == null ? null : rs.getInt("Number")).toString());
                 productCode.setNumber(rs.getObject("Number") == null ? null : rs.getInt("Number"));
                 productCode.setName(rs.getString("Name"));
                 productCode.setgDSCode(rs.getString("GDSCode"));
