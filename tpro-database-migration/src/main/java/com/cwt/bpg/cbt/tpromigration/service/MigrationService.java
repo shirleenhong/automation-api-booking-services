@@ -6,22 +6,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.*;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirlineRuleDAOImpl;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientDAOImpl;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientMerchantFeeDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.CurrencyDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductCodeDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirlineRule;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Bank;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.BankVendor;
@@ -46,11 +40,10 @@ public class MigrationService {
 	private DBObjectMapper dBObjectMapper;
 
 	@Autowired
-	@Qualifier("vendorDAOImpl")
-	private VendorDAO vendorDAO;
+	private VendorDAOFactory vendorDAOFactory;
 
 	@Autowired
-	private ProductCodeDAO productCodeDAO;
+	private ProductDAOFactory productDAOFactory;
 
 	@Autowired
 	private ClientMerchantFeeDAO clientMerchantFeeDAO;
@@ -78,8 +71,8 @@ public class MigrationService {
 
 		LOGGER.info("start migration...");
 
-		List<Vendor> vendorList = vendorDAO.listVendors();
-		List<Product> products = productCodeDAO.listProductCodes();
+		List<Vendor> vendorList = vendorDAOFactory.getVendorDAO().listVendors();
+		List<Product> products = productDAOFactory.getProductCodeDAO().listProductCodes();
 
 		String countryCode = System.getProperty("spring.profiles.default");
 
