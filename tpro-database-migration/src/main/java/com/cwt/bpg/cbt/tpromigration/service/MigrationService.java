@@ -161,7 +161,7 @@ public class MigrationService {
 		Map<Integer, List<Bank>> banksMap = getBankMap(clientDAO.getBanks());
 		List<Client> clients = clientDAO.getClients();
 
-		clients.addAll(updateClients(clients, productsMap, vendorsMap, banksMap));
+		updateClients(clients, productsMap, vendorsMap, banksMap);
 
 		List<Document> docs = new ArrayList<>();
 		for (Client client : clients) {
