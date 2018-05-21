@@ -17,13 +17,14 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.cwt.bpg.cbt.services.rest.security.WebSecurityConfig.ApiWebSecurityConfigurationAdapter;
 import com.cwt.bpg.cbt.services.rest.security.WebSecurityConfig.TokenSecurityConfigurerAdapter;
+
 
 public class WebSecurityConfigTest {
 	
 	
-	private WebSecurityConfig wsc = new WebSecurityConfig();
-
+	private ApiWebSecurityConfigurationAdapter wsc = new ApiWebSecurityConfigurationAdapter();
 
 	@SuppressWarnings("unchecked")
 	@Test
@@ -38,8 +39,8 @@ public class WebSecurityConfigTest {
 		List<RequestMatcher> field = (List<RequestMatcher>)ReflectionTestUtils.getField(ws, "ignoredRequests");
 		assertTrue(field.size() > 0);
 	}
-	
 
+	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void canConfigureHttpSecurity() throws Exception {
