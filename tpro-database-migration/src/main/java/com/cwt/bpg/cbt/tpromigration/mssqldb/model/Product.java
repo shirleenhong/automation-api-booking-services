@@ -31,7 +31,7 @@ public class Product {
 
 	private String type;
 
-	private Integer Number;
+	private Integer number;
 
 	private String name;
 
@@ -49,7 +49,7 @@ public class Product {
 
 	private Boolean suppressMI;
 
-	private Float FeeCode;
+	private Float feeCode;
 
 	private String gSTFormula;
 
@@ -156,11 +156,11 @@ public class Product {
 	}
 
 	public Integer getNumber() {
-		return Number;
+		return number;
 	}
 
 	public void setNumber(Integer number) {
-		Number = number;
+		this.number = number;
 	}
 
 	public String getName() {
@@ -228,11 +228,11 @@ public class Product {
 	}
 
 	public Float getFeeCode() {
-		return FeeCode;
+		return feeCode;
 	}
 
 	public void setFeeCode(Float feeCode) {
-		FeeCode = feeCode;
+		this.feeCode = feeCode;
 	}
 
 	public String getgSTFormula() {

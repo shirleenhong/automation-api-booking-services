@@ -52,7 +52,7 @@ public class Vendor {
 
 	private Boolean requireAdvanced;
 
-	private String HotelFee;
+	private String hotelFee;
 
 	public String getCountryCode() {
 		return countryCode;
@@ -239,10 +239,10 @@ public class Vendor {
 	}
 
 	public String getHotelFee() {
-		return HotelFee;
+		return hotelFee;
 	}
 
 	public void setHotelFee(String hotelFee) {
-		HotelFee = hotelFee;
+		this.hotelFee = hotelFee;
 	}
 }
