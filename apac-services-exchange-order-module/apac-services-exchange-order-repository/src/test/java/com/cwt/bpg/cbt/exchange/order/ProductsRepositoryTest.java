@@ -118,12 +118,11 @@ public class ProductsRepositoryTest {
 		assertNotNull(products);
 		assertEquals(2, products.size());
 
-		assertEquals("BSP Ticket And MPD", products.get(0).getDescription());
+		assertEquals("AA SEGMENT BOOKING FEE", products.get(0).getDescription());
 		assertEquals("BANK SETTLEMENT PLAN", products.get(0).getVendors().get(0).getVendorName());
-
-		assertEquals("AA SEGMENT BOOKING FEE", products.get(1).getDescription());
+		
+		assertEquals("BSP Ticket And MPD", products.get(1).getDescription());
 		assertEquals("BANK SETTLEMENT PLAN", products.get(1).getVendors().get(0).getVendorName());
-
 	}
 
 	@Test

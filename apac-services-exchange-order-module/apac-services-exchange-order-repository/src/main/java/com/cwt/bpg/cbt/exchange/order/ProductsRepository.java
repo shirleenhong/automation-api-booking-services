@@ -50,10 +50,10 @@ public class ProductsRepository {
 		if (products != null && !products.isEmpty()) {
 			for (Product product : products) {
 				if (product.getVendors() != null && !product.getVendors().isEmpty()) {
-					product.getVendors().sort(comparing(Vendor::getVendorNumber));
+					product.getVendors().sort(comparing(Vendor::getVendorName));
 				}
 			}
-			products.sort(comparing(Product::getProductCode));
+			products.sort(comparing(Product::getDescription));
 		}
 
 	}
