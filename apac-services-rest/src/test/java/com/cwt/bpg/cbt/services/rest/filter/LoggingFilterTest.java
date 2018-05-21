@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.http.MediaType;
 
 import com.google.common.collect.Iterators;
 
@@ -28,14 +29,15 @@ public class LoggingFilterTest {
 	public void canDoFilterChain() throws ServletException, IOException {
 		FilterChain filterChain = mock(FilterChain.class);
 		HttpServletResponse response = mock(HttpServletResponse.class);
-		HttpServletRequest request = mock(HttpServletRequest.class);
+		RequestWrapper request = mock(RequestWrapper.class);
 
 		ArrayList<String> headerNames = new ArrayList<>();
 		headerNames.add("Authorization");
 		
 		when(request.getHeaderNames()).thenReturn(Iterators.asEnumeration(headerNames.iterator()));
 		when(response.getCharacterEncoding()).thenReturn("UTF-8");
-		when(response.getContentType()).thenReturn("application/json");
+		when(request.getContentType()).thenReturn(MediaType.APPLICATION_JSON.toString());
+		when(response.getContentType()).thenReturn(MediaType.APPLICATION_JSON.toString());
 		when(response.getHeaderNames()).thenReturn(headerNames);
 
 		filter.doFilterInternal(request, response, filterChain);
@@ -49,11 +51,12 @@ public class LoggingFilterTest {
 	public void canDoFilterChainNonReadable() throws ServletException, IOException {
 		FilterChain filterChain = mock(FilterChain.class);
 		HttpServletResponse response = mock(HttpServletResponse.class);
-		HttpServletRequest request = mock(HttpServletRequest.class);
+		RequestWrapper request = mock(RequestWrapper.class);
 
-		when(request.getHeaderNames()).thenReturn((Iterators.asEnumeration(new ArrayList<String>().iterator()))); 
+		when(request.getHeaderNames()).thenReturn((Iterators.asEnumeration(new ArrayList<String>().iterator())));
+		when(request.getContentType()).thenReturn(MediaType.APPLICATION_JSON.toString());
 		when(response.getCharacterEncoding()).thenReturn("UTF-8");
-		when(response.getContentType()).thenReturn("xxx");
+		when(response.getContentType()).thenReturn(MediaType.APPLICATION_JSON.toString());
 
 		filter.doFilterInternal(request, response, filterChain);
 

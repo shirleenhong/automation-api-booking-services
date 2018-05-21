@@ -12,7 +12,7 @@ import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
 @Service
 public class AirlineRuleService {
 	@Autowired
-	AirlineRuleRepository repository;
+	private AirlineRuleRepository repository;
 
 	@Cacheable(cacheNames = "airline-rules", key = "{#root.methodName}")
 	public List<AirlineRule> getAll() {
