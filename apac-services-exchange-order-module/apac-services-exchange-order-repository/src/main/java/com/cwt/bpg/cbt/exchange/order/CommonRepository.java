@@ -18,8 +18,8 @@ class CommonRepository<T> {
 	@Autowired
 	private MorphiaComponent morphia;
 
-	final private Class<T> typeClass;
-	final private String keyColumn;
+	private final Class<T> typeClass;
+	private final String keyColumn;
 
 	CommonRepository(Class<T> typeClass, String keyColumn) {
 		this.typeClass = typeClass;
