@@ -28,7 +28,7 @@ public class LoggingFilterTest {
 	public void canDoFilterChain() throws ServletException, IOException {
 		FilterChain filterChain = mock(FilterChain.class);
 		HttpServletResponse response = mock(HttpServletResponse.class);
-		HttpServletRequest request = mock(HttpServletRequest.class);
+		RequestWrapper request = mock(RequestWrapper.class);
 
 		ArrayList<String> headerNames = new ArrayList<>();
 		headerNames.add("Authorization");
@@ -49,7 +49,7 @@ public class LoggingFilterTest {
 	public void canDoFilterChainNonReadable() throws ServletException, IOException {
 		FilterChain filterChain = mock(FilterChain.class);
 		HttpServletResponse response = mock(HttpServletResponse.class);
-		HttpServletRequest request = mock(HttpServletRequest.class);
+		RequestWrapper request = mock(RequestWrapper.class);
 
 		when(request.getHeaderNames()).thenReturn((Iterators.asEnumeration(new ArrayList<String>().iterator()))); 
 		when(response.getCharacterEncoding()).thenReturn("UTF-8");

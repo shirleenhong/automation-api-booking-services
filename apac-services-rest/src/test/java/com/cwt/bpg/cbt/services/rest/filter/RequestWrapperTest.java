@@ -32,5 +32,6 @@ public class RequestWrapperTest {
 		RequestWrapper wrapper = new RequestWrapper(1L, request);
 		wrapper.setId(8L);
 		assertEquals(8L, wrapper.getId());
+		assertNotNull(wrapper.toByteArray());
 	}
 }
