@@ -33,7 +33,8 @@ public class ClientDAOImpl {
 		List<Client> clients = new ArrayList<>();
 
 		String sql = "select \n" + 
-				"    clientmaster.clientid, clientmasterpricing.cmpid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax\n" + 
+				"    clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax,\n" + 
+				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee\n" + 
 				"from \n" + 
 				"	tblclientmaster clientmaster left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = clientmaster.clientid,  \n" + 
 				"	tblconfiguration config, \n" + 
@@ -44,7 +45,9 @@ public class ClientDAOImpl {
 				"	and clientmasterpricing.clientid = clientmaster.clientid\n" + 
 				"	and configinstance.countrycode = 'IN'\n" + 
 				"	and clientmapping.configinstancekeyid=configinstance.keyid\n" + 
-				"group by clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax\n" + 
+				"group by \n" + 
+				"    clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax,\n" + 
+				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee\n" + 
 				"order by clientmaster.clientid";
 
 		Connection conn = null;
