@@ -242,7 +242,6 @@ public class MigrationService {
 				client.setVendors(vendorsMap.get(client.getClientId()));
 				client.setBanks(banksMap.get(client.getClientId()));
 				
-				clients.add(client);
 			}
 				
 		}
