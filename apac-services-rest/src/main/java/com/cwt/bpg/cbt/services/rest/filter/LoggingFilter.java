@@ -27,7 +27,6 @@ public class LoggingFilter extends OncePerRequestFilter {
     private static final String REQUEST_PREFIX = "> ";
     private static final String RESPONSE_PREFIX = "< ";
     
-	private static final String START_TIME_KEY = "Start-Ttime";
     private static final String UUID_KEY = "UUID";
 
 	private static final AtomicLong id = new AtomicLong(0);	
@@ -51,7 +50,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 			final FilterChain filterChain) throws ServletException, IOException {
 
-		MDC.put(START_TIME_KEY, String.valueOf(System.currentTimeMillis()));
+		MDC.put(ResponseWrapper.START_TIME_KEY, String.valueOf(System.currentTimeMillis()));
 		final long requestId = id.incrementAndGet();
 		
 		RequestWrapper wrappedRequest = new RequestWrapper(requestId, request);
@@ -110,11 +109,6 @@ public class LoggingFilter extends OncePerRequestFilter {
 		
 		final long requestId = response.getId();
 		final StringBuilder b = new StringBuilder();
-
-        String startTime = MDC.get(START_TIME_KEY);
-        long executionTime = System.currentTimeMillis() - Long.parseLong(startTime);
-
-        httpResponse.addHeader("Execution-Time-In-Milliseconds", String.valueOf(executionTime));
 
         printResponseLine(b, "Server responded with a response", requestId, httpResponse.getStatus());
         printPrefixedHeaders(b, requestId, RESPONSE_PREFIX, httpResponse);
