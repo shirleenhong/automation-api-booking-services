@@ -20,7 +20,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 	private long id;
 
 	protected static final String START_TIME_KEY = "Start-Time";
-	private static final String EXECUTION_TIME_KEY = "Execution-Time-In-Milliseconds";
+	protected static final String EXECUTION_TIME_KEY = "Execution-Time-In-Milliseconds";
 
 	public ResponseWrapper(long requestId, HttpServletResponse response) {
 		super(response);
@@ -39,7 +39,9 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 		String startTime = MDC.get(START_TIME_KEY);
 
 		long executionTime = System.currentTimeMillis() - Long.parseLong(startTime);
-		this.addHeader(EXECUTION_TIME_KEY, String.valueOf(executionTime));
+		addHeader(EXECUTION_TIME_KEY, String.valueOf(executionTime));
+		
+		getHeaderNames().forEach(System.out::println);
 
 	}
 
