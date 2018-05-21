@@ -60,5 +60,16 @@ public class MerchantFeeControllerTest {
 		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());
 	}
+	
+	@Test
+	public void canRemoveMerchantFee() {
+		MerchantFee merchantFee = new MerchantFee();
+		Mockito.when(service.remove(merchantFee)).thenReturn(merchantFee);
+		
+		ResponseEntity<MerchantFee> result = controller.removeMerchantFee(merchantFee);
+
+		assertNotNull(result.getBody());
+		assertEquals(HttpStatus.OK, result.getStatusCode());
+	}
 
 }
