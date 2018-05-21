@@ -3,7 +3,7 @@ package com.cwt.bpg.cbt.tpromigration.mssqldb.model;
 public class AirlineRule {
 
 	private String code;
-	private boolean includeYQComm;
+	private boolean includeYqComm;
 
 	public String getCode() {
 		return code;
@@ -13,12 +13,11 @@ public class AirlineRule {
 		this.code = code;
 	}
 
-	public boolean isIncludeYQComm() {
-		return includeYQComm;
+	public boolean isIncludeYqComm() {
+		return includeYqComm;
 	}
 
-	public void setIncludeYQComm(boolean includeYQComm) {
-		this.includeYQComm = includeYQComm;
+	public void setIncludeYqComm(boolean includeYqComm) {
+		this.includeYqComm = includeYqComm;
 	}
-
 }
