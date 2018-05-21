@@ -21,6 +21,7 @@ import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Bank;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.BankVendor;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientMerchantFee;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientPricing;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Currency;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Product;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
@@ -154,13 +155,14 @@ public class MigrationService {
 		Map<Integer, List<ProductMerchantFee>> productsMap = getProductMap(clientDAO.getProducts());
 		Map<Integer, List<BankVendor>> vendorsMap = getVendoMap(clientDAO.getVendors());
 		Map<Integer, List<Bank>> banksMap = getBankMap(clientDAO.getBanks());
+		Map<Integer, Map<String, ClientPricing>> clientPricingMaps = getClientPricingMaps(clientDAO.getClientPricings());
 		List<Client> clients = clientDAO.getClients();
 		
 		Client defaultClient = new Client();
 		defaultClient.setClientId(-1);
 		clients.add(defaultClient);
 
-		updateClients(clients, productsMap, vendorsMap, banksMap);
+		updateClients(clients, productsMap, vendorsMap, banksMap, clientPricingMaps);
 
 		List<Document> docs = new ArrayList<>();
 		for (Client client : clients) {
@@ -172,6 +174,20 @@ public class MigrationService {
 
 		LOGGER.info("End of clients migration...");
 
+	}
+
+	private Map<Integer, Map<String, ClientPricing>> getClientPricingMaps(List<ClientPricing> clientPricings) {
+		Map<Integer, Map<String, ClientPricing>> result = new HashMap<>();
+		int previousCmpId = 0;
+		Map<String, ClientPricing> clientPricingMap = null;
+		for (ClientPricing clientPricing: clientPricings) {
+			if(previousCmpId != clientPricing.getCmpid()) {
+				clientPricingMap = new HashMap<>();
+			}
+			clientPricingMap.put(clientPricing.getTripType(), clientPricing);
+			result.put(clientPricing.getCmpid(), clientPricingMap);
+		}
+		return result;
 	}
 
 	private Map<Integer, List<ProductMerchantFee>> getProductMap(List<ProductMerchantFee> items) {
@@ -228,15 +244,36 @@ public class MigrationService {
 	private Collection<? extends Client> updateClients(
 			List<Client> clients, Map<Integer, List<ProductMerchantFee>> productsMap,
 			Map<Integer, List<BankVendor>> vendorsMap, 
-			Map<Integer, List<Bank>> banksMap) {
+			Map<Integer, List<Bank>> banksMap, Map<Integer, Map<String, ClientPricing>> clientPricingMaps) {
 		
-		for(Client client : clients) {
-						
-			client.setProducts(productsMap.get(client.getClientId()));
-			client.setVendors(vendorsMap.get(client.getClientId()));
-			client.setBanks(banksMap.get(client.getClientId()));
-		}		
-		
+		for(Client client : clients) {		
+			
+			if(productsMap.containsKey(client.getClientId()) 
+			|| vendorsMap.containsKey(client.getClientId()) 
+			|| banksMap.containsKey(client.getClientId())) {
+				
+				client.setProducts(productsMap.get(client.getClientId()));
+				client.setVendors(vendorsMap.get(client.getClientId()));
+				client.setBanks(banksMap.get(client.getClientId()));
+			}
+			List<ClientPricing> clientPricings = new ArrayList<>();
+			if(clientPricingMaps.containsKey(client.getCmpid())) {
+				Map<String, ClientPricing> clientPricingMap = clientPricingMaps.get(client.getCmpid());
+				for(String tripType: clientPricingMap.keySet()) {
+					ClientPricing clientPricing = clientPricingMap.get(tripType);
+					
+//					if("D".equals(tripType)) {
+//						
+//					}else if("I".equals(tripType)) {
+//						
+//					}else if("L".equals(tripType)) {
+//						
+//					}
+					clientPricings.add(clientPricing);
+				}
+				client.setClientPricings(clientPricings);
+			}
+		}
 		
 		return clients;
 	}
