@@ -25,4 +25,12 @@ public class RequestWrapperTest {
 		
 		assertFalse(inputStream.isReady());
 	}
+	
+	@Test
+	public void canSetId() throws IOException {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		RequestWrapper wrapper = new RequestWrapper(1L, request);
+		wrapper.setId(8L);
+		assertEquals(8L, wrapper.getId());
+	}
 }

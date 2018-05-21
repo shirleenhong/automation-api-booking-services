@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
@@ -39,5 +40,15 @@ public class ResponseWrapperTest {
 		when(response.getWriter()).thenReturn(writer);
 
 		assertNotNull(wrapper.getWriter());
+	}
+	
+	@Test
+	public void canGetResponse() throws IOException {
+		PrintWriter writer = mock(PrintWriter.class);
+		when(response.getWriter()).thenReturn(writer);
+		wrapper.setId(8L);
+
+		assertNotNull(wrapper.getResponse());
+		assertEquals(8L, wrapper.getId());
 	}
 }
