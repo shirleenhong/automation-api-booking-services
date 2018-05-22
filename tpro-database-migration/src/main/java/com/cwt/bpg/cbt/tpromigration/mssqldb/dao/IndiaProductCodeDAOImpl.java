@@ -28,8 +28,8 @@ public class IndiaProductCodeDAOImpl implements ProductCodeDAO {
 
         Connection conn = null;
 
-//		@Column(name="Number")
-//		@Column(name="Name")
+//		@Column(name="Number")-> productCode
+//		@Column(name="Name")-> description
 //		@Column(name="GDSCode")
 //		@Column(name="Type")
 //		@Column(name="TktPrefix")
@@ -53,8 +53,7 @@ public class IndiaProductCodeDAOImpl implements ProductCodeDAO {
             while (rs.next()) {
                 Product productCode = new Product();
                 productCode.setProductCode((rs.getObject("Number") == null ? null : rs.getInt("Number")).toString());
-                productCode.setNumber(rs.getObject("Number") == null ? null : rs.getInt("Number"));
-                productCode.setName(rs.getString("Name"));
+                productCode.setDescription(rs.getString("Name"));
                 productCode.setgDSCode(rs.getString("GDSCode"));
                 productCode.setType(rs.getString("Type"));
                 productCode.setTktPrefix(rs.getString("TktPrefix"));
