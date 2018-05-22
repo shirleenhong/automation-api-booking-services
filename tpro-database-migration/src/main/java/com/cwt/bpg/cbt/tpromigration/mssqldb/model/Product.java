@@ -15,7 +15,7 @@ public class Product {
 
 	private String description;
 
-	private Boolean enableCCFOP;
+	private Boolean enableCcfop;
 
 	private Boolean fullComm;
 
@@ -35,15 +35,13 @@ public class Product {
 
 	private String name;
 
-	private String gDSCode;
-
-	private Integer gST;
+	private String gdsCode;
 
 	private Integer oT1;
 
 	private Integer oT2;
 
-	private Boolean requireCDR;
+	private Boolean requireCdr;
 
 	private Boolean requireTicket;
 
@@ -83,12 +81,12 @@ public class Product {
 		this.description = description;
 	}
 
-	public Boolean getEnableCCFOP() {
-		return this.enableCCFOP;
+	public Boolean getEnableCcfop() {
+		return this.enableCcfop;
 	}
 
-	public void setEnableCCFOP(Boolean enableCCFOP) {
-		this.enableCCFOP = enableCCFOP;
+	public void setEnableCcfop(Boolean enableCcfop) {
+		this.enableCcfop = enableCcfop;
 	}
 
 	public Boolean getFullComm() {
@@ -171,20 +169,12 @@ public class Product {
 		this.name = name;
 	}
 
-	public String getgDSCode() {
-		return gDSCode;
+	public String getGdsCode() {
+		return gdsCode;
 	}
 
-	public void setgDSCode(String gDSCode) {
-		this.gDSCode = gDSCode;
-	}
-
-	public Integer getgST() {
-		return gST;
-	}
-
-	public void setgST(Integer gST) {
-		this.gST = gST;
+	public void setGdsCode(String gdsCode) {
+		this.gdsCode = gdsCode;
 	}
 
 	public Integer getoT1() {
@@ -203,12 +193,12 @@ public class Product {
 		this.oT2 = oT2;
 	}
 
-	public Boolean getRequireCDR() {
-		return requireCDR;
+	public Boolean getRequireCdr() {
+		return requireCdr;
 	}
 
-	public void setRequireCDR(Boolean requireCDR) {
-		this.requireCDR = requireCDR;
+	public void setRequireCdr(Boolean requireCdr) {
+		this.requireCdr = requireCdr;
 	}
 
 	public Boolean getRequireTicket() {

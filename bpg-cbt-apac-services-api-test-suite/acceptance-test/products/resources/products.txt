@@ -51,7 +51,7 @@ Verify Products And Vendors Are Not Retrieved
     Verify String Does Not Contain Substring    ${response.content}    "countryCode"
     Verify String Does Not Contain Substring    ${response.content}    "productCode"
     Verify String Does Not Contain Substring    ${response.content}    "description"
-    Verify String Does Not Contain Substring    ${response.content}    "enableCCFOP"
+    Verify String Does Not Contain Substring    ${response.content}    "enableCcfop"
     Verify String Does Not Contain Substring    ${response.content}    "gst"
     Verify String Does Not Contain Substring    ${response.content}    "mi"
     Verify String Does Not Contain Substring    ${response.content}    "sortKey"
