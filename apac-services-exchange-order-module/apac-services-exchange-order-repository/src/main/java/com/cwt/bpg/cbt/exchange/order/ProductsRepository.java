@@ -2,6 +2,8 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static java.util.Comparator.comparing;
 
+import static java.lang.String.CASE_INSENSITIVE_ORDER;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,10 +52,10 @@ public class ProductsRepository {
 		if (products != null && !products.isEmpty()) {
 			for (Product product : products) {
 				if (product.getVendors() != null && !product.getVendors().isEmpty()) {
-					product.getVendors().sort(comparing(Vendor::getVendorName));
+					product.getVendors().sort(comparing(Vendor::getVendorName, CASE_INSENSITIVE_ORDER));
 				}
 			}
-			products.sort(comparing(Product::getDescription));
+			products.sort(comparing(Product::getDescription, CASE_INSENSITIVE_ORDER));
 		}
 
 	}
