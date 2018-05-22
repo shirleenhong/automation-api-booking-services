@@ -1,8 +1,10 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.model;
 
+import java.util.List;
+
 public class TransactionFee {
-	
-	private String territoryCode;
+	private Integer feeId;
+	private List<String> territoryCodes;
 	private String type;
 	private Double tfAmount;
 	private String operator;
@@ -16,11 +18,17 @@ public class TransactionFee {
 	private Double endCoupon;
 	private Double threshold;
 	
-	public String getTerritoryCode() {
-		return territoryCode;
+	public Integer getFeeId() {
+		return feeId;
 	}
-	public void setTerritoryCode(String territoryCode) {
-		this.territoryCode = territoryCode;
+	public void setFeeId(Integer feeId) {
+		this.feeId = feeId;
+	}
+	public List<String> getTerritoryCodes() {
+		return territoryCodes;
+	}
+	public void setTerritoryCodes(List<String> territoryCodes) {
+		this.territoryCodes = territoryCodes;
 	}
 	public String getType() {
 		return type;
