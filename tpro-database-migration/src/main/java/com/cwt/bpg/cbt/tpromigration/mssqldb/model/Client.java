@@ -18,6 +18,9 @@ public class Client {
 	private Boolean applyMfCc;
 	private Boolean applyMfBank;
 	private Double merchantFee;
+	private Boolean lccSameAsInt;
+	private String lccDdlFeeApply;
+	private String intDdlFeeApply;
 
 	public void setProducts(List<ProductMerchantFee> list) {
 		this.products = list;
@@ -129,5 +132,29 @@ public class Client {
 
 	public void setMerchantFee(Double merchantFee) {
 		this.merchantFee = merchantFee;
+	}
+
+	public Boolean getLccSameAsInt() {
+		return lccSameAsInt;
+	}
+
+	public void setLccSameAsInt(Boolean lccSameAsInt) {
+		this.lccSameAsInt = lccSameAsInt;
+	}
+
+	public String getLccDdlFeeApply() {
+		return lccDdlFeeApply;
+	}
+
+	public void setLccDdlFeeApply(String lccDdlFeeApply) {
+		this.lccDdlFeeApply = lccDdlFeeApply;
+	}
+
+	public String getIntDdlFeeApply() {
+		return intDdlFeeApply;
+	}
+
+	public void setIntDdlFeeApply(String intDdlFeeApply) {
+		this.intDdlFeeApply = intDdlFeeApply;
 	}
 }

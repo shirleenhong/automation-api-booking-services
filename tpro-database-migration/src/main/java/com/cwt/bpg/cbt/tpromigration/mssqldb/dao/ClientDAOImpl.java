@@ -38,10 +38,12 @@ public class ClientDAOImpl {
 
 		String sql = "select \n" + 
 				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax,\n" + 
-				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee\n" + 
+				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee,\n" + 
+				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply\n" + 
 				"from \n" + 
 				"	tblclientmaster clientmaster left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = clientmaster.clientid,  \n" + 
 				"	tblconfiguration config, \n" + 
+				"	tblAirPricingFormula airpricingformula,\n" + 
 				"	cwtstandarddata.dbo.tblcsp_linedefclientmapping clientmapping, \n" + 
 				"	cwtstandarddata.dbo.configinstances configinstance  \n" + 
 				"where clientmaster.configurationid = config.configurationid \n" + 
@@ -49,9 +51,11 @@ public class ClientDAOImpl {
 				"	and clientmasterpricing.clientid = clientmaster.clientid\n" + 
 				"	and configinstance.countrycode = 'IN'\n" + 
 				"	and clientmapping.configinstancekeyid=configinstance.keyid\n" + 
+				"	and airpricingformula.airpricingid=clientmasterpricing.pricingid\n" + 
 				"group by \n" + 
 				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax,\n" + 
-				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee\n" + 
+				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee,\n" + 
+				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply\n" + 
 				"order by clientmaster.clientid";
 
 		Connection conn = null;
@@ -76,6 +80,9 @@ public class ClientDAOImpl {
 				client.setApplyMfCc(rs.getBoolean("applymfcc"));
 				client.setStandardMfProduct(rs.getBoolean("standardmfproduct"));
 				client.setMerchantFee(rs.getDouble("merchantfee"));
+				client.setLccSameAsInt(rs.getBoolean("lccsameasint"));
+				client.setIntDdlFeeApply(rs.getString("intddlfeeapply"));
+				client.setLccDdlFeeApply(rs.getString("lccddlfeeapply"));
 				clients.add(client);
 			}
 		}
