@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.*;
 import org.bson.Document;
@@ -190,8 +191,8 @@ public class MigrationService {
 	private Map<Integer, List<TransactionFee>> getTransactionFeesMap(List<TransactionFee> transactionFees) {
 		Map<Integer, List<TransactionFee>> transactionFeesMap = new HashMap<>();
 		int previousGroupId = 0;
+		List<TransactionFee> groupedTransactionFees = null;
 		for (TransactionFee transactionFee: transactionFees) {
-			List<TransactionFee> groupedTransactionFees = null;
 			if(previousGroupId != transactionFee.getFeeId()) {
 				groupedTransactionFees = new ArrayList<>();
 			}
@@ -210,8 +211,9 @@ public class MigrationService {
 			if(previousCmpId != clientPricing.getCmpid()) {
 				clientPricingMap = new HashMap<>();
 			}
+			previousCmpId = clientPricing.getCmpid();
 			clientPricingMap.put(clientPricing.getTripType(), clientPricing);
-			result.put(clientPricing.getCmpid(), clientPricingMap);
+			result.put(previousCmpId, clientPricingMap);
 		}
 		return result;
 	}
@@ -289,6 +291,7 @@ public class MigrationService {
 			List<ClientPricing> clientPricings = new ArrayList<>();
 			if(clientPricingMaps.containsKey(client.getCmpid())) {
 				Map<String, ClientPricing> clientPricingMap = clientPricingMaps.get(client.getCmpid());
+				Set test = clientPricingMap.keySet();
 				for(String tripType: clientPricingMap.keySet()) {
 					ClientPricing clientPricing = clientPricingMap.get(tripType);
 					String feeOption = clientPricing.getFeeOption();

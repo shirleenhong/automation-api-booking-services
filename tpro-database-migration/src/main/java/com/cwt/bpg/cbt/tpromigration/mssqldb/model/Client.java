@@ -14,6 +14,10 @@ public class Client {
 	private List<BankVendor> vendors;
 	private List<Bank> banks;
 	private List<ClientPricing> clientPricings;
+	private Boolean standardMfProduct;
+	private Boolean applyMfCc;
+	private Boolean applyMfBank;
+	private Double merchantFee;
 
 	public void setProducts(List<ProductMerchantFee> list) {
 		this.products = list;
@@ -93,5 +97,37 @@ public class Client {
 
 	public void setClientPricings(List<ClientPricing> clientPricings) {
 		this.clientPricings = clientPricings;
+	}
+
+	public Boolean getStandardMfProduct() {
+		return standardMfProduct;
+	}
+
+	public void setStandardMfProduct(Boolean standardMfProduct) {
+		this.standardMfProduct = standardMfProduct;
+	}
+
+	public Boolean getApplyMfCc() {
+		return applyMfCc;
+	}
+
+	public void setApplyMfCc(Boolean applyMfCc) {
+		this.applyMfCc = applyMfCc;
+	}
+
+	public Boolean getApplyMfBank() {
+		return applyMfBank;
+	}
+
+	public void setApplyMfBank(Boolean applyMfBank) {
+		this.applyMfBank = applyMfBank;
+	}
+
+	public Double getMerchantFee() {
+		return merchantFee;
+	}
+
+	public void setMerchantFee(Double merchantFee) {
+		this.merchantFee = merchantFee;
 	}
 }
