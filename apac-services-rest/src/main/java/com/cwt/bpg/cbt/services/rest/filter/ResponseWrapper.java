@@ -40,9 +40,6 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 
 		long executionTime = System.currentTimeMillis() - Long.parseLong(startTime);
 		addHeader(EXECUTION_TIME_KEY, String.valueOf(executionTime));
-		
-		getHeaderNames().forEach(System.out::println);
-
 	}
 
 	@Override
