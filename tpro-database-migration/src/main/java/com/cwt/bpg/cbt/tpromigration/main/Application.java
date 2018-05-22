@@ -15,10 +15,10 @@ public class Application {
 		doCountryCodeSelection();
 		try(ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");)
 		{			
-		    MigrationService service = context.getBean(MigrationService.class);		
+		    MigrationService service = context.getBean(MigrationService.class);
+			service.startMigration();
 			if ("IN".equals(System.getProperty("spring.profiles.default"))) {
 				service.migrateClients();
-				//service.startMigration();
 			} else {
 				
 			}

@@ -90,6 +90,18 @@ public class MigrationService {
 				LOGGER.info("vendor.getProductCodes():" + vendor.getProductCodes());
 				if (vendor.getProductCodes() != null
 						&& vendor.getProductCodes().contains(product.getProductCode())) {
+
+					vendor.getProductCodes().set(vendor.getProductCodes().indexOf(product.getProductCode()),null);
+					boolean allElemNull = true;
+					for (String s: vendor.getProductCodes()) {
+						if (s != null) {
+							allElemNull = false;
+							break;
+						}
+					}
+
+					if(allElemNull)vendor.setProductCodes(null);
+
 					product.getVendors().add(vendor);
 				}
 			}
@@ -98,7 +110,7 @@ public class MigrationService {
 
 		productList.setCountryCode(countryCode);
 
-		mongoDbConnection.getCollection("productList").insertOne(dBObjectMapper.mapAsDbDocument(productList));
+		mongoDbConnection.getCollection("productList").insertOne(dBObjectMapper.mapAsDbDocument(productList.getCountryCode(),productList));
 	}
 
 	@SuppressWarnings("unchecked")
