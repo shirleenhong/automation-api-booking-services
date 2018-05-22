@@ -37,7 +37,7 @@ public class ClientDAOImpl {
 		List<Client> clients = new ArrayList<>();
 
 		String sql = "select \n" + 
-				"    clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax,\n" + 
+				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax,\n" + 
 				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee\n" + 
 				"from \n" + 
 				"	tblclientmaster clientmaster left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = clientmaster.clientid,  \n" + 
@@ -50,7 +50,7 @@ public class ClientDAOImpl {
 				"	and configinstance.countrycode = 'IN'\n" + 
 				"	and clientmapping.configinstancekeyid=configinstance.keyid\n" + 
 				"group by \n" + 
-				"    clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax,\n" + 
+				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax,\n" + 
 				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee\n" + 
 				"order by clientmaster.clientid";
 
@@ -72,6 +72,10 @@ public class ClientDAOImpl {
 				client.setPricingId(rs.getInt("pricingid"));
 				client.setCmpid(rs.getInt("cmpid"));
 				client.setExemptTax(rs.getBoolean("exempttax"));
+				client.setApplyMfBank(rs.getBoolean("applymfbank"));
+				client.setApplyMfCc(rs.getBoolean("applymfcc"));
+				client.setStandardMfProduct(rs.getBoolean("standardmfproduct"));
+				client.setMerchantFee(rs.getDouble("merchantfee"));
 				clients.add(client);
 			}
 		}
@@ -279,7 +283,7 @@ public class ClientDAOImpl {
 
 		List<ClientPricing> resultList = new ArrayList<>();
 
-		String sql = "Select * from tblClientPricing";
+		String sql = "Select * from tblClientPricing where fieldid = 5";
 
 		Connection conn = null;
 		PreparedStatement ps = null;
