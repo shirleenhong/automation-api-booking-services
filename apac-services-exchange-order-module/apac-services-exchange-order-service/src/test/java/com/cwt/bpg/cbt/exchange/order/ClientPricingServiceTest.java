@@ -1,28 +1,43 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 
 public class ClientPricingServiceTest {
 	
-	private ClientPricingService service = new ClientPricingService();
+	@Mock
+	private ClientPricingRepository repository;
+	
+	@InjectMocks
+	private ClientPricingService service;
+	
+	@Before
+	public void init() {
+		MockitoAnnotations.initMocks(this);
+	}
 
 	@Test
 	public void canGetAllClientPricing() {
-		List<AirlineRule> all = service.getAll();
-		assertEquals(null, all);
+		List<Client> all = service.getAll();
+		verify(repository, times(1)).getAll();
 	}
 	
 	@Test
 	public void canDeleteClientPricing() {
-		String result = service.delete("OA");
-		assertEquals("OA", result);
+		final String key = "OA";
+		String result = service.delete(key);
+		verify(repository, times(1)).remove(key);
 	}
 	
 	@Test

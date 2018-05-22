@@ -2,28 +2,31 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 
 @Service
 public class ClientPricingService {
+	
+	@Autowired
+	private ClientPricingRepository clientPricingRepository;
 
 	@Cacheable(cacheNames = "client-pricing", key = "{#root.methodName}")
-	public List<AirlineRule> getAll() {
-		return null;
+	public List<Client> getAll() {
+		return clientPricingRepository.getAll();
 	}
 
 	public Client save(Client client) {
-		return null;
+		return clientPricingRepository.put(client);
 	}
 
 	@CacheEvict(cacheNames = "client-pricing", allEntries = true)
-	public String delete(String airlineCode) {
-		return airlineCode;
+	public String delete(String keyValue) {
+		return clientPricingRepository.remove(keyValue);
 	}
 
 }
