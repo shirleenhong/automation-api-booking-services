@@ -5,20 +5,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Bank;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.BankVendor;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientPricing;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductMerchantFee;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.TransactionFee;
 
 @Repository
 public class ClientDAOImpl {
@@ -321,6 +325,179 @@ public class ClientDAOImpl {
 
 		LOGGER.info("Size of client pricing from mssqldb: {}", resultList.size());
 
+		return resultList;
+	}
+
+
+	public List<TransactionFee> getTransactionFeeByPNR() {
+
+		List<TransactionFee> resultList = new ArrayList<>();
+
+		String sql = "select feeid, territorycode, tfamount, startamount, endamount from tbltransactionfeebypnr order by transid";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			LOGGER.info("Getting transaction fees from mssqldb");
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				TransactionFee transactionFee = new TransactionFee();
+				transactionFee.setFeeId(rs.getInt("feeid"));
+				String territoryCodesStr = rs.getString("territorycode");
+				if(StringUtils.isNotBlank(territoryCodesStr)) {
+					List<String> territoryCodes = Arrays.asList(territoryCodesStr.split(";"));
+					transactionFee.setTerritoryCodes(territoryCodes);
+				}
+				transactionFee.setTfAmount(rs.getDouble("tfamount"));
+				transactionFee.setStartAmount(rs.getDouble("startamount"));
+				transactionFee.setEndAmount(rs.getDouble("endamount"));
+				resultList.add(transactionFee);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading transaction fees, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+			}
+		}
+		LOGGER.info("Size of transaction fees from mssqldb: {}", resultList.size());
+		return resultList;
+	}
+
+
+	public List<TransactionFee> getTransactionFeeByCoupon() {
+
+		List<TransactionFee> resultList = new ArrayList<>();
+
+		String sql = "select feeid, type, endcoupon, startcoupon, tfamount, threshold from tbltransactionfeebycoupon order by type desc, startcoupon asc";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			LOGGER.info("Getting transaction fees from mssqldb");
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				TransactionFee transactionFee = new TransactionFee();
+				transactionFee.setFeeId(rs.getInt("feeid"));
+				transactionFee.setType(rs.getString("type"));
+				transactionFee.setStartCoupon(rs.getDouble("startcoupon"));
+				transactionFee.setEndCoupon(rs.getDouble("endcoupon"));
+				transactionFee.setTfAmount(rs.getDouble("tfamount"));
+				transactionFee.setThreshold(rs.getDouble("threshold"));
+				resultList.add(transactionFee);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading transaction fees, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+			}
+		}
+		LOGGER.info("Size of transaction fees from mssqldb: {}", resultList.size());
+		return resultList;
+	}
+
+
+	public List<TransactionFee> getTransactionFeeByTicket() {
+
+		List<TransactionFee> resultList = new ArrayList<>();
+
+		String sql = "select feeid, territorycode, operator, tfamount, extraamount, peramount, minamount, maxamount, startamount, endamount from tbltransactionfeebyticket"; 
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			LOGGER.info("Getting transaction fees from mssqldb");
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				TransactionFee transactionFee = new TransactionFee();
+				transactionFee.setFeeId(rs.getInt("feeid"));
+				String territoryCodesStr = rs.getString("territorycode");
+				if(StringUtils.isNotBlank(territoryCodesStr)) {
+					List<String> territoryCodes = Arrays.asList(territoryCodesStr.split(";"));
+					transactionFee.setTerritoryCodes(territoryCodes);
+				}
+				transactionFee.setOperator(rs.getString("operator"));
+				transactionFee.setTfAmount(rs.getDouble("tfamount"));
+				transactionFee.setExtraAmount(rs.getDouble("extraamount"));
+				transactionFee.setPerAmount(rs.getDouble("peramount"));
+				transactionFee.setMinAmount(rs.getDouble("minamount"));
+				transactionFee.setMaxAmount(rs.getDouble("maxamount"));
+				transactionFee.setStartAmount(rs.getDouble("startamount"));
+				transactionFee.setEndAmount(rs.getDouble("endamount"));
+				resultList.add(transactionFee);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading transaction fees, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+			}
+		}
+		LOGGER.info("Size of transaction fees from mssqldb: {}", resultList.size());
 		return resultList;
 	}
 

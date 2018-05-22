@@ -26,6 +26,7 @@ import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Currency;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Product;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductMerchantFee;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.TransactionFee;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -156,13 +157,23 @@ public class MigrationService {
 		Map<Integer, List<BankVendor>> vendorsMap = getVendoMap(clientDAO.getVendors());
 		Map<Integer, List<Bank>> banksMap = getBankMap(clientDAO.getBanks());
 		Map<Integer, Map<String, ClientPricing>> clientPricingMaps = getClientPricingMaps(clientDAO.getClientPricings());
+		Map<Integer, List<TransactionFee>> transactionFeeByPNR = getTransactionFeesMap(clientDAO.getTransactionFeeByPNR());
+		Map<Integer, List<TransactionFee>> transactionFeeByCoupon = getTransactionFeesMap(clientDAO.getTransactionFeeByCoupon());
+		Map<Integer, List<TransactionFee>> transactionFeeByTicket = getTransactionFeesMap(clientDAO.getTransactionFeeByTicket());
 		List<Client> clients = clientDAO.getClients();
 		
 		Client defaultClient = new Client();
 		defaultClient.setClientId(-1);
 		clients.add(defaultClient);
 
-		updateClients(clients, productsMap, vendorsMap, banksMap, clientPricingMaps);
+		updateClients(clients, 
+				productsMap, 
+				vendorsMap, 
+				banksMap, 
+				clientPricingMaps, 
+				transactionFeeByPNR, 
+				transactionFeeByCoupon, 
+				transactionFeeByTicket);
 
 		List<Document> docs = new ArrayList<>();
 		for (Client client : clients) {
@@ -174,6 +185,21 @@ public class MigrationService {
 
 		LOGGER.info("End of clients migration...");
 
+	}
+
+	private Map<Integer, List<TransactionFee>> getTransactionFeesMap(List<TransactionFee> transactionFees) {
+		Map<Integer, List<TransactionFee>> transactionFeesMap = new HashMap<>();
+		int previousGroupId = 0;
+		for (TransactionFee transactionFee: transactionFees) {
+			List<TransactionFee> groupedTransactionFees = null;
+			if(previousGroupId != transactionFee.getFeeId()) {
+				groupedTransactionFees = new ArrayList<>();
+			}
+			groupedTransactionFees.add(transactionFee);
+			previousGroupId = transactionFee.getFeeId();
+			transactionFeesMap.put(previousGroupId, groupedTransactionFees);
+		}
+		return transactionFeesMap;
 	}
 
 	private Map<Integer, Map<String, ClientPricing>> getClientPricingMaps(List<ClientPricing> clientPricings) {
@@ -244,7 +270,11 @@ public class MigrationService {
 	private Collection<? extends Client> updateClients(
 			List<Client> clients, Map<Integer, List<ProductMerchantFee>> productsMap,
 			Map<Integer, List<BankVendor>> vendorsMap, 
-			Map<Integer, List<Bank>> banksMap, Map<Integer, Map<String, ClientPricing>> clientPricingMaps) {
+			Map<Integer, List<Bank>> banksMap, Map<Integer, 
+			Map<String, ClientPricing>> clientPricingMaps, 
+			Map<Integer, List<TransactionFee>> transactionFeeByPNR, 
+			Map<Integer, List<TransactionFee>> transactionFeeByCoupon, 
+			Map<Integer, List<TransactionFee>> transactionFeeByTicket) {
 		
 		for(Client client : clients) {		
 			
@@ -261,14 +291,14 @@ public class MigrationService {
 				Map<String, ClientPricing> clientPricingMap = clientPricingMaps.get(client.getCmpid());
 				for(String tripType: clientPricingMap.keySet()) {
 					ClientPricing clientPricing = clientPricingMap.get(tripType);
-					
-//					if("D".equals(tripType)) {
-//						
-//					}else if("I".equals(tripType)) {
-//						
-//					}else if("L".equals(tripType)) {
-//						
-//					}
+					String feeOption = clientPricing.getFeeOption();
+					if("P".equals(feeOption)) {
+						clientPricing.setTransactionFees(transactionFeeByPNR.get(clientPricing.getGroup()));
+					}else if("C".equals(feeOption)) {
+						clientPricing.setTransactionFees(transactionFeeByCoupon.get(clientPricing.getGroup()));
+					}else if("T".equals(feeOption)) {
+						clientPricing.setTransactionFees(transactionFeeByTicket.get(clientPricing.getGroup()));
+					}
 					clientPricings.add(clientPricing);
 				}
 				client.setClientPricings(clientPricings);
