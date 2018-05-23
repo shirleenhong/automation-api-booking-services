@@ -30,16 +30,14 @@ public class IndiaVendorDAOImpl implements VendorDAO{
     @Override
     public List<Vendor> listVendors() {
         List<Vendor> vendorList = new ArrayList<Vendor>();
-        String sql = "SELECT DISTINCT a.*, \n" + 
-        		"    SUBSTRING(\n" + 
-        		"        (\n" + 
-        		"            SELECT ';' + CAST(productid AS varchar)  AS [text()]\n" + 
-        		"            FROM tblVendorProduct b\n" + 
-        		"			WHERE b.VendorNumber COLLATE SQL_LATIN1_GENERAL_CP1_CI_AS = a.VendorNumber\n" + 
-        		"            ORDER BY a.vendornumber\n" + 
-        		"            FOR XML PATH ('')\n" + 
-        		"        ), 2, 1000) [ProductID]\n" + 
-        		"FROM tblVendors a";
+        String sql = "SELECT * FROM (SELECT DISTINCT a.*, SUBSTRING(\n" +
+                "(SELECT ';' + CAST(productid AS varchar)  AS [text()]\n" +
+                "FROM tblVendorProduct b\n" +
+                "WHERE b.VendorNumber COLLATE SQL_LATIN1_GENERAL_CP1_CI_AS = a.VendorNumber \n" +
+                "ORDER BY a.vendornumber\n" +
+                "FOR XML PATH ('')\n" +
+                "), 2, 1000) [ProductID] \n" +
+                "FROM tblVendors a ) x WHERE x.[ProductID] is not null";
 
         Connection conn = null;
 

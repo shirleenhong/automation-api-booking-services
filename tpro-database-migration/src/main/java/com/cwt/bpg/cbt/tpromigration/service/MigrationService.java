@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.*;
 import org.bson.Document;
@@ -76,39 +77,26 @@ public class MigrationService {
 
 		List<Vendor> vendorList = vendorDAOFactory.getVendorDAO().listVendors();
 		List<Product> products = productDAOFactory.getProductCodeDAO().listProductCodes();
-
+		Map<String, Product> productsMap = products.stream().collect(Collectors.toMap(Product::getProductCode, product -> product));
 		String countryCode = System.getProperty("spring.profiles.default");
 
+		vendorList.forEach(vendor -> {
+			vendor.setCountryCode(countryCode);
+			List<String> productCodes = vendor.getProductCodes();
+
+			LOGGER.info("vendor:{}", vendor);
+			LOGGER.info("vendor.getProductCodes():" + productCodes);
+
+			productCodes.forEach(productCode -> {
+				if(productsMap.get(productCode)!=null)productsMap.get(productCode).getVendors().add(vendor);
+			});
+
+			vendor.setProductCodes(null);
+		});
+
 		ProductList productList = new ProductList();
-
-		for (Product product : products) {
-			product.setCountryCode(countryCode);
-			for (Vendor vendor : vendorList) {
-				vendor.setCountryCode(countryCode);
-				LOGGER.info("product:{}", product);
-				LOGGER.info("vendor:{}", vendor);
-				LOGGER.info("vendor.getProductCodes():" + vendor.getProductCodes());
-				if (vendor.getProductCodes() != null
-						&& vendor.getProductCodes().contains(product.getProductCode())) {
-
-					vendor.getProductCodes().set(vendor.getProductCodes().indexOf(product.getProductCode()),null);
-					boolean allElemNull = true;
-					for (String s: vendor.getProductCodes()) {
-						if (s != null) {
-							allElemNull = false;
-							break;
-						}
-					}
-
-					if(allElemNull)vendor.setProductCodes(null);
-
-					product.getVendors().add(vendor);
-				}
-			}
-		}
-		productList.setProducts(products);
-
 		productList.setCountryCode(countryCode);
+		productList.setProducts(new ArrayList<>(productsMap.values()));
 
 		mongoDbConnection.getCollection("productList").insertOne(dBObjectMapper.mapAsDbDocument(productList.getCountryCode(),productList));
 	}
