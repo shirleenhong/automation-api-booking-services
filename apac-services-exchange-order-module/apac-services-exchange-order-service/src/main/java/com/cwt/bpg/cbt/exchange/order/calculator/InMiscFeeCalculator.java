@@ -11,7 +11,6 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.Bank;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.CreditCardVendor;
-import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.InMiscFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.MiscFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.ProductMerchantFee;
@@ -22,7 +21,7 @@ public class InMiscFeeCalculator extends CommonCalculator {
 	private ScaleConfig scaleConfig;
 	private static final int BTC_FOP_MODE = 3;
 
-	public FeesBreakdown calculate(InMiscFeesInput input, Client client) {
+	public MiscFeesBreakdown calculate(InMiscFeesInput input, Client client) {
 
 		MiscFeesBreakdown result = new MiscFeesBreakdown();
 

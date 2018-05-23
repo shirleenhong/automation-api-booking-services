@@ -1,11 +1,17 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class InMiscFeesInput extends MiscFeesInput
+import org.hibernate.validator.constraints.NotEmpty;
+
+public class InMiscFeesInput implements Serializable
 {
 	private static final long serialVersionUID = 7271039286429340584L;
 
+	private String fopType;
+	private String countryCode;
+	
 	private boolean commissionByPercent;
 	private BigDecimal costAmount;
 	private Double commissionPercent;
@@ -14,6 +20,9 @@ public class InMiscFeesInput extends MiscFeesInput
 	private int fopMode;
 	private Product product;
 	private String acctType;
+	
+	@NotEmpty
+	private String profileName;
 	
 	public String getAcctType() {
 		return acctType;
@@ -78,4 +87,30 @@ public class InMiscFeesInput extends MiscFeesInput
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+
+	public String getFopType() {
+		return fopType;
+	}
+
+	public void setFopType(String fopType) {
+		this.fopType = fopType;
+	}
+
+	public String getProfileName() {
+		return profileName;
+	}
+
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+	
+	
 }

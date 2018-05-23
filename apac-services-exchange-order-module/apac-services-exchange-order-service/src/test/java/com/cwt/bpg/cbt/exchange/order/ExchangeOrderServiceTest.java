@@ -1,11 +1,11 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.anyString;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
@@ -25,6 +24,9 @@ public class ExchangeOrderServiceTest {
 	
 	@InjectMocks
 	private ExchangeOrderService service;
+	
+	@Mock
+	private ClientRepository clientRepo;
 	
 	@Mock
 	private CurrencyRepository currencyRepo;
@@ -68,6 +70,19 @@ public class ExchangeOrderServiceTest {
 		verify(currencyRepo, times(1)).getRoundingRule(Mockito.anyString());
 		assertNotNull(roundingRule);
 		
+	}
+	
+	@Test
+	public void canGetClient() {
+		String proName = "profileName";
+		service.getClient(proName);
+		Mockito.verify(clientRepo, Mockito.times(1)).getClient(proName);
+	}
+	
+	@Test
+	public void canGetDefaultClient() {
+		service.getDefaultClient();
+		Mockito.verify(clientRepo, Mockito.times(1)).getClient(-1);
 	}
 
 }

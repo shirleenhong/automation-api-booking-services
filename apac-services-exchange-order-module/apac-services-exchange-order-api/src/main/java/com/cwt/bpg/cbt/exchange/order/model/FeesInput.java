@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class FeesInput implements Serializable {
 
+	//TODO Review validation
 	private static final long serialVersionUID = -5237125856544162255L;
 
 	private String countryCode;

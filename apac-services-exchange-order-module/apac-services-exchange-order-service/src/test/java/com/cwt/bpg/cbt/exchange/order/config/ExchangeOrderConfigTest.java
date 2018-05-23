@@ -6,7 +6,12 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.calculator.*;
+import com.cwt.bpg.cbt.exchange.order.calculator.HkAirCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.InMiscFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.MiscFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.SgAirCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 
 public class ExchangeOrderConfigTest {
@@ -33,6 +38,11 @@ public class ExchangeOrderConfigTest {
 		assertThat(config.nettCostCalculator(), is(instanceOf(NettCostCalculator.class)));
 	}
 
+	@Test
+	public void shouldCreateInCalculator() {
+		assertThat(config.inMiscFeeCalculator(), is(instanceOf(InMiscFeeCalculator.class)));
+	}
+	
 	@Test
 	public void shouldVisaFeesCalculator() {
 		assertThat(config.visaFeesCalculator(), is(instanceOf(VisaFeesCalculator.class)));

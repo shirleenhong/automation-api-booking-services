@@ -16,6 +16,7 @@ import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.InMiscFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.MiscFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
 
 @Service
@@ -44,9 +45,7 @@ public class OtherServiceFeesService {
 	private ExchangeOrderService exchangeOrderService;
 
 	FeesBreakdown calculateMiscFee(FeesInput input) {
-		if(Country.INDIA.getCode().equals(input.getCountryCode())) {
-			return this.inMiscFeeCalculator.calculate((InMiscFeesInput)input, getClient(input));
-		}
+		
 		return this.miscFeeCalculator.calculate(input, getMerchantFeePct(input));
 	}
 
@@ -70,7 +69,7 @@ public class OtherServiceFeesService {
 				input.getClientType(), input.getProfileName());
 	}
 
-	private Client getClient(FeesInput input) {
+	private Client getClient(InMiscFeesInput input) {
 		
 		Client client = exchangeOrderService.getClient(input.getProfileName());
 		
@@ -79,5 +78,13 @@ public class OtherServiceFeesService {
 		}
 		
 		return client;
+	}
+
+	public MiscFeesBreakdown calculateNonAirFee(InMiscFeesInput input) {
+		if(Country.INDIA.getCode().equals(input.getCountryCode())) {
+			return this.inMiscFeeCalculator.calculate(input, getClient(input));
+		}
+		
+		return new MiscFeesBreakdown();
 	}
 }
