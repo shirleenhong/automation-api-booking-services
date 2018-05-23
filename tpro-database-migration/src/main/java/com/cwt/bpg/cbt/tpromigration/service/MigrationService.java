@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.*;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.*;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,18 +19,6 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirlineRule;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Bank;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.BankVendor;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientMerchantFee;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientPricing;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Currency;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Product;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductMerchantFee;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.TransactionFee;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @Service
@@ -60,6 +49,9 @@ public class MigrationService {
 
 	@Autowired
 	private ClientDAOImpl clientDAO;
+
+	@Autowired
+	private CityDAO cityDAO;
 
 	@Value("${com.cwt.tpromigration.mongodb.dbuser}")
 	private String dbUser;
@@ -99,6 +91,19 @@ public class MigrationService {
 		productList.setProducts(new ArrayList<>(productsMap.values()));
 
 		mongoDbConnection.getCollection("productList").insertOne(dBObjectMapper.mapAsDbDocument(productList.getCountryCode(),productList));
+	}
+
+	@SuppressWarnings("unchecked")
+	public void migrateCities() throws JsonProcessingException {
+		List<City> cities = cityDAO.getCities();
+
+		List<Document> docs = new ArrayList<>();
+
+		for (City city : cities) {
+			docs.add(dBObjectMapper.mapAsDbDocument(city));
+		}
+
+		mongoDbConnection.getCollection("cities").insertMany(docs);
 	}
 
 	@SuppressWarnings("unchecked")
