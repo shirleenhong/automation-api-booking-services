@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class ClientPricingService {
 		return clientPricingRepository.getAll();
 	}
 
+	@CachePut(cacheNames = "client-pricing", key = "client.clientId")
 	public Client save(Client client) {
 		return clientPricingRepository.put(client);
 	}
@@ -29,6 +31,7 @@ public class ClientPricingService {
 		return clientPricingRepository.remove(keyValue);
 	}
 
+	@Cacheable(cacheNames = "client-pricing", key = "#id")
 	public Client getClient(int id) {
 		return clientPricingRepository.getClient(id);
 	}
