@@ -48,7 +48,7 @@ public class InsuranceController {
 	}
 
 	@Internal
-	@DeleteMapping(path = "/insurance/{type}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@DeleteMapping(path = "/insurance/{type}")
 	@ResponseBody
 	@ApiOperation(value = "Remove insurance plan")
 	public ResponseEntity<String> removeInsurance(@PathVariable String type) {

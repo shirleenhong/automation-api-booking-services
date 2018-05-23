@@ -17,7 +17,7 @@ public class ClientPricingRepositoryTest {
 
 		repo.identity((i) -> {
 			assertThat(i[0], is(equalTo(Client.class)));
-			assertThat(i[1], is(equalTo("Key")));
+			assertThat(i[1], is(equalTo("clientId")));
 		});
 	}
 

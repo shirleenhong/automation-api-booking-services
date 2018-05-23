@@ -3,6 +3,9 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.io.Serializable;
 import java.util.List;
 
+import org.mongodb.morphia.annotations.Entity;
+
+@Entity("clients")
 public class Client implements Serializable {
 
 	private static final long serialVersionUID = 4416580993384869665L;
@@ -17,6 +20,13 @@ public class Client implements Serializable {
 	private List<BankVendor> vendors;
 	private List<Bank> banks;
 	private List<ClientPricing> clientPricings;
+	private Boolean standardMfProduct;
+	private Boolean applyMfCc;
+	private Boolean applyMfBank;
+	private Double merchantFee;
+	private Boolean lccSameAsInt;
+	private String lccDdlFeeApply;
+	private String intDdlFeeApply;
 
 	public void setProducts(List<ProductMerchantFee> list) {
 		this.products = list;
@@ -96,5 +106,61 @@ public class Client implements Serializable {
 
 	public void setClientPricings(List<ClientPricing> clientPricings) {
 		this.clientPricings = clientPricings;
+	}
+
+	public Boolean getStandardMfProduct() {
+		return standardMfProduct;
+	}
+
+	public void setStandardMfProduct(Boolean standardMfProduct) {
+		this.standardMfProduct = standardMfProduct;
+	}
+
+	public Boolean getApplyMfCc() {
+		return applyMfCc;
+	}
+
+	public void setApplyMfCc(Boolean applyMfCc) {
+		this.applyMfCc = applyMfCc;
+	}
+
+	public Boolean getApplyMfBank() {
+		return applyMfBank;
+	}
+
+	public void setApplyMfBank(Boolean applyMfBank) {
+		this.applyMfBank = applyMfBank;
+	}
+
+	public Double getMerchantFee() {
+		return merchantFee;
+	}
+
+	public void setMerchantFee(Double merchantFee) {
+		this.merchantFee = merchantFee;
+	}
+
+	public Boolean getLccSameAsInt() {
+		return lccSameAsInt;
+	}
+
+	public void setLccSameAsInt(Boolean lccSameAsInt) {
+		this.lccSameAsInt = lccSameAsInt;
+	}
+
+	public String getLccDdlFeeApply() {
+		return lccDdlFeeApply;
+	}
+
+	public void setLccDdlFeeApply(String lccDdlFeeApply) {
+		this.lccDdlFeeApply = lccDdlFeeApply;
+	}
+
+	public String getIntDdlFeeApply() {
+		return intDdlFeeApply;
+	}
+
+	public void setIntDdlFeeApply(String intDdlFeeApply) {
+		this.intDdlFeeApply = intDdlFeeApply;
 	}
 }

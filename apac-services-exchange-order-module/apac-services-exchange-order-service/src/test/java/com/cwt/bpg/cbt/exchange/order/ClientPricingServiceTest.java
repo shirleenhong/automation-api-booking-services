@@ -35,7 +35,7 @@ public class ClientPricingServiceTest {
 	
 	@Test
 	public void canDeleteClientPricing() {
-		final String key = "OA";
+		final int key = 1;
 		String result = service.delete(key);
 		verify(repository, times(1)).remove(key);
 	}

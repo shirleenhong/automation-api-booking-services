@@ -34,7 +34,7 @@ public class CommonRepositoryTest {
 	private MorphiaComponent morphia;
 
 	@InjectMocks
-	private CommonRepository<Insurance> repo;
+	private CommonRepository<Insurance, String> repo;
 
 	@Before
 	public void setUp() {
