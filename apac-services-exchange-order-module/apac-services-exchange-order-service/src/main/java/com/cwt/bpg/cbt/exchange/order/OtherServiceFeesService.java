@@ -4,11 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.InMiscFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.Client;
+import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.InMiscFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
 
 @Service
 public class OtherServiceFeesService {
@@ -16,6 +24,10 @@ public class OtherServiceFeesService {
 	@Autowired
 	@Qualifier(value = "miscFeeCalculator")
 	private Calculator miscFeeCalculator;
+	
+	@Autowired
+	@Qualifier(value = "inMiscFeeCalculator")
+	private InMiscFeeCalculator inMiscFeeCalculator;
 
 	@Autowired
 	@Qualifier(value = "nettCostCalculator")
@@ -32,6 +44,9 @@ public class OtherServiceFeesService {
 	private ExchangeOrderService exchangeOrderService;
 
 	FeesBreakdown calculateMiscFee(FeesInput input) {
+		if(Country.INDIA.getCode().equals(input.getCountryCode())) {
+			return this.inMiscFeeCalculator.calculate((InMiscFeesInput)input, getClient(input));
+		}
 		return this.miscFeeCalculator.calculate(input, getMerchantFeePct(input));
 	}
 
@@ -53,5 +68,16 @@ public class OtherServiceFeesService {
 
 		return exchangeOrderService.getMerchantFee(input.getCountryCode(),
 				input.getClientType(), input.getProfileName());
+	}
+
+	private Client getClient(FeesInput input) {
+		
+		Client client = exchangeOrderService.getClient(input.getProfileName());
+		
+		if(client != null && client.isStandardMFProduct()) {
+			return exchangeOrderService.getDefaultClient();
+		}
+		
+		return client;
 	}
 }

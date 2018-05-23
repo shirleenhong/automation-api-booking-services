@@ -31,5 +31,12 @@ public class CommonCalculator {
 	protected BigDecimal percentDecimal(Double value) {
 		return BigDecimal.valueOf(safeValue(value) * 0.01);
 	}
+	
+	protected int safeValue(Integer value) {
+		if (value == null) {
+			return 0;
+		}
+		return value;
+	}
 
 }

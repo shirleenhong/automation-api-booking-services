@@ -13,6 +13,11 @@ public class ExchangeOrderConfig {
 	public Calculator miscFeeCalculator() {
 		return new MiscFeeCalculator();
 	}
+	
+	@Bean(name = "inMiscFeeCalculator")
+	public InMiscFeeCalculator inMiscFeeCalculator() {
+		return new InMiscFeeCalculator();
+	}
 
 	@Bean(name = "hkAirCalculator")
 	public Calculator hkAirCalculator() {

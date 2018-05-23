@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
@@ -20,6 +21,9 @@ public class ExchangeOrderService {
 	
 	@Autowired
 	private CurrencyRepository currencyRepo;
+	
+	@Autowired
+	private ClientRepository clientRepo;
 
 	@Cacheable(cacheNames="merchant-fee", key="{#countryCode, #clientType, #profileName}")
 	public MerchantFee getMerchantFee(String countryCode, String clientType, String profileName) {
@@ -39,5 +43,15 @@ public class ExchangeOrderService {
 	@CacheEvict(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.clientType, #fee.profileName}")
 	public MerchantFee remove(MerchantFee fee) {
 		return merchantFeeRepo.removeMerchantFee(fee);
+	}
+
+	@Cacheable(cacheNames="client", key="{#profileName}")
+	public Client getClient(String profileName) {
+		return clientRepo.getClient(profileName);
+	}
+
+	@Cacheable(cacheNames="default-client", key="{#root.methodName}")
+	public Client getDefaultClient() {
+		return clientRepo.getClient(-1);		
 	}
 }

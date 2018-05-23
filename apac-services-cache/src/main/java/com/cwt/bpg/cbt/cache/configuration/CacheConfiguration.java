@@ -23,7 +23,9 @@ public class CacheConfiguration {
 			"currency-rounding-rule",
 			"insurance-types",
 			"airline-rules",
-			"client-pricing"};
+			"client-pricing",
+			"client",
+			"default-client"};
 
 	@Bean
 	public CacheManager cacheManager() {

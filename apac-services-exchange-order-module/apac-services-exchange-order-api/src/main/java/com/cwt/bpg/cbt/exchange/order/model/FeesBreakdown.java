@@ -7,7 +7,7 @@ public class FeesBreakdown implements Serializable {
 
 	private static final long serialVersionUID = 5067269385200872058L;
 
-	BigDecimal commission;
+	protected BigDecimal commission;
 
 	public BigDecimal getCommission() {
 		return commission;

@@ -34,6 +34,10 @@ public class Product implements Serializable {
 
 	private String type;
 	
+	private Integer oT1;
+
+	private Integer oT2;
+	
 	public Product() {
 		//Empty constructor
 	}
@@ -140,6 +144,22 @@ public class Product implements Serializable {
 
 	public void setProfileName(String profileName) {
 		this.profileName = profileName;
+	}
+
+	public Integer getoT1() {
+		return oT1;
+	}
+
+	public void setoT1(Integer oT1) {
+		this.oT1 = oT1;
+	}
+
+	public Integer getoT2() {
+		return oT2;
+	}
+
+	public void setoT2(Integer oT2) {
+		this.oT2 = oT2;
 	}
 	
 }
