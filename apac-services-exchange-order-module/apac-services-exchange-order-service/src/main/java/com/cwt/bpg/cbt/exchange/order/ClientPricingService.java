@@ -25,8 +25,12 @@ public class ClientPricingService {
 	}
 
 	@CacheEvict(cacheNames = "client-pricing", allEntries = true)
-	public String delete(String keyValue) {
+	public String delete(int keyValue) {
 		return clientPricingRepository.remove(keyValue);
+	}
+
+	public Client getClient(int id) {
+		return clientPricingRepository.getClient(id);
 	}
 
 }

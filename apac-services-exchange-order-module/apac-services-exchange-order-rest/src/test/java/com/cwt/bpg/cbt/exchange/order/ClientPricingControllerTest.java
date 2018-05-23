@@ -1,32 +1,53 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-import java.util.ArrayList;
-
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.cwt.bpg.cbt.exchange.order.model.Client;
+
 public class ClientPricingControllerTest {
 
-	private ClientPricingController clientPricingController = new ClientPricingController();
+	@Mock
+	private ClientPricingService clientPricingService;
+	
+	@InjectMocks
+	private ClientPricingController clientPricingController;
+	
+	@Before
+	public void init() {
+		MockitoAnnotations.initMocks(this);
+	}
 	
 	@Test
 	public void canGetClientById() {
-			ResponseEntity<?> client = clientPricingController.getClient(8);
+			final int id = 8;
+			ResponseEntity<?> client = clientPricingController.getClient(id);
+			verify(clientPricingService, times(1)).getClient(id);
 			assertEquals(HttpStatus.OK,  client.getStatusCode());
 	}
 
 	@Test
 	public void canPutClientPricing() {
-		ResponseEntity<?> client = clientPricingController.putClientPricing(ArrayList::new);
+		Client newClient = new Client();
+		ResponseEntity<?> client = clientPricingController.putClientPricing(newClient);
+		verify(clientPricingService, times(1)).save(newClient);
 		assertEquals(HttpStatus.OK, client.getStatusCode());
 	}
 	
 	@Test
 	public void canRemoveClientPricing() {
-		ResponseEntity<?> client = clientPricingController.removeClientPricing(ArrayList::new);
+		final int keyValue = 0;
+		ResponseEntity<?> client = clientPricingController.removeClientPricing(keyValue);
+		verify(clientPricingService, times(1)).delete(keyValue);
 		assertEquals(HttpStatus.OK, client.getStatusCode());
 	}
 }

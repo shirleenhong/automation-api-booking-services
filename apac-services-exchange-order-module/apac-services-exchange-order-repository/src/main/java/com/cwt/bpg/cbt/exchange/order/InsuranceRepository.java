@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.cwt.bpg.cbt.exchange.order.model.Insurance;
 
 @Repository
-public class InsuranceRepository extends CommonRepository<Insurance> {
+public class InsuranceRepository extends CommonRepository<Insurance, String> {
 
 	public static final String KEY_COLUMN = "type";
 
