@@ -29,6 +29,7 @@ public class ClientPricingService {
 		return clientPricingRepository.remove(keyValue);
 	}
 
+	@Cacheable(cacheNames = "client-pricing", key = "#id")
 	public Client getClient(int id) {
 		return clientPricingRepository.getClient(id);
 	}
