@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,51 +22,51 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(tags = "Merchant Fee")
 public class MerchantFeeController {
-	
+
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
-	
+
 	@Internal
-	@GetMapping(path="/merchant/{countryCode}/{clientType}/{profileName}")
+	@GetMapping(path = "/merchant/{countryCode}/{clientType}/{profileName}",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-    @ApiOperation(value = "Pulls merchant fee based on a [country code | client type | profile name] combination")
-	public ResponseEntity<MerchantFee> getMerchantFee(
-			@PathVariable String countryCode,
-			@PathVariable String clientType,
-			@PathVariable String profileName) {		
-		
-		return new ResponseEntity<>(exchangeOrderService.getMerchantFee(countryCode, clientType, profileName), HttpStatus.OK);
+	@ApiOperation(
+			value = "Pulls merchant fee based on a [country code | client type | profile name] combination")
+	public ResponseEntity<MerchantFee> getMerchantFee(@PathVariable String countryCode,
+			@PathVariable String clientType, @PathVariable String profileName) {
+
+		return new ResponseEntity<>(exchangeOrderService.getMerchantFee(countryCode, clientType, profileName),
+				HttpStatus.OK);
 	}
-	
+
 	@Deprecated
-    @Internal
-	@GetMapping(path="/merchant/currency/{currencyCode}")
+	@Internal
+	@GetMapping(path = "/merchant/currency/{currencyCode}",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-    @ApiOperation(value = "Pulls currency info based on currency code")
-	public ResponseEntity<CurrencyCodeRoundRule> getCurrency(
-			@PathVariable String currencyCode) {		
-		
+	@ApiOperation(value = "Pulls currency info based on currency code")
+	public ResponseEntity<CurrencyCodeRoundRule> getCurrency(@PathVariable String currencyCode) {
+
 		return new ResponseEntity<>(exchangeOrderService.getRoundingRule(currencyCode), HttpStatus.OK);
 	}
-	
-	
+
 	@Internal
-	@PutMapping(path="/merchant")
+	@PutMapping(path = "/merchant", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-    @ApiOperation(value = "Updates merchant fee configuration of a given market")
-	public ResponseEntity<MerchantFee> updateMerchantFee(
-			@RequestBody MerchantFee merchantFee) {		
-		
+	@ApiOperation(value = "Updates merchant fee configuration of a given market")
+	public ResponseEntity<MerchantFee> updateMerchantFee(@RequestBody MerchantFee merchantFee) {
+
 		return new ResponseEntity<>(exchangeOrderService.putMerchantFee(merchantFee), HttpStatus.OK);
 	}
-	
+
 	@Internal
-	@DeleteMapping(path="/merchant")
+	@DeleteMapping(path = "/merchant", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-    @ApiOperation(value = "remove merchant fee configuration of a given market")
-	public ResponseEntity<MerchantFee> removeMerchantFee(
-			@RequestBody MerchantFee merchantFee) {		
-		
+	@ApiOperation(value = "remove merchant fee configuration of a given market")
+	public ResponseEntity<MerchantFee> removeMerchantFee(@RequestBody MerchantFee merchantFee) {
+
 		return new ResponseEntity<>(exchangeOrderService.remove(merchantFee), HttpStatus.OK);
 	}
 

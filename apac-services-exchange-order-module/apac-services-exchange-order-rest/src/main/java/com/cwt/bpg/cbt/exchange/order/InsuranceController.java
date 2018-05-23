@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,35 +25,34 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(tags = "Exchange Order")
 public class InsuranceController {
-	
+
 	@Autowired
 	private InsuranceService service;
-	
-	@GetMapping(path="/insurance")
+
+	@GetMapping(path = "/insurance", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-    @ApiOperation(value = "Pulls insurance list")
-	public ResponseEntity<List<Insurance>> getInsuranceList() {		
-		
+	@ApiOperation(value = "Pulls insurance list")
+	public ResponseEntity<List<Insurance>> getInsuranceList() {
+
 		return new ResponseEntity<>(service.getInsuranceList(), HttpStatus.OK);
 	}
-	
+
 	@Internal
-	@PutMapping(path="/insurance")
+	@PutMapping(path = "/insurance", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-    @ApiOperation(value = "Add/Updates insurance plan")
-	public ResponseEntity<Insurance> updateInsurance(
-			@Valid @RequestBody Insurance insurance) {		
-		
+	@ApiOperation(value = "Add/Updates insurance plan")
+	public ResponseEntity<Insurance> updateInsurance(@Valid @RequestBody Insurance insurance) {
+
 		return new ResponseEntity<>(service.putInsurance(insurance), HttpStatus.OK);
 	}
-	
+
 	@Internal
-	@DeleteMapping(path="/insurance/{type}")
+	@DeleteMapping(path = "/insurance/{type}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-    @ApiOperation(value = "Remove insurance plan")
-	public ResponseEntity<String> removeInsurance(
-			@PathVariable String type) {		
-		
+	@ApiOperation(value = "Remove insurance plan")
+	public ResponseEntity<String> removeInsurance(@PathVariable String type) {
+
 		return new ResponseEntity<>(service.remove(type), HttpStatus.OK);
 	}
 
