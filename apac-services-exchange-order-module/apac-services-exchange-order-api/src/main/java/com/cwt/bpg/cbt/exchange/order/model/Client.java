@@ -4,8 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 
 @Entity("clients")
+@Indexes(@Index(fields = @Field("clientId")))
+
 public class Client implements Serializable {
 
 	private static final long serialVersionUID = 4416580993384869665L;
@@ -17,7 +22,7 @@ public class Client implements Serializable {
 	private Integer pricingId;
 	private Boolean exemptTax;
 	private List<ProductMerchantFee> products;
-	private List<BankVendor> vendors;
+	private List<CreditCardVendor> vendors;
 	private List<Bank> banks;
 	private List<ClientPricing> clientPricings;
 	private Boolean standardMfProduct;
@@ -32,7 +37,7 @@ public class Client implements Serializable {
 		this.products = list;
 	}
 
-	public void setVendors(List<BankVendor> list) {
+	public void setVendors(List<CreditCardVendor> list) {
 		this.vendors = list;
 	}
 
@@ -44,7 +49,7 @@ public class Client implements Serializable {
 		return products;
 	}
 
-	public List<BankVendor> getVendors() {
+	public List<CreditCardVendor> getVendors() {
 		return vendors;
 	}
 
@@ -108,7 +113,7 @@ public class Client implements Serializable {
 		this.clientPricings = clientPricings;
 	}
 
-	public Boolean getStandardMfProduct() {
+	public Boolean isStandardMfProduct() {
 		return standardMfProduct;
 	}
 
@@ -116,7 +121,7 @@ public class Client implements Serializable {
 		this.standardMfProduct = standardMfProduct;
 	}
 
-	public Boolean getApplyMfCc() {
+	public Boolean isApplyMfCc() {
 		return applyMfCc;
 	}
 
@@ -124,7 +129,7 @@ public class Client implements Serializable {
 		this.applyMfCc = applyMfCc;
 	}
 
-	public Boolean getApplyMfBank() {
+	public Boolean isApplyMfBank() {
 		return applyMfBank;
 	}
 

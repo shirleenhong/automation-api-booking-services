@@ -160,7 +160,7 @@ public class MigrationService {
 		LOGGER.info("Started clients migration...");
 
 		Map<Integer, List<ProductMerchantFee>> productsMap = getProductMap(clientDAO.getProducts());
-		Map<Integer, List<BankVendor>> vendorsMap = getVendoMap(clientDAO.getVendors());
+		Map<Integer, List<CreditCardVendor>> vendorsMap = getVendoMap(clientDAO.getVendors());
 		Map<Integer, List<Bank>> banksMap = getBankMap(clientDAO.getBanks());
 		Map<Integer, Map<String, ClientPricing>> clientPricingMaps = getClientPricingMaps(clientDAO.getClientPricings());
 		Map<Integer, List<TransactionFee>> transactionFeeByPNR = getTransactionFeesMap(clientDAO.getTransactionFeeByPNR());
@@ -240,16 +240,16 @@ public class MigrationService {
 		return result;
 	}
 
-	private Map<Integer, List<BankVendor>> getVendoMap(List<BankVendor> items) {
-		Map<Integer, List<BankVendor>> result = new HashMap<>();
+	private Map<Integer, List<CreditCardVendor>> getVendoMap(List<CreditCardVendor> items) {
+		Map<Integer, List<CreditCardVendor>> result = new HashMap<>();
 
-		for (BankVendor item : items) {
+		for (CreditCardVendor item : items) {
 
 			if (result.containsKey(item.getClientId())) {
 				result.get(item.getClientId()).add(item);
 			}
 			else {
-				List<BankVendor> list = new ArrayList<>();
+				List<CreditCardVendor> list = new ArrayList<>();
 				list.add(item);
 				result.put(item.getClientId(), list);
 			}
@@ -276,7 +276,7 @@ public class MigrationService {
 
 	private Collection<? extends Client> updateClients(
 			List<Client> clients, Map<Integer, List<ProductMerchantFee>> productsMap,
-			Map<Integer, List<BankVendor>> vendorsMap, 
+			Map<Integer, List<CreditCardVendor>> vendorsMap, 
 			Map<Integer, List<Bank>> banksMap, Map<Integer, 
 			Map<String, ClientPricing>> clientPricingMaps, 
 			Map<Integer, List<TransactionFee>> transactionFeeByPNR, 

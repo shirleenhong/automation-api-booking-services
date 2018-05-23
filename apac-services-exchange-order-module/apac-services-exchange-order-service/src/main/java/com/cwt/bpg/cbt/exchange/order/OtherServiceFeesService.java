@@ -74,7 +74,7 @@ public class OtherServiceFeesService {
 		
 		Client client = exchangeOrderService.getClient(input.getProfileName());
 		
-		if(client != null && client.isStandardMFProduct()) {
+		if(client != null && client.isStandardMfProduct()) {
 			return exchangeOrderService.getDefaultClient();
 		}
 		

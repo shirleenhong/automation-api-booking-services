@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Bank;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.BankVendor;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.CreditCardVendor;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientPricing;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductMerchantFee;
@@ -172,9 +172,9 @@ public class ClientDAOImpl {
 		return resultList;
 	}
 
-	public List<BankVendor> getVendors() {
+	public List<CreditCardVendor> getVendors() {
 		
-		List<BankVendor> resultList = new ArrayList<>();
+		List<CreditCardVendor> resultList = new ArrayList<>();
 
 		String sql = "SELECT * FROM tblMFByCC";
 
@@ -189,7 +189,7 @@ public class ClientDAOImpl {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				BankVendor item = new BankVendor();
+				CreditCardVendor item = new CreditCardVendor();
 
 				item.setClientId(rs.getInt("ClientID"));
 				item.setVendorName(rs.getString("Vendor"));

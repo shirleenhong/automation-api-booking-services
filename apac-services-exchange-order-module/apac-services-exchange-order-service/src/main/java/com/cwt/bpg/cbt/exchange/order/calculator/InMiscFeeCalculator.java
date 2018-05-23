@@ -93,12 +93,12 @@ public class InMiscFeeCalculator extends CommonCalculator {
 		if (product.isSubjectToMf()) {
 			mfPercent = 0D;
 		}
-		else if (!client.isApplyMFBank()) {
-			Bank bank = bank(client, input.getFopType(), !client.isApplyMFBank());
+		else if (!client.isApplyMfBank()) {
+			Bank bank = bank(client, input.getFopType(), !client.isApplyMfBank());
 			mfPercent = bank != null ? bank.getPercentage() : 0D;
 		}
-		else if (client.isApplyMFBank()) {
-			Bank bank = bank(client, input.getFopType(), client.isApplyMFBank());
+		else if (client.isApplyMfBank()) {
+			Bank bank = bank(client, input.getFopType(), client.isApplyMfBank());
 			mfPercent = bank != null ? bank.getPercentage() : 0D;
 		}
 		else if (!client.isApplyMfCc() && StringUtils.isEmpty(input.getFopType())) {

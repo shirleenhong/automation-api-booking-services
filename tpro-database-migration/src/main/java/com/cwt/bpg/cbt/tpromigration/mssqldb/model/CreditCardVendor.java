@@ -3,7 +3,7 @@ package com.cwt.bpg.cbt.tpromigration.mssqldb.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(value = { "clientId" })
-public class BankVendor {
+public class CreditCardVendor {
 	
 	private int clientId;
 	private String vendorName;

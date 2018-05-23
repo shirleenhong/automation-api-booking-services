@@ -11,7 +11,7 @@ public class Client {
 	private Integer pricingId;
 	private Boolean exemptTax;
 	private List<ProductMerchantFee> products;
-	private List<BankVendor> vendors;
+	private List<CreditCardVendor> vendors;
 	private List<Bank> banks;
 	private List<ClientPricing> clientPricings;
 	private Boolean standardMfProduct;
@@ -26,7 +26,7 @@ public class Client {
 		this.products = list;
 	}
 
-	public void setVendors(List<BankVendor> list) {
+	public void setVendors(List<CreditCardVendor> list) {
 		this.vendors = list;
 	}
 
@@ -38,7 +38,7 @@ public class Client {
 		return products;
 	}
 
-	public List<BankVendor> getVendors() {
+	public List<CreditCardVendor> getVendors() {
 		return vendors;
 	}
 
