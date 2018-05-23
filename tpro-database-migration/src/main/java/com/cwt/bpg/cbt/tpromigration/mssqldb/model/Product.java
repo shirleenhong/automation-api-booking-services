@@ -47,7 +47,7 @@ public class Product {
 
 	private Boolean suppressMI;
 
-	private Float feeCode;
+	private Double feeCode;
 
 	private String gSTFormula;
 
@@ -217,11 +217,11 @@ public class Product {
 		this.suppressMI = suppressMI;
 	}
 
-	public Float getFeeCode() {
+	public Double getFeeCode() {
 		return feeCode;
 	}
 
-	public void setFeeCode(Float feeCode) {
+	public void setFeeCode(Double feeCode) {
 		this.feeCode = feeCode;
 	}
 
