@@ -71,7 +71,7 @@ public class MigrationService {
 	private String dbName;
 
 	@SuppressWarnings("unchecked")
-	public void startMigration() throws JsonProcessingException {
+	public void migrateProductList() throws JsonProcessingException {
 
 		LOGGER.info("start migration...");
 
