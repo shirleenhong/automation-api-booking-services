@@ -37,6 +37,7 @@ public class MerchantFeeController {
 		return new ResponseEntity<>(exchangeOrderService.getMerchantFee(countryCode, clientType, profileName), HttpStatus.OK);
 	}
 	
+	@Deprecated
     @Internal
 	@GetMapping(path="/merchant/currency/{currencyCode}")
 	@ResponseBody

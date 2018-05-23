@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
+@Deprecated
 @Repository
 public class CurrencyRepository {
 
