@@ -25,7 +25,6 @@ Create Test Variables For Products And Vendors
     \    ${data_type}    Get Substring    ${data_item[0]}    0    3
     \    ${item_number}    Get Substring    ${data_item[0]}    3
     \    ${data_type}    Set Variable If    "${data_type.upper()}"=="PRO"    product    vendor
-    #\    Run Keyword If    "${data_type}"=="product"    Create New List    ${item_number}
     \    Set Test Variable    ${${data_type}_code_${item_number}}    ${data_item[1]}
     ${data_list_2}    Split String    ${${country}_data_list_2}    |
     : FOR    ${data}    IN    @{data_list_2}
@@ -79,9 +78,9 @@ Verify Vendors Are Retrieved Correctly
     [Arguments]    ${index}    ${item_vendor_list}
     ${item_vendor_list_length}    Get Length    ${item_vendor_list}
     ${vendor_index}    Set Variable    0
-    : FOR    ${vendor_index}    IN RANGE    ${item_vendor_list_length}
-    \    ${item_vendor_number}    Get Json Value As String    ${response.content}    $.[${index}].vendors.[${vendor_index}].vendorNumber
-    \    Should Contain X Times    ${item_vendor_list}    ${item_vendor_number}    1
-    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].vendorName    ${vendor_code_${item_vendor_number}}
-    ${vendor_index}    Evaluate    ${vendor_index}+1
+    :FOR    ${vendor_index}    IN RANGE    ${item_vendor_list_length}
+    \    ${list_item}    Get From List    ${item_vendor_list}    ${vendor_index}
+    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].vendorNumber    ${list_item}
+    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].vendorName    ${vendor_code_${list_item}}   
+    \    ${vendor_index}    Evaluate    ${vendor_index}+1
     Verify Json Element Does Not Exist    $[${index}].vendors.[${vendor_index}].vendorName
