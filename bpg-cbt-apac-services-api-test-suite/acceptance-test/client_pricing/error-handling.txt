@@ -1,0 +1,58 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource    resources/client-pricing.txt
+
+*** Test Cases ***
+Verify That Error Is Encountered When Invalid Token Is Used
+    [Tags]    functional
+    Send Get Request For Client Pricing    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Client Pricing Are Not Retrieved
+    Send Put Request For Client Pricing    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Client Pricing Are Not Retrieved
+    Send Delete Request For Client Pricing   airline_code=ZZ    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Client Pricing Are Not Retrieved
+    [Teardown]    Evict Client Pricing Cache        
+
+Verify That Error Is Encountered When Null Token Is Used
+    [Tags]    functional
+    Send Get Request For Client Pricing    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Client Pricing Are Not Retrieved
+    Send Put Request For Client Pricing    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Client Pricing Are Not Retrieved
+    Send Delete Request For Client Pricing   airline_code=ZZ    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Client Pricing Are Not Retrieved
+    [Teardown]    Evict Client Pricing Cache       
+
+Verify That Error Is Encountered When Empty Token Is Used
+    [Tags]    functional
+    Send Get Request For Client Pricing    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Client Pricing Are Not Retrieved
+    Send Put Request For Client Pricing    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Client Pricing Are Not Retrieved
+    Send Delete Request For Client Pricing   airline_code=ZZ    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Client Pricing Are Not Retrieved
+    [Teardown]    Evict Client Pricing Cache       
+
+Verify That Error Is Encountered When No Token Is Used
+    [Tags]    functional
+    Send Get Request For Client Pricing    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Client Pricing Are Not Retrieved
+    Send Put Request For Client Pricing    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Client Pricing Are Not Retrieved
+    Send Delete Request For Client Pricing  airline_code=ZZ    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Client Pricing Are Not Retrieved
+    [Teardown]    Evict Client Pricing Cache    
