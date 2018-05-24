@@ -37,7 +37,7 @@ public class CityServiceTest {
     }
 
     @Test
-    public void getCitiesShouldReturnCitiesWithMatchingCode() {
+    public void getCitiesShouldReturnCities() {
         List<City> cities = mock(List.class);
         when(service.getCities("MNL")).thenReturn(cities);
 
