@@ -20,6 +20,7 @@ import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerMiscFeeTe
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,6 +59,16 @@ public class CityControllerTest {
     }
 
     @Test
+    public void getCitiesByCodeShouldReturnCities() throws Exception {
+        mockMvc.perform(get("/cities/XXX")
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+        verify(service, times(1)).getCities("XXX");
+    }
+
+    @Test
     public void putCityShouldSaveAndReturnSavedCity() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
@@ -75,6 +86,23 @@ public class CityControllerTest {
                 .getResponse();
 
         verify(service, times(1)).save(any(City.class));
+    }
+
+    @Test
+    public void putCityShouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
+        JSONObject jsonObj = new JSONObject();
+
+        jsonObj.put("name", "Test City Name");
+        jsonObj.put("regionCode", "XXX");
+        jsonObj.put("countryCode", "XXX");
+        jsonObj.put("airportCode", "XXX");
+
+        mockMvc.perform(put("/cities")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(jsonObj)))
+                .andExpect(status().isBadRequest());
+
+        verifyZeroInteractions(service);
     }
 
     @Test
@@ -96,4 +124,22 @@ public class CityControllerTest {
 
         verify(service, times(1)).delete(any(City.class));
     }
+
+    @Test
+    public void removeCityShouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
+        JSONObject jsonObj = new JSONObject();
+
+        jsonObj.put("name", "Test City Name");
+        jsonObj.put("regionCode", "XXX");
+        jsonObj.put("countryCode", "XXX");
+        jsonObj.put("airportCode", "XXX");
+
+        mockMvc.perform(delete("/cities")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(jsonObj)))
+                .andExpect(status().isBadRequest());
+
+        verifyZeroInteractions(service);
+    }
+
 }
