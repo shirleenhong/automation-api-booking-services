@@ -24,7 +24,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.exchange.order.model.InMiscFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.InProduct;
-import com.cwt.bpg.cbt.exchange.order.model.Product;
 
 import net.minidev.json.JSONObject;
 
@@ -60,8 +59,8 @@ public class OtherServiceFeesControllerNonAirFeeTest {
 
     	InProduct product = new InProduct();
     	product.setGst(2);
-    	product.setoT1(5);
-    	product.setoT2(10);
+    	product.setOt1(5D);
+    	product.setOt2(10D);
         
         jsonObj.put("commissionByPercent", true);
         jsonObj.put("costAmount", 100);
@@ -89,8 +88,8 @@ public class OtherServiceFeesControllerNonAirFeeTest {
 
     	InProduct product = new InProduct();
     	product.setGst(2);
-    	product.setoT1(5);
-    	product.setoT2(10);
+    	product.setOt1(5D);
+    	product.setOt2(10D);
         
         jsonObj.put("commissionByPercent", true);
         jsonObj.put("costAmount", 100);

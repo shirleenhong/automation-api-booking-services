@@ -9,7 +9,7 @@ public class CommonCalculator {
 		return value == null ? BigDecimal.ZERO : value;
 	}
 
-	private double safeValue(Double value) {
+	protected double safeValue(Double value) {
 		return value == null ? 0D : value;
 	}
 

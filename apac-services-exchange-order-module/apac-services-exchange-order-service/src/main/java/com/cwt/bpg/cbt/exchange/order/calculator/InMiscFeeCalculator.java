@@ -72,12 +72,12 @@ public class InMiscFeeCalculator extends CommonCalculator {
 	
 			gstAmount = round(safeValue(tax)
 					.add(safeValue(calculatePercentage(grossSell,
-							Double.valueOf(safeValue(input.getProduct().getoT1())))))
+							Double.valueOf(safeValue(input.getProduct().getOt1())))))
 					.add(calculatePercentage(grossSell,
-							Double.valueOf(safeValue(input.getProduct().getoT2())))), scale);
+							Double.valueOf(safeValue(input.getProduct().getOt2())))), scale);
 		}
 		
-		BigDecimal merchantFeeAmont = round(
+		BigDecimal merchantFeeAmount = round(
 				calculatePercentage(safeValue(grossSell).add(tax), mfPercent),
 				scale);
 

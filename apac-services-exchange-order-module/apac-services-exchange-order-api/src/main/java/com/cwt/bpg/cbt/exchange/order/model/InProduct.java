@@ -1,9 +1,11 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 public class InProduct extends Product {
+	
+	private static final long serialVersionUID = 1L;
 	private String gdsCode;
-	private String ot1;
-	private String ot2;
+	private Double ot1;
+	private Double ot2;
 	private String requireCdr;
 	private Boolean requireTicket;
 	private Boolean suppressMi;
@@ -18,22 +20,6 @@ public class InProduct extends Product {
 
 	public void setGdsCode(String gdsCode) {
 		this.gdsCode = gdsCode;
-	}
-
-	public String getOt1() {
-		return ot1;
-	}
-
-	public void setOt1(String ot1) {
-		this.ot1 = ot1;
-	}
-
-	public String getOt2() {
-		return ot2;
-	}
-
-	public void setOt2(String ot2) {
-		this.ot2 = ot2;
 	}
 
 	public String getRequireCdr() {
@@ -91,4 +77,21 @@ public class InProduct extends Product {
 	public void setHotelFee(Boolean hotelFee) {
 		this.hotelFee = hotelFee;
 	}
+
+	public Double getOt1() {
+		return ot1;
+	}
+
+	public void setOt1(Double ot1) {
+		this.ot1 = ot1;
+	}
+
+	public Double getOt2() {
+		return ot2;
+	}
+
+	public void setOt2(Double ot2) {
+		this.ot2 = ot2;
+	}
+	
 }

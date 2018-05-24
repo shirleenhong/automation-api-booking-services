@@ -23,8 +23,8 @@ import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.CreditCardVendor;
 import com.cwt.bpg.cbt.exchange.order.model.FOPTypes;
 import com.cwt.bpg.cbt.exchange.order.model.InMiscFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.InProduct;
 import com.cwt.bpg.cbt.exchange.order.model.MiscFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.model.ProductMerchantFee;
 
 public class InMiscFeeCalculatorTest {
@@ -58,10 +58,10 @@ public class InMiscFeeCalculatorTest {
 		input.setFopNumber("1234");
 		input.setFopType(FOPTypes.CWT.getCode());
 		
-		Product product= new Product();
+		InProduct product= new InProduct();
 		product.setGst(6);
-		product.setoT1(3);
-		product.setoT2(5);
+		product.setOt1(3D);
+		product.setOt2(5D);
 		product.setProductCode("01");
 		input.setProduct(product);
 	}
