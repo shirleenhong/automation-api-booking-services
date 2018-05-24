@@ -19,9 +19,7 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
-import com.cwt.bpg.cbt.exchange.order.model.Product;
-import com.cwt.bpg.cbt.exchange.order.model.ProductList;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -37,16 +35,15 @@ public class ProductsRepositoryTest {
 	@InjectMocks
 	private ProductsRepository repository;
 	
-	private ProductList productList = new ProductList();
+	private HkSgProductList productList = new HkSgProductList();
 
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		Mockito.when(morphia.getDatastore()).thenReturn(dataStore);
 		
-		Product prodA = new Product();
+		HkSgProduct prodA = new HkSgProduct();
 
-		prodA.setCountryCode("SG");
 		prodA.setProductCode("00");
 		prodA.setDescription("BSP Ticket And MPD");
 		prodA.setGst(0);
@@ -72,8 +69,7 @@ public class ProductsRepositoryTest {
 
 		prodA.getVendors().add(vendorA);
 
-		Product prodB = new Product();
-		prodB.setCountryCode("SG");
+		HkSgProduct prodB = new HkSgProduct();
 		prodB.setProductCode("01");
 		prodB.setDescription("AA SEGMENT BOOKING FEE");
 		prodB.setGst(0);
@@ -97,7 +93,7 @@ public class ProductsRepositoryTest {
 		vendorB.setSortKey("BSP");
 		vendorB.setVendorName("BANK SETTLEMENT PLAN");
 		prodB.getVendors().add(vendorB);
-		List<Product> prodList = new ArrayList<Product>();
+		List<HkSgProduct> prodList = new ArrayList<>();
 		prodList.add(prodA);
 		prodList.add(prodB);
 		productList.setProducts(prodList);
@@ -108,7 +104,7 @@ public class ProductsRepositoryTest {
 		
 		Query query = Mockito.mock(Query.class);
 		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-		Mockito.when(dataStore.createQuery(ProductList.class)).thenReturn(query);
+		Mockito.when(dataStore.createQuery(HkSgProductList.class)).thenReturn(query);
 		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
 		Mockito.when(fieldEnd.equal("SG")).thenReturn(query);		
 		Mockito.when(query.get()).thenReturn(productList);
@@ -130,7 +126,7 @@ public class ProductsRepositoryTest {
 
 		Query query = Mockito.mock(Query.class);
 		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-		Mockito.when(dataStore.createQuery(ProductList.class)).thenReturn(query);
+		Mockito.when(dataStore.createQuery(HkSgProductList.class)).thenReturn(query);
 		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
 		Mockito.when(fieldEnd.equal("IN")).thenReturn(query);		
 		Mockito.when(query.get()).thenReturn(null);
@@ -147,7 +143,7 @@ public class ProductsRepositoryTest {
 
 		Query query = Mockito.mock(Query.class);
 		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-		Mockito.when(dataStore.createQuery(ProductList.class)).thenReturn(query);
+		Mockito.when(dataStore.createQuery(HkSgProductList.class)).thenReturn(query);
 		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
 		Mockito.when(fieldEnd.equal("IN")).thenReturn(query);		
 		Mockito.when(query.get()).thenThrow(IOException.class);

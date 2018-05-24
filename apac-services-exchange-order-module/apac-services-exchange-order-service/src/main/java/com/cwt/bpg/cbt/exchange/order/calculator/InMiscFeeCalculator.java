@@ -81,11 +81,11 @@ public class InMiscFeeCalculator extends CommonCalculator {
 				calculatePercentage(safeValue(grossSell).add(tax), mfPercent),
 				scale);
 
-		BigDecimal totalSellAmount = round(safeValue(grossSell).add(tax).add(safeValue(merchantFeeAmont)),
+		BigDecimal totalSellAmount = round(safeValue(grossSell).add(tax).add(safeValue(merchantFeeAmount)),
 				scale);
 
 		result.setGstAmount(gstAmount);
-		result.setMerchantFee(merchantFeeAmont);
+		result.setMerchantFee(merchantFeeAmount);
 		result.setSellingPriceInDi(totalSellAmount);
 		result.setCommission(commission);
 

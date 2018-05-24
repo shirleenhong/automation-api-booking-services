@@ -16,7 +16,4 @@ public class ClientPricingRepository extends CommonRepository<Client, Integer> {
 	public Client getClient(int Id) {
 		return morphia.getDatastore().createQuery(Client.class).field(_ID).equal(Id).get();
 	}
-	
-	
-
 }

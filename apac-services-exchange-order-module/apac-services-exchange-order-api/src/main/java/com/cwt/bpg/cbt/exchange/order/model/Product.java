@@ -7,39 +7,23 @@ import java.util.List;
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	private String profileName;
-	
+
 	private List<Vendor> vendors = new ArrayList<>();
-	
-	private String countryCode;
-	
+
 	private String productCode;
 
 	private String description;
 
-	private Boolean enableCCFOP;
-
-	private Boolean fullComm;
-
 	private Integer gst;
 
-	private Boolean mi;
-
 	private String sortKey;
-
-	private Boolean tktNo;
 
 	private String tktPrefix;
 
 	private String type;
-	
-	private Integer oT1;
 
-	private Integer oT2;
-	
 	public Product() {
-		//Empty constructor
+		// Empty constructor
 	}
 
 	public List<Vendor> getVendors() {
@@ -48,14 +32,6 @@ public class Product implements Serializable {
 
 	public void setVendors(List<Vendor> vendors) {
 		this.vendors = vendors;
-	}
-
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
 	}
 
 	public String getProductCode() {
@@ -74,22 +50,6 @@ public class Product implements Serializable {
 		this.description = description;
 	}
 
-	public Boolean getEnableCCFOP() {
-		return enableCCFOP;
-	}
-
-	public void setEnableCCFOP(Boolean enableCCFOP) {
-		this.enableCCFOP = enableCCFOP;
-	}
-
-	public Boolean getFullComm() {
-		return fullComm;
-	}
-
-	public void setFullComm(Boolean fullComm) {
-		this.fullComm = fullComm;
-	}
-
 	public Integer getGst() {
 		return gst;
 	}
@@ -98,28 +58,12 @@ public class Product implements Serializable {
 		this.gst = gst;
 	}
 
-	public Boolean getMi() {
-		return mi;
-	}
-
-	public void setMi(Boolean mi) {
-		this.mi = mi;
-	}
-
 	public String getSortKey() {
 		return sortKey;
 	}
 
 	public void setSortKey(String sortKey) {
 		this.sortKey = sortKey;
-	}
-
-	public Boolean getTktNo() {
-		return tktNo;
-	}
-
-	public void setTktNo(Boolean tktNo) {
-		this.tktNo = tktNo;
 	}
 
 	public String getTktPrefix() {
@@ -138,28 +82,4 @@ public class Product implements Serializable {
 		this.type = type;
 	}
 
-	public String getProfileName() {
-		return profileName;
-	}
-
-	public void setProfileName(String profileName) {
-		this.profileName = profileName;
-	}
-
-	public Integer getoT1() {
-		return oT1;
-	}
-
-	public void setoT1(Integer oT1) {
-		this.oT1 = oT1;
-	}
-
-	public Integer getoT2() {
-		return oT2;
-	}
-
-	public void setoT2(Integer oT2) {
-		this.oT2 = oT2;
-	}
-	
 }

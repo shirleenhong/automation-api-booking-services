@@ -13,6 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.WriteResult;
 
+/**
+ * T ->	class type or class entity used in morphia
+ * <p> DataType -> data type of unique key in db
+ * 
+ * @param <T> 
+ * @param <DataType>
+ */
 class CommonRepository<T, DataType> {
 
 	//TODO Adjust to support get by Id and get by field?

@@ -15,6 +15,7 @@ public class City implements Serializable {
 
     private String regionCode;
 
+    @NotNull
     private String countryCode;
 
     private String airportCode;
