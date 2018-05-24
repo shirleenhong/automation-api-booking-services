@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.dao;
 
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Repository
@@ -50,7 +51,21 @@ public class IndiaVendorDAOImpl implements VendorDAO{
             	Vendor tblVendor = new Vendor();
                 tblVendor.setVendorNumber(rs.getString("VendorNumber"));
                 tblVendor.setInterfaceNumber(rs.getString("InterfaceNumber"));
-                tblVendor.setVendorName(rs.getString("VendorName").replaceAll("\\u00A0"," ").trim().replaceAll(" +", " "));
+
+                String data = rs.getString("VendorName");
+                Pattern p = Pattern.compile("\\\\u(\\p{XDigit}{4})");
+                Matcher m = p.matcher(data);
+                StringBuffer buf = new StringBuffer(data.length());
+                while (m.find()) {
+                    String ch = String.valueOf((char) Integer.parseInt(m.group(1), 16));
+                    m.appendReplacement(buf, Matcher.quoteReplacement(ch));
+                }
+                m.appendTail(buf);
+                System.out.println(buf);
+
+                tblVendor.setVendorName(buf.toString().trim().replaceAll(" +", " "));
+
+
                 tblVendor.setContactPerson(rs.getString("ContactPerson"));
                 tblVendor.setAddress(rs.getString("Address"));
                 tblVendor.setCity(rs.getString("City"));
