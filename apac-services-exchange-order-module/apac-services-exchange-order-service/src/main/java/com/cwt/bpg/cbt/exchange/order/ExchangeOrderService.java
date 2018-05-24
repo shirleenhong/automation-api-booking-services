@@ -20,9 +20,6 @@ public class ExchangeOrderService {
 	private MerchantFeeRepository merchantFeeRepo;
 	
 	@Autowired
-	private CurrencyRepository currencyRepo;
-	
-	@Autowired
 	private ClientRepository clientRepo;
 
 	@Cacheable(cacheNames="merchant-fee", key="{#countryCode, #clientType, #profileName}")
@@ -35,11 +32,6 @@ public class ExchangeOrderService {
 		return merchantFeeRepo.putMerchantFee(fee);
 	}
 	
-	@Cacheable("currency-rounding-rule")
-	public CurrencyCodeRoundRule getRoundingRule(String currencyCode) {
-		return currencyRepo.getRoundingRule(currencyCode);
-	}
-
 	@CacheEvict(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.clientType, #fee.profileName}")
 	public MerchantFee remove(MerchantFee fee) {
 		return merchantFeeRepo.removeMerchantFee(fee);

@@ -20,7 +20,6 @@ public class CacheConfiguration {
 
 	private static final String[] cacheNames = new String[] { "products",
 			"merchant-fee",
-			"currency-rounding-rule",
 			"insurance-types",
 			"airline-rules",
 			"client-pricing",
@@ -36,7 +35,6 @@ public class CacheConfiguration {
 	@CacheEvict(allEntries = true,
 			cacheNames = { "products",
 					"merchant-fee",
-					"currency-rounding-rule",
 					"insurance-types",
 					"airline-rules",
 					"client-pricing",
