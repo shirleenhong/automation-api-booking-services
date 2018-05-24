@@ -21,7 +21,8 @@ Create Test Variables For Products And Vendors
     Set Test Variable    ${all_product_list}
     ${data_list_1}    Split String    ${${country}_data_list_1}    |
     : FOR    ${data}    IN    @{data_list_1}
-    \    ${data_item}    Split String    ${data}    ,
+    \    ${character}    Run Keyword If    "${country}"=="in"    Set Variable    _    ELSE    Set Variable    ,        
+    \    ${data_item}    Split String    ${data}    ${character}
     \    ${data_type}    Get Substring    ${data_item[0]}    0    3
     \    ${item_number}    Get Substring    ${data_item[0]}    3
     \    ${data_type}    Set Variable If    "${data_type.upper()}"=="PRO"    product    vendor
