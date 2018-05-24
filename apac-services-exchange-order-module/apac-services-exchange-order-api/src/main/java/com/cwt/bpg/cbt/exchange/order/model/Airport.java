@@ -1,13 +1,25 @@
-package com.cwt.bpg.cbt.tpromigration.mssqldb.model;
+package com.cwt.bpg.cbt.exchange.order.model;
 
-public class City {
+import org.mongodb.morphia.annotations.Entity;
 
-    public static final String COLLECTION = "_cities";
-    private String name;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+
+@Entity(value = "airports", noClassnameStored = true)
+public class Airport implements Serializable {
+
+    @NotNull
     private String code;
+
+    private String name;
+
+    @NotNull
+    private String cityCode;
+
     private String regionCode;
+
+    @NotNull
     private String countryCode;
-    private String airportCode;
 
     public String getName() {
         return name;
@@ -23,6 +35,14 @@ public class City {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
     }
 
     public String getRegionCode() {
@@ -41,13 +61,4 @@ public class City {
         this.countryCode = countryCode;
     }
 
-
-
-    public String getAirportCode() {
-        return airportCode;
-    }
-
-    public void setAirportCode(String airportCode) {
-        this.airportCode = airportCode;
-    }
 }

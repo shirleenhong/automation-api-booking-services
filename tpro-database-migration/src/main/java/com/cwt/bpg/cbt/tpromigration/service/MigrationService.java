@@ -51,7 +51,7 @@ public class MigrationService {
 	private ClientDAOImpl clientDAO;
 
 	@Autowired
-	private CityDAO cityDAO;
+	private AirportDAO airportDAO;
 
 	@Value("${com.cwt.tpromigration.mongodb.dbuser}")
 	private String dbUser;
@@ -94,16 +94,16 @@ public class MigrationService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void migrateCities() throws JsonProcessingException {
-		List<City> cities = cityDAO.getCities();
+	public void migrateAirports() throws JsonProcessingException {
+		List<Airport> airports = airportDAO.getAirports();
 
 		List<Document> docs = new ArrayList<>();
 
-		for (City city : cities) {
-			docs.add(dBObjectMapper.mapAsDbDocument(city));
+		for (Airport airport : airports) {
+			docs.add(dBObjectMapper.mapAsDbDocument(airport.getCode(),airport));
 		}
 
-		mongoDbConnection.getCollection("cities").insertMany(docs);
+		mongoDbConnection.getCollection(Airport.COLLECTION).insertMany(docs);
 	}
 
 	@SuppressWarnings("unchecked")
