@@ -46,7 +46,7 @@ public class CityRepositoryTest {
         verify(morphia,times(1)).getDatastore();
         verify(dataStore,times(1)).createQuery(City.class);
     }
-    @Test
+
     public void removeShouldReturnWriteResult(){
         Query query = Mockito.mock(Query.class);
         FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
