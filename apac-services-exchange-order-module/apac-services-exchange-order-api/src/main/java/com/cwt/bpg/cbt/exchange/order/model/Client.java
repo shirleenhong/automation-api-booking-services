@@ -20,16 +20,16 @@ public class Client implements Serializable {
 	private String name;
 	private String profileName;
 	private Integer pricingId;
-	private Boolean exemptTax;
+	private boolean exemptTax;
 	private List<ProductMerchantFee> products;
 	private List<CreditCardVendor> vendors;
 	private List<Bank> banks;
 	private List<ClientPricing> clientPricings;
-	private Boolean standardMfProduct;
-	private Boolean applyMfCc;
-	private Boolean applyMfBank;
+	private boolean standardMfProduct;
+	private boolean applyMfCc;
+	private boolean applyMfBank;
 	private Double merchantFee;
-	private Boolean lccSameAsInt;
+	private boolean lccSameAsInt;
 	private String lccDdlFeeApply;
 	private String intDdlFeeApply;
 
@@ -97,11 +97,11 @@ public class Client implements Serializable {
 		this.pricingId = pricingId;
 	}
 
-	public Boolean getExemptTax() {
+	public boolean getExemptTax() {
 		return exemptTax;
 	}
 
-	public void setExemptTax(Boolean exemptTax) {
+	public void setExemptTax(boolean exemptTax) {
 		this.exemptTax = exemptTax;
 	}
 
@@ -113,27 +113,27 @@ public class Client implements Serializable {
 		this.clientPricings = clientPricings;
 	}
 
-	public Boolean isStandardMfProduct() {
+	public boolean isStandardMfProduct() {
 		return standardMfProduct;
 	}
 
-	public void setStandardMfProduct(Boolean standardMfProduct) {
+	public void setStandardMfProduct(boolean standardMfProduct) {
 		this.standardMfProduct = standardMfProduct;
 	}
 
-	public Boolean isApplyMfCc() {
+	public boolean isApplyMfCc() {
 		return applyMfCc;
 	}
 
-	public void setApplyMfCc(Boolean applyMfCc) {
+	public void setApplyMfCc(boolean applyMfCc) {
 		this.applyMfCc = applyMfCc;
 	}
 
-	public Boolean isApplyMfBank() {
+	public boolean isApplyMfBank() {
 		return applyMfBank;
 	}
 
-	public void setApplyMfBank(Boolean applyMfBank) {
+	public void setApplyMfBank(boolean applyMfBank) {
 		this.applyMfBank = applyMfBank;
 	}
 
@@ -145,11 +145,11 @@ public class Client implements Serializable {
 		this.merchantFee = merchantFee;
 	}
 
-	public Boolean getLccSameAsInt() {
+	public boolean getLccSameAsInt() {
 		return lccSameAsInt;
 	}
 
-	public void setLccSameAsInt(Boolean lccSameAsInt) {
+	public void setLccSameAsInt(boolean lccSameAsInt) {
 		this.lccSameAsInt = lccSameAsInt;
 	}
 

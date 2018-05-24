@@ -2,10 +2,12 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.collection.IsEmptyCollection.emptyCollectionOf;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +60,7 @@ public class CommonRepositoryTest {
 		verify(datastore, times(1)).createQuery(Insurance.class);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldInsertOrUpdate() {
 		Insurance insurance = new Insurance();
@@ -96,6 +99,7 @@ public class CommonRepositoryTest {
         verifyZeroInteractions(datastore);
     }
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldDelete() {
 		final String toDelete = "test";

@@ -15,6 +15,7 @@ import com.mongodb.WriteResult;
 
 class CommonRepository<T, DataType> {
 
+	//TODO Adjust to support get by Id and get by field?
 	@Autowired
 	protected MorphiaComponent morphia;
 

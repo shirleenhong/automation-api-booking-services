@@ -60,7 +60,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
     	Product product = new Product();
     	product.setGst(2);
     	product.setoT1(5);
-    	product.setoT1(10);
+    	product.setoT2(10);
         
         jsonObj.put("commissionByPercent", true);
         jsonObj.put("costAmount", 100);
@@ -89,7 +89,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
     	Product product = new Product();
     	product.setGst(2);
     	product.setoT1(5);
-    	product.setoT1(10);
+    	product.setoT2(10);
         
         jsonObj.put("commissionByPercent", true);
         jsonObj.put("costAmount", 100);

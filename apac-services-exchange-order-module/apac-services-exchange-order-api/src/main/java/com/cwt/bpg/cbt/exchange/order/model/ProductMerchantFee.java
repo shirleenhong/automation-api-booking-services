@@ -10,7 +10,7 @@ public class ProductMerchantFee implements Serializable {
 	private static final long serialVersionUID = -214591267757226656L;
 	
 	private int clientId;
-	private int productCode;
+	private String productCode;
 	private boolean subjectToMf;
 	private boolean standard;
 
@@ -38,11 +38,11 @@ public class ProductMerchantFee implements Serializable {
 		this.standard = standard;
 	}
 
-	public int getProductCode() {
+	public String getProductCode() {
 		return productCode;
 	}
 
-	public void setProductCode(int productCode) {
+	public void setProductCode(String productCode) {
 		this.productCode = productCode;
 	}
 

@@ -13,6 +13,7 @@ import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.CreditCardVendor;
 import com.cwt.bpg.cbt.exchange.order.model.InMiscFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.MiscFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.model.ProductMerchantFee;
 
 public class InMiscFeeCalculator extends CommonCalculator {
@@ -27,14 +28,21 @@ public class InMiscFeeCalculator extends CommonCalculator {
 
 		BigDecimal commission = null;
 		BigDecimal discount = null;
-		Double merchantFeePercent = 0D;
+		Double mfPercent = 0D;
 
-		if (input == null) {
+		if (input == null || client == null) {
 			return result;
 		}
 
 		if (input.getFopMode() != BTC_FOP_MODE) {
-			merchantFeePercent = calculateMfPercent(input, client);
+
+			ProductMerchantFee product = getProduct(client, input.getProduct());
+			if (product != null && product.isSubjectToMf()) {
+				mfPercent = 0D;
+			}
+			else { 
+				mfPercent = calculateMfPercent(input, client);
+			}
 		}
 
 		int scale = scaleConfig.getScale(input.getCountryCode());
@@ -62,15 +70,15 @@ public class InMiscFeeCalculator extends CommonCalculator {
 			tax = round(calculatePercentage(grossSell, Double.valueOf(input.getProduct().getGst())),
 					scale);
 	
-			gstAmount = safeValue(tax)
-					.add(safeValue(round(calculatePercentage(grossSell,
-							Double.valueOf(safeValue(input.getProduct().getoT1()))), scale)))
-					.add(round(calculatePercentage(grossSell,
-							Double.valueOf(safeValue(input.getProduct().getoT2()))), scale));
+			gstAmount = round(safeValue(tax)
+					.add(safeValue(calculatePercentage(grossSell,
+							Double.valueOf(safeValue(input.getProduct().getoT1())))))
+					.add(calculatePercentage(grossSell,
+							Double.valueOf(safeValue(input.getProduct().getoT2())))), scale);
 		}
 		
 		BigDecimal merchantFeeAmont = round(
-				calculatePercentage(safeValue(grossSell).add(tax), merchantFeePercent),
+				calculatePercentage(safeValue(grossSell).add(tax), mfPercent),
 				scale);
 
 		BigDecimal totalSellAmount = round(safeValue(grossSell).add(tax).add(safeValue(merchantFeeAmont)),
@@ -87,34 +95,35 @@ public class InMiscFeeCalculator extends CommonCalculator {
 	private Double calculateMfPercent(InMiscFeesInput input, Client client) {
 
 		Double mfPercent = client.getMerchantFee();
-
-		ProductMerchantFee product = new ProductMerchantFee();
-		if (product.isSubjectToMf()) {
-			mfPercent = 0D;
+		
+		Bank bank = bank(client, input.getFopNumber(), client.isApplyMfBank());
+		if(bank != null && !StringUtils.isEmpty(bank.getCcNumberPrefix())) {
+			mfPercent = bank.getPercentage();
 		}
-		else if (!client.isApplyMfBank()) {
-			Bank bank = bank(client, input.getFopType(), !client.isApplyMfBank());
-			mfPercent = bank != null ? bank.getPercentage() : 0D;
-		}
-		else if (client.isApplyMfBank()) {
-			Bank bank = bank(client, input.getFopType(), client.isApplyMfBank());
-			mfPercent = bank != null ? bank.getPercentage() : 0D;
-		}
-		else if (!client.isApplyMfCc() && StringUtils.isEmpty(input.getFopType())) {
-			CreditCardVendor vendor = creditCard(client, input.getAcctType(), !client.isApplyMfCc());
-			mfPercent = vendor != null ? vendor.getPercentage() : 0D;
-		}
-		else if (client.isApplyMfCc() && StringUtils.isEmpty(input.getFopType())) {
+		else if(!StringUtils.isEmpty(input.getFopType())) {
 			CreditCardVendor vendor = creditCard(client, input.getAcctType(), client.isApplyMfCc());
 			mfPercent = vendor != null ? vendor.getPercentage() : 0D;
 		}
-
+		
 		return mfPercent;
+	}
+
+	private ProductMerchantFee getProduct(Client client, Product product) {
+		if(client.getProducts() != null) {
+			Optional<ProductMerchantFee> result = client.getProducts().stream()
+					.filter(item -> item.getProductCode().equals(product.getProductCode())).findFirst();
+
+			if (result.isPresent()) {
+				return result.get();
+			}
+		}
+		return null;
 	}
 
 	private CreditCardVendor creditCard(Client client, String acctType, boolean isStandard) {
 
 		if(client.getVendors() != null) {
+			
 			Optional<CreditCardVendor> vendor = client.getVendors().stream()
 					.filter(item -> item.getVendorName().equals(acctType) && isStandard).findFirst();
 
@@ -129,8 +138,10 @@ public class InMiscFeeCalculator extends CommonCalculator {
 	private Bank bank(Client client, String fopNumber, boolean isStandard) {
 
 		if(client.getBanks() != null) {
+			
 			Optional<Bank> bank = client.getBanks().stream()
-					.filter(item -> fopNumber.startsWith(item.getCcNumberPrefix()) && isStandard).findFirst();
+					.filter(item -> fopNumber.startsWith(item.getCcNumberPrefix()) 
+							&& isStandard).findFirst();
 
 			if (bank.isPresent()) {
 				return bank.get();

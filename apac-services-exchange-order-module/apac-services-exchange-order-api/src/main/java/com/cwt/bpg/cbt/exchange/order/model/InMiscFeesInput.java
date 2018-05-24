@@ -20,6 +20,7 @@ public class InMiscFeesInput implements Serializable
 	private int fopMode;
 	private Product product;
 	private String acctType;
+	private String fopNumber;
 	
 	@NotEmpty
 	private String profileName;
@@ -110,6 +111,14 @@ public class InMiscFeesInput implements Serializable
 
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
+	}
+
+	public String getFopNumber() {
+		return fopNumber;
+	}
+
+	public void setFopNumber(String fopNumber) {
+		this.fopNumber = fopNumber;
 	}
 	
 	
