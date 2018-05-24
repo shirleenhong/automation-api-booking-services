@@ -1,10 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static java.util.Comparator.comparing;
-
-import static java.lang.String.CASE_INSENSITIVE_ORDER;
-
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,51 +10,68 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cwt.bpg.cbt.exchange.order.model.HkSgProductList;
+import com.cwt.bpg.cbt.exchange.order.model.InProductList;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
-import com.cwt.bpg.cbt.exchange.order.model.ProductList;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
 public class ProductsRepository {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductsRepository.class); 
-	
-	@Autowired
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductsRepository.class);
+    private static final String INDIA_COUNTRY_CODE = "IN";
+
+    @Autowired
 	private MorphiaComponent morphia;
 
+    @SuppressWarnings("unchecked")
 	public List<Product> getProducts(String countryCode) {
-		
+
 		List<Product> products = new ArrayList<>();
-		ProductList productList = null;
 		try {
-					
-			productList =  morphia.getDatastore().createQuery(ProductList.class)
-					.field("countryCode")
-					.equal(countryCode)
-					.get();
-		
-		} catch(Exception e) {
-			LOGGER.error("Unable to parse product list for {} {}", countryCode, e.getMessage()); 
-		}
-		
-		if (productList != null) {
-			products.addAll(productList.getProducts());
+			if (INDIA_COUNTRY_CODE.equalsIgnoreCase(countryCode)) {
+				products.addAll(getInProducts(countryCode));
+			}
+			else {
+				products.addAll(getHkSgProducts(countryCode));
+			}
 			sort(products);
 		}
-	
+		catch (Exception e) {
+			LOGGER.error("Unable to parse product list for {} {}", countryCode, e.getMessage());
+		}
+
 		return products;
 	}
 
-	private void sort(List<Product> products) {
-		if (products != null && !products.isEmpty()) {
-			for (Product product : products) {
-				if (product.getVendors() != null && !product.getVendors().isEmpty()) {
-					product.getVendors().sort(comparing(Vendor::getVendorName, CASE_INSENSITIVE_ORDER));
-				}
-			}
-			products.sort(comparing(Product::getDescription, CASE_INSENSITIVE_ORDER));
-		}
+	private List getHkSgProducts(String countryCode) {
+		HkSgProductList productList = morphia.getDatastore().createQuery(HkSgProductList.class)
+				.field("countryCode").equal(countryCode).get();
 
+		return productList == null ? Collections.emptyList() : productList.getProducts();
 	}
+
+	private List getInProducts(String countryCode) {
+		InProductList productList = morphia.getDatastore().createQuery(InProductList.class)
+				.field("countryCode").equal(countryCode).get();
+
+		return productList == null ? Collections.emptyList() : productList.getProducts();
+	}
+
+    private void sort(List<Product> products)
+    {
+        if (products != null && !products.isEmpty())
+        {
+            for (Product product : products)
+            {
+                if (product.getVendors() != null && !product.getVendors().isEmpty())
+                {
+                    product.getVendors().sort(Comparator.comparing(Vendor::getVendorName, String.CASE_INSENSITIVE_ORDER));
+                }
+            }
+            products.sort(Comparator.comparing(Product::getDescription, String.CASE_INSENSITIVE_ORDER));
+        }
+    }
+
 }

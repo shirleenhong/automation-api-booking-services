@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.exchange.order.model.InMiscFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.InProduct;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 
 import net.minidev.json.JSONObject;
@@ -57,10 +58,10 @@ public class OtherServiceFeesControllerNonAirFeeTest {
     public void shouldReturnFeesBreakdown() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
-    	Product product = new Product();
+    	InProduct product = new InProduct();
     	product.setGst(2);
-    	product.setoT1(5);
-    	product.setoT1(10);
+    	product.setOt1("5");
+    	product.setOt1("10");
         
         jsonObj.put("commissionByPercent", true);
         jsonObj.put("costAmount", 100);
@@ -86,10 +87,10 @@ public class OtherServiceFeesControllerNonAirFeeTest {
     public void shouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
-    	Product product = new Product();
+    	InProduct product = new InProduct();
     	product.setGst(2);
-    	product.setoT1(5);
-    	product.setoT1(10);
+    	product.setOt1("5");
+    	product.setOt1("10");
         
         jsonObj.put("commissionByPercent", true);
         jsonObj.put("costAmount", 100);

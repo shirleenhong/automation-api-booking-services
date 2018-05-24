@@ -64,20 +64,20 @@ public class InMiscFeeCalculator extends CommonCalculator {
 	
 			gstAmount = safeValue(tax)
 					.add(safeValue(round(calculatePercentage(grossSell,
-							Double.valueOf(safeValue(input.getProduct().getoT1()))), scale)))
+							Double.valueOf(safeValue(input.getProduct().getOt1()))), scale)))
 					.add(round(calculatePercentage(grossSell,
-							Double.valueOf(safeValue(input.getProduct().getoT2()))), scale));
+							Double.valueOf(safeValue(input.getProduct().getOt2()))), scale));
 		}
 		
-		BigDecimal merchantFeeAmont = round(
+		BigDecimal merchantFeeAmount = round(
 				calculatePercentage(safeValue(grossSell).add(tax), merchantFeePercent),
 				scale);
 
-		BigDecimal totalSellAmount = round(safeValue(grossSell).add(tax).add(safeValue(merchantFeeAmont)),
+		BigDecimal totalSellAmount = round(safeValue(grossSell).add(tax).add(safeValue(merchantFeeAmount)),
 				scale);
 
 		result.setGstAmount(gstAmount);
-		result.setMerchantFee(merchantFeeAmont);
+		result.setMerchantFee(merchantFeeAmount);
 		result.setSellingPriceInDi(totalSellAmount);
 		result.setCommission(commission);
 

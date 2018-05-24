@@ -1,12 +1,10 @@
 package com.cwt.bpg.cbt.exchange.order.products;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.ProductsRepository;
+import com.cwt.bpg.cbt.exchange.order.model.HkSgProduct;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
@@ -53,7 +52,7 @@ public class ProductsServiceTest {
 	}
 
 	private static List<Product> createListOfProducts() {
-		Product product1 = new Product();
+		Product product1 = new HkSgProduct();
 		List<Vendor> vendors = Arrays.asList(new Vendor() {
 			private static final long serialVersionUID = -6678379343715153605L;
 			{
@@ -62,7 +61,7 @@ public class ProductsServiceTest {
 			}
 		});
 		product1.setVendors(vendors);
-		Product product2 = new Product();
+		Product product2 = new HkSgProduct();
 		return Arrays.asList(product1, product2);
 	}
 

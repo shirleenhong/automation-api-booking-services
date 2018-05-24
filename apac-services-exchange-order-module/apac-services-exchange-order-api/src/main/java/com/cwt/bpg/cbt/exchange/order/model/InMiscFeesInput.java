@@ -18,7 +18,7 @@ public class InMiscFeesInput implements Serializable
 	private Double discountPercent;	
 	private boolean discountByPercent;
 	private int fopMode;
-	private Product product;
+	private InProduct product;
 	private String acctType;
 	
 	@NotEmpty
@@ -80,11 +80,11 @@ public class InMiscFeesInput implements Serializable
 		this.fopMode = fopMode;
 	}
 
-	public Product getProduct() {
+	public InProduct getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(InProduct product) {
 		this.product = product;
 	}
 
