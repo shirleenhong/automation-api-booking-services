@@ -26,7 +26,7 @@ public class AirlineRulesController {
 	@ResponseBody
 	@ApiOperation(value = "Pulls airline rules")
 	public ResponseEntity<List<AirlineRule>> getAirlineRules() {
-		return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getAllAirlineRules(), HttpStatus.OK);
 	}
 
 	@PutMapping(path = "/airline-rules")

@@ -23,7 +23,6 @@ public class CacheConfiguration {
 			"insurance-types",
 			"airline-rules",
 			"clients",
-			"default-client",
 			"cities"};
 
 	@Bean
@@ -37,7 +36,6 @@ public class CacheConfiguration {
 					"insurance-types",
 					"airline-rules",
 					"clients",
-					"default-client",
 					"cities"})
 	@Scheduled(cron = "0 0 0,12 * * *")
 	public void evictAllCache() {

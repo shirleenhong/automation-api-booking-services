@@ -14,7 +14,7 @@ public class CityService {
     private CityRepository repository;
 
     @Cacheable(cacheNames = "cities", key = "{#root.methodName}")
-    public List<City> getAll() {
+    public List<City> getAllCities() {
         return repository.getAll();
     }
 

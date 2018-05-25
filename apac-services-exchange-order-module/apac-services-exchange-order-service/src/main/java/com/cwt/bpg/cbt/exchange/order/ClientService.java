@@ -16,8 +16,8 @@ public class ClientService {
 	@Autowired
 	private ClientRepository clientRepository;
 
-	@Cacheable(cacheNames = "clients", key = "{client-#root.methodName}")
-	public List<Client> getAll() {
+	@Cacheable(cacheNames = "clients", key = "{#root.methodName}")
+	public List<Client> getAllClients() {
 		return clientRepository.getAll();
 	}
 
@@ -34,6 +34,15 @@ public class ClientService {
 	@Cacheable(cacheNames = "clients", key = "#id")
 	public Client getClient(int id) {
 		return clientRepository.getClient(id);
+	}
+
+	@Cacheable(cacheNames="client", key="{#profileName}")
+	public Client getClient(String profileName) {
+		return clientRepository.getClient(profileName);
+	}
+
+	public Client getDefaultClient() {
+		return getClient(-1);		
 	}
 
 }

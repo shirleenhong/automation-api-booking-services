@@ -33,9 +33,9 @@ public class AirlineRuleServiceTest {
 	@Test
 	public void canGetAllAirlineRule() {
 		List<AirlineRule> value = mock(List.class);
-		when(service.getAll()).thenReturn(value);
+		when(service.getAllAirlineRules()).thenReturn(value);
 
-		List<AirlineRule> result = service.getAll();
+		List<AirlineRule> result = service.getAllAirlineRules();
 
 		assertNotNull(result);
 		verify(repository, times(1)).getAll();

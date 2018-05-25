@@ -15,8 +15,8 @@ public class AirlineRuleService {
 	@Autowired
 	private AirlineRuleRepository repository;
 
-	@Cacheable(cacheNames = "airline-rules", key = "{airline-#root.methodName}")
-	public List<AirlineRule> getAll() {
+	@Cacheable(cacheNames = "airline-rules", key = "{#root.methodName}")
+	public List<AirlineRule> getAllAirlineRules() {
 		return repository.getAll();
 	}
 

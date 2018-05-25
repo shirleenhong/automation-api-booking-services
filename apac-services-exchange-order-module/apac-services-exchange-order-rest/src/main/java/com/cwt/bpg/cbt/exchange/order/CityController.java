@@ -24,7 +24,7 @@ public class CityController {
     @ResponseBody
     @ApiOperation(value = "Pulls cities")
     public ResponseEntity<List<City>> getCities() {
-        return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(service.getAllCities(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/cities/{cityCode}")
