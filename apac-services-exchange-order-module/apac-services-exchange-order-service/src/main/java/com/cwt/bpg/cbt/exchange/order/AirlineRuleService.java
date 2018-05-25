@@ -11,6 +11,7 @@ import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
 
 @Service
 public class AirlineRuleService {
+	
 	@Autowired
 	private AirlineRuleRepository repository;
 

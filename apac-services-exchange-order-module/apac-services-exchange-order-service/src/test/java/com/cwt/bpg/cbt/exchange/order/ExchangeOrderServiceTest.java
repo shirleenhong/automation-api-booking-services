@@ -1,11 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public class ExchangeOrderServiceTest {
@@ -56,18 +51,4 @@ public class ExchangeOrderServiceTest {
 		service.remove(fee);
 		Mockito.verify(merchantFeeApi, Mockito.times(1)).removeMerchantFee(fee);
 	}
-	
-	@Test
-	public void canGetClient() {
-		String proName = "profileName";
-		service.getClient(proName);
-		Mockito.verify(clientRepo, Mockito.times(1)).getClient(proName);
-	}
-	
-	@Test
-	public void canGetDefaultClient() {
-		service.getDefaultClient();
-		Mockito.verify(clientRepo, Mockito.times(1)).getClient(-1);
-	}
-
 }

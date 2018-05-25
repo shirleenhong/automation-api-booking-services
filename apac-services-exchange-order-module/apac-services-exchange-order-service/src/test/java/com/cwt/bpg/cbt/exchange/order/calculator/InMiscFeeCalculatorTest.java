@@ -79,8 +79,8 @@ public class InMiscFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
-		client.setProducts(Arrays.asList(pf));
-		client.setBanks(Arrays.asList(bank));
+		client.setMfProducts(Arrays.asList(pf));
+		client.setMfBanks(Arrays.asList(bank));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 		
@@ -105,8 +105,8 @@ public class InMiscFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(true);
 		pf.setProductCode("01");
-		client.setProducts(Arrays.asList(pf));
-		client.setBanks(Arrays.asList(bank));
+		client.setMfProducts(Arrays.asList(pf));
+		client.setMfBanks(Arrays.asList(bank));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 		
@@ -131,8 +131,8 @@ public class InMiscFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
-		client.setProducts(Arrays.asList(pf));
-		client.setBanks(Arrays.asList(bank));
+		client.setMfProducts(Arrays.asList(pf));
+		client.setMfBanks(Arrays.asList(bank));
 		client.setApplyMfCc(true);
 		client.setApplyMfBank(true);
 		
@@ -158,13 +158,13 @@ public class InMiscFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
-		client.setProducts(Arrays.asList(pf));
-		client.setBanks(Arrays.asList(bank));
+		client.setMfProducts(Arrays.asList(pf));
+		client.setMfBanks(Arrays.asList(bank));
 		CreditCardVendor cc = new CreditCardVendor();
 		cc.setPercentage(2D);
 		cc.setStandard(false);
 		cc.setVendorName("Visa");
-		client.setVendors(Arrays.asList(cc));
+		client.setMfCcs(Arrays.asList(cc));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 		
@@ -187,13 +187,13 @@ public class InMiscFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
-		client.setProducts(Arrays.asList(pf));
+		client.setMfProducts(Arrays.asList(pf));
 		
 		CreditCardVendor cc = new CreditCardVendor();
 		cc.setPercentage(2D);
 		cc.setStandard(true);
 		cc.setVendorName("Visa");
-		client.setVendors(Arrays.asList(cc));
+		client.setMfCcs(Arrays.asList(cc));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(true);
 		
@@ -232,7 +232,7 @@ public class InMiscFeeCalculatorTest {
 		bank.setStandard(false);
 		bank.setPercentage(2D);
 		
-		client.setBanks(Arrays.asList(bank));
+		client.setMfBanks(Arrays.asList(bank));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 		
@@ -261,8 +261,8 @@ public class InMiscFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(true);
 		pf.setProductCode("01");
-		client.setProducts(Arrays.asList(pf));
-		client.setBanks(Arrays.asList(bank));
+		client.setMfProducts(Arrays.asList(pf));
+		client.setMfBanks(Arrays.asList(bank));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 		
@@ -290,8 +290,8 @@ public class InMiscFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
-		client.setProducts(Arrays.asList(pf));
-		client.setBanks(Arrays.asList(bank));
+		client.setMfProducts(Arrays.asList(pf));
+		client.setMfBanks(Arrays.asList(bank));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 		
@@ -325,9 +325,9 @@ public class InMiscFeeCalculatorTest {
 		cc.setPercentage(2D);
 		cc.setStandard(true);
 		cc.setVendorName("Visa");
-		client.setVendors(Arrays.asList(cc));
-		client.setProducts(Arrays.asList(pf));
-		client.setBanks(Arrays.asList(bank));
+		client.setMfCcs(Arrays.asList(cc));
+		client.setMfProducts(Arrays.asList(pf));
+		client.setMfBanks(Arrays.asList(bank));
 		client.setApplyMfCc(true);
 		client.setApplyMfBank(true);
 		

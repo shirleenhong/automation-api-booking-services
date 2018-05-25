@@ -58,8 +58,8 @@ public class IndiaProductCodeDAOImpl implements ProductCodeDAO {
                 productCode.setType(rs.getString("Type"));
                 productCode.setTktPrefix(rs.getString("TktPrefix"));
                 productCode.setGst(rs.getObject("GST") == null ? null : rs.getInt("GST"));
-                productCode.setoT1(rs.getObject("OT1") == null ? null : rs.getInt("OT1"));
-                productCode.setoT2(rs.getObject("OT2") == null ? null : rs.getInt("OT2"));
+                productCode.setOt1(rs.getObject("OT1") == null ? null : rs.getInt("OT1"));
+                productCode.setOt2(rs.getObject("OT2") == null ? null : rs.getInt("OT2"));
                 productCode.setRequireCdr(rs.getObject("RequireCDR") == null ? null : rs.getBoolean("RequireCDR"));
                 productCode.setRequireTicket(rs.getObject("RequireTicket") == null ? null : rs.getBoolean("RequireTicket"));
                 productCode.setSuppressMI(rs.getObject("SuppressMI") == null ? null : rs.getBoolean("SuppressMI"));

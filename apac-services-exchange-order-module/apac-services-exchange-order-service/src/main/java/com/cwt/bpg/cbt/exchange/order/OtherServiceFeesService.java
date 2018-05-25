@@ -43,6 +43,9 @@ public class OtherServiceFeesService {
 
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
+	
+	@Autowired
+	private ClientService clientService;
 
 	FeesBreakdown calculateMiscFee(FeesInput input) {
 		
@@ -71,10 +74,10 @@ public class OtherServiceFeesService {
 
 	private Client getClient(InMiscFeesInput input) {
 		
-		Client client = exchangeOrderService.getClient(input.getProfileName());
+		Client client = clientService.getClient(input.getProfileName());
 		
 		if(client != null && client.isStandardMfProduct()) {
-			return exchangeOrderService.getDefaultClient();
+			return clientService.getDefaultClient();
 		}
 		
 		return client;
