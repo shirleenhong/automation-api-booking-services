@@ -30,7 +30,7 @@ public class AirportController {
 
     @GetMapping(path = "/airports/{airportCode}")
     @ResponseBody
-    @ApiOperation(value = "Pulls airport for a specific airport code")
+    @ApiOperation(value = "Pulls airport for a specific airport or city code")
     public ResponseEntity<Airport> getAirport(
             @PathVariable
             @ApiParam(value = "Airport Code") String airportCode) {
