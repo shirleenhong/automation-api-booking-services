@@ -17,7 +17,7 @@ public class ClientService {
 	private ClientRepository clientRepository;
 
 	@Cacheable(cacheNames = "clients", key = "{#root.methodName}")
-	public List<Client> getAllClients() {
+	public List<Client> getAll() {
 		return clientRepository.getAll();
 	}
 

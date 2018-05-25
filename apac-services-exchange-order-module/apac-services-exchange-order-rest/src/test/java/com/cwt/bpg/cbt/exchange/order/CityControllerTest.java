@@ -55,7 +55,7 @@ public class CityControllerTest {
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
-        verify(service, times(1)).getAllCities();
+        verify(service, times(1)).getAll();
     }
 
     @Test

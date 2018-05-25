@@ -27,7 +27,7 @@ public class ClientServiceTest {
 
 	@Test
 	public void canGetAllClient() {
-		service.getAllClients();
+		service.getAll();
 		verify(repository, times(1)).getAll();
 	}
 	

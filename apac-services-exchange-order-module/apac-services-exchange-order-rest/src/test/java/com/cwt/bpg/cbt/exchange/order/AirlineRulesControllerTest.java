@@ -32,12 +32,12 @@ public class AirlineRulesControllerTest {
 
 	@Test
 	public void canGetAirlineRules() {
-		when(service.getAllAirlineRules()).thenReturn(new ArrayList<AirlineRule>());
+		when(service.getAll()).thenReturn(new ArrayList<AirlineRule>());
 		
 		ResponseEntity<?> airlineRules = airlineRulesController.getAirlineRules();
 		
 		assertEquals(HttpStatus.OK, airlineRules.getStatusCode());
-		verify(service, times(1)).getAllAirlineRules();
+		verify(service, times(1)).getAll();
 	}
 
 	@Test

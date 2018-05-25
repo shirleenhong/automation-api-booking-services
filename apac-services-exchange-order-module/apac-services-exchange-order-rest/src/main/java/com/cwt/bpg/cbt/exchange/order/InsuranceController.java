@@ -34,7 +34,7 @@ public class InsuranceController {
 	@ApiOperation(value = "Pulls insurance list")
 	public ResponseEntity<List<Insurance>> getInsuranceList() {
 
-		return new ResponseEntity<>(service.getInsuranceList(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
 	}
 
 	@Internal

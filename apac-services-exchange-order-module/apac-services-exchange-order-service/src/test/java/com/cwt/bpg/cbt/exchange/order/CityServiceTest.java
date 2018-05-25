@@ -28,9 +28,9 @@ public class CityServiceTest {
     @Test
     public void getAllShouldGetAllCities() {
         List<City> cities = mock(List.class);
-        when(service.getAllCities()).thenReturn(cities);
+        when(service.getAll()).thenReturn(cities);
 
-        List<City> result = service.getAllCities();
+        List<City> result = service.getAll();
 
         assertNotNull(result);
         verify(repository, times(1)).getAll();
