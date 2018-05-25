@@ -26,20 +26,20 @@ public class ClientServiceTest {
 	}
 
 	@Test
-	public void canGetAllClientPricing() {
+	public void canGetAllClient() {
 		service.getAll();
 		verify(repository, times(1)).getAll();
 	}
 	
 	@Test
-	public void canDeleteClientPricing() {
+	public void canDeleteClient() {
 		final int key = 1;
 		service.delete(key);
 		verify(repository, times(1)).remove(key);
 	}
 	
 	@Test
-	public void canSaveClientPricing() {
+	public void canSaveClient() {
 		Client client = new Client();
 		Client result = service.save(client);
 		assertEquals(null, result);

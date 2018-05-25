@@ -37,7 +37,7 @@ public class ClientController {
 	@ResponseBody
 	@ApiOperation(value = "Put client")
 	@Internal
-	public ResponseEntity<Client> putClientPricing(@RequestBody Client client) {
+	public ResponseEntity<Client> putClient(@RequestBody Client client) {
 
 		return new ResponseEntity<>(clientService.save(client), HttpStatus.OK);
 	}
@@ -46,7 +46,7 @@ public class ClientController {
 	@ResponseBody
 	@ApiOperation(value = "Remove client by id")
 	@Internal
-	public ResponseEntity<String> removeClientPricing(@PathVariable int id) {
+	public ResponseEntity<String> removeClient(@PathVariable int id) {
 
 		return new ResponseEntity<>(clientService.delete(id), HttpStatus.OK);
 	}

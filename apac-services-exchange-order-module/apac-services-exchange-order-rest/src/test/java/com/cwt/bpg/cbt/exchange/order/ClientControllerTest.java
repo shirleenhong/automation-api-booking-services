@@ -14,13 +14,13 @@ import org.springframework.http.ResponseEntity;
 
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 
-public class ClientPricingControllerTest {
+public class ClientControllerTest {
 
 	@Mock
 	private ClientService clientPricingService;
 	
 	@InjectMocks
-	private ClientController clientPricingController;
+	private ClientController clientController;
 	
 	@Before
 	public void init() {
@@ -30,7 +30,7 @@ public class ClientPricingControllerTest {
 	@Test
 	public void canGetClientById() {
 			final int id = 8;
-			ResponseEntity<?> client = clientPricingController.getClient(id);
+			ResponseEntity<?> client = clientController.getClient(id);
 			verify(clientPricingService, times(1)).getClient(id);
 			assertEquals(HttpStatus.OK,  client.getStatusCode());
 	}
@@ -38,7 +38,7 @@ public class ClientPricingControllerTest {
 	@Test
 	public void canPutClientPricing() {
 		Client newClient = new Client();
-		ResponseEntity<?> client = clientPricingController.putClientPricing(newClient);
+		ResponseEntity<?> client = clientController.putClient(newClient);
 		verify(clientPricingService, times(1)).save(newClient);
 		assertEquals(HttpStatus.OK, client.getStatusCode());
 	}
@@ -46,7 +46,7 @@ public class ClientPricingControllerTest {
 	@Test
 	public void canRemoveClientPricing() {
 		final int keyValue = 0;
-		ResponseEntity<?> client = clientPricingController.removeClientPricing(keyValue);
+		ResponseEntity<?> client = clientController.removeClient(keyValue);
 		verify(clientPricingService, times(1)).delete(keyValue);
 		assertEquals(HttpStatus.OK, client.getStatusCode());
 	}
