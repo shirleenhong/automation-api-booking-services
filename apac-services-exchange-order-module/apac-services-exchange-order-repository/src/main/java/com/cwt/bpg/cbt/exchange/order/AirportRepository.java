@@ -1,14 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import com.cwt.bpg.cbt.exchange.order.model.Airport;
-import com.mongodb.WriteResult;
-import org.mongodb.morphia.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
 
 @Repository
 public class AirportRepository extends CommonRepository<Airport, String> {
