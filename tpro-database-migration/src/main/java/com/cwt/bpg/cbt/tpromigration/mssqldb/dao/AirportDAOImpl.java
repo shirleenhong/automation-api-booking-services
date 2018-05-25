@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.dao;
 
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.City;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Airport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,38 +15,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CityDAOImpl implements CityDAO {
-    private static final Logger logger = LoggerFactory.getLogger(CityDAOImpl.class);
+public class AirportDAOImpl implements AirportDAO {
+    private static final Logger logger = LoggerFactory.getLogger(AirportDAOImpl.class);
 
     @Autowired
     private DataSource dataSource;
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<City> getCities() {
-        List<City> cities = new ArrayList<City>();
+    public List<Airport> getAirports() {
+        List<Airport> airports = new ArrayList<Airport>();
         String sql = "SELECT * FROM CWTStandardData.dbo.tblCity";
 
         Connection conn = null;
-//      @Column(name="City")->name
-//		@Column(name="CityCode")->code
-//		@Column(name="RegionCode")
-//		@Column(name="CountryCode")
-//		@Column(name="AirportCode")
 
         try {
-            logger.info("getting cities from mssqldb");
+            logger.info("getting airports from mssqldb");
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                City city = new City();
-                city.setName(rs.getString("City"));
-                city.setCode(rs.getString("CityCode"));
-                city.setRegionCode(rs.getString("RegionCode"));
-                city.setCountryCode(rs.getString("CountryCode"));
-                city.setAirportCode(rs.getString("AirportCode"));
-                cities.add(city);
+                Airport airport = new Airport();
+                airport.setName(rs.getString("Airport"));
+                airport.setCode(rs.getString("AirportCode"));
+                airport.setCityCode(rs.getString("CityCode"));
+                airport.setRegionCode(rs.getString("RegionCode"));
+                airport.setCountryCode(rs.getString("CountryCode"));
+                airports.add(airport);
             }
             rs.close();
             ps.close();
@@ -60,7 +55,7 @@ public class CityDAOImpl implements CityDAO {
                 }
             }
         }
-        logger.info("size of cities from mssqldb: {}", cities.size());
-        return cities;
+        logger.info("size of airports from mssqldb: {}", airports.size());
+        return airports;
     }
 }
