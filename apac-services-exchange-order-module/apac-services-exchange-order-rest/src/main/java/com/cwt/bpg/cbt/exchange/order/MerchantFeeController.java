@@ -39,17 +39,6 @@ public class MerchantFeeController {
 				HttpStatus.OK);
 	}
 
-	@Deprecated
-	@Internal
-	@GetMapping(path = "/merchant/currency/{currencyCode}",
-			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-	@ResponseBody
-	@ApiOperation(value = "Pulls currency info based on currency code")
-	public ResponseEntity<CurrencyCodeRoundRule> getCurrency(@PathVariable String currencyCode) {
-
-		return new ResponseEntity<>(exchangeOrderService.getRoundingRule(currencyCode), HttpStatus.OK);
-	}
-
 	@Internal
 	@PutMapping(path = "/merchant", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })

@@ -28,9 +28,6 @@ public class ExchangeOrderServiceTest {
 	@Mock
 	private ClientRepository clientRepo;
 	
-	@Mock
-	private CurrencyRepository currencyRepo;
-	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
@@ -58,18 +55,6 @@ public class ExchangeOrderServiceTest {
 		MerchantFee fee = new MerchantFee();
 		service.remove(fee);
 		Mockito.verify(merchantFeeApi, Mockito.times(1)).removeMerchantFee(fee);
-	}
-	
-	@Test
-	public void canGetRoundingRule() {
-		CurrencyCodeRoundRule ccr = mock(CurrencyCodeRoundRule.class);
-		when(currencyRepo.getRoundingRule(anyString())).thenReturn(ccr);
-
-		CurrencyCodeRoundRule roundingRule = service.getRoundingRule("SG");
-		
-		verify(currencyRepo, times(1)).getRoundingRule(Mockito.anyString());
-		assertNotNull(roundingRule);
-		
 	}
 	
 	@Test
