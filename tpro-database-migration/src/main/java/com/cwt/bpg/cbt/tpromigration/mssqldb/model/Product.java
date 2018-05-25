@@ -7,7 +7,7 @@ public class Product {
 
 	public static final String COLLECTION = "_productCodes";
 	
-	private List<Vendor> vendors = new ArrayList<Vendor>();
+	private List<Vendor> vendors = new ArrayList<>();
 	
 	private String countryCode;
 	
@@ -37,9 +37,9 @@ public class Product {
 
 	private String gdsCode;
 
-	private Integer oT1;
+	private Integer ot1;
 
-	private Integer oT2;
+	private Integer ot2;
 
 	private Boolean requireCdr;
 
@@ -177,22 +177,6 @@ public class Product {
 		this.gdsCode = gdsCode;
 	}
 
-	public Integer getoT1() {
-		return oT1;
-	}
-
-	public void setoT1(Integer oT1) {
-		this.oT1 = oT1;
-	}
-
-	public Integer getoT2() {
-		return oT2;
-	}
-
-	public void setoT2(Integer oT2) {
-		this.oT2 = oT2;
-	}
-
 	public Boolean getRequireCdr() {
 		return requireCdr;
 	}
@@ -256,4 +240,22 @@ public class Product {
 	public void setHotelFee(Boolean hotelFee) {
 		this.hotelFee = hotelFee;
 	}
+
+	public Integer getOt1() {
+		return ot1;
+	}
+
+	public void setOt1(Integer ot1) {
+		this.ot1 = ot1;
+	}
+
+	public Integer getOt2() {
+		return ot2;
+	}
+
+	public void setOt2(Integer ot2) {
+		this.ot2 = ot2;
+	}
+	
+	
 }

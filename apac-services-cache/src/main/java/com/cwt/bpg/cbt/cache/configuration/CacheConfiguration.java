@@ -22,9 +22,7 @@ public class CacheConfiguration {
 			"merchant-fee",
 			"insurance-types",
 			"airline-rules",
-			"client-pricing",
-			"client",
-			"default-client",
+			"clients",
 			"cities"};
 
 	@Bean
@@ -37,7 +35,7 @@ public class CacheConfiguration {
 					"merchant-fee",
 					"insurance-types",
 					"airline-rules",
-					"client-pricing",
+					"clients",
 					"cities"})
 	@Scheduled(cron = "0 0 0,12 * * *")
 	public void evictAllCache() {

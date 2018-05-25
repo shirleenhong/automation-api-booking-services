@@ -1,6 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -70,4 +73,13 @@ public class ClientRepositoryTest {
 		assertNotNull(result);
 	}
 
+	@Test
+	public void shouldCreateInsuranceRepository() {
+		ClientRepository repo = new ClientRepository();
+
+		repo.identity((i) -> {
+			assertThat(i[0], is(equalTo(Client.class)));
+			assertThat(i[1], is(equalTo("clientId")));
+		});
+	}
 }

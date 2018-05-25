@@ -10,9 +10,9 @@ public class Client {
 	private String profileName;
 	private Integer pricingId;
 	private Boolean exemptTax;
-	private List<ProductMerchantFee> products;
-	private List<CreditCardVendor> vendors;
-	private List<Bank> banks;
+	private List<ProductMerchantFee> mfProducts;
+	private List<CreditCardVendor> mfCcs;
+	private List<Bank> mfBanks;
 	private List<ClientPricing> clientPricings;
 	private Boolean standardMfProduct;
 	private Boolean applyMfCc;
@@ -21,30 +21,6 @@ public class Client {
 	private Boolean lccSameAsInt;
 	private String lccDdlFeeApply;
 	private String intDdlFeeApply;
-
-	public void setProducts(List<ProductMerchantFee> list) {
-		this.products = list;
-	}
-
-	public void setVendors(List<CreditCardVendor> list) {
-		this.vendors = list;
-	}
-
-	public void setBanks(List<Bank> list) {
-		this.banks = list;
-	}
-
-	public List<ProductMerchantFee> getProducts() {
-		return products;
-	}
-
-	public List<CreditCardVendor> getVendors() {
-		return vendors;
-	}
-
-	public List<Bank> getBanks() {
-		return banks;
-	}
 
 	public int getClientId() {
 		return clientId;
@@ -156,5 +132,29 @@ public class Client {
 
 	public void setIntDdlFeeApply(String intDdlFeeApply) {
 		this.intDdlFeeApply = intDdlFeeApply;
+	}
+
+	public List<ProductMerchantFee> getMfProducts() {
+		return mfProducts;
+	}
+
+	public void setMfProducts(List<ProductMerchantFee> mfProducts) {
+		this.mfProducts = mfProducts;
+	}
+
+	public List<Bank> getMfBanks() {
+		return mfBanks;
+	}
+
+	public void setMfBanks(List<Bank> mfBanks) {
+		this.mfBanks = mfBanks;
+	}
+
+	public List<CreditCardVendor> getMfCcs() {
+		return mfCcs;
+	}
+
+	public void setMfCcs(List<CreditCardVendor> mfCcs) {
+		this.mfCcs = mfCcs;
 	}
 }

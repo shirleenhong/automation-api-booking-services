@@ -15,12 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.CollectionUtils;
 
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Bank;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.CreditCardVendor;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientPricing;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.CreditCardVendor;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductMerchantFee;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.TransactionFee;
 
