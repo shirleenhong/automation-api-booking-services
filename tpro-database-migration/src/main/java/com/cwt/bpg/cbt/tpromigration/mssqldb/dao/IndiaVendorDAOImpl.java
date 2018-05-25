@@ -51,21 +51,7 @@ public class IndiaVendorDAOImpl implements VendorDAO{
             	Vendor tblVendor = new Vendor();
                 tblVendor.setVendorNumber(rs.getString("VendorNumber"));
                 tblVendor.setInterfaceNumber(rs.getString("InterfaceNumber"));
-
-                String data = rs.getString("VendorName");
-                Pattern p = Pattern.compile("\\\\u(\\p{XDigit}{4})");
-                Matcher m = p.matcher(data);
-                StringBuffer buf = new StringBuffer(data.length());
-                while (m.find()) {
-                    String ch = String.valueOf((char) Integer.parseInt(m.group(1), 16));
-                    m.appendReplacement(buf, Matcher.quoteReplacement(ch));
-                }
-                m.appendTail(buf);
-                System.out.println(buf);
-
-                tblVendor.setVendorName(buf.toString().trim().replaceAll(" +", " "));
-
-
+                tblVendor.setVendorName(rs.getString("VendorName").replaceAll("\\u2013","-").replaceAll("\\u00a0","").replaceAll(" +", " ").trim());
                 tblVendor.setContactPerson(rs.getString("ContactPerson"));
                 tblVendor.setAddress(rs.getString("Address"));
                 tblVendor.setCity(rs.getString("City"));
