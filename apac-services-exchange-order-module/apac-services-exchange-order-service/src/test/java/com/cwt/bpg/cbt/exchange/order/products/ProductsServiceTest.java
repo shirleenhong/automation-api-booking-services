@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.cwt.bpg.cbt.exchange.order.ProductsRepository;
+import com.cwt.bpg.cbt.exchange.order.ProductRepository;
 import com.cwt.bpg.cbt.exchange.order.model.HkSgProduct;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
@@ -21,7 +21,7 @@ import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 public class ProductsServiceTest {
 
 	@Mock
-	private ProductsRepository repo;
+	private ProductRepository repo;
 
 	@InjectMocks
 	private ProductsService service;

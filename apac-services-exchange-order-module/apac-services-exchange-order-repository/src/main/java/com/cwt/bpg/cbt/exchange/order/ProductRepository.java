@@ -17,9 +17,10 @@ import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
-public class ProductsRepository {
+public class ProductRepository
+{
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductsRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepository.class);
     private static final String INDIA_COUNTRY_CODE = "IN";
 
     @Autowired
