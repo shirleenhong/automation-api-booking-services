@@ -109,8 +109,8 @@ public class InMiscFeeCalculator extends CommonCalculator {
 	}
 
 	private ProductMerchantFee getProduct(Client client, Product product) {
-		if(client.getProducts() != null) {
-			Optional<ProductMerchantFee> result = client.getProducts().stream()
+		if(client.getMfProducts() != null) {
+			Optional<ProductMerchantFee> result = client.getMfProducts().stream()
 					.filter(item -> item.getProductCode().equals(product.getProductCode())).findFirst();
 
 			if (result.isPresent()) {
@@ -122,9 +122,9 @@ public class InMiscFeeCalculator extends CommonCalculator {
 
 	private CreditCardVendor creditCard(Client client, String acctType, boolean isStandard) {
 
-		if(client.getVendors() != null) {
+		if(client.getMfCcs() != null) {
 			
-			Optional<CreditCardVendor> vendor = client.getVendors().stream()
+			Optional<CreditCardVendor> vendor = client.getMfCcs().stream()
 					.filter(item -> item.getVendorName().equals(acctType) && isStandard).findFirst();
 
 			if (vendor.isPresent()) {
@@ -137,9 +137,9 @@ public class InMiscFeeCalculator extends CommonCalculator {
 
 	private Bank bank(Client client, String fopNumber, boolean isStandard) {
 
-		if(client.getBanks() != null) {
+		if(client.getMfBanks() != null) {
 			
-			Optional<Bank> bank = client.getBanks().stream()
+			Optional<Bank> bank = client.getMfBanks().stream()
 					.filter(item -> fopNumber.startsWith(item.getCcNumberPrefix()) 
 							&& isStandard).findFirst();
 

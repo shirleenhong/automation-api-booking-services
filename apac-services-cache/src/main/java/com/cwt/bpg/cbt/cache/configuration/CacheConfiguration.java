@@ -23,8 +23,7 @@ public class CacheConfiguration {
 			"currency-rounding-rule",
 			"insurance-types",
 			"airline-rules",
-			"client-pricing",
-			"client",
+			"clients",
 			"default-client",
 			"cities"};
 
@@ -39,7 +38,8 @@ public class CacheConfiguration {
 					"currency-rounding-rule",
 					"insurance-types",
 					"airline-rules",
-					"client-pricing",
+					"clients",
+					"default-client",
 					"cities"})
 	@Scheduled(cron = "0 0 0,12 * * *")
 	public void evictAllCache() {

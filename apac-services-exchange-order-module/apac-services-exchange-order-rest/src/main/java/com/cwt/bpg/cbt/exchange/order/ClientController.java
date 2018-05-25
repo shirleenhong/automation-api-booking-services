@@ -19,36 +19,36 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(tags = "Client Pricing")
-public class ClientPricingController {
+@Api(tags = "Clients")
+public class ClientController {
 
 	@Autowired
-	private ClientPricingService clientPricingService;
+	private ClientService clientService;
 	
-	@GetMapping(path = "/client-pricing/{id}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/clients/{id}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls client pricing")
+	@ApiOperation(value = "Pulls all clients")
 	public ResponseEntity<Client> getClient(@PathVariable int id) {
 
-		return new ResponseEntity<>(clientPricingService.getClient(id), HttpStatus.OK);
+		return new ResponseEntity<>(clientService.getClient(id), HttpStatus.OK);
 	}
 
-	@PutMapping(path = "/client-pricing", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@PutMapping(path = "/clients", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Put client pricing")
+	@ApiOperation(value = "Put client")
 	@Internal
 	public ResponseEntity<Client> putClientPricing(@RequestBody Client client) {
 
-		return new ResponseEntity<>(clientPricingService.save(client), HttpStatus.OK);
+		return new ResponseEntity<>(clientService.save(client), HttpStatus.OK);
 	}
 
-	@DeleteMapping(path = "/client-pricing/{id}")
+	@DeleteMapping(path = "/clients/{id}")
 	@ResponseBody
-	@ApiOperation(value = "Remove client pricing")
+	@ApiOperation(value = "Remove client by id")
 	@Internal
 	public ResponseEntity<String> removeClientPricing(@PathVariable int id) {
 
-		return new ResponseEntity<>(clientPricingService.delete(id), HttpStatus.OK);
+		return new ResponseEntity<>(clientService.delete(id), HttpStatus.OK);
 	}
 
 }

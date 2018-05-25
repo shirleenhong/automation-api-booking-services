@@ -17,10 +17,10 @@ import com.cwt.bpg.cbt.exchange.order.model.Client;
 public class ClientPricingControllerTest {
 
 	@Mock
-	private ClientPricingService clientPricingService;
+	private ClientService clientPricingService;
 	
 	@InjectMocks
-	private ClientPricingController clientPricingController;
+	private ClientController clientPricingController;
 	
 	@Before
 	public void init() {

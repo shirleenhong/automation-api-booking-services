@@ -289,9 +289,9 @@ public class MigrationService {
 			|| vendorsMap.containsKey(client.getClientId()) 
 			|| banksMap.containsKey(client.getClientId())) {
 				
-				client.setProducts(productsMap.get(client.getClientId()));
-				client.setVendors(vendorsMap.get(client.getClientId()));
-				client.setBanks(banksMap.get(client.getClientId()));
+				client.setMfProducts(productsMap.get(client.getClientId()));
+				client.setMfCcs(vendorsMap.get(client.getClientId()));
+				client.setMfBanks(banksMap.get(client.getClientId()));
 			}
 			List<ClientPricing> clientPricings = new ArrayList<>();
 			if(clientPricingMaps.containsKey(client.getCmpid())) {

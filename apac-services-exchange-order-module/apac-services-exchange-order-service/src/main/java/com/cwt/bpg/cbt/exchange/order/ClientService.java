@@ -11,29 +11,29 @@ import org.springframework.stereotype.Service;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 
 @Service
-public class ClientPricingService {
+public class ClientService {
 	
 	@Autowired
-	private ClientPricingRepository clientPricingRepository;
+	private ClientRepository clientRepository;
 
-	@Cacheable(cacheNames = "client-pricing", key = "{#root.methodName}")
+	@Cacheable(cacheNames = "clients", key = "{client-#root.methodName}")
 	public List<Client> getAll() {
-		return clientPricingRepository.getAll();
+		return clientRepository.getAll();
 	}
 
-	@CachePut(cacheNames = "client-pricing", key = "client.clientId")
+	@CachePut(cacheNames = "clients", key = "client.clientId")
 	public Client save(Client client) {
-		return clientPricingRepository.put(client);
+		return clientRepository.put(client);
 	}
 
-	@CacheEvict(cacheNames = "client-pricing", allEntries = true)
+	@CacheEvict(cacheNames = "clients", allEntries = true)
 	public String delete(int keyValue) {
-		return clientPricingRepository.remove(keyValue);
+		return clientRepository.remove(keyValue);
 	}
 
-	@Cacheable(cacheNames = "client-pricing", key = "#id")
+	@Cacheable(cacheNames = "clients", key = "#id")
 	public Client getClient(int id) {
-		return clientPricingRepository.getClient(id);
+		return clientRepository.getClient(id);
 	}
 
 }
