@@ -33,7 +33,7 @@ public class ProductsRepositoryTest {
 	private MorphiaComponent morphia;
 
 	@InjectMocks
-	private ProductsRepository repository;
+	private ProductRepository repository;
 	
 	private HkSgProductList productList = new HkSgProductList();
 
