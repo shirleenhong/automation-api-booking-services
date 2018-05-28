@@ -1,13 +1,11 @@
 package com.cwt.bpg.cbt.tpromigration.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
+import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.*;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.*;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Currency;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,29 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
-import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirlineRuleDAOImpl;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.CityDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientDAOImpl;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientMerchantFeeDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.CurrencyDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductDAOFactory;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAOFactory;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirlineRule;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Bank;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.City;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientMerchantFee;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientPricing;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.CreditCardVendor;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Currency;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Product;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductMerchantFee;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.TransactionFee;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MigrationService {
