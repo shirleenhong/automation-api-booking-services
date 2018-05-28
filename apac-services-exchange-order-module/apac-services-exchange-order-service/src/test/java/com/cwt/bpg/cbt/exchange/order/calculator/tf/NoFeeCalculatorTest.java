@@ -2,6 +2,8 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -25,7 +27,7 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getMfFeeShouldReturnNotNull() {
-        assertNotNull(noFeeCalc.getMfFee(1d, 1d, 1d, 1d));
+        assertNotNull(noFeeCalc.getMfFee(new BigDecimal(1), new BigDecimal(1), new BigDecimal(1), 1d));
     }
 
     @Test
@@ -45,11 +47,11 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getTotalSellingFareShouldReturnNotNull() {
-        assertNotNull(noFeeCalc.getTotalSellingFare(1d, 1d, 1d));
+        assertNotNull(noFeeCalc.getTotalSellingFare(new BigDecimal(1), new BigDecimal(1), new BigDecimal(1)));
     }
 
     @Test
     public void getTotalChargeShouldReturnNotNull() {
-        assertNotNull(noFeeCalc.getTotalCharge(1d, 1d, 1d, 1d));
+        assertNotNull(noFeeCalc.getTotalCharge(new BigDecimal(1), new BigDecimal(1), new BigDecimal(1), new BigDecimal(1)));
     }
 }

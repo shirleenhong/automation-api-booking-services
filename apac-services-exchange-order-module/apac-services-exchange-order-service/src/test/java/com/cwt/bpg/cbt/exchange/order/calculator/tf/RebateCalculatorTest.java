@@ -2,6 +2,8 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -11,25 +13,25 @@ public class RebateCalculatorTest {
 
     @Test
     public void getIntMfFeeTFShouldReturnNull() {
-        assertNull(rebateCalc.getIntMfFeeTF());
+        assertNull(rebateCalc.getMfFeeTF());
     }
 
     @Test
     public void getIntDdlFeeApplyShouldReturnNull() {
-        assertNull(rebateCalc.getIntDdlFeeApply());
+        assertNull(rebateCalc.getDdlFeeApply());
     }
 
     @Test
     public void getIntTotalChargeShouldReturnNotNull() {
-        Double totalSellFare = 1d;
-        Double totalDiscount = 1d;
-        Double totalGST = 1d;
-        Double totalMerchantFee = 1d;
-        Double fee = 1d;
-        Double totalTaxes = 1d;
+        BigDecimal totalSellFare = new BigDecimal(1),
+                totalDiscount = new BigDecimal(1),
+                totalGST = new BigDecimal(1),
+                totalMerchantFee = new BigDecimal(1),
+                fee = new BigDecimal(1),
+                totalTaxes = new BigDecimal(1);
 
-        Double expectedResult = totalSellFare - totalDiscount + totalGST + totalMerchantFee + fee + totalTaxes;
-        Double actualResult = rebateCalc.getIntTotalCharge(1d, 1d, 1d, 1d, 1d, 1d);
+        BigDecimal expectedResult = totalSellFare.subtract(totalDiscount).add(totalGST).add(totalMerchantFee).add(fee).add(totalTaxes);
+        BigDecimal actualResult = rebateCalc.getTotalCharge(totalSellFare, totalDiscount, totalGST, totalMerchantFee, fee, totalTaxes);
 
         assertNotNull(actualResult);
         assertEquals(actualResult, expectedResult);

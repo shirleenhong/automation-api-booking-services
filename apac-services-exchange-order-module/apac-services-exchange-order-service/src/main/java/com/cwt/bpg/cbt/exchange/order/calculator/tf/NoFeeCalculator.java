@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
+import java.math.BigDecimal;
+
 public class NoFeeCalculator extends TransactionFeeCalculator {
     public Double getTotalDiscount() {
         return null;
@@ -13,8 +15,8 @@ public class NoFeeCalculator extends TransactionFeeCalculator {
         return null;
     }
 
-    public Double getMfFee(Double totalSellFare, Double totalTaxes, Double totalGST, Double merchantFee) {
-        return (totalSellFare + totalTaxes + totalGST) * merchantFee;
+    public BigDecimal getMfFee(BigDecimal totalSellFare, BigDecimal totalTaxes, BigDecimal totalGST, Double merchantFeePct) {
+        return calculatePercentage(safeValue(totalSellFare).add(safeValue(totalTaxes)).add(safeValue(totalGST)), merchantFeePct);
     }
 
     public Double getMfFeeTf() {
@@ -29,12 +31,12 @@ public class NoFeeCalculator extends TransactionFeeCalculator {
         return null;
     }
 
-    public Double getTotalSellingFare(Double totalSellFare, Double totalGST, Double totalMerchantFee) {
-        return totalSellFare + totalGST + totalMerchantFee;
+    public BigDecimal getTotalSellingFare(BigDecimal totalSellFare, BigDecimal totalGST, BigDecimal totalMerchantFee) {
+        return safeValue(totalSellFare).add(safeValue(totalGST)).add(safeValue(totalMerchantFee));
     }
 
-    public Double getTotalCharge(Double totalSellFare, Double totalGST, Double totalMerchantFee, Double totalTaxes) {
-        return totalSellFare + totalGST + totalMerchantFee + totalTaxes;
+    public BigDecimal getTotalCharge(BigDecimal totalSellFare, BigDecimal totalGST, BigDecimal totalMerchantFee, BigDecimal totalTaxes) {
+        return safeValue(totalSellFare).add(safeValue(totalGST)).add(safeValue(totalMerchantFee)).add(safeValue(totalTaxes));
     }
 
 }
