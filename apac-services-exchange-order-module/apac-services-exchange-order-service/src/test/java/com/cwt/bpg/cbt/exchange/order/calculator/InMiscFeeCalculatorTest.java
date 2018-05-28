@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -240,7 +239,7 @@ public class InMiscFeeCalculatorTest {
 		
 		MiscFeesBreakdown result = calculator.calculate(input, client);		
 
-		assertNull(result.getCommission());
+		assertEquals(BigDecimal.ZERO, result.getCommission());
 		assertEquals(round(new BigDecimal(182)), result.getGstAmount());
 		assertEquals(round(new BigDecimal(0)), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(1378)), result.getSellingPriceInDi());
@@ -270,7 +269,7 @@ public class InMiscFeeCalculatorTest {
 		
 		MiscFeesBreakdown result = calculator.calculate(input, client);		
 
-		assertNull(result.getCommission());
+		assertEquals(BigDecimal.ZERO, result.getCommission());
 		assertEquals(round(new BigDecimal(182)), result.getGstAmount());
 		assertEquals(round(new BigDecimal(0)), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(1378)), result.getSellingPriceInDi());
