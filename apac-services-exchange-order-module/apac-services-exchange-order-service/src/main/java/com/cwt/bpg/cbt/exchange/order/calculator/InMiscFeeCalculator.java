@@ -25,15 +25,15 @@ public class InMiscFeeCalculator extends CommonCalculator {
 	public MiscFeesBreakdown calculate(InMiscFeesInput input, Client client) {
 
 		MiscFeesBreakdown result = new MiscFeesBreakdown();
-
-		BigDecimal commission = null;
-		BigDecimal discount = null;
-		Double mfPercent = 0D;
-
+		
 		if (input == null || client == null) {
 			return result;
 		}
 
+		BigDecimal commission = safeValue(input.getCommission());
+		BigDecimal discount = safeValue(input.getDiscount());
+		Double mfPercent = 0D;
+		
 		if (input.getFopMode() != BTC_FOP_MODE) {
 
 			ProductMerchantFee product = getProduct(client, input.getProduct());

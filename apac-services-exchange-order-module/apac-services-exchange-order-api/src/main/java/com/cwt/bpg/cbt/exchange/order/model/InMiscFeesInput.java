@@ -15,7 +15,9 @@ public class InMiscFeesInput implements Serializable
 	private boolean commissionByPercent;
 	private BigDecimal costAmount;
 	private Double commissionPercent;
-	private Double discountPercent;	
+	private BigDecimal commission;
+	private Double discountPercent;
+	private BigDecimal discount;
 	private boolean discountByPercent;
 	private int fopMode;
 	private InProduct product;
@@ -120,6 +122,20 @@ public class InMiscFeesInput implements Serializable
 	public void setFopNumber(String fopNumber) {
 		this.fopNumber = fopNumber;
 	}
-	
-	
+
+	public BigDecimal getCommission() {
+		return commission;
+	}
+
+	public void setCommission(BigDecimal commission) {
+		this.commission = commission;
+	}
+
+	public BigDecimal getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(BigDecimal discount) {
+		this.discount = discount;
+	}
 }
