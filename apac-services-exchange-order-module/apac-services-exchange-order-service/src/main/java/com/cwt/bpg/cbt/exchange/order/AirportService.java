@@ -14,16 +14,17 @@ public class AirportService {
     @Autowired
     private AirportRepository repository;
 
-    @Cacheable(cacheNames = "airports", key = "{#root.methodName}")
+    @Cacheable(cacheNames = "airports", key = "#root.methodName")
     public List<Airport> getAll() {
         return repository.getAll();
     }
 
+    @Cacheable(cacheNames = "airports", key = "#airportCode")
     public Airport getAirport(String airportCode) {
         return repository.getAirport(airportCode);
     }
 
-    @CachePut(cacheNames = "airports", key = "{#airport.code}")
+    @CachePut(cacheNames = "airports", key = "#airport.code")
     public Airport save(Airport airport) {
         return repository.put(airport);
     }
