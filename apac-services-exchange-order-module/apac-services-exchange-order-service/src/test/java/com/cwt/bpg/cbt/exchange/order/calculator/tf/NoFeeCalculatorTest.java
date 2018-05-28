@@ -14,28 +14,28 @@ public class NoFeeCalculatorTest {
     }
 
     @Test
-    public void getTotalORComShouldReturnNull(){
-        assertNull(noFeeCalc.getTotalORCom());
+    public void getTotalOrComShouldReturnNull(){
+        assertNull(noFeeCalc.getTotalOrCom());
     }
 
     @Test
-    public void getTotalORCom2ShouldReturnNull(){
-        assertNull(noFeeCalc.getTotalORCom2());
+    public void getTotalOrCom2ShouldReturnNull(){
+        assertNull(noFeeCalc.getTotalOrCom2());
     }
 
     @Test
-    public void getMFFeeShouldReturnNotNull(){
-        assertNotNull(noFeeCalc.getMFFee(1d,1d,1d,1d));
+    public void getMfFeeShouldReturnNotNull(){
+        assertNotNull(noFeeCalc.getMfFee(1d,1d,1d,1d));
     }
 
     @Test
-    public void getMFFeeTFShouldReturnNull(){
-        assertNull(noFeeCalc.getMFFeeTF());
+    public void getMfFeeTfShouldReturnNull(){
+        assertNull(noFeeCalc.getMfFeeTf());
     }
 
     @Test
-    public void getDDLFeeApplyShouldReturnNull(){
-        assertNull(noFeeCalc.getDDLFeeApply());
+    public void getDdlFeeApplyShouldReturnNull(){
+        assertNull(noFeeCalc.getDdlFeeApply());
     }
 
     @Test

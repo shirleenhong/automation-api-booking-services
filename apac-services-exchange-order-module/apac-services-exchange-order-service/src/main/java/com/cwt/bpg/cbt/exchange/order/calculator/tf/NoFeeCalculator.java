@@ -5,23 +5,23 @@ public class NoFeeCalculator extends TransactionFeeCalculator {
         return null;
     }
 
-    public Double getTotalORCom() {
+    public Double getTotalOrCom() {
         return null;
     }
 
-    public Double getTotalORCom2() {
+    public Double getTotalOrCom2() {
         return null;
     }
 
-    public Double getMFFee(Double totalSellFare, Double totalTaxes, Double totalGST, Double merchantFee) {
+    public Double getMfFee(Double totalSellFare, Double totalTaxes, Double totalGST, Double merchantFee) {
         return (totalSellFare + totalTaxes + totalGST) * merchantFee;
     }
 
-    public Double getMFFeeTF() {
+    public Double getMfFeeTf() {
         return null;
     }
 
-    public Double getDDLFeeApply() {
+    public Double getDdlFeeApply() {
         return null;
     }
 
