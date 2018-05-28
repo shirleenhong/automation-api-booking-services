@@ -8,56 +8,56 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.TransactionFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.tf.FeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.PricingNames;
 
 public class TransactionFeeCalculatorFactory {
 
 	@Autowired
 	@Qualifier("tfCalculator")
-	private TransactionFeeCalculator tfCalculator;
+	private FeeCalculator tfCalculator;
 	
 	@Autowired
 	@Qualifier("tfFullFareCalculator")
-	private TransactionFeeCalculator tfFullFareCalculator;
+	private FeeCalculator tfFullFareCalculator;
 	
 	@Autowired
 	@Qualifier("tfNettFareCalculator")
-	private TransactionFeeCalculator tfNettFareCalculator;
+	private FeeCalculator tfNettFareCalculator;
 	
 	@Autowired
 	@Qualifier("tfGrossFareCalculator")
-	private TransactionFeeCalculator tfGrossFareCalculator;
+	private FeeCalculator tfGrossFareCalculator;
 	
 	@Autowired
 	@Qualifier("tfFareCalculator")
-	private TransactionFeeCalculator tfFareCalculator;
+	private FeeCalculator tfFareCalculator;
 	
 	@Autowired
 	@Qualifier("tfBasicCalculator")
-	private TransactionFeeCalculator tfBasicCalculator;
+	private FeeCalculator tfBasicCalculator;
 	
 	@Autowired
 	@Qualifier("noFeeCalculator")
-	private TransactionFeeCalculator noFeeCalculator;
+	private FeeCalculator noFeeCalculator;
 	
 	@Autowired
 	@Qualifier("tfPlusVatCalculator")
-	private TransactionFeeCalculator tfPlusVatCalculator;
+	private FeeCalculator tfPlusVatCalculator;
 	
 	@Autowired
 	@Qualifier("tfRebateCalculator")
-	private TransactionFeeCalculator tfRebateCalculator;
+	private FeeCalculator tfRebateCalculator;
 	
 	@Autowired
 	@Qualifier("noFeeWithDiscountCalculator")
-	private TransactionFeeCalculator noFeeWithDiscountCalculator;
+	private FeeCalculator noFeeWithDiscountCalculator;
 	
 	@Autowired
 	@Qualifier("tfBaseAndYqCalculator")
-	private TransactionFeeCalculator tfBaseAndYqCalculator;
+	private FeeCalculator tfBaseAndYqCalculator;
 
-	private Map<Integer, TransactionFeeCalculator> serviceMap = new HashMap<>();
+	private Map<Integer, FeeCalculator> serviceMap = new HashMap<>();
 
 	@PostConstruct
 	public void init() {
@@ -75,7 +75,7 @@ public class TransactionFeeCalculatorFactory {
 		this.serviceMap.put(PricingNames.TF_ON_BASE_AND_YQ.getId(), this.tfBaseAndYqCalculator);
 	}
 
-	public TransactionFeeCalculator getCalculator(int id) {
+	public FeeCalculator getCalculator(int id) {
 
 		if (this.serviceMap.containsKey(id)) {
 			return this.serviceMap.get(id);

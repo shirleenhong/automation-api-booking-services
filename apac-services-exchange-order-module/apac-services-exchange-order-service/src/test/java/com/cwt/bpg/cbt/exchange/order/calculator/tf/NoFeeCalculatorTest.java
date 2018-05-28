@@ -1,38 +1,42 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import org.junit.Test;
+
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
 
 public class NoFeeCalculatorTest {
     private NoFeeCalculator noFeeCalc = new NoFeeCalculator();
 
     @Test
     public void getTotalDiscountShouldReturnNull() {
-        assertNull(noFeeCalc.getTotalDiscount());
+        assertNull(noFeeCalc.getTotalDiscount(0, null));
     }
 
     @Test
     public void getTotalOrComShouldReturnNull() {
-        assertNull(noFeeCalc.getTotalOrCom());
+        assertNull(noFeeCalc.getTotalOrCom(0, null));
     }
 
     @Test
     public void getTotalOrCom2ShouldReturnNull() {
-        assertNull(noFeeCalc.getTotalOrCom2());
+        assertNull(noFeeCalc.getTotalOrCom2(0, null));
     }
 
     @Test
     public void getMfFeeShouldReturnNotNull() {
-        assertNotNull(noFeeCalc.getMerchantFee(new BigDecimal(1), new BigDecimal(1), new BigDecimal(1), 1d));
+    	assertNotNull(noFeeCalc.getMerchantFee(
+    			new TransactionFeesInput(), new TransactionFeesBreakdown()));
     }
 
     @Test
     public void getMfFeeTfShouldReturnNull() {
-        assertNull(noFeeCalc.getMfOnTf());
+        assertNull(noFeeCalc.getMfOnTf(0, null, BigDecimal.ZERO));
     }
 
     @Test
@@ -47,11 +51,23 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getTotalSellingFareShouldReturnNotNull() {
-        assertNotNull(noFeeCalc.getTotalSellingFare(new BigDecimal(1), new BigDecimal(1), new BigDecimal(1)));
+    	
+    	TransactionFeesBreakdown breakdown = new TransactionFeesBreakdown();
+    	breakdown.setTotalSellFare(new BigDecimal(100));
+    	breakdown.setTotalGst(new BigDecimal(50));
+    	breakdown.setTotalMerchantFee(new BigDecimal(10));
+    	
+        assertNotNull(noFeeCalc.getTotalSellingFare(breakdown));
     }
 
     @Test
     public void getTotalChargeShouldReturnNotNull() {
-        assertNotNull(noFeeCalc.getTotalCharge(new BigDecimal(1), new BigDecimal(1), new BigDecimal(1), new BigDecimal(1)));
+
+    	TransactionFeesBreakdown breakdown = new TransactionFeesBreakdown();
+    	breakdown.setTotalSellFare(new BigDecimal(100));
+    	breakdown.setTotalGst(new BigDecimal(50));
+    	breakdown.setTotalMerchantFee(new BigDecimal(10));
+    	
+        assertNotNull(noFeeCalc.getTotalCharge(null, breakdown));
     }
 }

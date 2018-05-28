@@ -19,6 +19,7 @@ import com.cwt.bpg.cbt.exchange.order.model.InMiscFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.MiscFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
 
 @Service
 public class OtherServiceFeesService {
@@ -57,14 +58,16 @@ public class OtherServiceFeesService {
 	}
 
 	public FeesBreakdown calculateAirFee(FeesInput input) {
-		if(Country.INDIA.getCode().equals(input.getCountryCode())) {
-			return this.tfFactory.getCalculator(
-							getPricingId(input.getProfileName()))
-					.calculate(input);
-		}
-		
 		return this.osFactory.getCalculator(input.getCountryCode()).calculate(input,
 				getMerchantFeePct(input));
+	}
+
+	
+	public FeesBreakdown calculateAirFee(TransactionFeesInput input) {		
+		return this.tfFactory.getCalculator(
+						getPricingId(input.getProfileName()))
+				.calculate((TransactionFeesInput)input);
+	
 	}
 
 	private int getPricingId(String profileName) {
