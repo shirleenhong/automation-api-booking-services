@@ -152,6 +152,28 @@ public class ProductsRepositoryTest {
 
 		assertNotNull(products);
 		assertEquals(0, products.size());
+	}
+	
+	@Test
+	public void canGetIndiaProductList() {
+		
+		InProductList inProductList = new InProductList();
+		inProductList.setCountryCode("IN");
+		List<InProduct> products = new ArrayList<>();
+		products.add(new InProduct());
+		inProductList.setProducts(products);
 
+		Query query = Mockito.mock(Query.class);
+		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
+		Mockito.when(dataStore.createQuery(InProductList.class)).thenReturn(query);
+		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
+		Mockito.when(fieldEnd.equal("IN")).thenReturn(query);		
+		Mockito.when(query.get()).thenReturn(inProductList);
+		
+		List<Product> result = repository.getProducts("IN");
+
+		assertNotNull(products);
+		assertEquals(1, result.size());
+		
 	}
 }
