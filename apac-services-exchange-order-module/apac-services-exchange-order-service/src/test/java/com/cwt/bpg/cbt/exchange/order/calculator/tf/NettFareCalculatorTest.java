@@ -28,7 +28,7 @@ public class NettFareCalculatorTest {
 	}
 
 	@Test
-	public void getTotalFee_validParams() {
+	public void shouldGetTotalFeeValidParams() {
 		assertNotNull(netFareCalc.getTotalFee(mockBigDecimalValFive, mockBigDecimalValZero, mockBigDecimalValZero));
 
 	}
