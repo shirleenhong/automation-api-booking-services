@@ -9,47 +9,47 @@ public class NoFeeCalculatorTest {
     private NoFeeCalculator noFeeCalc = new NoFeeCalculator();
 
     @Test
-    public void getTotalDiscountShouldReturnNull(){
+    public void getTotalDiscountShouldReturnNull() {
         assertNull(noFeeCalc.getTotalDiscount());
     }
 
     @Test
-    public void getTotalOrComShouldReturnNull(){
+    public void getTotalOrComShouldReturnNull() {
         assertNull(noFeeCalc.getTotalOrCom());
     }
 
     @Test
-    public void getTotalOrCom2ShouldReturnNull(){
+    public void getTotalOrCom2ShouldReturnNull() {
         assertNull(noFeeCalc.getTotalOrCom2());
     }
 
     @Test
-    public void getMfFeeShouldReturnNotNull(){
-        assertNotNull(noFeeCalc.getMfFee(1d,1d,1d,1d));
+    public void getMfFeeShouldReturnNotNull() {
+        assertNotNull(noFeeCalc.getMfFee(1d, 1d, 1d, 1d));
     }
 
     @Test
-    public void getMfFeeTfShouldReturnNull(){
+    public void getMfFeeTfShouldReturnNull() {
         assertNull(noFeeCalc.getMfFeeTf());
     }
 
     @Test
-    public void getDdlFeeApplyShouldReturnNull(){
+    public void getDdlFeeApplyShouldReturnNull() {
         assertNull(noFeeCalc.getDdlFeeApply());
     }
 
     @Test
-    public void getTotalFeeShouldReturnNull(){
+    public void getTotalFeeShouldReturnNull() {
         assertNull(noFeeCalc.getTotalFee());
     }
 
     @Test
-    public void getTotalSellingFareShouldReturnNotNull(){
-        assertNotNull(noFeeCalc.getTotalSellingFare(1d,1d,1d));
+    public void getTotalSellingFareShouldReturnNotNull() {
+        assertNotNull(noFeeCalc.getTotalSellingFare(1d, 1d, 1d));
     }
 
     @Test
-    public void getTotalChargeShouldReturnNotNull(){
-        assertNotNull(noFeeCalc.getTotalCharge(1d,1d,1d,1d));
+    public void getTotalChargeShouldReturnNotNull() {
+        assertNotNull(noFeeCalc.getTotalCharge(1d, 1d, 1d, 1d));
     }
 }
