@@ -27,12 +27,12 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getMfFeeShouldReturnNotNull() {
-        assertNotNull(noFeeCalc.getMfFee(new BigDecimal(1), new BigDecimal(1), new BigDecimal(1), 1d));
+        assertNotNull(noFeeCalc.getMerchantFee(new BigDecimal(1), new BigDecimal(1), new BigDecimal(1), 1d));
     }
 
     @Test
     public void getMfFeeTfShouldReturnNull() {
-        assertNull(noFeeCalc.getMfFeeTf());
+        assertNull(noFeeCalc.getMfTf());
     }
 
     @Test

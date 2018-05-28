@@ -15,11 +15,11 @@ public class NoFeeCalculator extends TransactionFeeCalculator {
         return null;
     }
 
-    public BigDecimal getMfFee(BigDecimal totalSellFare, BigDecimal totalTaxes, BigDecimal totalGST, Double merchantFeePct) {
+    public BigDecimal getMerchantFee(BigDecimal totalSellFare, BigDecimal totalTaxes, BigDecimal totalGST, Double merchantFeePct) {
         return calculatePercentage(safeValue(totalSellFare).add(safeValue(totalTaxes)).add(safeValue(totalGST)), merchantFeePct);
     }
 
-    public Double getMfFeeTf() {
+    public Double getMfTf() {
         return null;
     }
 
