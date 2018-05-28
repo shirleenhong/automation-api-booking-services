@@ -16,12 +16,12 @@ public class ClientService {
 	@Autowired
 	private ClientRepository clientRepository;
 
-	@Cacheable(cacheNames = "clients", key = "{#root.methodName}")
+	@Cacheable(cacheNames = "clients", key = "#root.methodName")
 	public List<Client> getAll() {
 		return clientRepository.getAll();
 	}
 
-	@CachePut(cacheNames = "clients", key = "client.clientId")
+	@CachePut(cacheNames = "clients", key = "#client.clientId")
 	public Client save(Client client) {
 		return clientRepository.put(client);
 	}
