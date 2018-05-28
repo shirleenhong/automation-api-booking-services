@@ -10,12 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.exchange.order.model.HkSgProduct;
-import com.cwt.bpg.cbt.exchange.order.model.HkSgProductList;
-import com.cwt.bpg.cbt.exchange.order.model.InProduct;
-import com.cwt.bpg.cbt.exchange.order.model.InProductList;
-import com.cwt.bpg.cbt.exchange.order.model.Product;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
@@ -28,7 +23,6 @@ public class ProductRepository
     @Autowired
 	private MorphiaComponent morphia;
 
-    @SuppressWarnings("unchecked")
 	public List<Product> getProducts(String countryCode) {
 
 		List<Product> products = new ArrayList<>();

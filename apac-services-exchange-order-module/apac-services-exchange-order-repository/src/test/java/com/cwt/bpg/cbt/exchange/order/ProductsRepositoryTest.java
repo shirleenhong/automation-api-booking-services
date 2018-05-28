@@ -19,12 +19,7 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
-import com.cwt.bpg.cbt.exchange.order.model.HkSgProduct;
-import com.cwt.bpg.cbt.exchange.order.model.HkSgProductList;
-import com.cwt.bpg.cbt.exchange.order.model.InProduct;
-import com.cwt.bpg.cbt.exchange.order.model.InProductList;
-import com.cwt.bpg.cbt.exchange.order.model.Product;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @RunWith(MockitoJUnitRunner.class)
