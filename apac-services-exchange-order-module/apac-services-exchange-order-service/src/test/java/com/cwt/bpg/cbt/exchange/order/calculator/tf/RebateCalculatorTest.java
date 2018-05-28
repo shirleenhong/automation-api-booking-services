@@ -25,13 +25,13 @@ public class RebateCalculatorTest {
     public void getIntTotalChargeShouldReturnNotNull() {
         BigDecimal totalSellFare = new BigDecimal(1),
                 totalDiscount = new BigDecimal(1),
-                totalGST = new BigDecimal(1),
+                totalGst = new BigDecimal(1),
                 totalMerchantFee = new BigDecimal(1),
                 fee = new BigDecimal(1),
                 totalTaxes = new BigDecimal(1);
 
-        BigDecimal expectedResult = totalSellFare.subtract(totalDiscount).add(totalGST).add(totalMerchantFee).add(fee).add(totalTaxes);
-        BigDecimal actualResult = rebateCalc.getTotalCharge(totalSellFare, totalDiscount, totalGST, totalMerchantFee, fee, totalTaxes);
+        BigDecimal expectedResult = totalSellFare.subtract(totalDiscount).add(totalGst).add(totalMerchantFee).add(fee).add(totalTaxes);
+        BigDecimal actualResult = rebateCalc.getTotalCharge(totalSellFare, totalDiscount, totalGst, totalMerchantFee, fee, totalTaxes);
 
         assertNotNull(actualResult);
         assertEquals(actualResult, expectedResult);
