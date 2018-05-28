@@ -9,6 +9,7 @@ import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.InMiscFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
@@ -40,6 +41,9 @@ public class OtherServiceFeesService {
 
 	@Autowired
 	private OtherServiceCalculatorFactory osFactory;
+	
+	@Autowired
+	private TransactionFeeCalculatorFactory tfFactory;
 
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
@@ -53,8 +57,23 @@ public class OtherServiceFeesService {
 	}
 
 	FeesBreakdown calculateAirFee(FeesInput input) {
+		if(Country.INDIA.getCode().equals(input.getCountryCode())) {
+			return this.tfFactory.getCalculator(
+							getPricingId(input.getProfileName()))
+					.calculate(input);
+		}
+		
 		return this.osFactory.getCalculator(input.getCountryCode()).calculate(input,
 				getMerchantFeePct(input));
+	}
+
+	private int getPricingId(String profileName) {
+		Client client = getClient(profileName);
+		return client != null ? client.getPricingId() : 0;
+	}
+
+	private Client getClient(String profileName) {
+		return clientService.getClient(profileName);
 	}
 
 	FeesBreakdown calculateVisaFees(FeesInput input) {

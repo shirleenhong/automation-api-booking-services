@@ -9,10 +9,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
+import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
+import com.cwt.bpg.cbt.exchange.order.calculator.tf.TransactionFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
 import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
@@ -23,16 +27,25 @@ public class OtherServiceFeesServiceTest {
 	private OtherServiceCalculatorFactory factory;
 	
 	@Mock
+	private TransactionFeeCalculatorFactory tfFactory;
+	
+	@Mock
 	private Calculator miscFeeCalculator;
 	
 	@Mock
 	private Calculator hkCalculator;
 	
 	@Mock
+	private TransactionFeeCalculator tfCalculator;
+	
+	@Mock
 	private NettCostCalculator nettCostCalculator;
 	
 	@Mock
 	private ExchangeOrderService orderService;
+	
+	@Mock
+	private ClientService clientService;
 	
 	@InjectMocks
 	private OtherServiceFeesService service;
@@ -68,5 +81,25 @@ public class OtherServiceFeesServiceTest {
 		Mockito.when(nettCostCalculator.calculateFee(Mockito.anyObject(), Mockito.anyObject()))
 			.thenReturn(new AirFeesBreakdown());
 		assertNotNull(service.calculateNettCost(new NettCostInput()));
+	}
+	
+	@Test
+	public void shouldReturnIndiaAirFeesBreakdown() {
+		
+		Mockito.when(tfFactory.getCalculator(Mockito.anyInt()))
+			.thenReturn(tfCalculator);
+		
+		Mockito.when(tfCalculator.calculate(Mockito.anyObject()))
+			.thenReturn(new FeesBreakdown());
+		
+		Client client = new Client();
+		client.setPricingId(20);
+		Mockito.when(clientService.getClient(Mockito.anyString()))
+				.thenReturn(client);
+		
+		FeesInput input = new FeesInput();
+		input.setCountryCode(Country.INDIA.getCode());
+		
+		assertNotNull(service.calculateAirFee(input));
 	}
 }

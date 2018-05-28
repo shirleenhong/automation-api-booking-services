@@ -20,22 +20,22 @@ public class OtherServiceCalculatorFactory {
 	@Autowired
 	@Qualifier("sgAirCalculator")
 	private Calculator sgAirCalculator;
-	
-	private Map<String, Calculator> serviceMap = new HashMap<>();
+		
+	private Map<String, Calculator> calculatorMap = new HashMap<>();
 	
 	@PostConstruct
 	public void init(){
 		
-		this.serviceMap.put(Country.HONG_KONG.getCode(), hkAirCalculator);
-		this.serviceMap.put(Country.SINGAPORE.getCode(), sgAirCalculator);
-		this.serviceMap.put(Country.AUSTRALIA.getCode(), sgAirCalculator);
-		this.serviceMap.put(Country.NEW_ZEALAND.getCode(), sgAirCalculator);
+		this.calculatorMap.put(Country.HONG_KONG.getCode(), hkAirCalculator);
+		this.calculatorMap.put(Country.SINGAPORE.getCode(), sgAirCalculator);
+		this.calculatorMap.put(Country.AUSTRALIA.getCode(), sgAirCalculator);
+		this.calculatorMap.put(Country.NEW_ZEALAND.getCode(), sgAirCalculator);
 	}
 	
 	public Calculator getCalculator(String countryCode) {
 		
-		if (this.serviceMap.containsKey(countryCode)) {
-			return this.serviceMap.get(countryCode);
+		if (this.calculatorMap.containsKey(countryCode)) {
+			return this.calculatorMap.get(countryCode);
 		}
 		else {
 			throw new IllegalArgumentException("Country not supported");
