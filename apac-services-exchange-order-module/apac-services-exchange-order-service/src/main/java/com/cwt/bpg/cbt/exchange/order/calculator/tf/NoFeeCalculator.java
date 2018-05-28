@@ -3,7 +3,7 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 import java.math.BigDecimal;
 
 public class NoFeeCalculator extends TransactionFeeCalculator {
-    public Double getTotalDiscount() {
+    public BigDecimal getTotalDiscount() {
         return null;
     }
 
@@ -19,7 +19,7 @@ public class NoFeeCalculator extends TransactionFeeCalculator {
         return calculatePercentage(safeValue(totalSellFare).add(safeValue(totalTaxes)).add(safeValue(totalGst)), merchantFeePct);
     }
 
-    public Double getMfOnTf() {
+    public BigDecimal getMfOnTf() {
         return null;
     }
 
@@ -27,7 +27,7 @@ public class NoFeeCalculator extends TransactionFeeCalculator {
         return null;
     }
 
-    public Double getTotalFee() {
+    public BigDecimal getTotalFee() {
         return null;
     }
 
