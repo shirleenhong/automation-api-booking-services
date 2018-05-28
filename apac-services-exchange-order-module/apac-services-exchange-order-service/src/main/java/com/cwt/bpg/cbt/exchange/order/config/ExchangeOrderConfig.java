@@ -11,6 +11,7 @@ import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.SgAirCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
+import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.tf.*;
 
 @Configuration("com.cwt.bpg.cbt.exchange.order.config")
@@ -49,7 +50,12 @@ public class ExchangeOrderConfig {
 	public OtherServiceCalculatorFactory otherServiceCalculatorFactory() {
 		return new OtherServiceCalculatorFactory();
 	}
-
+	
+	@Bean(name = "transactionFeeCalculatorFactory")
+	public TransactionFeeCalculatorFactory transactionFeeCalculatorFactory() {
+		return new TransactionFeeCalculatorFactory();
+	}
+	
 	@Bean(name = "tfCalculator")
 	public TransactionFeeCalculator tfCalculator() {
 		return new TransactionFeeCalculator();
