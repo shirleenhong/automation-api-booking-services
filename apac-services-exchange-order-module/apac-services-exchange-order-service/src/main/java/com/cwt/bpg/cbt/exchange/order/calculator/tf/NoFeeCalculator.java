@@ -15,11 +15,11 @@ public class NoFeeCalculator extends TransactionFeeCalculator {
         return null;
     }
 
-    public BigDecimal getMerchantFee(BigDecimal totalSellFare, BigDecimal totalTaxes, BigDecimal totalGST, Double merchantFeePct) {
-        return calculatePercentage(safeValue(totalSellFare).add(safeValue(totalTaxes)).add(safeValue(totalGST)), merchantFeePct);
+    public BigDecimal getMerchantFee(BigDecimal totalSellFare, BigDecimal totalTaxes, BigDecimal totalGst, Double merchantFeePct) {
+        return calculatePercentage(safeValue(totalSellFare).add(safeValue(totalTaxes)).add(safeValue(totalGst)), merchantFeePct);
     }
 
-    public Double getMfTf() {
+    public Double getMfOnTf() {
         return null;
     }
 
@@ -31,12 +31,12 @@ public class NoFeeCalculator extends TransactionFeeCalculator {
         return null;
     }
 
-    public BigDecimal getTotalSellingFare(BigDecimal totalSellFare, BigDecimal totalGST, BigDecimal totalMerchantFee) {
-        return safeValue(totalSellFare).add(safeValue(totalGST)).add(safeValue(totalMerchantFee));
+    public BigDecimal getTotalSellingFare(BigDecimal totalSellFare, BigDecimal totalGst, BigDecimal totalMerchantFee) {
+        return safeValue(totalSellFare).add(safeValue(totalGst)).add(safeValue(totalMerchantFee));
     }
 
-    public BigDecimal getTotalCharge(BigDecimal totalSellFare, BigDecimal totalGST, BigDecimal totalMerchantFee, BigDecimal totalTaxes) {
-        return safeValue(totalSellFare).add(safeValue(totalGST)).add(safeValue(totalMerchantFee)).add(safeValue(totalTaxes));
+    public BigDecimal getTotalCharge(BigDecimal totalSellFare, BigDecimal totalGst, BigDecimal totalMerchantFee, BigDecimal totalTaxes) {
+        return safeValue(totalSellFare).add(safeValue(totalGst)).add(safeValue(totalMerchantFee)).add(safeValue(totalTaxes));
     }
 
 }

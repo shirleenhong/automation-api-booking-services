@@ -32,7 +32,7 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getMfFeeTfShouldReturnNull() {
-        assertNull(noFeeCalc.getMfTf());
+        assertNull(noFeeCalc.getMfOnTf());
     }
 
     @Test
