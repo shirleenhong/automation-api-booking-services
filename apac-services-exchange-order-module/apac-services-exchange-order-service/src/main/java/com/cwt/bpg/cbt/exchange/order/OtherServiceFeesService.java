@@ -51,12 +51,12 @@ public class OtherServiceFeesService {
 	@Autowired
 	private ClientService clientService;
 
-	FeesBreakdown calculateMiscFee(FeesInput input) {
+	public FeesBreakdown calculateMiscFee(FeesInput input) {
 		
 		return this.miscFeeCalculator.calculate(input, getMerchantFeePct(input));
 	}
 
-	FeesBreakdown calculateAirFee(FeesInput input) {
+	public FeesBreakdown calculateAirFee(FeesInput input) {
 		if(Country.INDIA.getCode().equals(input.getCountryCode())) {
 			return this.tfFactory.getCalculator(
 							getPricingId(input.getProfileName()))
@@ -76,11 +76,11 @@ public class OtherServiceFeesService {
 		return clientService.getClient(profileName);
 	}
 
-	FeesBreakdown calculateVisaFees(FeesInput input) {
+	public FeesBreakdown calculateVisaFees(FeesInput input) {
 		return this.visaFeesCalculator.calculate(input, getMerchantFeePct(input));
 	}
 
-	AirFeesBreakdown calculateNettCost(NettCostInput input) {
+	public AirFeesBreakdown calculateNettCost(NettCostInput input) {
 		return nettCostCalculator.calculateFee(input.getSellingPrice(),
 				input.getCommissionPct());
 	}
