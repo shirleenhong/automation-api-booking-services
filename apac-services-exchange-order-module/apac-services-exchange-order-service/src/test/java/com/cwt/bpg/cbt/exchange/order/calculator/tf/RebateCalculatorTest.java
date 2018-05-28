@@ -13,7 +13,7 @@ public class RebateCalculatorTest {
 
     @Test
     public void getIntMfFeeTFShouldReturnNull() {
-        assertNull(rebateCalc.getMfFeeTF());
+        assertNull(rebateCalc.getMfOnTf());
     }
 
     @Test

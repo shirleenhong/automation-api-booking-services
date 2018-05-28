@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 
 public class RebateCalculator extends TransactionFeeCalculator {
 
-    public BigDecimal getMfFeeTF() {
+    public BigDecimal getMfOnTf() {
         return null;
     }
 
-    public BigDecimal getDdlFeeApply() {
+    public Boolean getDdlFeeApply() {
         return null;
     }
 

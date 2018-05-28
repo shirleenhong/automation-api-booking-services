@@ -23,7 +23,7 @@ public class NoFeeCalculator extends TransactionFeeCalculator {
         return null;
     }
 
-    public Double getDdlFeeApply() {
+    public Boolean getDdlFeeApply() {
         return null;
     }
 
