@@ -6,6 +6,8 @@ import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
 import java.math.BigDecimal;
 
 public class WithVatCalculator extends FeeCalculator {
+
+	@Override
 	public BigDecimal getTotalFee(TransactionFeesInput input, TransactionFeesBreakdown breakdown) {
 
 		return safeValue(input.getBaseFare()).add(safeValue(breakdown.getTotalTaxes()))

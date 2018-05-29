@@ -98,7 +98,7 @@ public class FeeCalculator extends CommonCalculator {
 		return safeValue(input.getBaseFare());		
 	}
 	
-	public BigDecimal getTotalFee() {
+	public BigDecimal getTotalFee(TransactionFeesInput input, TransactionFeesBreakdown breakdown) {
 		return null;		
 	}
 	
