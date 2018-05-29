@@ -177,7 +177,7 @@ public class Product {
 		this.gdsCode = gdsCode;
 	}
 
-	public Boolean getRequireCdr() {
+  public Boolean getRequireCdr() {
 		return requireCdr;
 	}
 
