@@ -73,7 +73,7 @@ public class Client implements Serializable {
 		this.pricingId = pricingId;
 	}
 
-	public boolean getExemptTax() {
+	public boolean isExemptTax() {
 		return exemptTax;
 	}
 

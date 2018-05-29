@@ -90,7 +90,8 @@ public class OtherServiceFeesServiceTest {
 		Mockito.when(tfFactory.getCalculator(Mockito.anyInt()))
 			.thenReturn(tfCalculator);
 		
-		Mockito.when(tfCalculator.calculate(Mockito.anyObject()))
+		Mockito.when(tfCalculator.calculate(Mockito.anyObject(), 
+				Mockito.anyObject()))
 			.thenReturn(new FeesBreakdown());
 		
 		Client client = new Client();

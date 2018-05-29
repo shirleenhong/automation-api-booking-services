@@ -66,17 +66,13 @@ public class OtherServiceFeesService {
 	public FeesBreakdown calculateAirFee(TransactionFeesInput input) {		
 		return this.tfFactory.getCalculator(
 						getPricingId(input.getProfileName()))
-				.calculate((TransactionFeesInput)input);
+				.calculate(getClient(input.getProfileName()), input);
 	
 	}
 
 	private int getPricingId(String profileName) {
 		Client client = getClient(profileName);
 		return client != null ? client.getPricingId() : 0;
-	}
-
-	private Client getClient(String profileName) {
-		return clientService.getClient(profileName);
 	}
 
 	public FeesBreakdown calculateVisaFees(FeesInput input) {
@@ -94,9 +90,9 @@ public class OtherServiceFeesService {
 				input.getClientType(), input.getProfileName());
 	}
 
-	private Client getClient(InMiscFeesInput input) {
+	private Client getClient(String profileName) {
 		
-		Client client = clientService.getClient(input.getProfileName());
+		Client client = clientService.getClient(profileName);
 		
 		if(client != null && client.isStandardMfProduct()) {
 			return clientService.getDefaultClient();
@@ -107,7 +103,7 @@ public class OtherServiceFeesService {
 
 	public MiscFeesBreakdown calculateNonAirFee(InMiscFeesInput input) {
 		if(Country.INDIA.getCode().equals(input.getCountryCode())) {
-			return this.inMiscFeeCalculator.calculate(input, getClient(input));
+			return this.inMiscFeeCalculator.calculate(input, getClient(input.getProfileName()));
 		}
 		
 		return new MiscFeesBreakdown();

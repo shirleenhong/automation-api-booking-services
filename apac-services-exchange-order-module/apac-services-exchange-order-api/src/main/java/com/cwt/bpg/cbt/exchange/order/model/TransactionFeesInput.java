@@ -14,6 +14,17 @@ public class TransactionFeesInput extends FeesInput {
 	private Double airlineCommissionPercent;
 	private Double merchantFeePercent;
 	private BigDecimal fee;
+	private String tripType;
+	private String platCarrier;
+	private boolean gstEnabled;
+	private boolean commissionEnabled;
+	private boolean orCommissionEnabled;
+	private boolean markUpEnabled;
+	private boolean discountEnabled;
+	
+	private InProduct product;
+	
+	
 
 	public BigDecimal getBaseFare() {
 		return baseFare;
@@ -78,4 +89,71 @@ public class TransactionFeesInput extends FeesInput {
 	public void setFee(BigDecimal fee) {
 		this.fee = fee;
 	}
+
+	public String getTripType() {
+		return tripType;
+	}
+
+	public void setTripType(String tripType) {
+		this.tripType = tripType;
+	}
+
+	public String getPlatCarrier() {
+		return platCarrier;
+	}
+
+	public void setPlatCarrier(String platCarrier) {
+		this.platCarrier = platCarrier;
+	}
+
+	public boolean isGstEnabled() {
+		return gstEnabled;
+	}
+
+	public void setGstEnabled(boolean gstEnabled) {
+		this.gstEnabled = gstEnabled;
+	}
+
+	public InProduct getProduct() {
+		return product;
+	}
+
+	public void setProduct(InProduct product) {
+		this.product = product;
+	}
+
+	public boolean isCommissionEnabled() {
+		return commissionEnabled;
+	}
+
+	public void setCommissionEnabled(boolean commissionEnabled) {
+		this.commissionEnabled = commissionEnabled;
+	}
+
+	public boolean isOrCommissionEnabled() {
+		return orCommissionEnabled;
+	}
+
+	public void setOrCommissionEnabled(boolean orCommissionEnabled) {
+		this.orCommissionEnabled = orCommissionEnabled;
+	}
+
+	public boolean isMarkUpEnabled() {
+		return markUpEnabled;
+	}
+
+	public void setMarkUpEnabled(boolean markUpEnabled) {
+		this.markUpEnabled = markUpEnabled;
+	}
+
+	public boolean isDiscountEnabled() {
+		return discountEnabled;
+	}
+
+	public void setDiscountEnabled(boolean discountEnabled) {
+		this.discountEnabled = discountEnabled;
+	}
+	
+	
+	
 }

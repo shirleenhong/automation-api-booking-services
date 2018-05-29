@@ -8,8 +8,7 @@ import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
 public class RebateCalculator extends FeeCalculator {
 
 	@Override
-    public BigDecimal getMfOnTf(int tripType, 
-			TransactionFeesInput input, 
+    public BigDecimal getMfOnTf(TransactionFeesInput input, 
 			BigDecimal totalGstOnTf) {
         return null;
     }
