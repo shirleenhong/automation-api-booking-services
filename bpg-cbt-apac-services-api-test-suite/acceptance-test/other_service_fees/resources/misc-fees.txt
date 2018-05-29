@@ -40,8 +40,8 @@ Append Additional Fields For Miscellaneous Fees
     Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCost":${nett_cost_value}
     Run Keyword If    "${gst_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercent":${gst_percent_value}
     [Return]    ${other_service_fees_request_list}
-    
-Append Additional Fields For Miscellaneous Fees For India
+
+Append Additional Fields For Non-Air Fees
     [Arguments]    ${other_service_fees_request_list}
     Run Keyword If    "${cost_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "costAmount":${cost_amount_value}
     Run Keyword If    "${commission_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commission":${commission_value}
@@ -54,7 +54,7 @@ Append Additional Fields For Miscellaneous Fees For India
     Run Keyword If    "${apply_mf_cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "applyMerchantFeeCc":${apply_mf_cc_value}
     Run Keyword If    "${ot1_value}"!="null"    Append To List    ${other_service_fees_request_list}    "ot1":${ot1_value}
     Run Keyword If    "${ot2_value}"!="null"    Append To List    ${other_service_fees_request_list}    "ot2":{ot2_value}
-    [Return]    ${other_service_fees_request_list}    
+    [Return]    ${other_service_fees_request_list} 
 
 Append Additional Fields For Visa Fees
     [Arguments]    ${other_service_fees_request_list}
@@ -66,7 +66,7 @@ Append Additional Fields For Visa Fees
     [Return]    ${other_service_fees_request_list}
 
 Calculate Miscellaneous Fees Commission
-    ${calculated_value}    Evaluate    ${selling_price_in_di_value}-${nett_cost_value}
+    ${calculated_value}    Evaluate    ${total_selling_price_value}-${nett_cost_value}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
@@ -98,73 +98,7 @@ Calculate Miscellaneous Fees Selling Price In DI
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${selling_price_in_di_value}    ${calculated_value}
-
-Calculate Miscellaneous Fees For Hong Kong/ Singapore
-    Run Keyword If    "${gst_absorb_value}" == "false"    Run Keywords    Calculate Miscellaneous Fees GST
-    ...    AND    Calculate Miscellaneous Fees Nett Cost GST
-    ...    ELSE    Set GST And Nett Cost GST
-    Run Keyword If    "${merchant_fee_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Miscellaneous Fees Mechant Fee
-    ...    ELSE    Set Merchant Fee
-    Calculate Miscellaneous Fees Selling Price In DI
-    Run Keyword If    ${selling_price_in_di_value}>${nett_cost_value}    Calculate Miscellaneous Fees Commission
-    ...    ELSE    Set Commission Value
-
-Calculate Miscellaneous Fees For India
-    Run Keyword If    "${cc_value}" != "BTC"    Calculate Miscelleneous Fees Merchant Fee Percentage For India    ELSE    Set Test Variable    ${merchant_fee_percentage_amount}    0
-    Run Keyword If    "${commission_by_percentage_value}" == "true"    Calculate Miscelleneous Fees Commission For India    ELSE    Set Test Variable    ${commission_amount}    ${commission_value}
-    Run Keyword If    "${discount_by_percentage}" == "true"    Calculate Miscelleneous Fees Discount    ELSE    Set Test Variable    ${discount_amount}    ${discount_value}
-    Calculate Miscelleneous Fees Gross Sell Amount
-    Calculate Miscelleneous Fees VAT/ GST Amount
-    Calculate Miscelleneous Fees Total Sell Amount
-
-Calculate Miscelleneous Fees Merchant Fee Percentage For India
-    ${fop_cc_number_value}    Run Keyword And Return Status    Verify String Contains Substring    ${fop_number_value}    ${cc_number_value}
-    Run Keyword If    "${subject_to_mf_value}" == "true"    Set Test Variable    ${merchant_fee_percentage}    0    
-    ...    ELSE IF    ("${apply_mf_bank_value}" == "NULL" or "${apply_mf_bank_value}" == "false") and "${merchant_fee_percentage_value}" != "0" and "${cc_number_value}" != "${EMPTY}" and "${fop_cc_number_value}" == "true"    Set Test Variable    ${merchant_fee_percentage}    ${merchant_fee_percentage_value}
-    ...    ELSE IF    "${apply_mf_bank_value}" == "true"  and "${merchant_fee_percentage_value}" != "0" and "${cc_number_value}" != "${EMPTY}" and "${fop_cc_number_value}" == "true"    Set Test Variable    ${merchant_fee_percentage}    ${merchant_fee_percentage_value}
-    ...    ELSE IF    ("${apply_mf_cc_value}" == "NULL" or "${apply_mf_cc_value}" == "false") and "${merchant_fee_percentage_value}" != "0" and "${fop_type_value}" != "${EMPTY}"    Set Test Variable    ${merchant_fee_percentage}    ${merchant_fee_percentage_value}
-    ...    ELSE IF    "${apply_mf_cc_value}" == "true" and "${merchant_fee_percentage_value}" != "0" and "${fop_type_value}" != "${EMPTY}"    Set Test Variable    ${merchant_fee_percentage}    ${merchant_fee_percentage_value}
-    ...    ELSE    Set Test variable    ${merchant_fee_percentage}    ${merchant_fee_percentage_value}
-    ${merchant_fee_percentage_amount}    Evaluate    ${merchant_fee_percentage}*0.01
-    Set Test Variable    ${merchant_fee_percentage_amount}
-
-Calculate Miscelleneous Fees Commission For India
-    ${calculated_value}    Evaluate    (${cost_amount_value}*(${commission_percentage_value}*0.01))
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${commission_amount}    ${calculated_value} 
-    
-Calculate Miscelleneous Fees Discount
-    ${calculated_value}    Evaluate    ((${cost_amount_value}+${commission_amount})*(${discount_percentage_value}*0.01))
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${discount_amount}    ${calculated_value}
-    
-Calculate Miscelleneous Fees Gross Sell Amount
-    ${calculated_value}    Evaluate    ${cost_amount_value}+${commission_amount}-${discount_amount}
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${gross_sell_amount}    ${calculated_value}    
-    
-Calculate Miscelleneous Fees VAT/ GST Amount
-    ${tax_calculated_value}    Evaluate    round((${gross_sell_amount}*(${gst_percentage_value}*0.01)),${decimal_place})
-    ${calculated_value}    Evaluate    ${tax_calculated_value}+round((${gross_sell_amount}*(${ot1_percentage_value}*0.01)),${decimal_place})+round((${gross_sell_amount}*(${ot2_percentage_value}*0.01)),${decimal_place})
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${vat_gst_amount}    ${calculated_value}
-
-Calculate Miscelleneous Fees Total Sell Amount
-    ${merchant_fee_amount}    Evaluate    round(((${gross_sell_amount}+${vat_gst_amount})*${merchant_fee_percentage_amount}),${decimal_place})
-    ${calculated_value}    Evaluate    (${gross_sell_amount}+${vat_gst_amount}+${merchant_fee_amount})
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${total_sell_amount}    ${calculated_value}
+    Set Test Variable    ${total_selling_price_value}    ${calculated_value}
 
 Create Test Variables For Miscellaneous Fees
     [Arguments]    ${fees_list}    ${country}=sg
@@ -183,7 +117,14 @@ Generate Test Variables For Miscellaneous Fees
     Create Test Variables For Miscellaneous Fees    ${fees_list}    ${country}
     ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
     Set Test Variable    ${decimal_place}
-    Run Keyword If    "${country.upper()}" != "IN"    Calculate Miscellaneous Fees For Hong kong/ Singapore    ELSE    Calculate Miscellaneous Fees For India
+    Run Keyword If    "${gst_absorb_value}" == "false"    Run Keywords    Calculate Miscellaneous Fees GST
+    ...    AND    Calculate Miscellaneous Fees Nett Cost GST
+    ...    ELSE    Set GST And Nett Cost GST
+    Run Keyword If    "${merchant_fee_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Miscellaneous Fees Mechant Fee
+    ...    ELSE    Set Merchant Fee
+    Calculate Miscellaneous Fees Selling Price In DI
+    Run Keyword If    ${total_selling_price_value}>${nett_cost_value}    Calculate Miscellaneous Fees Commission
+    ...    ELSE    Set Commission Value
     Run Keyword If    "${country.upper()}" != "SG"    Remove Decimal Places
 
 Get Rounding Rules
@@ -194,17 +135,17 @@ Get Rounding Rules
     Set Test Variable    ${rounding_rule}    ${round_rule_value}
 
 Remove Decimal Places
-    ${selling_price_in_di_value}    Convert To String    ${selling_price_in_di_value}
+    ${total_selling_price_value}    Convert To String    ${total_selling_price_value}
     ${gst_amount_value}    Convert To String    ${gst_amount_value}
     ${merchant_fee_value}    Convert To String    ${merchant_fee_value}
     ${commission_value}    Convert To String    ${commission_value}
     ${nett_cost_gst_value}    Convert To String    ${nett_cost_gst_value}
-    ${selling_price_in_di_value}    Remove String    ${selling_price_in_di_value}    .00
+    ${total_selling_price_value}    Remove String    ${total_selling_price_value}    .00
     ${gst_amount_value}    Remove String    ${gst_amount_value}    .00
     ${merchant_fee_value}    Remove String    ${merchant_fee_value}    .00
     ${commission_value}    Remove String    ${commission_value}    .00
     ${nett_cost_gst_value}    Remove String    ${nett_cost_gst_value}    .00
-    Set Test Variable    ${selling_price_in_di_value}
+    Set Test Variable    ${total_selling_price_value}
     Set Test Variable    ${gst_amount_value}
     Set Test Variable    ${merchant_fee_value}
     Set Test Variable    ${commission_value}
@@ -235,10 +176,10 @@ Send Other Service Fees Post Request
     Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":${client_type}
     Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "profileName":"${pro_name_value}"
     Set Test Variable    ${other_service_fees_request_list}
-    ${other_service_fees_request_list}    Run Keyword If    "${service_fee_name}"=="misc-fees" and "${country}"!="IN"    Append Additional Fields For Miscellaneous Fees    ${other_service_fees_request_list}
-    ...    ELSE IF    "${service_fee_name}"=="misc-fees" and "${country}"=="IN"    Append Additional Fields For Miscellaneous Fees For India    ${other_service_fees_request_list}
+    ${other_service_fees_request_list}    Run Keyword If    "${service_fee_name}"=="misc-fees"    Append Additional Fields For Miscellaneous Fees    ${other_service_fees_request_list}
     ...    ELSE IF    "${service_fee_name}"=="air-fees"    Append Additional Fields For Air Fees    ${other_service_fees_request_list}
     ...    ELSE IF    "${service_fee_name}"=="visa-fees"    Append Additional Fields For Visa Fees    ${other_service_fees_request_list}
+    ...    ELSE IF    "${service_fee_name}"=="non-air-fees"    Append Additional Fields For Non-Air Fees    ${other_service_fees_request_list}
     ${list_count}    Get Length    ${other_service_fees_request_list}
     : FOR    ${i}    IN RANGE    0    ${list_count}
     \    ${fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${fees_list},
@@ -266,7 +207,7 @@ Set Merchant Fee
     ...    ELSE    Set Test Variable    ${merchant_fee_value}    0
 
 Verify Calculated Miscellaneous Fees Are Not Returned
-    Verify String Does Not Contain Substring    ${response.content}    "sellingPriceInDi"
+    Verify String Does Not Contain Substring    ${response.content}    "totalSellingPrice"
     Verify String Does Not Contain Substring    ${response.content}    "merchantFeeAmount"
     Verify String Does Not Contain Substring    ${response.content}    "gstAmount"
     Verify String Does Not Contain Substring    ${response.content}    "nettCostGst"
