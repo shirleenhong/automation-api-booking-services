@@ -21,13 +21,11 @@ public class TransactionFeesInput extends FeesInput {
 	private boolean gstEnabled;
 	private boolean commissionEnabled;
 	private boolean orCommissionEnabled;
-	private boolean markUpEnabled;
+	private boolean markupEnabled;
 	private boolean discountEnabled;
 	
 	private InProduct product;
 	
-	
-
 	public BigDecimal getBaseFare() {
 		return baseFare;
 	}
@@ -140,12 +138,12 @@ public class TransactionFeesInput extends FeesInput {
 		this.orCommissionEnabled = orCommissionEnabled;
 	}
 
-	public boolean isMarkUpEnabled() {
-		return markUpEnabled;
+	public boolean isMarkupEnabled() {
+		return markupEnabled;
 	}
 
-	public void setMarkUpEnabled(boolean markUpEnabled) {
-		this.markUpEnabled = markUpEnabled;
+	public void setMarkupEnabled(boolean markupEnabled) {
+		this.markupEnabled = markupEnabled;
 	}
 
 	public boolean isDiscountEnabled() {

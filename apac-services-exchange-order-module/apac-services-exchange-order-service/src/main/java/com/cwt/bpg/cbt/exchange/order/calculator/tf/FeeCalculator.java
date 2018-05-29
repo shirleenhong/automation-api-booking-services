@@ -44,8 +44,8 @@ public class FeeCalculator extends CommonCalculator {
 			breakdown.setTotalReturnableOr(getTotalOrCom(input));
 		}
 		
-		if(input.isMarkUpEnabled()) {
-			breakdown.setTotalMarkup(getTotalMarkUp());
+		if(input.isMarkupEnabled()) {
+			breakdown.setTotalMarkup(getTotalMarkup());
 		}
 		
 		if(input.isDiscountEnabled()) {
@@ -113,7 +113,7 @@ public class FeeCalculator extends CommonCalculator {
 					.add(safeValue(input.getAirlineCommission()));
 	}
 	
-	public BigDecimal getTotalMarkUp() {
+	public BigDecimal getTotalMarkup() {
 		return null;
 	}
 	
