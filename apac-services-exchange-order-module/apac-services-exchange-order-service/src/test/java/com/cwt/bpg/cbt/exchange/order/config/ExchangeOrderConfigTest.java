@@ -52,7 +52,7 @@ public class ExchangeOrderConfigTest {
 	public void shouldCreateInCalculator() {
 		assertThat(config.inMiscFeeCalculator(), is(instanceOf(InMiscFeeCalculator.class)));
 	}
-	
+
 	@Test
 	public void shouldVisaFeesCalculator() {
 		assertThat(config.visaFeesCalculator(), is(instanceOf(VisaFeesCalculator.class)));
@@ -60,58 +60,56 @@ public class ExchangeOrderConfigTest {
 
 	@Test
 	public void tfCalculator() {
-		assertThat(config.tfCalculator(),
-				is(instanceOf(FeeCalculator.class)));
+		assertThat(config.tfCalculator(), is(instanceOf(FeeCalculator.class)));
 	}
-	
+
 	@Test
 	public void tfFullFareCalculator() {
-		assertThat(config.tfFullFareCalculator(),
-				is(instanceOf(FullFareCalculator.class)));
+		assertThat(config.tfFullFareCalculator(), is(instanceOf(FullFareCalculator.class)));
 	}
+
 	@Test
 	public void tfNettFareCalculator() {
-		assertThat(config.tfNettFareCalculator(),
-				is(instanceOf(NettFareCalculator.class)));
+		assertThat(config.tfNettFareCalculator(), is(instanceOf(NettFareCalculator.class)));
 	}
+
 	@Test
 	public void tfGrossFareCalculator() {
-		assertThat(config.tfGrossFareCalculator(),
-				is(instanceOf(GrossFareCalculator.class)));
+		assertThat(config.tfGrossFareCalculator(), is(instanceOf(GrossFareCalculator.class)));
 	}
+
 	@Test
 	public void tfFareCalculator() {
-		assertThat(config.tfFareCalculator(),
-				is(instanceOf(FareCalculator.class)));
+		assertThat(config.tfFareCalculator(), is(instanceOf(FareCalculator.class)));
 	}
+
 	@Test
 	public void tfBasicCalculator() {
-		assertThat(config.tfBasicCalculator(),
-				is(instanceOf(BasicCalculator.class)));
+		assertThat(config.tfBasicCalculator(), is(instanceOf(BasicCalculator.class)));
 	}
+
 	@Test
 	public void noFeeCalculator() {
-		assertThat(config.noFeeCalculator(),
-				is(instanceOf(NoFeeCalculator.class)));
+		assertThat(config.noFeeCalculator(), is(instanceOf(NoFeeCalculator.class)));
 	}
+
 	@Test
 	public void tfPlusVatCalculator() {
-		assertThat(config.tfPlusVatCalculator(),
-				is(instanceOf(WithVatCalculator.class)));
+		assertThat(config.tfPlusVatCalculator(), is(instanceOf(WithVatCalculator.class)));
 	}
+
 	@Test
 	public void tfRebateCalculator() {
-		assertThat(config.tfRebateCalculator(),
-				is(instanceOf(RebateCalculator.class)));
+		assertThat(config.tfRebateCalculator(), is(instanceOf(RebateCalculator.class)));
 	}
+
 	@Test
 	public void noFeeWithDiscountCalculator() {
-		assertThat(config.noFeeWithDiscountCalculator(),
-				is(instanceOf(NoFeeWithDiscountCalculator.class)));
+		assertThat(config.noFeeWithDiscountCalculator(), is(instanceOf(NoFeeWithDiscountCalculator.class)));
 	}
+
 	@Test
 	public void tfBaseAndYqCalculator() {
-		assertThat(config.tfBaseAndYqCalculator(),
-				is(instanceOf(BaseAndYqCalculator.class)));
+		assertThat(config.tfBaseAndYqCalculator(), is(instanceOf(BaseAndYqCalculator.class)));
 	}
 }

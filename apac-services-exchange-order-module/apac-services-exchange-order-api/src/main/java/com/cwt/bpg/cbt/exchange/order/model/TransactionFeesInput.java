@@ -13,6 +13,8 @@ public class TransactionFeesInput extends FeesInput {
 	private Double returnOrCommissionPercent;
 	private Double airlineCommissionPercent;
 	private Double merchantFeePercent;
+	private BigDecimal tax1;
+	private BigDecimal tax2;
 	private BigDecimal fee;
 	private String tripType;
 	private String platCarrier;
@@ -153,7 +155,21 @@ public class TransactionFeesInput extends FeesInput {
 	public void setDiscountEnabled(boolean discountEnabled) {
 		this.discountEnabled = discountEnabled;
 	}
-	
-	
+
+	public BigDecimal getTax1() {
+		return tax1;
+	}
+
+	public void setTax1(BigDecimal tax1) {
+		this.tax1 = tax1;
+	}
+
+	public BigDecimal getTax2() {
+		return tax2;
+	}
+
+	public void setTax2(BigDecimal tax2) {
+		this.tax2 = tax2;
+	}
 	
 }

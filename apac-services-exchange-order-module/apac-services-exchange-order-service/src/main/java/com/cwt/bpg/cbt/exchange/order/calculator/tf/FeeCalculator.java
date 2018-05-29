@@ -3,7 +3,12 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 import java.math.BigDecimal;
 
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
+import com.cwt.bpg.cbt.exchange.order.model.Client;
+import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.TripTypes;
 
 public class FeeCalculator extends CommonCalculator {
 
@@ -11,6 +16,8 @@ public class FeeCalculator extends CommonCalculator {
 		
 		BigDecimal gstAmount = null;
 		BigDecimal yqTax = null;
+		
+		TransactionFeesBreakdown breakdown = new TransactionFeesBreakdown();
 		
 		if(input.isGstEnabled()) {
 			gstAmount = BigDecimal.ZERO;
@@ -28,36 +35,32 @@ public class FeeCalculator extends CommonCalculator {
 					.add(calculatePercentage(safeValue(input.getBaseFare())
 							.add(input.getYqTax()), input.getProduct().getOt2()));
 		}
-		/*
-		BigDecimal commission = null;
-		BigDecimal orCommission = null;
-		BigDecimal markup = null;
-		BigDecimal discount = null;
-		
+				
 		if(input.isCommissionEnabled()) {
-			commission = 
+			breakdown.setTotalIataCommission(getTotalAirCom(input));
 		} 
 		
 		if(input.isOrCommissionEnabled()) {
-			orCommission =l
+			breakdown.setTotalReturnableOr(getTotalOrCom(input));
 		}
 		
 		if(input.isMarkUpEnabled()) {
-			markup = 
+			breakdown.setTotalMarkup(getTotalMarkUp());
 		}
 		
 		if(input.isDiscountEnabled()) {
-			discount = 
-		}
+			breakdown.setTotalDiscount(getTotalDiscount(input, breakdown));
+		}		
 		
+		breakdown.setTotalTaxes(safeValue(input.getYqTax())
+									.add(input.getTax1())
+									.add(input.getTax1()));
 		
-		GetCalculate Total Taxes
-		Total Taxes = Total Taxes + txtTax(1) + txtTax(2)
-
-		GetCalculate Total Fare
-
-		GetCalculate lblFeeBaseText
-
+		breakdown.setTotalGst(gstAmount);
+		breakdown.setTotalSellingFare(getTotalFare(input));
+		breakdown.setBaseAmount(getTotalFee(input, breakdown));
+		
+		/*
 		If Fee Override Checkbox is Unchecked Then
 		   ClientPricing = client.getClientPricings where triptype = ttype and cmpid = ????
 		   FeeOption = ClientPricing.FeeOption
@@ -75,33 +78,35 @@ public class FeeCalculator extends CommonCalculator {
 				Transaction Fee = 0
 			End If
 		End If
-
-		GetCalculate Merchant Fee AMount
-		GetCalculate Merchant Fee TF Amount	
-
-		GetCalculate Total Sell Fare
-
-		GetCalculate Total Quote
-
-		txtRefFare = Base Fare + Total Taxes
-			
-
-		If txtDeclineFare < ((Total Fare - Discount Amount) + Total Taxes) Then
+		*/
+		
+		breakdown.setTotalMerchantFee(getMerchantFee(input, breakdown));
+		
+		BigDecimal totalGstOnTf = null; // ??
+		breakdown.setMerchantFeeOnTF(getMfOnTf(input, totalGstOnTf));
+		breakdown.setTotalSellFare(getTotalSellingFare(breakdown));		
+		breakdown.setTotalCharge(getTotalCharge(input, breakdown));
+		
+		/*
+		**txtRefFare = Base Amount + Total Tax(es)
+		
+		If txtDeclineFare < ((Total Sell Fare - Total Discount) + Total Tax(es)) Then
 			txtLowFare = txtDeclineFare
 			txtLowFareCarrier = txtDeclineAirline
 		Else
-			txtLowFare = (Total Fare - Discount Amount) + Total Taxes
+			txtLowFare = (Total Sell Fare - Total Discount) + Total Tax(es)
 			txtLowFareCarrier = cmbPlatCarrier.Text
-		End If
+		End If			
 		*/
 		return new FeesBreakdown();
 	}
 	
 	private AirlineRule getAirlineRule(String platCarrier) {
-		// TODO Get airline rule;
+		// TODO Get airline rule, move out to service
 		return new AirlineRule();
 	}
 
+	//TODO Spell out commission
 	public BigDecimal getTotalAirCom(TransactionFeesInput input) {
 		return safeValue(input.getBaseFare())
 					.add(safeValue(input.getYqTax()))
