@@ -14,7 +14,7 @@ public class FullFareCalculatorTest {
 	private FullFareCalculator fullFareCalculator = new FullFareCalculator();
 
 	@Test
-	public void getMfFeeShouldReturnNotNull() {
+	public void getTotalFeeShouldReturnNotNull() {
 		BigDecimal baseFare = new BigDecimal(1);
 		BigDecimal totalTaxes = new BigDecimal(1);
 
