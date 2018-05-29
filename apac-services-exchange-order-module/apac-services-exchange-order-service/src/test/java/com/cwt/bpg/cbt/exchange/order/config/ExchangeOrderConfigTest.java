@@ -22,7 +22,7 @@ import com.cwt.bpg.cbt.exchange.order.calculator.tf.GrossFareCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.tf.NettFareCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.tf.WithVatCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.tf.RebateCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.TransactionFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.tf.FeeCalculator;
 
 public class ExchangeOrderConfigTest {
 
@@ -61,7 +61,7 @@ public class ExchangeOrderConfigTest {
 	@Test
 	public void tfCalculator() {
 		assertThat(config.tfCalculator(),
-				is(instanceOf(TransactionFeeCalculator.class)));
+				is(instanceOf(FeeCalculator.class)));
 	}
 	
 	@Test

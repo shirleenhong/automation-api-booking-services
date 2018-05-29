@@ -1,5 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
-public class BaseAndYqCalculator extends TransactionFeeCalculator {
+public class BaseAndYqCalculator extends FeeCalculator {
 
 }

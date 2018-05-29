@@ -1,5 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
-public class GrossFareCalculator extends TransactionFeeCalculator {
+public class GrossFareCalculator extends FeeCalculator {
 
 }

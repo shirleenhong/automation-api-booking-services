@@ -2,19 +2,30 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import java.math.BigDecimal;
 
-public class RebateCalculator extends TransactionFeeCalculator {
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
 
-    public BigDecimal getMfOnTf() {
+public class RebateCalculator extends FeeCalculator {
+
+	@Override
+    public BigDecimal getMfOnTf(int tripType, 
+			TransactionFeesInput input, 
+			BigDecimal totalGstOnTf) {
         return null;
     }
 
+	@Override
     public Boolean getDdlFeeApply() {
         return null;
     }
 
-    public BigDecimal getTotalCharge(BigDecimal totalSellFare, BigDecimal totalDiscount,
-                                     BigDecimal totalGst, BigDecimal totalMerchantFee, BigDecimal fee, BigDecimal totalTaxes) {
-        return safeValue(totalSellFare).subtract(safeValue(totalDiscount)).add(safeValue(totalGst))
-                .add(safeValue(totalMerchantFee)).add(safeValue(fee)).add(safeValue(totalTaxes));
+    @Override
+    public BigDecimal getTotalCharge(
+    		TransactionFeesInput input,
+			TransactionFeesBreakdown breakdown) {
+    	
+        return safeValue(breakdown.getTotalSellFare())
+        		.add(safeValue(input.getFee()))
+				.add(safeValue(breakdown.getTotalTaxes()));
     }
 }

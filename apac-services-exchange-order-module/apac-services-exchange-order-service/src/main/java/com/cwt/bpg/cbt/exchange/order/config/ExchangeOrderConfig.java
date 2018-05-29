@@ -57,57 +57,57 @@ public class ExchangeOrderConfig {
 	}
 	
 	@Bean(name = "tfCalculator")
-	public TransactionFeeCalculator tfCalculator() {
-		return new TransactionFeeCalculator();
+	public FeeCalculator tfCalculator() {
+		return new FeeCalculator();
 	}
 
 	@Bean(name = "tfFullFareCalculator")
-	public TransactionFeeCalculator tfFullFareCalculator() {
+	public FeeCalculator tfFullFareCalculator() {
 		return new FullFareCalculator();
 	}
 
 	@Bean(name = "tfNettFareCalculator")
-	public TransactionFeeCalculator tfNettFareCalculator() {
+	public FeeCalculator tfNettFareCalculator() {
 		return new NettFareCalculator();
 	}
 
 	@Bean(name = "tfGrossFareCalculator")
-	public TransactionFeeCalculator tfGrossFareCalculator() {
+	public FeeCalculator tfGrossFareCalculator() {
 		return new GrossFareCalculator();
 	}
 
 	@Bean(name = "tfFareCalculator")
-	public TransactionFeeCalculator tfFareCalculator() {
+	public FeeCalculator tfFareCalculator() {
 		return new FareCalculator();
 	}
 
 	@Bean(name = "tfBasicCalculator")
-	public TransactionFeeCalculator tfBasicCalculator() {
+	public FeeCalculator tfBasicCalculator() {
 		return new BasicCalculator();
 	}
 
 	@Bean(name = "noFeeCalculator")
-	public TransactionFeeCalculator noFeeCalculator() {
+	public FeeCalculator noFeeCalculator() {
 		return new NoFeeCalculator();
 	}
 
 	@Bean(name = "tfPlusVatCalculator")
-	public TransactionFeeCalculator tfPlusVatCalculator() {
+	public FeeCalculator tfPlusVatCalculator() {
 		return new WithVatCalculator();
 	}
 
 	@Bean(name = "tfRebateCalculator")
-	public TransactionFeeCalculator tfRebateCalculator() {
+	public FeeCalculator tfRebateCalculator() {
 		return new RebateCalculator();
 	}
 
 	@Bean(name = "noFeeWithDiscountCalculator")
-	public TransactionFeeCalculator noFeeWithDiscountCalculator() {
+	public FeeCalculator noFeeWithDiscountCalculator() {
 		return new NoFeeWithDiscountCalculator();
 	}
 
 	@Bean(name = "tfBaseAndYqCalculator")
-	public TransactionFeeCalculator tfBaseAndYqCalculator() {
+	public FeeCalculator tfBaseAndYqCalculator() {
 		return new BaseAndYqCalculator();
 	}
 }
