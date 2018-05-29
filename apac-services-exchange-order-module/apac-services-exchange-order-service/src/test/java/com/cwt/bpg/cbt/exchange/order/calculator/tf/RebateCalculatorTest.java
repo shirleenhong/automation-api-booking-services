@@ -14,7 +14,7 @@ public class RebateCalculatorTest {
     private RebateCalculator rebateCalc = new RebateCalculator();
 
     @Test
-    public void getIntMfFeeTFShouldReturnNull() {
+    public void getMfOnTfShouldReturnNull() {
         assertNull(rebateCalc.getMfOnTf(0, null, BigDecimal.ZERO));
     }
 

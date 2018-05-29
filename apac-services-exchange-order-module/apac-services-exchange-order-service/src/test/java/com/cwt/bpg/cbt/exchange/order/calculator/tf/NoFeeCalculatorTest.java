@@ -29,13 +29,13 @@ public class NoFeeCalculatorTest {
     }
 
     @Test
-    public void getMfFeeShouldReturnNotNull() {
+    public void getMerchantFeeShouldReturnNotNull() {
     	assertNotNull(noFeeCalc.getMerchantFee(
     			new TransactionFeesInput(), new TransactionFeesBreakdown()));
     }
 
     @Test
-    public void getMfFeeTfShouldReturnNull() {
+    public void getMfOnTfShouldReturnNull() {
         assertNull(noFeeCalc.getMfOnTf(0, null, BigDecimal.ZERO));
     }
 
