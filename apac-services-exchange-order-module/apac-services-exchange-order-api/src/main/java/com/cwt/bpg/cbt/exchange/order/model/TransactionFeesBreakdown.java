@@ -6,16 +6,16 @@ public class TransactionFeesBreakdown extends FeesBreakdown {
 
 	private static final long serialVersionUID = 3942100881048994637L;
 
-	private Double returnableOrPercent;
+	private Double overheadPercent;
 	private Double clientDiscountPercent;
-	private Double vatPercent;
+	private Double gstPercent;
 	private Double ot1Percent;
 	private Double ot2Percent;
 	private Double merchantFeePercent;
 	private Double subMerchantFeePercent;
 	private BigDecimal baseAmount;
 	private BigDecimal totalIataCommission;
-	private BigDecimal totalReturnableOr;
+	private BigDecimal totalOverheadCommission;
 	private BigDecimal totalDiscount;
 	private BigDecimal totalMarkup;
 	private BigDecimal totalSellFare;
@@ -23,15 +23,15 @@ public class TransactionFeesBreakdown extends FeesBreakdown {
 	private BigDecimal totalMerchantFee;
 	private BigDecimal totalSellingFare;
 	private BigDecimal totalTaxes;
-	private BigDecimal merchantFeeOnTF;
+	private BigDecimal merchantFeeOnTf;
 	private BigDecimal totalCharge;
 
-	public Double getReturnableOrPercent() {
-		return returnableOrPercent;
+	public Double getOverheadPercent() {
+		return overheadPercent;
 	}
 
-	public void setReturnableOrPercent(Double returnableOrPercent) {
-		this.returnableOrPercent = returnableOrPercent;
+	public void setOverheadPercent(Double percent) {
+		this.overheadPercent = percent;
 	}
 
 	public Double getClientDiscountPercent() {
@@ -42,12 +42,12 @@ public class TransactionFeesBreakdown extends FeesBreakdown {
 		this.clientDiscountPercent = clientDiscountPercent;
 	}
 
-	public Double getVatPercent() {
-		return vatPercent;
+	public Double getGsttPercent() {
+		return gstPercent;
 	}
 
 	public void setVatPercent(Double vatPercent) {
-		this.vatPercent = vatPercent;
+		this.gstPercent = vatPercent;
 	}
 
 	public Double getOt1Percent() {
@@ -98,12 +98,12 @@ public class TransactionFeesBreakdown extends FeesBreakdown {
 		this.totalIataCommission = totalIataCommission;
 	}
 
-	public BigDecimal getTotalReturnableOr() {
-		return totalReturnableOr;
+	public BigDecimal getTotalOverheadCommission() {
+		return totalOverheadCommission;
 	}
 
-	public void setTotalReturnableOr(BigDecimal totalReturnableOr) {
-		this.totalReturnableOr = totalReturnableOr;
+	public void setTotalOverheadCommission(BigDecimal commission) {
+		this.totalOverheadCommission = commission;
 	}
 
 	public BigDecimal getTotalDiscount() {
@@ -154,12 +154,12 @@ public class TransactionFeesBreakdown extends FeesBreakdown {
 		this.totalTaxes = totalTaxes;
 	}
 
-	public BigDecimal getMerchantFeeOnTF() {
-		return merchantFeeOnTF;
+	public BigDecimal getMerchantFeeOnTf() {
+		return merchantFeeOnTf;
 	}
 
-	public void setMerchantFeeOnTF(BigDecimal merchantFeeOnTF) {
-		this.merchantFeeOnTF = merchantFeeOnTF;
+	public void setMerchantFeeOnTf(BigDecimal merchantFeeOnTF) {
+		this.merchantFeeOnTf = merchantFeeOnTF;
 	}
 
 	public BigDecimal getTotalCharge() {

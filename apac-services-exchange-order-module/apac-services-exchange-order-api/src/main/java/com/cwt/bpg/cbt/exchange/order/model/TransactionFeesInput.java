@@ -20,7 +20,7 @@ public class TransactionFeesInput extends FeesInput {
 	private String platCarrier;
 	private boolean gstEnabled;
 	private boolean commissionEnabled;
-	private boolean orCommissionEnabled;
+	private boolean overheadCommissionEnabled;
 	private boolean markupEnabled;
 	private boolean discountEnabled;
 	
@@ -130,12 +130,12 @@ public class TransactionFeesInput extends FeesInput {
 		this.commissionEnabled = commissionEnabled;
 	}
 
-	public boolean isOrCommissionEnabled() {
-		return orCommissionEnabled;
+	public boolean isOverheadCommissionEnabled() {
+		return overheadCommissionEnabled;
 	}
 
-	public void setOrCommissionEnabled(boolean orCommissionEnabled) {
-		this.orCommissionEnabled = orCommissionEnabled;
+	public void setOverheadCommissionEnabled(boolean commissionEnabled) {
+		this.overheadCommissionEnabled = commissionEnabled;
 	}
 
 	public boolean isMarkupEnabled() {

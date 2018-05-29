@@ -9,7 +9,7 @@ public class NettFareCalculator extends FeeCalculator {
 	public BigDecimal getTotalFee(TransactionFeesInput input, TransactionFeesBreakdown breakdown) {
 
 		return safeValue(input.getBaseFare()).subtract(safeValue(breakdown.getTotalIataCommission()))
-				.subtract(safeValue(breakdown.getTotalReturnableOr()));
+				.subtract(safeValue(breakdown.getTotalOverheadCommission()));
 
 	}
 }

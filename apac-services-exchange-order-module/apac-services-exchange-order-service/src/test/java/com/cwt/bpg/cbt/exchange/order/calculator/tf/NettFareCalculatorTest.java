@@ -38,7 +38,7 @@ public class NettFareCalculatorTest {
 	public void shouldGetTotalFeeValidParams() {
 		input.setBaseFare(baseFare);
 		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setTotalReturnableOr(returnableOr);
+		breakdown.setTotalOverheadCommission(returnableOr);
 		
 		assertNotNull(netFareCalc.getTotalFee(input, breakdown));
 
@@ -48,7 +48,7 @@ public class NettFareCalculatorTest {
 	public void shouldGetTotalFeeDifference() {
 		input.setBaseFare(baseFare);
 		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setTotalReturnableOr(returnableOr);
+		breakdown.setTotalOverheadCommission(returnableOr);
 		
 		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown);
 		assertEquals(expectedPositiveValue, actualTotalFee);
@@ -58,7 +58,7 @@ public class NettFareCalculatorTest {
 	public void shouldGetTotalFeeNullValues() {
 		input.setBaseFare(null);
 		breakdown.setTotalIataCommission(null);
-		breakdown.setTotalReturnableOr(null);
+		breakdown.setTotalOverheadCommission(null);
 		
 		assertNotNull(netFareCalc.getTotalFee(input, breakdown));
 	}
@@ -67,7 +67,7 @@ public class NettFareCalculatorTest {
 	public void shouldGetTotalFeeNegativeDiff() {
 		input.setBaseFare(totalIataCommission);
 		breakdown.setTotalIataCommission(baseFare);
-		breakdown.setTotalReturnableOr(returnableOr);
+		breakdown.setTotalOverheadCommission(returnableOr);
 		
 		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown);
 		assertEquals(expectedNegativeValue, actualTotalFee);

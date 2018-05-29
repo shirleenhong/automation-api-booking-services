@@ -15,7 +15,7 @@ public class NoFeeCalculator extends FeeCalculator {
     }
 
 	@Override
-    public BigDecimal getTotalOrCom( 
+    public BigDecimal getTotalOverheadCommission( 
 			TransactionFeesInput input) {
         return null;
     }

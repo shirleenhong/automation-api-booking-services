@@ -37,11 +37,11 @@ public class FeeCalculator extends CommonCalculator {
 		}
 				
 		if(input.isCommissionEnabled()) {
-			breakdown.setTotalIataCommission(getTotalAirCom(input));
+			breakdown.setTotalIataCommission(getTotalAirCommission(input));
 		} 
 		
-		if(input.isOrCommissionEnabled()) {
-			breakdown.setTotalReturnableOr(getTotalOrCom(input));
+		if(input.isOverheadCommissionEnabled()) {
+			breakdown.setTotalOverheadCommission(getTotalOverheadCommission(input));
 		}
 		
 		if(input.isMarkupEnabled()) {
@@ -83,7 +83,7 @@ public class FeeCalculator extends CommonCalculator {
 		breakdown.setTotalMerchantFee(getMerchantFee(input, breakdown));
 		
 		BigDecimal totalGstOnTf = null; // ??
-		breakdown.setMerchantFeeOnTF(getMfOnTf(input, totalGstOnTf));
+		breakdown.setMerchantFeeOnTf(getMfOnTf(input, totalGstOnTf));
 		breakdown.setTotalSellFare(getTotalSellingFare(breakdown));		
 		breakdown.setTotalCharge(getTotalCharge(input, breakdown));
 		
@@ -107,7 +107,7 @@ public class FeeCalculator extends CommonCalculator {
 	}
 
 	//TODO Spell out commission
-	public BigDecimal getTotalAirCom(TransactionFeesInput input) {
+	public BigDecimal getTotalAirCommission(TransactionFeesInput input) {
 		return safeValue(input.getBaseFare())
 					.add(safeValue(input.getYqTax()))
 					.add(safeValue(input.getAirlineCommission()));
@@ -126,7 +126,7 @@ public class FeeCalculator extends CommonCalculator {
 				breakdown.getClientDiscountPercent());
 		
 		if(TripTypes.isInternational(input.getTripType())) {
-			return commissionAmount.add(safeValue(breakdown.getTotalReturnableOr()));
+			return commissionAmount.add(safeValue(breakdown.getTotalOverheadCommission()));
 		}
 		
 		return commissionAmount;
@@ -136,7 +136,7 @@ public class FeeCalculator extends CommonCalculator {
 		return safeValue(input.getBaseFare());
 	}
 	
-	public BigDecimal getTotalOrCom(TransactionFeesInput input) {
+	public BigDecimal getTotalOverheadCommission(TransactionFeesInput input) {
 		
 		if(TripTypes.isInternational(input.getTripType())) {
 			calculatePercentage(calculatePercentage(
@@ -205,7 +205,7 @@ public class FeeCalculator extends CommonCalculator {
 			TransactionFeesBreakdown breakdown) {
 		
 		return safeValue(breakdown.getTotalSellFare())
-				.subtract(safeValue(breakdown.getMerchantFeeOnTF()))
+				.subtract(safeValue(breakdown.getMerchantFeeOnTf()))
 				.add(safeValue(input.getFee()))
 				.add(safeValue(breakdown.getTotalTaxes()));	
 	}

@@ -20,7 +20,7 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getTotalOrComShouldReturnNull() {
-        assertNull(noFeeCalc.getTotalOrCom(null));
+        assertNull(noFeeCalc.getTotalOverheadCommission(null));
     }
 
     @Test
