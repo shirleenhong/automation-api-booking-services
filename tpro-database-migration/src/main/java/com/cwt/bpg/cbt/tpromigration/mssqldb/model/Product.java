@@ -7,7 +7,7 @@ public class Product {
 
 	public static final String COLLECTION = "_productCodes";
 	
-	private List<Vendor> vendors = new ArrayList<Vendor>();
+	private List<Vendor> vendors = new ArrayList<>();
 	
 	private String countryCode;
 	
@@ -15,7 +15,7 @@ public class Product {
 
 	private String description;
 
-	private Boolean enableCCFOP;
+	private Boolean enableCcfop;
 
 	private Boolean fullComm;
 
@@ -30,6 +30,32 @@ public class Product {
 	private String tktPrefix;
 
 	private String type;
+
+	private Integer number;
+
+	private String name;
+
+	private String gdsCode;
+
+	private Integer ot1;
+
+	private Integer ot2;
+
+	private Boolean requireCdr;
+
+	private Boolean requireTicket;
+
+	private Boolean suppressMI;
+
+	private Double feeCode;
+
+	private String gSTFormula;
+
+	private Boolean appMF;
+
+	private Boolean overridePC;
+
+	private Boolean hotelFee;
 
 	public String getCountryCode() {
 		return countryCode;
@@ -55,12 +81,12 @@ public class Product {
 		this.description = description;
 	}
 
-	public Boolean getEnableCCFOP() {
-		return this.enableCCFOP;
+	public Boolean getEnableCcfop() {
+		return this.enableCcfop;
 	}
 
-	public void setEnableCCFOP(Boolean enableCCFOP) {
-		this.enableCCFOP = enableCCFOP;
+	public void setEnableCcfop(Boolean enableCcfop) {
+		this.enableCcfop = enableCcfop;
 	}
 
 	public Boolean getFullComm() {
@@ -126,7 +152,110 @@ public class Product {
 	public void setVendors(List<Vendor> vendors) {
 		this.vendors = vendors;
 	}
-	
-	
 
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getGdsCode() {
+		return gdsCode;
+	}
+
+	public void setGdsCode(String gdsCode) {
+		this.gdsCode = gdsCode;
+	}
+
+  public Boolean getRequireCdr() {
+		return requireCdr;
+	}
+
+	public void setRequireCdr(Boolean requireCdr) {
+		this.requireCdr = requireCdr;
+	}
+
+	public Boolean getRequireTicket() {
+		return requireTicket;
+	}
+
+	public void setRequireTicket(Boolean requireTicket) {
+		this.requireTicket = requireTicket;
+	}
+
+	public Boolean getSuppressMI() {
+		return suppressMI;
+	}
+
+	public void setSuppressMI(Boolean suppressMI) {
+		this.suppressMI = suppressMI;
+	}
+
+	public Double getFeeCode() {
+		return feeCode;
+	}
+
+	public void setFeeCode(Double feeCode) {
+		this.feeCode = feeCode;
+	}
+
+	public String getgSTFormula() {
+		return gSTFormula;
+	}
+
+	public void setgSTFormula(String gSTFormula) {
+		this.gSTFormula = gSTFormula;
+	}
+
+	public Boolean getAppMF() {
+		return appMF;
+	}
+
+	public void setAppMF(Boolean appMF) {
+		this.appMF = appMF;
+	}
+
+	public Boolean getOverridePC() {
+		return overridePC;
+	}
+
+	public void setOverridePC(Boolean overridePC) {
+		this.overridePC = overridePC;
+	}
+
+	public Boolean getHotelFee() {
+		return hotelFee;
+	}
+
+	public void setHotelFee(Boolean hotelFee) {
+		this.hotelFee = hotelFee;
+	}
+
+	public Integer getOt1() {
+		return ot1;
+	}
+
+	public void setOt1(Integer ot1) {
+		this.ot1 = ot1;
+	}
+
+	public Integer getOt2() {
+		return ot2;
+	}
+
+	public void setOt2(Integer ot2) {
+		this.ot2 = ot2;
+	}
+	
+	
 }

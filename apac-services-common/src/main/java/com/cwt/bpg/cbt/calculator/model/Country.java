@@ -5,7 +5,8 @@ public enum Country {
 	HONG_KONG("HK"),
 	SINGAPORE("SG"),
 	AUSTRALIA("AU"),
-	NEW_ZEALAND("NZ");
+	NEW_ZEALAND("NZ"),
+	INDIA("IN");
 	
 	private final String code;
 

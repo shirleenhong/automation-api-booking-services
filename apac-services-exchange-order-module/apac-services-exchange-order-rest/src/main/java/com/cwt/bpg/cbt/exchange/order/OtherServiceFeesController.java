@@ -35,6 +35,16 @@ public class OtherServiceFeesController {
 
 		return new ResponseEntity<>((MiscFeesBreakdown) service.calculateMiscFee(input), HttpStatus.OK);
 	}
+	
+	@PostMapping(path = "/non-air-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Computes non air fees.")
+	public ResponseEntity<MiscFeesBreakdown> computeNonAirFee(
+			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") InMiscFeesInput input) {
+
+		return new ResponseEntity<>((MiscFeesBreakdown) service.calculateNonAirFee(input), HttpStatus.OK);
+	}
 
 	@PostMapping(path = "/air-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })

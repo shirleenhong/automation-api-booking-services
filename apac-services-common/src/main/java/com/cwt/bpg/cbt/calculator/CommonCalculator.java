@@ -9,7 +9,7 @@ public class CommonCalculator {
 		return value == null ? BigDecimal.ZERO : value;
 	}
 
-	private double safeValue(Double value) {
+	protected double safeValue(Double value) {
 		return value == null ? 0D : value;
 	}
 
@@ -30,6 +30,13 @@ public class CommonCalculator {
 
 	protected BigDecimal percentDecimal(Double value) {
 		return BigDecimal.valueOf(safeValue(value) * 0.01);
+	}
+	
+	protected int safeValue(Integer value) {
+		if (value == null) {
+			return 0;
+		}
+		return value;
 	}
 
 }

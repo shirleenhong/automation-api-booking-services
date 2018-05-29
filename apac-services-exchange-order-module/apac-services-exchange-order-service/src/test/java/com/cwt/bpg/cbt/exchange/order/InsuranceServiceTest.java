@@ -34,7 +34,7 @@ public class InsuranceServiceTest {
 	public void canGetAllInsuranceType() {
 		
 		when(insuranceRepository.getAll()).thenReturn(new ArrayList<>());
-		List<Insurance> insuranceList = service.getInsuranceList();
+		List<Insurance> insuranceList = service.getAll();
 		
 		verify(insuranceRepository, times(1)).getAll();
 		assertNotNull(insuranceList);

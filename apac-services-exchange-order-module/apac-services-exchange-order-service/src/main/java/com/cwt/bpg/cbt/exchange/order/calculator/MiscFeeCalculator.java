@@ -58,7 +58,7 @@ public class MiscFeeCalculator extends CommonCalculator implements Calculator {
 		result.setNettCostGst(nettCostGst);
 		result.setGstAmount(gstAmount);
 		result.setMerchantFee(merchantFeeAmount);
-		result.setSellingPriceInDi(sellingPriceInDi);
+		result.setTotalSellingPrice(sellingPriceInDi);
 		result.setCommission(commission);
 
 		return result;

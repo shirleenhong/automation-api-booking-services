@@ -1,11 +1,11 @@
 package com.cwt.bpg.cbt.tpromigration.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
+import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.*;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.*;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Currency;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,25 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
-import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirlineRuleDAOImpl;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientDAOImpl;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientMerchantFeeDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.CurrencyDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductCodeDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirlineRule;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Bank;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.BankVendor;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientMerchantFee;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Currency;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Product;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductMerchantFee;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MigrationService {
@@ -45,10 +28,10 @@ public class MigrationService {
 	private DBObjectMapper dBObjectMapper;
 
 	@Autowired
-	private VendorDAO vendorDAO;
+	private VendorDAOFactory vendorDAOFactory;
 
 	@Autowired
-	private ProductCodeDAO productCodeDAO;
+	private ProductDAOFactory productDAOFactory;
 
 	@Autowired
 	private ClientMerchantFeeDAO clientMerchantFeeDAO;
@@ -62,6 +45,9 @@ public class MigrationService {
 	@Autowired
 	private ClientDAOImpl clientDAO;
 
+	@Autowired
+	private AirportDAO airportDAO;
+
 	@Value("${com.cwt.tpromigration.mongodb.dbuser}")
 	private String dbUser;
 
@@ -72,35 +58,47 @@ public class MigrationService {
 	private String dbName;
 
 	@SuppressWarnings("unchecked")
-	public void startMigration() throws JsonProcessingException {
+	public void migrateProductList() throws JsonProcessingException {
 
 		LOGGER.info("start migration...");
 
-		List<Vendor> vendorList = vendorDAO.listVendors();
-		List<Product> products = productCodeDAO.listProductCodes();
-
+		List<Vendor> vendorList = vendorDAOFactory.getVendorDAO().listVendors();
+		List<Product> products = productDAOFactory.getProductCodeDAO().listProductCodes();
+		Map<String, Product> productsMap = products.stream().collect(Collectors.toMap(Product::getProductCode, product -> product));
 		String countryCode = System.getProperty("spring.profiles.default");
 
+		vendorList.forEach(vendor -> {
+			vendor.setCountryCode(countryCode);
+			List<String> productCodes = vendor.getProductCodes();
+
+			LOGGER.info("vendor:{}", vendor);
+			LOGGER.info("vendor.getProductCodes():" + productCodes);
+
+			productCodes.forEach(productCode -> {
+				if(productsMap.get(productCode)!=null)productsMap.get(productCode).getVendors().add(vendor);
+			});
+
+			vendor.setProductCodes(null);
+		});
+
 		ProductList productList = new ProductList();
-
-		for (Product product : products) {
-			product.setCountryCode(countryCode);
-			for (Vendor vendor : vendorList) {
-				vendor.setCountryCode(countryCode);
-				LOGGER.info("product:{}", product);
-				LOGGER.info("vendor:{}", vendor);
-				LOGGER.info("vendor.getProductCodes():" + vendor.getProductCodes());
-				if (vendor.getProductCodes() != null
-						&& vendor.getProductCodes().contains(product.getProductCode())) {
-					product.getVendors().add(vendor);
-				}
-			}
-		}
-		productList.setProducts(products);
-
 		productList.setCountryCode(countryCode);
+		productList.setProducts(new ArrayList<>(productsMap.values()));
 
-		mongoDbConnection.getCollection("productList").insertOne(dBObjectMapper.mapAsDbDocument(productList));
+		mongoDbConnection.getCollection("productList").insertOne(dBObjectMapper.mapAsDbDocument(productList.getCountryCode(),productList));
+	}
+
+	@SuppressWarnings("unchecked")
+	public void migrateAirports() throws JsonProcessingException {
+		List<Airport> airports = airportDAO.getAirports();
+
+		List<Document> docs = new ArrayList<>();
+
+		for (Airport airport : airports) {
+			docs.add(dBObjectMapper.mapAsDbDocument(airport.getCode(),airport));
+		}
+
+		mongoDbConnection.getCollection(Airport.COLLECTION).insertMany(docs);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -157,11 +155,28 @@ public class MigrationService {
 		LOGGER.info("Started clients migration...");
 
 		Map<Integer, List<ProductMerchantFee>> productsMap = getProductMap(clientDAO.getProducts());
-		Map<Integer, List<BankVendor>> vendorsMap = getVendoMap(clientDAO.getVendors());
+		Map<Integer, List<CreditCardVendor>> vendorsMap = getVendoMap(clientDAO.getVendors());
 		Map<Integer, List<Bank>> banksMap = getBankMap(clientDAO.getBanks());
+		Map<Integer, Map<String, ClientPricing>> clientPricingMaps = getClientPricingMaps(clientDAO.getClientPricings());
+		Map<Integer, List<TransactionFee>> transactionFeeByPNR = getTransactionFeesMap(clientDAO.getTransactionFeeByPNR());
+		Map<Integer, List<TransactionFee>> transactionFeeByCoupon = getTransactionFeesMap(clientDAO.getTransactionFeeByCoupon());
+		Map<Integer, List<TransactionFee>> transactionFeeByTicket = getTransactionFeesMap(clientDAO.getTransactionFeeByTicket());
 		List<Client> clients = clientDAO.getClients();
+		
+		Client defaultClient = new Client();
+		defaultClient.setClientId(-1);
+		defaultClient.setApplyMfBank(false);
+		defaultClient.setApplyMfCc(false);
+		clients.add(defaultClient);
 
-		clients.addAll(updateClients(clients, productsMap, vendorsMap, banksMap));
+		updateClients(clients, 
+				productsMap, 
+				vendorsMap, 
+				banksMap, 
+				clientPricingMaps, 
+				transactionFeeByPNR, 
+				transactionFeeByCoupon, 
+				transactionFeeByTicket);
 
 		List<Document> docs = new ArrayList<>();
 		for (Client client : clients) {
@@ -173,6 +188,36 @@ public class MigrationService {
 
 		LOGGER.info("End of clients migration...");
 
+	}
+
+	private Map<Integer, List<TransactionFee>> getTransactionFeesMap(List<TransactionFee> transactionFees) {
+		Map<Integer, List<TransactionFee>> transactionFeesMap = new HashMap<>();
+		int previousGroupId = 0;
+		List<TransactionFee> groupedTransactionFees = null;
+		for (TransactionFee transactionFee: transactionFees) {
+			if(previousGroupId != transactionFee.getFeeId()) {
+				groupedTransactionFees = new ArrayList<>();
+			}
+			groupedTransactionFees.add(transactionFee);
+			previousGroupId = transactionFee.getFeeId();
+			transactionFeesMap.put(previousGroupId, groupedTransactionFees);
+		}
+		return transactionFeesMap;
+	}
+
+	private Map<Integer, Map<String, ClientPricing>> getClientPricingMaps(List<ClientPricing> clientPricings) {
+		Map<Integer, Map<String, ClientPricing>> result = new HashMap<>();
+		int previousCmpId = 0;
+		Map<String, ClientPricing> clientPricingMap = null;
+		for (ClientPricing clientPricing: clientPricings) {
+			if(previousCmpId != clientPricing.getCmpid()) {
+				clientPricingMap = new HashMap<>();
+			}
+			previousCmpId = clientPricing.getCmpid();
+			clientPricingMap.put(clientPricing.getTripType(), clientPricing);
+			result.put(previousCmpId, clientPricingMap);
+		}
+		return result;
 	}
 
 	private Map<Integer, List<ProductMerchantFee>> getProductMap(List<ProductMerchantFee> items) {
@@ -192,16 +237,16 @@ public class MigrationService {
 		return result;
 	}
 
-	private Map<Integer, List<BankVendor>> getVendoMap(List<BankVendor> items) {
-		Map<Integer, List<BankVendor>> result = new HashMap<>();
+	private Map<Integer, List<CreditCardVendor>> getVendoMap(List<CreditCardVendor> items) {
+		Map<Integer, List<CreditCardVendor>> result = new HashMap<>();
 
-		for (BankVendor item : items) {
+		for (CreditCardVendor item : items) {
 
 			if (result.containsKey(item.getClientId())) {
 				result.get(item.getClientId()).add(item);
 			}
 			else {
-				List<BankVendor> list = new ArrayList<>();
+				List<CreditCardVendor> list = new ArrayList<>();
 				list.add(item);
 				result.put(item.getClientId(), list);
 			}
@@ -228,23 +273,41 @@ public class MigrationService {
 
 	private Collection<? extends Client> updateClients(
 			List<Client> clients, Map<Integer, List<ProductMerchantFee>> productsMap,
-			Map<Integer, List<BankVendor>> vendorsMap, 
-			Map<Integer, List<Bank>> banksMap) {
+			Map<Integer, List<CreditCardVendor>> vendorsMap, 
+			Map<Integer, List<Bank>> banksMap, Map<Integer, 
+			Map<String, ClientPricing>> clientPricingMaps, 
+			Map<Integer, List<TransactionFee>> transactionFeeByPNR, 
+			Map<Integer, List<TransactionFee>> transactionFeeByCoupon, 
+			Map<Integer, List<TransactionFee>> transactionFeeByTicket) {
 		
-		
-		for(Client client : clients) {
+		for(Client client : clients) {		
 			
 			if(productsMap.containsKey(client.getClientId()) 
 			|| vendorsMap.containsKey(client.getClientId()) 
 			|| banksMap.containsKey(client.getClientId())) {
 				
-				client.setProducts(productsMap.get(client.getClientId()));
-				client.setVendors(vendorsMap.get(client.getClientId()));
-				client.setBanks(banksMap.get(client.getClientId()));
-				
-				clients.add(client);
+				client.setMfProducts(productsMap.get(client.getClientId()));
+				client.setMfCcs(vendorsMap.get(client.getClientId()));
+				client.setMfBanks(banksMap.get(client.getClientId()));
 			}
-				
+			List<ClientPricing> clientPricings = new ArrayList<>();
+			if(clientPricingMaps.containsKey(client.getCmpid())) {
+				Map<String, ClientPricing> clientPricingMap = clientPricingMaps.get(client.getCmpid());
+				Set test = clientPricingMap.keySet();
+				for(String tripType: clientPricingMap.keySet()) {
+					ClientPricing clientPricing = clientPricingMap.get(tripType);
+					String feeOption = clientPricing.getFeeOption();
+					if("P".equals(feeOption)) {
+						clientPricing.setTransactionFees(transactionFeeByPNR.get(clientPricing.getGroup()));
+					}else if("C".equals(feeOption)) {
+						clientPricing.setTransactionFees(transactionFeeByCoupon.get(clientPricing.getGroup()));
+					}else if("T".equals(feeOption)) {
+						clientPricing.setTransactionFees(transactionFeeByTicket.get(clientPricing.getGroup()));
+					}
+					clientPricings.add(clientPricing);
+				}
+				client.setClientPricings(clientPricings);
+			}
 		}
 		
 		return clients;

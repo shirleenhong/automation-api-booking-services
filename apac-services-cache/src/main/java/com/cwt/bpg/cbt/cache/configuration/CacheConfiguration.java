@@ -20,10 +20,10 @@ public class CacheConfiguration {
 
 	private static final String[] cacheNames = new String[] { "products",
 			"merchant-fee",
-			"currency-rounding-rule",
 			"insurance-types",
 			"airline-rules",
-			"client-pricing"};
+			"clients",
+			"airports"};
 
 	@Bean
 	public CacheManager cacheManager() {
@@ -33,10 +33,10 @@ public class CacheConfiguration {
 	@CacheEvict(allEntries = true,
 			cacheNames = { "products",
 					"merchant-fee",
-					"currency-rounding-rule",
 					"insurance-types",
 					"airline-rules",
-					"client-pricing"})
+					"clients",
+					"airports"})
 	@Scheduled(cron = "0 0 0,12 * * *")
 	public void evictAllCache() {
 		logger.info("Cache Evicted!");

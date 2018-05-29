@@ -13,13 +13,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.WriteResult;
 
-class CommonRepository<T> {
+/**
+ * T ->	class type or class entity used in morphia
+ * <p> DataType -> data type of unique key in db
+ * 
+ * @param <T> 
+ * @param <DataType>
+ */
+class CommonRepository<T, DataType> {
 
+	//TODO Adjust to support get by Id and get by field?
 	@Autowired
-	private MorphiaComponent morphia;
+	protected MorphiaComponent morphia;
 
-	final private Class<T> typeClass;
-	final private String keyColumn;
+	private final Class<T> typeClass;
+	private final String keyColumn;
 
 	CommonRepository(Class<T> typeClass, String keyColumn) {
 		this.typeClass = typeClass;
@@ -31,9 +39,9 @@ class CommonRepository<T> {
 	}
 
 	T put(T object) {
-		final String keyValue = getKeyValue(object);
+		final DataType keyValue = getKeyValue(object);
 
-		if (!keyValue.isEmpty())
+		if (keyValue != null)
         {
             remove(keyValue);
 
@@ -46,7 +54,7 @@ class CommonRepository<T> {
 		return object;
 	}
 
-	String remove(String keyValue) {
+	String remove(DataType keyValue) {
 		final Datastore datastore = morphia.getDatastore();
 		final Query<T> query = datastore.createQuery(typeClass).field(keyColumn).equal(keyValue);
 
@@ -57,12 +65,13 @@ class CommonRepository<T> {
 		return delete.toString();
 	}
 
-	private String getKeyValue(T object) {
-		String keyValue = "";
+	@SuppressWarnings("unchecked")
+	private DataType getKeyValue(T object) {
+		DataType keyValue = null;
 		try {
 			Field keyField = typeClass.getDeclaredField(keyColumn);
 			keyField.setAccessible(true);
-			keyValue = (String) keyField.get(object);
+			keyValue = (DataType) keyField.get(object);
 		}
 		catch (NoSuchFieldException | IllegalAccessException e) {
 			LoggerFactory.getLogger(typeClass).error("Unable to get value of key column.", e);

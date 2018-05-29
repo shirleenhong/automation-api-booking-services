@@ -42,7 +42,7 @@ public class AirlineRuleDAOImpl {
 			while (rs.next()) {
 				AirlineRule airlineRule = new AirlineRule();
 				airlineRule.setCode(rs.getString("AirlineCode"));
-				airlineRule.setIncludeYQComm(rs.getBoolean("IncludeYQComm"));
+				airlineRule.setIncludeYqComm(rs.getBoolean("IncludeYQComm"));
 				airlineRuleList.add(airlineRule);
 			}
 		}

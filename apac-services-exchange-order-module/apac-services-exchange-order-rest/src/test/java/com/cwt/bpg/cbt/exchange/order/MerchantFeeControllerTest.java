@@ -51,11 +51,11 @@ public class MerchantFeeControllerTest {
 	}
 	
 	@Test
-	public void canGetCurrency() {
-		CurrencyCodeRoundRule roundingRule = new CurrencyCodeRoundRule();
-		Mockito.when(service.getRoundingRule(Mockito.anyString())).thenReturn(roundingRule);
+	public void canRemoveMerchantFee() {
+		MerchantFee merchantFee = new MerchantFee();
+		Mockito.when(service.remove(merchantFee)).thenReturn(merchantFee);
 		
-		ResponseEntity<CurrencyCodeRoundRule> result = controller.getCurrency("SGD");
+		ResponseEntity<MerchantFee> result = controller.removeMerchantFee(merchantFee);
 
 		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());

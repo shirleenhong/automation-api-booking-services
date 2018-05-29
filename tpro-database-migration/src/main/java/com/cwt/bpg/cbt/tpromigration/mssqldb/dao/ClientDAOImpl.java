@@ -5,19 +5,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Bank;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.BankVendor;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientPricing;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.CreditCardVendor;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductMerchantFee;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.TransactionFee;
 
 @Repository
 public class ClientDAOImpl {
@@ -32,10 +36,13 @@ public class ClientDAOImpl {
 		List<Client> clients = new ArrayList<>();
 
 		String sql = "select \n" + 
-				"    clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax\n" + 
+				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax,\n" + 
+				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee,\n" + 
+				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply\n" + 
 				"from \n" + 
 				"	tblclientmaster clientmaster left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = clientmaster.clientid,  \n" + 
 				"	tblconfiguration config, \n" + 
+				"	tblAirPricingFormula airpricingformula,\n" + 
 				"	cwtstandarddata.dbo.tblcsp_linedefclientmapping clientmapping, \n" + 
 				"	cwtstandarddata.dbo.configinstances configinstance  \n" + 
 				"where clientmaster.configurationid = config.configurationid \n" + 
@@ -43,7 +50,11 @@ public class ClientDAOImpl {
 				"	and clientmasterpricing.clientid = clientmaster.clientid\n" + 
 				"	and configinstance.countrycode = 'IN'\n" + 
 				"	and clientmapping.configinstancekeyid=configinstance.keyid\n" + 
-				"group by clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax\n" + 
+				"	and airpricingformula.airpricingid=clientmasterpricing.pricingid\n" + 
+				"group by \n" + 
+				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax,\n" + 
+				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee,\n" + 
+				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply\n" + 
 				"order by clientmaster.clientid";
 
 		Connection conn = null;
@@ -62,7 +73,15 @@ public class ClientDAOImpl {
 				client.setName(rs.getString("name"));
 				client.setProfileName(rs.getString("profilename"));
 				client.setPricingId(rs.getInt("pricingid"));
+				client.setCmpid(rs.getInt("cmpid"));
 				client.setExemptTax(rs.getBoolean("exempttax"));
+				client.setApplyMfBank(rs.getBoolean("applymfbank"));
+				client.setApplyMfCc(rs.getBoolean("applymfcc"));
+				client.setStandardMfProduct(rs.getBoolean("standardmfproduct"));
+				client.setMerchantFee(rs.getDouble("merchantfee"));
+				client.setLccSameAsInt(rs.getBoolean("lccsameasint"));
+				client.setIntDdlFeeApply(rs.getString("intddlfeeapply"));
+				client.setLccDdlFeeApply(rs.getString("lccddlfeeapply"));
 				clients.add(client);
 			}
 		}
@@ -152,9 +171,9 @@ public class ClientDAOImpl {
 		return resultList;
 	}
 
-	public List<BankVendor> getVendors() {
+	public List<CreditCardVendor> getVendors() {
 		
-		List<BankVendor> resultList = new ArrayList<>();
+		List<CreditCardVendor> resultList = new ArrayList<>();
 
 		String sql = "SELECT * FROM tblMFByCC";
 
@@ -169,7 +188,7 @@ public class ClientDAOImpl {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				BankVendor item = new BankVendor();
+				CreditCardVendor item = new CreditCardVendor();
 
 				item.setClientId(rs.getInt("ClientID"));
 				item.setVendorName(rs.getString("Vendor"));
@@ -262,6 +281,233 @@ public class ClientDAOImpl {
 
 		LOGGER.info("Size of banks from mssqldb: {}", resultList.size());
 
+		return resultList;
+	}
+
+
+	public List<ClientPricing> getClientPricings() {
+
+		List<ClientPricing> resultList = new ArrayList<>();
+
+		String sql = "Select * from tblClientPricing where fieldid = 5";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			LOGGER.info("Getting client pricing from mssqldb");
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				ClientPricing clientPricing = new ClientPricing();
+				clientPricing.setCmpid(rs.getInt("cmpid"));
+				clientPricing.setGroup(rs.getInt("value"));
+				clientPricing.setTripType(rs.getString("triptype"));
+				clientPricing.setFeeOption(rs.getString("valueoption"));
+				resultList.add(clientPricing);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading client pricing, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+			}
+		}
+
+		LOGGER.info("Size of client pricing from mssqldb: {}", resultList.size());
+
+		return resultList;
+	}
+
+
+	public List<TransactionFee> getTransactionFeeByPNR() {
+
+		List<TransactionFee> resultList = new ArrayList<>();
+
+		String sql = "select feeid, territorycode, tfamount, startamount, endamount from tbltransactionfeebypnr order by transid";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			LOGGER.info("Getting transaction fees from mssqldb");
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				TransactionFee transactionFee = new TransactionFee();
+				transactionFee.setFeeId(rs.getInt("feeid"));
+				String territoryCodesStr = rs.getString("territorycode");
+				if(StringUtils.isNotBlank(territoryCodesStr)) {
+					List<String> territoryCodes = Arrays.asList(territoryCodesStr.split(";"));
+					transactionFee.setTerritoryCodes(territoryCodes);
+				}
+				transactionFee.setTfAmount(rs.getDouble("tfamount"));
+				transactionFee.setStartAmount(rs.getDouble("startamount"));
+				transactionFee.setEndAmount(rs.getDouble("endamount"));
+				resultList.add(transactionFee);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading transaction fees, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+			}
+		}
+		LOGGER.info("Size of transaction fees from mssqldb: {}", resultList.size());
+		return resultList;
+	}
+
+
+	public List<TransactionFee> getTransactionFeeByCoupon() {
+
+		List<TransactionFee> resultList = new ArrayList<>();
+
+		String sql = "select feeid, type, endcoupon, startcoupon, tfamount, threshold from tbltransactionfeebycoupon order by type desc, startcoupon asc";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			LOGGER.info("Getting transaction fees from mssqldb");
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				TransactionFee transactionFee = new TransactionFee();
+				transactionFee.setFeeId(rs.getInt("feeid"));
+				transactionFee.setType(rs.getString("type"));
+				transactionFee.setStartCoupon(rs.getDouble("startcoupon"));
+				transactionFee.setEndCoupon(rs.getDouble("endcoupon"));
+				transactionFee.setTfAmount(rs.getDouble("tfamount"));
+				transactionFee.setThreshold(rs.getDouble("threshold"));
+				resultList.add(transactionFee);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading transaction fees, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+			}
+		}
+		LOGGER.info("Size of transaction fees from mssqldb: {}", resultList.size());
+		return resultList;
+	}
+
+
+	public List<TransactionFee> getTransactionFeeByTicket() {
+
+		List<TransactionFee> resultList = new ArrayList<>();
+
+		String sql = "select feeid, territorycode, operator, tfamount, extraamount, peramount, minamount, maxamount, startamount, endamount from tbltransactionfeebyticket"; 
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			LOGGER.info("Getting transaction fees from mssqldb");
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				TransactionFee transactionFee = new TransactionFee();
+				transactionFee.setFeeId(rs.getInt("feeid"));
+				String territoryCodesStr = rs.getString("territorycode");
+				if(StringUtils.isNotBlank(territoryCodesStr)) {
+					List<String> territoryCodes = Arrays.asList(territoryCodesStr.split(";"));
+					transactionFee.setTerritoryCodes(territoryCodes);
+				}
+				transactionFee.setOperator(rs.getString("operator"));
+				transactionFee.setTfAmount(rs.getDouble("tfamount"));
+				transactionFee.setExtraAmount(rs.getDouble("extraamount"));
+				transactionFee.setPerAmount(rs.getDouble("peramount"));
+				transactionFee.setMinAmount(rs.getDouble("minamount"));
+				transactionFee.setMaxAmount(rs.getDouble("maxamount"));
+				transactionFee.setStartAmount(rs.getDouble("startamount"));
+				transactionFee.setEndAmount(rs.getDouble("endamount"));
+				resultList.add(transactionFee);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading transaction fees, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+			}
+		}
+		LOGGER.info("Size of transaction fees from mssqldb: {}", resultList.size());
 		return resultList;
 	}
 

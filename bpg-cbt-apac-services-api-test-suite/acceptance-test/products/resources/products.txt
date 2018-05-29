@@ -6,9 +6,13 @@ Resource    ../../resources/api-variables.txt
 *** Keywords ***
 Create New List
     [Arguments]    ${product_number}
+    ${all_product_list_length}    Get Length    ${all_product_list}
+    ${index}    Set Variable    ${all_product_list_length}    
     @{product_list}    Create List
-    Set Test Variable    ${product_code_${product_number}_list}    ${product_list}
+    Set Test Variable    ${${product_number}_list}    ${product_list}
+    Set Test variable    ${product_list_${index}}    ${${product_number}_list}
     Append To List    ${all_product_list}    ${product_number}
+    Set Test Variable    ${index}    
     Set Test Variable    ${all_product_list}
 
 Create Test Variables For Products And Vendors
@@ -17,21 +21,23 @@ Create Test Variables For Products And Vendors
     Set Test Variable    ${all_product_list}
     ${data_list_1}    Split String    ${${country}_data_list_1}    |
     : FOR    ${data}    IN    @{data_list_1}
-    \    ${data_item}    Split String    ${data}    ,
+    \    ${character}    Run Keyword If    "${country}"=="in"    Set Variable    _    ELSE    Set Variable    ,        
+    \    ${data_item}    Split String    ${data}    ${character}
     \    ${data_type}    Get Substring    ${data_item[0]}    0    3
     \    ${item_number}    Get Substring    ${data_item[0]}    3
     \    ${data_type}    Set Variable If    "${data_type.upper()}"=="PRO"    product    vendor
-    \    Run Keyword If    "${data_type}"=="product"    Create New List    ${item_number}
     \    Set Test Variable    ${${data_type}_code_${item_number}}    ${data_item[1]}
     ${data_list_2}    Split String    ${${country}_data_list_2}    |
     : FOR    ${data}    IN    @{data_list_2}
     \    ${data_item}    Split String    ${data}    ,
     \    ${product_number}    Get Substring    ${data_item[0]}    3
     \    ${vendor_number}    Get Substring    ${data_item[1]}    3
-    \    Append To List    ${product_code_${product_number}_list}    ${vendor_number}
-    : FOR    ${item}    IN    @{all_product_list}
-    \    Set Test Variable    ${product_code_${product_number}_list}
-    \    Log    ${product_code_${item}_list}
+    \    ${is_list_created}    Run Keyword And Return Status    Variable Should Exist    ${${product_number}_list}
+    \    Run Keyword If    "${is_list_created}"=="False"    Create New List    ${product_number}    
+    \    Append To List    ${product_list_${index}}    ${vendor_number}  
+    : FOR    ${item}    IN RANGE    0    ${index}+1
+    \    Set Test Variable    ${product_list_${item}}
+    \    Log    ${product_list_${item}}
     Set Test Variable    ${country}    ${country.upper()}
     Set Test Variable    ${all_product_list}
 
@@ -65,7 +71,7 @@ Verify Products And Vendors Are Retrieved Correctly
     : FOR    ${index}    IN RANGE    ${all_product_list_length}
     \    ${item_product_code}    Get Json Value As String    ${response.content}    $.[${index}].productCode
     \    Verify Json Value Is Correct    $[${index}].description    ${product_code_${item_product_code}}
-    \    Verify Vendors Are Retrieved Correctly    ${index}    ${product_code_${item_product_code}_list}
+    \    Verify Vendors Are Retrieved Correctly    ${index}    ${product_list_${index}}
     ${index}    Evaluate    ${index}+1
     Verify Json Element Does Not Exist    $[${index}].description
 
@@ -73,9 +79,9 @@ Verify Vendors Are Retrieved Correctly
     [Arguments]    ${index}    ${item_vendor_list}
     ${item_vendor_list_length}    Get Length    ${item_vendor_list}
     ${vendor_index}    Set Variable    0
-    : FOR    ${vendor_index}    IN RANGE    ${item_vendor_list_length}
-    \    ${item_vendor_number}    Get Json Value As String    ${response.content}    $.[${index}].vendors.[${vendor_index}].vendorNumber
-    \    Should Contain X Times    ${item_vendor_list}    ${item_vendor_number}    1
-    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].vendorName    ${vendor_code_${item_vendor_number}}
-    ${vendor_index}    Evaluate    ${vendor_index}+1
+    :FOR    ${vendor_index}    IN RANGE    ${item_vendor_list_length}
+    \    ${list_item}    Get From List    ${item_vendor_list}    ${vendor_index}
+    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].vendorNumber    ${list_item}
+    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].vendorName    ${vendor_code_${list_item}}   
+    \    ${vendor_index}    Evaluate    ${vendor_index}+1
     Verify Json Element Does Not Exist    $[${index}].vendors.[${vendor_index}].vendorName
