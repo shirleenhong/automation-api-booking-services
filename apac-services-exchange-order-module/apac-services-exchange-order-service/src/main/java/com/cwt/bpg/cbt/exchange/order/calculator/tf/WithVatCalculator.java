@@ -1,12 +1,16 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
+
 import java.math.BigDecimal;
 
-public class WithVatCalculator extends TransactionFeeCalculator {
-	public BigDecimal getTotalFee(BigDecimal baseFare, BigDecimal totalTaxes, BigDecimal totalGst,
-			BigDecimal totalAirlineCommission, BigDecimal totalReturnableOr) {
+public class WithVatCalculator extends FeeCalculator {
+	public BigDecimal getTotalFee(TransactionFeesInput input, TransactionFeesBreakdown breakdown) {
 
-		return safeValue(baseFare).add(safeValue(totalTaxes)).add(safeValue(totalGst))
-				.subtract(safeValue(totalAirlineCommission)).subtract(totalReturnableOr);
+		return safeValue(input.getBaseFare()).add(safeValue(breakdown.getTotalTaxes()))
+				.add(safeValue(breakdown.getTotalGst()))
+				.subtract(safeValue(breakdown.getTotalIataCommission()))
+				.subtract(breakdown.getTotalReturnableOr());
 	}
 }

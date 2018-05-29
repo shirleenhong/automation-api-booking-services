@@ -29,7 +29,7 @@ public class FeeCalculator extends CommonCalculator {
 			TransactionFeesBreakdown breakdown) {
 		
 		BigDecimal commissionAmount = calculatePercentage(
-					safeValue(breakdown.getTotalIATACom()), 
+					safeValue(breakdown.getTotalIataCommission()),
 				breakdown.getClientDiscountPercent());
 		
 		if(tripType == TripTypes.INT.getId()) {
