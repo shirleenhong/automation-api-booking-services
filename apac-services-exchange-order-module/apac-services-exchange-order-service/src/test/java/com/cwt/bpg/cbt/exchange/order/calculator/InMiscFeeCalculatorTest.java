@@ -52,7 +52,7 @@ public class InMiscFeeCalculatorTest {
 		input.setFopType(FOPTypes.CWT.getCode());
 
 		InProduct product = new InProduct();
-		product.setGst(6);
+		product.setGst(6D);
 		product.setOt1(3D);
 		product.setOt2(5D);
 		product.setProductCode("01");

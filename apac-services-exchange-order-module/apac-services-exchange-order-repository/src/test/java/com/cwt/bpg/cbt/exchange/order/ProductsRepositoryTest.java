@@ -46,7 +46,7 @@ public class ProductsRepositoryTest {
 
 		prodA.setProductCode("00");
 		prodA.setDescription("BSP Ticket And MPD");
-		prodA.setGst(0);
+		prodA.setGst(0D);
 		prodA.setMi(false);
 		prodA.setSortKey("00");
 		prodA.setTktNo(false);
@@ -72,7 +72,7 @@ public class ProductsRepositoryTest {
 		HkSgProduct prodB = new HkSgProduct();
 		prodB.setProductCode("01");
 		prodB.setDescription("AA SEGMENT BOOKING FEE");
-		prodB.setGst(0);
+		prodB.setGst(0D);
 		prodB.setMi(false);
 		prodB.setSortKey("01");
 		prodB.setTktNo(false);

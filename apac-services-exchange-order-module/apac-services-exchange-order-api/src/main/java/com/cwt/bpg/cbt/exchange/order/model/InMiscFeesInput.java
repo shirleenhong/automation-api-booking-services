@@ -15,6 +15,8 @@ public class InMiscFeesInput implements Serializable
 	private String countryCode;
 	
 	private boolean commissionByPercent;
+
+	@NotNull
 	private BigDecimal costAmount;
 	private Double commissionPercent;
 	private BigDecimal commission;

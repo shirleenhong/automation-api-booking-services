@@ -11,7 +11,7 @@ public class TransactionFeesInput extends FeesInput {
 	private BigDecimal airlineCommission;
 	private BigDecimal airlineOrCommission;
 	private Double returnOrCommissionPercent;
-	private Double airlineCommisionPercent;
+	private Double airlineCommissionPercent;
 	private Double merchantFeePercent;
 	private BigDecimal fee;
 
@@ -55,12 +55,12 @@ public class TransactionFeesInput extends FeesInput {
 		this.returnOrCommissionPercent = returnOrCommissionPercent;
 	}
 
-	public Double getAirlineCommisionPercent() {
-		return airlineCommisionPercent;
+	public Double getAirlineCommissionPercent() {
+		return airlineCommissionPercent;
 	}
 
-	public void setAirlineCommisionPercent(Double airlineCommisionPercent) {
-		this.airlineCommisionPercent = airlineCommisionPercent;
+	public void setAirlineCommissionPercent(Double airlineCommissionPercent) {
+		this.airlineCommissionPercent = airlineCommissionPercent;
 	}
 
 	public Double getMerchantFeePercent() {
