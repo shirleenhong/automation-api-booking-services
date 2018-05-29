@@ -14,13 +14,13 @@ public class NoFeeCalculator extends FeeCalculator {
     }
 
 	@Override
-    public BigDecimal getTotalOrCom(int tripType, 
+    public BigDecimal getTotalOrCom(int tripType,
 			TransactionFeesInput input) {
         return null;
     }
 
 	@Override
-    public BigDecimal getTotalOrCom2(int tripType, 
+    public BigDecimal getTotalOrCom2(int tripType,
 			TransactionFeesInput input) {
         return null;
     }
@@ -33,13 +33,13 @@ public class NoFeeCalculator extends FeeCalculator {
         return calculatePercentage(
         		safeValue(breakdown.getTotalSellFare())
         		.add(safeValue(breakdown.getTotalTaxes()))
-        		.add(safeValue(breakdown.getTotalGst())), 
+        		.add(safeValue(breakdown.getTotalGst())),
         			input.getMerchantFeePercent());
     }
 
 	@Override
-    public BigDecimal getMfOnTf(int tripType, 
-			TransactionFeesInput input, 
+    public BigDecimal getMfOnTf(int tripType,
+			TransactionFeesInput input,
 			BigDecimal totalGstOnTf) {
         return null;
     }
@@ -56,7 +56,7 @@ public class NoFeeCalculator extends FeeCalculator {
 
 	@Override
     public BigDecimal getTotalSellingFare(TransactionFeesBreakdown breakdown) {
-    	
+
         return safeValue(breakdown.getTotalSellFare())
     			.add(safeValue(breakdown.getTotalGst()))
     			.add(safeValue(breakdown.getTotalMerchantFee()));
@@ -66,7 +66,7 @@ public class NoFeeCalculator extends FeeCalculator {
     public BigDecimal getTotalCharge(
     		TransactionFeesInput input,
 			TransactionFeesBreakdown breakdown) {
-    	
+
         return safeValue(breakdown.getTotalSellFare())
     			.add(safeValue(breakdown.getTotalTaxes()));
     }
