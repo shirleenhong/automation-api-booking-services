@@ -37,9 +37,9 @@ public class Product {
 
 	private String gdsCode;
 
-	private Integer oT1;
+	private Integer ot1;
 
-	private Integer oT2;
+	private Integer ot2;
 
 	private Boolean requireCdr;
 
@@ -177,20 +177,20 @@ public class Product {
 		this.gdsCode = gdsCode;
 	}
 
-	public Integer getoT1() {
-		return oT1;
+	public Integer getOt1() {
+		return ot1;
 	}
 
-	public void setoT1(Integer oT1) {
-		this.oT1 = oT1;
+	public void setOt1(Integer ot1) {
+		this.ot1 = ot1;
 	}
 
-	public Integer getoT2() {
-		return oT2;
+	public Integer getOt2() {
+		return ot2;
 	}
 
-	public void setoT2(Integer oT2) {
-		this.oT2 = oT2;
+	public void setOt2(Integer ot2) {
+		this.ot2 = ot2;
 	}
 
 	public Boolean getRequireCdr() {
