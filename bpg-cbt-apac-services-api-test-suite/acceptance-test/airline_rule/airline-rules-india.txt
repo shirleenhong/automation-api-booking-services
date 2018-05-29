@@ -58,4 +58,8 @@ Verify That Airline Rules Are Deleted Correctly After Delete Request
     Send Get Request For Airline Rules    
     Verify Response Status Code Is Correct    200
     Verify Airline Rules Are Correctly Retrieved
-    [Teardown]    Evict Airline Rules Cache    
+    [Teardown]    Evict Airline Rules Cache 
+    
+Test
+    ${list}    Split String    ${in_client_pricings_74_list}    |    
+    ${length}    Get Length    ${list}   

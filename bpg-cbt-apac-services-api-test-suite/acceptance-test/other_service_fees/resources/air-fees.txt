@@ -108,6 +108,28 @@ Calculate Air Fees-HK Total Selling Fare Without Formula
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}
+    
+Calculate Air Fees-IN GST Amount
+    ${gst_amount_formula}    Set Variable If    "${gst_amount_is_visible}" == "true" and "${exempt_tax}" == "false"    ((${gross_sell}+${yq_tax})*${tax_percentage})*3    0
+    ${calculated_value}    Evaluate    ${gst_amount_formula}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}   
+    Set Test Variable    ${gst_amount}    ${calculated_value} 
+    
+Calculate Air Fees-IN Reference Fare
+    ${calculate_value}    Evaluate    ${base_fare}+${total_taxes} 
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}  
+    Set Test Variable    ${reference_fare_amount}    ${calculate_value}      
+    
+Calculate Air Fees-IN Total Taxes
+    ${calculated_value}    Evaluate    ${total_taxes}+${tax_1}+${tax_2}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${total_taxes_amount}    ${calculated_value}      
 
 Calculate Air Fees-SG Commission
     ${commission_formula}    Set Variable If    "${commission_percent_flag_value}" == "true"    ${nett_fare_value}*(${commission_percentage_value}*0.01)    ${commission_value}

@@ -1,0 +1,61 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource    resources/clients.txt
+
+*** Test Cases ***
+Verify That Clients Are Correctly Retrieved
+    Create Test Variables For Client    client_id=74     
+    Send Get Request For Client    client_id=74    
+    Verify Response Status Code Is Correct    200
+    Verify Client Are Correctly Retrieved
+    
+Verify That Clients Are Updated Correctly After Put Request
+    Create Test Variables For Client  
+    Send Get Request For Client    
+    Verify Response Status Code Is Correct    200
+    Verify Client Are Correctly Retrieved
+    Send Put Request For Client
+    Verify Response Status Code Is Correct    200
+    Evict Client Cache    4
+    Create Test Variables For Client    
+    Send Get Request For Client    
+    Verify Response Status Code Is Correct    200
+    Verify Client Are Correctly Retrieved
+    [Teardown]    Update Client To Original Value And Evict Client Pricing Cache      
+    
+Verify That Clients Are Added Correctly After Put Request
+    Create Test Variables For Client    
+    Send Get Request For Client    
+    Verify Response Status Code Is Correct    200
+    Verify Client Are Correctly Retrieved
+    Send Put Request For Client
+    Verify Response Status Code Is Correct    200
+    Evict Client Cache    4
+    Create Test Variables For Client    
+    Send Get Request For Client    
+    Verify Response Status Code Is Correct    200
+    Verify Client Are Correctly Retrieved
+    [Teardown]    Delete Client And Evict Client Pricing Cache    
+    
+Verify That Clients Are Deleted Correctly After Delete Request
+    Create Test Variables For Client    
+    Send Get Request For Client    
+    Verify Response Status Code Is Correct    200
+    Verify Client Are Correctly Retrieved
+    Send Put Request For Client
+    Verify Response Status Code Is Correct    200
+    Evict Client Cache    4
+    Create Test Variables For Client    
+    Send Get Request For Client    
+    Verify Response Status Code Is Correct    200
+    Verify Client Are Correctly Retrieved
+    Send Delete Request For Client
+    Verify Response Status Code Is Correct    200
+    Evict Client Pricing Cache   4
+    Create Test Variables For Client    
+    Send Get Request For Client    
+    Verify Response Status Code Is Correct    200
+    Verify Client Are Correctly Retrieved
+    [Teardown]    Evict Client Cache    
