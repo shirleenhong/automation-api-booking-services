@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 
@@ -14,7 +13,7 @@ import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
 
 public class GrossFareCalculatorTest {
 
-	private GrossFareCalculator netFareCalc = new GrossFareCalculator();
+	private GrossFareCalculator grossFareCalc = new GrossFareCalculator();
 	
 	private BigDecimal mockBigDecimalValFive;
 	private BigDecimal mockBigDecimalValFour;
@@ -39,15 +38,8 @@ public class GrossFareCalculatorTest {
 		breakdown.setTotalTaxes(mockBigDecimalValFour);
 		breakdown.setTotalGst(mockBigDecimalValOne);
 		
-		assertNotNull(netFareCalc.getTotalFee(input, breakdown));
+		assertNotNull(grossFareCalc.getTotalFee(input, breakdown));
 
-	}
-
-	@Test
-	public void getTotalFee_nullParams() {
-		assertNull(netFareCalc.getTotalFee(null, breakdown));
-		assertNull(netFareCalc.getTotalFee(input, null));
-		assertNull(netFareCalc.getTotalFee(null, null));
 	}
 
 	@Test
@@ -56,8 +48,17 @@ public class GrossFareCalculatorTest {
 		breakdown.setTotalTaxes(mockBigDecimalValFour);
 		breakdown.setTotalGst(mockBigDecimalValOne);
 		
-		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown);
+		BigDecimal actualTotalFee = grossFareCalc.getTotalFee(input, breakdown);
 		assertEquals(mockBigDecimalValTen, actualTotalFee);
+	}
+	
+	@Test
+	public void getTotalFee_testNullValue() {
+		input.setBaseFare(null);
+		breakdown.setTotalTaxes(null);
+		breakdown.setTotalGst(null);
+		
+		assertNotNull(grossFareCalc.getTotalFee(input, breakdown));
 	}
 	
 }

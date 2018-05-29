@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 
@@ -46,13 +45,6 @@ public class NettFareCalculatorTest {
 	}
 
 	@Test
-	public void getTotalFee_nullParams() {
-		assertNull(netFareCalc.getTotalFee(null, breakdown));
-		assertNull(netFareCalc.getTotalFee(input, null));
-		assertNull(netFareCalc.getTotalFee(null, null));
-	}
-
-	@Test
 	public void getTotalFee_testValue() {
 		input.setBaseFare(mockBigDecimalValFive);
 		breakdown.setTotalIataCommission(mockBigDecimalValFour);
@@ -60,6 +52,15 @@ public class NettFareCalculatorTest {
 		
 		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown);
 		assertEquals(mockBigDecimalValOne, actualTotalFee);
+	}
+	
+	@Test
+	public void getTotalFee_testNullValue() {
+		input.setBaseFare(null);
+		breakdown.setTotalIataCommission(null);
+		breakdown.setTotalReturnableOr(null);
+		
+		assertNotNull(netFareCalc.getTotalFee(input, breakdown));
 	}
 	
 	@Test
