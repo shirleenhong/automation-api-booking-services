@@ -1,7 +1,10 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -59,7 +62,8 @@ public class MiscFeeCalculatorTest {
 		assertEquals(round(new BigDecimal(60.03), 2), result.getGstAmount());
 		assertEquals(round(new BigDecimal(75.63), 2), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(76.4135), 2), result.getNettCostGst());
-		assertEquals(round(new BigDecimal(1272.53), 2), result.getSellingPriceInDi());
+		assertEquals(round(new BigDecimal(1272.53), 2), result.getTotalSellingPrice());
+		assertNull(result.getGrossSellingPrice());
 	}
 	
 	@Test
@@ -79,7 +83,8 @@ public class MiscFeeCalculatorTest {
 		assertEquals(round(new BigDecimal(75.025)), result.getGstAmount());
 		assertEquals(round(new BigDecimal(94.5315)), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(61.4135)), result.getNettCostGst());
-		assertEquals(round(new BigDecimal(1590.95)), result.getSellingPriceInDi());
+		assertEquals(round(new BigDecimal(1590.95)), result.getTotalSellingPrice());
+		assertNull(result.getGrossSellingPrice());
 	}
 
 	@Test
@@ -100,18 +105,20 @@ public class MiscFeeCalculatorTest {
 		assertNull(result.getGstAmount());
 		assertNull(result.getMerchantFee());
 		assertNull(result.getNettCostGst());
-		assertEquals(round(new BigDecimal(1143.33)), result.getSellingPriceInDi());
+		assertEquals(round(new BigDecimal(1143.33)), result.getTotalSellingPrice());
+		assertNull(result.getGrossSellingPrice());
 	}
 
 	@Test
 	public void shouldNotFailOnNullInput() {
 		MiscFeesBreakdown result = (MiscFeesBreakdown) calculator.calculate(null, null);
 
-		assertEquals(BigDecimal.ZERO, result.getCommission());
-		assertEquals(BigDecimal.ZERO, result.getGstAmount());
-		assertEquals(BigDecimal.ZERO, result.getMerchantFee());
-		assertEquals(BigDecimal.ZERO, result.getNettCostGst());
-		assertEquals(BigDecimal.ZERO, result.getSellingPriceInDi());
+		assertThat(result.getCommission(), is(nullValue(BigDecimal.class)));
+		assertThat(result.getGstAmount(), is(nullValue(BigDecimal.class)));
+		assertThat(result.getMerchantFee(), is(nullValue(BigDecimal.class)));
+		assertThat(result.getNettCostGst(), is(nullValue(BigDecimal.class)));
+		assertThat(result.getTotalSellingPrice(), is(nullValue(BigDecimal.class)));
+		assertNull(result.getGrossSellingPrice());
 	}
 
 	@Test
@@ -124,7 +131,8 @@ public class MiscFeeCalculatorTest {
 		assertEquals(round(BigDecimal.ZERO, 2), result.getGstAmount());
 		assertNull(result.getMerchantFee());
 		assertEquals(round(BigDecimal.ZERO, 2), result.getNettCostGst());
-		assertEquals(round(BigDecimal.ZERO, 2), result.getSellingPriceInDi());
+		assertEquals(round(BigDecimal.ZERO, 2), result.getTotalSellingPrice());
+		assertNull(result.getGrossSellingPrice());
 	}
 	
 	private BigDecimal round(BigDecimal value, int scale) {

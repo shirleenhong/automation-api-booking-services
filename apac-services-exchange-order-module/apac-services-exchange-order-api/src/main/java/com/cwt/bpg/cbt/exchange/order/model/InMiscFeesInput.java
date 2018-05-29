@@ -3,6 +3,8 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class InMiscFeesInput implements Serializable
@@ -20,6 +22,8 @@ public class InMiscFeesInput implements Serializable
 	private BigDecimal discount;
 	private boolean discountByPercent;
 	private int fopMode;
+
+	@NotNull
 	private InProduct product;
 	private String acctType;
 	private String fopNumber;
