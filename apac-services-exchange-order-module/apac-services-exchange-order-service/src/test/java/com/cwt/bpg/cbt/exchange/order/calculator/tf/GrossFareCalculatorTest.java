@@ -15,28 +15,28 @@ public class GrossFareCalculatorTest {
 
 	private GrossFareCalculator grossFareCalc = new GrossFareCalculator();
 	
-	private BigDecimal valFive;
-	private BigDecimal valFour;
-	private BigDecimal valOne;
-	private BigDecimal valTen;
+	private BigDecimal baseFare;
+	private BigDecimal totalTaxes;
+	private BigDecimal totalGst;
+	private BigDecimal expectedValue;
 	private TransactionFeesInput input;
 	private TransactionFeesBreakdown breakdown;
 	
 	@Before
 	public void setup() {
-		valFive = new BigDecimal(5);
-		valFour = new BigDecimal(4);
-		valOne = new BigDecimal(1);
-		valTen = new BigDecimal(10);
+		baseFare = new BigDecimal(5);
+		totalTaxes = new BigDecimal(4);
+		totalGst = new BigDecimal(1);
+		expectedValue = new BigDecimal(10);
 		input = new TransactionFeesInput();
 		breakdown = new TransactionFeesBreakdown();
 	}
 
 	@Test
 	public void shouldGetTotalFeeValidParams() {
-		input.setBaseFare(valFive);
-		breakdown.setTotalTaxes(valFour);
-		breakdown.setTotalGst(valOne);
+		input.setBaseFare(baseFare);
+		breakdown.setTotalTaxes(totalTaxes);
+		breakdown.setTotalGst(totalGst);
 		
 		assertNotNull(grossFareCalc.getTotalFee(input, breakdown));
 
@@ -44,12 +44,12 @@ public class GrossFareCalculatorTest {
 
 	@Test
 	public void shouldGetTotalFeeSum() {
-		input.setBaseFare(valFive);
-		breakdown.setTotalTaxes(valFour);
-		breakdown.setTotalGst(valOne);
+		input.setBaseFare(baseFare);
+		breakdown.setTotalTaxes(totalTaxes);
+		breakdown.setTotalGst(totalGst);
 		
 		BigDecimal actualTotalFee = grossFareCalc.getTotalFee(input, breakdown);
-		assertEquals(valTen, actualTotalFee);
+		assertEquals(expectedValue, actualTotalFee);
 	}
 	
 	@Test

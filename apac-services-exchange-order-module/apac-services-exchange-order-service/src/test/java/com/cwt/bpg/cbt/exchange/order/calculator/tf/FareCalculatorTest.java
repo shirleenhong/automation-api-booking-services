@@ -15,27 +15,27 @@ public class FareCalculatorTest {
 
 	private FareCalculator fareCalc = new FareCalculator();
 	
-	private BigDecimal valFive;
-	private BigDecimal valFour;
-	private BigDecimal valOne;
-	private BigDecimal valNegative;
+	private BigDecimal baseFare;
+	private BigDecimal totalIataCommission;
+	private BigDecimal expectedPositiveValue;
+	private BigDecimal expectedNegativeValue;
 	private TransactionFeesInput input;
 	private TransactionFeesBreakdown breakdown;
 	
 	@Before
 	public void setup() {
-		valFive = new BigDecimal(5);
-		valFour = new BigDecimal(4);
-		valOne = new BigDecimal(1);
-		valNegative = new BigDecimal(-1);
+		baseFare = new BigDecimal(5);
+		totalIataCommission = new BigDecimal(4);
+		expectedPositiveValue = new BigDecimal(1);
+		expectedNegativeValue = new BigDecimal(-1);
 		input = new TransactionFeesInput();
 		breakdown = new TransactionFeesBreakdown();
 	}
 
 	@Test
 	public void shouldGetTotalFeeValidParams() {
-		input.setBaseFare(valFive);
-		breakdown.setTotalIataCommission(valFour);
+		input.setBaseFare(baseFare);
+		breakdown.setTotalIataCommission(totalIataCommission);
 		
 		assertNotNull(fareCalc.getTotalFee(input, breakdown));
 
@@ -43,11 +43,11 @@ public class FareCalculatorTest {
 
 	@Test
 	public void shouldGetTotalFeeDifference() {
-		input.setBaseFare(valFive);
-		breakdown.setTotalIataCommission(valFour);
+		input.setBaseFare(baseFare);
+		breakdown.setTotalIataCommission(totalIataCommission);
 		
 		BigDecimal actualTotalFee = fareCalc.getTotalFee(input, breakdown);
-		assertEquals(valOne, actualTotalFee);
+		assertEquals(expectedPositiveValue, actualTotalFee);
 	}
 	
 	@Test
@@ -60,11 +60,11 @@ public class FareCalculatorTest {
 	
 	@Test
 	public void shouldGetTotalFeeNegativeDiff() {
-		input.setBaseFare(valFour);
-		breakdown.setTotalIataCommission(valFive);
+		input.setBaseFare(totalIataCommission);
+		breakdown.setTotalIataCommission(baseFare);
 
 		
 		BigDecimal actualTotalFee = fareCalc.getTotalFee(input, breakdown);
-		assertEquals(valNegative, actualTotalFee);
+		assertEquals(expectedNegativeValue, actualTotalFee);
 	}
 }

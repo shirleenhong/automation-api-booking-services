@@ -15,30 +15,30 @@ public class NettFareCalculatorTest {
 
 	private NettFareCalculator netFareCalc = new NettFareCalculator();
 	
-	private BigDecimal valFive;
-	private BigDecimal valFour;
-	private BigDecimal valOne;
-	private BigDecimal valZero;
-	private BigDecimal valNegative;
+	private BigDecimal baseFare;
+	private BigDecimal totalIataCommission;
+	private BigDecimal expectedPositiveValue;
+	private BigDecimal expectedNegativeValue;
+	private BigDecimal returnableOr;
 	private TransactionFeesInput input;
 	private TransactionFeesBreakdown breakdown;
 	
 	@Before
 	public void setup() {
-		valFive = new BigDecimal(5);
-		valFour = new BigDecimal(4);
-		valOne = new BigDecimal(1);
-		valZero = new BigDecimal(0);
-		valNegative = new BigDecimal(-1);
+		baseFare = new BigDecimal(5);
+		totalIataCommission = new BigDecimal(4);
+		expectedPositiveValue = new BigDecimal(1);
+		returnableOr = new BigDecimal(0);
+		expectedNegativeValue = new BigDecimal(-1);
 		input = new TransactionFeesInput();
 		breakdown = new TransactionFeesBreakdown();
 	}
 
 	@Test
 	public void shouldGetTotalFeeValidParams() {
-		input.setBaseFare(valFive);
-		breakdown.setTotalIataCommission(valFour);
-		breakdown.setTotalReturnableOr(valZero);
+		input.setBaseFare(baseFare);
+		breakdown.setTotalIataCommission(totalIataCommission);
+		breakdown.setTotalReturnableOr(returnableOr);
 		
 		assertNotNull(netFareCalc.getTotalFee(input, breakdown));
 
@@ -46,12 +46,12 @@ public class NettFareCalculatorTest {
 
 	@Test
 	public void shouldGetTotalFeeDifference() {
-		input.setBaseFare(valFive);
-		breakdown.setTotalIataCommission(valFour);
-		breakdown.setTotalReturnableOr(valZero);
+		input.setBaseFare(baseFare);
+		breakdown.setTotalIataCommission(totalIataCommission);
+		breakdown.setTotalReturnableOr(returnableOr);
 		
 		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown);
-		assertEquals(valOne, actualTotalFee);
+		assertEquals(expectedPositiveValue, actualTotalFee);
 	}
 	
 	@Test
@@ -65,11 +65,11 @@ public class NettFareCalculatorTest {
 	
 	@Test
 	public void shouldGetTotalFeeNegativeDiff() {
-		input.setBaseFare(valFour);
-		breakdown.setTotalIataCommission(valFive);
-		breakdown.setTotalReturnableOr(valZero);
+		input.setBaseFare(totalIataCommission);
+		breakdown.setTotalIataCommission(baseFare);
+		breakdown.setTotalReturnableOr(returnableOr);
 		
 		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown);
-		assertEquals(valNegative, actualTotalFee);
+		assertEquals(expectedNegativeValue, actualTotalFee);
 	}
 }
