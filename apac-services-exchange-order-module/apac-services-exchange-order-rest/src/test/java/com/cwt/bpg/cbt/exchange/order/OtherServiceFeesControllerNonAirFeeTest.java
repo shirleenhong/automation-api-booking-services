@@ -58,7 +58,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
         JSONObject jsonObj = new JSONObject();
 
     	InProduct product = new InProduct();
-    	product.setGst(2);
+    	product.setGst(2D);
     	product.setOt1(5D);
     	product.setOt2(10D);
         
@@ -87,12 +87,58 @@ public class OtherServiceFeesControllerNonAirFeeTest {
         JSONObject jsonObj = new JSONObject();
 
     	InProduct product = new InProduct();
-    	product.setGst(2);
+    	product.setGst(2D);
     	product.setOt1(5D);
     	product.setOt2(10D);
         
         jsonObj.put("commissionByPercent", true);
         jsonObj.put("costAmount", 100);
+        jsonObj.put("commissionPercent", 10);
+        jsonObj.put("discountPercent", 2);
+        jsonObj.put("acctType", "001");
+        jsonObj.put("fopType", 2);
+        jsonObj.put("fopMode", 3);
+        jsonObj.put("product", product);
+
+        mockMvc.perform(post("/other-service-fees/non-air-fees")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(jsonObj)))
+                .andExpect(status().isBadRequest());
+
+        verifyZeroInteractions(service);
+    }
+
+    @Test
+    public void shouldReturnBadRequestOnEmptyProduct() throws Exception {
+        JSONObject jsonObj = new JSONObject();
+
+        jsonObj.put("commissionByPercent", true);
+        jsonObj.put("costAmount", 100);
+        jsonObj.put("commissionPercent", 10);
+        jsonObj.put("discountPercent", 2);
+        jsonObj.put("acctType", "001");
+        jsonObj.put("fopType", 2);
+        jsonObj.put("fopMode", 3);
+        jsonObj.put("product", new InProduct());
+
+        mockMvc.perform(post("/other-service-fees/non-air-fees")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(jsonObj)))
+                .andExpect(status().isBadRequest());
+
+        verifyZeroInteractions(service);
+    }
+
+    @Test
+    public void shouldReturnBadRequestOnEmptyCostAmount() throws Exception {
+        JSONObject jsonObj = new JSONObject();
+
+        InProduct product = new InProduct();
+        product.setGst(2D);
+        product.setOt1(5D);
+        product.setOt2(10D);
+
+        jsonObj.put("commissionByPercent", true);
         jsonObj.put("commissionPercent", 10);
         jsonObj.put("discountPercent", 2);
         jsonObj.put("acctType", "001");
