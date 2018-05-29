@@ -6,25 +6,18 @@ public class MiscFeesBreakdown extends FeesBreakdown {
 
 	private static final long serialVersionUID = 3847345778240245241L;
 
-	private BigDecimal sellingPriceInDi;
+	private BigDecimal totalSellingPrice;
 	private BigDecimal gstAmount;
 	private BigDecimal merchantFee;
 	private BigDecimal nettCostGst;
+	private BigDecimal grossSellingPrice;
 
-	public MiscFeesBreakdown() {
-		this.commission = BigDecimal.ZERO;
-		this.gstAmount = BigDecimal.ZERO;
-		this.nettCostGst = BigDecimal.ZERO;
-		this.merchantFee = BigDecimal.ZERO;
-		this.sellingPriceInDi = BigDecimal.ZERO;
+	public BigDecimal getTotalSellingPrice() {
+		return totalSellingPrice;
 	}
 
-	public BigDecimal getSellingPriceInDi() {
-		return sellingPriceInDi;
-	}
-
-	public void setSellingPriceInDi(BigDecimal sellingPriceInDi) {
-		this.sellingPriceInDi = sellingPriceInDi;
+	public void setTotalSellingPrice(BigDecimal totalSellingPrice) {
+		this.totalSellingPrice = totalSellingPrice;
 	}
 
 	public BigDecimal getGstAmount() {
@@ -49,5 +42,13 @@ public class MiscFeesBreakdown extends FeesBreakdown {
 
 	public void setNettCostGst(BigDecimal nettCostGst) {
 		this.nettCostGst = nettCostGst;
+	}
+
+	public BigDecimal getGrossSellingPrice() {
+		return grossSellingPrice;
+	}
+
+	public void setGrossSellingPrice(BigDecimal grossSellingPrice) {
+		this.grossSellingPrice = grossSellingPrice;
 	}
 }
