@@ -46,7 +46,7 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getTotalFeeShouldReturnNull() {
-        assertNull(noFeeCalc.getTotalFee());
+        assertNull(noFeeCalc.getTotalFee(new TransactionFeesInput(),new TransactionFeesBreakdown()));
     }
 
     @Test
