@@ -2,41 +2,72 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import java.math.BigDecimal;
 
-public class NoFeeCalculator extends TransactionFeeCalculator {
-    public BigDecimal getTotalDiscount() {
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
+
+public class NoFeeCalculator extends FeeCalculator {
+
+	@Override
+	public BigDecimal getTotalDiscount(int tripType,
+			TransactionFeesBreakdown breakdown) {
         return null;
     }
 
-    public Double getTotalOrCom() {
+	@Override
+    public BigDecimal getTotalOrCom(int tripType, 
+			TransactionFeesInput input) {
         return null;
     }
 
-    public Double getTotalOrCom2() {
+	@Override
+    public BigDecimal getTotalOrCom2(int tripType, 
+			TransactionFeesInput input) {
         return null;
     }
 
-    public BigDecimal getMerchantFee(BigDecimal totalSellFare, BigDecimal totalTaxes, BigDecimal totalGst, Double merchantFeePct) {
-        return calculatePercentage(safeValue(totalSellFare).add(safeValue(totalTaxes)).add(safeValue(totalGst)), merchantFeePct);
+	@Override
+    public BigDecimal getMerchantFee(
+    		TransactionFeesInput input,
+			TransactionFeesBreakdown breakdown
+			) {
+        return calculatePercentage(
+        		safeValue(breakdown.getTotalSellFare())
+        		.add(safeValue(breakdown.getTotalTaxes()))
+        		.add(safeValue(breakdown.getTotalGst())), 
+        			input.getMerchantFeePercent());
     }
 
-    public BigDecimal getMfOnTf() {
+	@Override
+    public BigDecimal getMfOnTf(int tripType, 
+			TransactionFeesInput input, 
+			BigDecimal totalGstOnTf) {
         return null;
     }
 
+	@Override
     public Boolean getDdlFeeApply() {
         return null;
     }
 
+	@Override
     public BigDecimal getTotalFee() {
         return null;
     }
 
-    public BigDecimal getTotalSellingFare(BigDecimal totalSellFare, BigDecimal totalGst, BigDecimal totalMerchantFee) {
-        return safeValue(totalSellFare).add(safeValue(totalGst)).add(safeValue(totalMerchantFee));
+	@Override
+    public BigDecimal getTotalSellingFare(TransactionFeesBreakdown breakdown) {
+    	
+        return safeValue(breakdown.getTotalSellFare())
+    			.add(safeValue(breakdown.getTotalGst()))
+    			.add(safeValue(breakdown.getTotalMerchantFee()));
     }
 
-    public BigDecimal getTotalCharge(BigDecimal totalSellFare, BigDecimal totalGst, BigDecimal totalMerchantFee, BigDecimal totalTaxes) {
-        return safeValue(totalSellFare).add(safeValue(totalGst)).add(safeValue(totalMerchantFee)).add(safeValue(totalTaxes));
+	@Override
+    public BigDecimal getTotalCharge(
+    		TransactionFeesInput input,
+			TransactionFeesBreakdown breakdown) {
+    	
+        return safeValue(breakdown.getTotalSellFare())
+    			.add(safeValue(breakdown.getTotalTaxes()));
     }
-
 }

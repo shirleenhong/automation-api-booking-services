@@ -1,8 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
-
 import java.math.BigDecimal;
 
-public class NettFareCalculator extends TransactionFeeCalculator {
+public class NettFareCalculator extends FeeCalculator {
 
 	public BigDecimal getTotalFee(BigDecimal baseFare, BigDecimal totalAirlineCommission,
 			BigDecimal totalReturnableOr) {

@@ -14,11 +14,12 @@ import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.TransactionFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.tf.FeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
 
 public class OtherServiceFeesServiceTest {
@@ -36,7 +37,7 @@ public class OtherServiceFeesServiceTest {
 	private Calculator hkCalculator;
 	
 	@Mock
-	private TransactionFeeCalculator tfCalculator;
+	private FeeCalculator tfCalculator;
 	
 	@Mock
 	private NettCostCalculator nettCostCalculator;
@@ -97,7 +98,7 @@ public class OtherServiceFeesServiceTest {
 		Mockito.when(clientService.getClient(Mockito.anyString()))
 				.thenReturn(client);
 		
-		FeesInput input = new FeesInput();
+		TransactionFeesInput input = new TransactionFeesInput();
 		input.setCountryCode(Country.INDIA.getCode());
 		
 		assertNotNull(service.calculateAirFee(input));
