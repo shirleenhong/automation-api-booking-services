@@ -13,10 +13,13 @@ public class WithVatCalculatorTest {
 	private WithVatCalculator withVatCalculator = new WithVatCalculator();
 
 	@Test
-	public void getTotalFeeShouldReturn() {
+	public void getTotalFeeShouldReturnTotalFee() {
 
-		BigDecimal baseFare = new BigDecimal(1), totalTaxes = new BigDecimal(1), totalGst = new BigDecimal(1),
-				totalAirlineCommission = new BigDecimal(1), totalReturnableOr = new BigDecimal(1);
+		BigDecimal baseFare = new BigDecimal(1);
+		BigDecimal totalTaxes = new BigDecimal(1);
+		BigDecimal totalGst = new BigDecimal(1);
+		BigDecimal totalAirlineCommission = new BigDecimal(1);
+		BigDecimal totalReturnableOr = new BigDecimal(1);
 
 		TransactionFeesInput input = new TransactionFeesInput();
 		input.setBaseFare(baseFare);
