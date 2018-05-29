@@ -12,15 +12,14 @@ import org.junit.Test;
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
 
-public class NettFareCalculatorTest {
+public class GrossFareCalculatorTest {
 
-	private NettFareCalculator netFareCalc = new NettFareCalculator();
+	private GrossFareCalculator netFareCalc = new GrossFareCalculator();
 	
 	private BigDecimal mockBigDecimalValFive;
 	private BigDecimal mockBigDecimalValFour;
 	private BigDecimal mockBigDecimalValOne;
-	private BigDecimal mockBigDecimalValZero;
-	private BigDecimal mockBigDecimalValNegative;
+	private BigDecimal mockBigDecimalValTen;
 	private TransactionFeesInput input;
 	private TransactionFeesBreakdown breakdown;
 	
@@ -29,8 +28,7 @@ public class NettFareCalculatorTest {
 		mockBigDecimalValFive = new BigDecimal(5);
 		mockBigDecimalValFour = new BigDecimal(4);
 		mockBigDecimalValOne = new BigDecimal(1);
-		mockBigDecimalValZero = new BigDecimal(0);
-		mockBigDecimalValNegative = new BigDecimal(-1);
+		mockBigDecimalValTen = new BigDecimal(10);
 		input = new TransactionFeesInput();
 		breakdown = new TransactionFeesBreakdown();
 	}
@@ -38,8 +36,8 @@ public class NettFareCalculatorTest {
 	@Test
 	public void shouldGetTotalFeeValidParams() {
 		input.setBaseFare(mockBigDecimalValFive);
-		breakdown.setTotalIataCommission(mockBigDecimalValFour);
-		breakdown.setTotalReturnableOr(mockBigDecimalValZero);
+		breakdown.setTotalTaxes(mockBigDecimalValFour);
+		breakdown.setTotalGst(mockBigDecimalValOne);
 		
 		assertNotNull(netFareCalc.getTotalFee(input, breakdown));
 
@@ -55,20 +53,11 @@ public class NettFareCalculatorTest {
 	@Test
 	public void getTotalFee_testValue() {
 		input.setBaseFare(mockBigDecimalValFive);
-		breakdown.setTotalIataCommission(mockBigDecimalValFour);
-		breakdown.setTotalReturnableOr(mockBigDecimalValZero);
+		breakdown.setTotalTaxes(mockBigDecimalValFour);
+		breakdown.setTotalGst(mockBigDecimalValOne);
 		
 		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown);
-		assertEquals(mockBigDecimalValOne, actualTotalFee);
+		assertEquals(mockBigDecimalValTen, actualTotalFee);
 	}
 	
-	@Test
-	public void getTotalFee_testNegativeValue() {
-		input.setBaseFare(mockBigDecimalValFour);
-		breakdown.setTotalIataCommission(mockBigDecimalValFive);
-		breakdown.setTotalReturnableOr(mockBigDecimalValZero);
-		
-		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown);
-		assertEquals(mockBigDecimalValNegative, actualTotalFee);
-	}
 }
