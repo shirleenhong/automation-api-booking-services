@@ -1,0 +1,88 @@
+*** Setting ***
+Resource    ../../resources/api-imports.txt
+Resource    ../../resources/api-utilities.txt
+Resource    ../../resources/api-variables.txt
+*** Keywords ***
+Create Test Variables For Airline Rules
+    [Arguments]    ${airline_rules_list}=${in_airline_rules_list}
+    ${airline_rules_list}    Split String    ${airline_rules_list}    |
+    ${airline_rules_list_length}    Get Length    ${airline_rules_list}
+    Set Test Variable    ${airline_rules_list_length}
+    Set Test Variable    ${airline_rules_list}
+    : FOR    ${data}    IN    @{airline_rules_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Set Test Variable    ${${data_item[0]}_includeYqComm}    ${data_item[1]}
+
+Delete Airline Rules And Evict Airline Rules Cache
+    [Arguments]    ${airline_code}=ZZ    ${number}=2    ${token}=${default_token}
+    Send Delete Request For Airline Rules   ${airline_code}    ${token}
+    Evict Airline Rules Cache    ${number}    ${token}
+
+Evict Airline Rules Cache
+    [Arguments]    ${number}=2    ${token}=${default_token}
+    Create Session    airline-rules    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    : FOR    ${index}    IN RANGE    0    ${number}
+    \    ${response}    Get Request    airline-rules    /apac-services-rest/api/caches/evict/airline-rules    headers=${headers}
+    \    Set Test Variable    ${response}
+    \    Verify Response Status Code Is Correct    200
+    \    Log    ${response.headers}
+    \    Log    ${response.content}
+    Set Test Variable    ${api_flag}    airline-rules
+     
+Send Get Request For Airline Rules
+    [Arguments]    ${token}=${default_token}
+    Create Session    airline-rules    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    airline-rules    apac-services-rest/api/airline-rules    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    airline-rules
+    
+Send Delete Request For Airline Rules
+    [Arguments]    ${airline_code}    ${token}=${default_token}
+    Create Session    airline-rules    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Delete Request    airline-rules    /apac-services-rest/api/airline-rules/${airline_code}     headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    airline-rules
+    
+Send Put Request For Airline Rules
+    [Arguments]    ${airline_code}=${EMPTY}    ${include_yq_comm}=true    ${token}=${default_token}
+    Create Session    airline-rules    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${data}    Set Variable    {"code":"${airline_code}","includeYqComm":${include_yq_comm}}
+    ${data}    Replace String    ${data}    "null"    null
+    ${response}    Put Request    airline-rules    /apac-services-rest/api/airline-rules    data=${data}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    airline-rules
+
+Update Airline Rules To Original Value And Evict Airline Rules Cache
+    [Arguments]    ${airline_code}=9W    ${include_yq_comm}=true    ${number}=2    ${token}=${default_token}
+    Send Put Request For Airline Rules    ${airline_code}    ${include_yq_comm}    ${token}
+    Evict Airline Rules Cache    ${number}    ${token}
+    
+Verify Airline Rules Are Correctly Retrieved
+    ${data}    Remove String    ${response.text}    [
+    ${data}    Remove String    ${data}    ]
+    ${data_list}    Split String    ${data}    },{
+    : FOR    ${item}    IN    @{data_list}
+    \    ${item}    Remove String    ${item}    "
+    \    ${item}    Remove String    ${item}    {
+    \    ${item}    Remove String    ${item}    }
+    \    ${item}    Replace String    ${item}    :    ,
+    \    ${items}    Split String    ${item}    ,
+    \    Verify Actual Value Matches Expected Value    ${items[3]}    ${${items[1]}_includeYqComm}
+    
+Verify Airline Rules Are Not Retrieved
+    Verify String Does Not Contain Substring    ${response.content}    "code"
+    Verify String Does Not Contain Substring    ${response.content}    "includeYqComm"

@@ -1,0 +1,158 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource    resources/airline-rules.txt
+
+*** Test Cases ***
+Verify That Error Is Encountered When Invalid Token Is Used
+    [Tags]    functional
+    Send Get Request For Airline Rules    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Airline Rules Are Not Retrieved
+    Send Put Request For Airline Rules    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Airline Rules Are Not Retrieved
+    Send Delete Request For Airline Rules   airline_code=ZZ    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Airline Rules Are Not Retrieved
+    [Teardown]    Evict Airline Rules Cache    
+
+Verify That Error Is Encountered When Null Token Is Used
+    [Tags]    functional
+    Send Get Request For Airline Rules    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Airline Rules Are Not Retrieved
+    Send Put Request For Airline Rules    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Airline Rules Are Not Retrieved
+    Send Delete Request For Airline Rules   airline_code=ZZ    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Airline Rules Are Not Retrieved
+    [Teardown]    Evict Airline Rules Cache    
+
+Verify That Error Is Encountered When Empty Token Is Used
+    [Tags]    functional
+    Send Get Request For Airline Rules    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Airline Rules Are Not Retrieved
+    Send Put Request For Airline Rules    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Airline Rules Are Not Retrieved
+    Send Delete Request For Airline Rules   airline_code=ZZ    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Airline Rules Are Not Retrieved
+    [Teardown]    Evict Airline Rules Cache    
+
+Verify That Error Is Encountered When No Token Is Used
+    [Tags]    functional
+    Send Get Request For Airline Rules    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Airline Rules Are Not Retrieved
+    Send Put Request For Airline Rules    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Airline Rules Are Not Retrieved
+    Send Delete Request For Airline Rules   airline_code=ZZ    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Airline Rules Are Not Retrieved
+    [Teardown]    Evict Airline Rules Cache
+    
+Verify That Error Is Encountered When Null Airline Code Is Used During Put Request
+    [Tags]    functional
+    Send Put Request For Airline Rules   airline_code=null    include_yq_comm=false
+    Verify Response Status Code Is Correct    400
+    Create Test Variables For Airline Rules    
+    Send Get Request For Airline Rules    
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    [Teardown]    Evict Airline Rules Cache    
+
+Verify That Error Is Encountered When Empty Airline Code Is Used During Put Request
+    [Tags]    functional
+    Send Put Request For Airline Rules    airline_code=${EMPTY}    include_yq_comm=false
+    Verify Response Status Code Is Correct    400
+    Create Test Variables For Airline Rules    
+    Send Get Request For Airline Rules    
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    [Teardown]    Evict Airline Rules Cache    
+
+Verify That Error Is Encountered When Invalid YQ Comm Is Used During Put Request
+    [Tags]    functional
+    Send Put Request For Airline Rules    airline_code=9W    include_yq_comm=!@#$%^&*()
+    Verify Response Status Code Is Correct    400
+    Create Test Variables For Airline Rules    
+    Send Get Request For Airline Rules    
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    [Teardown]    Evict Airline Rules Cache    
+
+Verify That Error Is Encountered When Null YQ Comm Is Used During Put Request
+    [Tags]    functional
+    Send Put Request For Airline Rules    airline_code=9W    include_yq_comm=null
+    Verify Response Status Code Is Correct    400
+    Create Test Variables For Airline Rules    
+    Send Get Request For Airline Rules    
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    [Teardown]    Evict Airline Rules Cache    
+
+Verify That Error Is Encountered When Empty YQ Comm Is Used During Put Request
+    [Tags]    functional
+    Send Put Request For Airline Rules    airline_code=9W    include_yq_comm=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Create Test Variables For Airline Rules    
+    Send Get Request For Airline Rules    
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    [Teardown]    Evict Airline Rules Cache    
+
+Verify That Error Is Encountered When No YQ Comm Is Used During Put Request
+    [Tags]    functional
+    Send Put Request For Airline Rules    airline_code=9W    include_yq_comm=None
+    Verify Response Status Code Is Correct    400
+    Create Test Variables For Airline Rules    
+    Send Get Request For Airline Rules    
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    [Teardown]    Evict Airline Rules Cache    
+    
+Verify That No Error Is Encountered When Invalid Airline Code Is Used During Delete Request
+    [Tags]    functional
+    [Setup]    Evict Airline Rules Cache    
+    Send Delete Request For Airline Rules    airline_code=!@#$%^&*()
+    Verify Response Status Code Is Correct    200
+    Create Test Variables For Airline Rules    
+    Send Get Request For Airline Rules    
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+
+Verify That No Error Is Encountered When Null Airline Code Is Used During Delete Request
+    [Tags]    functional
+    Send Delete Request For Airline Rules   airline_code=null
+    Verify Response Status Code Is Correct    200
+    Create Test Variables For Airline Rules    
+    Send Get Request For Airline Rules    
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    [Teardown]    Evict Airline Rules Cache    
+
+Verify That Error Is Encountered When Empty Airline Code Is Used During Delete Request
+    [Tags]    functional
+    Send Delete Request For Airline Rules    airline_code=${EMPTY}
+    Verify Response Status Code Is Correct    405
+    Create Test Variables For Airline Rules    
+    Send Get Request For Airline Rules    
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    [Teardown]    Evict Airline Rules Cache    
+
+Verify That No Error Is Encountered When No Airline Code Is Used During Delete Request
+    [Tags]    functional
+    Send Delete Request For Airline Rules    airline_code=None
+    Verify Response Status Code Is Correct    200
+    Create Test Variables For Airline Rules    
+    Send Get Request For Airline Rules    
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    [Teardown]    Evict Airline Rules Cache     

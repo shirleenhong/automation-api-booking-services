@@ -1,0 +1,65 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource    resources/airline-rules.txt
+
+*** Test Cases ***
+Verify That Airline Rules Are Correctly Retrieved
+    Create Test Variables For Airline Rules
+    Send Get Request For Airline Rules
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    
+Verify That Airline Rules Are Updated Correctly After Put Request
+    Create Test Variables For Airline Rules
+    Send Get Request For Airline Rules
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    Send Put Request For Airline Rules    airline_code=9W    include_yq_comm=false
+    Verify Response Status Code Is Correct    200
+    Evict Airline Rules Cache    4
+    Create Test Variables For Airline Rules    00,false|0A,false|0D,false|1A,false|3U,false|4L,false|6E,false|9H,false|9W,false|AA,false|AB,false|AC,false|AF,false|AH,false|AI,true|AK,false|AM,false|AP,false|AR,false|AS,false|AT,false|AY,false|AZ,false|BA,false|BD,false|BE,false|BG,false|BT,false|BV,false|CA,false|CB,false|CI,false|CO,false|CX,false|CZ,false|DL,false|DY,false|EK,false|ET,false|EY,true|FL,false|G8,false|GA,false|GF,false|GJ,false|GQ,false|GR,false|HA,false|HM,false|HR,false|HV,false|I7,true|I9,true|IC,true|IT,true|IY,false|JJ,false|JL,false|KA,false|KC,false|KE,false|KL,false|KQ,false|KU,false|LH,false|LO,false|LS,false|LX,false|LY,false|MH,false|MI,false|MJ,false|MK,false|MS,false|MU,false|MW,false|NA,false|NH,false|NW,false|NZ,false|OD,false|OK,false|OS,false|OV,false|OZ,false|PG,false|PK,false|PR,false|QF,false|QR,false|RE,false|RJ,false|S2,false|SA,false|SG,false|SK,false|SN,false|SQ,false|SU,false|SV,false|SW,false|SY,false|TG,false|TK,false|TX,false|U2,false|UA,false|UD,false|UK,false|UL,false|UM,false|UP,false|US,false|UU,false|VK,false|VN,false|VS,false|VV,false|W5,false|WY,false|YY,false|Z5,false
+    Send Get Request For Airline Rules
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved   
+    [Teardown]    Update Airline Rules To Original Value And Evict Airline Rules Cache    
+    
+Verify That Airline Rules Are Added Correctly After Put Request
+    Create Test Variables For Airline Rules
+    Send Get Request For Airline Rules
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    Send Put Request For Airline Rules    airline_code=ZZ    include_yq_comm=false
+    Verify Response Status Code Is Correct    200
+    Evict Airline Rules Cache    4
+    Create Test Variables For Airline Rules    00,false|0A,false|0D,false|1A,false|3U,false|4L,false|6E,false|9H,false|9W,true|AA,false|AB,false|AC,false|AF,false|AH,false|AI,true|AK,false|AM,false|AP,false|AR,false|AS,false|AT,false|AY,false|AZ,false|BA,false|BD,false|BE,false|BG,false|BT,false|BV,false|CA,false|CB,false|CI,false|CO,false|CX,false|CZ,false|DL,false|DY,false|EK,false|ET,false|EY,true|FL,false|G8,false|GA,false|GF,false|GJ,false|GQ,false|GR,false|HA,false|HM,false|HR,false|HV,false|I7,true|I9,true|IC,true|IT,true|IY,false|JJ,false|JL,false|KA,false|KC,false|KE,false|KL,false|KQ,false|KU,false|LH,false|LO,false|LS,false|LX,false|LY,false|MH,false|MI,false|MJ,false|MK,false|MS,false|MU,false|MW,false|NA,false|NH,false|NW,false|NZ,false|OD,false|OK,false|OS,false|OV,false|OZ,false|PG,false|PK,false|PR,false|QF,false|QR,false|RE,false|RJ,false|S2,false|SA,false|SG,false|SK,false|SN,false|SQ,false|SU,false|SV,false|SW,false|SY,false|TG,false|TK,false|TX,false|U2,false|UA,false|UD,false|UK,false|UL,false|UM,false|UP,false|US,false|UU,false|VK,false|VN,false|VS,false|VV,false|W5,false|WY,false|YY,false|Z5,false|ZZ,false
+    Send Get Request For Airline Rules
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved   
+    [Teardown]    Delete Airline Rules And Evict Airline Rules Cache
+    
+Verify That Airline Rules Are Deleted Correctly After Delete Request
+    Create Test Variables For Airline Rules
+    Send Get Request For Airline Rules
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    Send Put Request For Airline Rules    airline_code=ZZ    include_yq_comm=false
+    Verify Response Status Code Is Correct    200
+    Evict Airline Rules Cache    4
+    Create Test Variables For Airline Rules    00,false|0A,false|0D,false|1A,false|3U,false|4L,false|6E,false|9H,false|9W,true|AA,false|AB,false|AC,false|AF,false|AH,false|AI,true|AK,false|AM,false|AP,false|AR,false|AS,false|AT,false|AY,false|AZ,false|BA,false|BD,false|BE,false|BG,false|BT,false|BV,false|CA,false|CB,false|CI,false|CO,false|CX,false|CZ,false|DL,false|DY,false|EK,false|ET,false|EY,true|FL,false|G8,false|GA,false|GF,false|GJ,false|GQ,false|GR,false|HA,false|HM,false|HR,false|HV,false|I7,true|I9,true|IC,true|IT,true|IY,false|JJ,false|JL,false|KA,false|KC,false|KE,false|KL,false|KQ,false|KU,false|LH,false|LO,false|LS,false|LX,false|LY,false|MH,false|MI,false|MJ,false|MK,false|MS,false|MU,false|MW,false|NA,false|NH,false|NW,false|NZ,false|OD,false|OK,false|OS,false|OV,false|OZ,false|PG,false|PK,false|PR,false|QF,false|QR,false|RE,false|RJ,false|S2,false|SA,false|SG,false|SK,false|SN,false|SQ,false|SU,false|SV,false|SW,false|SY,false|TG,false|TK,false|TX,false|U2,false|UA,false|UD,false|UK,false|UL,false|UM,false|UP,false|US,false|UU,false|VK,false|VN,false|VS,false|VV,false|W5,false|WY,false|YY,false|Z5,false|ZZ,false
+    Send Get Request For Airline Rules
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    Send Delete Request For Airline Rules    airline_code=ZZ
+    Verify Response Status Code Is Correct    200
+    Evict Airline Rules Cache    4
+    Create Test Variables For Airline Rules    
+    Send Get Request For Airline Rules    
+    Verify Response Status Code Is Correct    200
+    Verify Airline Rules Are Correctly Retrieved
+    [Teardown]    Evict Airline Rules Cache 
+    
+Test
+    ${list}    Split String    ${in_client_pricings_74_list}    |    
+    ${length}    Get Length    ${list}   

@@ -1,0 +1,173 @@
+*** Setting ***
+Resource    ../../resources/api-imports.txt
+Resource    ../../resources/api-utilities.txt
+Resource    ../../resources/api-variables.txt
+*** Keywords ***
+Create Test Variables For Client
+    [Arguments]    ${client_id}
+    Set Test Variable    ${client_id}    
+    ${client_products_list}    Split String    ${in_client_products_${client_id}_list}    |
+    : FOR    ${data}    IN    @{client_products_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Set Test Variable    ${${data_item[0]}_products_subject_to_mf__value}    ${data_item[1]}
+    \    Set Test Variable    ${${data_item[0]}_products_standard__value}    ${data_item[2]}
+    ${client_vendors_list}    Split String    ${in_client_vendors_${client_id}_list}    |
+    : FOR    ${data}    IN    @{client_vendors_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Set Test Variable    ${${data_item[0]}_vendors_percentage__value}    ${data_item[1]}
+    \    Set Test Variable    ${${data_item[0]}_vendors_standard__value}    ${data_item[2]}
+    ${client_pricings_list}    Split String    ${in_client_pricings_${client_id}_list}    |
+    Set Test Variable    ${client_pricings_list}
+    : FOR    ${data}    IN    @{client_pricings_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Set Test Variable    ${${data_item[0]}_${data_item[1]}_client_pricings_group__value}    ${data_item[2]}
+    \    Set Test Variable    ${${data_item[0]}_${data_item[1]}_client_pricings_fee_option__value}    ${data_item[3]}
+    ${client_pricings_transaction_fees_list}    Split String    ${in_client_pricings_transaction_fees_${client_id}_list}    |
+    Set Test Variable    ${client_pricings_transaction_fees_list}    
+    : FOR    ${data}    IN    @{client_pricings_transaction_fees_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Set Test Variable    ${${data_item[0]}_territory_codes_value}    ${data_item[1]}
+    \    Set Test Variable    ${${data_item[0]}_tf_amount_value}    ${data_item[2]}  
+    \    Set Test Variable    ${${data_item[0]}_operator_value}    ${data_item[3]}   
+    \    Set Test Variable    ${${data_item[0]}_extra_amount_value}    ${data_item[4]}
+    \    Set Test Variable    ${${data_item[0]}_per_amount_value}    ${data_item[5]}  
+    \    Set Test Variable    ${${data_item[0]}_min_amount_value}    ${data_item[6]} 
+    \    Set Test Variable    ${${data_item[0]}_max_amount_value}    ${data_item[7]}  
+    \    Set Test Variable    ${${data_item[0]}_start_amount_value}    ${data_item[8]}
+    \    Set Test Variable    ${${data_item[0]}_end_amount_value}    ${data_item[9]}      
+
+Delete Client And Evict Client Cache
+    [Arguments]    ${airline_code}=ZZ    ${number}=2    ${token}=${default_token}
+    Send Delete Request For Client   ${airline_code}    ${token}
+    Evict Client Cache    ${number}    ${token}
+
+Evict Client Cache
+    [Arguments]    ${number}=2    ${token}=${default_token}
+    Create Session    client    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    : FOR    ${index}    IN RANGE    0    ${number}
+    \    ${response}    Get Request    client    /apac-services-rest/api/caches/evict/client    headers=${headers}
+    \    Set Test Variable    ${response}
+    \    Verify Response Status Code Is Correct    200
+    \    Log    ${response.headers}
+    \    Log    ${response.content}
+    Set Test Variable    ${api_flag}    client
+
+Send Get Request For Client
+    [Arguments]    ${client_id}    ${token}=${default_token}
+    Create Session    client    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    client    apac-services-rest/api/clients/${client_id}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    client
+    
+Send Delete Request For Client
+    [Arguments]    ${client_id}    ${token}=${default_token}
+    Create Session    client    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Delete Request    client    /apac-services-rest/api/clients/${client_id}     headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    client
+    
+Send Put Request For Client
+    [Arguments]    ${code}=${EMPTY}    ${include_yq_comm}=true    ${token}=${default_token}
+    Create Session    client    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${main_details}    Set Variable    ${EMPTY}
+    @{parameters_list_1}    Create List
+    @{parameters_list_2}    Create List
+    @{parameters_list_3}    Create List
+    ${data_list}    Split String    ${in_client_${client_id}_list}    |
+    : FOR    ${item}    IN    @{data_list}
+    \    ${items}    Split String    ${item}    ,
+    \    ${is_number}    Check If Parameter Is A Number    ${items[1]}
+    \    ${main_details}    Set Variable If    "${is_number}" == "True"    ${main_details}"${items[0]}":${items[1]},    ${main_details}"${items[0]}":"${items[1]}",
+    ${data_list}    Split String    ${in_client_products_${client_id}_list}    |
+    : FOR    ${item}    IN    @{data_list}
+    \    ${items}    Split String    ${item}    ,
+    \    ${is_number}    Check If Parameter Is A Number    ${items[1]}
+    ${data}    Set Variable    {"code":"${code}","includeYqComm":${include_yq_comm}}
+    ${data}    Replace String    ${data}    "null"    null
+    ${response}    Put Request    client    /apac-services-rest/api/clients    data=${data}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    client
+
+Update Client To Original Value And Evict Client Cache
+    [Arguments]    ${airline_code}=9W    ${include_yq_comm}=true    ${number}=2    ${token}=${default_token}
+    Send Put Request For Client    ${airline_code}    ${include_yq_comm}    ${token}
+    Evict Client Cache    ${number}    ${token}
+    
+Verify Client Are Correctly Retrieved
+    ${data_list}    Split String    ${in_client_${client_id}_list}    |
+    : FOR    ${item}    IN    @{data_list}
+    \    ${items}    Split String    ${item}    ,
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.${items[0]}    ${items[1]}
+    Verify Client Products Are Correctly Retrieved
+    Verify Client Vendors Are Correctly Retrieved
+    Verify Client Pricings Are Correctly Retrieved
+    Verify Client Pricings Transaction Fees Are Correctly Retrieved
+    
+Verify Client Are Not Retrieved
+    Verify String Does Not Contain Substring    ${response.content}    "clientId"
+    Verify String Does Not Contain Substring    ${response.content}    "name"
+    Verify String Does Not Contain Substring    ${response.content}    "profileName"
+    
+Verify Client Pricings Are Correctly Retrieved
+    ${client_pricings_list_length}    Get Length    ${client_pricings_list}
+    : FOR    ${index}    IN RANGE    ${client_pricings_list_length}
+    \    ${item_trip_type}    Get Json Value As String    ${response.content}    $.clientPricings.[${index}].tripType
+    \    ${item_cmpid}    Get Json Value As String    ${response.content}    $.clientPricings.[${index}].cmpid
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].group    ${${item_cmpid}_${item_trip_type}_client_pricings_group__value}
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].feeOption    ${${item_cmpid}_${item_trip_type}_client_pricings_fee_option__value}
+
+Verify Client Pricings Transaction Fees Are Correctly Retrieved
+    ${client_pricings_list_length}    Get Length    ${client_pricings_list}
+    : FOR    ${index}    IN RANGE    ${client_pricings_list_length}
+    \    ${item_fee_id}    Get Json Value As String    ${response.content}    $.clientPricings.[${index}].transactionFees.[0].feeId
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].territoryCodes.[0]    ${${item_fee_id}_territory_codes_value}
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].tfAmount    ${${item_fee_id}_tf_amount_value}
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].operator    ${${item_fee_id}_operator_value}
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].extraAmount    ${${item_fee_id}_extra_amount_value}
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].perAmount    ${${item_fee_id}_per_amount_value}
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].minAmount    ${${item_fee_id}_min_amount_value}
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].maxAmount    ${${item_fee_id}_max_amount_value}
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].startAmount    ${${item_fee_id}_start_amount_value}
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].endAmount    ${${item_fee_id}_end_amount_value}
+   
+Verify Client Products Are Correctly Retrieved
+    ${products_list}    Get Json Value As String    ${response.content}    $.mfProducts
+    ${data}    Remove String    ${products_list}    [
+    ${data}    Remove String    ${data}    ]
+    ${data_list}    Split String    ${data}    },{
+    : FOR    ${item}    IN    @{data_list}
+    \    ${item}    Remove String    ${item}    "
+    \    ${item}    Remove String    ${item}    {
+    \    ${item}    Remove String    ${item}    }
+    \    ${item}    Replace String    ${item}    :    ,
+    \    ${items}    Split String    ${item}    ,
+    \    Verify Actual Value Matches Expected Value    ${items[3].strip()}    ${${items[1]}_products_subject_to_mf__value}
+    \    Verify Actual Value Matches Expected Value    ${items[5].strip()}    ${${items[1]}_products_standard__value}
+
+Verify Client Vendors Are Correctly Retrieved
+    ${vendors_list}    Get Json Value As String    ${response.content}    $.mfCcs
+    ${data}    Remove String    ${vendors_list}    [
+    ${data}    Remove String    ${data}    ]
+    ${data_list}    Split String    ${data}    },{
+    : FOR    ${item}    IN    @{data_list}
+    \    ${item}    Remove String    ${item}    "
+    \    ${item}    Remove String    ${item}    {
+    \    ${item}    Remove String    ${item}    }
+    \    ${item}    Replace String    ${item}    :    ,
+    \    ${items}    Split String    ${item}    ,
+    \    Verify Actual Value Matches Expected Value    ${items[3].strip()}    ${${items[1]}_vendors_percentage__value}
+    \    Verify Actual Value Matches Expected Value    ${items[5].strip()}    ${${items[1]}_vendors_standard__value}
