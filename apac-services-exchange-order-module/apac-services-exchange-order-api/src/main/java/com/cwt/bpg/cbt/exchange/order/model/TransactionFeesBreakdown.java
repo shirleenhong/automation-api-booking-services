@@ -42,12 +42,12 @@ public class TransactionFeesBreakdown extends FeesBreakdown {
 		this.clientDiscountPercent = clientDiscountPercent;
 	}
 
-	public Double getGsttPercent() {
+	public Double getGstPercent() {
 		return gstPercent;
 	}
 
-	public void setVatPercent(Double vatPercent) {
-		this.gstPercent = vatPercent;
+	public void setGstPercent(Double gstPercent) {
+		this.gstPercent = gstPercent;
 	}
 
 	public Double getOt1Percent() {
