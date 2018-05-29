@@ -1,15 +1,11 @@
 package com.cwt.bpg.cbt.tpromigration.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
+import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.*;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.*;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Currency;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
-import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MigrationService {
@@ -51,7 +46,7 @@ public class MigrationService {
 	private ClientDAOImpl clientDAO;
 
 	@Autowired
-	private CityDAO cityDAO;
+	private AirportDAO airportDAO;
 
 	@Value("${com.cwt.tpromigration.mongodb.dbuser}")
 	private String dbUser;
@@ -94,16 +89,16 @@ public class MigrationService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void migrateCities() throws JsonProcessingException {
-		List<City> cities = cityDAO.getCities();
+	public void migrateAirports() throws JsonProcessingException {
+		List<Airport> airports = airportDAO.getAirports();
 
 		List<Document> docs = new ArrayList<>();
 
-		for (City city : cities) {
-			docs.add(dBObjectMapper.mapAsDbDocument(city));
+		for (Airport airport : airports) {
+			docs.add(dBObjectMapper.mapAsDbDocument(airport.getCode(),airport));
 		}
 
-		mongoDbConnection.getCollection("cities").insertMany(docs);
+		mongoDbConnection.getCollection(Airport.COLLECTION).insertMany(docs);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -170,6 +165,8 @@ public class MigrationService {
 		
 		Client defaultClient = new Client();
 		defaultClient.setClientId(-1);
+		defaultClient.setApplyMfBank(false);
+		defaultClient.setApplyMfCc(false);
 		clients.add(defaultClient);
 
 		updateClients(clients, 
@@ -289,9 +286,9 @@ public class MigrationService {
 			|| vendorsMap.containsKey(client.getClientId()) 
 			|| banksMap.containsKey(client.getClientId())) {
 				
-				client.setProducts(productsMap.get(client.getClientId()));
-				client.setVendors(vendorsMap.get(client.getClientId()));
-				client.setBanks(banksMap.get(client.getClientId()));
+				client.setMfProducts(productsMap.get(client.getClientId()));
+				client.setMfCcs(vendorsMap.get(client.getClientId()));
+				client.setMfBanks(banksMap.get(client.getClientId()));
 			}
 			List<ClientPricing> clientPricings = new ArrayList<>();
 			if(clientPricingMaps.containsKey(client.getCmpid())) {

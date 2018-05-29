@@ -44,7 +44,7 @@ public class InsuranceControllerTest {
 	@Test
 	public void canGetInsuranceList() {
 		List<Insurance> insuranceList = new ArrayList<>();
-		Mockito.when(service.getInsuranceList()).thenReturn(insuranceList);
+		Mockito.when(service.getAll()).thenReturn(insuranceList);
 		
 		ResponseEntity<List<Insurance>>result = controller.getInsuranceList();
 

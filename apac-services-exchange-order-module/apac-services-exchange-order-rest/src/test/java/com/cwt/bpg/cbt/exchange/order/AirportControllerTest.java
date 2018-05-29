@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import com.cwt.bpg.cbt.exchange.order.model.City;
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
 import net.minidev.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +18,7 @@ import java.nio.charset.Charset;
 
 import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerMiscFeeTest.convertObjectToJsonBytes;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -26,14 +27,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-public class CityControllerTest {
+public class AirportControllerTest {
     private MockMvc mockMvc;
 
     @Mock
-    private CityService service;
+    private AirportService service;
 
     @InjectMocks
-    private CityController controller;
+    private AirportController controller;
 
     public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -50,7 +51,7 @@ public class CityControllerTest {
 
     @Test
     public void getCitiesShouldReturnCities() throws Exception {
-        mockMvc.perform(get("/cities")
+        mockMvc.perform(get("/airports")
                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -60,44 +61,44 @@ public class CityControllerTest {
 
     @Test
     public void getCitiesByCodeShouldReturnCities() throws Exception {
-        mockMvc.perform(get("/cities/XXX")
+        mockMvc.perform(get("/airports/XXX")
                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
-        verify(service, times(1)).getCities("XXX");
+        verify(service, times(1)).getAirport("XXX");
     }
 
     @Test
-    public void putCityShouldSaveAndReturnSavedCity() throws Exception {
+    public void putAirportShouldSaveAndReturnSavedAirport() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
         jsonObj.put("code", "XXX");
-        jsonObj.put("name", "Test City Name");
+        jsonObj.put("name", "Test Airport Name");
         jsonObj.put("regionCode", "XXX");
         jsonObj.put("countryCode", "XXX");
-        jsonObj.put("airportCode", "XXX");
+        jsonObj.put("cityCode", "XXX");
 
-        mockMvc.perform(put("/cities")
+        mockMvc.perform(put("/airports")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(jsonObj)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        verify(service, times(1)).save(any(City.class));
+        verify(service, times(1)).save(any(Airport.class));
     }
 
     @Test
-    public void putCityShouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
+    public void putAirportShouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
-        jsonObj.put("name", "Test City Name");
+        jsonObj.put("name", "Test Airport Name");
         jsonObj.put("regionCode", "XXX");
         jsonObj.put("countryCode", "XXX");
-        jsonObj.put("airportCode", "XXX");
+        jsonObj.put("cityCode", "XXX");
 
-        mockMvc.perform(put("/cities")
+        mockMvc.perform(put("/airports")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(jsonObj)))
                 .andExpect(status().isBadRequest());
@@ -106,38 +107,22 @@ public class CityControllerTest {
     }
 
     @Test
-    public void removeCityShouldDeleteCity() throws Exception {
-        JSONObject jsonObj = new JSONObject();
+    public void removeAirportShouldDeleteAirport() throws Exception {
 
-        jsonObj.put("code", "XXX");
-        jsonObj.put("name", "Test City Name");
-        jsonObj.put("regionCode", "XXX");
-        jsonObj.put("countryCode", "XXX");
-        jsonObj.put("airportCode", "XXX");
-
-        mockMvc.perform(delete("/cities")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(jsonObj)))
+        mockMvc.perform(delete("/airports/XXX")
+                .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
-                .andReturn()
-                .getResponse();
+                .andReturn();
 
-        verify(service, times(1)).delete(any(City.class));
+        verify(service, times(1)).delete(anyString());
     }
 
     @Test
-    public void removeCityShouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
-        JSONObject jsonObj = new JSONObject();
-
-        jsonObj.put("name", "Test City Name");
-        jsonObj.put("regionCode", "XXX");
-        jsonObj.put("countryCode", "XXX");
-        jsonObj.put("airportCode", "XXX");
-
-        mockMvc.perform(delete("/cities")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(jsonObj)))
-                .andExpect(status().isBadRequest());
+    public void removeAirportShouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
+        mockMvc.perform(delete("/airports")
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().is4xxClientError())
+                .andReturn();
 
         verifyZeroInteractions(service);
     }

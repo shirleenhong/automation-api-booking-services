@@ -22,10 +22,8 @@ public class CacheConfiguration {
 			"merchant-fee",
 			"insurance-types",
 			"airline-rules",
-			"client-pricing",
-			"client",
-			"default-client",
-			"cities"};
+			"clients",
+			"airports"};
 
 	@Bean
 	public CacheManager cacheManager() {
@@ -37,8 +35,8 @@ public class CacheConfiguration {
 					"merchant-fee",
 					"insurance-types",
 					"airline-rules",
-					"client-pricing",
-					"cities"})
+					"clients",
+					"airports"})
 	@Scheduled(cron = "0 0 0,12 * * *")
 	public void evictAllCache() {
 		logger.info("Cache Evicted!");

@@ -17,7 +17,7 @@ public class Application {
 		{			
 		    MigrationService service = context.getBean(MigrationService.class);
 			//service.migrateProductList();
-			//service.migrateCities();
+			//service.migrateAirports();
 			if ("IN".equals(System.getProperty("spring.profiles.default"))) {
 				//service.migrateClients();
 			} else {

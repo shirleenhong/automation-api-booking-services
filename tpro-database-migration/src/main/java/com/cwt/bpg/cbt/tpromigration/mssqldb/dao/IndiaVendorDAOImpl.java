@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.dao;
 
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +49,7 @@ public class IndiaVendorDAOImpl implements VendorDAO{
             	Vendor tblVendor = new Vendor();
                 tblVendor.setVendorNumber(rs.getString("VendorNumber"));
                 tblVendor.setInterfaceNumber(rs.getString("InterfaceNumber"));
-                tblVendor.setVendorName(rs.getString("VendorName").replaceAll("\\u00A0"," ").trim());
+                tblVendor.setVendorName(rs.getString("VendorName").replaceAll("\\u2013","-").replaceAll("\\u00a0"," ").replaceAll(" +", " ").trim());
                 tblVendor.setContactPerson(rs.getString("ContactPerson"));
                 tblVendor.setAddress(rs.getString("Address"));
                 tblVendor.setCity(rs.getString("City"));

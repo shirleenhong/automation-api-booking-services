@@ -1,13 +1,14 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.model;
 
-public class City {
+public class Airport {
 
-    public static final String COLLECTION = "_cities";
+    public static final String COLLECTION = "airports";
+
     private String name;
     private String code;
     private String regionCode;
     private String countryCode;
-    private String airportCode;
+    private String cityCode;
 
     public String getName() {
         return name;
@@ -41,13 +42,11 @@ public class City {
         this.countryCode = countryCode;
     }
 
-
-
-    public String getAirportCode() {
-        return airportCode;
+    public String getCityCode() {
+        return cityCode;
     }
 
-    public void setAirportCode(String airportCode) {
-        this.airportCode = airportCode;
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
     }
 }

@@ -7,23 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.cwt.bpg.cbt.exchange.order.ProductsRepository;
+import com.cwt.bpg.cbt.exchange.order.ProductRepository;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 
 @Service
 public class ProductsService {
 
 	@Autowired
-	private ProductsRepository productRepo;
+	private ProductRepository productRepo;
 
 	@Cacheable("products")
 	public List<Product> getProducts(String countryCode) {
 
 		final List<Product> products = productRepo.getProducts(countryCode);
 
-		final List<Product> filteredProducts = products.stream().filter(f -> f.getVendors().size() > 0)
+		return products.stream().filter(f -> !f.getVendors().isEmpty())
 				.collect(Collectors.toList());
-
-		return filteredProducts;
 	}
 }

@@ -10,22 +10,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.exchange.order.model.HkSgProductList;
-import com.cwt.bpg.cbt.exchange.order.model.InProductList;
-import com.cwt.bpg.cbt.exchange.order.model.Product;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
-public class ProductsRepository {
+public class ProductRepository
+{
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductsRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepository.class);
     private static final String INDIA_COUNTRY_CODE = "IN";
 
     @Autowired
 	private MorphiaComponent morphia;
 
-    @SuppressWarnings("unchecked")
 	public List<Product> getProducts(String countryCode) {
 
 		List<Product> products = new ArrayList<>();
@@ -45,18 +42,18 @@ public class ProductsRepository {
 		return products;
 	}
 
-	private List getHkSgProducts(String countryCode) {
+	private List<HkSgProduct> getHkSgProducts(String countryCode) {
 		HkSgProductList productList = morphia.getDatastore().createQuery(HkSgProductList.class)
 				.field("countryCode").equal(countryCode).get();
 
-		return productList == null ? Collections.emptyList() : productList.getProducts();
+		return productList == null ? Collections.<HkSgProduct>emptyList() : productList.getProducts();
 	}
 
-	private List getInProducts(String countryCode) {
+	private List<InProduct> getInProducts(String countryCode) {
 		InProductList productList = morphia.getDatastore().createQuery(InProductList.class)
 				.field("countryCode").equal(countryCode).get();
 
-		return productList == null ? Collections.emptyList() : productList.getProducts();
+		return productList == null ? Collections.<InProduct>emptyList() : productList.getProducts();
 	}
 
     private void sort(List<Product> products)
