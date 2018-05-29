@@ -50,7 +50,7 @@ public class NoFeeCalculator extends FeeCalculator {
     }
 
 	@Override
-    public BigDecimal getTotalFee() {
+    public BigDecimal getTotalFee(TransactionFeesInput input, TransactionFeesBreakdown breakdown) {
         return null;
     }
 
