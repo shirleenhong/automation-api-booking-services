@@ -3,10 +3,7 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 import java.math.BigDecimal;
 
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
-import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.TripTypes;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 
 public class FeeCalculator extends CommonCalculator {
 
@@ -50,7 +47,7 @@ public class FeeCalculator extends CommonCalculator {
 			calculatePercentage(calculatePercentage(
 					safeValue(input.getBaseFare())
 						.subtract(input.getAirlineCommission()),
-							input.getAirlineCommisionPercent()), 
+							input.getAirlineCommissionPercent()),
 					input.getReturnOrCommissionPercent());
 		}
 		
