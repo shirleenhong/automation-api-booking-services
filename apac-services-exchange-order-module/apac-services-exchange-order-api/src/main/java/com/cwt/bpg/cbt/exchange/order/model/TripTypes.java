@@ -2,8 +2,8 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 public enum TripTypes {
 	
-	INT(1),
-	DOM(2),
+	INTERNATIONAL(1),
+	DOMESTIC(2),
 	LCC(22);	
 
 	private final int id;
@@ -14,5 +14,12 @@ public enum TripTypes {
 
 	public int getId() {
 		return id;
+	}
+
+	public static boolean isInternational(String tripType) {
+		
+		return tripType != null 
+				? tripType.equalsIgnoreCase(INTERNATIONAL.toString()) 
+				: false;
 	}
 }

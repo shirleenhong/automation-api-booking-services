@@ -8,19 +8,20 @@ import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
 public class NoFeeCalculator extends FeeCalculator {
 
 	@Override
-	public BigDecimal getTotalDiscount(int tripType,
+	public BigDecimal getTotalDiscount(
+			TransactionFeesInput input,
 			TransactionFeesBreakdown breakdown) {
         return null;
     }
 
 	@Override
-    public BigDecimal getTotalOrCom(int tripType,
+    public BigDecimal getTotalOverheadCommission( 
 			TransactionFeesInput input) {
         return null;
     }
 
 	@Override
-    public BigDecimal getTotalOrCom2(int tripType,
+    public BigDecimal getTotalOrCom2( 
 			TransactionFeesInput input) {
         return null;
     }
@@ -38,8 +39,8 @@ public class NoFeeCalculator extends FeeCalculator {
     }
 
 	@Override
-    public BigDecimal getMfOnTf(int tripType,
-			TransactionFeesInput input,
+    public BigDecimal getMfOnTf( 
+			TransactionFeesInput input, 
 			BigDecimal totalGstOnTf) {
         return null;
     }

@@ -1,17 +1,18 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
+import java.math.BigDecimal;
+
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.TripTypes;
 
-import java.math.BigDecimal;
-
 public class NoFeeWithDiscountCalculator extends FeeCalculator {
 
-	public BigDecimal getMfOnTf(int tripType, TransactionFeesInput input, BigDecimal totalGstOnTf) {
-		if (tripType == TripTypes.INT.getId()) {
+	@Override
+	public BigDecimal getMfOnTf(TransactionFeesInput input, BigDecimal totalGstOnTf) {
+		if(TripTypes.isInternational(input.getTripType())) {
 			return null;
 		}else {
-			return super.getMfOnTf(tripType, input, totalGstOnTf);
+			return super.getMfOnTf(input, totalGstOnTf);
 		}
 	}
 }

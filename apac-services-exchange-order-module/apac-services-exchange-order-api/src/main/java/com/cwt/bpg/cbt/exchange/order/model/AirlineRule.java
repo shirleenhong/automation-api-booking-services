@@ -20,6 +20,7 @@ public class AirlineRule implements Serializable {
     @NotNull
     private String code;
 	private boolean includeYqComm;
+	// TODO Spell out commission
 
     public String getCode()
     {

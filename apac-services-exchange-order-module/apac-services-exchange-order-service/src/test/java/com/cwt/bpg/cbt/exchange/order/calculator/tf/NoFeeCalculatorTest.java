@@ -15,17 +15,17 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getTotalDiscountShouldReturnNull() {
-        assertNull(noFeeCalc.getTotalDiscount(0, null));
+        assertNull(noFeeCalc.getTotalDiscount(null, null));
     }
 
     @Test
     public void getTotalOrComShouldReturnNull() {
-        assertNull(noFeeCalc.getTotalOrCom(0, null));
+        assertNull(noFeeCalc.getTotalOverheadCommission(null));
     }
 
     @Test
     public void getTotalOrCom2ShouldReturnNull() {
-        assertNull(noFeeCalc.getTotalOrCom2(0, null));
+        assertNull(noFeeCalc.getTotalOrCom2(null));
     }
 
     @Test
@@ -35,8 +35,8 @@ public class NoFeeCalculatorTest {
     }
 
     @Test
-    public void getMfOnTfShouldReturnNull() {
-        assertNull(noFeeCalc.getMfOnTf(0, null, BigDecimal.ZERO));
+    public void getMfFeeTfShouldReturnNull() {
+        assertNull(noFeeCalc.getMfOnTf(null, BigDecimal.ZERO));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getTotalFeeShouldReturnNull() {
-        assertNull(noFeeCalc.getTotalFee(new TransactionFeesInput(),new TransactionFeesBreakdown()));
+        assertNull(noFeeCalc.getTotalFee(new TransactionFeesInput(), new TransactionFeesBreakdown()));
     }
 
     @Test

@@ -1,6 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.TripTypes;
+
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -15,12 +17,13 @@ public class NoFeeWithDiscountCalculatorTest {
 	@Test
 	public void getMfOnTfShouldReturnNullIfTripTypeInt() {
         TransactionFeesInput input = new TransactionFeesInput();
-		assertNull(noFeeWithDiscountCalculator.getMfOnTf(1, input, new BigDecimal(1)));
+        input.setTripType(TripTypes.INTERNATIONAL.toString());
+		assertNull(noFeeWithDiscountCalculator.getMfOnTf(input, new BigDecimal(1)));
 	}
 
     @Test
     public void getMfOnTfShouldReturnNotNullIfTripTypeNotInt() {
         TransactionFeesInput input = new TransactionFeesInput();
-        assertNotNull(noFeeWithDiscountCalculator.getMfOnTf(2, input, new BigDecimal(1)));
+        assertNotNull(noFeeWithDiscountCalculator.getMfOnTf(input, new BigDecimal(1)));
     }
 }

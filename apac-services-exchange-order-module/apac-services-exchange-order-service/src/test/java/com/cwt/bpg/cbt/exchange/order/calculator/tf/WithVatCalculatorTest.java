@@ -27,7 +27,7 @@ public class WithVatCalculatorTest {
 		breakdown.setTotalTaxes(new BigDecimal(1));
 		breakdown.setTotalGst(new BigDecimal(1));
 		breakdown.setTotalIataCommission(new BigDecimal(1));
-		breakdown.setTotalReturnableOr(new BigDecimal(1));
+		breakdown.setTotalOverheadCommission(new BigDecimal(1));
 
 		BigDecimal expectedResult = baseFare.add(totalTaxes).add(totalGst).subtract(totalAirlineCommission)
 				.subtract(totalReturnableOr);

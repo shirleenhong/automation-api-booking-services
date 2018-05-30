@@ -50,8 +50,8 @@ public class InMiscFeeCalculatorTest {
 		input.setFopMode(4);
 		input.setFopNumber("1234");
 		input.setFopType(FOPTypes.CWT.getCode());
-
-		InProduct product = new InProduct();
+		
+		InProduct product= new InProduct();
 		product.setGst(6D);
 		product.setOt1(3D);
 		product.setOt2(5D);

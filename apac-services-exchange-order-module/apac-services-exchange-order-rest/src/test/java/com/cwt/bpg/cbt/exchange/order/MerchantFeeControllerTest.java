@@ -12,7 +12,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.cwt.bpg.cbt.exchange.order.model.CurrencyCodeRoundRule;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public class MerchantFeeControllerTest {
