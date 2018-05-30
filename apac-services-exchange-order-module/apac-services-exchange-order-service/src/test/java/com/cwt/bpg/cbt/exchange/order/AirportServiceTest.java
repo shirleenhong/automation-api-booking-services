@@ -44,7 +44,7 @@ public class AirportServiceTest {
         Airport result = service.getAirport("MNL");
 
         assertNotNull(result);
-        verify(repository, times(1)).getAirport("MNL");
+        verify(repository, times(1)).get("MNL");
     }
 
     @Test

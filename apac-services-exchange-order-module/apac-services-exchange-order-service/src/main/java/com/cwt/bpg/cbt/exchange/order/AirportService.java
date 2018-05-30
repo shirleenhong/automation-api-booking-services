@@ -21,7 +21,7 @@ public class AirportService {
 
     @Cacheable(cacheNames = "airports", key = "#airportCode")
     public Airport getAirport(String airportCode) {
-        return repository.getAirport(airportCode);
+        return repository.get(airportCode);
     }
 
     @CachePut(cacheNames = "airports", key = "#airport.code")

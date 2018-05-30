@@ -43,7 +43,7 @@ public class AirportRepositoryTest {
         Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
         Mockito.when(fieldEnd.equal(anyString())).thenReturn(query);
 
-        repository.getAirport("MNL");
+        repository.get("MNL");
 
         verify(morphia, times(1)).getDatastore();
         verify(dataStore, times(1)).createQuery(Airport.class);

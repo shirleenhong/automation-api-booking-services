@@ -51,10 +51,10 @@ public class ClientServiceTest {
 	public void canGetSingleClientUsingId() {
 		Client client = new Client();
 		final int id = 9;
-		when(repository.getClient(id)).thenReturn(client);
+		when(repository.get(id)).thenReturn(client);
 		Client result = service.getClient(id);
 		assertNotNull(result);
-		verify(repository, times(1)).getClient(id);
+		verify(repository, times(1)).get(id);
 	}
 	
 	@Test
@@ -71,10 +71,10 @@ public class ClientServiceTest {
 	public void canGetDefaultClient() {
 		Client client = new Client();
 		final int id = -1;
-		when(repository.getClient(id)).thenReturn(client);
+		when(repository.get(id)).thenReturn(client);
 		Client result = service.getDefaultClient();
 		assertNotNull(result);
-		verify(repository, times(1)).getClient(id);
+		verify(repository, times(1)).get(id);
 	}
 	
 }

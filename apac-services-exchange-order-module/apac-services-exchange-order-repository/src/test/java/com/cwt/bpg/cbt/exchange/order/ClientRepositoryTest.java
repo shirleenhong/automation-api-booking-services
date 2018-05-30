@@ -65,7 +65,7 @@ public class ClientRepositoryTest {
 		Mockito.when(fieldEnd.equal(-1)).thenReturn(query);
 		Mockito.when(query.get()).thenReturn(new Client());
 				
-		Client result = repo.getClient(-1);
+		Client result = repo.get(-1);
 		
 		Mockito.verify(morphia, Mockito.times(1)).getDatastore();
 		Mockito.verify(dataStore, Mockito.times(1)).createQuery(Client.class);
