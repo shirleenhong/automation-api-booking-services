@@ -37,20 +37,25 @@ class CommonRepository<T, DataType> {
     List<T> getAll() {
 		return morphia.getDatastore().createQuery(typeClass).asList();
 	}
+    
+    // Basic get based on Key Column
+    T get(DataType criteria) {
+    	return morphia.getDatastore().createQuery(typeClass)
+    			.field(keyColumn)
+    			.equal(criteria)
+    			.get();
+    }
 
 	T put(T object) {
 		final DataType keyValue = getKeyValue(object);
-
 		if (keyValue != null)
         {
             remove(keyValue);
-
             final Datastore datastore = morphia.getDatastore();
             Key<T> newKey = datastore.save(object);
 
             LoggerFactory.getLogger(typeClass).info("Save Result: {}", newKey);
         }
-
 		return object;
 	}
 

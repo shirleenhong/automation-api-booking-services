@@ -3,11 +3,13 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
+@Component
 public class VisaFeesCalculator extends CommonCalculator implements Calculator {
 
     @Autowired

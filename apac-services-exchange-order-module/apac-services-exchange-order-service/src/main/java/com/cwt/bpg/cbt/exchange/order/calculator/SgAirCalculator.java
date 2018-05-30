@@ -3,17 +3,13 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
-import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.ClientTypes;
-import com.cwt.bpg.cbt.exchange.order.model.FOPTypes;
-import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
-import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 
+@Component
 public class SgAirCalculator extends CommonCalculator implements Calculator {
 
 	@Autowired

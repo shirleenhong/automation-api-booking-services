@@ -2,17 +2,15 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import java.math.BigDecimal;
 
-import com.cwt.bpg.cbt.calculator.CommonCalculator;
-import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
-import com.cwt.bpg.cbt.exchange.order.model.Client;
-import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.TripTypes;
+import org.springframework.stereotype.Component;
 
+import com.cwt.bpg.cbt.calculator.CommonCalculator;
+import com.cwt.bpg.cbt.exchange.order.model.*;
+
+@Component("tfCalculator")
 public class FeeCalculator extends CommonCalculator {
 
-	public FeesBreakdown calculate(Client client, TransactionFeesInput input) {
+	public FeesBreakdown calculate(AirlineRule airlineRule, Client client, TransactionFeesInput input) {
 		
 		BigDecimal gstAmount = null;
 		BigDecimal yqTax = null;
@@ -23,17 +21,20 @@ public class FeeCalculator extends CommonCalculator {
 			gstAmount = BigDecimal.ZERO;
 		}
 
-		if(!getAirlineRule(input.getPlatCarrier()).isIncludeYqComm()) {
+		// airlineRule shall be get via platCarrier
+		// TODO: AirlineRuleService to inject or not?
+		if(!airlineRule.isIncludeYqComm()) {
 			yqTax = BigDecimal.ZERO;
 		}
 
 		if(input.isGstEnabled() && client.isExemptTax()) {
-			gstAmount = calculatePercentage(safeValue(input.getBaseFare())
-							.add(input.getYqTax()), input.getProduct().getGst())
-					.add(calculatePercentage(safeValue(input.getBaseFare())
-							.add(input.getYqTax()), input.getProduct().getOt1()))
-					.add(calculatePercentage(safeValue(input.getBaseFare())
-							.add(input.getYqTax()), input.getProduct().getOt2()));
+			final InProduct product = input.getProduct();
+			final BigDecimal baseFarePlusYqTax = safeValue(input.getBaseFare())
+							.add(input.getYqTax());
+			
+			gstAmount = calculatePercentage(baseFarePlusYqTax, product.getGst())
+					.add(calculatePercentage(baseFarePlusYqTax, product.getOt1()))
+					.add(calculatePercentage(baseFarePlusYqTax, product.getOt2()));
 		}
 				
 		if(input.isCommissionEnabled()) {
@@ -54,7 +55,7 @@ public class FeeCalculator extends CommonCalculator {
 		
 		breakdown.setTotalTaxes(safeValue(input.getYqTax())
 									.add(input.getTax1())
-									.add(input.getTax1()));
+									.add(input.getTax2()));
 		
 		breakdown.setTotalGst(gstAmount);
 		breakdown.setTotalSellingFare(getTotalFare(input));
@@ -101,11 +102,6 @@ public class FeeCalculator extends CommonCalculator {
 		return new FeesBreakdown();
 	}
 	
-	private AirlineRule getAirlineRule(String platCarrier) {
-		// TODO Get airline rule, move out to service
-		return new AirlineRule();
-	}
-
 	//TODO Spell out commission
 	public BigDecimal getTotalAirCommission(TransactionFeesInput input) {
 		return safeValue(input.getBaseFare())
@@ -121,8 +117,7 @@ public class FeeCalculator extends CommonCalculator {
 			TransactionFeesInput input,
 			TransactionFeesBreakdown breakdown) {
 		
-		BigDecimal commissionAmount = calculatePercentage(
-					safeValue(breakdown.getTotalIataCommission()),
+		BigDecimal commissionAmount = calculatePercentage(breakdown.getTotalIataCommission(),
 				breakdown.getClientDiscountPercent());
 		
 		if(TripTypes.isInternational(input.getTripType())) {
@@ -137,23 +132,18 @@ public class FeeCalculator extends CommonCalculator {
 	}
 	
 	public BigDecimal getTotalOverheadCommission(TransactionFeesInput input) {
-		
 		if(TripTypes.isInternational(input.getTripType())) {
-			calculatePercentage(calculatePercentage(
-					safeValue(input.getBaseFare())
-						.subtract(input.getAirlineCommission()),
-							input.getAirlineCommissionPercent()),
+			return calculatePercentage(calculatePercentage(safeValue(input.getBaseFare())
+						.subtract(input.getAirlineCommission()), input.getAirlineCommissionPercent()),
 					input.getReturnOrCommissionPercent());
 		}
-		
 		return null;
-
 	}
 
 	public BigDecimal getTotalOrCom2(TransactionFeesInput input) {
 		
 		if(TripTypes.isInternational(input.getTripType())) {
-			calculatePercentage(input.getAirlineOrCommission(), 
+			return calculatePercentage(input.getAirlineOrCommission(), 
 					input.getReturnOrCommissionPercent());
 		}
 		
@@ -165,11 +155,10 @@ public class FeeCalculator extends CommonCalculator {
 			TransactionFeesBreakdown breakdown
 			) {
 		
-		return calculatePercentage(
-				safeValue(breakdown.getTotalSellFare())
-				.subtract(breakdown.getTotalDiscount())
-				.add(breakdown.getTotalTaxes())
-				.add(breakdown.getTotalGst()), input.getMerchantFeePercent());
+		return calculatePercentage(safeValue(breakdown.getTotalSellFare())
+					.subtract(breakdown.getTotalDiscount())
+					.add(breakdown.getTotalTaxes())
+					.add(breakdown.getTotalGst()), input.getMerchantFeePercent());
 	}
 	
 	public BigDecimal getMfOnTf(TransactionFeesInput input, 

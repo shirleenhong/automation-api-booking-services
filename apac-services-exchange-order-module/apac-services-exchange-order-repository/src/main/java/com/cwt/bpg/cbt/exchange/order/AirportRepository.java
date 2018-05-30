@@ -12,8 +12,4 @@ public class AirportRepository extends CommonRepository<Airport, String> {
     public AirportRepository() {
         super(Airport.class, KEY_COLUMN);
     }
-
-    public Airport getAirport(String airportCode) {
-        return morphia.getDatastore().createQuery(Airport.class).field(KEY_COLUMN).equal(airportCode).get();
-    }
 }
