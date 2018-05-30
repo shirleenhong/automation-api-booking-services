@@ -28,12 +28,13 @@ public class FeeCalculator extends CommonCalculator {
 		}
 
 		if(input.isGstEnabled() && client.isExemptTax()) {
+			final InProduct product = input.getProduct();
 			gstAmount = calculatePercentage(safeValue(input.getBaseFare())
-							.add(input.getYqTax()), input.getProduct().getGst())
+							.add(input.getYqTax()), product.getGst())
 					.add(calculatePercentage(safeValue(input.getBaseFare())
-							.add(input.getYqTax()), input.getProduct().getOt1()))
+							.add(input.getYqTax()), product.getOt1()))
 					.add(calculatePercentage(safeValue(input.getBaseFare())
-							.add(input.getYqTax()), input.getProduct().getOt2()));
+							.add(input.getYqTax()), product.getOt2()));
 		}
 				
 		if(input.isCommissionEnabled()) {
@@ -54,7 +55,7 @@ public class FeeCalculator extends CommonCalculator {
 		
 		breakdown.setTotalTaxes(safeValue(input.getYqTax())
 									.add(input.getTax1())
-									.add(input.getTax1()));
+									.add(input.getTax2()));
 		
 		breakdown.setTotalGst(gstAmount);
 		breakdown.setTotalSellingFare(getTotalFare(input));
