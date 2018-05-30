@@ -38,26 +38,4 @@ public class CommonCalculator {
 		}
 		return value;
 	}
-	
-	public static class CommonFunction {
-		private BigDecimal input1;
-		private BigDecimal input2;
-		private BigDecimal input3;
-		
-		public CommonFunction setInput1(BigDecimal a) {
-			this.input1 = safeValue(a);
-			return this;
-		}
-		
-		public CommonFunction setInput2(BigDecimal b) {
-			this.input2 = safeValue(b);
-			return this;
-		}
-		
-		public CommonFunction setInput3(BigDecimal c) {
-			this.input3 = safeValue(c);
-			return this;
-		}
-	}
-
 }
