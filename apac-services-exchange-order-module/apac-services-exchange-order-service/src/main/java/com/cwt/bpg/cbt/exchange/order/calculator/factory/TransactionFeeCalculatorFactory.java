@@ -62,26 +62,26 @@ public class TransactionFeeCalculatorFactory {
 	@PostConstruct
 	public void init() {
 
-		this.serviceMap.put(PricingNames.TRANSACTION_FEE.getId(), this.tfCalculator);
-		this.serviceMap.put(PricingNames.TF_ON_FULL_FARE.getId(), this.tfFullFareCalculator);
-		this.serviceMap.put(PricingNames.TF_ON_NETT_FARE.getId(), this.tfNettFareCalculator);
-		this.serviceMap.put(PricingNames.TF_ON_GROSS_FARE.getId(), this.tfGrossFareCalculator);
-		this.serviceMap.put(PricingNames.TF_ON_FARE.getId(), this.tfFareCalculator);
-		this.serviceMap.put(PricingNames.TF_ON_BASIC.getId(), this.tfBasicCalculator);
-		this.serviceMap.put(PricingNames.NO_FEE.getId(), this.noFeeCalculator);
-		this.serviceMap.put(PricingNames.TF_PLUS_VAT.getId(), this.tfPlusVatCalculator);
-		this.serviceMap.put(PricingNames.TF_REBATE.getId(), this.tfRebateCalculator);
-		this.serviceMap.put(PricingNames.NO_FEE_WITH_DISCOUNT.getId(), this.noFeeWithDiscountCalculator);
-		this.serviceMap.put(PricingNames.TF_ON_BASE_AND_YQ.getId(), this.tfBaseAndYqCalculator);
+		serviceMap.put(PricingNames.TRANSACTION_FEE.getId(), tfCalculator);
+		serviceMap.put(PricingNames.TF_ON_FULL_FARE.getId(), tfFullFareCalculator);
+		serviceMap.put(PricingNames.TF_ON_NETT_FARE.getId(), tfNettFareCalculator);
+		serviceMap.put(PricingNames.TF_ON_GROSS_FARE.getId(), tfGrossFareCalculator);
+		serviceMap.put(PricingNames.TF_ON_FARE.getId(), tfFareCalculator);
+		serviceMap.put(PricingNames.TF_ON_BASIC.getId(), tfBasicCalculator);
+		serviceMap.put(PricingNames.NO_FEE.getId(), noFeeCalculator);
+		serviceMap.put(PricingNames.TF_PLUS_VAT.getId(), tfPlusVatCalculator);
+		serviceMap.put(PricingNames.TF_REBATE.getId(), tfRebateCalculator);
+		serviceMap.put(PricingNames.NO_FEE_WITH_DISCOUNT.getId(), noFeeWithDiscountCalculator);
+		serviceMap.put(PricingNames.TF_ON_BASE_AND_YQ.getId(), tfBaseAndYqCalculator);
 	}
 
 	public FeeCalculator getCalculator(int id) {
 
-		if (this.serviceMap.containsKey(id)) {
-			return this.serviceMap.get(id);
+		if (serviceMap.containsKey(id)) {
+			return serviceMap.get(id);
 		}
 		else {
-			return this.tfCalculator;
+			return tfCalculator;
 		}
 	}
 

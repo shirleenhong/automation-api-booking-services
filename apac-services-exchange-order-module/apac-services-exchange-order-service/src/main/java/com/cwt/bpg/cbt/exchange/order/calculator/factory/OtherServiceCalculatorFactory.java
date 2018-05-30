@@ -26,16 +26,16 @@ public class OtherServiceCalculatorFactory {
 	@PostConstruct
 	public void init(){
 		
-		this.calculatorMap.put(Country.HONG_KONG.getCode(), hkAirCalculator);
-		this.calculatorMap.put(Country.SINGAPORE.getCode(), sgAirCalculator);
-		this.calculatorMap.put(Country.AUSTRALIA.getCode(), sgAirCalculator);
-		this.calculatorMap.put(Country.NEW_ZEALAND.getCode(), sgAirCalculator);
+		calculatorMap.put(Country.HONG_KONG.getCode(), hkAirCalculator);
+		calculatorMap.put(Country.SINGAPORE.getCode(), sgAirCalculator);
+		calculatorMap.put(Country.AUSTRALIA.getCode(), sgAirCalculator);
+		calculatorMap.put(Country.NEW_ZEALAND.getCode(), sgAirCalculator);
 	}
 	
 	public Calculator getCalculator(String countryCode) {
 		
-		if (this.calculatorMap.containsKey(countryCode)) {
-			return this.calculatorMap.get(countryCode);
+		if (calculatorMap.containsKey(countryCode)) {
+			return calculatorMap.get(countryCode);
 		}
 		else {
 			throw new IllegalArgumentException("Country not supported");

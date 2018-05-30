@@ -5,19 +5,19 @@ import java.math.RoundingMode;
 
 public class CommonCalculator {
 
-	protected BigDecimal safeValue(BigDecimal value) {
+	protected static BigDecimal safeValue(BigDecimal value) {
 		return value == null ? BigDecimal.ZERO : value;
 	}
 
-	protected double safeValue(Double value) {
+	protected static double safeValue(Double value) {
 		return value == null ? 0D : value;
 	}
 
-	protected String safeValue(String value) {
+	protected static String safeValue(String value) {
 		return value == null ? "" : value;
 	}
 
-	protected BigDecimal round(BigDecimal amount, int scale) {
+	protected static BigDecimal round(BigDecimal amount, int scale) {
 		if (amount == null) {
 			return null;
 		}
@@ -32,7 +32,7 @@ public class CommonCalculator {
 		return BigDecimal.valueOf(safeValue(value) * 0.01);
 	}
 	
-	protected int safeValue(Integer value) {
+	protected static int safeValue(Integer value) {
 		if (value == null) {
 			return 0;
 		}
