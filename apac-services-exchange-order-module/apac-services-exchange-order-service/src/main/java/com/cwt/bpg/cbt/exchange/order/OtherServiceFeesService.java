@@ -9,17 +9,9 @@ import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.InMiscFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
-import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.Client;
-import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.InMiscFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
-import com.cwt.bpg.cbt.exchange.order.model.MiscFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
+import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Service
 public class OtherServiceFeesService {
@@ -51,6 +43,9 @@ public class OtherServiceFeesService {
 	
 	@Autowired
 	private ClientService clientService;
+	
+	@Autowired 
+	private AirlineRuleService airlineRuleService;
 
 	public FeesBreakdown calculateMiscFee(FeesInput input) {
 		
@@ -64,9 +59,12 @@ public class OtherServiceFeesService {
 
 	
 	public FeesBreakdown calculateAirFee(TransactionFeesInput input) {		
-		return this.tfFactory.getCalculator(
-						getPricingId(input.getProfileName()))
-				.calculate(getClient(input.getProfileName()), input);
+		final Client client = getClient(input.getProfileName());
+		final int pricingId = getPricingId(input.getProfileName());
+		final AirlineRule airlineRule = airlineRuleService.getAirlineRule(input.getPlatCarrier());
+		
+		return this.tfFactory.getCalculator(pricingId)
+				.calculate(airlineRule, client, input);
 	
 	}
 

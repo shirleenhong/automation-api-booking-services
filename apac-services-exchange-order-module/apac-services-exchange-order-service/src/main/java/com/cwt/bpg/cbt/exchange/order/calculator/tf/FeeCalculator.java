@@ -10,7 +10,7 @@ import com.cwt.bpg.cbt.exchange.order.model.*;
 @Component("tfCalculator")
 public class FeeCalculator extends CommonCalculator {
 
-	public FeesBreakdown calculate(Client client, TransactionFeesInput input) {
+	public FeesBreakdown calculate(AirlineRule airlineRule, Client client, TransactionFeesInput input) {
 		
 		BigDecimal gstAmount = null;
 		BigDecimal yqTax = null;
@@ -21,7 +21,9 @@ public class FeeCalculator extends CommonCalculator {
 			gstAmount = BigDecimal.ZERO;
 		}
 
-		if(!getAirlineRule(input.getPlatCarrier()).isIncludeYqComm()) {
+		// airlineRule shall be get via platCarrier
+		// TODO: AirlineRuleService to inject or not?
+		if(!airlineRule.isIncludeYqComm()) {
 			yqTax = BigDecimal.ZERO;
 		}
 
@@ -99,11 +101,6 @@ public class FeeCalculator extends CommonCalculator {
 		return new FeesBreakdown();
 	}
 	
-	private AirlineRule getAirlineRule(String platCarrier) {
-		// TODO Get airline rule, move out to service
-		return new AirlineRule();
-	}
-
 	//TODO Spell out commission
 	public BigDecimal getTotalAirCommission(TransactionFeesInput input) {
 		return safeValue(input.getBaseFare())

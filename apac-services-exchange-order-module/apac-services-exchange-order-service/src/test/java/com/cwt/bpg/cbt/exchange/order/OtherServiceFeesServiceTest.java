@@ -1,12 +1,15 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
@@ -15,12 +18,7 @@ import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.tf.FeeCalculator;
-import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.Client;
-import com.cwt.bpg.cbt.exchange.order.model.FeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 
 public class OtherServiceFeesServiceTest {
 
@@ -48,6 +46,10 @@ public class OtherServiceFeesServiceTest {
 	@Mock
 	private ClientService clientService;
 	
+	@Mock
+	private AirlineRuleService airlineRuleService;
+	
+	
 	@InjectMocks
 	private OtherServiceFeesService service;
 	
@@ -59,7 +61,7 @@ public class OtherServiceFeesServiceTest {
 	@Test
 	public void shouldReturnFeesBreakdown() {
 		
-		Mockito.when(miscFeeCalculator.calculate(Mockito.anyObject(), Mockito.anyObject()))
+		when(miscFeeCalculator.calculate(anyObject(), anyObject()))
 			.thenReturn(new FeesBreakdown());
 		assertNotNull(service.calculateMiscFee(new FeesInput()));
 	}
@@ -67,10 +69,10 @@ public class OtherServiceFeesServiceTest {
 	@Test
 	public void shouldReturnAirFeesBreakdown() {
 		
-		Mockito.when(factory.getCalculator(Mockito.anyString()))
+		when(factory.getCalculator(anyString()))
 			.thenReturn(hkCalculator);
 		
-		Mockito.when(hkCalculator.calculate(Mockito.anyObject(), Mockito.anyObject()))
+		when(hkCalculator.calculate(anyObject(), anyObject()))
 			.thenReturn(new FeesBreakdown());
 		
 		assertNotNull(service.calculateAirFee(new FeesInput()));
@@ -79,7 +81,7 @@ public class OtherServiceFeesServiceTest {
 	@Test
 	public void shouldReturnNettCost() {
 		
-		Mockito.when(nettCostCalculator.calculateFee(Mockito.anyObject(), Mockito.anyObject()))
+		when(nettCostCalculator.calculateFee(anyObject(), anyObject()))
 			.thenReturn(new AirFeesBreakdown());
 		assertNotNull(service.calculateNettCost(new NettCostInput()));
 	}
@@ -87,16 +89,18 @@ public class OtherServiceFeesServiceTest {
 	@Test
 	public void shouldReturnIndiaAirFeesBreakdown() {
 		
-		Mockito.when(tfFactory.getCalculator(Mockito.anyInt()))
+		when(tfFactory.getCalculator(anyInt()))
 			.thenReturn(tfCalculator);
 		
-		Mockito.when(tfCalculator.calculate(Mockito.anyObject(), 
-				Mockito.anyObject()))
+		when(tfCalculator.calculate(anyObject(), anyObject(), 
+				anyObject()))
 			.thenReturn(new FeesBreakdown());
+		
+		when(airlineRuleService.getAirlineRule(anyString())).thenReturn(new AirlineRule());
 		
 		Client client = new Client();
 		client.setPricingId(20);
-		Mockito.when(clientService.getClient(Mockito.anyString()))
+		when(clientService.getClient(anyString()))
 				.thenReturn(client);
 		
 		TransactionFeesInput input = new TransactionFeesInput();
