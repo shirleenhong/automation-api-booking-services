@@ -29,12 +29,12 @@ public class FeeCalculator extends CommonCalculator {
 
 		if(input.isGstEnabled() && client.isExemptTax()) {
 			final InProduct product = input.getProduct();
-			gstAmount = calculatePercentage(safeValue(input.getBaseFare())
-							.add(input.getYqTax()), product.getGst())
-					.add(calculatePercentage(safeValue(input.getBaseFare())
-							.add(input.getYqTax()), product.getOt1()))
-					.add(calculatePercentage(safeValue(input.getBaseFare())
-							.add(input.getYqTax()), product.getOt2()));
+			final BigDecimal baseFarePlusYqTax = safeValue(input.getBaseFare())
+							.add(input.getYqTax());
+			
+			gstAmount = calculatePercentage(baseFarePlusYqTax, product.getGst())
+					.add(calculatePercentage(baseFarePlusYqTax, product.getOt1()))
+					.add(calculatePercentage(baseFarePlusYqTax, product.getOt2()));
 		}
 				
 		if(input.isCommissionEnabled()) {
@@ -117,8 +117,7 @@ public class FeeCalculator extends CommonCalculator {
 			TransactionFeesInput input,
 			TransactionFeesBreakdown breakdown) {
 		
-		BigDecimal commissionAmount = calculatePercentage(
-					safeValue(breakdown.getTotalIataCommission()),
+		BigDecimal commissionAmount = calculatePercentage(breakdown.getTotalIataCommission(),
 				breakdown.getClientDiscountPercent());
 		
 		if(TripTypes.isInternational(input.getTripType())) {
@@ -133,23 +132,18 @@ public class FeeCalculator extends CommonCalculator {
 	}
 	
 	public BigDecimal getTotalOverheadCommission(TransactionFeesInput input) {
-		
 		if(TripTypes.isInternational(input.getTripType())) {
-			calculatePercentage(calculatePercentage(
-					safeValue(input.getBaseFare())
-						.subtract(input.getAirlineCommission()),
-							input.getAirlineCommissionPercent()),
+			return calculatePercentage(calculatePercentage(input.getBaseFare()
+						.subtract(input.getAirlineCommission()), input.getAirlineCommissionPercent()),
 					input.getReturnOrCommissionPercent());
 		}
-		
 		return null;
-
 	}
 
 	public BigDecimal getTotalOrCom2(TransactionFeesInput input) {
 		
 		if(TripTypes.isInternational(input.getTripType())) {
-			calculatePercentage(input.getAirlineOrCommission(), 
+			return calculatePercentage(input.getAirlineOrCommission(), 
 					input.getReturnOrCommissionPercent());
 		}
 		
@@ -161,18 +155,17 @@ public class FeeCalculator extends CommonCalculator {
 			TransactionFeesBreakdown breakdown
 			) {
 		
-		return calculatePercentage(
-				safeValue(breakdown.getTotalSellFare())
-				.subtract(breakdown.getTotalDiscount())
-				.add(breakdown.getTotalTaxes())
-				.add(breakdown.getTotalGst()), input.getMerchantFeePercent());
+		return calculatePercentage(breakdown.getTotalSellFare()
+					.subtract(breakdown.getTotalDiscount())
+					.add(breakdown.getTotalTaxes())
+					.add(breakdown.getTotalGst()), input.getMerchantFeePercent());
 	}
 	
 	public BigDecimal getMfOnTf(TransactionFeesInput input, 
 			BigDecimal totalGstOnTf) {
 
 		if(TripTypes.isInternational(input.getTripType())) {
-			return calculatePercentage(safeValue(input.getFee()).add(totalGstOnTf), 
+			return calculatePercentage(input.getFee().add(totalGstOnTf), 
 					input.getMerchantFeePercent());
 		}
 		
