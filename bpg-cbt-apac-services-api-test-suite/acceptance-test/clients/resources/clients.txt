@@ -7,11 +7,13 @@ Create Test Variables For Client
     [Arguments]    ${client_id}
     Set Test Variable    ${client_id}    
     ${client_products_list}    Split String    ${in_client_products_${client_id}_list}    |
+    Set Test Variable    ${client_products_list}
     : FOR    ${data}    IN    @{client_products_list}
     \    ${data_item}    Split String    ${data}    ,
     \    Set Test Variable    ${${data_item[0]}_products_subject_to_mf__value}    ${data_item[1]}
     \    Set Test Variable    ${${data_item[0]}_products_standard__value}    ${data_item[2]}
     ${client_vendors_list}    Split String    ${in_client_vendors_${client_id}_list}    |
+    Set Test Variable    ${client_vendors_list}    
     : FOR    ${data}    IN    @{client_vendors_list}
     \    ${data_item}    Split String    ${data}    ,
     \    Set Test Variable    ${${data_item[0]}_vendors_percentage__value}    ${data_item[1]}
@@ -37,8 +39,8 @@ Create Test Variables For Client
     \    Set Test Variable    ${${data_item[0]}_end_amount_value}    ${data_item[9]}      
 
 Delete Client And Evict Client Cache
-    [Arguments]    ${airline_code}=ZZ    ${number}=2    ${token}=${default_token}
-    Send Delete Request For Client   ${airline_code}    ${token}
+    [Arguments]    ${client_id}=${client_id}    ${number}=2    ${token}=${default_token}
+    Send Delete Request For Client   ${client_id}    ${token}
     Evict Client Cache    ${number}    ${token}
 
 Evict Client Cache
@@ -77,7 +79,7 @@ Send Delete Request For Client
     Set Test Variable    ${api_flag}    client
     
 Send Put Request For Client
-    [Arguments]    ${code}=${EMPTY}    ${include_yq_comm}=true    ${token}=${default_token}
+    [Arguments]    ${client_list}=${in_client_${client_id}_list}    ${token}=${default_token}
     Create Session    client    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
@@ -85,17 +87,40 @@ Send Put Request For Client
     @{parameters_list_1}    Create List
     @{parameters_list_2}    Create List
     @{parameters_list_3}    Create List
-    ${data_list}    Split String    ${in_client_${client_id}_list}    |
+    ${data_list}    Split String    ${client_list}    |
     : FOR    ${item}    IN    @{data_list}
     \    ${items}    Split String    ${item}    ,
     \    ${is_number}    Check If Parameter Is A Number    ${items[1]}
     \    ${main_details}    Set Variable If    "${is_number}" == "True"    ${main_details}"${items[0]}":${items[1]},    ${main_details}"${items[0]}":"${items[1]}",
-    ${data_list}    Split String    ${in_client_products_${client_id}_list}    |
-    : FOR    ${item}    IN    @{data_list}
+    ${main_details}    Replace String    ${main_details}    "false"    false
+    ${main_details}    Replace String    ${main_details}    "true"    true
+    ${main_details}    Replace String    ${main_details}    "0.0"    0
+    : FOR    ${item}    IN    @{client_products_list}
     \    ${items}    Split String    ${item}    ,
-    \    ${is_number}    Check If Parameter Is A Number    ${items[1]}
-    ${data}    Set Variable    {"code":"${code}","includeYqComm":${include_yq_comm}}
-    ${data}    Replace String    ${data}    "null"    null
+    \    ${details}    Set Variable    {"productCode":"${items[0]}","subjectToMf":${items[1]},"standard":${items[2]}}
+    \    Append To List    ${parameters_list_1}    ${details}
+    ${parameters_count_1}    Get Length    ${parameters_list_1}
+    : FOR    ${i}    IN RANGE    0    ${parameters_count_1}
+    \    ${parameters_1}    Set Variable If    ${i}==0    ${EMPTY}    ${parameters_1},
+    \    ${parameters_1}    Set Variable    ${parameters_1}${parameters_list_1[${i}]}
+    : FOR    ${item}    IN    @{client_vendors_list}
+    \    ${items}    Split String    ${item}    ,
+    \    ${details}    Set Variable    {"vendorName":"${items[0]}","percentage":${items[1]},"standard":${items[2]}}
+    \    Append To List    ${parameters_list_2}    ${details}
+    ${parameters_count_2}    Get Length    ${parameters_list_2}
+    : FOR    ${i}    IN RANGE    0    ${parameters_count_2}
+    \    ${parameters_2}    Set Variable If    ${i}==0    ${EMPTY}    ${parameters_2},
+    \    ${parameters_2}    Set Variable    ${parameters_2}${parameters_list_2[${i}]}
+    : FOR    ${item}    IN    @{client_pricings_list}
+    \    ${items}    Split String    ${item}    ,
+    \    ${details}    Set Variable    {"tripType":"${items[1]}","feeOption":"${items[3]}","group":${items[2]},"cmpid":${items[0]},"transactionFees":[{"feeId":${items[2]},"territoryCodes":["X"],"tfAmount":${${items[2]}_tf_amount_value},"operator":"${${items[2]}_operator_value}","extraAmount":${${items[2]}_extra_amount_value},"perAmount":${${items[2]}_per_amount_value},"minAmount":${${items[2]}_min_amount_value},"maxAmount":${${items[2]}_max_amount_value},"startAmount":${${items[2]}_start_amount_value},"endAmount":${${items[2]}_end_amount_value}}]}
+    \    Append To List    ${parameters_list_3}    ${details}
+    ${parameters_count_3}    Get Length    ${parameters_list_3}
+    : FOR    ${i}    IN RANGE    0    ${parameters_count_3}
+    \    ${parameters_3}    Set Variable If    ${i}==0    ${EMPTY}    ${parameters_3},
+    \    ${parameters_3}    Set Variable    ${parameters_3}${parameters_list_3[${i}]}
+    ${data}    Set Variable    {${main_details}"mfProducts":[${parameters_1}],"mfCcs":[${parameters_2}],"clientPricings":[${parameters_3}]}
+    Comment    Create File    ${EXECDIR}/file_with_products_vendors.txt    ${data}
     ${response}    Put Request    client    /apac-services-rest/api/clients    data=${data}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
@@ -103,12 +128,13 @@ Send Put Request For Client
     Set Test Variable    ${api_flag}    client
 
 Update Client To Original Value And Evict Client Cache
-    [Arguments]    ${airline_code}=9W    ${include_yq_comm}=true    ${number}=2    ${token}=${default_token}
-    Send Put Request For Client    ${airline_code}    ${include_yq_comm}    ${token}
+    [Arguments]    ${client_list}=${in_client_${client_id}_list}    ${number}=2    ${token}=${default_token}
+    Send Put Request For Client    ${client_list}    ${token}
     Evict Client Cache    ${number}    ${token}
     
 Verify Client Are Correctly Retrieved
-    ${data_list}    Split String    ${in_client_${client_id}_list}    |
+    [Arguments]    ${client_list}=${in_client_${client_id}_list}
+    ${data_list}    Split String    ${client_list}    |
     : FOR    ${item}    IN    @{data_list}
     \    ${items}    Split String    ${item}    ,
     \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.${items[0]}    ${items[1]}
@@ -155,6 +181,8 @@ Verify Client Products Are Correctly Retrieved
     \    ${item}    Remove String    ${item}    }
     \    ${item}    Replace String    ${item}    :    ,
     \    ${items}    Split String    ${item}    ,
+    \    Log   ${items[3].strip()} 
+    \    Log    {${items[1].strip()}
     \    Verify Actual Value Matches Expected Value    ${items[3].strip()}    ${${items[1]}_products_subject_to_mf__value}
     \    Verify Actual Value Matches Expected Value    ${items[5].strip()}    ${${items[1]}_products_standard__value}
 

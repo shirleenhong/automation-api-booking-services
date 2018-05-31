@@ -68,7 +68,7 @@ Verify That Error Is Encountered When Null Airline Code Is Used During Put Reque
     [Teardown]    Evict Airline Rules Cache    
 
 Verify That Error Is Encountered When Empty Airline Code Is Used During Put Request
-    [Tags]    functional
+    [Tags]    not-ready
     Send Put Request For Airline Rules    airline_code=${EMPTY}    include_yq_comm=false
     Verify Response Status Code Is Correct    400
     Create Test Variables For Airline Rules    
@@ -87,36 +87,6 @@ Verify That Error Is Encountered When Invalid YQ Comm Is Used During Put Request
     Verify Airline Rules Are Correctly Retrieved
     [Teardown]    Evict Airline Rules Cache    
 
-Verify That Error Is Encountered When Null YQ Comm Is Used During Put Request
-    [Tags]    functional
-    Send Put Request For Airline Rules    airline_code=9W    include_yq_comm=null
-    Verify Response Status Code Is Correct    400
-    Create Test Variables For Airline Rules    
-    Send Get Request For Airline Rules    
-    Verify Response Status Code Is Correct    200
-    Verify Airline Rules Are Correctly Retrieved
-    [Teardown]    Evict Airline Rules Cache    
-
-Verify That Error Is Encountered When Empty YQ Comm Is Used During Put Request
-    [Tags]    functional
-    Send Put Request For Airline Rules    airline_code=9W    include_yq_comm=${EMPTY}
-    Verify Response Status Code Is Correct    400
-    Create Test Variables For Airline Rules    
-    Send Get Request For Airline Rules    
-    Verify Response Status Code Is Correct    200
-    Verify Airline Rules Are Correctly Retrieved
-    [Teardown]    Evict Airline Rules Cache    
-
-Verify That Error Is Encountered When No YQ Comm Is Used During Put Request
-    [Tags]    functional
-    Send Put Request For Airline Rules    airline_code=9W    include_yq_comm=None
-    Verify Response Status Code Is Correct    400
-    Create Test Variables For Airline Rules    
-    Send Get Request For Airline Rules    
-    Verify Response Status Code Is Correct    200
-    Verify Airline Rules Are Correctly Retrieved
-    [Teardown]    Evict Airline Rules Cache    
-    
 Verify That No Error Is Encountered When Invalid Airline Code Is Used During Delete Request
     [Tags]    functional
     [Setup]    Evict Airline Rules Cache    
