@@ -171,7 +171,7 @@ Verify Client Pricings Transaction Fees Are Correctly Retrieved
     \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].endAmount    ${${item_fee_id}_end_amount_value}
    
 Verify Client Products Are Correctly Retrieved
-    ${products_list}    Get Json Value As String    ${response.content}    $.mfProducts
+    ${products_list}    Get Json Value As String    ${response.content}    $..mfProducts
     ${data}    Remove String    ${products_list}    [
     ${data}    Remove String    ${data}    ]
     ${data_list}    Split String    ${data}    },{
@@ -187,7 +187,7 @@ Verify Client Products Are Correctly Retrieved
     \    Verify Actual Value Matches Expected Value    ${items[5].strip()}    ${${items[1]}_products_standard__value}
 
 Verify Client Vendors Are Correctly Retrieved
-    ${vendors_list}    Get Json Value As String    ${response.content}    $.mfCcs
+    ${vendors_list}    Get Json Value As String    ${response.content}    $..mfCcs
     ${data}    Remove String    ${vendors_list}    [
     ${data}    Remove String    ${data}    ]
     ${data_list}    Split String    ${data}    },{
