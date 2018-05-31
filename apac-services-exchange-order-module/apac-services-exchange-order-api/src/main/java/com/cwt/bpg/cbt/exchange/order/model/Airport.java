@@ -8,7 +8,9 @@ import java.io.Serializable;
 @Entity(value = "airports", noClassnameStored = true)
 public class Airport implements Serializable {
 
-    @NotNull
+	private static final long serialVersionUID = 7858317666413989443L;
+
+	@NotNull
     private String code;
 
     private String name;
