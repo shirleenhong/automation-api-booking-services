@@ -6,12 +6,14 @@ Resource    resources/airline-rules.txt
 
 *** Test Cases ***
 Verify That Airline Rules Are Correctly Retrieved
+    [Tags]    functional
     Create Test Variables For Airline Rules
     Send Get Request For Airline Rules
     Verify Response Status Code Is Correct    200
     Verify Airline Rules Are Correctly Retrieved
     
 Verify That Airline Rules Are Updated Correctly After Put Request
+    [Tags]    functional
     Create Test Variables For Airline Rules
     Send Get Request For Airline Rules
     Verify Response Status Code Is Correct    200
@@ -26,6 +28,7 @@ Verify That Airline Rules Are Updated Correctly After Put Request
     [Teardown]    Update Airline Rules To Original Value And Evict Airline Rules Cache    
     
 Verify That Airline Rules Are Added Correctly After Put Request
+    [Tags]    functional
     Create Test Variables For Airline Rules
     Send Get Request For Airline Rules
     Verify Response Status Code Is Correct    200
@@ -40,6 +43,7 @@ Verify That Airline Rules Are Added Correctly After Put Request
     [Teardown]    Delete Airline Rules And Evict Airline Rules Cache
     
 Verify That Airline Rules Are Deleted Correctly After Delete Request
+    [Tags]    functional
     Create Test Variables For Airline Rules
     Send Get Request For Airline Rules
     Verify Response Status Code Is Correct    200
@@ -59,7 +63,3 @@ Verify That Airline Rules Are Deleted Correctly After Delete Request
     Verify Response Status Code Is Correct    200
     Verify Airline Rules Are Correctly Retrieved
     [Teardown]    Evict Airline Rules Cache 
-    
-Test
-    ${list}    Split String    ${in_client_pricings_74_list}    |    
-    ${length}    Get Length    ${list}   
