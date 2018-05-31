@@ -2,57 +2,61 @@
 Resource          ../resources/api-variables.txt
 Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-imports.txt
-Resource    resources/client-pricing.txt
+Resource    resources/clients.txt
 
 *** Test Cases ***
 Verify That Error Is Encountered When Invalid Token Is Used
     [Tags]    functional
-    Send Get Request For Client Pricing    token=12345.12345.12345
+    Send Get Request For Client    client_id=5000    token=12345.12345.12345
     Verify Response Status Code Is Correct    401
-    Verify Client Pricing Are Not Retrieved
-    Send Put Request For Client Pricing    token=12345.12345.12345
+    Verify Client Are Not Retrieved
+    Create Test Variables For Client    client_id=5000  
+    Send Put Request For Client    token=12345.12345.12345
     Verify Response Status Code Is Correct    401
-    Verify Client Pricing Are Not Retrieved
-    Send Delete Request For Client Pricing   airline_code=ZZ    token=12345.12345.12345
+    Verify Client Are Not Retrieved
+    Send Delete Request For Client   airline_code=ZZ    token=12345.12345.12345
     Verify Response Status Code Is Correct    401
-    Verify Client Pricing Are Not Retrieved
-    [Teardown]    Evict Client Pricing Cache        
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache        
 
 Verify That Error Is Encountered When Null Token Is Used
     [Tags]    functional
-    Send Get Request For Client Pricing    token=null
+    Send Get Request For Client    client_id=5000    token=null
     Verify Response Status Code Is Correct    401
-    Verify Client Pricing Are Not Retrieved
-    Send Put Request For Client Pricing    token=null
+    Verify Client Are Not Retrieved
+    Create Test Variables For Client    client_id=5000  
+    Send Put Request For Client    token=null
     Verify Response Status Code Is Correct    401
-    Verify Client Pricing Are Not Retrieved
-    Send Delete Request For Client Pricing   airline_code=ZZ    token=null
+    Verify Client Are Not Retrieved
+    Send Delete Request For Client   client_id=5000    token=null
     Verify Response Status Code Is Correct    401
-    Verify Client Pricing Are Not Retrieved
-    [Teardown]    Evict Client Pricing Cache       
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache       
 
 Verify That Error Is Encountered When Empty Token Is Used
     [Tags]    functional
-    Send Get Request For Client Pricing    token=${EMPTY}
+    Send Get Request For Client    client_id=5000    token=${EMPTY}
     Verify Response Status Code Is Correct    400
-    Verify Client Pricing Are Not Retrieved
-    Send Put Request For Client Pricing    token=${EMPTY}
+    Verify Client Are Not Retrieved
+    Create Test Variables For Client    client_id=5000  
+    Send Put Request For Client    token=${EMPTY}
     Verify Response Status Code Is Correct    400
-    Verify Client Pricing Are Not Retrieved
-    Send Delete Request For Client Pricing   airline_code=ZZ    token=${EMPTY}
+    Verify Client Are Not Retrieved
+    Send Delete Request For Client   client_id=5000    token=${EMPTY}
     Verify Response Status Code Is Correct    400
-    Verify Client Pricing Are Not Retrieved
-    [Teardown]    Evict Client Pricing Cache       
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache       
 
 Verify That Error Is Encountered When No Token Is Used
     [Tags]    functional
-    Send Get Request For Client Pricing    token=None
+    Send Get Request For Client    client_id=5000    token=None
     Verify Response Status Code Is Correct    400
-    Verify Client Pricing Are Not Retrieved
-    Send Put Request For Client Pricing    token=None
+    Verify Client Are Not Retrieved
+    Create Test Variables For Client    client_id=5000  
+    Send Put Request For Client    token=None
     Verify Response Status Code Is Correct    400
-    Verify Client Pricing Are Not Retrieved
-    Send Delete Request For Client Pricing  airline_code=ZZ    token=None
+    Verify Client Are Not Retrieved
+    Send Delete Request For Client  client_id=74    token=None
     Verify Response Status Code Is Correct    400
-    Verify Client Pricing Are Not Retrieved
-    [Teardown]    Evict Client Pricing Cache    
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache    
