@@ -6,27 +6,25 @@ import javax.validation.constraints.NotNull;
 
 public class VisaFeesInput extends FeesInput {
 
-    private static final long serialVersionUID = -5761273312586606568L;
+	private static final long serialVersionUID = -5761273312586606568L;
 
-    private boolean nettCostMerchantFeeChecked;
+	private boolean nettCostMerchantFeeChecked;
 	private boolean cwtHandlingMerchantFeeChecked;
 	private BigDecimal nettCost;
-    @NotNull
+	@NotNull
 	private BigDecimal cwtHandling;
-    @NotNull
+	@NotNull
 	private BigDecimal vendorHandling;
 
-    public BigDecimal getNettCost()
-    {
-        return nettCost;
-    }
+	public BigDecimal getNettCost() {
+		return nettCost;
+	}
 
-    public void setNettCost(BigDecimal nettCost)
-    {
-        this.nettCost = nettCost;
-    }
+	public void setNettCost(BigDecimal nettCost) {
+		this.nettCost = nettCost;
+	}
 
-    public boolean isNettCostMerchantFeeChecked() {
+	public boolean isNettCostMerchantFeeChecked() {
 		return nettCostMerchantFeeChecked;
 	}
 

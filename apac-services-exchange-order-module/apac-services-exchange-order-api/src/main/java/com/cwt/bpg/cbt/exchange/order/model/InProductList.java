@@ -10,20 +10,18 @@ import org.mongodb.morphia.annotations.Indexes;
 @Entity("productList")
 @Indexes(@Index(fields = @Field("countryCode")))
 public class InProductList {
-    private String countryCode;
+	private String countryCode;
 	private List<InProduct> products;
 
-    public String getCountryCode()
-    {
-        return countryCode;
-    }
+	public String getCountryCode() {
+		return countryCode;
+	}
 
-    public void setCountryCode(String countryCode)
-    {
-        this.countryCode = countryCode;
-    }
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 
-    public List<InProduct> getProducts() {
+	public List<InProduct> getProducts() {
 		return products;
 	}
 
