@@ -6,12 +6,14 @@ Resource    resources/clients.txt
 
 *** Test Cases ***
 Verify That Clients Are Correctly Retrieved
+    [Tags]    functional
     Create Test Variables For Client    client_id=74     
     Send Get Request For Client    client_id=74    
     Verify Response Status Code Is Correct    200
     Verify Client Are Correctly Retrieved
     
 Verify That Clients Are Updated Correctly After Put Request
+    [Tags]    functional
     Create Test Variables For Client    client_id=74    
     Send Get Request For Client    client_id=74      
     Verify Response Status Code Is Correct    200
@@ -26,6 +28,7 @@ Verify That Clients Are Updated Correctly After Put Request
     [Teardown]    Update Client To Original Value And Evict Client Cache      
     
 Verify That Clients Are Added Correctly After Put Request
+    [Tags]    functional
     Create Test Variables For Client    client_id=5000  
     Send Put Request For Client
     Verify Response Status Code Is Correct    200
@@ -36,6 +39,7 @@ Verify That Clients Are Added Correctly After Put Request
     [Teardown]    Delete Client And Evict Client Cache    
     
 Verify That Clients Are Deleted Correctly After Delete Request
+    [Tags]    functional
     Create Test Variables For Client    client_id=5000  
     Send Put Request For Client
     Verify Response Status Code Is Correct    200
@@ -49,12 +53,4 @@ Verify That Clients Are Deleted Correctly After Delete Request
     Send Get Request For Client    client_id=5000    
     Verify Response Status Code Is Correct    200
     Verify Client Are Not Retrieved
-    [Teardown]    Evict Client Cache
-    
-Test
-    Create Test Variables For Client    client_id=5000  
-    Send Put Request For Client
-    Verify Response Status Code Is Correct    200
-    Send Get Request For Client    client_id=74
-    Verify Response Status Code Is Correct    200   
-    Verify Client Are Correctly Retrieved       
+    [Teardown]    Evict Client Cache  
