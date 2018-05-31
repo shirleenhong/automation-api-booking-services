@@ -49,7 +49,7 @@ Evict Client Cache
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
     : FOR    ${index}    IN RANGE    0    ${number}
-    \    ${response}    Get Request    client    /apac-services-rest/api/caches/evict/client    headers=${headers}
+    \    ${response}    Get Request    client    /apac-services-rest/api/caches/evict/clients    headers=${headers}
     \    Set Test Variable    ${response}
     \    Verify Response Status Code Is Correct    200
     \    Log    ${response.headers}

@@ -59,4 +59,76 @@ Verify That Error Is Encountered When No Token Is Used
     Send Delete Request For Client  client_id=74    token=None
     Verify Response Status Code Is Correct    400
     Verify Client Are Not Retrieved
-    [Teardown]    Evict Client Cache    
+    [Teardown]    Evict Client Cache
+    
+Verify That Error Is Encountered When Null Client Id Is Used During Get Request
+    [Tags]    functional
+    Send Get Request For Client    client_id=null
+    Verify Response Status Code Is Correct    400 
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache 
+
+Verify That Error Is Encountered When Invalid Client Id Is Used During Get Request
+    [Tags]    functional
+    Send Get Request For Client    client_id=#$$%&
+    Verify Response Status Code Is Correct    405 
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache  
+
+Verify That Error Is Encountered When Empty Client Id Is Used During Get Request
+    [Tags]    functional
+    Send Get Request For Client    client_id=${EMPTY}
+    Verify Response Status Code Is Correct    405 
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache
+
+Verify That Error Is Encountered When No Client Id Is Used During Get Request
+    [Tags]    functional
+    Send Get Request For Client    client_id=None
+    Verify Response Status Code Is Correct    400 
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache
+
+Verify That Error Is Encountered When Invalid Client Id Is Used During Put Request
+    [Tags]    functional
+    Create Test Variables For Client    client_id=5000
+    Send Put Request For Client    client_list=clientId,@#$#@|cmpid,83|name,TEST-PNQ|profileName,TEST-SIEMENSINVPNQ|pricingId,10|exemptTax,false|standardMfProduct,false|applyMfCc,false|applyMfBank,false|merchantFee,0.0|lccSameAsInt,false|lccDdlFeeApply,TF|intDdlFeeApply,TF
+    Verify Response Status Code Is Correct    400 
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache
+    
+Verify That Error Is Encountered When No Client Id Is Used During Put Request
+    [Tags]    functional
+    Create Test Variables For Client    client_id=5000
+    Send Put Request For Client    client_list=clientId,None|cmpid,83|name,TEST-PNQ|profileName,TEST-SIEMENSINVPNQ|pricingId,10|exemptTax,false|standardMfProduct,false|applyMfCc,false|applyMfBank,false|merchantFee,0.0|lccSameAsInt,false|lccDdlFeeApply,TF|intDdlFeeApply,TF
+    Verify Response Status Code Is Correct    400 
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache
+    
+Verify That Error Is Encountered When Null Client Id Is Used During Delete Request
+    [Tags]    functional
+    Send Delete Request For Client    client_id=null
+    Verify Response Status Code Is Correct    400 
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache
+    
+Verify That Error Is Encountered When Invalid Client Id Is Used During Delete Request
+    [Tags]    functional
+    Send Get Request For Client    client_id=*&&^^%
+    Verify Response Status Code Is Correct    400 
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache  
+    
+Verify That Error Is Encountered When No Client Id Is Used During Delete Request
+    [Tags]    functional
+    Send Get Request For Client    client_id=None
+    Verify Response Status Code Is Correct    400 
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache   
+    
+Verify That Error Is Encountered When Empty Client Id Is Used During Delete Request
+    [Tags]    functional
+    Send Get Request For Client    client_id=${EMPTY}
+    Verify Response Status Code Is Correct    405 
+    Verify Client Are Not Retrieved
+    [Teardown]    Evict Client Cache             
