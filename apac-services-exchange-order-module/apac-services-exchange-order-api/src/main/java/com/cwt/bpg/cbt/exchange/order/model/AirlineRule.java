@@ -13,32 +13,28 @@ import org.mongodb.morphia.annotations.Indexes;
 @Entity(value = "airlineRules", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("code")))
 public class AirlineRule implements Serializable {
-	
-    private static final long serialVersionUID = -3604480842389246624L;
-    
-    @Id
-    @NotNull
-    private String code;
+
+	private static final long serialVersionUID = -3604480842389246624L;
+
+	@Id
+	@NotNull
+	private String code;
 	private boolean includeYqComm;
 	// TODO Spell out commission
 
-    public String getCode()
-    {
-        return code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(String code)
-    {
-        this.code = code;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public boolean isIncludeYqComm()
-    {
-        return includeYqComm;
-    }
+	public boolean isIncludeYqComm() {
+		return includeYqComm;
+	}
 
-    public void setIncludeYqComm(boolean includeYqComm)
-    {
-        this.includeYqComm = includeYqComm;
-    }
+	public void setIncludeYqComm(boolean includeYqComm) {
+		this.includeYqComm = includeYqComm;
+	}
 }

@@ -26,6 +26,26 @@ public class TransactionFeesInput extends FeesInput {
 	
 	private InProduct product;
 	
+	private boolean feeOverride;
+	
+	private String cityCode;
+	
+	public String getCityCode() {
+		return cityCode;
+	}
+
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+
+	public boolean isFeeOverride() {
+		return feeOverride;
+	}
+
+	public void setFeeOverride(boolean feeOverride) {
+		this.feeOverride = feeOverride;
+	}
+
 	public BigDecimal getBaseFare() {
 		return baseFare;
 	}

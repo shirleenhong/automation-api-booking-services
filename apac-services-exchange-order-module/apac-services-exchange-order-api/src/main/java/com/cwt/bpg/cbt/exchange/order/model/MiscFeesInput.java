@@ -5,8 +5,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class MiscFeesInput extends FeesInput
-{
+public class MiscFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = 7271039286429340584L;
 
@@ -20,13 +19,12 @@ public class MiscFeesInput extends FeesInput
 	protected Double gstPercent;
 	protected BigDecimal nettCost;
 
-    public MiscFeesInput()
-    {
-        this.sellingPrice = BigDecimal.ZERO;
-        this.gstPercent = 0d;
-    }
+	public MiscFeesInput() {
+		this.sellingPrice = BigDecimal.ZERO;
+		this.gstPercent = 0d;
+	}
 
-    public String getFopType() {
+	public String getFopType() {
 		return fopType;
 	}
 

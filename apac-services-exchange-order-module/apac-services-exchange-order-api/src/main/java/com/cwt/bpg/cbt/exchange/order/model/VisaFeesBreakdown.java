@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 
 public class VisaFeesBreakdown extends FeesBreakdown {
 
-    private static final long serialVersionUID = 1879405764903602533L;
+	private static final long serialVersionUID = 1879405764903602533L;
 
-    private BigDecimal sellingPriceInDi;
+	private BigDecimal sellingPriceInDi;
 	private BigDecimal sellingPrice;
 	private BigDecimal nettCostMerchantFee;
 	private BigDecimal cwtHandlingMerchantFee;
@@ -17,17 +17,15 @@ public class VisaFeesBreakdown extends FeesBreakdown {
 		this.commission = BigDecimal.ZERO;
 	}
 
-    public BigDecimal getSellingPriceInDi()
-    {
-        return sellingPriceInDi;
-    }
+	public BigDecimal getSellingPriceInDi() {
+		return sellingPriceInDi;
+	}
 
-    public void setSellingPriceInDi(BigDecimal sellingPriceInDi)
-    {
-        this.sellingPriceInDi = sellingPriceInDi;
-    }
+	public void setSellingPriceInDi(BigDecimal sellingPriceInDi) {
+		this.sellingPriceInDi = sellingPriceInDi;
+	}
 
-    public BigDecimal getSellingPrice() {
+	public BigDecimal getSellingPrice() {
 		return sellingPrice;
 	}
 
@@ -35,23 +33,19 @@ public class VisaFeesBreakdown extends FeesBreakdown {
 		this.sellingPrice = sellingPrice;
 	}
 
-    public BigDecimal getNettCostMerchantFee()
-    {
-        return nettCostMerchantFee;
-    }
+	public BigDecimal getNettCostMerchantFee() {
+		return nettCostMerchantFee;
+	}
 
-    public void setNettCostMerchantFee(BigDecimal nettCostMerchantFee)
-    {
-        this.nettCostMerchantFee = nettCostMerchantFee;
-    }
+	public void setNettCostMerchantFee(BigDecimal nettCostMerchantFee) {
+		this.nettCostMerchantFee = nettCostMerchantFee;
+	}
 
-    public BigDecimal getCwtHandlingMerchantFee()
-    {
-        return cwtHandlingMerchantFee;
-    }
+	public BigDecimal getCwtHandlingMerchantFee() {
+		return cwtHandlingMerchantFee;
+	}
 
-    public void setCwtHandlingMerchantFee(BigDecimal cwtHandlingMerchantFee)
-    {
-        this.cwtHandlingMerchantFee = cwtHandlingMerchantFee;
-    }
+	public void setCwtHandlingMerchantFee(BigDecimal cwtHandlingMerchantFee) {
+		this.cwtHandlingMerchantFee = cwtHandlingMerchantFee;
+	}
 }

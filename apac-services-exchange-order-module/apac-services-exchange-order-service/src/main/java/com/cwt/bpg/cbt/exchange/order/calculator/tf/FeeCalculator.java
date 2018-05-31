@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
@@ -61,25 +62,7 @@ public class FeeCalculator extends CommonCalculator {
 		breakdown.setTotalSellingFare(getTotalFare(input));
 		breakdown.setBaseAmount(getTotalFee(input, breakdown));
 		
-		/*
-		If Fee Override Checkbox is Unchecked Then
-		   ClientPricing = client.getClientPricings where triptype = ttype and cmpid = ????
-		   FeeOption = ClientPricing.FeeOption
-		   ApplyFee = client.lccsameasint ? client.intddlfeeapply : client.lccddlfeeapply
-		   
-			If ApplyFee <> "NA" Then
-				If FeeOption = "P" Then
-					Transaction Fee = Transaction Fee by PNR
-				ElseIf FeeOption = "C" Then
-					Transaction Fee = Transaction Fee by Coupon
-				ElseIf FeeOption = "T" Then
-					Transaction Fee = Transaction Fee by Tkt
-				End If
-			Else
-				Transaction Fee = 0
-			End If
-		End If
-		*/
+		BigDecimal transactionFee = getTransactionFee(client, input, breakdown);
 		
 		breakdown.setTotalMerchantFee(getMerchantFee(input, breakdown));
 		
@@ -100,6 +83,65 @@ public class FeeCalculator extends CommonCalculator {
 		End If			
 		*/
 		return new FeesBreakdown();
+	}
+
+	private BigDecimal getTransactionFee(Client client, TransactionFeesInput input, TransactionFeesBreakdown breakdown) {
+
+
+		/*
+		If Fee Override Checkbox is Unchecked Then
+		   ClientPricing = client.getClientPricings where triptype = ttype and cmpid = ????
+		   FeeOption = ClientPricing.FeeOption
+		   ApplyFee = client.lccsameasint ? client.intddlfeeapply : client.lccddlfeeapply
+		   
+			If ApplyFee <> "NA" Then
+				If FeeOption = "P" Then
+					Transaction Fee = Transaction Fee by PNR
+				ElseIf FeeOption = "C" Then
+					Transaction Fee = Transaction Fee by Coupon
+				ElseIf FeeOption = "T" Then
+					Transaction Fee = Transaction Fee by Tkt
+				End If
+			Else
+				Transaction Fee = 0
+			End If
+		End If
+		*/
+		
+		if (!input.isFeeOverride()) {
+			// cmpid needed?
+			Optional<ClientPricing> cp = client.getClientPricings().stream()
+							.filter(i -> i.getTripType().equals(input.getTripType()))
+							.findFirst();
+			
+			if (cp.isPresent()) {
+				final ClientPricing clientPricing = cp.get();
+				final String feeOption = clientPricing.getFeeOption();
+				
+				final String applyFee = client.getLccSameAsInt() == true ? 
+						client.getIntDdlFeeApply() : client.getLccDdlFeeApply();
+						
+				if (!applyFee.equals("NA")) {
+					if (feeOption.equals("P")) {
+						// transaction fee by PNR
+						BigDecimal totalFee = getTotalFee(input, breakdown);
+					}
+					else if (feeOption.equals("C")) {
+						// transaction fee by coupon
+						
+					}
+					else if (feeOption.equals("T")) {
+						// transaction fee by ticket
+					}
+					else {
+						// Fee == 0
+						return BigDecimal.ZERO;
+					}
+				}
+			}
+			
+		}
+		return null;
 	}
 	
 	//TODO Spell out commission
