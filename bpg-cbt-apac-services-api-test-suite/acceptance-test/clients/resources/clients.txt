@@ -1,11 +1,12 @@
 *** Setting ***
-Resource    ../../resources/api-imports.txt
-Resource    ../../resources/api-utilities.txt
-Resource    ../../resources/api-variables.txt
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
+
 *** Keywords ***
 Create Test Variables For Client
     [Arguments]    ${client_id}
-    Set Test Variable    ${client_id}    
+    Set Test Variable    ${client_id}
     ${client_products_list}    Split String    ${in_client_products_${client_id}_list}    |
     Set Test Variable    ${client_products_list}
     : FOR    ${data}    IN    @{client_products_list}
@@ -13,7 +14,7 @@ Create Test Variables For Client
     \    Set Test Variable    ${${data_item[0]}_products_subject_to_mf__value}    ${data_item[1]}
     \    Set Test Variable    ${${data_item[0]}_products_standard__value}    ${data_item[2]}
     ${client_vendors_list}    Split String    ${in_client_vendors_${client_id}_list}    |
-    Set Test Variable    ${client_vendors_list}    
+    Set Test Variable    ${client_vendors_list}
     : FOR    ${data}    IN    @{client_vendors_list}
     \    ${data_item}    Split String    ${data}    ,
     \    Set Test Variable    ${${data_item[0]}_vendors_percentage__value}    ${data_item[1]}
@@ -25,22 +26,22 @@ Create Test Variables For Client
     \    Set Test Variable    ${${data_item[0]}_${data_item[1]}_client_pricings_group__value}    ${data_item[2]}
     \    Set Test Variable    ${${data_item[0]}_${data_item[1]}_client_pricings_fee_option__value}    ${data_item[3]}
     ${client_pricings_transaction_fees_list}    Split String    ${in_client_pricings_transaction_fees_${client_id}_list}    |
-    Set Test Variable    ${client_pricings_transaction_fees_list}    
+    Set Test Variable    ${client_pricings_transaction_fees_list}
     : FOR    ${data}    IN    @{client_pricings_transaction_fees_list}
     \    ${data_item}    Split String    ${data}    ,
     \    Set Test Variable    ${${data_item[0]}_territory_codes_value}    ${data_item[1]}
-    \    Set Test Variable    ${${data_item[0]}_tf_amount_value}    ${data_item[2]}  
-    \    Set Test Variable    ${${data_item[0]}_operator_value}    ${data_item[3]}   
+    \    Set Test Variable    ${${data_item[0]}_tf_amount_value}    ${data_item[2]}
+    \    Set Test Variable    ${${data_item[0]}_operator_value}    ${data_item[3]}
     \    Set Test Variable    ${${data_item[0]}_extra_amount_value}    ${data_item[4]}
-    \    Set Test Variable    ${${data_item[0]}_per_amount_value}    ${data_item[5]}  
-    \    Set Test Variable    ${${data_item[0]}_min_amount_value}    ${data_item[6]} 
-    \    Set Test Variable    ${${data_item[0]}_max_amount_value}    ${data_item[7]}  
+    \    Set Test Variable    ${${data_item[0]}_per_amount_value}    ${data_item[5]}
+    \    Set Test Variable    ${${data_item[0]}_min_amount_value}    ${data_item[6]}
+    \    Set Test Variable    ${${data_item[0]}_max_amount_value}    ${data_item[7]}
     \    Set Test Variable    ${${data_item[0]}_start_amount_value}    ${data_item[8]}
-    \    Set Test Variable    ${${data_item[0]}_end_amount_value}    ${data_item[9]}      
+    \    Set Test Variable    ${${data_item[0]}_end_amount_value}    ${data_item[9]}
 
 Delete Client And Evict Client Cache
     [Arguments]    ${client_id}=${client_id}    ${number}=2    ${token}=${default_token}
-    Send Delete Request For Client   ${client_id}    ${token}
+    Send Delete Request For Client    ${client_id}    ${token}
     Evict Client Cache    ${number}    ${token}
 
 Evict Client Cache
@@ -66,18 +67,18 @@ Send Get Request For Client
     Log    ${response.headers}
     Log    ${response.content}
     Set Test Variable    ${api_flag}    client
-    
+
 Send Delete Request For Client
     [Arguments]    ${client_id}    ${token}=${default_token}
     Create Session    client    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${response}    Delete Request    client    /apac-services-rest/api/clients/${client_id}     headers=${headers}
+    ${response}    Delete Request    client    /apac-services-rest/api/clients/${client_id}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
     Set Test Variable    ${api_flag}    client
-    
+
 Send Put Request For Client
     [Arguments]    ${client_list}=${in_client_${client_id}_list}    ${token}=${default_token}
     Create Session    client    ${${env}_base_url}    verify=True
@@ -131,7 +132,7 @@ Update Client To Original Value And Evict Client Cache
     [Arguments]    ${client_list}=${in_client_${client_id}_list}    ${number}=2    ${token}=${default_token}
     Send Put Request For Client    ${client_list}    ${token}
     Evict Client Cache    ${number}    ${token}
-    
+
 Verify Client Are Correctly Retrieved
     [Arguments]    ${client_list}=${in_client_${client_id}_list}
     ${data_list}    Split String    ${client_list}    |
@@ -142,12 +143,12 @@ Verify Client Are Correctly Retrieved
     Verify Client Vendors Are Correctly Retrieved
     Verify Client Pricings Are Correctly Retrieved
     Verify Client Pricings Transaction Fees Are Correctly Retrieved
-    
+
 Verify Client Are Not Retrieved
     Verify String Does Not Contain Substring    ${response.content}    "clientId"
     Verify String Does Not Contain Substring    ${response.content}    "name"
     Verify String Does Not Contain Substring    ${response.content}    "profileName"
-    
+
 Verify Client Pricings Are Correctly Retrieved
     ${client_pricings_list_length}    Get Length    ${client_pricings_list}
     : FOR    ${index}    IN RANGE    ${client_pricings_list_length}
@@ -169,9 +170,9 @@ Verify Client Pricings Transaction Fees Are Correctly Retrieved
     \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].maxAmount    ${${item_fee_id}_max_amount_value}
     \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].startAmount    ${${item_fee_id}_start_amount_value}
     \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].transactionFees.[0].endAmount    ${${item_fee_id}_end_amount_value}
-   
+
 Verify Client Products Are Correctly Retrieved
-    ${products_list}    Get Json Value As String    ${response.content}    $..mfProducts
+    ${products_list}    Get Json Value As String    ${response.content}    $.mfProducts
     ${data}    Remove String    ${products_list}    [
     ${data}    Remove String    ${data}    ]
     ${data_list}    Split String    ${data}    },{
@@ -181,13 +182,13 @@ Verify Client Products Are Correctly Retrieved
     \    ${item}    Remove String    ${item}    }
     \    ${item}    Replace String    ${item}    :    ,
     \    ${items}    Split String    ${item}    ,
-    \    Log   ${items[3].strip()} 
-    \    Log    {${items[1].strip()}
-    \    Verify Actual Value Matches Expected Value    ${items[3].strip()}    ${${items[1]}_products_subject_to_mf__value}
-    \    Verify Actual Value Matches Expected Value    ${items[5].strip()}    ${${items[1]}_products_standard__value}
+    \    ${subject_mf}    Set Variable If    "${items[2].strip()}" == "subjectToMf"    ${items[3].strip()}    ${items[5].strip()}
+    \    ${standard}    Set Variable If    "${items[4].strip()}" == "standard"    ${items[5].strip()}    ${items[3].strip()}
+    \    Verify Actual Value Matches Expected Value    ${subject_mf}    ${${items[1]}_products_subject_to_mf__value}
+    \    Verify Actual Value Matches Expected Value    ${standard}    ${${items[1]}_products_standard__value}
 
 Verify Client Vendors Are Correctly Retrieved
-    ${vendors_list}    Get Json Value As String    ${response.content}    $..mfCcs
+    ${vendors_list}    Get Json Value As String    ${response.content}    $.mfCcs
     ${data}    Remove String    ${vendors_list}    [
     ${data}    Remove String    ${data}    ]
     ${data_list}    Split String    ${data}    },{
@@ -197,5 +198,7 @@ Verify Client Vendors Are Correctly Retrieved
     \    ${item}    Remove String    ${item}    }
     \    ${item}    Replace String    ${item}    :    ,
     \    ${items}    Split String    ${item}    ,
-    \    Verify Actual Value Matches Expected Value    ${items[3].strip()}    ${${items[1]}_vendors_percentage__value}
-    \    Verify Actual Value Matches Expected Value    ${items[5].strip()}    ${${items[1]}_vendors_standard__value}
+    \    ${vendor_name}    Set Variable If    "${items[0].strip()}" == "vendorName"    ${items[1]}    ${items[3]}
+    \    ${vendor_percentage}    Set Variable If    "${items[2].strip()}" == "percentage"    ${items[3].strip()}    ${items[1].strip()}
+    \    Verify Actual Value Matches Expected Value    ${vendor_percentage}    ${${vendor_name}_vendors_percentage__value}
+    \    Verify Actual Value Matches Expected Value    ${items[5].strip()}    ${${vendor_name}_vendors_standard__value}
