@@ -1,5 +1,6 @@
 *** Setting ***
-Resource    api-imports.txt
+Resource          api-imports.txt
+
 *** Keywords ***
 Append To Response
     [Arguments]    ${string}
@@ -43,6 +44,7 @@ Get Json Value As String
     ${res_content}=    To Json    ${json_object}
     ${actual_value}    Get Value From Json    ${res_content}    ${json_path}
     ${actual_value}    Convert JSON To String    ${actual_value}
+    Comment    ${actual_value}    Evaluate    json.dumps(${actual_value})    json
     ${actual_value}    Remove String    ${actual_value}    [    "    ]
     [Return]    ${actual_value}
 
