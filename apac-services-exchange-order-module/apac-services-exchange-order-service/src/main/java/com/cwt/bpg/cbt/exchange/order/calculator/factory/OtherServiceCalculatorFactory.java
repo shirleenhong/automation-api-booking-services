@@ -10,18 +10,20 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 
 public class OtherServiceCalculatorFactory {
 	
 	@Autowired
 	@Qualifier("hkAirCalculator")
-	private Calculator hkAirCalculator;
+	private Calculator<AirFeesBreakdown, AirFeesInput> hkAirCalculator;
 	
 	@Autowired
 	@Qualifier("sgAirCalculator")
-	private Calculator sgAirCalculator;
+	private Calculator<AirFeesBreakdown, AirFeesInput> sgAirCalculator;
 		
-	private Map<String, Calculator> calculatorMap = new HashMap<>();
+	private Map<String, Calculator<AirFeesBreakdown, AirFeesInput>> calculatorMap = new HashMap<>();
 	
 	@PostConstruct
 	public void init(){
@@ -32,7 +34,7 @@ public class OtherServiceCalculatorFactory {
 		calculatorMap.put(Country.NEW_ZEALAND.getCode(), sgAirCalculator);
 	}
 	
-	public Calculator getCalculator(String countryCode) {
+	public Calculator<AirFeesBreakdown, AirFeesInput> getCalculator(String countryCode) {
 		
 		if (calculatorMap.containsKey(countryCode)) {
 			return calculatorMap.get(countryCode);

@@ -11,14 +11,13 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
-public class MiscFeeCalculator extends CommonCalculator implements Calculator {
+public class MiscFeeCalculator extends CommonCalculator implements Calculator<FeesBreakdown, MiscFeesInput> {
 
 	@Autowired
 	private ScaleConfig scaleConfig;
 
 	@Override
-	public FeesBreakdown calculate(FeesInput genericInput, MerchantFee merchantFee) {
-		MiscFeesInput input = (MiscFeesInput) genericInput;
+	public FeesBreakdown calculate(MiscFeesInput input, MerchantFee merchantFee) {
 		MiscFeesBreakdown result = new MiscFeesBreakdown();
 
 		if (input == null) {

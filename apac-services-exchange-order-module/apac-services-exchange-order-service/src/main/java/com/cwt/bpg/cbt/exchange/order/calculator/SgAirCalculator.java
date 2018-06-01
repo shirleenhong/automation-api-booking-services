@@ -10,21 +10,19 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
-public class SgAirCalculator extends CommonCalculator implements Calculator {
+public class SgAirCalculator extends CommonCalculator implements Calculator<AirFeesBreakdown, AirFeesInput> {
 
 	@Autowired
 	private ScaleConfig scaleConfig;
 
 	@Override
-	public FeesBreakdown calculate(FeesInput genericInput, MerchantFee merchantFeeObj) {
+	public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFeeObj) {
 
 		AirFeesBreakdown result = new AirFeesBreakdown();
 
-		if (genericInput == null) {
+		if (input == null) {
 			return result;
 		}
-
-		AirFeesInput input = (AirFeesInput) genericInput;
 
 		int scale = scaleConfig.getScale(input.getCountryCode());
 
