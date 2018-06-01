@@ -29,10 +29,10 @@ public class OtherServiceFeesServiceTest {
 	private TransactionFeeCalculatorFactory tfFactory;
 	
 	@Mock
-	private Calculator miscFeeCalculator;
+	private Calculator<MiscFeesBreakdown, MiscFeesInput> miscFeeCalculator;
 	
 	@Mock
-	private Calculator hkCalculator;
+	private Calculator<AirFeesBreakdown, AirFeesInput> hkCalculator;
 	
 	@Mock
 	private FeeCalculator tfCalculator;
@@ -62,8 +62,8 @@ public class OtherServiceFeesServiceTest {
 	public void shouldReturnFeesBreakdown() {
 		
 		when(miscFeeCalculator.calculate(anyObject(), anyObject()))
-			.thenReturn(new FeesBreakdown());
-		assertNotNull(service.calculateMiscFee(new FeesInput()));
+			.thenReturn(new MiscFeesBreakdown());
+		assertNotNull(service.calculateMiscFee(new MiscFeesInput()));
 	}
 	
 	@Test
@@ -73,9 +73,9 @@ public class OtherServiceFeesServiceTest {
 			.thenReturn(hkCalculator);
 		
 		when(hkCalculator.calculate(anyObject(), anyObject()))
-			.thenReturn(new FeesBreakdown());
+			.thenReturn(new AirFeesBreakdown());
 		
-		assertNotNull(service.calculateAirFee(new FeesInput()));
+		assertNotNull(service.calculateAirFee(new AirFeesInput()));
 	}
 
 	@Test

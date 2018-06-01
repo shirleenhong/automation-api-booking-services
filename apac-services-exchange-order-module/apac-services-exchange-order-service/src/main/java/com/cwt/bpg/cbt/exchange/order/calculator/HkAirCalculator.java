@@ -13,7 +13,7 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
-public class HkAirCalculator extends CommonCalculator implements Calculator {
+public class HkAirCalculator extends CommonCalculator implements Calculator<AirFeesBreakdown, AirFeesInput> {
 
 	@Autowired
 	private ScaleConfig scaleConfig;
@@ -33,10 +33,9 @@ public class HkAirCalculator extends CommonCalculator implements Calculator {
 			ClientTypes.TF.getCode());
 
 	@Override
-	public FeesBreakdown calculate(FeesInput genericInput, MerchantFee merchantFee) {
+	public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFee) {
 
 		AirFeesBreakdown result = new AirFeesBreakdown();
-		AirFeesInput input = (AirFeesInput) genericInput;
 
 		if (input == null) {
 			return result;

@@ -33,7 +33,7 @@ public class OtherServiceFeesController {
 	public ResponseEntity<MiscFeesBreakdown> computeMiscellaneousFee(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") MiscFeesInput input) {
 
-		return new ResponseEntity<>((MiscFeesBreakdown) service.calculateMiscFee(input), HttpStatus.OK);
+		return new ResponseEntity<>(service.calculateMiscFee(input), HttpStatus.OK);
 	}
 	
 	@PostMapping(path = "/non-air-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
@@ -43,7 +43,7 @@ public class OtherServiceFeesController {
 	public ResponseEntity<MiscFeesBreakdown> computeNonAirFee(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") InMiscFeesInput input) {
 
-		return new ResponseEntity<>((MiscFeesBreakdown) service.calculateNonAirFee(input), HttpStatus.OK);
+		return new ResponseEntity<>(service.calculateNonAirFee(input), HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/air-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
@@ -53,7 +53,7 @@ public class OtherServiceFeesController {
 	public ResponseEntity<AirFeesBreakdown> computeAirFees(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") AirFeesInput input) {
 
-		return new ResponseEntity<>((AirFeesBreakdown) service.calculateAirFee(input), HttpStatus.OK);
+		return new ResponseEntity<>(service.calculateAirFee(input), HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/visa-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
@@ -63,7 +63,7 @@ public class OtherServiceFeesController {
 	public ResponseEntity<VisaFeesBreakdown> computeVisaFee(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") VisaFeesInput input) {
 
-		return new ResponseEntity<>((VisaFeesBreakdown) service.calculateVisaFees(input), HttpStatus.OK);
+		return new ResponseEntity<>(service.calculateVisaFees(input), HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/nett-cost", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
@@ -73,7 +73,7 @@ public class OtherServiceFeesController {
 	public ResponseEntity<AirFeesBreakdown> computeNettCost(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NettCostInput input) {
 
-		return new ResponseEntity<>((AirFeesBreakdown) service.calculateNettCost(input), HttpStatus.OK);
+		return new ResponseEntity<>(service.calculateNettCost(input), HttpStatus.OK);
 	}
 
 }

@@ -10,16 +10,15 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
-public class VisaFeesCalculator extends CommonCalculator implements Calculator {
+public class VisaFeesCalculator extends CommonCalculator implements Calculator<VisaFeesBreakdown, VisaFeesInput> {
 
     @Autowired
     private ScaleConfig scaleConfig;
 
     @Override
-    public FeesBreakdown calculate(FeesInput feesInput, MerchantFee merchantFee) {
+    public VisaFeesBreakdown calculate(VisaFeesInput input, MerchantFee merchantFee) {
 
         VisaFeesBreakdown result = new VisaFeesBreakdown();
-        VisaFeesInput input = (VisaFeesInput) feesInput;
 
         int scale = scaleConfig.getScale(input.getCountryCode());
 
