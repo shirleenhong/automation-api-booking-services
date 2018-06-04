@@ -14,7 +14,7 @@ public class TransactionFee implements Serializable {
 	private BigDecimal amount;
 	private String operator;
 	private BigDecimal extraAmount;
-	private BigDecimal perAmount;
+	private Double perAmount;
 	private BigDecimal minAmount;
 	private BigDecimal maxAmount;
 	private BigDecimal startAmount;
@@ -71,14 +71,6 @@ public class TransactionFee implements Serializable {
 		this.extraAmount = extraAmount;
 	}
 
-	public BigDecimal getPerAmount() {
-		return perAmount;
-	}
-
-	public void setPerAmount(BigDecimal perAmount) {
-		this.perAmount = perAmount;
-	}
-
 	public BigDecimal getMinAmount() {
 		return minAmount;
 	}
@@ -133,5 +125,13 @@ public class TransactionFee implements Serializable {
 
 	public void setThreshold(BigDecimal threshold) {
 		this.threshold = threshold;
+	}
+
+	public Double getPerAmount() {
+		return perAmount;
+	}
+
+	public void setPerAmount(Double perAmount) {
+		this.perAmount = perAmount;
 	}
 }

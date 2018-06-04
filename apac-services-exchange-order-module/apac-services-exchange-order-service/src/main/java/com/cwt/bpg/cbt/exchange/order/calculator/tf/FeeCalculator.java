@@ -1,9 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -116,13 +114,13 @@ public class FeeCalculator extends CommonCalculator {
 						
 				if (!applyFee.equals(NA)) {
 					if (feeOption.equals(PNR)) {
-						result = getFeeByPnr(input, breakdown, client, airport, clientPricing);
+						result = getFeeByPnr(input, breakdown, airport, clientPricing);
 					}
 					else if (feeOption.equals(COUPON)) {
 						result = getFeeByCoupon();
 					}
 					else if (feeOption.equals(TICKET)) {
-						result = getFeeByTicket();
+						result = getFeeByTicket(input, breakdown, airport, clientPricing);
 					}
 				}
 			}
@@ -131,9 +129,47 @@ public class FeeCalculator extends CommonCalculator {
 		return result;
 	}
 	
-	private BigDecimal getFeeByTicket() {
-		// TODO Auto-generated method stub
-		return null;
+	private BigDecimal getFeeByTicket(
+			TransactionFeesInput input, 
+			TransactionFeesBreakdown breakdown, 
+			Airport airport, 
+			ClientPricing pricing) {
+		
+		BigDecimal result = BigDecimal.ZERO;
+		BigDecimal baseAmount = getTotalFee(input, breakdown);
+		
+		if(baseAmount == null) {
+			baseAmount = input.getBaseFare();
+		}
+		
+		TransactionFee tf = getFeeByTerritorry(airport, pricing, baseAmount);
+
+		if(tf != null) {
+		
+			if("F".equals(tf.getOperator())) {
+				result = tf.getAmount().add(tf.getExtraAmount());
+			} 
+			else if("M".equals(tf.getOperator())) {
+				result = calculatePercentage(baseAmount, tf.getPerAmount()).add(tf.getExtraAmount());
+			}
+			else if("D".equals(tf.getOperator())) {
+				result = tf.getAmount()
+							.divide(new BigDecimal(100).subtract(percentDecimal(tf.getPerAmount())))
+							.add(tf.getExtraAmount())
+							.subtract(baseAmount);
+			}
+			
+			if(tf.getMaxAmount().compareTo(BigDecimal.ZERO) > 0 
+				&& result.compareTo(tf.getMaxAmount()) > 0) {
+				 result = tf.getMaxAmount();
+			}
+			
+			if(result.compareTo(tf.getMinAmount()) < 0){
+				result = tf.getMinAmount();
+			}			
+		}
+		
+		return result;
 	}
 
 	private BigDecimal getFeeByCoupon() {
@@ -144,7 +180,6 @@ public class FeeCalculator extends CommonCalculator {
 	private BigDecimal getFeeByPnr(
 			TransactionFeesInput input,
 			TransactionFeesBreakdown breakdown,
-			Client client,
 			Airport airport,
 			ClientPricing pricing) {
 		
@@ -155,6 +190,16 @@ public class FeeCalculator extends CommonCalculator {
 			baseAmount = input.getBaseFare();
 		}
 		
+		TransactionFee transactionFee = getFeeByTerritorry(airport, pricing, baseAmount);
+		
+		if(transactionFee != null) {
+			result = transactionFee.getAmount();
+		}		
+		
+		return result;
+	}
+
+	private TransactionFee getFeeByTerritorry(Airport airport, ClientPricing pricing, BigDecimal baseAmount) {
 		TransactionFee transactionFee = getFeeByTerritory(pricing, airport.getCityCode(), baseAmount);
 		
 		if(transactionFee == null) {
@@ -169,11 +214,7 @@ public class FeeCalculator extends CommonCalculator {
 			transactionFee = getFeeByTerritory(pricing, ALL, baseAmount);
 		}
 		
-		if(transactionFee != null) {
-			result = transactionFee.getAmount();
-		}		
-		
-		return result;
+		return transactionFee;
 	}
 
 	private TransactionFee getFeeByTerritory(
@@ -181,17 +222,20 @@ public class FeeCalculator extends CommonCalculator {
 			String territoryCode,
 			BigDecimal amount) {
 		
-		List<TransactionFee> list = pricing.getTransactionFees().stream()
+		Optional<TransactionFee> result = pricing.getTransactionFees().stream()
 				.filter(i -> i.getTerritoryCodes().stream()
 						.anyMatch(code -> 
 							code.equals(territoryCode)
 							&& amount.compareTo(i.getStartAmount()) <= 0
 							&& amount.compareTo(i.getEndAmount()) >= 0
 							)
-						)
-				.collect(Collectors.toList());
+				).findFirst();
 		
-		return list.get(0);
+		if(result.isPresent()) {
+			return result.get();
+		}
+		
+		return null;
 	}
 
 	public BigDecimal getTotalAirCommission(TransactionFeesInput input) {

@@ -474,7 +474,7 @@ public class ClientDAOImpl {
 				transactionFee.setOperator(rs.getString("operator"));
 				transactionFee.setAmount(rs.getBigDecimal("tfamount"));
 				transactionFee.setExtraAmount(rs.getBigDecimal("extraamount"));
-				transactionFee.setPerAmount(rs.getBigDecimal("peramount"));
+				transactionFee.setPerAmount(rs.getDouble("peramount"));
 				transactionFee.setMinAmount(rs.getBigDecimal("minamount"));
 				transactionFee.setMaxAmount(rs.getBigDecimal("maxamount"));
 				transactionFee.setStartAmount(rs.getBigDecimal("startamount"));
