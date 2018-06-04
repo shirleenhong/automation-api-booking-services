@@ -50,7 +50,7 @@ Verify Merchant Fee Percentage Is Correctly Retrieved
     \    Verify Json Value Is Correct    $.clientName    ${client_name_${index}}
     \    Verify Json Value Is Correct    $.profileName    ${profile_name_${index}}
     \    Verify Json Value Is Correct    $.clientType    ${client_type_${index}}
-    \    Verify Json Value Is Correct    $.merchantFeePct    ${merchant_fee_percent_${index}}    float
+    \    Verify Json Value Is Correct    $.merchantFeePercent    ${merchant_fee_percent_${index}}    float
     \    Verify Json Value Is Correct    $.includeTransactionFee    ${merchant_fee_flag_${index}}    boolean
 
 Verify Merchant Fee Percentages Are Not Returned
@@ -58,7 +58,7 @@ Verify Merchant Fee Percentages Are Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "clientName"
     Verify String Does Not Contain Substring    ${response.content}    "profileName"
     Verify String Does Not Contain Substring    ${response.content}    "clientType"
-    Verify String Does Not Contain Substring    ${response.content}    "merchantFeePct"
+    Verify String Does Not Contain Substring    ${response.content}    "merchantFeePercent"
     Verify String Does Not Contain Substring    ${response.content}    "includeTransactionFee"
 
 Verify Response Status Code Is Correct For Merchant Fee Percentage
