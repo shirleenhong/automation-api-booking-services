@@ -12,6 +12,7 @@ public class RebateCalculator extends FeeCalculator {
 
 	@Override
     public BigDecimal getMfOnTf(TransactionFeesInput input, 
+    		TransactionFeesBreakdown breakdown,
 			BigDecimal totalGstOnTf) {
         return null;
     }
@@ -23,11 +24,10 @@ public class RebateCalculator extends FeeCalculator {
 
     @Override
     public BigDecimal getTotalCharge(
-    		TransactionFeesInput input,
 			TransactionFeesBreakdown breakdown) {
     	
         return safeValue(breakdown.getTotalSellFare())
-        		.add(safeValue(input.getFee()))
+        		.add(safeValue(breakdown.getFee()))
 				.add(safeValue(breakdown.getTotalTaxes()));
     }
 }

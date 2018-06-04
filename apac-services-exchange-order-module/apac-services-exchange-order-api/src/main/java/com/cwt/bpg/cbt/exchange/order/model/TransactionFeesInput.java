@@ -15,7 +15,6 @@ public class TransactionFeesInput extends FeesInput {
 	private Double merchantFeePercent;
 	private BigDecimal tax1;
 	private BigDecimal tax2;
-	private BigDecimal fee;
 	private String tripType;
 	private String platCarrier;
 	private boolean gstEnabled;
@@ -100,14 +99,6 @@ public class TransactionFeesInput extends FeesInput {
 
 	public void setMerchantFeePercent(Double merchantFeePercent) {
 		this.merchantFeePercent = merchantFeePercent;
-	}
-
-	public BigDecimal getFee() {
-		return fee;
-	}
-
-	public void setFee(BigDecimal fee) {
-		this.fee = fee;
 	}
 
 	public String getTripType() {

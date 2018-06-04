@@ -11,7 +11,7 @@
 
 	<groupId>com.cwt.bpg.cbt</groupId>
 	<artifactId>tpro-database-migration</artifactId>
-	<version>1.0</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>tpro-database-migration</name>
 	<description>tpro-database-migration</description>
 
@@ -104,6 +104,16 @@
 	    <dependency>
 	      <groupId>org.slf4j</groupId>
 	      <artifactId>slf4j-api</artifactId>
+	    </dependency>
+	     <dependency>
+	      <groupId>com.cwt.bpg.cbt</groupId>
+	      <artifactId>apac-services-exchange-order-api</artifactId>
+	      <version>${project.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.cwt.bpg.cbt</groupId>
+	      <artifactId>apac-services-fees-api</artifactId>
+	      <version>${project.version}</version>
 	    </dependency>
 	</dependencies>
 

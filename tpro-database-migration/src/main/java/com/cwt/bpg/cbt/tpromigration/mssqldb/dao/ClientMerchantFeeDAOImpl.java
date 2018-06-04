@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientMerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 @Repository
 public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
@@ -25,8 +25,8 @@ public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
 	private DataSource dataSource;
 
 	@Override
-	public List<ClientMerchantFee> listMerchantFees() {
-		List<ClientMerchantFee> merchantFeeList = new ArrayList<ClientMerchantFee>();
+	public List<MerchantFee> listMerchantFees() {
+		List<MerchantFee> merchantFeeList = new ArrayList<>();
 		String sql = "SELECT clientname, proname, clientType, merchfeepct , tfincmf FROM tblClients";
 		
 		Connection conn = null;
@@ -38,9 +38,9 @@ public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
 			ResultSet rs = ps.executeQuery();
 			String countryCode = System.getProperty("spring.profiles.default");
 			while (rs.next()) {
-				ClientMerchantFee merchantFee = new ClientMerchantFee();
+				MerchantFee merchantFee = new MerchantFee();
 				merchantFee.setIncludeTransactionFee(rs.getObject("tfincmf") == null ? null : rs.getBoolean("tfincmf"));
-				merchantFee.setMerchantFeePct(rs.getObject("merchfeepct") == null ? null : rs.getDouble("merchfeepct"));
+				merchantFee.setMerchantFeePercent(rs.getObject("merchfeepct") == null ? null : rs.getDouble("merchfeepct"));
 				merchantFee.setClientName(rs.getObject("clientname") == null ? null : rs.getString("clientname").trim().replaceAll(" +", " "));
 				merchantFee.setCountryCode(countryCode);
 				if(rs.getObject("clientType") != null) {

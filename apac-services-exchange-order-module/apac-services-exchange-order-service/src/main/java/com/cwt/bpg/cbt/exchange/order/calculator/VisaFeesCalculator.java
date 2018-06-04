@@ -23,12 +23,12 @@ public class VisaFeesCalculator extends CommonCalculator implements Calculator<V
         int scale = scaleConfig.getScale(input.getCountryCode());
 
         BigDecimal mfNettCost = BigDecimal.ZERO;
-        Double merchantFeePct = merchantFee != null ? merchantFee.getMerchantFeePct() : 0d;
+        Double merchantFeePercent = merchantFee != null ? merchantFee.getMerchantFeePercent() : 0d;
         BigDecimal nettCost = safeValue(input.getNettCost());
 
         if (input.isNettCostMerchantFeeChecked()) {
             mfNettCost = round(calculatePercentage(nettCost,
-                    merchantFeePct), scale);
+                    merchantFeePercent), scale);
             result.setNettCostMerchantFee(mfNettCost);
         }
 
@@ -36,7 +36,7 @@ public class VisaFeesCalculator extends CommonCalculator implements Calculator<V
         if (input.isCwtHandlingMerchantFeeChecked()) {
             mfCwtHandling = round(calculatePercentage(
                     input.getCwtHandling().add(input.getVendorHandling()),
-                    merchantFeePct), scale);
+                    merchantFeePercent), scale);
             result.setCwtHandlingMerchantFee(mfCwtHandling);
         }
 

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirlineRule;
+import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
 
 @Repository
 public class AirlineRuleDAOImpl {
@@ -42,7 +42,7 @@ public class AirlineRuleDAOImpl {
 			while (rs.next()) {
 				AirlineRule airlineRule = new AirlineRule();
 				airlineRule.setCode(rs.getString("AirlineCode"));
-				airlineRule.setIncludeYqComm(rs.getBoolean("IncludeYQComm"));
+				airlineRule.setIncludeYqCommission(rs.getBoolean("IncludeYQComm"));
 				airlineRuleList.add(airlineRule);
 			}
 		}

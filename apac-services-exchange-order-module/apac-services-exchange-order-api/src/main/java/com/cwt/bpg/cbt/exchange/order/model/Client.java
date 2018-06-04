@@ -8,15 +8,16 @@ import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity("clients")
 @Indexes(@Index(fields = @Field("clientId")))
-
+@JsonIgnoreProperties(value = { "cmpid" })
 public class Client implements Serializable {
 
 	private static final long serialVersionUID = 4416580993384869665L;
 	
 	private int clientId;
-	private int cmpid;
 	private String name;
 	private String profileName;
 	private Integer pricingId;
@@ -39,14 +40,6 @@ public class Client implements Serializable {
 
 	public void setClientId(int clientId) {
 		this.clientId = clientId;
-	}
-
-	public int getCmpid() {
-		return cmpid;
-	}
-
-	public void setCmpid(int cmpid) {
-		this.cmpid = cmpid;
 	}
 
 	public String getName() {

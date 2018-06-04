@@ -2,10 +2,10 @@ package com.cwt.bpg.cbt.tpromigration.mssqldb.dao;
 
 import java.util.List;
 
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientMerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public interface ClientMerchantFeeDAO {
 	
-	List<ClientMerchantFee> listMerchantFees();
+	List<MerchantFee> listMerchantFees();
 
 }

@@ -1,8 +1,8 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.dao;
 
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Airport;
-
 import java.util.List;
+
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
 
 public interface AirportDAO {
 

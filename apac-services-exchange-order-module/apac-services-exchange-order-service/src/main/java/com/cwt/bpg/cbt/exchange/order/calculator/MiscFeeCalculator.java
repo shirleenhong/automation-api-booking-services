@@ -41,7 +41,7 @@ public class MiscFeeCalculator extends CommonCalculator implements Calculator<Fe
 					calculatePercentage(
 							input.getSellingPrice()
 									.multiply(BigDecimal.ONE.add(percentDecimal(input.getGstPercent()))),
-							merchantFee.getMerchantFeePct()),
+							merchantFee.getMerchantFeePercent()),
 					scale);
 		}
 

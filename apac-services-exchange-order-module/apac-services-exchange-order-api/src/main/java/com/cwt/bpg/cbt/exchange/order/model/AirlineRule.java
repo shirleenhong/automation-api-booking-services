@@ -19,8 +19,7 @@ public class AirlineRule implements Serializable {
 	@Id
 	@NotNull
 	private String code;
-	private boolean includeYqComm;
-	// TODO Spell out commission
+	private boolean includeYqCommission;
 
 	public String getCode() {
 		return code;
@@ -30,11 +29,11 @@ public class AirlineRule implements Serializable {
 		this.code = code;
 	}
 
-	public boolean isIncludeYqComm() {
-		return includeYqComm;
+	public boolean isIncludeYqCommission() {
+		return includeYqCommission;
 	}
 
-	public void setIncludeYqComm(boolean includeYqComm) {
-		this.includeYqComm = includeYqComm;
+	public void setIncludeYqCommission(boolean includeYqCommission) {
+		this.includeYqCommission = includeYqCommission;
 	}
 }

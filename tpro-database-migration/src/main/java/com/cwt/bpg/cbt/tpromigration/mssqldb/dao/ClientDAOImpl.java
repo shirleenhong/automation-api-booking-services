@@ -16,12 +16,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Bank;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ClientPricing;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.CreditCardVendor;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductMerchantFee;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.TransactionFee;
+
+import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Repository
 public class ClientDAOImpl {
@@ -35,27 +32,27 @@ public class ClientDAOImpl {
 
 		List<Client> clients = new ArrayList<>();
 
-		String sql = "select \n" + 
-				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax,\n" + 
-				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee,\n" + 
-				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply\n" + 
-				"from \n" + 
-				"	tblclientmaster clientmaster left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = clientmaster.clientid,  \n" + 
-				"	tblconfiguration config, \n" + 
-				"	tblAirPricingFormula airpricingformula,\n" + 
-				"	cwtstandarddata.dbo.tblcsp_linedefclientmapping clientmapping, \n" + 
-				"	cwtstandarddata.dbo.configinstances configinstance  \n" + 
-				"where clientmaster.configurationid = config.configurationid \n" + 
-				"	and clientmaster.clientid = clientmapping.clientid \n" + 
-				"	and clientmasterpricing.clientid = clientmaster.clientid\n" + 
-				"	and configinstance.countrycode = 'IN'\n" + 
-				"	and clientmapping.configinstancekeyid=configinstance.keyid\n" + 
-				"	and airpricingformula.airpricingid=clientmasterpricing.pricingid\n" + 
-				"group by \n" + 
-				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax,\n" + 
-				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee,\n" + 
-				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply\n" + 
-				"order by clientmaster.clientid";
+		String sql = "select " + 
+				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax," + 
+				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee," + 
+				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply" + 
+				" from " + 
+				"	tblclientmaster clientmaster left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = clientmaster.clientid,  " + 
+				"	tblconfiguration config, " + 
+				"	tblAirPricingFormula airpricingformula," + 
+				"	cwtstandarddata.dbo.tblcsp_linedefclientmapping clientmapping, " + 
+				"	cwtstandarddata.dbo.configinstances configinstance  " + 
+				"where clientmaster.configurationid = config.configurationid " + 
+				"	and clientmaster.clientid = clientmapping.clientid " + 
+				"	and clientmasterpricing.clientid = clientmaster.clientid" + 
+				"	and configinstance.countrycode = 'IN'" + 
+				"	and clientmapping.configinstancekeyid=configinstance.keyid" + 
+				"	and airpricingformula.airpricingid=clientmasterpricing.pricingid" + 
+				" group by " + 
+				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax," + 
+				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee," + 
+				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply" + 
+				" order by clientmaster.clientid";
 
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -73,10 +70,10 @@ public class ClientDAOImpl {
 				client.setName(rs.getString("name"));
 				client.setProfileName(rs.getString("profilename"));
 				client.setPricingId(rs.getInt("pricingid"));
-				client.setCmpid(rs.getInt("cmpid"));
 				client.setExemptTax(rs.getBoolean("exempttax"));
 				client.setApplyMfBank(rs.getBoolean("applymfbank"));
 				client.setApplyMfCc(rs.getBoolean("applymfcc"));
+				client.setCmpid(rs.getInt("cmpid"));
 				client.setStandardMfProduct(rs.getBoolean("standardmfproduct"));
 				client.setMerchantFee(rs.getDouble("merchantfee"));
 				client.setLccSameAsInt(rs.getBoolean("lccsameasint"));
@@ -135,7 +132,7 @@ public class ClientDAOImpl {
 				ProductMerchantFee item = new ProductMerchantFee();
 
 				item.setClientId(rs.getInt("ClientID"));
-				item.setProductCode(rs.getInt("ProductCode"));
+				item.setProductCode(rs.getString("ProductCode"));
 				item.setSubjectToMf(rs.getBoolean("SubjectToMF"));
 				item.setStandard(rs.getBoolean("Standard"));
 
@@ -363,9 +360,9 @@ public class ClientDAOImpl {
 					List<String> territoryCodes = Arrays.asList(territoryCodesStr.split(";"));
 					transactionFee.setTerritoryCodes(territoryCodes);
 				}
-				transactionFee.setTfAmount(rs.getDouble("tfamount"));
-				transactionFee.setStartAmount(rs.getDouble("startamount"));
-				transactionFee.setEndAmount(rs.getDouble("endamount"));
+				transactionFee.setAmount(rs.getBigDecimal("tfamount"));
+				transactionFee.setStartAmount(rs.getBigDecimal("startamount"));
+				transactionFee.setEndAmount(rs.getBigDecimal("endamount"));
 				resultList.add(transactionFee);
 			}
 		}
@@ -416,10 +413,10 @@ public class ClientDAOImpl {
 				TransactionFee transactionFee = new TransactionFee();
 				transactionFee.setFeeId(rs.getInt("feeid"));
 				transactionFee.setType(rs.getString("type"));
-				transactionFee.setStartCoupon(rs.getDouble("startcoupon"));
-				transactionFee.setEndCoupon(rs.getDouble("endcoupon"));
-				transactionFee.setTfAmount(rs.getDouble("tfamount"));
-				transactionFee.setThreshold(rs.getDouble("threshold"));
+				transactionFee.setStartCoupon(rs.getBigDecimal("startcoupon"));
+				transactionFee.setEndCoupon(rs.getBigDecimal("endcoupon"));
+				transactionFee.setAmount(rs.getBigDecimal("tfamount"));
+				transactionFee.setThreshold(rs.getBigDecimal("threshold"));
 				resultList.add(transactionFee);
 			}
 		}
@@ -475,13 +472,13 @@ public class ClientDAOImpl {
 					transactionFee.setTerritoryCodes(territoryCodes);
 				}
 				transactionFee.setOperator(rs.getString("operator"));
-				transactionFee.setTfAmount(rs.getDouble("tfamount"));
-				transactionFee.setExtraAmount(rs.getDouble("extraamount"));
+				transactionFee.setAmount(rs.getBigDecimal("tfamount"));
+				transactionFee.setExtraAmount(rs.getBigDecimal("extraamount"));
 				transactionFee.setPerAmount(rs.getDouble("peramount"));
-				transactionFee.setMinAmount(rs.getDouble("minamount"));
-				transactionFee.setMaxAmount(rs.getDouble("maxamount"));
-				transactionFee.setStartAmount(rs.getDouble("startamount"));
-				transactionFee.setEndAmount(rs.getDouble("endamount"));
+				transactionFee.setMinAmount(rs.getBigDecimal("minamount"));
+				transactionFee.setMaxAmount(rs.getBigDecimal("maxamount"));
+				transactionFee.setStartAmount(rs.getBigDecimal("startamount"));
+				transactionFee.setEndAmount(rs.getBigDecimal("endamount"));
 				resultList.add(transactionFee);
 			}
 		}
