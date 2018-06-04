@@ -66,7 +66,8 @@ public class FeeCalculator extends CommonCalculator {
 		breakdown.setTotalSellingFare(getTotalFare(input));
 		breakdown.setBaseAmount(getTotalFee(input, breakdown));
 		
-		breakdown.setFee(getTransactionFee(client, input, breakdown, airport));
+		BigDecimal baseAmount = getTotalFee(input, breakdown);
+		breakdown.setFee(getTransactionFee(client, input, breakdown, airport, baseAmount));
 		
 		breakdown.setTotalMerchantFee(getMerchantFee(input, breakdown));
 		
@@ -94,7 +95,7 @@ public class FeeCalculator extends CommonCalculator {
 	private BigDecimal getTransactionFee(Client client, 
 			TransactionFeesInput input, 
 			TransactionFeesBreakdown breakdown, 
-			Airport airport) {
+			Airport airport, BigDecimal baseAmount) {
 
 		BigDecimal result = BigDecimal.ZERO;
 		
@@ -114,13 +115,13 @@ public class FeeCalculator extends CommonCalculator {
 						
 				if (!applyFee.equals(NA)) {
 					if (feeOption.equals(PNR)) {
-						result = getFeeByPnr(input, breakdown, airport, clientPricing);
+						result = getFeeByPnr(input, airport, clientPricing, baseAmount);
 					}
 					else if (feeOption.equals(COUPON)) {
 						result = getFeeByCoupon();
 					}
 					else if (feeOption.equals(TICKET)) {
-						result = getFeeByTicket(input, breakdown, airport, clientPricing);
+						result = getFeeByTicket(input, airport, clientPricing, baseAmount);
 					}
 				}
 			}
@@ -130,13 +131,13 @@ public class FeeCalculator extends CommonCalculator {
 	}
 	
 	private BigDecimal getFeeByTicket(
-			TransactionFeesInput input, 
-			TransactionFeesBreakdown breakdown, 
+			TransactionFeesInput input,  
 			Airport airport, 
-			ClientPricing pricing) {
+			ClientPricing pricing,
+			BigDecimal totalFee) {
 		
 		BigDecimal result = BigDecimal.ZERO;
-		BigDecimal baseAmount = getTotalFee(input, breakdown);
+		BigDecimal baseAmount = totalFee;
 		
 		if(baseAmount == null) {
 			baseAmount = input.getBaseFare();
@@ -179,12 +180,11 @@ public class FeeCalculator extends CommonCalculator {
 
 	private BigDecimal getFeeByPnr(
 			TransactionFeesInput input,
-			TransactionFeesBreakdown breakdown,
 			Airport airport,
-			ClientPricing pricing) {
+			ClientPricing pricing, BigDecimal totalFee) {
 		
 		BigDecimal result = BigDecimal.ZERO;
-		BigDecimal baseAmount = getTotalFee(input, breakdown);
+		BigDecimal baseAmount = totalFee;
 		
 		if(baseAmount == null) {
 			baseAmount = input.getBaseFare();
