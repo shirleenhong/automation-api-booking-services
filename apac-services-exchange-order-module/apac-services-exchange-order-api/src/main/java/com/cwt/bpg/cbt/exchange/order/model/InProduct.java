@@ -6,11 +6,11 @@ public class InProduct extends Product {
 	private String gdsCode;
 	private Double ot1;
 	private Double ot2;
-	private String requireCdr;
+	private Boolean requireCdr;
 	private Boolean requireTicket;
 	private Boolean suppressMi;
 	private Double feeCode;
-	private Boolean appMF;
+	private Boolean appMf;
 	private Boolean overridePc;
 	private Boolean hotelFee;
 
@@ -20,14 +20,6 @@ public class InProduct extends Product {
 
 	public void setGdsCode(String gdsCode) {
 		this.gdsCode = gdsCode;
-	}
-
-	public String getRequireCdr() {
-		return requireCdr;
-	}
-
-	public void setRequireCdr(String requireCdr) {
-		this.requireCdr = requireCdr;
 	}
 
 	public Boolean getRequireTicket() {
@@ -54,12 +46,12 @@ public class InProduct extends Product {
 		this.feeCode = feeCode;
 	}
 
-	public Boolean getAppMF() {
-		return appMF;
+	public Boolean getAppMf() {
+		return appMf;
 	}
 
-	public void setAppMF(Boolean appMF) {
-		this.appMF = appMF;
+	public void setAppMf(Boolean appMf) {
+		this.appMf = appMf;
 	}
 
 	public Boolean getOverridePc() {
@@ -92,6 +84,14 @@ public class InProduct extends Product {
 
 	public void setOt2(Double ot2) {
 		this.ot2 = ot2;
+	}
+
+	public Boolean getRequireCdr() {
+		return requireCdr;
+	}
+
+	public void setRequireCdr(Boolean requireCdr) {
+		this.requireCdr = requireCdr;
 	}
 	
 }

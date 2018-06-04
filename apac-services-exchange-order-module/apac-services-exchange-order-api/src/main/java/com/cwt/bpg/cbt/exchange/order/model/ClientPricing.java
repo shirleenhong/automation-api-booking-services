@@ -3,6 +3,9 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(value = { "cmpid" })
 public class ClientPricing implements Serializable {
 
 	private static final long serialVersionUID = -1193230937085830329L;

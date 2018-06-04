@@ -36,7 +36,7 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getMfFeeTfShouldReturnNull() {
-        assertNull(noFeeCalc.getMfOnTf(null, BigDecimal.ZERO));
+        assertNull(noFeeCalc.getMfOnTf(null, null, BigDecimal.ZERO));
     }
 
     @Test
@@ -68,6 +68,6 @@ public class NoFeeCalculatorTest {
     	breakdown.setTotalGst(new BigDecimal(50));
     	breakdown.setTotalMerchantFee(new BigDecimal(10));
     	
-        assertNotNull(noFeeCalc.getTotalCharge(null, breakdown));
+        assertNotNull(noFeeCalc.getTotalCharge(breakdown));
     }
 }

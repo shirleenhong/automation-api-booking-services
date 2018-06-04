@@ -44,7 +44,8 @@ public class NoFeeCalculator extends FeeCalculator {
 
 	@Override
     public BigDecimal getMfOnTf( 
-			TransactionFeesInput input, 
+			TransactionFeesInput input,
+			TransactionFeesBreakdown breakdown,
 			BigDecimal totalGstOnTf) {
         return null;
     }
@@ -69,7 +70,6 @@ public class NoFeeCalculator extends FeeCalculator {
 
 	@Override
     public BigDecimal getTotalCharge(
-    		TransactionFeesInput input,
 			TransactionFeesBreakdown breakdown) {
 
         return safeValue(breakdown.getTotalSellFare())

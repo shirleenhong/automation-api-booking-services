@@ -119,9 +119,9 @@ public class SgAirCalculatorTest {
 		input.setTax2(bigDecimal("14"));
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommissionByPercent(true);
-		input.setCommissionPct(Double.parseDouble("20"));
+		input.setCommissionPercent(Double.parseDouble("20"));
 		input.setDiscountByPercent(true);
-		input.setDiscountPct(Double.parseDouble("15"));
+		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setCountryCode("SG");
 
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculate(input, null);
@@ -147,14 +147,14 @@ public class SgAirCalculatorTest {
 		input.setCommissionByPercent(false);
 		input.setCommission(bigDecimal("15"));
 		input.setDiscountByPercent(true);
-		input.setDiscountPct(Double.parseDouble("15"));
+		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setProductType("CT");
 		input.setClientType("TF");
 		input.setFopType("CX");
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(true);
-		merchantFee.setMerchantFeePct(Double.parseDouble("25"));
+		merchantFee.setMerchantFeePercent(Double.parseDouble("25"));
 		input.setTransactionFee(bigDecimal("75"));
 		input.setCountryCode("SG");
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculate(input,
@@ -181,14 +181,14 @@ public class SgAirCalculatorTest {
 		input.setCommissionByPercent(false);
 		input.setCommission(bigDecimal("15"));
 		input.setDiscountByPercent(true);
-		input.setDiscountPct(Double.parseDouble("15"));
+		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setProductType("CT");
 		input.setClientType("DU");
 		input.setFopType("CX");
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(false);
-		merchantFee.setMerchantFeePct(Double.parseDouble("25"));
+		merchantFee.setMerchantFeePercent(Double.parseDouble("25"));
 		input.setTransactionFee(bigDecimal("75"));
 		input.setCountryCode("SG");
 
@@ -223,7 +223,7 @@ public class SgAirCalculatorTest {
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(false);
-		merchantFee.setMerchantFeePct(Double.parseDouble("25"));
+		merchantFee.setMerchantFeePercent(Double.parseDouble("25"));
 		input.setTransactionFee(bigDecimal("75"));
 		input.setCountryCode("SG");
 
@@ -258,9 +258,9 @@ public class SgAirCalculatorTest {
 		input.setTax2(bigDecimal("14"));
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommissionByPercent(true);
-		input.setCommissionPct(Double.parseDouble("20"));
+		input.setCommissionPercent(Double.parseDouble("20"));
 		input.setDiscountByPercent(true);
-		input.setDiscountPct(Double.parseDouble("15"));
+		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setCountryCode("SG");
 
 		AirFeesBreakdown afb = (AirFeesBreakdown) calculator.calculate(input, null);

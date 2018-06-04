@@ -1,7 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -10,8 +12,14 @@ import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component("tfCalculator")
 public class FeeCalculator extends CommonCalculator {
+	
+	private static final String PNR = "P";
+	private static final String COUPON = "C";
+	private static final String TICKET = "T";
+	private static final String NA = "NA";
+	private static final String ALL = "ALL";
 
-	public FeesBreakdown calculate(AirlineRule airlineRule, Client client, TransactionFeesInput input) {
+	public FeesBreakdown calculate(TransactionFeesInput input, AirlineRule airlineRule, Client client, Airport airport) {
 		
 		BigDecimal gstAmount = null;
 		BigDecimal yqTax = null;
@@ -22,9 +30,7 @@ public class FeeCalculator extends CommonCalculator {
 			gstAmount = BigDecimal.ZERO;
 		}
 
-		// airlineRule shall be get via platCarrier
-		// TODO: AirlineRuleService to inject or not?
-		if(!airlineRule.isIncludeYqComm()) {
+		if(!airlineRule.isIncludeYqCommission()) {
 			yqTax = BigDecimal.ZERO;
 		}
 
@@ -62,15 +68,15 @@ public class FeeCalculator extends CommonCalculator {
 		breakdown.setTotalSellingFare(getTotalFare(input));
 		breakdown.setBaseAmount(getTotalFee(input, breakdown));
 		
-		BigDecimal transactionFee = getTransactionFee(client, input, breakdown);
+		breakdown.setFee(getTransactionFee(client, input, breakdown, airport));
 		
 		breakdown.setTotalMerchantFee(getMerchantFee(input, breakdown));
 		
 		BigDecimal totalGstOnTf = null; // ??
-		breakdown.setMerchantFeeOnTf(getMfOnTf(input, totalGstOnTf));
+		breakdown.setMerchantFeeOnTf(getMfOnTf(input, breakdown, totalGstOnTf));
 		breakdown.setTotalSellFare(getTotalSellingFare(breakdown));		
-		breakdown.setTotalCharge(getTotalCharge(input, breakdown));
-		
+		breakdown.setTotalCharge(getTotalCharge(breakdown));
+				
 		/*
 		**txtRefFare = Base Amount + Total Tax(es)
 		
@@ -82,69 +88,112 @@ public class FeeCalculator extends CommonCalculator {
 			txtLowFareCarrier = cmbPlatCarrier.Text
 		End If			
 		*/
-		return new FeesBreakdown();
+		breakdown.setFee(null);
+		
+		return breakdown;
 	}
 
-	private BigDecimal getTransactionFee(Client client, TransactionFeesInput input, TransactionFeesBreakdown breakdown) {
+	private BigDecimal getTransactionFee(Client client, 
+			TransactionFeesInput input, 
+			TransactionFeesBreakdown breakdown, 
+			Airport airport) {
 
-
-		/*
-		If Fee Override Checkbox is Unchecked Then
-		   ClientPricing = client.getClientPricings where triptype = ttype and cmpid = ????
-		   FeeOption = ClientPricing.FeeOption
-		   ApplyFee = client.lccsameasint ? client.intddlfeeapply : client.lccddlfeeapply
-		   
-			If ApplyFee <> "NA" Then
-				If FeeOption = "P" Then
-					Transaction Fee = Transaction Fee by PNR
-				ElseIf FeeOption = "C" Then
-					Transaction Fee = Transaction Fee by Coupon
-				ElseIf FeeOption = "T" Then
-					Transaction Fee = Transaction Fee by Tkt
-				End If
-			Else
-				Transaction Fee = 0
-			End If
-		End If
-		*/
+		BigDecimal result = BigDecimal.ZERO;
 		
 		if (!input.isFeeOverride()) {
-			// cmpid needed?
-			Optional<ClientPricing> cp = client.getClientPricings().stream()
+			
+			Optional<ClientPricing> pricing = client.getClientPricings().stream()
 							.filter(i -> i.getTripType().equals(input.getTripType()))
 							.findFirst();
 			
-			if (cp.isPresent()) {
-				final ClientPricing clientPricing = cp.get();
+			if (pricing.isPresent()) {
+				final ClientPricing clientPricing = pricing.get();
 				final String feeOption = clientPricing.getFeeOption();
 				
-				final String applyFee = client.getLccSameAsInt() == true ? 
-						client.getIntDdlFeeApply() : client.getLccDdlFeeApply();
+				final String applyFee = client.getLccSameAsInt() 
+							? client.getIntDdlFeeApply() 
+							: client.getLccDdlFeeApply();
 						
-				if (!applyFee.equals("NA")) {
-					if (feeOption.equals("P")) {
-						// transaction fee by PNR
-						BigDecimal totalFee = getTotalFee(input, breakdown);
+				if (!applyFee.equals(NA)) {
+					if (feeOption.equals(PNR)) {
+						result = getFeeByPnr(input, breakdown, client, airport, clientPricing);
 					}
-					else if (feeOption.equals("C")) {
-						// transaction fee by coupon
-						
+					else if (feeOption.equals(COUPON)) {
+						result = getFeeByCoupon();
 					}
-					else if (feeOption.equals("T")) {
-						// transaction fee by ticket
-					}
-					else {
-						// Fee == 0
-						return BigDecimal.ZERO;
+					else if (feeOption.equals(TICKET)) {
+						result = getFeeByTicket();
 					}
 				}
 			}
 			
 		}
-		return null;
+		return result;
 	}
 	
-	//TODO Spell out commission
+	private BigDecimal getFeeByTicket() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private BigDecimal getFeeByCoupon() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private BigDecimal getFeeByPnr(
+			TransactionFeesInput input,
+			TransactionFeesBreakdown breakdown,
+			Client client,
+			Airport airport,
+			ClientPricing pricing) {
+		
+		BigDecimal result = BigDecimal.ZERO;
+		BigDecimal baseAmount = getTotalFee(input, breakdown);
+		
+		if(baseAmount == null) {
+			baseAmount = input.getBaseFare();
+		}
+		
+		TransactionFee transactionFee = getFeeByTerritory(pricing, airport.getCityCode(), baseAmount);
+		
+		if(transactionFee == null) {
+			transactionFee = getFeeByTerritory(pricing, airport.getCountryCode(), baseAmount);
+		}
+		
+		if(transactionFee == null) {			
+			transactionFee = getFeeByTerritory(pricing, airport.getRegionCode(), baseAmount);
+		}
+		
+		if(transactionFee == null) {
+			transactionFee = getFeeByTerritory(pricing, ALL, baseAmount);
+		}
+		
+		if(transactionFee != null) {
+			result = transactionFee.getAmount();
+		}		
+		
+		return result;
+	}
+
+	private TransactionFee getFeeByTerritory(
+			ClientPricing pricing, 
+			String territoryCode,
+			BigDecimal amount) {
+		
+		List<TransactionFee> list = pricing.getTransactionFees().stream()
+				.filter(i -> i.getTerritoryCodes().stream()
+						.anyMatch(code -> 
+							code.equals(territoryCode)
+							&& amount.compareTo(i.getStartAmount()) <= 0
+							&& amount.compareTo(i.getEndAmount()) >= 0
+							)
+						)
+				.collect(Collectors.toList());
+		
+		return list.get(0);
+	}
+
 	public BigDecimal getTotalAirCommission(TransactionFeesInput input) {
 		return safeValue(input.getBaseFare())
 					.add(safeValue(input.getYqTax()))
@@ -203,15 +252,15 @@ public class FeeCalculator extends CommonCalculator {
 					.add(breakdown.getTotalGst()), input.getMerchantFeePercent());
 	}
 	
-	public BigDecimal getMfOnTf(TransactionFeesInput input, 
+	public BigDecimal getMfOnTf(TransactionFeesInput input, TransactionFeesBreakdown breakdown,
 			BigDecimal totalGstOnTf) {
 
 		if(TripTypes.isInternational(input.getTripType())) {
-			return calculatePercentage(safeValue(input.getFee()).add(totalGstOnTf), 
+			return calculatePercentage(safeValue(breakdown.getFee()).add(totalGstOnTf), 
 					input.getMerchantFeePercent());
 		}
 		
-		return calculatePercentage(input.getFee(), 
+		return calculatePercentage(breakdown.getFee(), 
 				input.getMerchantFeePercent());
 	}
 	
@@ -232,12 +281,11 @@ public class FeeCalculator extends CommonCalculator {
 	}
 	
 	public BigDecimal getTotalCharge(
-			TransactionFeesInput input,
 			TransactionFeesBreakdown breakdown) {
 		
 		return safeValue(breakdown.getTotalSellFare())
 				.subtract(safeValue(breakdown.getMerchantFeeOnTf()))
-				.add(safeValue(input.getFee()))
+				.add(safeValue(breakdown.getFee()))
 				.add(safeValue(breakdown.getTotalTaxes()));	
 	}
 	

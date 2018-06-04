@@ -59,7 +59,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator<AirF
 						input.getTransactionFee(),
 						inClientType,
 						getTransactionFeeFlag(merchantFeeObj));
-				merchantFee = getMerchantFee(totalPlusTF, safeMerchantFeePct(merchantFeeObj), scale);
+				merchantFee = getMerchantFee(totalPlusTF, safeMerchantFeePercent(merchantFeeObj), scale);
 				result.setMerchantFee(merchantFee);
 			}
 
@@ -75,8 +75,8 @@ public class SgAirCalculator extends CommonCalculator implements Calculator<AirF
 		return result;
 	}
 
-	private Double safeMerchantFeePct(MerchantFee merchantFee) {
-		return (merchantFee != null) ? merchantFee.getMerchantFeePct() : 0D;
+	private Double safeMerchantFeePercent(MerchantFee merchantFee) {
+		return (merchantFee != null) ? merchantFee.getMerchantFeePercent() : 0D;
 	}
 
 	private Boolean getTransactionFeeFlag(MerchantFee merchantFee) {
@@ -99,7 +99,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator<AirF
 			BigDecimal inDiscount, String inClientType) {
 		BigDecimal discount;
 		if (input.isDiscountByPercent()) {
-			discount = getDiscountAmt(inNettFare, input.getDiscountPct(), inClientType, scale);
+			discount = getDiscountAmt(inNettFare, input.getDiscountPercent(), inClientType, scale);
 		}
 		else {
 			discount = inDiscount;
@@ -111,7 +111,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator<AirF
 			BigDecimal inCommission) {
 		BigDecimal commission;
 		if (input.isCommissionByPercent()) {
-			commission = round(inNettFare.multiply(percentDecimal(input.getCommissionPct())), scale);
+			commission = round(inNettFare.multiply(percentDecimal(input.getCommissionPercent())), scale);
 		}
 		else {
 			commission = inCommission;
@@ -119,10 +119,10 @@ public class SgAirCalculator extends CommonCalculator implements Calculator<AirF
 		return commission;
 	}
 
-	private BigDecimal getDiscountAmt(BigDecimal sellFare, Double discountPct, String clientType, int scale) {
+	private BigDecimal getDiscountAmt(BigDecimal sellFare, Double discountPercent, String clientType, int scale) {
 		BigDecimal discountAmt = BigDecimal.ZERO;
 		if (ClientTypes.clientsWithDiscount().contains(clientType)) {
-			discountAmt = round(sellFare.multiply(percentDecimal(discountPct)), scale);
+			discountAmt = round(sellFare.multiply(percentDecimal(discountPercent)), scale);
 		}
 		return discountAmt;
 	}
@@ -141,8 +141,8 @@ public class SgAirCalculator extends CommonCalculator implements Calculator<AirF
 		return total;
 	}
 
-	private BigDecimal getMerchantFee(BigDecimal totalCharge, Double merchantFeePct, int scale) {
+	private BigDecimal getMerchantFee(BigDecimal totalCharge, Double merchantFeePercent, int scale) {
 
-		return round(totalCharge.multiply(percentDecimal(merchantFeePct)), scale);
+		return round(totalCharge.multiply(percentDecimal(merchantFeePercent)), scale);
 	}
 }

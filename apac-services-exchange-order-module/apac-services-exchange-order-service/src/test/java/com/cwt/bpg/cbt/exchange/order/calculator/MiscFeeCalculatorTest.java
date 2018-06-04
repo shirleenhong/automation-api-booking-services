@@ -42,7 +42,7 @@ public class MiscFeeCalculatorTest {
 		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
 		
 		merchantFee = new MerchantFee();
-		merchantFee.setMerchantFeePct(6D);
+		merchantFee.setMerchantFeePercent(6D);
 	}
 
 	@Test

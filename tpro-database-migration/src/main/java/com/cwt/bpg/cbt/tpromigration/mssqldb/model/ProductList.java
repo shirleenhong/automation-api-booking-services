@@ -2,11 +2,11 @@ package com.cwt.bpg.cbt.tpromigration.mssqldb.model;
 
 import java.util.List;
 
-public class ProductList {
+public class ProductList<T> {
 	
 	private String countryCode;
 	
-	private List<Product> products;
+	private List<T> products;
 
 	public String getCountryCode() {
 		return countryCode;
@@ -16,14 +16,11 @@ public class ProductList {
 		this.countryCode = countryCode;
 	}
 
-	public List<Product> getProducts() {
+	public List<T> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<Product> products) {
+	public void setProducts(List<T> products) {
 		this.products = products;
 	}
-	
-	
-
 }

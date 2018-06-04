@@ -49,8 +49,8 @@ public class ProductsRepositoryTest {
 		prodA.setGst(0D);
 		prodA.setMi(false);
 		prodA.setSortKey("00");
-		prodA.setTktNo(false);
-		prodA.setTktPrefix("");
+		prodA.setTicketNumber(false);
+		prodA.setTicketPrefix("");
 		prodA.setType("BT");
 
 		Vendor vendorA = new Vendor();
@@ -75,8 +75,8 @@ public class ProductsRepositoryTest {
 		prodB.setGst(0D);
 		prodB.setMi(false);
 		prodB.setSortKey("01");
-		prodB.setTktNo(false);
-		prodB.setTktPrefix("");
+		prodB.setTicketNumber(false);
+		prodB.setTicketPrefix("");
 		prodB.setType("BT");
 
 		Vendor vendorB = new Vendor();

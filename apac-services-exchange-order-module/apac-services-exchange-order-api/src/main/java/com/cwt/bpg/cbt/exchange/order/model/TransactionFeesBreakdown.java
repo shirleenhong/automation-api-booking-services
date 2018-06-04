@@ -25,6 +25,7 @@ public class TransactionFeesBreakdown extends FeesBreakdown {
 	private BigDecimal totalTaxes;
 	private BigDecimal merchantFeeOnTf;
 	private BigDecimal totalCharge;
+	private BigDecimal fee;
 
 	public Double getOverheadPercent() {
 		return overheadPercent;
@@ -176,6 +177,14 @@ public class TransactionFeesBreakdown extends FeesBreakdown {
 
 	public void setTotalGst(BigDecimal totalGst) {
 		this.totalGst = totalGst;
+	}
+
+	public BigDecimal getFee() {
+		return fee;
+	}
+
+	public void setFee(BigDecimal fee) {
+		this.fee = fee;
 	}
 
 }

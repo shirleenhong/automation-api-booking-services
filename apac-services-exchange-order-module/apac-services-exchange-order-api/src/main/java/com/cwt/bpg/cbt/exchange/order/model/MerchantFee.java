@@ -15,7 +15,7 @@ public class MerchantFee implements Serializable {
 
 	private boolean includeTransactionFee;
 	
-	private Double merchantFeePct;
+	private Double merchantFeePercent;
 	
 	private String clientType;
 	
@@ -60,19 +60,19 @@ public class MerchantFee implements Serializable {
 		this.profileName = profileName;
 	}
 
-	public Double getMerchantFeePct() {
-		return merchantFeePct;
-	}
-
-	public void setMerchantFeePct(Double merchantFeePct) {
-		this.merchantFeePct = merchantFeePct;
-	}
-
 	public String getCountryCode() {
 		return countryCode;
 	}
 
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
+	}
+
+	public Double getMerchantFeePercent() {
+		return merchantFeePercent;
+	}
+
+	public void setMerchantFeePercent(Double merchantFeePercent) {
+		this.merchantFeePercent = merchantFeePercent;
 	}
 }

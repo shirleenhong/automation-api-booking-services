@@ -8,14 +8,13 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
 
 public class RebateCalculatorTest {
     private RebateCalculator rebateCalc = new RebateCalculator();
 
     @Test
     public void getIntMfFeeTFShouldReturnNull() {
-        assertNull(rebateCalc.getMfOnTf(null, BigDecimal.ZERO));
+        assertNull(rebateCalc.getMfOnTf(null, null, BigDecimal.ZERO));
     }
 
     @Test
@@ -29,11 +28,9 @@ public class RebateCalculatorTest {
     	TransactionFeesBreakdown breakdown = new TransactionFeesBreakdown();
     	breakdown.setTotalSellFare(new BigDecimal(100));
     	breakdown.setTotalTaxes(new BigDecimal(10));
+    	breakdown.setFee(new BigDecimal(50));    	
     	
-    	TransactionFeesInput input = new TransactionFeesInput();
-    	input.setFee(new BigDecimal(50));    	
-    	
-        BigDecimal actualResult = rebateCalc.getTotalCharge(input, breakdown);
+        BigDecimal actualResult = rebateCalc.getTotalCharge(breakdown);
 
         assertEquals(new BigDecimal(160), actualResult);
     }

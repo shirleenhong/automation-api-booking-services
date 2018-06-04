@@ -49,6 +49,8 @@ public class OtherServiceFeesServiceTest {
 	@Mock
 	private AirlineRuleService airlineRuleService;
 	
+	@Mock
+	private AirportService airportService;	
 	
 	@InjectMocks
 	private OtherServiceFeesService service;
@@ -92,11 +94,12 @@ public class OtherServiceFeesServiceTest {
 		when(tfFactory.getCalculator(anyInt()))
 			.thenReturn(tfCalculator);
 		
-		when(tfCalculator.calculate(anyObject(), anyObject(), 
+		when(tfCalculator.calculate(anyObject(), anyObject(), anyObject(), 
 				anyObject()))
 			.thenReturn(new FeesBreakdown());
 		
 		when(airlineRuleService.getAirlineRule(anyString())).thenReturn(new AirlineRule());
+		when(airportService.getAirport(anyString())).thenReturn(new Airport());
 		
 		Client client = new Client();
 		client.setPricingId(20);

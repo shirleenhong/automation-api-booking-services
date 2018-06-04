@@ -1,13 +1,5 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.dao;
 
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +7,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
+
 
 @Repository
 public class VendorDAOImpl implements VendorDAO {
@@ -24,27 +27,13 @@ public class VendorDAOImpl implements VendorDAO {
     @Autowired
     private DataSource dataSource;
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<Vendor> listVendors() {
-        List<Vendor> vendorList = new ArrayList<Vendor>();
+    	
+        List<Vendor> vendorList = new ArrayList<>();
         String sql = "SELECT * FROM tblVendors WHERE ProductCodes is not null and len([ProductCodes]) > 0";
 
         Connection conn = null;
-//		@Column(name="VendorNumber")
-//		@Column(name="Address1")
-//		@Column(name="Address2")
-//		@Column(name="City")
-//		@Column(name="ContactNo")
-//		@Column(name="Country")
-//		@Column(name="CreditTerms")
-//		@Column(name="Email")
-//		@Column(name="FaxNumber")
-//		@Column(name="MISC")
-//		@Column(name="ProductCodes")
-//		@Column(name="RaiseType")
-//		@Column(name="SortKey")
-//		@Column(name="VendorName")
 
         try {
             logger.info("getting vendors from mssqldb");

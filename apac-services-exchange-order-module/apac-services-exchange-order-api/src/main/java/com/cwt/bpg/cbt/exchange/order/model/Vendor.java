@@ -6,8 +6,6 @@ public class Vendor implements Serializable {
 
 	private static final long serialVersionUID = -6536616212682978836L;
 	
-	public static final String COLLECTION = "vendors";
-	
 	private String countryCode;
 	
 	private String vendorNumber;

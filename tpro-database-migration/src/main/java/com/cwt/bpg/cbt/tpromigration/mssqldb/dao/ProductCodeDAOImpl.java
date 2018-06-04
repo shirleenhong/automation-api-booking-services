@@ -14,10 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Product;
+import com.cwt.bpg.cbt.exchange.order.model.HkSgProduct;
 
 @Repository
-public class ProductCodeDAOImpl implements ProductCodeDAO {
+public class ProductCodeDAOImpl implements ProductCodeDAO<HkSgProduct> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductCodeDAOImpl.class);
 
@@ -25,39 +25,28 @@ public class ProductCodeDAOImpl implements ProductCodeDAO {
 	private DataSource dataSource;
 
 	@Override
-	public List<Product> listProductCodes() {
-		List<Product> productCodeList = new ArrayList<Product>();
+	public List<HkSgProduct> listProductCodes() {
+		List<HkSgProduct> productCodeList = new ArrayList<>();
 		String sql = "SELECT * FROM tblProductCodes";
 		
 		Connection conn = null;
-
-//		@Column(name="ProductCode")
-//		@Column(name="Description")
-//		@Column(name="EnableCCFOP")
-//		@Column(name="FullComm")
-//		@Column(name="GST")
-//		@Column(name="MI")
-//		@Column(name="SortKey")
-//		@Column(name="TktNo")
-//		@Column(name="TktPrefix")
-//		@Column(name="Type")
-
+		
 		try {
 			logger.info("getting product codes from mssqldb");
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Product productCode = new Product();
+				HkSgProduct productCode = new HkSgProduct();
 				productCode.setProductCode(rs.getString("ProductCode"));
 				productCode.setDescription(rs.getString("Description").trim().replaceAll(" +", " "));
-				productCode.setEnableCcfop(rs.getObject("EnableCCFOP") == null ? null : rs.getBoolean("EnableCCFOP"));
-				productCode.setFullComm(rs.getObject("FullComm") == null ? null : rs.getBoolean("FullComm"));
-				productCode.setGst(rs.getObject("GST") == null ? null : rs.getInt("GST"));
+				productCode.setEnableCcFop(rs.getObject("EnableCCFOP") == null ? null : rs.getBoolean("EnableCCFOP"));
+				productCode.setFullCommission(rs.getObject("FullComm") == null ? null : rs.getBoolean("FullComm"));
+				productCode.setGst(rs.getObject("GST") == null ? null : rs.getDouble("GST"));
 				productCode.setMi(rs.getObject("MI") == null ? null : rs.getBoolean("MI"));
 				productCode.setSortKey(rs.getString("SortKey"));
-				productCode.setTktNo(rs.getObject("TktNo") == null ? null : rs.getBoolean("TktNo"));
-				productCode.setTktPrefix(rs.getString("TktPrefix"));
+				productCode.setTicketNumber(rs.getObject("TktNo") == null ? null : rs.getBoolean("TktNo"));
+				productCode.setTicketPrefix(rs.getString("TktPrefix"));
 				productCode.setType(rs.getString("Type"));
 				productCodeList.add(productCode);
 			}

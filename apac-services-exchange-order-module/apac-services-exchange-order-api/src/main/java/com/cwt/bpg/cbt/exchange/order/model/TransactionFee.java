@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class TransactionFee implements Serializable {
@@ -10,17 +11,17 @@ public class TransactionFee implements Serializable {
 	private Integer feeId;
 	private List<String> territoryCodes;
 	private String type;
-	private Double tfAmount;
+	private BigDecimal amount;
 	private String operator;
-	private Double extraAmount;
-	private Double perAmount;
-	private Double minAmount;
-	private Double maxAmount;
-	private Double startAmount;
-	private Double endAmount;
-	private Double startCoupon;
-	private Double endCoupon;
-	private Double threshold;
+	private BigDecimal extraAmount;
+	private BigDecimal perAmount;
+	private BigDecimal minAmount;
+	private BigDecimal maxAmount;
+	private BigDecimal startAmount;
+	private BigDecimal endAmount;
+	private BigDecimal startCoupon;
+	private BigDecimal endCoupon;
+	private BigDecimal threshold;
 
 	public Integer getFeeId() {
 		return feeId;
@@ -46,12 +47,12 @@ public class TransactionFee implements Serializable {
 		this.type = type;
 	}
 
-	public Double getTfAmount() {
-		return tfAmount;
+	public BigDecimal getAmount() {
+		return amount;
 	}
 
-	public void setTfAmount(Double tfAmount) {
-		this.tfAmount = tfAmount;
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
 
 	public String getOperator() {
@@ -62,75 +63,75 @@ public class TransactionFee implements Serializable {
 		this.operator = operator;
 	}
 
-	public Double getExtraAmount() {
+	public BigDecimal getExtraAmount() {
 		return extraAmount;
 	}
 
-	public void setExtraAmount(Double extraAmount) {
+	public void setExtraAmount(BigDecimal extraAmount) {
 		this.extraAmount = extraAmount;
 	}
 
-	public Double getPerAmount() {
+	public BigDecimal getPerAmount() {
 		return perAmount;
 	}
 
-	public void setPerAmount(Double perAmount) {
+	public void setPerAmount(BigDecimal perAmount) {
 		this.perAmount = perAmount;
 	}
 
-	public Double getMinAmount() {
+	public BigDecimal getMinAmount() {
 		return minAmount;
 	}
 
-	public void setMinAmount(Double minAmount) {
+	public void setMinAmount(BigDecimal minAmount) {
 		this.minAmount = minAmount;
 	}
 
-	public Double getMaxAmount() {
+	public BigDecimal getMaxAmount() {
 		return maxAmount;
 	}
 
-	public void setMaxAmount(Double maxAmount) {
+	public void setMaxAmount(BigDecimal maxAmount) {
 		this.maxAmount = maxAmount;
 	}
 
-	public Double getStartAmount() {
+	public BigDecimal getStartAmount() {
 		return startAmount;
 	}
 
-	public void setStartAmount(Double startAmount) {
+	public void setStartAmount(BigDecimal startAmount) {
 		this.startAmount = startAmount;
 	}
 
-	public Double getEndAmount() {
+	public BigDecimal getEndAmount() {
 		return endAmount;
 	}
 
-	public void setEndAmount(Double endAmount) {
+	public void setEndAmount(BigDecimal endAmount) {
 		this.endAmount = endAmount;
 	}
 
-	public Double getStartCoupon() {
+	public BigDecimal getStartCoupon() {
 		return startCoupon;
 	}
 
-	public void setStartCoupon(Double startCoupon) {
+	public void setStartCoupon(BigDecimal startCoupon) {
 		this.startCoupon = startCoupon;
 	}
 
-	public Double getEndCoupon() {
+	public BigDecimal getEndCoupon() {
 		return endCoupon;
 	}
 
-	public void setEndCoupon(Double endCoupon) {
+	public void setEndCoupon(BigDecimal endCoupon) {
 		this.endCoupon = endCoupon;
 	}
 
-	public Double getThreshold() {
+	public BigDecimal getThreshold() {
 		return threshold;
 	}
 
-	public void setThreshold(Double threshold) {
+	public void setThreshold(BigDecimal threshold) {
 		this.threshold = threshold;
 	}
 }

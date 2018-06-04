@@ -87,7 +87,7 @@ public class VisaFeesCalculatorTest {
 
 	private MerchantFee createMerchantFee() {
 		MerchantFee merchantFee = new MerchantFee();
-		merchantFee.setMerchantFeePct(2D);
+		merchantFee.setMerchantFeePercent(2D);
 		return merchantFee;
 	}
 }

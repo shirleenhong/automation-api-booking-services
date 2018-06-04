@@ -44,6 +44,9 @@ public class OtherServiceFeesService {
 	@Autowired
 	private ClientService clientService;
 	
+	@Autowired
+	private AirportService airportService;
+	
 	@Autowired 
 	private AirlineRuleService airlineRuleService;
 
@@ -64,8 +67,12 @@ public class OtherServiceFeesService {
 		final AirlineRule airlineRule = airlineRuleService.getAirlineRule(input.getPlatCarrier());
 		
 		return this.tfFactory.getCalculator(pricingId)
-				.calculate(airlineRule, client, input);
+				.calculate(input, airlineRule, client, getAirport(input.getCityCode()));
 	
+	}
+
+	private Airport getAirport(String cityCode) {
+		return airportService.getAirport(cityCode);
 	}
 
 	private int getPricingId(String profileName) {

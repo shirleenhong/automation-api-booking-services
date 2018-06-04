@@ -18,7 +18,7 @@ public class Product implements Serializable {
 
 	private String sortKey;
 
-	private String tktPrefix;
+	private String ticketPrefix;
 
 	private String type;
 
@@ -66,20 +66,20 @@ public class Product implements Serializable {
 		this.sortKey = sortKey;
 	}
 
-	public String getTktPrefix() {
-		return tktPrefix;
-	}
-
-	public void setTktPrefix(String tktPrefix) {
-		this.tktPrefix = tktPrefix;
-	}
-
 	public String getType() {
 		return type;
 	}
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getTicketPrefix() {
+		return ticketPrefix;
+	}
+
+	public void setTicketPrefix(String ticketPrefix) {
+		this.ticketPrefix = ticketPrefix;
 	}
 
 }
