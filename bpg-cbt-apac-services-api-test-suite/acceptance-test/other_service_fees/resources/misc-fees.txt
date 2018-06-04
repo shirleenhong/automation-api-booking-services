@@ -11,11 +11,11 @@ Append Additional Fields For Air Fees
     Run Keyword If    "${merchant_fee_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFee":${merchant_fee_value}
     Run Keyword If    "${commission_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commission":${commission_value}
     Run Keyword If    "${commission_percent_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionByPercent":${commission_percent_flag_value}
-    Run Keyword If    "${commission_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionPct":${commission_percentage_value}
+    Run Keyword If    "${commission_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionPercent":${commission_percentage_value}
     Run Keyword If    "${cwt_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "cwtAbsorb":${cwt_absorb_value}
     Run Keyword If    "${discount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discount":${discount_value}
     Run Keyword If    "${discount_percent_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountByPercent":${discount_percent_flag_value}
-    Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountPct":${discount_percentage_value}
+    Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountPercent":${discount_percentage_value}
     Run Keyword If    "${nett_fare_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettFare":${nett_fare_value}
     ${product_type}    Set Variable If    "${product_type_value}"=="NULL"    null    "${product_type_value}"=="None"    None    "${product_type_value}"
     Run Keyword If    "${product_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productType":${product_type}

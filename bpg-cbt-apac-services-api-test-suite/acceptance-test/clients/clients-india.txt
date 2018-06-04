@@ -25,7 +25,7 @@ Verify That Clients Are Updated Correctly After Put Request
     Send Get Request For Client    client_id=74    
     Verify Response Status Code Is Correct    200
     Verify Client Are Correctly Retrieved    client_list=clientId,74|cmpid,83|name,TEST-PNQ|profileName,TEST-SIEMENSINVPNQ|pricingId,10|exemptTax,false|standardMfProduct,false|applyMfCc,false|applyMfBank,false|merchantFee,0.0|lccSameAsInt,false|lccDdlFeeApply,TF|intDdlFeeApply,TF
-    [Teardown]    Update Client To Original Value And Evict Client Cache      
+    [Teardown]    Update Client To Original Value And Evict Client Cache
     
 Verify That Clients Are Added Correctly After Put Request
     [Tags]    functional
