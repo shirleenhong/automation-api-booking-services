@@ -18,7 +18,9 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 	private ScaleConfig scaleConfig;
 	private static final int BTC_FOP_MODE = 3;
 
-	public NonAirFeesBreakdown calculate(InNonAirFeesInput input, Client client) {
+	public NonAirFeesBreakdown calculate(InNonAirFeesInput input, 
+			Client client, 
+			Client defaultClient) {
 
 		NonAirFeesBreakdown result = new NonAirFeesBreakdown();
 
@@ -37,7 +39,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 				mfPercent = 0D;
 			}
 			else {
-				mfPercent = calculateMfPercent(input, client);
+				mfPercent = calculateMfPercent(input, client, defaultClient);
 			}
 		}
 
@@ -81,20 +83,44 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 		return result;
 	}
 
-	private Double calculateMfPercent(InNonAirFeesInput input, Client client) {
+	private Double calculateMfPercent(InNonAirFeesInput input, 
+			Client client, 
+			Client defaultClient) {
 
 		Double mfPercent = client.getMerchantFee();
-
-		Bank bank = bank(client, input.getFopNumber(), client.isApplyMfBank());
-		if (bank != null && !StringUtils.isEmpty(bank.getCcNumberPrefix())) {
-			mfPercent = bank.getPercentage();
+	
+		if(isSubjectToMF(client.isStandardMfProduct() 
+				? defaultClient : client, 
+				input.getProduct().getProductCode())) {
+			mfPercent = 0D;
 		}
-		else if (!StringUtils.isEmpty(input.getFopType())) {
-			CreditCardVendor vendor = creditCard(client, input.getAcctType(), client.isApplyMfCc());
-			mfPercent = vendor != null ? vendor.getPercentage() : 0D;
+		else {
+			Bank bank = getBank(client, input.getFopNumber(), client.isApplyMfBank());
+			if (bank != null && !StringUtils.isEmpty(bank.getCcNumberPrefix())) {
+				mfPercent = bank.getPercentage();
+			}
+			else if (!StringUtils.isEmpty(input.getFopType())) {
+				CreditCardVendor vendor = getCreditCard(client, input.getAcctType(), client.isApplyMfCc());
+				mfPercent = vendor != null ? vendor.getPercentage() : 0D;
+			}	
 		}
-
+		
 		return mfPercent;
+	}
+
+	private boolean isSubjectToMF(Client client, String productCode) {
+
+		if (client.getMfProducts() != null) {
+			Optional<ProductMerchantFee> pmf = client.getMfProducts().stream()
+					.filter(p -> p.getProductCode().equals(productCode)).findFirst();
+
+			if (pmf.isPresent()) {
+				return pmf.get().isSubjectToMf();
+			}
+
+		}
+
+		return false;
 	}
 
 	private ProductMerchantFee getProduct(Client client, Product product) {
@@ -109,7 +135,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 		return null;
 	}
 
-	private CreditCardVendor creditCard(Client client, String acctType, boolean isStandard) {
+	private CreditCardVendor getCreditCard(Client client, String acctType, boolean isStandard) {
 
 		if (client.getMfCcs() != null) {
 
@@ -124,7 +150,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 		return null;
 	}
 
-	private Bank bank(Client client, String fopNumber, boolean isStandard) {
+	private Bank getBank(Client client, String fopNumber, boolean isStandard) {
 
 		if (client.getMfBanks() != null) {
 

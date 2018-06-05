@@ -52,7 +52,9 @@ public class IndiaVendorDAOImpl implements VendorDAO {
 				tblVendor.setVendorName(rs.getString("VendorName").replaceAll("\\u2013", "-")
 						.replaceAll("\\u00a0", " ").replaceAll(" +", " ").trim());
 				tblVendor.setContactPerson(rs.getString("ContactPerson"));
-				tblVendor.setAddress1(rs.getString("Address"));
+				tblVendor.setAddress1(rs.getString("Address") != null 
+						? rs.getString("Address").replaceAll("\\r\\n", " ")
+						: null);
 				tblVendor.setCity(rs.getString("City"));
 				tblVendor.setPostalCode(rs.getString("PostalCode"));
 				tblVendor.setState(rs.getString("State"));

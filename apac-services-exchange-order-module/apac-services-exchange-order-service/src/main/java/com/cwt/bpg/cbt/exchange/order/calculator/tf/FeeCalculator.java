@@ -17,8 +17,12 @@ public class FeeCalculator extends CommonCalculator {
 	private static final String NA = "NA";
 	private static final String ALL = "ALL";
 
-	public AirFeesBreakdown calculate(InAirFeesInput input, AirlineRule airlineRule, Client client, Airport airport) {
+	public AirFeesBreakdown calculate(InAirFeesInput input, 
+			AirlineRule airlineRule, 
+			Client client, 
+			Airport airport) {
 		
+		InProduct airProduct = new InProduct();
 		BigDecimal gstAmount = null;
 		BigDecimal yqTax = null;
 		
@@ -67,12 +71,12 @@ public class FeeCalculator extends CommonCalculator {
 		breakdown.setBaseAmount(getTotalFee(input, breakdown));
 		
 		BigDecimal baseAmount = getTotalFee(input, breakdown);
-		breakdown.setFee(getTransactionFee(client, input, breakdown, airport, baseAmount));
+		breakdown.setFee(getTransactionFee(client, input, airport, baseAmount));
 		
 		breakdown.setTotalMerchantFee(getMerchantFee(input, breakdown));
 		
-		BigDecimal totalGstOnTf = null; // ??
-		breakdown.setMerchantFeeOnTf(getMfOnTf(input, breakdown, totalGstOnTf));
+		breakdown.setMerchantFeeOnTf(getMfOnTf(input, breakdown, 
+								getGstOnTf(airProduct, breakdown.getFee())));
 		breakdown.setTotalSellFare(getTotalSellingFare(breakdown));		
 		breakdown.setTotalCharge(getTotalCharge(breakdown));
 				
@@ -92,13 +96,19 @@ public class FeeCalculator extends CommonCalculator {
 		return breakdown;
 	}
 
+	private BigDecimal getGstOnTf(InProduct airProduct, BigDecimal fee) {
+
+		return calculatePercentage(fee, airProduct.getGst())
+				.add(calculatePercentage(fee, airProduct.getOt1()))
+				.add(calculatePercentage(fee, airProduct.getOt2()));
+	}
+
 	private BigDecimal getTransactionFee(Client client, 
 			InAirFeesInput input,
-			InAirFeesBreakdown breakdown,
 			Airport airport, BigDecimal baseAmount) {
 
 		BigDecimal result = BigDecimal.ZERO;
-		
+		 
 		if (!input.isFeeOverride()) {
 			
 			Optional<ClientPricing> pricing = client.getClientPricings().stream()
