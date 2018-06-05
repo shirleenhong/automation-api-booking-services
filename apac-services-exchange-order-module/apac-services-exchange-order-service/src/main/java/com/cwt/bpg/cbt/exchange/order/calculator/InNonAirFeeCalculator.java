@@ -18,7 +18,9 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 	private ScaleConfig scaleConfig;
 	private static final int BTC_FOP_MODE = 3;
 
-	public NonAirFeesBreakdown calculate(InNonAirFeesInput input, Client client, Client defaultClient) {
+	public NonAirFeesBreakdown calculate(InNonAirFeesInput input, 
+			Client client, 
+			Client defaultClient) {
 
 		NonAirFeesBreakdown result = new NonAirFeesBreakdown();
 
@@ -88,7 +90,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 		Double mfPercent = client.getMerchantFee();
 	
 		if(isSubjectToMF(client.isStandardMfProduct() 
-				? client : defaultClient, 
+				? defaultClient : client, 
 				input.getProduct().getProductCode())) {
 			mfPercent = 0D;
 		}

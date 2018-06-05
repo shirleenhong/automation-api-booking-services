@@ -61,15 +61,15 @@ public class OtherServiceFeesService {
 			final Client client = clientService.getClient(input.getProfileName());
 			final int pricingId = getPricingId(input.getProfileName());
 			final InAirFeesInput inAirFeesInput = (InAirFeesInput) input;
-			final AirlineRule airlineRule = airlineRuleService.getAirlineRule(inAirFeesInput.getPlatCarrier());
+			final AirlineRule airlineRule = airlineRuleService
+					.getAirlineRule(inAirFeesInput.getPlatCarrier());
 			Airport airport = getAirport(inAirFeesInput.getCityCode());
 
 			return this.tfFactory.getCalculator(pricingId)
 					.calculate(inAirFeesInput, airlineRule, client, airport);
 		}
 		else {
-			return this.osFactory.getCalculator(countryCode).calculate(input,
-					getMerchantFeePct(input));
+			return this.osFactory.getCalculator(countryCode).calculate(input, getMerchantFeePct(input));
 		}
 	}
 
@@ -97,14 +97,18 @@ public class OtherServiceFeesService {
 	}
 
 	public NonAirFeesBreakdown calculateNonAirFee(NonAirFeesInput input) {
+		
 		if (Country.INDIA.getCode().equals(input.getCountryCode())) {
-			return this.inNonAirFeeCalculator.calculate(
-					(InNonAirFeesInput)input, 
-						clientService.getClient(input.getProfileName()),
-						clientService.getDefaultClient());
+			
+			final Client client = clientService.getClient(input.getProfileName());
+			final Client defaultClient = clientService.getDefaultClient(); 
+			
+			return this.inNonAirFeeCalculator.calculate((InNonAirFeesInput) input,
+					client, defaultClient);
 		}
 		else {
-			return this.hkSgNonAirFeeCalculator.calculate((HkSgNonAirFeesInput)input, getMerchantFeePct(input));
+			return this.hkSgNonAirFeeCalculator.calculate((HkSgNonAirFeesInput) input,
+					getMerchantFeePct(input));
 		}
 	}
 }

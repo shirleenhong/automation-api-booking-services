@@ -74,7 +74,9 @@ public class ClientDAOImpl {
 				client.setApplyMfBank(rs.getBoolean("applymfbank"));
 				client.setApplyMfCc(rs.getBoolean("applymfcc"));
 				client.setCmpid(rs.getInt("cmpid"));
-				client.setStandardMfProduct(rs.getBoolean("standardmfproduct"));
+				client.setStandardMfProduct(rs.getObject("standardmfproduct") != null
+												? rs.getBoolean("standardmfproduct") 
+												: true);
 				client.setMerchantFee(rs.getDouble("merchantfee"));
 				client.setLccSameAsInt(rs.getBoolean("lccsameasint"));
 				client.setIntDdlFeeApply(rs.getString("intddlfeeapply"));
