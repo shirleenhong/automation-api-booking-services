@@ -1,0 +1,244 @@
+*** Settings ***
+Resource    ../../resources/api-imports.txt
+Resource    ../../resources/api-utilities.txt
+Resource    ../../resources/api-variables.txt
+
+*** Keywords ***
+Append Fields For Non-Air Fees For HK/SG
+    [Arguments]    ${other_service_fees_request_list}
+    ${length_country_code}    Get Length    ${country}
+    Run Keyword If    ${length_country_code} > 2    Append To List    ${other_service_fees_request_list}    "countryCode":${country}
+    ...    ELSE    Append To List    ${other_service_fees_request_list}    "countryCode":"${country}"
+    Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
+    ${client_type}    Set Variable If    "${client_type_value}"=="NULL"    null    "${client_type_value}"=="None"    None    "${client_type_value}"
+    Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":${client_type}
+    Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "profileName":"${pro_name_value}"
+    Run Keyword If    "${merchant_fee_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeAbsorb":${merchant_fee_absorb_value}
+    Run Keyword If    "${merchant_fee_waive_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeWaive":${merchant_fee_waive_value}
+    Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPrice":${selling_price_value}
+    Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAbsorb":${gst_absorb_value}
+    Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCost":${nett_cost_value}
+    Run Keyword If    "${gst_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercent":${gst_percent_value}
+    Set Test Variable    ${other_service_fees_request_list}
+
+Append Fields For Non-Air Fees For India
+    [Arguments]    ${other_service_fees_request_list}    ${product_request_list}
+    ${length_country_code}    Get Length    ${country}
+    Run Keyword If    ${length_country_code} > 2    Append To List    ${other_service_fees_request_list}    "countryCode":${country}
+    ...    ELSE    Append To List    ${other_service_fees_request_list}    "countryCode":"${country}"
+    Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
+    Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "profileName":"${pro_name_value}"
+    Run Keyword If    "${acct_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "acctType":"${acct_type_value}"
+    Run Keyword If    "${cost_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "costAmount":"${cost_amount_value}"
+    Run Keyword If    "${comm_by_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionByPercent":${comm_by_percent_value}
+    Run Keyword If    "${comm_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionPercent":${comm_percentage_value}
+    Run Keyword If    "${commission_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionAmount":${commission_value}
+    Run Keyword If    "${discount_by_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountByPercent":${discount_by_percent_value}
+    Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountPercent":${discount_percentage_value}
+    Run Keyword If    "${discount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountAmount":${discount_value}
+    Run Keyword If    "${fop_mode_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopMode":${fop_mode_value}
+    Run Keyword If    "${fop_number_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopNumber":"${fop_number_value}"
+    Run Keyword If    "${gst_percentage_value}"!="null"    Append To List    ${product_request_list}    "gst":${gst_percentage_value}
+    Run Keyword If    "${ot1_value}"!="null"    Append To List    ${product_request_list}    "ot1":${ot1_value}
+    Run Keyword If    "${ot2_value}"!="null"    Append To List    ${product_request_list}    "ot2":${ot2_value}
+    Run Keyword If    "${product_code_value}"!="null"    Append To List    ${product_request_list}    "productCode":"${product_code_value}"
+    Set Test Variable    ${other_service_fees_request_list}
+    Set Test Variable    ${product_request_list}
+
+Calculate Non-Air Fees For IN
+    Run Keyword If    "${fop_mode_value}" != "3"    Calculate Non-Air Fees Merchant Fee Percentage    ELSE    Set Test Variable    ${merchant_fee_percentage_amount}    0
+    Run Keyword If    "${comm_by_percent_value}" == "true"    Calculate Non-Air Fees Commission    ELSE    Set Test Variable    ${commission_amount}    ${commission_value}
+    Run Keyword If    "${discount_by_percent_value}" == "true"    Calculate Non-Air Fees Discount    ELSE    Set Test Variable    ${discount_amount}    ${discount_value}
+    Calculate Non-Air Fees Gross Sell Amount
+    Calculate Non-Air Fees VAT/ GST Amount
+    Calculate Non-Air Fees Total Sell Amount
+
+Calculate Non-Air Fees For HK/SG
+    Run Keyword If    "${gst_absorb_value}" == "false"    Run Keywords    Calculate Non-Air Fees GST
+    ...    AND    Calculate Non-Air Fees Nett Cost GST
+    ...    ELSE    Set GST And Nett Cost GST
+    Run Keyword If    "${merchant_fee_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Non-Air Fees Merchant Fee
+    ...    ELSE    Set Merchant Fee
+    Calculate Non-Air Fees Selling Price In DI
+    Run Keyword If    ${total_selling_price_value}>${nett_cost_value}    Calculate Non-Air Fees Commission
+    ...    ELSE    Set Commission Value
+    Run Keyword If    "${country.upper()}" == "HK"    Remove Decimal Places
+
+Calculate Non-Air Fees GST
+    ${calculated_value}    Evaluate    ${selling_price_value}*(${gst_percent_value}*0.01)
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${gst_amount_value}    ${calculated_value}
+    
+Calculate Non-Air Fees Nett Cost GST
+    ${calculated_value}    Evaluate    ${nett_cost_value}*(${gst_percent_value}*0.01)
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${nett_cost_gst_value}    ${calculated_value}
+
+Calculate Non-Air Fees Merchant Fee
+    ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percentage_value}*0.01)
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${merchant_fee_value}    ${calculated_value}
+
+Calculate Non-Air Fees Merchant Fee Percentage
+    ${fop_cc_number_value}    Run Keyword And Return Status    Verify String Contains Substring    ${fop_number_value}    ${cc_number_value}
+    Run Keyword If    "${subject_to_mf_value}" == "true"    Set Test Variable    ${merchant_fee_percentage_amount}    0    
+    ...    ELSE IF    ("${apply_mf_bank_value}" == "NULL" or "${apply_mf_bank_value}" == "false") and "${merchant_fee_percentage_value}" != "0" and "${cc_number_value}" != "${EMPTY}" and "${fop_cc_number_value}" == "True"    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}
+    ...    ELSE IF    "${apply_mf_bank_value}" == "true" and "${merchant_fee_percentage_value}" != "0" and "${cc_number_value}" != "${EMPTY}" and "${fop_cc_number_value}" == "True"    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}
+    ...    ELSE IF    ("${apply_mf_cc_value}" == "NULL" or "${apply_mf_cc_value}" == "false") and "${merchant_fee_percentage_value}" != "0" and "${cc_value}" != "${EMPTY}"    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}
+    ...    ELSE IF    "${apply_mf_cc_value}" == "true" and "${merchant_fee_percentage_value}" != "0" and "${cc_value}" != "${EMPTY}"    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}
+    ...    ELSE    Set Test variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}
+    ${merchant_fee_percentage_amount}    Evaluate    ${merchant_fee_percentage_amount}*0.01
+    Set Test Variable    ${merchant_fee_percentage_amount}
+
+Calculate Non-Air Fees Commission
+    ${formula}    Set Variable If    "${country}"!="IN"    ${total_selling_price_value}-${nett_cost_value}    (${cost_amount_value}*(${comm_percentage_value}*0.01))
+    ${calculated_value}    Evaluate    ${formula}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${commission_value}    ${calculated_value} 
+    
+Calculate Non-Air Fees Discount
+    ${calculated_value}    Evaluate    ((${cost_amount_value}+${commission_value})*(${discount_percentage_value}*0.01))
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${discount_amount}    ${calculated_value}
+    
+Calculate Non-Air Fees Gross Sell Amount
+    ${calculated_value}    Evaluate    ${cost_amount_value}+${commission_value}-${discount_amount}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${gross_selling_price_value}    ${calculated_value}    
+
+Calculate Non-Air Fees Selling Price In DI
+    ${calculated_value}    Evaluate    (${selling_price_value}+${gst_amount_value}+${merchant_fee_value})/(1+${gst_percent_value}*0.01)
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${total_selling_price_value}    ${calculated_value}
+    
+Calculate Non-Air Fees VAT/ GST Amount
+    ${tax_calculated_value}    Evaluate    round((${gross_selling_price_value}*(${gst_percentage_value}*0.01)),${decimal_place})
+    ${calculated_value}    Evaluate    ${tax_calculated_value}+round((${gross_selling_price_value}*(${ot1_value}*0.01)),${decimal_place})+round((${gross_selling_price_value}*(${ot2_value}*0.01)),${decimal_place})
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${gst_amount_value}    ${calculated_value}
+
+Calculate Non-Air Fees Total Sell Amount
+    ${merchant_fee_amount}    Evaluate    round(((${gross_selling_price_value}+${gst_amount_value})*${merchant_fee_percentage_amount}),${decimal_place})
+    ${merchant_fee_amount}    Convert To String    ${merchant_fee_amount}
+    ${merchant_fee_amount}    Fix Decimal Places    ${merchant_fee_amount}    
+    Set Test Variable    ${merchant_fee_value}    ${merchant_fee_amount}
+    ${calculated_value}    Evaluate    (${gross_selling_price_value}+${gst_amount_value}+${merchant_fee_amount})
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${total_selling_price_value}    ${calculated_value}
+
+Create Test Variables For Non-Air Fees
+    [Arguments]    ${fees_list}    ${country}=sg
+    ${fees_list}    Split String    ${fees_list}    |
+    : FOR    ${fees}    IN    @{fees_list}
+    \    ${fees_item}    Split String    ${fees}    ,
+    \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
+    Set Test Variable    ${fees_list}
+    Set Test Variable    ${country}    ${country.upper()}
+    Set Test Variable    ${service_fee_name}    non-air-fees
+
+Generate Test Variables For Non-Air Fees
+    [Arguments]    ${fees_list}    ${country}=sg
+    Create Test Variables For Non-Air Fees    ${fees_list}    ${country}
+    Run Keyword If    "${country}"=="SG" or "${country}"=="IN"    Set Test Variable    ${decimal_place}    2    ELSE    Set Test Variable    ${decimal_place}    0
+    Run Keyword If    "${country}"=="IN"    Calculate Non-Air Fees For IN    ELSE    Calculate Non-Air Fees For HK/SG
+
+Get Rounding Rules
+    Send Currency Get Request
+    ${decimal_value}    Get Json Value    ${response.content}    /decimal
+    ${round_rule_value}    Get Json Value    ${response.content}    /roundRule
+    Set Test Variable    ${decimal_place}    ${decimal_value}
+    Set Test Variable    ${rounding_rule}    ${round_rule_value}
+
+Remove Decimal Places
+    ${total_selling_price_value}    Convert To String    ${total_selling_price_value}
+    ${gst_amount_value}    Convert To String    ${gst_amount_value}
+    ${merchant_fee_value}    Convert To String    ${merchant_fee_value}
+    ${commission_value}    Convert To String    ${commission_value}
+    ${nett_cost_gst_value}    Convert To String    ${nett_cost_gst_value}
+    ${total_selling_price_value}    Remove String    ${total_selling_price_value}    .00
+    ${gst_amount_value}    Remove String    ${gst_amount_value}    .00
+    ${merchant_fee_value}    Remove String    ${merchant_fee_value}    .00
+    ${commission_value}    Remove String    ${commission_value}    .00
+    ${nett_cost_gst_value}    Remove String    ${nett_cost_gst_value}    .00
+    Set Test Variable    ${total_selling_price_value}
+    Set Test Variable    ${gst_amount_value}
+    Set Test Variable    ${merchant_fee_value}
+    Set Test Variable    ${commission_value}
+    Set Test Variable    ${nett_cost_gst_value}
+    
+Send Other Service Fees For Non-Air Fees Post Request
+    [Arguments]    ${token}=${default_token}
+    Create Session    fees    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${other_service_fees_request_list}    Create List
+    ${product_request_list}    Create List
+    Run Keyword If    "${country}"!="IN"    Append Fields For Non-Air Fees For HK/SG     ${other_service_fees_request_list}   ELSE    Append Fields For Non-Air Fees For India     ${other_service_fees_request_list}    ${product_request_list}
+    ${list_count_1}    Get Length    ${other_service_fees_request_list}
+    : FOR    ${i}    IN RANGE    0    ${list_count_1}
+    \    ${fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${fees_list},
+    \    ${fees_list}    Set Variable    ${fees_list}${other_service_fees_request_list[${i}]}
+    ${list_count_2}    Get Length    ${product_request_list}
+    : FOR    ${i}    IN RANGE    0    ${list_count_2}
+    \    ${products_fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${products_fees_list},
+    \    ${products_fees_list}    Set Variable    ${products_fees_list}${product_request_list[${i}]}
+    ${data}    Set Variable If    "${country}"!="IN"    {${fees_list}}    {${fees_list},"product":{${products_fees_list}}}
+    Log    ${data}
+    ${response}    Post Request    fees    /apac-services-rest/api/other-service-fees/non-air-fees    data=${data}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    fees
+
+Set Commission Value
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${commission_value}    0.00
+    ...    ELSE    Set Test Variable    ${commission_value}    0
+
+Set GST And Nett Cost GST
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${gst_amount_value}    0.00
+    ...    ELSE    Set Test Variable    ${gst_amount_value}    0
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${nett_cost_gst_value}    0.00
+    ...    ELSE    Set Test Variable    ${nett_cost_gst_value}    0
+
+Set Merchant Fee
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${merchant_fee_value}    0.00
+    ...    ELSE    Set Test Variable    ${merchant_fee_value}    0
+
+Verify Calculated Non-Air Fees Are Not Returned
+    Verify String Does Not Contain Substring    ${response.content}    "totalSellingPrice"
+    Verify String Does Not Contain Substring    ${response.content}    "merchantFee"
+    Verify String Does Not Contain Substring    ${response.content}    "gstAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "grossSellingPrice"
+    Run Keyword If    "${country}"!="IN"    Verify String Does Not Contain Substring    ${response.content}    "commission"
+    
+   
+Verify Calculated Non-Air Fees Are Returned Correctly
+    ${data}    Remove String    ${response.text}    {
+    ${data}    Remove String    ${data}    }
+    ${data}    Remove String    ${data}    "
+    ${data_list}    Split String    ${data}    ,
+    : FOR    ${item}    IN    @{data_list}
+    \    ${items}    Split String    ${item}    :
+    \    Verify Actual Value Matches Expected Value    ${items[1]}    ${${items[0]}_value}
+
+Verify Response Does Not Contain Calculated Fee
+    [Arguments]    ${element}
+    Verify String Does Not Contain Substring    ${response.content}    "${element}"

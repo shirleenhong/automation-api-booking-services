@@ -2,6 +2,7 @@
 Resource    ../../resources/api-imports.txt
 Resource    ../../resources/api-utilities.txt
 Resource    ../../resources/api-variables.txt
+
 *** Keywords ***
 Calculate Air Fees-HK Commission
     Run Keyword If    "${client_type_value.upper()}" == "TP"    Set Test Variable    ${commission_amount}    0
@@ -278,6 +279,55 @@ Remove Decimal Places For Air Fees-HK
     Set Test Variable    ${selling_price_amount}
     Set Test Variable    ${discount_amount}
     Set Test Variable    ${nett_fare_amount}
+
+Send Other Service Fees For Air Fees Post Request
+    [Arguments]    ${token}=${default_token}
+    Create Session    fees    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${other_service_fees_request_list}    Create List
+    ${length_country_code}    Get Length    ${country}
+    Run Keyword If    ${length_country_code} > 2    Append To List    ${other_service_fees_request_list}    "countryCode":${country}
+    ...    ELSE    Append To List    ${other_service_fees_request_list}    "countryCode":"${country}"
+    Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
+    ${client_type}    Set Variable If    "${client_type_value}"=="NULL"    null    "${client_type_value}"=="None"    None    "${client_type_value}"
+    Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":${client_type}
+    Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "profileName":"${pro_name_value}"
+    Run Keyword If    "${merchant_fee_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeAbsorb":${merchant_fee_absorb_value}
+    Run Keyword If    "${merchant_fee_waive_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeWaive":${merchant_fee_waive_value}
+    Run Keyword If    "${apply_formula_value}"!="null"    Append To List    ${other_service_fees_request_list}    "applyFormula":${apply_formula_value}
+    Run Keyword If    "${merchant_fee_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFee":${merchant_fee_value}
+    Run Keyword If    "${commission_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commission":${commission_value}
+    Run Keyword If    "${commission_percent_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionByPercent":${commission_percent_flag_value}
+    Run Keyword If    "${commission_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionPercent":${commission_percentage_value}
+    Run Keyword If    "${cwt_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "cwtAbsorb":${cwt_absorb_value}
+    Run Keyword If    "${discount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discount":${discount_value}
+    Run Keyword If    "${discount_percent_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountByPercent":${discount_percent_flag_value}
+    Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountPercent":${discount_percentage_value}
+    Run Keyword If    "${nett_fare_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettFare":${nett_fare_value}
+    ${product_type}    Set Variable If    "${product_type_value}"=="NULL"    null    "${product_type_value}"=="None"    None    "${product_type_value}"
+    Run Keyword If    "${product_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "productType":${product_type}
+    Run Keyword If    "${tax_1_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax1":${tax_1_value}
+    Run Keyword If    "${tax_2_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax2":${tax_2_value}
+    Run Keyword If    "${web_fare_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "webFareSelected":${web_fare_flag_value}
+    ${selling_price_exists}    Run Keyword If    "${country}"=="SG"    Run Keyword And Return Status    Variable Should Exist    ${selling_price_value}
+    ...    ELSE    Set Variable    False
+    Run Keyword If    "${selling_price_exists}"=="True"    Append To List    ${other_service_fees_request_list}    "sellingPrice":${selling_price_value}
+    ${transaction_fee_exists}    Run Keyword And Return Status    Variable Should Exist    ${transaction_fee_value}
+    Run Keyword If    "${transaction_fee_exists}"=="True"    Append To List    ${other_service_fees_request_list}    "transactionFee":${transaction_fee_value}
+    ${uatp_exists}    Run Keyword And Return Status    Variable Should Exist    ${uatp_flag_value}
+    Run Keyword If    "${uatp_exists}"=="True"    Append To List    ${other_service_fees_request_list}    "uatp":${uatp_flag_value}
+    ${list_count}    Get Length    ${other_service_fees_request_list}
+    : FOR    ${i}    IN RANGE    0    ${list_count}
+    \    ${fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${fees_list},
+    \    ${fees_list}    Set Variable    ${fees_list}${other_service_fees_request_list[${i}]}
+    ${data}    Set Variable    {${fees_list}}
+    Log    ${data}
+    ${response}    Post Request    fees    /apac-services-rest/api/other-service-fees/air-fees    data=${data}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    fees
 
 Verify Calculated Air Fees Are Returned Correctly
     ${data}    Remove String    ${response.text}    {
