@@ -1,12 +1,12 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import com.cwt.bpg.cbt.exchange.order.calculator.InNonAirFeeCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.InMiscFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
@@ -17,12 +17,12 @@ import com.cwt.bpg.cbt.exchange.order.model.*;
 public class OtherServiceFeesService {
 
 	@Autowired
-	@Qualifier(value = "miscFeeCalculator")
-	private Calculator<NonAirFeesBreakdown, HkSgNonAirFeesInput> miscFeeCalculator;
+	@Qualifier(value = "hkSgNonAirFeeCalculator")
+	private Calculator<NonAirFeesBreakdown, HkSgNonAirFeesInput> hkSgNonAirFeeCalculator;
 
 	@Autowired
-	@Qualifier(value = "inMiscFeeCalculator")
-	private InMiscFeeCalculator inMiscFeeCalculator;
+	@Qualifier(value = "inNonAirFeeCalculator")
+	private InNonAirFeeCalculator inNonAirFeeCalculator;
 
 	@Autowired
 	@Qualifier(value = "nettCostCalculator")
@@ -52,7 +52,7 @@ public class OtherServiceFeesService {
 
 	public NonAirFeesBreakdown calculateMiscFee(HkSgNonAirFeesInput input) {
 
-		return this.miscFeeCalculator.calculate(input, getMerchantFeePct(input));
+		return this.hkSgNonAirFeeCalculator.calculate(input, getMerchantFeePct(input));
 	}
 
 	public AirFeesBreakdown calculateAirFee(AirFeesInput input) {
@@ -109,9 +109,9 @@ public class OtherServiceFeesService {
 
 	public NonAirFeesBreakdown calculateNonAirFee(NonAirFeesInput input) {
 		if (Country.INDIA.getCode().equals(input.getCountryCode())) {
-			return this.inMiscFeeCalculator.calculate((InNonAirFeesInput)input, getClient(input.getProfileName()));
+			return this.inNonAirFeeCalculator.calculate((InNonAirFeesInput)input, getClient(input.getProfileName()));
 		}else{
-			return this.miscFeeCalculator.calculate((HkSgNonAirFeesInput)input, getMerchantFeePct(input));
+			return this.hkSgNonAirFeeCalculator.calculate((HkSgNonAirFeesInput)input, getMerchantFeePct(input));
 		}
 	}
 }

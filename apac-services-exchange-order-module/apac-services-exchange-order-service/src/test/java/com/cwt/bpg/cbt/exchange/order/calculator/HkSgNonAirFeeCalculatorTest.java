@@ -22,10 +22,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
-public class MiscFeeCalculatorTest {
+public class HkSgNonAirFeeCalculatorTest {
 	
 	@InjectMocks
-	private MiscFeeCalculator calculator = new MiscFeeCalculator();
+	private HkSgNonAirFeeCalculator calculator = new HkSgNonAirFeeCalculator();
 	
 	@Mock
 	private ScaleConfig scaleConfig;

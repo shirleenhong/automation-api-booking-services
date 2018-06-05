@@ -10,8 +10,8 @@ import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
-@Component("miscFeeCalculator")
-public class MiscFeeCalculator extends CommonCalculator implements Calculator<NonAirFeesBreakdown, HkSgNonAirFeesInput> {
+@Component("hkSgNonAirFeeCalculator")
+public class HkSgNonAirFeeCalculator extends CommonCalculator implements Calculator<NonAirFeesBreakdown, HkSgNonAirFeesInput> {
 
 	@Autowired
 	private ScaleConfig scaleConfig;

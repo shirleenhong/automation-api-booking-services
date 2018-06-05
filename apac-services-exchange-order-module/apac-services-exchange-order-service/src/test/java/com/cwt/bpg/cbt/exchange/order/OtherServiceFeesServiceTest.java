@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
 
+import com.cwt.bpg.cbt.exchange.order.calculator.InNonAirFeeCalculator;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -12,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.InMiscFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
@@ -29,7 +29,7 @@ public class OtherServiceFeesServiceTest {
 	private TransactionFeeCalculatorFactory tfFactory;
 	
 	@Mock
-	private Calculator<NonAirFeesBreakdown, HkSgNonAirFeesInput> miscFeeCalculator;
+	private Calculator<NonAirFeesBreakdown, HkSgNonAirFeesInput> hkSgNonAirFeeCalculator;
 
 	@Mock
 	private Calculator<AirFeesBreakdown, AirFeesInput> hkCalculator;
@@ -56,7 +56,7 @@ public class OtherServiceFeesServiceTest {
 	private VisaFeesCalculator visaFeesCalculator;
 
 	@Mock
-	private InMiscFeeCalculator inMiscFeeCalculator;
+	private InNonAirFeeCalculator inNonAirFeeCalculator;
 
 	@InjectMocks
 	private OtherServiceFeesService service;
@@ -69,7 +69,7 @@ public class OtherServiceFeesServiceTest {
 	@Test
 	public void shouldReturnFeesBreakdown() {
 
-		when(miscFeeCalculator.calculate(anyObject(), anyObject()))
+		when(hkSgNonAirFeeCalculator.calculate(anyObject(), anyObject()))
 			.thenReturn(new NonAirFeesBreakdown());
 		assertNotNull(service.calculateMiscFee(new HkSgNonAirFeesInput()));
 	}
@@ -150,7 +150,7 @@ public class OtherServiceFeesServiceTest {
 
 	@Test
 	public void shouldReturnNonAirFeeIndia() {
-		when(inMiscFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
+		when(inNonAirFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
 
 		Client client = new Client();
 		client.setPricingId(20);
@@ -165,7 +165,7 @@ public class OtherServiceFeesServiceTest {
 
 	@Test
 	public void shouldReturnNonAirFeeOther() {
-		when(inMiscFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
+		when(inNonAirFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
 
 		Client client = new Client();
 		client.setPricingId(20);
