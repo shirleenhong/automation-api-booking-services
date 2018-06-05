@@ -150,7 +150,7 @@ public class OtherServiceFeesServiceTest {
 
 	@Test
 	public void shouldReturnNonAirFeeIndia() {
-		when(inNonAirFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
+		when(inNonAirFeeCalculator.calculate(anyObject(), anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
 
 		Client client = new Client();
 		client.setPricingId(20);
@@ -165,7 +165,7 @@ public class OtherServiceFeesServiceTest {
 
 	@Test
 	public void shouldReturnNonAirFeeOther() {
-		when(inNonAirFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
+		when(inNonAirFeeCalculator.calculate(anyObject(), anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
 
 		Client client = new Client();
 		client.setPricingId(20);
