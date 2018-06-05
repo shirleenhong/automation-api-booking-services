@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 
 public class NoFeeCalculatorTest {
@@ -31,7 +31,7 @@ public class NoFeeCalculatorTest {
     @Test
     public void getMerchantFeeShouldReturnNotNull() {
     	assertNotNull(noFeeCalc.getMerchantFee(
-    			new InAirFeesInput(), new TransactionFeesBreakdown()));
+    			new InAirFeesInput(), new InAirFeesBreakdown()));
     }
 
     @Test
@@ -46,13 +46,13 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getTotalFeeShouldReturnNull() {
-        assertNull(noFeeCalc.getTotalFee(new InAirFeesInput(), new TransactionFeesBreakdown()));
+        assertNull(noFeeCalc.getTotalFee(new InAirFeesInput(), new InAirFeesBreakdown()));
     }
 
     @Test
     public void getTotalSellingFareShouldReturnNotNull() {
     	
-    	TransactionFeesBreakdown breakdown = new TransactionFeesBreakdown();
+    	InAirFeesBreakdown breakdown = new InAirFeesBreakdown();
     	breakdown.setTotalSellFare(new BigDecimal(100));
     	breakdown.setTotalGst(new BigDecimal(50));
     	breakdown.setTotalMerchantFee(new BigDecimal(10));
@@ -63,7 +63,7 @@ public class NoFeeCalculatorTest {
     @Test
     public void getTotalChargeShouldReturnNotNull() {
 
-    	TransactionFeesBreakdown breakdown = new TransactionFeesBreakdown();
+    	InAirFeesBreakdown breakdown = new InAirFeesBreakdown();
     	breakdown.setTotalSellFare(new BigDecimal(100));
     	breakdown.setTotalGst(new BigDecimal(50));
     	breakdown.setTotalMerchantFee(new BigDecimal(10));

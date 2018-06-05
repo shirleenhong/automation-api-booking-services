@@ -1,13 +1,14 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
+
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 
 public class BasicCalculatorTest {
 	private BasicCalculator basicCalculator = new BasicCalculator();
@@ -16,7 +17,7 @@ public class BasicCalculatorTest {
 	public void getTotalFeeShouldReturnBaseFare() {
 		InAirFeesInput input = new InAirFeesInput();
 		input.setBaseFare(new BigDecimal(6));
-		TransactionFeesBreakdown breakdown = new TransactionFeesBreakdown();
+		InAirFeesBreakdown breakdown = new InAirFeesBreakdown();
 
 		BigDecimal expectedResult = input.getBaseFare();
 		BigDecimal actualResult = basicCalculator.getTotalFee(input, breakdown);

@@ -1,10 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -75,16 +73,16 @@ public class OtherServiceFeesServiceTest {
 			.thenReturn(hkCalculator);
 		
 		when(hkCalculator.calculate(anyObject(), anyObject()))
-			.thenReturn(new AirFeesBreakdown());
+			.thenReturn(new HkSgAirFeesBreakdown());
 		
-		assertNotNull(service.calculateAirFee(new AirFeesInput()));
+		assertNotNull(service.calculateAirFee(new HkSgAirFeesInput()));
 	}
 
 	@Test
 	public void shouldReturnNettCost() {
 		
 		when(nettCostCalculator.calculateFee(anyObject(), anyObject()))
-			.thenReturn(new AirFeesBreakdown());
+			.thenReturn(new HkSgAirFeesBreakdown());
 		assertNotNull(service.calculateNettCost(new NettCostInput()));
 	}
 	

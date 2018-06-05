@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.TripTypes;
 
@@ -19,12 +19,12 @@ public class NoFeeWithDiscountCalculatorTest {
 	public void getMfOnTfShouldReturnNullIfTripTypeInt() {
         InAirFeesInput input = new InAirFeesInput();
         input.setTripType(TripTypes.INTERNATIONAL.getCode());
-		assertNull(noFeeWithDiscountCalculator.getMfOnTf(input, new TransactionFeesBreakdown(), new BigDecimal(1)));
+		assertNull(noFeeWithDiscountCalculator.getMfOnTf(input, new InAirFeesBreakdown(), new BigDecimal(1)));
 	}
 
     @Test
     public void getMfOnTfShouldReturnNotNullIfTripTypeNotInt() {
         InAirFeesInput input = new InAirFeesInput();
-        assertNotNull(noFeeWithDiscountCalculator.getMfOnTf(input, new TransactionFeesBreakdown(), new BigDecimal(1)));
+        assertNotNull(noFeeWithDiscountCalculator.getMfOnTf(input, new InAirFeesBreakdown(), new BigDecimal(1)));
     }
 }

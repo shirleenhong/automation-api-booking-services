@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import org.springframework.stereotype.Component;
 
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 
 
@@ -14,7 +14,7 @@ public class NoFeeCalculator extends FeeCalculator {
 	@Override
 	public BigDecimal getTotalDiscount(
 			InAirFeesInput input,
-			TransactionFeesBreakdown breakdown) {
+			InAirFeesBreakdown breakdown) {
         return null;
     }
 
@@ -33,7 +33,7 @@ public class NoFeeCalculator extends FeeCalculator {
 	@Override
     public BigDecimal getMerchantFee(
     		InAirFeesInput input,
-			TransactionFeesBreakdown breakdown
+			InAirFeesBreakdown breakdown
 			) {
         return calculatePercentage(
         		safeValue(breakdown.getTotalSellFare())
@@ -45,7 +45,7 @@ public class NoFeeCalculator extends FeeCalculator {
 	@Override
     public BigDecimal getMfOnTf( 
 			InAirFeesInput input,
-			TransactionFeesBreakdown breakdown,
+			InAirFeesBreakdown breakdown,
 			BigDecimal totalGstOnTf) {
         return null;
     }
@@ -56,12 +56,12 @@ public class NoFeeCalculator extends FeeCalculator {
     }
 
 	@Override
-    public BigDecimal getTotalFee(InAirFeesInput input, TransactionFeesBreakdown breakdown) {
+    public BigDecimal getTotalFee(InAirFeesInput input, InAirFeesBreakdown breakdown) {
         return null;
     }
 
 	@Override
-    public BigDecimal getTotalSellingFare(TransactionFeesBreakdown breakdown) {
+    public BigDecimal getTotalSellingFare(InAirFeesBreakdown breakdown) {
 
         return safeValue(breakdown.getTotalSellFare())
     			.add(safeValue(breakdown.getTotalGst()))
@@ -70,7 +70,7 @@ public class NoFeeCalculator extends FeeCalculator {
 
 	@Override
     public BigDecimal getTotalCharge(
-			TransactionFeesBreakdown breakdown) {
+			InAirFeesBreakdown breakdown) {
 
         return safeValue(breakdown.getTotalSellFare())
     			.add(safeValue(breakdown.getTotalTaxes()));

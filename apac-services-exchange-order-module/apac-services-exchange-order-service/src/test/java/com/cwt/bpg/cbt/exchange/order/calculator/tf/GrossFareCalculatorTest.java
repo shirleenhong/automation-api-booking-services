@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 
 public class GrossFareCalculatorTest {
@@ -20,7 +20,7 @@ public class GrossFareCalculatorTest {
 	private BigDecimal totalGst;
 	private BigDecimal expectedValue;
 	private InAirFeesInput input;
-	private TransactionFeesBreakdown breakdown;
+	private InAirFeesBreakdown breakdown;
 	
 	@Before
 	public void setup() {
@@ -29,7 +29,7 @@ public class GrossFareCalculatorTest {
 		totalGst = new BigDecimal(1);
 		expectedValue = new BigDecimal(10);
 		input = new InAirFeesInput();
-		breakdown = new TransactionFeesBreakdown();
+		breakdown = new InAirFeesBreakdown();
 	}
 
 	@Test

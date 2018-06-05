@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import org.springframework.stereotype.Component;
 
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.TripTypes;
 
@@ -13,7 +13,7 @@ public class NoFeeWithDiscountCalculator extends FeeCalculator {
 
 	@Override
 	public BigDecimal getMfOnTf(InAirFeesInput input,
-			TransactionFeesBreakdown breakdown, 
+			InAirFeesBreakdown breakdown,
 			BigDecimal totalGstOnTf) {
 		
 		if (TripTypes.isInternational(input.getTripType())) {

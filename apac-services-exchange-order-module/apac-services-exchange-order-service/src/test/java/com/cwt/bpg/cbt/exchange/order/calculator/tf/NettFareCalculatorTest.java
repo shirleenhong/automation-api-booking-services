@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 
 public class NettFareCalculatorTest {
@@ -21,7 +21,7 @@ public class NettFareCalculatorTest {
 	private BigDecimal expectedNegativeValue;
 	private BigDecimal returnableOr;
 	private InAirFeesInput input;
-	private TransactionFeesBreakdown breakdown;
+	private InAirFeesBreakdown breakdown;
 	
 	@Before
 	public void setup() {
@@ -31,7 +31,7 @@ public class NettFareCalculatorTest {
 		returnableOr = new BigDecimal(0);
 		expectedNegativeValue = new BigDecimal(-1);
 		input = new InAirFeesInput();
-		breakdown = new TransactionFeesBreakdown();
+		breakdown = new InAirFeesBreakdown();
 	}
 
 	@Test

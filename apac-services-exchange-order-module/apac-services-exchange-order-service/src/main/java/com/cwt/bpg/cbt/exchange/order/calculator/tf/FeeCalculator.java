@@ -22,7 +22,7 @@ public class FeeCalculator extends CommonCalculator {
 		BigDecimal gstAmount = null;
 		BigDecimal yqTax = null;
 		
-		TransactionFeesBreakdown breakdown = new TransactionFeesBreakdown();
+		InAirFeesBreakdown breakdown = new InAirFeesBreakdown();
 		
 		if(input.isGstEnabled()) {
 			gstAmount = BigDecimal.ZERO;
@@ -94,7 +94,7 @@ public class FeeCalculator extends CommonCalculator {
 
 	private BigDecimal getTransactionFee(Client client, 
 			InAirFeesInput input,
-			TransactionFeesBreakdown breakdown, 
+			InAirFeesBreakdown breakdown,
 			Airport airport, BigDecimal baseAmount) {
 
 		BigDecimal result = BigDecimal.ZERO;
@@ -250,7 +250,7 @@ public class FeeCalculator extends CommonCalculator {
 	
 	public BigDecimal getTotalDiscount(
 			InAirFeesInput input,
-			TransactionFeesBreakdown breakdown) {
+			InAirFeesBreakdown breakdown) {
 		
 		BigDecimal commissionAmount = calculatePercentage(breakdown.getTotalIataCommission(),
 				breakdown.getClientDiscountPercent());
@@ -287,7 +287,7 @@ public class FeeCalculator extends CommonCalculator {
 	
 	public BigDecimal getMerchantFee(
 			InAirFeesInput input,
-			TransactionFeesBreakdown breakdown
+			InAirFeesBreakdown breakdown
 			) {
 		
 		return calculatePercentage(safeValue(breakdown.getTotalSellFare())
@@ -296,7 +296,7 @@ public class FeeCalculator extends CommonCalculator {
 					.add(breakdown.getTotalGst()), input.getMerchantFeePercent());
 	}
 	
-	public BigDecimal getMfOnTf(InAirFeesInput input, TransactionFeesBreakdown breakdown,
+	public BigDecimal getMfOnTf(InAirFeesInput input, InAirFeesBreakdown breakdown,
 								BigDecimal totalGstOnTf) {
 
 		if(TripTypes.isInternational(input.getTripType())) {
@@ -312,11 +312,11 @@ public class FeeCalculator extends CommonCalculator {
 		return safeValue(input.getBaseFare());		
 	}
 	
-	public BigDecimal getTotalFee(InAirFeesInput input, TransactionFeesBreakdown breakdown) {
+	public BigDecimal getTotalFee(InAirFeesInput input, InAirFeesBreakdown breakdown) {
 		return null;		
 	}
 	
-	public BigDecimal getTotalSellingFare(TransactionFeesBreakdown breakdown) {
+	public BigDecimal getTotalSellingFare(InAirFeesBreakdown breakdown) {
 
 		return safeValue(breakdown.getTotalSellFare())
 				.subtract(safeValue(breakdown.getTotalDiscount()))
@@ -325,7 +325,7 @@ public class FeeCalculator extends CommonCalculator {
 	}
 	
 	public BigDecimal getTotalCharge(
-			TransactionFeesBreakdown breakdown) {
+			InAirFeesBreakdown breakdown) {
 		
 		return safeValue(breakdown.getTotalSellFare())
 				.subtract(safeValue(breakdown.getMerchantFeeOnTf()))

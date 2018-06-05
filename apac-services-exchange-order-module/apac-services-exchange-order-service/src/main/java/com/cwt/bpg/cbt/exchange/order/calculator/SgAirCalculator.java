@@ -18,7 +18,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator<AirF
 	@Override
 	public AirFeesBreakdown calculate(AirFeesInput airFeesInput, MerchantFee merchantFeeObj) {
 
-		AirFeesBreakdown result = new AirFeesBreakdown();
+        HkSgAirFeesBreakdown result = new HkSgAirFeesBreakdown();
 
 		if (airFeesInput == null) {
 			return result;
