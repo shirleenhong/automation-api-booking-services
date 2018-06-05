@@ -94,7 +94,7 @@ public class OtherServiceFeesServiceTest {
 		
 		when(tfCalculator.calculate(anyObject(), anyObject(), anyObject(), 
 				anyObject()))
-			.thenReturn(new FeesBreakdown());
+			.thenReturn(new InAirFeesBreakdown());
 		
 		when(airlineRuleService.getAirlineRule(anyString())).thenReturn(new AirlineRule());
 		when(airportService.getAirport(anyString())).thenReturn(new Airport());

@@ -17,7 +17,7 @@ public class FeeCalculator extends CommonCalculator {
 	private static final String NA = "NA";
 	private static final String ALL = "ALL";
 
-	public FeesBreakdown calculate(InAirFeesInput input, AirlineRule airlineRule, Client client, Airport airport) {
+	public AirFeesBreakdown calculate(InAirFeesInput input, AirlineRule airlineRule, Client client, Airport airport) {
 		
 		BigDecimal gstAmount = null;
 		BigDecimal yqTax = null;
