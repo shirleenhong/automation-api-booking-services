@@ -133,7 +133,7 @@ public class OtherServiceFeesServiceTest {
 	public void shouldReturnDefaulClient() {
 		when(tfFactory.getCalculator(anyInt())).thenReturn(tfCalculator);
 
-		when(tfCalculator.calculate(anyObject(), anyObject(), anyObject(), anyObject())).thenReturn(new FeesBreakdown());
+		when(tfCalculator.calculate(anyObject(), anyObject(), anyObject(), anyObject())).thenReturn(new InAirFeesBreakdown());
 
 		when(airlineRuleService.getAirlineRule(anyString())).thenReturn(new AirlineRule());
 
@@ -142,7 +142,7 @@ public class OtherServiceFeesServiceTest {
 		client.setStandardMfProduct(true);
 		when(clientService.getClient(anyString())).thenReturn(client);
 
-		TransactionFeesInput input = new TransactionFeesInput();
+		InAirFeesInput input = new InAirFeesInput();
 		input.setCountryCode(Country.INDIA.getCode());
 
 		assertNotNull(service.calculateAirFee(input));
@@ -150,7 +150,7 @@ public class OtherServiceFeesServiceTest {
 	
 	@Test
 	public void shouldReturnNonAirFeeIndia() {
-		when(inMiscFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new MiscFeesBreakdown());
+		when(inMiscFeeCalculator.calculate(anyObject(), anyObject(), anyObject())).thenReturn(new MiscFeesBreakdown());
 		
 		Client client = new Client();
 		client.setPricingId(20);
@@ -165,7 +165,7 @@ public class OtherServiceFeesServiceTest {
 	
 	@Test
 	public void shouldReturnNonAirFeeOther() {
-		when(inMiscFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new MiscFeesBreakdown());
+		when(inMiscFeeCalculator.calculate(anyObject(), anyObject(), anyObject())).thenReturn(new MiscFeesBreakdown());
 		
 		Client client = new Client();
 		client.setPricingId(20);

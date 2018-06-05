@@ -18,7 +18,7 @@ public class InMiscFeeCalculator extends CommonCalculator {
 	private ScaleConfig scaleConfig;
 	private static final int BTC_FOP_MODE = 3;
 
-	public MiscFeesBreakdown calculate(InMiscFeesInput input, Client client) {
+	public MiscFeesBreakdown calculate(InMiscFeesInput input, Client client, Client defaultClient) {
 
 		MiscFeesBreakdown result = new MiscFeesBreakdown();
 
@@ -37,7 +37,7 @@ public class InMiscFeeCalculator extends CommonCalculator {
 				mfPercent = 0D;
 			}
 			else {
-				mfPercent = calculateMfPercent(input, client);
+				mfPercent = calculateMfPercent(input, client, defaultClient);
 			}
 		}
 
@@ -81,20 +81,42 @@ public class InMiscFeeCalculator extends CommonCalculator {
 		return result;
 	}
 
-	private Double calculateMfPercent(InMiscFeesInput input, Client client) {
+	private Double calculateMfPercent(InMiscFeesInput input, Client client, Client defaultClient) {
 
 		Double mfPercent = client.getMerchantFee();
-
-		Bank bank = bank(client, input.getFopNumber(), client.isApplyMfBank());
-		if (bank != null && !StringUtils.isEmpty(bank.getCcNumberPrefix())) {
-			mfPercent = bank.getPercentage();
+	
+		if(isSubjectToMF(client.isStandardMfProduct() 
+				? client : defaultClient, 
+				input.getProduct().getProductCode())) {
+			mfPercent = 0D;
 		}
-		else if (!StringUtils.isEmpty(input.getFopType())) {
-			CreditCardVendor vendor = creditCard(client, input.getAcctType(), client.isApplyMfCc());
-			mfPercent = vendor != null ? vendor.getPercentage() : 0D;
+		else {
+			Bank bank = bank(client, input.getFopNumber(), client.isApplyMfBank());
+			if (bank != null && !StringUtils.isEmpty(bank.getCcNumberPrefix())) {
+				mfPercent = bank.getPercentage();
+			}
+			else if (!StringUtils.isEmpty(input.getFopType())) {
+				CreditCardVendor vendor = creditCard(client, input.getAcctType(), client.isApplyMfCc());
+				mfPercent = vendor != null ? vendor.getPercentage() : 0D;
+			}	
 		}
-
+		
 		return mfPercent;
+	}
+
+	private boolean isSubjectToMF(Client client, String productCode) {
+
+		if (client.getMfProducts() != null) {
+			Optional<ProductMerchantFee> pmf = client.getMfProducts().stream()
+					.filter(p -> p.getProductCode().equals(productCode)).findFirst();
+
+			if (pmf.isPresent()) {
+				return pmf.get().isSubjectToMf();
+			}
+
+		}
+
+		return false;
 	}
 
 	private ProductMerchantFee getProduct(Client client, Product product) {

@@ -77,7 +77,7 @@ public class InMiscFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		MiscFeesBreakdown result = calculator.calculate(input, client);
+		MiscFeesBreakdown result = calculator.calculate(input, client, client);
 
 		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
 		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
@@ -105,7 +105,7 @@ public class InMiscFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		MiscFeesBreakdown result = calculator.calculate(input, client);
+		MiscFeesBreakdown result = calculator.calculate(input, client, client);
 
 		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
 		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
@@ -133,7 +133,7 @@ public class InMiscFeeCalculatorTest {
 		client.setApplyMfCc(true);
 		client.setApplyMfBank(true);
 
-		MiscFeesBreakdown result = calculator.calculate(input, client);
+		MiscFeesBreakdown result = calculator.calculate(input, client, client);
 
 		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
 		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(26.71D)));
@@ -167,9 +167,9 @@ public class InMiscFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		calculator.calculate(input, client);
+		calculator.calculate(input, client, client);
 
-		MiscFeesBreakdown result = calculator.calculate(input, client);
+		MiscFeesBreakdown result = calculator.calculate(input, client, client);
 
 		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
 		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
@@ -198,7 +198,7 @@ public class InMiscFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(true);
 
-		MiscFeesBreakdown result = calculator.calculate(input, client);
+		MiscFeesBreakdown result = calculator.calculate(input, client, client);
 
 		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
 		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(26.71D)));
@@ -227,7 +227,7 @@ public class InMiscFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(true);
 
-		MiscFeesBreakdown result = calculator.calculate(input, client);
+		MiscFeesBreakdown result = calculator.calculate(input, client, client);
 
 		assertNotNull(result);
 	}
@@ -235,7 +235,7 @@ public class InMiscFeeCalculatorTest {
 	@Test
 	public void nullInput() {
 
-		MiscFeesBreakdown result = calculator.calculate(null, null);
+		MiscFeesBreakdown result = calculator.calculate(null, null, null);
 
 		assertThat(result.getGstAmount(), is(nullValue()));
 		assertThat(result.getMerchantFee(), is(nullValue()));
@@ -244,8 +244,8 @@ public class InMiscFeeCalculatorTest {
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
 
-		assertNotNull(calculator.calculate(new InMiscFeesInput(), null));
-		assertNotNull(calculator.calculate(null, new Client()));
+		assertNotNull(calculator.calculate(new InMiscFeesInput(), null, null));
+		assertNotNull(calculator.calculate(null, new Client(), null));
 	}
 
 	@Test
@@ -265,9 +265,9 @@ public class InMiscFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		calculator.calculate(input, client);
+		calculator.calculate(input, client, client);
 
-		MiscFeesBreakdown result = calculator.calculate(input, client);
+		MiscFeesBreakdown result = calculator.calculate(input, client, client);
 
 		assertThat(result.getGstAmount().doubleValue(), is(equalTo(182D)));
 		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
@@ -297,9 +297,9 @@ public class InMiscFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		calculator.calculate(input, client);
+		calculator.calculate(input, client, client);
 
-		MiscFeesBreakdown result = calculator.calculate(input, client);
+		MiscFeesBreakdown result = calculator.calculate(input, client, client);
 
 		assertThat(result.getGstAmount().doubleValue(), is(equalTo(182D)));
 		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
@@ -310,8 +310,68 @@ public class InMiscFeeCalculatorTest {
 	}
 
 	@Test
+	public void standardMfProduct() {
+		input.setProfileName("profileName");
+		
+		client = new Client();
+		Bank bank = new Bank();
+		bank.setCcNumberPrefix("12345");
+		bank.setStandard(false);
+		bank.setPercentage(2D);
+		ProductMerchantFee pf = new ProductMerchantFee();
+		pf.setSubjectToMf(false);
+		pf.setProductCode("01");
+		client.setStandardMfProduct(true);
+		client.setMfProducts(Arrays.asList(pf));
+		client.setMfBanks(Arrays.asList(bank));
+		client.setApplyMfBank(false);
+		client.setApplyMfCc(false);
+		
+		MiscFeesBreakdown result = calculator.calculate(input, client, client);
+
+		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1436.06D)));
+		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70D)));
+		assertThat(result.getCommission(), is(nullValue()));
+		assertThat(result.getNettCostGst(), is(nullValue()));
+	}
+	
+	@Test
+	public void standardMfProductDefaultClient() {
+		input.setProfileName("profileName");
+		Client defaultClient = new Client();
+		client = new Client();
+		Bank bank = new Bank();
+		bank.setCcNumberPrefix("12345");
+		bank.setStandard(false);
+		bank.setPercentage(2D);
+		ProductMerchantFee pf = new ProductMerchantFee();
+		pf.setSubjectToMf(false);
+		pf.setProductCode("01");
+		client.setStandardMfProduct(false);
+		client.setMfProducts(Arrays.asList(pf));
+		client.setMfBanks(Arrays.asList(bank));
+		client.setApplyMfBank(false);
+		client.setApplyMfCc(false);
+		
+		ProductMerchantFee pf2 = new ProductMerchantFee();
+		pf2.setSubjectToMf(true);
+		pf2.setProductCode("01");
+		defaultClient.setMfProducts(Arrays.asList(pf2));
+		MiscFeesBreakdown result = calculator.calculate(input, client, defaultClient);
+
+		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1436.06D)));
+		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70D)));
+		assertThat(result.getCommission(), is(nullValue()));
+		assertThat(result.getNettCostGst(), is(nullValue()));
+	}
+	
+	@Test
 	public void btcFop() {
-		// input.setProduct(null);
+		
 		input.setFopMode(3);
 		input.setProfileName("profileName");
 
@@ -328,9 +388,9 @@ public class InMiscFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		calculator.calculate(input, client);
+		calculator.calculate(input, client, client);
 
-		MiscFeesBreakdown result = calculator.calculate(input, client);
+		MiscFeesBreakdown result = calculator.calculate(input, client, client);
 
 		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
 		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
@@ -366,9 +426,9 @@ public class InMiscFeeCalculatorTest {
 		client.setApplyMfCc(true);
 		client.setApplyMfBank(true);
 
-		calculator.calculate(input, client);
+		calculator.calculate(input, client, client);
 
-		MiscFeesBreakdown result = calculator.calculate(input, client);
+		MiscFeesBreakdown result = calculator.calculate(input, client, client);
 
 		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(40.06D)));
 		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
