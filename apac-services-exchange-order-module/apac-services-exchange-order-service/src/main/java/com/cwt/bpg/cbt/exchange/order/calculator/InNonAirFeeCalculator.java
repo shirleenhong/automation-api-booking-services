@@ -93,12 +93,12 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 			mfPercent = 0D;
 		}
 		else {
-			Bank bank = bank(client, input.getFopNumber(), client.isApplyMfBank());
+			Bank bank = getBank(client, input.getFopNumber(), client.isApplyMfBank());
 			if (bank != null && !StringUtils.isEmpty(bank.getCcNumberPrefix())) {
 				mfPercent = bank.getPercentage();
 			}
 			else if (!StringUtils.isEmpty(input.getFopType())) {
-				CreditCardVendor vendor = creditCard(client, input.getAcctType(), client.isApplyMfCc());
+				CreditCardVendor vendor = getCreditCard(client, input.getAcctType(), client.isApplyMfCc());
 				mfPercent = vendor != null ? vendor.getPercentage() : 0D;
 			}	
 		}
@@ -133,7 +133,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 		return null;
 	}
 
-	private CreditCardVendor creditCard(Client client, String acctType, boolean isStandard) {
+	private CreditCardVendor getCreditCard(Client client, String acctType, boolean isStandard) {
 
 		if (client.getMfCcs() != null) {
 
@@ -148,7 +148,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 		return null;
 	}
 
-	private Bank bank(Client client, String fopNumber, boolean isStandard) {
+	private Bank getBank(Client client, String fopNumber, boolean isStandard) {
 
 		if (client.getMfBanks() != null) {
 
