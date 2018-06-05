@@ -9,6 +9,8 @@ import static org.junit.Assert.assertThat;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import com.cwt.bpg.cbt.exchange.order.model.HkSgNonAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -19,13 +21,11 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
-import com.cwt.bpg.cbt.exchange.order.model.MiscFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
 
-public class MiscFeeCalculatorTest {
+public class HkSgNonAirFeeCalculatorTest {
 	
 	@InjectMocks
-	private MiscFeeCalculator calculator = new MiscFeeCalculator();
+	private HkSgNonAirFeeCalculator calculator = new HkSgNonAirFeeCalculator();
 	
 	@Mock
 	private ScaleConfig scaleConfig;
@@ -48,7 +48,7 @@ public class MiscFeeCalculatorTest {
 	@Test
 	public void shouldCalculateFees2DScale() {
 
-		MiscFeesInput input = new MiscFeesInput();
+		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
 
 		input.setFopType("CX");
 		input.setCountryCode("SG");
@@ -56,7 +56,7 @@ public class MiscFeeCalculatorTest {
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1528.27));
 
-		MiscFeesBreakdown result = (MiscFeesBreakdown) calculator.calculate(input, merchantFee);
+		NonAirFeesBreakdown result = (NonAirFeesBreakdown) calculator.calculate(input, merchantFee);
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(new BigDecimal(60.03), 2), result.getGstAmount());
@@ -69,7 +69,7 @@ public class MiscFeeCalculatorTest {
 	@Test
 	public void shouldCalculateFees0DScale() {
 
-		MiscFeesInput input = new MiscFeesInput();
+		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
 
 		input.setFopType("CX");
 		input.setCountryCode("HK");
@@ -77,7 +77,7 @@ public class MiscFeeCalculatorTest {
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1228.27));
 		
-		MiscFeesBreakdown result = (MiscFeesBreakdown) calculator.calculate(input, merchantFee);
+		NonAirFeesBreakdown result = (NonAirFeesBreakdown) calculator.calculate(input, merchantFee);
 
 		assertEquals(round(new BigDecimal(362.68)), result.getCommission());
 		assertEquals(round(new BigDecimal(75.025)), result.getGstAmount());
@@ -89,7 +89,7 @@ public class MiscFeeCalculatorTest {
 
 	@Test
 	public void shouldCalculateFeesFlagsTrue() {
-		MiscFeesInput input = new MiscFeesInput();
+		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
 
 		input.setFopType("CX");
 		input.setCountryCode("HK");
@@ -99,7 +99,7 @@ public class MiscFeeCalculatorTest {
 		input.setMerchantFeeAbsorb(true);
 		input.setNettCost(new BigDecimal(1528.27));
 		
-		MiscFeesBreakdown result = (MiscFeesBreakdown) calculator.calculate(input, merchantFee);
+		NonAirFeesBreakdown result = (NonAirFeesBreakdown) calculator.calculate(input, merchantFee);
 
 		assertEquals(round(BigDecimal.ZERO), result.getCommission());
 		assertNull(result.getGstAmount());
@@ -111,7 +111,7 @@ public class MiscFeeCalculatorTest {
 
 	@Test
 	public void shouldNotFailOnNullInput() {
-		MiscFeesBreakdown result = (MiscFeesBreakdown) calculator.calculate(null, null);
+		NonAirFeesBreakdown result = (NonAirFeesBreakdown) calculator.calculate(null, null);
 
 		assertThat(result.getCommission(), is(nullValue(BigDecimal.class)));
 		assertThat(result.getGstAmount(), is(nullValue(BigDecimal.class)));
@@ -123,9 +123,9 @@ public class MiscFeeCalculatorTest {
 
 	@Test
 	public void shouldNotFailOnEmptyInput() {
-		MiscFeesInput input = new MiscFeesInput();
+		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
 		input.setCountryCode("SG");
-		MiscFeesBreakdown result = (MiscFeesBreakdown) calculator.calculate(input, null);
+		NonAirFeesBreakdown result = (NonAirFeesBreakdown) calculator.calculate(input, null);
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(BigDecimal.ZERO, 2), result.getGstAmount());

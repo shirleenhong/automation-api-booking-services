@@ -26,22 +26,13 @@ public class OtherServiceFeesController {
 	@Autowired
 	private OtherServiceFeesService service;
 
-	@PostMapping(path = "/misc-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
-			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-	@ResponseBody
-	@ApiOperation(value = "Computes miscellaneous fees as well as visa cost and visa handling fees. Applicable to car, hotel and other ticket (train and ferry).")
-	public ResponseEntity<MiscFeesBreakdown> computeMiscellaneousFee(
-			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") MiscFeesInput input) {
 
-		return new ResponseEntity<>(service.calculateMiscFee(input), HttpStatus.OK);
-	}
-	
 	@PostMapping(path = "/non-air-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes non air fees.")
-	public ResponseEntity<MiscFeesBreakdown> computeNonAirFee(
-			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") InMiscFeesInput input) {
+	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFee(
+			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NonAirFeesInput input) {
 
 		return new ResponseEntity<>(service.calculateNonAirFee(input), HttpStatus.OK);
 	}

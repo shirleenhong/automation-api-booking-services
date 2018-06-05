@@ -60,6 +60,7 @@ public class OtherServiceFeesControllerAirFeeTest {
         jsonObj.put("fopType", "Z");
         jsonObj.put("applyFormula", 111);
         jsonObj.put("commissionByPercent", 111);
+        jsonObj.put("countryCode","HK");
 
         mockMvc.perform(post("/other-service-fees/air-fees")
                 .contentType(APPLICATION_JSON_UTF8)
@@ -80,7 +81,8 @@ public class OtherServiceFeesControllerAirFeeTest {
         jsonObj.put("fopType", "Z");
         jsonObj.put("applyFormula", 111);
         jsonObj.put("commissionByPercent", 111);
-
+        jsonObj.put("countryCode","HK");
+        jsonObj.put("gstPercent","1");
 
         mockMvc.perform(post("/other-service-fees/air-fees")
                 .contentType(APPLICATION_JSON_UTF8)
