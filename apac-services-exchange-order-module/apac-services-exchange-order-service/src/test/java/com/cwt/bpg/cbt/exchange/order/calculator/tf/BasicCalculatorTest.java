@@ -1,7 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ public class BasicCalculatorTest {
 
 	@Test
 	public void getTotalFeeShouldReturnBaseFare() {
-		TransactionFeesInput input = new TransactionFeesInput();
+		InAirFeesInput input = new InAirFeesInput();
 		input.setBaseFare(new BigDecimal(6));
 		TransactionFeesBreakdown breakdown = new TransactionFeesBreakdown();
 

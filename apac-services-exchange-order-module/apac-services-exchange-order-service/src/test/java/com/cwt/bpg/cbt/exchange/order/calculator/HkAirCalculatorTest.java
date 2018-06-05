@@ -15,7 +15,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.HkSgAirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public class HkAirCalculatorTest {
@@ -47,7 +47,7 @@ public class HkAirCalculatorTest {
 
 	@Test
 	public void shouldHandleNullFieldsFromInput() {
-		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(new AirFeesInput(), null);
+		AirFeesBreakdown airFeesBreakdown = (AirFeesBreakdown) calculator.calculate(new HkSgAirFeesInput(), null);
 		assertNotNull(airFeesBreakdown);
 		assertNotNull(airFeesBreakdown.getNettCost());
 		assertNotNull(airFeesBreakdown.getTotalSellingFare());
@@ -57,7 +57,7 @@ public class HkAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithComissionByPercentageClientTypeDU() {
 		MerchantFee merchantFee = new MerchantFee();
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(true);
 		input.setCommissionPercent(20D);
@@ -77,7 +77,7 @@ public class HkAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithComissionByPercentageClientTypeTP() {
 		MerchantFee merchantFee = new MerchantFee();
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(true);
 		input.setCommissionPercent(20D);
@@ -97,7 +97,7 @@ public class HkAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithComissionByPercentageClientTypeDB() {
 		MerchantFee merchantFee = new MerchantFee();
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(true);
 		input.setCommissionPercent(20D);
@@ -117,7 +117,7 @@ public class HkAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithComissionNotByPercentageClientTypeAny() {
 		MerchantFee merchantFee = new MerchantFee();
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(false);
 		input.setCommissionPercent(20D);
@@ -137,7 +137,7 @@ public class HkAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithDiscountByPercentageClientTypeDU() {
 		MerchantFee merchantFee = new MerchantFee();
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(true);
@@ -159,7 +159,7 @@ public class HkAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithDiscountByPercentageClientTypeMN() {
 		MerchantFee merchantFee = new MerchantFee();
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(true);
@@ -181,7 +181,7 @@ public class HkAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithDiscountByPercentageClientTypeMG() {
 		MerchantFee merchantFee = new MerchantFee();
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(true);
@@ -205,7 +205,7 @@ public class HkAirCalculatorTest {
 	public void shouldCalculateMerchantFeeClientTypeTF() {
 		MerchantFee merchantFee = new MerchantFee();
 		merchantFee.setMerchantFeePercent(20D);
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(false);
@@ -234,7 +234,7 @@ public class HkAirCalculatorTest {
 		MerchantFee merchantFee = new MerchantFee();
 		merchantFee.setMerchantFeePercent(20D);
 		merchantFee.setIncludeTransactionFee(true);
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(false);
@@ -262,7 +262,7 @@ public class HkAirCalculatorTest {
 	public void shouldCalculateMerchantFeeClientTypeTFAndUATP() {
 		MerchantFee merchantFee = new MerchantFee();
 		merchantFee.setMerchantFeePercent(20D);
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(false);
@@ -292,7 +292,7 @@ public class HkAirCalculatorTest {
 	public void shouldCalculateMerchantFeeClientTypeNonTFAndUATP() {
 		MerchantFee merchantFee = new MerchantFee();
 		merchantFee.setMerchantFeePercent(20D);
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(false);
@@ -321,7 +321,7 @@ public class HkAirCalculatorTest {
 	public void shouldCalculateMerchantFeeClientTypeNonTFAndUATPAndTaxesGreaterThanNettFare() {
 		MerchantFee merchantFee = new MerchantFee();
 		merchantFee.setMerchantFeePercent(20D);
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(false);
@@ -350,7 +350,7 @@ public class HkAirCalculatorTest {
 	public void shouldAssignZeroToMerchantFeeForNegative() {
 		MerchantFee merchantFee = new MerchantFee();
 		merchantFee.setMerchantFeePercent(20D);
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(false);

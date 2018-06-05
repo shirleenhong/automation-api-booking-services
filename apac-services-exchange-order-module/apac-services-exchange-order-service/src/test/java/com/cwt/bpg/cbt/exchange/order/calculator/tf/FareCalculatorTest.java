@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 
 public class FareCalculatorTest {
 
@@ -19,7 +19,7 @@ public class FareCalculatorTest {
 	private BigDecimal totalIataCommission;
 	private BigDecimal expectedPositiveValue;
 	private BigDecimal expectedNegativeValue;
-	private TransactionFeesInput input;
+	private InAirFeesInput input;
 	private TransactionFeesBreakdown breakdown;
 	
 	@Before
@@ -28,7 +28,7 @@ public class FareCalculatorTest {
 		totalIataCommission = new BigDecimal(4);
 		expectedPositiveValue = new BigDecimal(1);
 		expectedNegativeValue = new BigDecimal(-1);
-		input = new TransactionFeesInput();
+		input = new InAirFeesInput();
 		breakdown = new TransactionFeesBreakdown();
 	}
 

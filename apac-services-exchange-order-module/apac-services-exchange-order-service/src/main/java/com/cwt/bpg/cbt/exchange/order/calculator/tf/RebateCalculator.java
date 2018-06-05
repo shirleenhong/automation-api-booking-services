@@ -5,13 +5,13 @@ import java.math.BigDecimal;
 import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 
 @Component("tfRebateCalculator")
 public class RebateCalculator extends FeeCalculator {
 
 	@Override
-    public BigDecimal getMfOnTf(TransactionFeesInput input, 
+    public BigDecimal getMfOnTf(InAirFeesInput input,
     		TransactionFeesBreakdown breakdown,
 			BigDecimal totalGstOnTf) {
         return null;

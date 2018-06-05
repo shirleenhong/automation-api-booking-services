@@ -16,7 +16,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.HkSgAirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public class SgAirCalculatorTest {
@@ -45,7 +45,7 @@ public class SgAirCalculatorTest {
 
 	@Test
 	public void shouldCalculateNotApplyFormulaWithProductTypeNotCT() {
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setSellingPrice(bigDecimal("500"));
 		input.setDiscount(bigDecimal("150"));
 		input.setTax1(bigDecimal("23"));
@@ -66,7 +66,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateNotApplyFormulaWithProductTypeCT() {
 
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setProductType("CT");
 		input.setNettFare(bigDecimal("300"));
 		input.setDiscountByPercent(false);
@@ -88,7 +88,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateNotDiscountByPercent() {
 
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setProductType("CX");
 		input.setApplyFormula(true);
 		input.setDiscountByPercent(false);
@@ -111,7 +111,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithApplyFormula() {
 
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
 		input.setSellingPrice(bigDecimal("200"));
@@ -136,7 +136,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithApplyFormulaAndProductTypeCTAndFOPTypeCXIncMF() {
 
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		MerchantFee merchantFee = new MerchantFee();
 		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
@@ -170,7 +170,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithApplyFormulaAndProductTypeCTAndFOPTypeCX() {
 
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		MerchantFee merchantFee = new MerchantFee();
 		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
@@ -205,7 +205,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithApplyFormulaAndProductTypeCTAndFOPTypeCXIncMerFee() {
 
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		MerchantFee merchantFee = new MerchantFee();
 		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
@@ -247,7 +247,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateNoMerchantFee() {
 
-		AirFeesInput input = new AirFeesInput();
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
 		input.setApplyFormula(true);
 		input.setCwtAbsorb(false);
 		input.setFopType("CX");

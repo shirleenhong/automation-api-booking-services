@@ -16,14 +16,15 @@ public class SgAirCalculator extends CommonCalculator implements Calculator<AirF
 	private ScaleConfig scaleConfig;
 
 	@Override
-	public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFeeObj) {
+	public AirFeesBreakdown calculate(AirFeesInput airFeesInput, MerchantFee merchantFeeObj) {
 
 		AirFeesBreakdown result = new AirFeesBreakdown();
 
-		if (input == null) {
+		if (airFeesInput == null) {
 			return result;
 		}
 
+		HkSgAirFeesInput input = (HkSgAirFeesInput) airFeesInput;
 		int scale = scaleConfig.getScale(input.getCountryCode());
 
 		BigDecimal totalSellingFare;
@@ -43,7 +44,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator<AirF
 				totalSellingFare = inNettFare.subtract(inDiscount).add(totalTax).add(inMerchantFee);
 			}
 			else {
-				totalSellingFare = input.getSellingPrice().subtract(inDiscount).add(totalTax)
+				totalSellingFare = safeValue(input.getSellingPrice()).subtract(inDiscount).add(totalTax)
 						.add(inMerchantFee);
 			}
 			nettCost = inNettFare.subtract(inCommission);
@@ -83,19 +84,19 @@ public class SgAirCalculator extends CommonCalculator implements Calculator<AirF
 		return (merchantFee != null) ? merchantFee.isIncludeTransactionFee() : Boolean.FALSE;
 	}
 
-	private BigDecimal getTotalNettFare(AirFeesInput input, BigDecimal discount, BigDecimal totalTax,
+	private BigDecimal getTotalNettFare(HkSgAirFeesInput input, BigDecimal discount, BigDecimal totalTax,
 			BigDecimal inNettFare, Boolean isConstTkt) {
 		BigDecimal totalNettFare;
 		if (isConstTkt) {
 			totalNettFare = inNettFare.subtract(discount).add(totalTax);
 		}
 		else {
-			totalNettFare = input.getSellingPrice().subtract(discount).add(totalTax);
+			totalNettFare = safeValue(input.getSellingPrice()).subtract(discount).add(totalTax);
 		}
 		return totalNettFare.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : totalNettFare;
 	}
 
-	private BigDecimal getDiscount(AirFeesInput input, int scale, BigDecimal inNettFare,
+	private BigDecimal getDiscount(HkSgAirFeesInput input, int scale, BigDecimal inNettFare,
 			BigDecimal inDiscount, String inClientType) {
 		BigDecimal discount;
 		if (input.isDiscountByPercent()) {
@@ -107,7 +108,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator<AirF
 		return discount;
 	}
 
-	private BigDecimal getCommission(AirFeesInput input, int scale, BigDecimal inNettFare,
+	private BigDecimal getCommission(HkSgAirFeesInput input, int scale, BigDecimal inNettFare,
 			BigDecimal inCommission) {
 		BigDecimal commission;
 		if (input.isCommissionByPercent()) {

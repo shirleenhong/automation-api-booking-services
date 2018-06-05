@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 
 public class GrossFareCalculatorTest {
 
@@ -19,7 +19,7 @@ public class GrossFareCalculatorTest {
 	private BigDecimal totalTaxes;
 	private BigDecimal totalGst;
 	private BigDecimal expectedValue;
-	private TransactionFeesInput input;
+	private InAirFeesInput input;
 	private TransactionFeesBreakdown breakdown;
 	
 	@Before
@@ -28,7 +28,7 @@ public class GrossFareCalculatorTest {
 		totalTaxes = new BigDecimal(4);
 		totalGst = new BigDecimal(1);
 		expectedValue = new BigDecimal(10);
-		input = new TransactionFeesInput();
+		input = new InAirFeesInput();
 		breakdown = new TransactionFeesBreakdown();
 	}
 

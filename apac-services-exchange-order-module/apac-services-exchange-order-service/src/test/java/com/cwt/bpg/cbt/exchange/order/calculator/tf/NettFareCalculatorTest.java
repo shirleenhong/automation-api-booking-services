@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 
 public class NettFareCalculatorTest {
 
@@ -20,7 +20,7 @@ public class NettFareCalculatorTest {
 	private BigDecimal expectedPositiveValue;
 	private BigDecimal expectedNegativeValue;
 	private BigDecimal returnableOr;
-	private TransactionFeesInput input;
+	private InAirFeesInput input;
 	private TransactionFeesBreakdown breakdown;
 	
 	@Before
@@ -30,7 +30,7 @@ public class NettFareCalculatorTest {
 		expectedPositiveValue = new BigDecimal(1);
 		returnableOr = new BigDecimal(0);
 		expectedNegativeValue = new BigDecimal(-1);
-		input = new TransactionFeesInput();
+		input = new InAirFeesInput();
 		breakdown = new TransactionFeesBreakdown();
 	}
 

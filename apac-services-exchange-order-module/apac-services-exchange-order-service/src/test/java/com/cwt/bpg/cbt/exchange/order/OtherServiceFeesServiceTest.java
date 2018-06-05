@@ -106,7 +106,7 @@ public class OtherServiceFeesServiceTest {
 		when(clientService.getClient(anyString()))
 				.thenReturn(client);
 		
-		TransactionFeesInput input = new TransactionFeesInput();
+		InAirFeesInput input = new InAirFeesInput();
 		input.setCountryCode(Country.INDIA.getCode());
 		
 		assertNotNull(service.calculateAirFee(input));

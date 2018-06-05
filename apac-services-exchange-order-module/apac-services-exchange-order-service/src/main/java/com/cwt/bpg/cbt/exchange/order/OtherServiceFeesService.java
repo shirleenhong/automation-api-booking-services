@@ -61,7 +61,7 @@ public class OtherServiceFeesService {
 	}
 
 	
-	public FeesBreakdown calculateAirFee(TransactionFeesInput input) {		
+	public FeesBreakdown calculateAirFee(InAirFeesInput input) {
 		final Client client = getClient(input.getProfileName());
 		final int pricingId = getPricingId(input.getProfileName());
 		final AirlineRule airlineRule = airlineRuleService.getAirlineRule(input.getPlatCarrier());

@@ -1,7 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -17,7 +17,7 @@ public class BaseAndYqCalculatorTest {
 	public void getTotalFeeShouldReturnSumOfBaseFareAndYqTax() {
 		BigDecimal baseFare = new BigDecimal(1), yqTax = new BigDecimal(1);
 
-		TransactionFeesInput input = new TransactionFeesInput();
+		InAirFeesInput input = new InAirFeesInput();
 		input.setBaseFare(baseFare);
 		input.setYqTax(yqTax);
 

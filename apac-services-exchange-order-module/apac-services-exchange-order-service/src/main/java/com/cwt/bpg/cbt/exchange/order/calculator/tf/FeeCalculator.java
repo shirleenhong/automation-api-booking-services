@@ -17,7 +17,7 @@ public class FeeCalculator extends CommonCalculator {
 	private static final String NA = "NA";
 	private static final String ALL = "ALL";
 
-	public FeesBreakdown calculate(TransactionFeesInput input, AirlineRule airlineRule, Client client, Airport airport) {
+	public FeesBreakdown calculate(InAirFeesInput input, AirlineRule airlineRule, Client client, Airport airport) {
 		
 		BigDecimal gstAmount = null;
 		BigDecimal yqTax = null;
@@ -93,7 +93,7 @@ public class FeeCalculator extends CommonCalculator {
 	}
 
 	private BigDecimal getTransactionFee(Client client, 
-			TransactionFeesInput input, 
+			InAirFeesInput input,
 			TransactionFeesBreakdown breakdown, 
 			Airport airport, BigDecimal baseAmount) {
 
@@ -131,7 +131,7 @@ public class FeeCalculator extends CommonCalculator {
 	}
 	
 	private BigDecimal getFeeByTicket(
-			TransactionFeesInput input,  
+			InAirFeesInput input,
 			Airport airport, 
 			ClientPricing pricing,
 			BigDecimal totalFee) {
@@ -179,7 +179,7 @@ public class FeeCalculator extends CommonCalculator {
 	}
 
 	private BigDecimal getFeeByPnr(
-			TransactionFeesInput input,
+			InAirFeesInput input,
 			Airport airport,
 			ClientPricing pricing, BigDecimal totalFee) {
 		
@@ -238,7 +238,7 @@ public class FeeCalculator extends CommonCalculator {
 		return null;
 	}
 
-	public BigDecimal getTotalAirCommission(TransactionFeesInput input) {
+	public BigDecimal getTotalAirCommission(InAirFeesInput input) {
 		return safeValue(input.getBaseFare())
 					.add(safeValue(input.getYqTax()))
 					.add(safeValue(input.getAirlineCommission()));
@@ -249,7 +249,7 @@ public class FeeCalculator extends CommonCalculator {
 	}
 	
 	public BigDecimal getTotalDiscount(
-			TransactionFeesInput input,
+			InAirFeesInput input,
 			TransactionFeesBreakdown breakdown) {
 		
 		BigDecimal commissionAmount = calculatePercentage(breakdown.getTotalIataCommission(),
@@ -262,11 +262,11 @@ public class FeeCalculator extends CommonCalculator {
 		return commissionAmount;
 	}
 	
-	public BigDecimal getTotalFare(TransactionFeesInput input) {
+	public BigDecimal getTotalFare(InAirFeesInput input) {
 		return safeValue(input.getBaseFare());
 	}
 	
-	public BigDecimal getTotalOverheadCommission(TransactionFeesInput input) {
+	public BigDecimal getTotalOverheadCommission(InAirFeesInput input) {
 		if(TripTypes.isInternational(input.getTripType())) {
 			return calculatePercentage(calculatePercentage(safeValue(input.getBaseFare())
 						.subtract(input.getAirlineCommission()), input.getAirlineCommissionPercent()),
@@ -275,7 +275,7 @@ public class FeeCalculator extends CommonCalculator {
 		return null;
 	}
 
-	public BigDecimal getTotalOrCom2(TransactionFeesInput input) {
+	public BigDecimal getTotalOrCom2(InAirFeesInput input) {
 		
 		if(TripTypes.isInternational(input.getTripType())) {
 			return calculatePercentage(input.getAirlineOrCommission(), 
@@ -286,7 +286,7 @@ public class FeeCalculator extends CommonCalculator {
 	}
 	
 	public BigDecimal getMerchantFee(
-			TransactionFeesInput input,
+			InAirFeesInput input,
 			TransactionFeesBreakdown breakdown
 			) {
 		
@@ -296,8 +296,8 @@ public class FeeCalculator extends CommonCalculator {
 					.add(breakdown.getTotalGst()), input.getMerchantFeePercent());
 	}
 	
-	public BigDecimal getMfOnTf(TransactionFeesInput input, TransactionFeesBreakdown breakdown,
-			BigDecimal totalGstOnTf) {
+	public BigDecimal getMfOnTf(InAirFeesInput input, TransactionFeesBreakdown breakdown,
+								BigDecimal totalGstOnTf) {
 
 		if(TripTypes.isInternational(input.getTripType())) {
 			return calculatePercentage(safeValue(breakdown.getFee()).add(totalGstOnTf), 
@@ -308,11 +308,11 @@ public class FeeCalculator extends CommonCalculator {
 				input.getMerchantFeePercent());
 	}
 	
-	public BigDecimal getTotalNettFare(TransactionFeesInput input) {
+	public BigDecimal getTotalNettFare(InAirFeesInput input) {
 		return safeValue(input.getBaseFare());		
 	}
 	
-	public BigDecimal getTotalFee(TransactionFeesInput input, TransactionFeesBreakdown breakdown) {
+	public BigDecimal getTotalFee(InAirFeesInput input, TransactionFeesBreakdown breakdown) {
 		return null;		
 	}
 	

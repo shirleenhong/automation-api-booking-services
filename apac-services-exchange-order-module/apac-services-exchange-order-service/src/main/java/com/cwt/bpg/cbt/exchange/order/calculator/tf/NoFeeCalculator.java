@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 
 
 @Component("noFeeCalculator")
@@ -13,26 +13,26 @@ public class NoFeeCalculator extends FeeCalculator {
 
 	@Override
 	public BigDecimal getTotalDiscount(
-			TransactionFeesInput input,
+			InAirFeesInput input,
 			TransactionFeesBreakdown breakdown) {
         return null;
     }
 
 	@Override
     public BigDecimal getTotalOverheadCommission( 
-			TransactionFeesInput input) {
+			InAirFeesInput input) {
         return null;
     }
 
 	@Override
     public BigDecimal getTotalOrCom2( 
-			TransactionFeesInput input) {
+			InAirFeesInput input) {
         return null;
     }
 
 	@Override
     public BigDecimal getMerchantFee(
-    		TransactionFeesInput input,
+    		InAirFeesInput input,
 			TransactionFeesBreakdown breakdown
 			) {
         return calculatePercentage(
@@ -44,7 +44,7 @@ public class NoFeeCalculator extends FeeCalculator {
 
 	@Override
     public BigDecimal getMfOnTf( 
-			TransactionFeesInput input,
+			InAirFeesInput input,
 			TransactionFeesBreakdown breakdown,
 			BigDecimal totalGstOnTf) {
         return null;
@@ -56,7 +56,7 @@ public class NoFeeCalculator extends FeeCalculator {
     }
 
 	@Override
-    public BigDecimal getTotalFee(TransactionFeesInput input, TransactionFeesBreakdown breakdown) {
+    public BigDecimal getTotalFee(InAirFeesInput input, TransactionFeesBreakdown breakdown) {
         return null;
     }
 
