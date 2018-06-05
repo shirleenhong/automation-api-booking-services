@@ -1,0 +1,300 @@
+*** Settings ***
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-variables.txt
+Resource          resources/non-air-fees.txt
+Resource          ../resources/api-imports.txt
+
+*** Test Cases ***
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission Percentage, Discount Percentage, FOP Mode, GST% OT1% and OT2%
+    [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,SIEMENSINVPNQ|acct_type,AX|comm_by_percent,true|comm_percentage,3.00|commission,null|cost_amount,400|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,3|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,null|apply_mf_bank,null|merchant_fee_percentage,null|gst_percentage,14|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission Percentage, Discount Percentage, FOP Mode, Subject To Merchant Fee, GST% OT1% and OT2%
+    [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,SIEMENSINVPNQ|acct_type,MC|comm_by_percent,true|comm_percentage,3.00|commission,null|cost_amount,400|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,1|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,true|apply_mf_bank,null|merchant_fee_percentage,2.25|gst_percentage,14|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission Percentage, Discount Percentage, FOP Mode, Subject To Merchant Fee, Apply Bank Merchant Fee, CC Number, FOP Number, GST% OT1% and OT2%
+    [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,SIEMENSINVPNQ|acct_type,AX|comm_by_percent,true|comm_percentage,5.00|commission,null|cost_amount,400|discount_by_percent,true|discount_percentage,4.50|discount,null|fop_mode,1|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,true|apply_mf_bank,false|merchant_fee_percentage,2.25|gst_percentage,14|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA1|acct_type,AX|comm_by_percent,true|comm_percentage,4.00|commission,null|cost_amount,500|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,2|fop_number,1234|ot1,0.5|ot2,0.5|product_code,35|cc_number,1234|subject_to_mf,true|apply_mf_bank,true|merchant_fee_percentage,3.50|gst_percentage,14|apply_mf_cc,null    country=in
+    Verify Response Status Code Is Correct    200
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA6|acct_type,AX|comm_by_percent,true|comm_percentage,8.00|commission,null|cost_amount,500|discount_by_percent,true|discount_percentage,6.50|discount,null|fop_mode,5|fop_number,1234|ot1,0.05|ot2,0.05|product_code,0|cc_number,1234|subject_to_mf,false|apply_mf_bank,false|merchant_fee_percentage,2.0|gst_percentage,1.4|apply_mf_cc,null    country=in
+    Verify Response Status Code Is Correct    200
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA3|acct_type,AX|comm_by_percent,true|comm_percentage,3.90|commission,null|cost_amount,680|discount_by_percent,true|discount_percentage,6.47|discount,null|fop_mode,1|fop_number,5678|ot1,0.025|ot2,0.025|product_code,85|cc_number,5678|subject_to_mf,false|apply_mf_bank,true|merchant_fee_percentage,3.0|gst_percentage,0.7|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA6|acct_type,AX|comm_by_percent,true|comm_percentage,4.00|commission,null|cost_amount,696|discount_by_percent,true|discount_percentage,4.5|discount,null|fop_mode,5|fop_number,1112|ot1,0.05|ot2,0.05|product_code,0|cc_number,1234|subject_to_mf,false|apply_mf_bank,false|merchant_fee_percentage,0.0|gst_percentage,1.4|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+
+    
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission Percentage, Discount Percentage, FOP Mode, Subject To Merchant Fee, Apply Bank Merchant Fee, CC Number, GST% OT1% and OT2%
+    [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA3|acct_type,AX|comm_by_percent,true|comm_percentage,5.90|commission,null|cost_amount,750|discount_by_percent,true|discount_percentage,7.90|discount,null|fop_mode,2|fop_number,${EMPTY}|ot1,0.025|ot2,0.025|product_code,85|cc_number,5678|subject_to_mf,false|apply_mf_bank,true|merchant_fee_percentage,5.2|gst_percentage,0.7|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA6|acct_type,AX|comm_by_percent,true|comm_percentage,11.00|commission,null|cost_amount,1200|discount_by_percent,true|discount_percentage,12.50|discount,null|fop_mode,2|fop_number,${EMPTY}|ot1,0.05|ot2,0.05|product_code,0|cc_number,1234|subject_to_mf,false|apply_mf_bank,false|merchant_fee_percentage,2.5|gst_percentage,1.4|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA3|acct_type,AX|comm_by_percent,true|comm_percentage,5.90|commission,null|cost_amount,750|discount_by_percent,true|discount_percentage,7.90|discount,null|fop_mode,2|fop_number,1112|ot1,0.025|ot2,0.025|product_code,85|cc_number,5678|subject_to_mf,false|apply_mf_bank,true|merchant_fee_percentage,5.2|gst_percentage,0.7|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission Percentage, Discount Percentage, FOP Mode, Subject To Merchant Fee, Apply CC Merchant Fee, FOP Type, GST% OT1% and OT2%
+     [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA4|acct_type,AX|comm_by_percent,true|comm_percentage,4.90|commission,null|cost_amount,720|discount_by_percent,true|discount_percentage,5.00|discount,null|fop_mode,2|fop_number,null|ot1,0.05|ot2,0.05|product_code,0|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,2.25|gst_percentage,1.4|apply_mf_cc,false    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA5|acct_type,AX|comm_by_percent,true|comm_percentage,2.90|commission,null|cost_amount,800|discount_by_percent,true|discount_percentage,4.00|discount,null|fop_mode,2|fop_number,null|ot1,0.025|ot2,0.025|product_code,85|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,2.25|gst_percentage,0.7|apply_mf_cc,true    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA4|acct_type,AX|comm_by_percent,true|comm_percentage,4.90|commission,null|cost_amount,720|discount_by_percent,true|discount_percentage,5.00|discount,null|fop_mode,2|fop_number,null|ot1,0.05|ot2,0.05|product_code,0|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,1.80|gst_percentage,1.4|apply_mf_cc,false    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA5|acct_type,AX|comm_by_percent,true|comm_percentage,2.90|commission,null|cost_amount,800|discount_by_percent,true|discount_percentage,4.00|discount,null|fop_mode,2|fop_number,null|ot1,0.025|ot2,0.025|product_code,85|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,5.30|gst_percentage,0.7|apply_mf_cc,true    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+ 
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission Percentage, Discount Percentage, FOP Mode, Subject To Merchant Fee, Apply CC Merchant Fee, GST% OT1% and OT2%
+    [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA4|acct_type,AX|comm_by_percent,true|comm_percentage,7.90|commission,null|cost_amount,650|discount_by_percent,true|discount_percentage,3.00|discount,null|fop_mode,6|fop_number,null|ot1,0.15|ot2,0.15|product_code,13|cc_number,null|subject_to_mf,true|apply_mf_bank,null|merchant_fee_percentage,1.80|gst_percentage,4.2|apply_mf_cc,false    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA5|acct_type,AX|comm_by_percent,true|comm_percentage,7.30|commission,null|cost_amount,800|discount_by_percent,true|discount_percentage,2.90|discount,null|fop_mode,2|fop_number,null|ot1,0.5|ot2,0.5|product_code,40|cc_number,null|subject_to_mf,true|apply_mf_bank,null|merchant_fee_percentage,5.30|gst_percentage,14|apply_mf_cc,true    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+ 
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission Percentage, Discount Percentage, FOP Mode, Subject To Merchant Fee, Apply Bank Merchant Fee, CC Number And FOP Number
+     [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,SIEMENSINVPNQ|acct_type,AX|comm_by_percent,true|comm_percentage,5.00|commission,null|cost_amount,400|discount_by_percent,true|discount_percentage,4.50|discount,null|fop_mode,1|fop_number,1234|ot1,0.0|ot2,0.0|product_code,9|cc_number,1234|subject_to_mf,true|apply_mf_bank,false|merchant_fee_percentage,2.25|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA1|acct_type,AX|comm_by_percent,true|comm_percentage,4.00|commission,null|cost_amount,500|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,2|fop_number,1234|ot1,0.0|ot2,0.0|product_code,9|cc_number,1234|subject_to_mf,true|apply_mf_bank,true|merchant_fee_percentage,3.50|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Verify Response Status Code Is Correct    200
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA6|acct_type,AX|comm_by_percent,true|comm_percentage,2.70|commission,null|cost_amount,780|discount_by_percent,true|discount_percentage,5.67|discount,null|fop_mode,5|fop_number,1234|ot1,0.0|ot2,0.0|product_code,66|cc_number,1234|subject_to_mf,false|apply_mf_bank,false|merchant_fee_percentage,2.0|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Verify Response Status Code Is Correct    200
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA3|acct_type,AX|comm_by_percent,true|comm_percentage,3.90|commission,null|cost_amount,680|discount_by_percent,true|discount_percentage,6.47|discount,null|fop_mode,1|fop_number,1234|ot1,0.0|ot2,0.0|product_code,0|cc_number,1234|subject_to_mf,false|apply_mf_bank,true|merchant_fee_percentage,2.0|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+ 
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission Percentage, Discount Percentage, FOP Mode, Subject To Merchant Fee, Apply Bank Merchant Fee And CC Number
+     [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA3|acct_type,AX|comm_by_percent,true|comm_percentage,3.90|commission,null|cost_amount,680|discount_by_percent,true|discount_percentage,6.47|discount,null|fop_mode,1|fop_number,${EMPTY}|ot1,0.0|ot2,0.0|product_code,9|cc_number,1234|subject_to_mf,false|apply_mf_bank,true|merchant_fee_percentage,5.20|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA6|acct_type,AX|comm_by_percent,true|comm_percentage,8.00|commission,null|cost_amount,500|discount_by_percent,true|discount_percentage,6.50|discount,null|fop_mode,5|fop_number,${EMPTY}|ot1,0.0|ot2,0.0|product_code,9|cc_number,1234|subject_to_mf,false|apply_mf_bank,false|merchant_fee_percentage,2.50|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA3|acct_type,AX|comm_by_percent,true|comm_percentage,3.90|commission,null|cost_amount,680|discount_by_percent,true|discount_percentage,6.47|discount,null|fop_mode,1|fop_number,1112|ot1,0.0|ot2,0.0|product_code,9|cc_number,1234|subject_to_mf,false|apply_mf_bank,true|merchant_fee_percentage,5.20|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission Percentage, Discount Percentage, FOP Mode, Subject To Merchant Fee, Apply CC Merchant Fee And FOP Type
+     [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA4|acct_type,AX|comm_by_percent,true|comm_percentage,4.90|commission,null|cost_amount,720|discount_by_percent,true|discount_percentage,5.00|discount,null|fop_mode,2|fop_number,null|ot1,0.0|ot2,0.0|product_code,9|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,1.80|gst_percentage,0.0|apply_mf_cc,false    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA5|acct_type,AX|comm_by_percent,true|comm_percentage,2.90|commission,null|cost_amount,800|discount_by_percent,true|discount_percentage,4.00|discount,null|fop_mode,2|fop_number,null|ot1,0.0|ot2,0.0|product_code,9|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,5.30|gst_percentage,0.0|apply_mf_cc,true    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA4|acct_type,AX|comm_by_percent,true|comm_percentage,4.90|commission,null|cost_amount,720|discount_by_percent,true|discount_percentage,5.00|discount,null|fop_mode,2|fop_number,null|ot1,0.0|ot2,0.0|product_code,9|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,1.80|gst_percentage,0.0|apply_mf_cc,false    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA5|acct_type,AX|comm_by_percent,true|comm_percentage,2.90|commission,null|cost_amount,800|discount_by_percent,true|discount_percentage,4.00|discount,null|fop_mode,2|fop_number,null|ot1,0.0|ot2,0.0|product_code,9|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,5.30|gst_percentage,0.0|apply_mf_cc,true    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission Percentage, Discount Percentage, FOP Mode, Subject To Merchant Fee And Apply CC Merchant Fee
+    [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA4|acct_type,AX|comm_by_percent,true|comm_percentage,7.90|commission,null|cost_amount,650|discount_by_percent,true|discount_percentage,3.00|discount,null|fop_mode,6|fop_number,null|ot1,0.0|ot2,0.0|product_code,26|cc_number,null|subject_to_mf,true|apply_mf_bank,null|merchant_fee_percentage,1.80|gst_percentage,0.0|apply_mf_cc,false    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA5|acct_type,AX|comm_by_percent,true|comm_percentage,7.30|commission,null|cost_amount,800|discount_by_percent,true|discount_percentage,2.90|discount,null|fop_mode,2|fop_number,null|ot1,0.0|ot2,0.0|product_code,26|cc_number,null|subject_to_mf,true|apply_mf_bank,null|merchant_fee_percentage,5.30|gst_percentage,0.0|apply_mf_cc,true    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission, Discount, FOP Mode, GST% OT1% and OT2%
+    [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,SIEMENSINVPNQ|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,100|cost_amount,400|discount_by_percent,false|discount_percentage,null|discount,80|fop_mode,3|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,null|apply_mf_bank,null|merchant_fee_percentage,null|gst_percentage,14|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission, Discount, FOP Mode, Subject To Merchant Fee, GST% OT1% and OT2%
+    [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,SIEMENSINVPNQ|acct_type,MC|comm_by_percent,false|comm_percentage,null|commission,100|cost_amount,400|discount_by_percent,false|discount_percentage,null|discount,80|fop_mode,1|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,true|apply_mf_bank,null|merchant_fee_percentage,2.25|gst_percentage,14|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission, Discount, FOP Mode, Subject To Merchant Fee, Apply Bank Merchant Fee, CC Number, FOP Number, GST% OT1% and OT2%
+    [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,SIEMENSINVPNQ|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,200|cost_amount,400|discount_by_percent,false|discount_percentage,null|discount,100|fop_mode,1|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,true|apply_mf_bank,false|merchant_fee_percentage,2.25|gst_percentage,14|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA1|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,200|cost_amount,500|discount_by_percent,false|discount_percentage,null|discount,100|fop_mode,2|fop_number,1234|ot1,0.5|ot2,0.5|product_code,35|cc_number,1234|subject_to_mf,true|apply_mf_bank,true|merchant_fee_percentage,3.50|gst_percentage,14|apply_mf_cc,null    country=in
+    Verify Response Status Code Is Correct    200
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA6|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,200|cost_amount,500|discount_by_percent,false|discount_percentage,null|discount,100|fop_mode,5|fop_number,1234|ot1,0.05|ot2,0.05|product_code,0|cc_number,1234|subject_to_mf,false|apply_mf_bank,false|merchant_fee_percentage,2.0|gst_percentage,1.4|apply_mf_cc,null    country=in
+    Verify Response Status Code Is Correct    200
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA3|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,200|cost_amount,680|discount_by_percent,false|discount_percentage,null|discount,100|fop_mode,1|fop_number,5678|ot1,0.025|ot2,0.025|product_code,85|cc_number,5678|subject_to_mf,false|apply_mf_bank,true|merchant_fee_percentage,3.0|gst_percentage,0.7|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA6|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,200|cost_amount,696|discount_by_percent,false|discount_percentage,null|discount,100|fop_mode,5|fop_number,1112|ot1,0.05|ot2,0.05|product_code,0|cc_number,1234|subject_to_mf,false|apply_mf_bank,false|merchant_fee_percentage,0.0|gst_percentage,1.4|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+
+    
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission, Discount, FOP Mode, Subject To Merchant Fee, Apply Bank Merchant Fee, CC Number, GST% OT1% and OT2%
+    [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA3|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,180|cost_amount,750|discount_by_percent,false|discount_percentage,null|discount,154|fop_mode,2|fop_number,${EMPTY}|ot1,0.025|ot2,0.025|product_code,85|cc_number,5678|subject_to_mf,false|apply_mf_bank,true|merchant_fee_percentage,3.0|gst_percentage,0.7|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA6|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,180|cost_amount,1200|discount_by_percent,false|discount_percentage,null|discount,154|fop_mode,2|fop_number,${EMPTY}|ot1,0.05|ot2,0.05|product_code,0|cc_number,1234|subject_to_mf,false|apply_mf_bank,false|merchant_fee_percentage,2.0|gst_percentage,1.4|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA3|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,180|cost_amount,750|discount_by_percent,false|discount_percentage,null|discount,154|fop_mode,2|fop_number,1112|ot1,0.025|ot2,0.025|product_code,85|cc_number,5678|subject_to_mf,false|apply_mf_bank,true|merchant_fee_percentage,3.0|gst_percentage,0.7|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission, Discount, FOP Mode, Subject To Merchant Fee, Apply CC Merchant Fee, FOP Type, GST% OT1% and OT2%
+     [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA4|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,120|cost_amount,720|discount_by_percent,false|discount_percentage,null|discount,180|fop_mode,2|fop_number,null|ot1,0.05|ot2,0.05|product_code,0|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,2.25|gst_percentage,1.4|apply_mf_cc,false    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA5|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,120|cost_amount,800|discount_by_percent,false|discount_percentage,null|discount,180|fop_mode,2|fop_number,null|ot1,0.025|ot2,0.025|product_code,85|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,2.25|gst_percentage,0.7|apply_mf_cc,true    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA4|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,120|cost_amount,720|discount_by_percent,false|discount_percentage,null|discount,180|fop_mode,2|fop_number,null|ot1,0.05|ot2,0.05|product_code,0|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,1.80|gst_percentage,1.4|apply_mf_cc,false    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA5|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,120|cost_amount,800|discount_by_percent,false|discount_percentage,null|discount,180|fop_mode,2|fop_number,null|ot1,0.025|ot2,0.025|product_code,85|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,5.30|gst_percentage,0.7|apply_mf_cc,true    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+ 
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission, Discount, FOP Mode, Subject To Merchant Fee, Apply CC Merchant Fee, GST% OT1% and OT2%
+    [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA4|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,85|cost_amount,650|discount_by_percent,false|discount_percentage,null|discount,90|fop_mode,6|fop_number,null|ot1,0.15|ot2,0.15|product_code,13|cc_number,null|subject_to_mf,true|apply_mf_bank,null|merchant_fee_percentage,1.80|gst_percentage,4.2|apply_mf_cc,false    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA5|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,85|cost_amount,800|discount_by_percent,false|discount_percentage,null|discount,90|fop_mode,2|fop_number,null|ot1,0.5|ot2,0.5|product_code,40|cc_number,null|subject_to_mf,true|apply_mf_bank,null|merchant_fee_percentage,5.30|gst_percentage,14|apply_mf_cc,true    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+ 
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission, Discount, FOP Mode, Subject To Merchant Fee, Apply Bank Merchant Fee, CC Number And FOP Number
+     [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,SIEMENSINVPNQ|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,85|cost_amount,400|discount_by_percent,false|discount_percentage,null|discount,105|fop_mode,1|fop_number,1234|ot1,0.0|ot2,0.0|product_code,9|cc_number,1234|subject_to_mf,true|apply_mf_bank,false|merchant_fee_percentage,2.25|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA1|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,85|cost_amount,500|discount_by_percent,false|discount_percentage,null|discount,105|fop_mode,2|fop_number,1234|ot1,0.0|ot2,0.0|product_code,9|cc_number,1234|subject_to_mf,true|apply_mf_bank,true|merchant_fee_percentage,3.50|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Verify Response Status Code Is Correct    200
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA6|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,85|cost_amount,780|discount_by_percent,false|discount_percentage,null|discount,105|fop_mode,5|fop_number,1234|ot1,0.0|ot2,0.0|product_code,66|cc_number,1234|subject_to_mf,false|apply_mf_bank,false|merchant_fee_percentage,2.0|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Verify Response Status Code Is Correct    200
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA3|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,85|cost_amount,680|discount_by_percent,false|discount_percentage,null|discount,105|fop_mode,1|fop_number,1234|ot1,0.0|ot2,0.0|product_code,0|cc_number,1234|subject_to_mf,false|apply_mf_bank,true|merchant_fee_percentage,2.0|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+ 
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission, Discount, FOP Mode, Subject To Merchant Fee, Apply Bank Merchant Fee And CC Number
+     [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA3|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,74|cost_amount,680|discount_by_percent,false|discount_percentage,null|discount,55|fop_mode,1|fop_number,${EMPTY}|ot1,0.0|ot2,0.0|product_code,9|cc_number,1234|subject_to_mf,false|apply_mf_bank,true|merchant_fee_percentage,5.20|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA6|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,74|cost_amount,500|discount_by_percent,false|discount_percentage,null|discount,55|fop_mode,5|fop_number,${EMPTY}|ot1,0.0|ot2,0.0|product_code,9|cc_number,1234|subject_to_mf,false|apply_mf_bank,false|merchant_fee_percentage,2.50|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA3|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,74|cost_amount,680|discount_by_percent,false|discount_percentage,null|discount,55|fop_mode,1|fop_number,1112|ot1,0.0|ot2,0.0|product_code,9|cc_number,1234|subject_to_mf,false|apply_mf_bank,true|merchant_fee_percentage,5.20|gst_percentage,0.0|apply_mf_cc,null    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission, Discount, FOP Mode, Subject To Merchant Fee, Apply CC Merchant Fee And FOP Type
+     [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA4|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,115|cost_amount,720|discount_by_percent,false|discount_percentage,null|discount,60|fop_mode,2|fop_number,null|ot1,0.0|ot2,0.0|product_code,9|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,1.80|gst_percentage,0.0|apply_mf_cc,false    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,AUTTESTDATA5|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,115|cost_amount,800|discount_by_percent,false|discount_percentage,null|discount,60|fop_mode,2|fop_number,null|ot1,0.0|ot2,0.0|product_code,9|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,5.30|gst_percentage,0.0|apply_mf_cc,true    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA4|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,115|cost_amount,720|discount_by_percent,false|discount_percentage,null|discount,60|fop_mode,2|fop_number,null|ot1,0.0|ot2,0.0|product_code,9|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,1.80|gst_percentage,0.0|apply_mf_cc,false    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA5|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,115|cost_amount,800|discount_by_percent,false|discount_percentage,null|discount,60|fop_mode,2|fop_number,null|ot1,0.0|ot2,0.0|product_code,9|cc_number,null|subject_to_mf,false|apply_mf_bank,null|merchant_fee_percentage,5.30|gst_percentage,0.0|apply_mf_cc,true    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+
+Verify That Miscellaneous Fees Are Calculated Correctly Using Cost Amount, Commission, Discount, FOP Mode, Subject To Merchant Fee And Apply CC Merchant Fee
+    [Tags]    functional    not-ready
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA4|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,205|cost_amount,650|discount_by_percent,false|discount_percentage,null|discount,50|fop_mode,6|fop_number,null|ot1,0.0|ot2,0.0|product_code,26|cc_number,null|subject_to_mf,true|apply_mf_bank,null|merchant_fee_percentage,1.80|gst_percentage,0.0|apply_mf_cc,false    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
+    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,AUTTESTDATA5|acct_type,AX|comm_by_percent,false|comm_percentage,null|commission,205|cost_amount,800|discount_by_percent,false|discount_percentage,null|discount,50|fop_mode,2|fop_number,null|ot1,0.0|ot2,0.0|product_code,26|cc_number,null|subject_to_mf,true|apply_mf_bank,null|merchant_fee_percentage,5.30|gst_percentage,0.0|apply_mf_cc,true    country=in
+    Send Other Service Fees Non-Air Fees Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Non-Air Fees Are Returned Correctly
