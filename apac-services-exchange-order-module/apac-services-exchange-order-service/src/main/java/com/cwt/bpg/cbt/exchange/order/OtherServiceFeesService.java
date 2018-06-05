@@ -12,9 +12,12 @@ import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 @Service
 public class OtherServiceFeesService {
+
+	private static final String AIR_PRODUCT_CODE = "35";
 
 	@Autowired
 	@Qualifier(value = "hkSgNonAirFeeCalculator")
@@ -49,6 +52,9 @@ public class OtherServiceFeesService {
 
 	@Autowired
 	private AirlineRuleService airlineRuleService;
+	
+	@Autowired
+	private ProductService productService;
 
 	public NonAirFeesBreakdown calculateMiscFee(HkSgNonAirFeesInput input) {
 
@@ -63,14 +69,21 @@ public class OtherServiceFeesService {
 			final InAirFeesInput inAirFeesInput = (InAirFeesInput) input;
 			final AirlineRule airlineRule = airlineRuleService
 					.getAirlineRule(inAirFeesInput.getPlatCarrier());
-			Airport airport = getAirport(inAirFeesInput.getCityCode());
+			final Airport airport = getAirport(inAirFeesInput.getCityCode());
+			final Product airproduct = getProduct(
+							Country.INDIA.getCode(), 
+							AIR_PRODUCT_CODE);
 
 			return this.tfFactory.getCalculator(pricingId)
-					.calculate(inAirFeesInput, airlineRule, client, airport);
+					.calculate(inAirFeesInput, airlineRule, client, airport, airproduct);
 		}
 		else {
 			return this.osFactory.getCalculator(countryCode).calculate(input, getMerchantFeePct(input));
 		}
+	}
+
+	private Product getProduct(String countryCode, String productCode) {
+		return productService.getProductByCode(countryCode, productCode);
 	}
 
 	private Airport getAirport(String cityCode) {

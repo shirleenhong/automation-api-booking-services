@@ -24,7 +24,7 @@ public class ProductsServiceTest {
 	private ProductRepository repo;
 
 	@InjectMocks
-	private ProductsService service;
+	private ProductService service;
 
 	@Before
 	public void setUp() {

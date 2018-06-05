@@ -19,6 +19,7 @@ import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorF
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.tf.FeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 public class OtherServiceFeesServiceTest {
 
@@ -58,6 +59,9 @@ public class OtherServiceFeesServiceTest {
 	@Mock
 	private InNonAirFeeCalculator inNonAirFeeCalculator;
 
+	@Mock
+	private ProductService productService;
+	
 	@InjectMocks
 	private OtherServiceFeesService service;
 
@@ -101,7 +105,7 @@ public class OtherServiceFeesServiceTest {
 			.thenReturn(tfCalculator);
 
 		when(tfCalculator.calculate(anyObject(), anyObject(), anyObject(),
-				anyObject()))
+				anyObject(), anyObject()))
 			.thenReturn(new InAirFeesBreakdown());
 
 		when(airlineRuleService.getAirlineRule(anyString())).thenReturn(new AirlineRule());
@@ -127,25 +131,6 @@ public class OtherServiceFeesServiceTest {
 
 		assertNotNull(service.calculateVisaFees(input));
 
-	}
-
-	@Test
-	public void shouldReturnDefaulClient() {
-		when(tfFactory.getCalculator(anyInt())).thenReturn(tfCalculator);
-
-		when(tfCalculator.calculate(anyObject(), anyObject(), anyObject(), anyObject())).thenReturn(new InAirFeesBreakdown());
-
-		when(airlineRuleService.getAirlineRule(anyString())).thenReturn(new AirlineRule());
-
-		Client client = new Client();
-		client.setPricingId(20);
-		client.setStandardMfProduct(true);
-		when(clientService.getClient(anyString())).thenReturn(client);
-
-		InAirFeesInput input = new InAirFeesInput();
-		input.setCountryCode(Country.INDIA.getCode());
-
-		assertNotNull(service.calculateAirFee(input));
 	}
 
 	@Test

@@ -20,9 +20,9 @@ public class FeeCalculator extends CommonCalculator {
 	public AirFeesBreakdown calculate(InAirFeesInput input, 
 			AirlineRule airlineRule, 
 			Client client, 
-			Airport airport) {
+			Airport airport,
+			Product airProduct) {
 		
-		InProduct airProduct = new InProduct();
 		BigDecimal gstAmount = null;
 		BigDecimal yqTax = null;
 		
@@ -76,7 +76,7 @@ public class FeeCalculator extends CommonCalculator {
 		breakdown.setTotalMerchantFee(getMerchantFee(input, breakdown));
 		
 		breakdown.setMerchantFeeOnTf(getMfOnTf(input, breakdown, 
-								getGstOnTf(airProduct, breakdown.getFee())));
+								getGstOnTf((InProduct) airProduct, breakdown.getFee())));
 		breakdown.setTotalSellFare(getTotalSellingFare(breakdown));		
 		breakdown.setTotalCharge(getTotalCharge(breakdown));
 				
@@ -91,6 +91,7 @@ public class FeeCalculator extends CommonCalculator {
 			txtLowFareCarrier = cmbPlatCarrier.Text
 		End If			
 		*/
+		breakdown.setYqTax(yqTax);
 		breakdown.setFee(null);
 		
 		return breakdown;

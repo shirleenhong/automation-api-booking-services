@@ -12,7 +12,6 @@ import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.HkSgAirFeesInput;
 
 public class OtherServiceCalculatorFactory {
 	
