@@ -33,14 +33,15 @@ public class HkAirCalculator extends CommonCalculator implements Calculator<AirF
 			ClientTypes.TF.getCode());
 
 	@Override
-	public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFee) {
+	public AirFeesBreakdown calculate(AirFeesInput airFeesInput, MerchantFee merchantFee) {
 
-		AirFeesBreakdown result = new AirFeesBreakdown();
+		HkSgAirFeesBreakdown result = new HkSgAirFeesBreakdown();
 
-		if (input == null) {
+		if (airFeesInput == null) {
 			return result;
 		}
 
+		HkSgAirFeesInput input = (HkSgAirFeesInput) airFeesInput;
 		int scale = scaleConfig.getScale(input.getCountryCode());
 
 		BigDecimal totalSellingFare;
@@ -100,7 +101,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator<AirF
 		return result;
 	}
 
-	private BigDecimal getCommission(AirFeesInput input, int scale, BigDecimal nettFare) {
+	private BigDecimal getCommission(HkSgAirFeesInput input, int scale, BigDecimal nettFare) {
 
 		BigDecimal commission = nettFare
 				.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPercent())),
@@ -114,7 +115,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator<AirF
 		return round(commission, scale);
 	}
 
-	private BigDecimal applyMerchantFee(MerchantFee merchantFee, AirFeesInput input, int scale,
+	private BigDecimal applyMerchantFee(MerchantFee merchantFee, HkSgAirFeesInput input, int scale,
 			BigDecimal nettFare, BigDecimal tax1, BigDecimal tax2) {
 
 		BigDecimal merchantFeeAmount = null;
@@ -149,7 +150,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator<AirF
 		return merchantFeeAmount;
 	}
 
-	private BigDecimal applyDiscount(AirFeesInput input, BigDecimal commission, BigDecimal discount,
+	private BigDecimal applyDiscount(HkSgAirFeesInput input, BigDecimal commission, BigDecimal discount,
 			BigDecimal nettFare) {
 
 		BigDecimal result = discount;

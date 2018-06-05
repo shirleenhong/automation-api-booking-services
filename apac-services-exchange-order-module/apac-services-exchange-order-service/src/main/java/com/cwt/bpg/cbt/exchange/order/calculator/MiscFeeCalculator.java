@@ -10,7 +10,7 @@ import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
-@Component
+@Component("miscFeeCalculator")
 public class MiscFeeCalculator extends CommonCalculator implements Calculator<MiscFeesBreakdown, MiscFeesInput> {
 
 	@Autowired

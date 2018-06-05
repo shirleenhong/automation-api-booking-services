@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
 
 public class RebateCalculatorTest {
     private RebateCalculator rebateCalc = new RebateCalculator();
@@ -25,7 +25,7 @@ public class RebateCalculatorTest {
     @Test
     public void getIntTotalChargeShouldReturnNotNull() {
     	
-    	TransactionFeesBreakdown breakdown = new TransactionFeesBreakdown();
+    	InAirFeesBreakdown breakdown = new InAirFeesBreakdown();
     	breakdown.setTotalSellFare(new BigDecimal(100));
     	breakdown.setTotalTaxes(new BigDecimal(10));
     	breakdown.setFee(new BigDecimal(50));    	

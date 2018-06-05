@@ -1,10 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -83,16 +81,16 @@ public class OtherServiceFeesServiceTest {
 			.thenReturn(hkCalculator);
 		
 		when(hkCalculator.calculate(anyObject(), anyObject()))
-			.thenReturn(new AirFeesBreakdown());
+			.thenReturn(new HkSgAirFeesBreakdown());
 		
-		assertNotNull(service.calculateAirFee(new AirFeesInput()));
+		assertNotNull(service.calculateAirFee(new HkSgAirFeesInput()));
 	}
 
 	@Test
 	public void shouldReturnNettCost() {
 		
 		when(nettCostCalculator.calculateFee(anyObject(), anyObject()))
-			.thenReturn(new AirFeesBreakdown());
+			.thenReturn(new HkSgAirFeesBreakdown());
 		assertNotNull(service.calculateNettCost(new NettCostInput()));
 	}
 	
@@ -104,7 +102,7 @@ public class OtherServiceFeesServiceTest {
 		
 		when(tfCalculator.calculate(anyObject(), anyObject(), anyObject(), 
 				anyObject()))
-			.thenReturn(new FeesBreakdown());
+			.thenReturn(new InAirFeesBreakdown());
 		
 		when(airlineRuleService.getAirlineRule(anyString())).thenReturn(new AirlineRule());
 		when(airportService.getAirport(anyString())).thenReturn(new Airport());
@@ -114,7 +112,7 @@ public class OtherServiceFeesServiceTest {
 		when(clientService.getClient(anyString()))
 				.thenReturn(client);
 		
-		TransactionFeesInput input = new TransactionFeesInput();
+		InAirFeesInput input = new InAirFeesInput();
 		input.setCountryCode(Country.INDIA.getCode());
 		
 		assertNotNull(service.calculateAirFee(input));

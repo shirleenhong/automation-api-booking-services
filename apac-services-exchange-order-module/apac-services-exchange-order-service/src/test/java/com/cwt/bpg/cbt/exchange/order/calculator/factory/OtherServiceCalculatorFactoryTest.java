@@ -9,6 +9,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.HkAirCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.SgAirCalculator;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.HkSgAirFeesInput;
 
 public class OtherServiceCalculatorFactoryTest {
 

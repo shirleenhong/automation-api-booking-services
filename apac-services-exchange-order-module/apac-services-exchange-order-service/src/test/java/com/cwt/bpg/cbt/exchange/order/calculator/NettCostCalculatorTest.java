@@ -7,14 +7,14 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.HkSgAirFeesBreakdown;
 
 public class NettCostCalculatorTest {
 
 	@Test
 	public void shouldCalculateNettCost() {
 		NettCostCalculator calculator = new NettCostCalculator();
-		AirFeesBreakdown result = calculator.calculateFee(new BigDecimal(125), 2.5D);
+		HkSgAirFeesBreakdown result = (HkSgAirFeesBreakdown) calculator.calculateFee(new BigDecimal(125), 2.5D);
 		assertEquals(new BigDecimal(121.875), result.getNettCost());
 	}
 	
@@ -22,7 +22,7 @@ public class NettCostCalculatorTest {
 	@Test
 	public void shouldNotFailOnNullInput() {
 		NettCostCalculator calculator = new NettCostCalculator();
-		AirFeesBreakdown result = calculator.calculateFee(null, null);
+		HkSgAirFeesBreakdown result = (HkSgAirFeesBreakdown) calculator.calculateFee(null, null);
 		assertNotNull(result.getNettCost());
 	}
 

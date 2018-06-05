@@ -1,13 +1,14 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFeesInput;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
+
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
 
 public class WithVatCalculatorTest {
 	private WithVatCalculator withVatCalculator = new WithVatCalculator();
@@ -21,9 +22,9 @@ public class WithVatCalculatorTest {
 		BigDecimal totalAirlineCommission = new BigDecimal(1);
 		BigDecimal totalReturnableOr = new BigDecimal(1);
 
-		TransactionFeesInput input = new TransactionFeesInput();
+		InAirFeesInput input = new InAirFeesInput();
 		input.setBaseFare(baseFare);
-		TransactionFeesBreakdown breakdown = new TransactionFeesBreakdown();
+		InAirFeesBreakdown breakdown = new InAirFeesBreakdown();
 		breakdown.setTotalTaxes(new BigDecimal(1));
 		breakdown.setTotalGst(new BigDecimal(1));
 		breakdown.setTotalIataCommission(new BigDecimal(1));

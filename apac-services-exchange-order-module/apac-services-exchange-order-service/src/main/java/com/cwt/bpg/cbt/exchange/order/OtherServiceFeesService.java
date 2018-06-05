@@ -19,7 +19,7 @@ public class OtherServiceFeesService {
 	@Autowired
 	@Qualifier(value = "miscFeeCalculator")
 	private Calculator<MiscFeesBreakdown, MiscFeesInput> miscFeeCalculator;
-	
+
 	@Autowired
 	@Qualifier(value = "inMiscFeeCalculator")
 	private InMiscFeeCalculator inMiscFeeCalculator;
@@ -34,41 +34,43 @@ public class OtherServiceFeesService {
 
 	@Autowired
 	private OtherServiceCalculatorFactory osFactory;
-	
+
 	@Autowired
 	private TransactionFeeCalculatorFactory tfFactory;
 
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
-	
+
 	@Autowired
 	private ClientService clientService;
-	
+
 	@Autowired
 	private AirportService airportService;
-	
-	@Autowired 
+
+	@Autowired
 	private AirlineRuleService airlineRuleService;
 
 	public MiscFeesBreakdown calculateMiscFee(MiscFeesInput input) {
-		
+
 		return this.miscFeeCalculator.calculate(input, getMerchantFeePct(input));
 	}
 
 	public AirFeesBreakdown calculateAirFee(AirFeesInput input) {
-		return this.osFactory.getCalculator(input.getCountryCode()).calculate(input,
-				getMerchantFeePct(input));
-	}
+		String countryCode = input.getCountryCode();
+		if ("IN".equalsIgnoreCase(countryCode)) {
+			final Client client = getClient(input.getProfileName());
+			final int pricingId = getPricingId(input.getProfileName());
+			final InAirFeesInput inAirFeesInput = (InAirFeesInput) input;
+			final AirlineRule airlineRule = airlineRuleService.getAirlineRule(inAirFeesInput.getPlatCarrier());
+			Airport airport = getAirport(inAirFeesInput.getCityCode());
 
-	
-	public FeesBreakdown calculateAirFee(TransactionFeesInput input) {		
-		final Client client = getClient(input.getProfileName());
-		final int pricingId = getPricingId(input.getProfileName());
-		final AirlineRule airlineRule = airlineRuleService.getAirlineRule(input.getPlatCarrier());
-		
-		return this.tfFactory.getCalculator(pricingId)
-				.calculate(input, airlineRule, client, getAirport(input.getCityCode()));
-	
+			return this.tfFactory.getCalculator(pricingId)
+					.calculate(inAirFeesInput, airlineRule, client, airport);
+		}
+		else {
+			return this.osFactory.getCalculator(countryCode).calculate(input,
+					getMerchantFeePct(input));
+		}
 	}
 
 	private Airport getAirport(String cityCode) {
@@ -85,32 +87,31 @@ public class OtherServiceFeesService {
 	}
 
 	public AirFeesBreakdown calculateNettCost(NettCostInput input) {
-		return nettCostCalculator.calculateFee(input.getSellingPrice(),
-				input.getCommissionPct());
+		return nettCostCalculator.calculateFee(input.getSellingPrice(), input.getCommissionPct());
 	}
 
 	private MerchantFee getMerchantFeePct(FeesInput input) {
 
-		return exchangeOrderService.getMerchantFee(input.getCountryCode(),
-				input.getClientType(), input.getProfileName());
+		return exchangeOrderService
+				.getMerchantFee(input.getCountryCode(), input.getClientType(), input.getProfileName());
 	}
 
 	private Client getClient(String profileName) {
-		
+
 		Client client = clientService.getClient(profileName);
-		
-		if(client != null && client.isStandardMfProduct()) {
+
+		if (client != null && client.isStandardMfProduct()) {
 			return clientService.getDefaultClient();
 		}
-		
+
 		return client;
 	}
 
 	public MiscFeesBreakdown calculateNonAirFee(InMiscFeesInput input) {
-		if(Country.INDIA.getCode().equals(input.getCountryCode())) {
+		if (Country.INDIA.getCode().equals(input.getCountryCode())) {
 			return this.inMiscFeeCalculator.calculate(input, getClient(input.getProfileName()));
 		}
-		
+
 		return new MiscFeesBreakdown();
 	}
 }
