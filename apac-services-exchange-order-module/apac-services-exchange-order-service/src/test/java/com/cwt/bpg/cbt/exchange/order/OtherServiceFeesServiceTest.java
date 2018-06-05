@@ -14,7 +14,9 @@ import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.InMiscFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.tf.FeeCalculator;
@@ -51,6 +53,12 @@ public class OtherServiceFeesServiceTest {
 	
 	@Mock
 	private AirportService airportService;	
+
+	@Mock
+	private VisaFeesCalculator visaFeesCalculator;
+	
+	@Mock
+	private InMiscFeeCalculator inMiscFeeCalculator;
 	
 	@InjectMocks
 	private OtherServiceFeesService service;
@@ -110,5 +118,65 @@ public class OtherServiceFeesServiceTest {
 		input.setCountryCode(Country.INDIA.getCode());
 		
 		assertNotNull(service.calculateAirFee(input));
+	}
+
+@Test
+	public void shouldReturnVisaFees() {
+		when(visaFeesCalculator.calculate(anyObject(), anyObject())).thenReturn(new VisaFeesBreakdown());
+		
+		VisaFeesInput input = new VisaFeesInput();
+		input.setCountryCode(Country.HONG_KONG.getCode());
+		
+		assertNotNull(service.calculateVisaFees(input));
+		
+	}
+	
+	@Test
+	public void shouldReturnDefaulClient() {
+		when(tfFactory.getCalculator(anyInt())).thenReturn(tfCalculator);
+
+		when(tfCalculator.calculate(anyObject(), anyObject(), anyObject(), anyObject())).thenReturn(new FeesBreakdown());
+
+		when(airlineRuleService.getAirlineRule(anyString())).thenReturn(new AirlineRule());
+
+		Client client = new Client();
+		client.setPricingId(20);
+		client.setStandardMfProduct(true);
+		when(clientService.getClient(anyString())).thenReturn(client);
+
+		TransactionFeesInput input = new TransactionFeesInput();
+		input.setCountryCode(Country.INDIA.getCode());
+
+		assertNotNull(service.calculateAirFee(input));
+	}
+	
+	@Test
+	public void shouldReturnNonAirFeeIndia() {
+		when(inMiscFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new MiscFeesBreakdown());
+		
+		Client client = new Client();
+		client.setPricingId(20);
+		client.setStandardMfProduct(false);
+		when(clientService.getClient(anyString())).thenReturn(client);
+		
+		InMiscFeesInput input = new InMiscFeesInput();
+		input.setCountryCode(Country.INDIA.getCode());
+		
+		assertNotNull(service.calculateNonAirFee(input));
+	}
+	
+	@Test
+	public void shouldReturnNonAirFeeOther() {
+		when(inMiscFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new MiscFeesBreakdown());
+		
+		Client client = new Client();
+		client.setPricingId(20);
+		client.setStandardMfProduct(false);
+		when(clientService.getClient(anyString())).thenReturn(client);
+		
+		InMiscFeesInput input = new InMiscFeesInput();
+		input.setCountryCode(Country.HONG_KONG.getCode());
+		
+		assertNotNull(service.calculateNonAirFee(input));
 	}
 }
