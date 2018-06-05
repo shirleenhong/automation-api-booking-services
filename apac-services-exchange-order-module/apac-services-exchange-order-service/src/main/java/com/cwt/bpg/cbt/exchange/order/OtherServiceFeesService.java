@@ -110,7 +110,8 @@ public class OtherServiceFeesService {
 	public NonAirFeesBreakdown calculateNonAirFee(NonAirFeesInput input) {
 		if (Country.INDIA.getCode().equals(input.getCountryCode())) {
 			return this.inNonAirFeeCalculator.calculate((InNonAirFeesInput)input, getClient(input.getProfileName()));
-		}else{
+		}
+		else {
 			return this.hkSgNonAirFeeCalculator.calculate((HkSgNonAirFeesInput)input, getMerchantFeePct(input));
 		}
 	}
