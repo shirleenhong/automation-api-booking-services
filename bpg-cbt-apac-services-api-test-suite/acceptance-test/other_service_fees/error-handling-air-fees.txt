@@ -10,7 +10,7 @@ Resource          resources/misc-fees.txt
 Verify That Calculated Values Are Complete For Air Fees Hong Kong
     [Tags]    functional
     Generate Test Variables For Air Fees-HK    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3800|commission,300|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,350    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Response Does Not Contain Calculated Fee    element=commission
     Verify Response Does Not Contain Calculated Fee    element=discount
@@ -22,7 +22,7 @@ Verify That Calculated Values Are Complete For Air Fees Hong Kong
     Verify Response Does Not Contain Calculated Fee    element=sellingPriceInDi
     Verify Calculated Air Fees Are Returned Correctly
     Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3800|commission,300|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,true|merchant_fee_waive,true|client_type,TF|pro_name,ACCEHK|cwt_absorb,true|product_type,BT|transaction_fee,350    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Response Does Not Contain Calculated Fee    element=merchantFee
     Verify Response Does Not Contain Calculated Fee    element=gstAmount
@@ -33,7 +33,7 @@ Verify That Calculated Values Are Complete For Air Fees Hong Kong
 Verify That Calculated Values Are Complete For Air Fees Singapore
     [Tags]    functional
     Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3800|commission,300|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,350|selling_price,230    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Response Does Not Contain Calculated Fee    element=commission
     Verify Response Does Not Contain Calculated Fee    element=discount
@@ -45,7 +45,7 @@ Verify That Calculated Values Are Complete For Air Fees Singapore
     Verify Response Does Not Contain Calculated Fee    element=sellingPriceInDi
     Verify Calculated Air Fees Are Returned Correctly
     Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3800|commission,300|selling_price,230|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,true|merchant_fee_waive,true|client_type,TF|pro_name,ACCEHK|cwt_absorb,true|product_type,BT|transaction_fee,350    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Response Does Not Contain Calculated Fee    element=merchantFee
     Verify Response Does Not Contain Calculated Fee    element=gstAmount
@@ -56,353 +56,353 @@ Verify That Calculated Values Are Complete For Air Fees Singapore
 Verify That Error Is Encountered When Invalid Token Is Used
     [Tags]    functional
     Generate Test Variables For Air Fees-HK    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3800|commission,300|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,350    country=hk
-    Send Other Service Fees Post Request    token=111.222.333
+    Send Other Service Fees For Air Fees Post Request    token=111.222.333
     Verify Response Status Code Is Correct    401
     Verify Calculated Miscellaneous Fees Are Not Returned
     Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3800|commission,300|selling_price,230|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,350    country=sg
-    Send Other Service Fees Post Request    token=aaa.bbb.ccc
+    Send Other Service Fees For Air Fees Post Request    token=aaa.bbb.ccc
     Verify Response Status Code Is Correct    401
     Verify Calculated Miscellaneous Fees Are Not Returned
     Generate Test Variables For Air Fees-HK    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3800|commission,300|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,350    country=hk
-    Send Other Service Fees Post Request    token=!@#$%^&.!@#$%^&*.!@#$%^
+    Send Other Service Fees For Air Fees Post Request    token=!@#$%^&.!@#$%^&*.!@#$%^
     Verify Response Status Code Is Correct    401
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Null Token Is Used
     [Tags]    functional
     Generate Test Variables For Air Fees-HK    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3800|commission,300|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,350    country=hk
-    Send Other Service Fees Post Request    token=null
+    Send Other Service Fees For Air Fees Post Request    token=null
     Verify Response Status Code Is Correct    401
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Empty Token Is Used
     [Tags]    functional
     Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3800|commission,300|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,350|selling_price,230    country=sg
-    Send Other Service Fees Post Request    token=${EMPTY}
+    Send Other Service Fees For Air Fees Post Request    token=${EMPTY}
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When No Token Is Used
     [Tags]    functional
     Generate Test Variables For Air Fees-HK    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3800|commission,300|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,350    country=hk
-    Send Other Service Fees Post Request    token=None
+    Send Other Service Fees For Air Fees Post Request    token=None
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Apply Formula Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,xxx|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,${EMPTY}|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,None|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Client Type Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,${EMPTY}|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,NULL|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,None|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Commission Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,xxxx|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,${EMPTY}|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,None|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Commission By Percent Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,xxx|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,${EMPTY}|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,None|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Commission Percentage Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,xxxx|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,${EMPTY}|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,None|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Country Code Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8743|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=!@#$%^&*()
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8743|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=null
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8743|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=None
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid CWT Absorb Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,xxxx|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,${EMPTY}|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,None|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Discount Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,xxxx|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,${EMPTY}|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,None|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Discount By Percent Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,xxxx|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,${EMPTY}|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,None|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Discount Percentage Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,xxxx|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,${EMPTY}|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,None|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid FOP Type Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,${EMPTY}|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,null|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Merchant Fee Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,xxxx|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,${EMPTY}|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,None|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Merchant Fee Absorb Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,xxxx|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,${EMPTY}|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,None|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Merchant Fee Waive Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,xxxx|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,${EMPTY}|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,None|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Nett Fare Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,xxxx|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,${EMPTY}|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,None|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Product Type Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,None|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Profile Name Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,${EMPTY}|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,null|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Tax 1 Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,xxxx|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,${EMPTY}|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,None|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Tax 2 Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,${EMPTY}|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,None|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,Null|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,xxxx|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Transaction Fee Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,xxxx    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,${EMPTY}    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,None    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid UATP Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854|uatp_flag,xxxx    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854|uatp_flag,${EMPTY}    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854|uatp_flag,None    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
 
 Verify That Error Is Encountered When Invalid Web Fare Selected Value Is Used
     [Tags]    functional
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,xxx|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,${EMPTY}|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=hk
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
     Create Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,None|cc,CX|nett_fare,1000|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|pro_name,ACCEHK|cwt_absorb,false|product_type,BT|transaction_fee,854    country=sg
-    Send Other Service Fees Post Request
+    Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Miscellaneous Fees Are Not Returned
