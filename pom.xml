@@ -32,7 +32,7 @@
 		<mongodb.morphia.version>1.3.2</mongodb.morphia.version>
 		<springfox.swagger.version>2.8.0</springfox.swagger.version>
 		<javax.ws.rs.version>2.0.1</javax.ws.rs.version>
-		<sonar.coverage.exclusions>**/*PropertyConfig.java, **/*ApiError.java</sonar.coverage.exclusions>
+		<sonar.coverage.exclusions>**/*PropertyConfig.java, **/*ApiError.java, **/Application.java, **/Mongo*.java, **/Morphia*.java, **/*Encryptor*.java, **/model/*, **/mapper/*, **/documentation/*</sonar.coverage.exclusions>
 	</properties>
 
 	<scm>

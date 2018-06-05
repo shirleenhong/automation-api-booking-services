@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -61,6 +62,14 @@ public class AirlineRuleServiceTest {
 
 		assertNotNull(result);
 		verify(repository, times(1)).remove(airlineCode);
+	}
+	
+	@Test
+	public void canGetAirlineWithAirlineCode() {
+		when(service.getAirlineRule(anyString())).thenReturn(new AirlineRule());
+		
+		assertNotNull(service.getAirlineRule(anyString()));
+		verify(repository, times(1)).get(anyString());
 	}
 
 }

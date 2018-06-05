@@ -66,7 +66,7 @@ public class InMiscFeeCalculatorTest {
 
 		client = new Client();
 		Bank bank = new Bank();
-		bank.setCcNumberPrefix("1234");
+		bank.setCcNumberPrefix("12345");
 		bank.setStandard(false);
 		bank.setPercentage(2D);
 		ProductMerchantFee pf = new ProductMerchantFee();
@@ -208,6 +208,30 @@ public class InMiscFeeCalculatorTest {
 		assertThat(result.getNettCostGst(), is(nullValue()));
 	}
 
+	@Test
+	public void standardCCAcctTypeNotEqual() {
+		input.setAcctType("Visas");
+		input.setProfileName("profileName");
+
+		client = new Client();
+		ProductMerchantFee pf = new ProductMerchantFee();
+		pf.setSubjectToMf(false);
+		pf.setProductCode("01");
+		client.setMfProducts(Arrays.asList(pf));
+
+		CreditCardVendor cc = new CreditCardVendor();
+		cc.setPercentage(2D);
+		cc.setStandard(true);
+		cc.setVendorName("Visa");
+		client.setMfCcs(Arrays.asList(cc));
+		client.setApplyMfBank(false);
+		client.setApplyMfCc(true);
+
+		MiscFeesBreakdown result = calculator.calculate(input, client);
+
+		assertNotNull(result);
+	}
+	
 	@Test
 	public void nullInput() {
 
