@@ -59,8 +59,8 @@ public class FeeCalculator extends CommonCalculator {
 		}		
 		
 		breakdown.setTotalTaxes(safeValue(input.getYqTax())
-									.add(input.getTax1())
-									.add(input.getTax2()));
+									.add(safeValue(input.getTax1()))
+									.add(safeValue(input.getTax2())));
 		
 		breakdown.setTotalGst(gstAmount);
 		breakdown.setTotalSellingFare(getTotalFare(input));
@@ -148,25 +148,25 @@ public class FeeCalculator extends CommonCalculator {
 		if(tf != null) {
 		
 			if("F".equals(tf.getOperator())) {
-				result = tf.getAmount().add(tf.getExtraAmount());
+				result = safeValue(tf.getAmount()).add(safeValue(tf.getExtraAmount()));
 			} 
 			else if("M".equals(tf.getOperator())) {
-				result = calculatePercentage(baseAmount, tf.getPerAmount()).add(tf.getExtraAmount());
+				result = calculatePercentage(baseAmount, tf.getPerAmount()).add(safeValue(tf.getExtraAmount()));
 			}
 			else if("D".equals(tf.getOperator())) {
 				result = tf.getAmount()
-							.divide(new BigDecimal(100).subtract(percentDecimal(tf.getPerAmount())))
-							.add(tf.getExtraAmount())
-							.subtract(baseAmount);
+							.divide(new BigDecimal(100).subtract(percentDecimal(safeValue(tf.getPerAmount()))))
+							.add(safeValue(tf.getExtraAmount()))
+							.subtract(safeValue(baseAmount));
 			}
 			
-			if(tf.getMaxAmount().compareTo(BigDecimal.ZERO) > 0 
-				&& result.compareTo(tf.getMaxAmount()) > 0) {
+			if(safeValue(tf.getMaxAmount()).compareTo(BigDecimal.ZERO) > 0 
+				&& result.compareTo(safeValue(tf.getMaxAmount())) > 0) {
 				 result = tf.getMaxAmount();
 			}
 			
-			if(result.compareTo(tf.getMinAmount()) < 0){
-				result = tf.getMinAmount();
+			if(result.compareTo(safeValue(tf.getMinAmount())) < 0){
+				result = safeValue(tf.getMinAmount());
 			}			
 		}
 		

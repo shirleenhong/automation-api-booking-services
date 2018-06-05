@@ -147,7 +147,7 @@ public class MigrationService {
 		LOGGER.info("Started clients migration...");
 
 		Map<Integer, List<ProductMerchantFee>> productsMap = getProductMap(clientDAO.getProducts());
-		Map<Integer, List<CreditCardVendor>> vendorsMap = getVendoMap(clientDAO.getVendors());
+		Map<Integer, List<CreditCardVendor>> ccsMap = getVendoMap(clientDAO.getCcs());
 		Map<Integer, List<Bank>> banksMap = getBankMap(clientDAO.getBanks());
 		Map<Integer, Map<String, ClientPricing>> clientPricingMaps = getClientPricingMaps(
 				clientDAO.getClientPricings());
@@ -167,7 +167,7 @@ public class MigrationService {
 
 		updateClients(clients,
 				productsMap,
-				vendorsMap,
+				ccsMap,
 				banksMap,
 				clientPricingMaps,
 				transactionFeeByPNR,
@@ -278,8 +278,9 @@ public class MigrationService {
 
 		for (Client client : clients) {
 
-			if (productsMap.containsKey(client.getClientId()) || vendorsMap.containsKey(client.getClientId())
-					|| banksMap.containsKey(client.getClientId())) {
+			if (productsMap.containsKey(client.getClientId()) 
+				|| vendorsMap.containsKey(client.getClientId())
+				|| banksMap.containsKey(client.getClientId())) {
 
 				client.setMfProducts(productsMap.get(client.getClientId()));
 				client.setMfCcs(vendorsMap.get(client.getClientId()));
