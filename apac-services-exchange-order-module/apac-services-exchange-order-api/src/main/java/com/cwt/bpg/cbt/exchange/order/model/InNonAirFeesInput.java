@@ -7,13 +7,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class InMiscFeesInput implements Serializable
+public class InNonAirFeesInput extends NonAirFeesInput
 {
 	private static final long serialVersionUID = 7271039286429340584L;
 
 	private String fopType;
-	private String countryCode;
-	
 	private boolean commissionByPercent;
 
 	@NotNull
@@ -29,9 +27,6 @@ public class InMiscFeesInput implements Serializable
 	private InProduct product;
 	private String acctType;
 	private String fopNumber;
-	
-	@NotEmpty
-	private String profileName;
 	
 	public String getAcctType() {
 		return acctType;
@@ -103,22 +98,6 @@ public class InMiscFeesInput implements Serializable
 
 	public void setFopType(String fopType) {
 		this.fopType = fopType;
-	}
-
-	public String getProfileName() {
-		return profileName;
-	}
-
-	public void setProfileName(String profileName) {
-		this.profileName = profileName;
-	}
-
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
 	}
 
 	public String getFopNumber() {

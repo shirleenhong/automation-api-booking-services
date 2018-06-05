@@ -18,9 +18,9 @@ public class InMiscFeeCalculator extends CommonCalculator {
 	private ScaleConfig scaleConfig;
 	private static final int BTC_FOP_MODE = 3;
 
-	public MiscFeesBreakdown calculate(InMiscFeesInput input, Client client) {
+	public NonAirFeesBreakdown calculate(InNonAirFeesInput input, Client client) {
 
-		MiscFeesBreakdown result = new MiscFeesBreakdown();
+		NonAirFeesBreakdown result = new NonAirFeesBreakdown();
 
 		if (input == null || client == null) {
 			return result;
@@ -81,7 +81,7 @@ public class InMiscFeeCalculator extends CommonCalculator {
 		return result;
 	}
 
-	private Double calculateMfPercent(InMiscFeesInput input, Client client) {
+	private Double calculateMfPercent(InNonAirFeesInput input, Client client) {
 
 		Double mfPercent = client.getMerchantFee();
 

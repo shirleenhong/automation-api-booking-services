@@ -2,7 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
 
-public class MiscFeesBreakdown extends FeesBreakdown {
+public class NonAirFeesBreakdown extends FeesBreakdown {
 
 	private static final long serialVersionUID = 3847345778240245241L;
 

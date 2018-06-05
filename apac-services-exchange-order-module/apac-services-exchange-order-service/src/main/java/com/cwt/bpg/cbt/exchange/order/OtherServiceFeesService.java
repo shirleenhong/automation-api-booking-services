@@ -18,7 +18,7 @@ public class OtherServiceFeesService {
 
 	@Autowired
 	@Qualifier(value = "miscFeeCalculator")
-	private Calculator<MiscFeesBreakdown, MiscFeesInput> miscFeeCalculator;
+	private Calculator<NonAirFeesBreakdown, HkSgNonAirFeesInput> miscFeeCalculator;
 
 	@Autowired
 	@Qualifier(value = "inMiscFeeCalculator")
@@ -50,7 +50,7 @@ public class OtherServiceFeesService {
 	@Autowired
 	private AirlineRuleService airlineRuleService;
 
-	public MiscFeesBreakdown calculateMiscFee(MiscFeesInput input) {
+	public NonAirFeesBreakdown calculateMiscFee(HkSgNonAirFeesInput input) {
 
 		return this.miscFeeCalculator.calculate(input, getMerchantFeePct(input));
 	}
@@ -107,11 +107,11 @@ public class OtherServiceFeesService {
 		return client;
 	}
 
-	public MiscFeesBreakdown calculateNonAirFee(InMiscFeesInput input) {
+	public NonAirFeesBreakdown calculateNonAirFee(NonAirFeesInput input) {
 		if (Country.INDIA.getCode().equals(input.getCountryCode())) {
-			return this.inMiscFeeCalculator.calculate(input, getClient(input.getProfileName()));
+			return this.inMiscFeeCalculator.calculate((InNonAirFeesInput)input, getClient(input.getProfileName()));
+		}else{
+			return this.miscFeeCalculator.calculate((HkSgNonAirFeesInput)input, getMerchantFeePct(input));
 		}
-
-		return new MiscFeesBreakdown();
 	}
 }

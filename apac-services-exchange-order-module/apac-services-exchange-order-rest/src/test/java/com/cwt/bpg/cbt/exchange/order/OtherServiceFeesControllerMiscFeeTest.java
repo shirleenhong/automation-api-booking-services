@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import com.cwt.bpg.cbt.exchange.order.model.HkSgNonAirFeesInput;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -15,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.cwt.bpg.cbt.exchange.order.model.MiscFeesInput;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -45,14 +45,14 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnFeesBreakdown() throws Exception {
 
-		MiscFeesInput input = new MiscFeesInput();
+		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
 		
 		input.setFopType("CX");	  
 	    input.setClientType("CT");
 	    input.setGstPercent(2D);
 	    input.setProfileName("PN");
 	    
-        mockMvc.perform(post("/other-service-fees/misc-fees")
+        mockMvc.perform(post("/other-service-fees/non-air-fees")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isOk());
@@ -62,20 +62,20 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnBadRequestOnEmptyFOPType() throws Exception {
 						
-		MiscFeesInput input = new MiscFeesInput();
+		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
 		
 	    input.setClientType("CT");
 	    input.setGstPercent(2D);
 	    input.setProfileName("PN");
 	    
-	    mockMvc.perform(post("/other-service-fees/misc-fees")
+	    mockMvc.perform(post("/other-service-fees/non-air-fees")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isBadRequest());
 		
 		input.setFopType("");
 		
-		mockMvc.perform(post("/other-service-fees/misc-fees")
+		mockMvc.perform(post("/other-service-fees/non-air-fees")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isBadRequest());
@@ -84,20 +84,20 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnBadRequestOnEmptyClientType() throws Exception {
 						
-		MiscFeesInput input = new MiscFeesInput();
+		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
 		
 	    input.setFopType("CX");
 	    input.setGstPercent(2D);
 	    input.setProfileName("PN");
 	    
-	    mockMvc.perform(post("/other-service-fees/misc-fees")
+	    mockMvc.perform(post("/other-service-fees/non-air-fees")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isBadRequest());
 		
 	    input.setClientType("");
 		
-		mockMvc.perform(post("/other-service-fees/misc-fees")
+		mockMvc.perform(post("/other-service-fees/non-air-fees")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isBadRequest());
@@ -106,12 +106,13 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnBadRequestOnEmptyGst() throws Exception {
 						
-		MiscFeesInput input = new MiscFeesInput();
+		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
 		
 	    input.setFopType("CX");
 	    input.setProfileName("PN");
+        input.setCountryCode("HK");
 	    
-	    mockMvc.perform(post("/other-service-fees/misc-fees")
+	    mockMvc.perform(post("/other-service-fees/non-air-fees")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isBadRequest());
@@ -121,19 +122,19 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnBadRequestOnEmptyProdName() throws Exception {
 						
-		MiscFeesInput input = new MiscFeesInput();
+		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
 		
 	    input.setFopType("CX");
 	    input.setGstPercent(2D);
 	    
-	    mockMvc.perform(post("/other-service-fees/misc-fees")
+	    mockMvc.perform(post("/other-service-fees/non-air-fees")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isBadRequest());
 		
 	    input.setProfileName("");
 		
-		mockMvc.perform(post("/other-service-fees/misc-fees")
+		mockMvc.perform(post("/other-service-fees/non-air-fees")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isBadRequest());
