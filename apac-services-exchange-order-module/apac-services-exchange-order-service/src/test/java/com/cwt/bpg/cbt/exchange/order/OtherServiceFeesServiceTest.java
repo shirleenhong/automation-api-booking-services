@@ -166,7 +166,7 @@ public class OtherServiceFeesServiceTest {
 	@Test
 	public void shouldReturnNonAirFeeOther() {
 		when(inNonAirFeeCalculator.calculate(anyObject(), anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
-
+		
 		Client client = new Client();
 		client.setPricingId(20);
 		client.setStandardMfProduct(false);

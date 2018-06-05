@@ -81,7 +81,9 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 		return result;
 	}
 
-	private Double calculateMfPercent(InNonAirFeesInput input, Client client, Client defaultClient) {
+	private Double calculateMfPercent(InNonAirFeesInput input, 
+			Client client, 
+			Client defaultClient) {
 
 		Double mfPercent = client.getMerchantFee();
 	

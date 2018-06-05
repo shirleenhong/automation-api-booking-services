@@ -311,7 +311,7 @@ public class InNonAirFeeCalculatorTest {
 
 	@Test
 	public void btcFop() {
-		// input.setProduct(null);
+		
 		input.setFopMode(3);
 		input.setProfileName("profileName");
 
