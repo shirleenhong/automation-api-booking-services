@@ -168,7 +168,7 @@ public class ClientDAOImpl {
 		return resultList;
 	}
 
-	public List<CreditCardVendor> getVendors() {
+	public List<CreditCardVendor> getCcs() {
 		
 		List<CreditCardVendor> resultList = new ArrayList<>();
 
@@ -228,7 +228,7 @@ public class ClientDAOImpl {
 	
 		List<Bank> resultList = new ArrayList<>();
 
-		String sql = "Select * from tblMFByCC";
+		String sql = "Select * from tblMFByBank";
 
 		Connection conn = null;
 		PreparedStatement ps = null;
