@@ -1,20 +1,20 @@
 package com.cwt.bpg.cbt.services.rest.filter;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-import org.slf4j.MDC;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.MDC;
 
 public class ResponseWrapperTest {
 
@@ -32,6 +32,7 @@ public class ResponseWrapperTest {
 	public void canReturnOuputStream() throws IOException {
         ServletOutputStream outputStream = wrapper.getOutputStream();
 		
+        outputStream.setWriteListener(null);
 		assertNotNull(outputStream);
 		assertFalse(outputStream.isReady());
 	}
@@ -66,4 +67,5 @@ public class ResponseWrapperTest {
 		assertNotNull(wrapper.getHeader(ResponseWrapper.EXECUTION_TIME_KEY));
 
 	}
+	
 }
