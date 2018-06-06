@@ -13,16 +13,16 @@ public class ApiError {
 
 	public ApiError(HttpStatus status, String message, List<String> errors) {
 		super();
-		this.status = status;
-		this.message = message;
-		this.errors = errors;
+		setStatus(status);
+		setMessage(message);
+		setErrors(errors);
 	}
 
 	public ApiError(HttpStatus status, String message, String error) {
 		super();
-		this.status = status;
-		this.message = message;
-		errors = Arrays.asList(error);
+		setStatus(status);
+		setMessage(message);
+		setErrors(Arrays.asList(error));
 	}
 
 	public HttpStatus getStatus() {
