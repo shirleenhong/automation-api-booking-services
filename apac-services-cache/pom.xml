@@ -11,7 +11,7 @@
 	<groupId>com.cwt.bpg.cbt</groupId>
 	<artifactId>apac-services-cache</artifactId>
 
-	<name>apac-services-exception-cache</name>
+	<name>apac-services-cache</name>
 
 	<dependencies>
 		<dependency>
