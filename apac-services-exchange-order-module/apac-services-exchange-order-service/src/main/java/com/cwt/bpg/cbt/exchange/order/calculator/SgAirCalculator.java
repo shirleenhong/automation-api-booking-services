@@ -10,21 +10,20 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
-public class SgAirCalculator extends CommonCalculator implements Calculator<AirFeesBreakdown, AirFeesInput> {
+public class SgAirCalculator extends CommonCalculator implements Calculator<AirFeesBreakdown, HkSgAirFeesInput> {
 
 	@Autowired
 	private ScaleConfig scaleConfig;
 
 	@Override
-	public AirFeesBreakdown calculate(AirFeesInput airFeesInput, MerchantFee merchantFeeObj) {
+	public AirFeesBreakdown calculate(HkSgAirFeesInput input, MerchantFee merchantFeeObj) {
 
         HkSgAirFeesBreakdown result = new HkSgAirFeesBreakdown();
 
-		if (airFeesInput == null) {
+		if (input == null) {
 			return result;
 		}
 
-		HkSgAirFeesInput input = (HkSgAirFeesInput) airFeesInput;
 		int scale = scaleConfig.getScale(input.getCountryCode());
 
 		BigDecimal totalSellingFare;
