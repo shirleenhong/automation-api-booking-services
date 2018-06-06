@@ -153,9 +153,9 @@ Verify Client Pricings Are Correctly Retrieved
     ${client_pricings_list_length}    Get Length    ${client_pricings_list}
     : FOR    ${index}    IN RANGE    ${client_pricings_list_length}
     \    ${item_trip_type}    Get Json Value As String    ${response.content}    $.clientPricings.[${index}].tripType
-    \    ${item_cmpid}    Get Json Value As String    ${response.content}    $.clientPricings.[${index}].cmpid
-    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].group    ${${item_cmpid}_${item_trip_type}_client_pricings_group__value}
-    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].feeOption    ${${item_cmpid}_${item_trip_type}_client_pricings_fee_option__value}
+    #    ${item_client_id}    Get Json Value As String    ${response.content}    $.clientPricings.[${index}].clientId
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].group    ${${client_id}_${item_trip_type}_client_pricings_group__value}
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].feeOption    ${${client_id}_${item_trip_type}_client_pricings_fee_option__value}
 
 Verify Client Pricings Transaction Fees Are Correctly Retrieved
     ${client_pricings_list_length}    Get Length    ${client_pricings_list}
