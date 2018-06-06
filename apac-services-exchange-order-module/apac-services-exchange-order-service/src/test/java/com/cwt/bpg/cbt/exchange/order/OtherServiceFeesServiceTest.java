@@ -33,7 +33,7 @@ public class OtherServiceFeesServiceTest {
 	private Calculator<NonAirFeesBreakdown, HkSgNonAirFeesInput> hkSgNonAirFeeCalculator;
 
 	@Mock
-	private Calculator<AirFeesBreakdown, AirFeesInput> hkCalculator;
+	private Calculator<AirFeesBreakdown, HkSgAirFeesInput> hkCalculator;
 
 	@Mock
 	private FeeCalculator tfCalculator;
