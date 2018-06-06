@@ -18,9 +18,9 @@ import com.mongodb.WriteResult;
  * <p> DataType -> data type of unique key in db
  * 
  * @param <T> 
- * @param <DataType>
+ * @param <D>
  */
-class CommonRepository<T, DataType> {
+class CommonRepository<T, D> {
 
 	//TODO Adjust to support get by Id and get by field?
 	@Autowired
@@ -39,7 +39,7 @@ class CommonRepository<T, DataType> {
 	}
     
     // Basic get based on Key Column
-    T get(DataType criteria) {
+    T get(D criteria) {
     	return morphia.getDatastore().createQuery(typeClass)
     			.field(keyColumn)
     			.equal(criteria)
@@ -47,7 +47,7 @@ class CommonRepository<T, DataType> {
     }
 
 	T put(T object) {
-		final DataType keyValue = getKeyValue(object);
+		final D keyValue = getKeyValue(object);
 		if (keyValue != null)
         {
             remove(keyValue);
@@ -59,7 +59,7 @@ class CommonRepository<T, DataType> {
 		return object;
 	}
 
-	String remove(DataType keyValue) {
+	String remove(D keyValue) {
 		final Datastore datastore = morphia.getDatastore();
 		final Query<T> query = datastore.createQuery(typeClass).field(keyColumn).equal(keyValue);
 
@@ -71,12 +71,12 @@ class CommonRepository<T, DataType> {
 	}
 
 	@SuppressWarnings("unchecked")
-	private DataType getKeyValue(T object) {
-		DataType keyValue = null;
+	private D getKeyValue(T object) {
+		D keyValue = null;
 		try {
 			Field keyField = typeClass.getDeclaredField(keyColumn);
 			keyField.setAccessible(true);
-			keyValue = (DataType) keyField.get(object);
+			keyValue = (D) keyField.get(object);
 		}
 		catch (NoSuchFieldException | IllegalAccessException e) {
 			LoggerFactory.getLogger(typeClass).error("Unable to get value of key column.", e);

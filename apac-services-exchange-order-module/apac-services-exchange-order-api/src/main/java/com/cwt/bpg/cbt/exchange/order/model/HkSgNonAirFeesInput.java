@@ -24,28 +24,20 @@ public class HkSgNonAirFeesInput extends NonAirFeesInput {
 		this.gstPercent = 0d;
 	}
 
-	public String getFopType() {
-		return fopType;
-	}
-
-	public void setFopType(String fopType) {
-		this.fopType = fopType;
-	}
-
-	public BigDecimal getSellingPrice() {
-		return sellingPrice;
-	}
-
-	public void setSellingPrice(BigDecimal sellingPrice) {
-		this.sellingPrice = sellingPrice;
-	}
-
 	public boolean isMerchantFeeWaive() {
 		return isMerchantFeeWaive;
 	}
 
 	public void setMerchantFeeWaive(boolean merchantFeeWaive) {
 		isMerchantFeeWaive = merchantFeeWaive;
+	}
+	
+	public String getFopType() {
+		return fopType;
+	}
+
+	public void setFopType(String fopType) {
+		this.fopType = fopType;
 	}
 
 	public boolean isGstAbsorb() {
@@ -56,6 +48,14 @@ public class HkSgNonAirFeesInput extends NonAirFeesInput {
 		this.isGstAbsorb = isGstAbsorb;
 	}
 
+	public BigDecimal getSellingPrice() {
+		return sellingPrice;
+	}
+
+	public void setSellingPrice(BigDecimal sellingPrice) {
+		this.sellingPrice = sellingPrice;
+	}
+	
 	public boolean isMerchantFeeAbsorb() {
 		return isMerchantFeeAbsorb;
 	}

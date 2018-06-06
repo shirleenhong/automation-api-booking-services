@@ -31,19 +31,17 @@ public class LoggingFilter extends OncePerRequestFilter {
 
 	private static final AtomicLong id = new AtomicLong(0);	
 
-    private static final Set<String> READABLE_APP_MEDIA_TYPES = new HashSet<String>()
-    {
-        private static final long serialVersionUID = 1L;
-        {
-            add("text");
-            add(MediaType.APPLICATION_ATOM_XML.toString());
-            add(MediaType.APPLICATION_FORM_URLENCODED.toString());
-            add(MediaType.APPLICATION_JSON.toString());
-            add(MediaType.APPLICATION_XHTML_XML.toString());
-            add(MediaType.APPLICATION_XML.toString());
-        }
-    };
-	
+	private static final Set<String> READABLE_APP_MEDIA_TYPES = new HashSet<>();
+
+	static {
+		READABLE_APP_MEDIA_TYPES.add("text");
+		READABLE_APP_MEDIA_TYPES.add(MediaType.APPLICATION_ATOM_XML.toString());
+		READABLE_APP_MEDIA_TYPES.add(MediaType.APPLICATION_FORM_URLENCODED.toString());
+		READABLE_APP_MEDIA_TYPES.add(MediaType.APPLICATION_JSON.toString());
+		READABLE_APP_MEDIA_TYPES.add(MediaType.APPLICATION_XHTML_XML.toString());
+		READABLE_APP_MEDIA_TYPES.add(MediaType.APPLICATION_XML.toString());
+	}
+
 	protected static final Logger LOGGER = LoggerFactory.getLogger(LoggingFilter.class);
 
 	@Override

@@ -1,7 +1,10 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
@@ -234,6 +237,76 @@ public class SgAirCalculatorTest {
 		assertThat(afb.getNettCost().doubleValue(), is(equalTo(285D)));
 		assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(73D)));
 		assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(365D)));
+	}
+	
+	@Test
+	public void shouldCalculateWithApplyFormulaAndProductTypeCTAndFOPTypeCXIncMerFee2() {
+
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
+		MerchantFee merchantFee = new MerchantFee();
+		input.setApplyFormula(true);
+		input.setNettFare(bigDecimal("300"));
+		input.setSellingPrice(bigDecimal("200"));
+		input.setTax1(bigDecimal("23"));
+		input.setTax2(bigDecimal("14"));
+		input.setMerchantFee(bigDecimal("30"));
+		input.setCommissionByPercent(false);
+		input.setCommission(bigDecimal("15"));
+		input.setDiscountByPercent(false);
+		input.setDiscount(bigDecimal("45.00"));
+		input.setProductType("CT");
+		input.setClientType("TF");
+		input.setFopType("CXT");
+		input.setCwtAbsorb(true);
+		input.setMerchantFeeWaive(false);
+		merchantFee.setIncludeTransactionFee(false);
+		merchantFee.setMerchantFeePercent(Double.parseDouble("25"));
+		input.setTransactionFee(bigDecimal("75"));
+		input.setCountryCode("SG");
+
+		HkSgAirFeesBreakdown afb = (HkSgAirFeesBreakdown) calculator.calculate(input,
+				merchantFee);
+
+		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
+		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
+		assertThat(afb.getNettCost().doubleValue(), is(equalTo(285D)));
+		assertNull(afb.getMerchantFee());
+		assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(292D)));
+	}
+	
+	@Test
+	public void shouldCalculateWithApplyFormulaAndProductTypeCTAndFOPTypeCXIncMerFee3() {
+
+		HkSgAirFeesInput input = new HkSgAirFeesInput();
+		MerchantFee merchantFee = new MerchantFee();
+		input.setApplyFormula(true);
+		input.setNettFare(bigDecimal("300"));
+		input.setSellingPrice(bigDecimal("200"));
+		input.setTax1(bigDecimal("23"));
+		input.setTax2(bigDecimal("14"));
+		input.setMerchantFee(bigDecimal("30"));
+		input.setCommissionByPercent(false);
+		input.setCommission(bigDecimal("15"));
+		input.setDiscountByPercent(false);
+		input.setDiscount(bigDecimal("45.00"));
+		input.setProductType("CT");
+		input.setClientType("TF");
+		input.setFopType("CXT");
+		input.setCwtAbsorb(false);
+		input.setMerchantFeeWaive(true);
+		merchantFee.setIncludeTransactionFee(false);
+		merchantFee.setMerchantFeePercent(Double.parseDouble("25"));
+		input.setTransactionFee(bigDecimal("75"));
+		input.setCountryCode("SG");
+
+		HkSgAirFeesBreakdown afb = (HkSgAirFeesBreakdown) calculator.calculate(input,
+				merchantFee);
+
+		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
+		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
+		assertThat(afb.getNettCost().doubleValue(), is(equalTo(285D)));
+		assertNull(afb.getMerchantFee());
+		assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(292D)));
 	}
 
 	private BigDecimal bigDecimal(String amount) {
