@@ -1,90 +1,164 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Ignore;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.Airport;
-import com.cwt.bpg.cbt.exchange.order.model.Client;
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.Product;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 
-@Ignore
 public class FeeCalculatorTest {
 
-	private FeeCalculator calculator = new FeeCalculator();
+	private FeeCalculator calculator;
+	private InAirFeesInput input;
+	private InAirFeesBreakdown breakdown;
+	private BigDecimal baseFare;
+	private BigDecimal yqTax;
+	private BigDecimal airlineCommission;
+	private BigDecimal totalIataCommission;
+	private BigDecimal totalOverheadCommission;
+	private BigDecimal tax1;
+	private BigDecimal tax2;
+	private BigDecimal totalSellFare;
+	private BigDecimal totalDiscount;
+	private BigDecimal totalTaxes;
+	private BigDecimal totalGst;
+	private Double gst;
+	private Double airlineCommissionPercent;
+	private Double clientDiscountPercent;
+	private Double ot1;
+	private Double ot2;
+
 	
+	@Before
+	public void setup() {
+		calculator = new FeeCalculator();
+		breakdown = new InAirFeesBreakdown();
+		input = new InAirFeesInput();
+		baseFare = new BigDecimal(5);
+		yqTax = new BigDecimal(5);
+		airlineCommission = new BigDecimal(5);
+		totalIataCommission = new BigDecimal(5);
+		gst = new Double(30);
+		airlineCommissionPercent = new Double(5);
+		clientDiscountPercent = new Double(5);
+		ot1 = new Double(5);
+		ot2 = new Double(5);
+	}
 	@Test
 	public void shouldCalculate() {
 		Client client = new Client();
-		InAirFeesInput input = new InAirFeesInput();
-		calculator.calculate(input, null, client, new Airport(), new Product());
+		AirlineRule airlineRule = new AirlineRule();
+		InProduct product = new InProduct();
+		List<ClientPricing> clientPricings = new ArrayList<>();
+		ClientPricing clientPricing = new ClientPricing();
+		List<TransactionFee> transactionFees = new ArrayList<>();
+		TransactionFee transactionFee = new TransactionFee();
+		
+		product.setGst(gst);
+		product.setOt1(ot1);
+		product.setOt2(ot2);
+		
+		input.setGstEnabled(true);
+		input.setProduct(product);
+		input.setCommissionEnabled(true);
+		input.setOverheadCommissionEnabled(true);
+		input.setMarkupEnabled(true);
+		input.setBaseFare(baseFare);
+		input.setYqTax(yqTax);
+		input.setAirlineCommission(airlineCommission);
+		input.setDiscountEnabled(true);
+		input.setTax1(tax1);
+		input.setTax2(tax2);
+		input.setTripType("I");
+		input.setAirlineCommissionPercent(airlineCommissionPercent);
+		input.setFeeOverride(false);
+		
+		breakdown.setTotalIataCommission(totalIataCommission);
+		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		breakdown.setTotalOverheadCommission(totalOverheadCommission);
+		breakdown.setTotalSellFare(totalSellFare);
+		breakdown.setTotalDiscount(totalDiscount);
+		breakdown.setTotalTaxes(totalTaxes);
+		breakdown.setTotalGst(totalGst);
+		
+		airlineRule.setIncludeYqCommission(false);
+		
+		clientPricing.setFeeOption("P");
+		clientPricing.setTripType("I");
+		
+		transactionFee.setTerritoryCodes(new ArrayList<>());
+		transactionFees.add(transactionFee);
+		clientPricing.setTransactionFees(transactionFees);
+		clientPricings.add(clientPricing);
+
+		client.setExemptTax(true);
+		client.setLccSameAsInt(true);
+		client.setIntDdlFeeApply("N");
+		client.setClientPricings(clientPricings);
+
+		calculator.calculate(input, airlineRule, client, new Airport(), new InProduct());
 	}
 
-	@Test
-	public void shouldGetTotalAirCommission() {
-		fail("Not yet implemented");
-	}
+
+
 
 	@Test
-	public void shouldGetTotalMarkup() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void shouldGetTotalDiscount() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void shouldGetTotalFare() {
-		fail("Not yet implemented");
+	public void shouldGetTotalDiscountNotInternational() {
+		input.setTripType("D");
+		BigDecimal totalDiscount = calculator.getTotalDiscount(input, breakdown);
+		
+		assertEquals(new BigDecimal("0.0"), totalDiscount);
 	}
 
 	@Test
 	public void shouldGetTotalOverheadCommission() {
-		fail("Not yet implemented");
+		input.setTripType("D");
+		BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission(input);
+		
+		assertNull(totalOverheadCommission);
 	}
 
 	@Test
 	public void shouldGetTotalOrCom2() {
-		fail("Not yet implemented");
+		input.setTripType("I");
+		input.setAirlineOrCommission(airlineCommission);
+		input.setReturnOrCommissionPercent(airlineCommissionPercent);
+		BigDecimal totalOrCom2 = calculator.getTotalOrCom2(input);
+		
+		assertEquals(new BigDecimal(0.25), totalOrCom2);
+		
+	}
+	
+	@Test
+	public void shouldGetTotalOrCom2Null() {
+		input.setTripType("D");
+		input.setAirlineOrCommission(airlineCommission);
+		input.setReturnOrCommissionPercent(airlineCommissionPercent);
+		
+		assertNull(calculator.getTotalOrCom2(input));
+		
 	}
 
-	@Test
-	public void shouldGetMerchantFee() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void shouldGetMfOnTf() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void shouldGetTotalNettFare() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void shouldGetTotalFee() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void shouldGetTotalSellingFare() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void shouldGetTotalCharge() {
-		fail("Not yet implemented");
+		input.setBaseFare(baseFare);
+		BigDecimal totalNetFare = calculator.getTotalNettFare(input);
+		
+		assertEquals(new BigDecimal(5), totalNetFare);
 	}
 
 	@Test
 	public void shouldGetDdlFeeApply() {
-		fail("Not yet implemented");
+		Boolean ddlFeeApply = calculator.getDdlFeeApply();
+		assertTrue(ddlFeeApply);
 	}
 
 }

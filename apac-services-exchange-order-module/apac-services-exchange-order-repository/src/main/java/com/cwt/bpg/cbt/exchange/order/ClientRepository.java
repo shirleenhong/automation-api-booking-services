@@ -7,10 +7,10 @@ import com.cwt.bpg.cbt.exchange.order.model.Client;
 @Repository
 public class ClientRepository extends CommonRepository<Client, Integer> {
 	
-	private static final String _ID = "clientId";
+	private static final String ID = "clientId";
 
 	public ClientRepository() {
-		super(Client.class, _ID);
+		super(Client.class, ID);
 	}
 
 	public Client getClient(String profileName) {

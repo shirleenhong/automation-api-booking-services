@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -132,6 +133,48 @@ public class ProductsRepositoryTest {
 		Mockito.when(query.get()).thenReturn(null);
 				
 		List<Product> products = repository.getProducts("IN");
+
+		assertNotNull(products);
+		assertEquals(0, products.size());
+
+	}
+	
+	@Test
+	public void shouldGetNullINProductList() {
+
+		Query query = Mockito.mock(Query.class);
+		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
+				
+		when(morphia.getDatastore()).thenReturn(dataStore);
+		when(morphia.getDatastore().createQuery(InProductList.class)).thenReturn(query);
+		when(morphia.getDatastore().createQuery(InProductList.class).field(Mockito.anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equal("IN")).thenReturn(query);
+		Mockito.when(query.get()).thenReturn(null);
+		when(morphia.getDatastore().createQuery(InProductList.class)
+				.field("countryCode").equal("IN").get()).thenReturn(null);
+				
+		List<Product> products = repository.getProducts("IN");
+
+		assertNotNull(products);
+		assertEquals(0, products.size());
+
+	}
+	
+	@Test
+	public void shouldGetNullHKProductList() {
+
+		Query query = Mockito.mock(Query.class);
+		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
+
+		when(morphia.getDatastore()).thenReturn(dataStore);
+		when(morphia.getDatastore().createQuery(HkSgProductList.class)).thenReturn(query);
+		when(morphia.getDatastore().createQuery(HkSgProductList.class).field(Mockito.anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equal("HK")).thenReturn(query);
+		Mockito.when(query.get()).thenReturn(null);
+		when(morphia.getDatastore().createQuery(HkSgProductList.class).field("countryCode").equal("HK").get())
+				.thenReturn(null);
+
+		List<Product> products = repository.getProducts("HK");
 
 		assertNotNull(products);
 		assertEquals(0, products.size());
