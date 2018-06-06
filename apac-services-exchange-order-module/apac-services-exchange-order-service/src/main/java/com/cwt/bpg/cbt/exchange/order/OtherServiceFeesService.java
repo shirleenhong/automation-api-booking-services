@@ -78,7 +78,7 @@ public class OtherServiceFeesService {
 					.calculate(inAirFeesInput, airlineRule, client, airport, airproduct);
 		}
 		else {
-			return this.osFactory.getCalculator(countryCode).calculate(input, getMerchantFeePct(input));
+			return this.osFactory.getCalculator(countryCode).calculate((HkSgAirFeesInput) input, getMerchantFeePct(input));
 		}
 	}
 
