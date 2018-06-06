@@ -21,7 +21,7 @@ public class OtherServiceFeesService {
 
 	@Autowired
 	@Qualifier(value = "hkSgNonAirFeeCalculator")
-	private Calculator<NonAirFeesBreakdown, HkSgNonAirFeesInput> hkSgNonAirFeeCalculator;
+	private Calculator<NonAirFeesBreakdown, NonAirFeesInput> hkSgNonAirFeeCalculator;
 
 	@Autowired
 	@Qualifier(value = "inNonAirFeeCalculator")
@@ -52,13 +52,20 @@ public class OtherServiceFeesService {
 
 	@Autowired
 	private AirlineRuleService airlineRuleService;
-	
+
 	@Autowired
 	private ProductService productService;
 
-	public NonAirFeesBreakdown calculateMiscFee(HkSgNonAirFeesInput input) {
-
+	public NonAirFeesBreakdown calculateNonAirFee(NonAirFeesInput input) {
 		return this.hkSgNonAirFeeCalculator.calculate(input, getMerchantFeePct(input));
+	}
+
+	public NonAirFeesBreakdown calculateInNonAirFee(InNonAirFeesInput input) {
+
+		final Client client = clientService.getClient(input.getProfileName());
+		final Client defaultClient = clientService.getDefaultClient();
+
+		return this.inNonAirFeeCalculator.calculate(input, client, defaultClient);
 	}
 
 	public AirFeesBreakdown calculateAirFee(AirFeesInput input) {
@@ -70,15 +77,14 @@ public class OtherServiceFeesService {
 			final AirlineRule airlineRule = airlineRuleService
 					.getAirlineRule(inAirFeesInput.getPlatCarrier());
 			final Airport airport = getAirport(inAirFeesInput.getCityCode());
-			final Product airproduct = getProduct(
-							Country.INDIA.getCode(), 
-							AIR_PRODUCT_CODE);
+			final Product airproduct = getProduct(Country.INDIA.getCode(), AIR_PRODUCT_CODE);
 
 			return this.tfFactory.getCalculator(pricingId)
 					.calculate(inAirFeesInput, airlineRule, client, airport, airproduct);
 		}
 		else {
-			return this.osFactory.getCalculator(countryCode).calculate((HkSgAirFeesInput) input, getMerchantFeePct(input));
+			return this.osFactory.getCalculator(countryCode).calculate((HkSgAirFeesInput) input,
+					getMerchantFeePct(input));
 		}
 	}
 
@@ -107,21 +113,5 @@ public class OtherServiceFeesService {
 
 		return exchangeOrderService
 				.getMerchantFee(input.getCountryCode(), input.getClientType(), input.getProfileName());
-	}
-
-	public NonAirFeesBreakdown calculateNonAirFee(NonAirFeesInput input) {
-		
-		if (Country.INDIA.getCode().equals(input.getCountryCode())) {
-			
-			final Client client = clientService.getClient(input.getProfileName());
-			final Client defaultClient = clientService.getDefaultClient(); 
-			
-			return this.inNonAirFeeCalculator.calculate((InNonAirFeesInput) input,
-					client, defaultClient);
-		}
-		else {
-			return this.hkSgNonAirFeeCalculator.calculate((HkSgNonAirFeesInput) input,
-					getMerchantFeePct(input));
-		}
 	}
 }

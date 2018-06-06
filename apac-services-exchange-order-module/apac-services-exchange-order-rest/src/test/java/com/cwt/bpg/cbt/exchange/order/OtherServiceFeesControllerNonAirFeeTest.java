@@ -81,7 +81,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
                 .andReturn()
                 .getResponse();
 
-        verify(service, times(1)).calculateNonAirFee(any(InNonAirFeesInput.class));
+        verify(service, times(1)).calculateInNonAirFee(any(InNonAirFeesInput.class));
     }
 
     @Test

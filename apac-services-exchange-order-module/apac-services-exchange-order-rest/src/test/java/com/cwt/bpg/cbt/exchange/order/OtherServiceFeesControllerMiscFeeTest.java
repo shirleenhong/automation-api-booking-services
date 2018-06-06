@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import com.cwt.bpg.cbt.exchange.order.model.HkSgNonAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -45,7 +45,7 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnFeesBreakdown() throws Exception {
 
-		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
+		NonAirFeesInput input = new NonAirFeesInput();
 		
 		input.setFopType("CX");	  
 	    input.setClientType("CT");
@@ -62,7 +62,7 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnBadRequestOnEmptyFOPType() throws Exception {
 						
-		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
+		NonAirFeesInput input = new NonAirFeesInput();
 		
 	    input.setClientType("CT");
 	    input.setGstPercent(2D);
@@ -84,7 +84,7 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnBadRequestOnEmptyClientType() throws Exception {
 						
-		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
+		NonAirFeesInput input = new NonAirFeesInput();
 		
 	    input.setFopType("CX");
 	    input.setGstPercent(2D);
@@ -106,7 +106,7 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnBadRequestOnEmptyGst() throws Exception {
 						
-		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
+		NonAirFeesInput input = new NonAirFeesInput();
 		
 	    input.setFopType("CX");
 	    input.setProfileName("PN");
@@ -122,7 +122,7 @@ public class OtherServiceFeesControllerMiscFeeTest {
 	@Test
 	public void shouldReturnBadRequestOnEmptyProdName() throws Exception {
 						
-		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
+		NonAirFeesInput input = new NonAirFeesInput();
 		
 	    input.setFopType("CX");
 	    input.setGstPercent(2D);
