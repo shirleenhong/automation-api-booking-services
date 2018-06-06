@@ -10,4 +10,9 @@
 	<artifactId>apac-services-fees-api</artifactId>
 	<name>apac-services-fees-api</name>
 	<description>apac-services-fees-api</description>
+	
+	<properties>
+		<sonar.skip>true</sonar.skip>		
+	</properties>
+	
 </project>
