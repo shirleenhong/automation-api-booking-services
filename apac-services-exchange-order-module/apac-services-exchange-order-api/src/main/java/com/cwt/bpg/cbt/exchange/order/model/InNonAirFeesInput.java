@@ -1,11 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-import javax.validation.constraints.NotNull;
-
-public class InNonAirFeesInput extends NonAirFeesInput
-{
+public class InNonAirFeesInput extends FeesInput {
 	private static final long serialVersionUID = 7271039286429340584L;
 
 	private String fopType;

@@ -9,7 +9,7 @@ import static org.junit.Assert.assertThat;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import com.cwt.bpg.cbt.exchange.order.model.HkSgNonAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +48,7 @@ public class HkSgNonAirFeeCalculatorTest {
 	@Test
 	public void shouldCalculateFees2DScale() {
 
-		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
+		NonAirFeesInput input = new NonAirFeesInput();
 
 		input.setFopType("CX");
 		input.setCountryCode("SG");
@@ -69,7 +69,7 @@ public class HkSgNonAirFeeCalculatorTest {
 	@Test
 	public void shouldCalculateFees0DScale() {
 
-		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
+		NonAirFeesInput input = new NonAirFeesInput();
 
 		input.setFopType("CX");
 		input.setCountryCode("HK");
@@ -89,7 +89,7 @@ public class HkSgNonAirFeeCalculatorTest {
 
 	@Test
 	public void shouldCalculateFeesFlagsTrue() {
-		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
+		NonAirFeesInput input = new NonAirFeesInput();
 
 		input.setFopType("CX");
 		input.setCountryCode("HK");
@@ -123,7 +123,7 @@ public class HkSgNonAirFeeCalculatorTest {
 
 	@Test
 	public void shouldNotFailOnEmptyInput() {
-		HkSgNonAirFeesInput input = new HkSgNonAirFeesInput();
+		NonAirFeesInput input = new NonAirFeesInput();
 		input.setCountryCode("SG");
 		NonAirFeesBreakdown result = (NonAirFeesBreakdown) calculator.calculate(input, null);
 
