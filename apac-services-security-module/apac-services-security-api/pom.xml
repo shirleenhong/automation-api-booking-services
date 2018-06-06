@@ -11,6 +11,10 @@
 	<name>apac-services-security-api</name>
 	<description>apac-services-security-api</description>
 
+	<properties>
+		<sonar.skip>true</sonar.skip>		
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.mongodb.morphia</groupId>

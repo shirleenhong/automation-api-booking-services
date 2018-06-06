@@ -10,6 +10,10 @@
 	<name>apac-services-exchange-order-api</name>
 	<description>apac-services-exchange-order-api</description>
 
+	<properties>
+		<sonar.skip>true</sonar.skip>		
+	</properties>
+
  	<dependencies>
 		<dependency>
 			<groupId>org.mongodb.morphia</groupId>
