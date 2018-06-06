@@ -88,10 +88,12 @@ public class ApplicationCacheResource {
 			this.result = result;
 		}
 
+		@SuppressWarnings("unused")
 		public Object getKey() {
 			return key;
 		}
 
+		@SuppressWarnings("unused")
 		public Object getResult() {
 			return result;
 		}
@@ -108,10 +110,12 @@ public class ApplicationCacheResource {
 			this.size = size;
 		}
 
+		@SuppressWarnings("unused")
 		public String getCacheName() {
 			return cacheName;
 		}
 
+		@SuppressWarnings("unused")
 		public int getSize() {
 			return size;
 		}
