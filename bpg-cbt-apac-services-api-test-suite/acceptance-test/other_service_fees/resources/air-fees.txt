@@ -329,6 +329,15 @@ Send Other Service Fees For Air Fees Post Request
     Log    ${response.content}
     Set Test Variable    ${api_flag}    fees
 
+Verify Calculated Air Fees Are Not Returned Correctly
+    Verify String Does Not Contain Substring    ${response.content}    "commission"
+    Verify String Does Not Contain Substring    ${response.content}    "totalSellingFare"
+    Verify String Does Not Contain Substring    ${response.content}    "nettCost"
+    Verify String Does Not Contain Substring    ${response.content}    "sellingPrice"
+    Verify String Does Not Contain Substring    ${response.content}    "merchantFee"
+    Verify String Does Not Contain Substring    ${response.content}    "discount"
+    Verify String Does Not Contain Substring    ${response.content}    "nettFare"
+
 Verify Calculated Air Fees Are Returned Correctly
     ${data}    Remove String    ${response.text}    {
     ${data}    Remove String    ${data}    }
