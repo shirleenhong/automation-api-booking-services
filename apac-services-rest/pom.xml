@@ -13,6 +13,10 @@
 	<packaging>jar</packaging>
 
 	<name>apac-services-rest</name>
+	
+	<properties>
+		<sonar.coverage.exclusions>**/*PropertyConfig.java</sonar.coverage.exclusions>
+	</properties>
 
 	<dependencies>
 		<dependency>
