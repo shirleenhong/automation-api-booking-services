@@ -19,7 +19,7 @@ public class Application {
 			if ("IN".equals(System.getProperty("spring.profiles.default"))) {
 				service.migrateClients();
 			} else {
-				service.migrateProductList();
+				service.migrateMerchantFees();
 			}
 		}
 	}

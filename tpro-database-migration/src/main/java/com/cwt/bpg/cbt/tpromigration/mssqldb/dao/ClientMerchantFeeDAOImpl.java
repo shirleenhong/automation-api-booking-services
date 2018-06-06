@@ -38,8 +38,10 @@ public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
 			ResultSet rs = ps.executeQuery();
 			String countryCode = System.getProperty("spring.profiles.default");
 			while (rs.next()) {
+				
 				MerchantFee merchantFee = new MerchantFee();
-				merchantFee.setIncludeTransactionFee(rs.getObject("tfincmf") == null ? null : rs.getBoolean("tfincmf"));
+				//TODO Get Object check doesn't work
+				merchantFee.setIncludeTransactionFee(rs.getBoolean("tfincmf"));
 				merchantFee.setMerchantFeePercent(rs.getObject("merchfeepct") == null ? null : rs.getDouble("merchfeepct"));
 				merchantFee.setClientName(rs.getObject("clientname") == null ? null : rs.getString("clientname").trim().replaceAll(" +", " "));
 				merchantFee.setCountryCode(countryCode);

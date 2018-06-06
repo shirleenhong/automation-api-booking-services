@@ -8,6 +8,7 @@ import org.junit.Test;
 import com.cwt.bpg.cbt.exchange.order.model.Airport;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.Product;
 
 @Ignore
 public class FeeCalculatorTest {
@@ -18,7 +19,7 @@ public class FeeCalculatorTest {
 	public void shouldCalculate() {
 		Client client = new Client();
 		InAirFeesInput input = new InAirFeesInput();
-		calculator.calculate(input, null, client, new Airport());
+		calculator.calculate(input, null, client, new Airport(), new Product());
 	}
 
 	@Test

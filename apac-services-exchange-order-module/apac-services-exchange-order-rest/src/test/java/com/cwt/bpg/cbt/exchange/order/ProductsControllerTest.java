@@ -16,12 +16,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.cwt.bpg.cbt.exchange.order.model.Product;
-import com.cwt.bpg.cbt.exchange.order.products.ProductsService;
+import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 public class ProductsControllerTest {
 
 	@Mock
-	private ProductsService service;
+	private ProductService service;
 
 	@Before
 	public void setUp() {
