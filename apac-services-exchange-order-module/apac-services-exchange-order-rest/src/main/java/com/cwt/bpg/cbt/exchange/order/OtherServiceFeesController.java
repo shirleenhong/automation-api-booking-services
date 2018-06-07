@@ -28,21 +28,21 @@ public class OtherServiceFeesController {
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes non air fees.")
-	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFee(
-			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") InNonAirFeesInput input) {
+	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(
+			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") IndiaNonAirFeesInput input) {
 		input.setCountryCode(Country.INDIA.getCode());
-		return new ResponseEntity<>(service.calculateInNonAirFee(input), HttpStatus.OK);
+		return new ResponseEntity<>(service.calculateIndiaNonAirFees(input), HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/non-air-fees/{countryCode:HK|SG|hk|sg}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes non air fees.")
-	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFee(
+	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(
 			@PathVariable String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NonAirFeesInput input) {
 		input.setCountryCode(countryCode.toUpperCase());
-		return new ResponseEntity<>(service.calculateNonAirFee(input), HttpStatus.OK);
+		return new ResponseEntity<>(service.calculateNonAirFees(input), HttpStatus.OK);
 	}
 
     @PostMapping(path = "/air-fees/in", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
@@ -71,7 +71,7 @@ public class OtherServiceFeesController {
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes visa processing fees, not be used for visa cost and handling fee")
-	public ResponseEntity<VisaFeesBreakdown> computeVisaFee(
+	public ResponseEntity<VisaFeesBreakdown> computeVisaFees(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") VisaFeesInput input) {
 
 		return new ResponseEntity<>(service.calculateVisaFees(input), HttpStatus.OK);

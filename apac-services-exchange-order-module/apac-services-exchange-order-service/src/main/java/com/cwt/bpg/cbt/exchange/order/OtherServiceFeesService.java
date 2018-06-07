@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.InNonAirFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.IndiaNonAirFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
@@ -24,8 +24,8 @@ public class OtherServiceFeesService {
 	private Calculator<NonAirFeesBreakdown, NonAirFeesInput> hkSgNonAirFeeCalculator;
 
 	@Autowired
-	@Qualifier(value = "inNonAirFeeCalculator")
-	private InNonAirFeeCalculator inNonAirFeeCalculator;
+	@Qualifier(value = "indiaNonAirFeeCalculator")
+	private IndiaNonAirFeeCalculator indiaNonAirFeeCalculator;
 
 	@Autowired
 	@Qualifier(value = "nettCostCalculator")
@@ -56,18 +56,18 @@ public class OtherServiceFeesService {
 	@Autowired
 	private ProductService productService;
 
-	public NonAirFeesBreakdown calculateNonAirFee(NonAirFeesInput input) {
+	public NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input) {
         MerchantFee merchantFee = exchangeOrderService
                 .getMerchantFee(input.getCountryCode(), input.getClientType(), input.getProfileName());
 		return this.hkSgNonAirFeeCalculator.calculate(input, merchantFee);
 	}
 
-	public NonAirFeesBreakdown calculateInNonAirFee(InNonAirFeesInput input) {
+	public NonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
 
 		final Client client = clientService.getClient(input.getProfileName());
 		final Client defaultClient = clientService.getDefaultClient();
 
-		return this.inNonAirFeeCalculator.calculate(input, client, defaultClient);
+		return this.indiaNonAirFeeCalculator.calculate(input, client, defaultClient);
 	}
 
 	public AirFeesBreakdown calculateAirFees(AirFeesInput input) {
