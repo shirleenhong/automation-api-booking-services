@@ -2,15 +2,12 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerMiscFeeTest.convertObjectToJsonBytes;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.Charset;
 
-import com.cwt.bpg.cbt.exchange.order.model.InNonAirFeesInput;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +20,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.cwt.bpg.cbt.exchange.order.model.InProduct;
+import com.cwt.bpg.cbt.exchange.order.model.InNonAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
 
 import net.minidev.json.JSONObject;
 
@@ -40,7 +38,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
     private OtherServiceFeesController controller;
 
 
-    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
+    private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8")
     );
@@ -57,7 +55,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
     public void shouldReturnFeesBreakdown() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
-    	InProduct product = new InProduct();
+    	IndiaProduct product = new IndiaProduct();
     	product.setGst(2D);
     	product.setOt1(5D);
     	product.setOt2(10D);
@@ -88,7 +86,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
     public void shouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
-    	InProduct product = new InProduct();
+    	IndiaProduct product = new IndiaProduct();
     	product.setGst(2D);
     	product.setOt1(5D);
     	product.setOt2(10D);
@@ -121,7 +119,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
         jsonObj.put("acctType", "001");
         jsonObj.put("fopType", 2);
         jsonObj.put("fopMode", 3);
-        jsonObj.put("product", new InProduct());
+        jsonObj.put("product", new IndiaProduct());
 
         mockMvc.perform(post("/other-service-fees/non-air-fees/in")
                 .contentType(APPLICATION_JSON_UTF8)
@@ -135,7 +133,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
     public void shouldReturnBadRequestOnEmptyCostAmount() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
-        InProduct product = new InProduct();
+        IndiaProduct product = new IndiaProduct();
         product.setGst(2D);
         product.setOt1(5D);
         product.setOt2(10D);

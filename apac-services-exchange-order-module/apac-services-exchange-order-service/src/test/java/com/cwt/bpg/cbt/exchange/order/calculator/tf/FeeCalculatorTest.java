@@ -42,18 +42,18 @@ public class FeeCalculatorTest {
 		yqTax = new BigDecimal(5);
 		airlineCommission = new BigDecimal(5);
 		totalIataCommission = new BigDecimal(5);
-		gst = new Double(30);
-		airlineCommissionPercent = new Double(5);
-		clientDiscountPercent = new Double(5);
-		ot1 = new Double(5);
-		ot2 = new Double(5);
+		gst = 30d;
+		airlineCommissionPercent = 5d;
+		clientDiscountPercent = 5d;
+		ot1 = 5d;
+		ot2 = 5d;
 	}
 	@Test
 	public void shouldCalculate() {
 		Client client = new Client();
 		IndiaAirFeesInput input = new IndiaAirFeesInput();
 		AirlineRule airlineRule = new AirlineRule();
-		InProduct product = new InProduct();
+		IndiaProduct product = new IndiaProduct();
 		List<ClientPricing> clientPricings = new ArrayList<>();
 		ClientPricing clientPricing = new ClientPricing();
 		List<TransactionFee> transactionFees = new ArrayList<>();
@@ -101,7 +101,7 @@ public class FeeCalculatorTest {
 		client.setIntDdlFeeApply("N");
 		client.setClientPricings(clientPricings);
 
-		calculator.calculate(input, airlineRule, client, new Airport(), new InProduct());
+		calculator.calculate(input, airlineRule, client, new Airport(), new IndiaProduct());
 	}
 
 
