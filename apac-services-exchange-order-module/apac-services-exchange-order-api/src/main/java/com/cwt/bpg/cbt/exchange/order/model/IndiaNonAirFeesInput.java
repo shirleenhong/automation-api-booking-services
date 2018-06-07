@@ -1,9 +1,10 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import io.swagger.annotations.ApiModelProperty;
+import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
+
+import io.swagger.annotations.ApiModelProperty;
 
 public class IndiaNonAirFeesInput extends FeesInput {
 	private static final long serialVersionUID = 7271039286429340584L;

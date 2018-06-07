@@ -28,10 +28,10 @@ public class ProductRepository
 		List<Product> products = new ArrayList<>();
 		try {
 			if (INDIA_COUNTRY_CODE.equalsIgnoreCase(countryCode)) {
-				products.addAll(getInProducts(countryCode));
+				products.addAll(getIndiaProducts(countryCode));
 			}
 			else {
-				products.addAll(getHkSgProducts(countryCode));
+				products.addAll(getNonIndiaProducts(countryCode));
 			}
 			sort(products);
 		}
@@ -42,18 +42,18 @@ public class ProductRepository
 		return products;
 	}
 
-	private List<HkSgProduct> getHkSgProducts(String countryCode) {
+	private List<HkSgProduct> getNonIndiaProducts(String countryCode) {
 		HkSgProductList productList = morphia.getDatastore().createQuery(HkSgProductList.class)
 				.field("countryCode").equal(countryCode).get();
 
-		return productList == null ? Collections.<HkSgProduct>emptyList() : productList.getProducts();
+		return productList == null ? Collections.emptyList() : productList.getProducts();
 	}
 
-	private List<IndiaProduct> getInProducts(String countryCode) {
+	private List<IndiaProduct> getIndiaProducts(String countryCode) {
 		InProductList productList = morphia.getDatastore().createQuery(InProductList.class)
 				.field("countryCode").equal(countryCode).get();
 
-		return productList == null ? Collections.<IndiaProduct>emptyList() : productList.getProducts();
+		return productList == null ? Collections.emptyList() : productList.getProducts();
 	}
 
     private void sort(List<Product> products)
