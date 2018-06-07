@@ -74,7 +74,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
         jsonObj.put("countryCode", "IN");
         jsonObj.put("clientType", "Z");
 
-        mockMvc.perform(post("/other-service-fees/non-air-fees")
+        mockMvc.perform(post("/other-service-fees/non-air-fees/in")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(jsonObj)))
                 .andExpect(status().isOk())
@@ -102,7 +102,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
         jsonObj.put("fopMode", 3);
         jsonObj.put("product", product);
 
-        mockMvc.perform(post("/other-service-fees/non-air-fees")
+        mockMvc.perform(post("/other-service-fees/non-air-fees/in")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(jsonObj)))
                 .andExpect(status().isBadRequest());
@@ -123,7 +123,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
         jsonObj.put("fopMode", 3);
         jsonObj.put("product", new InProduct());
 
-        mockMvc.perform(post("/other-service-fees/non-air-fees")
+        mockMvc.perform(post("/other-service-fees/non-air-fees/in")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(jsonObj)))
                 .andExpect(status().isBadRequest());
@@ -148,7 +148,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
         jsonObj.put("fopMode", 3);
         jsonObj.put("product", product);
 
-        mockMvc.perform(post("/other-service-fees/non-air-fees")
+        mockMvc.perform(post("/other-service-fees/non-air-fees/in")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(jsonObj)))
                 .andExpect(status().isBadRequest());
