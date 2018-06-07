@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
@@ -11,8 +13,10 @@ public class VisaFeesInput extends FeesInput {
 	private boolean nettCostMerchantFeeChecked;
 	private boolean cwtHandlingMerchantFeeChecked;
 	private BigDecimal nettCost;
+	@ApiModelProperty(required = true)
 	@NotNull
 	private BigDecimal cwtHandling;
+	@ApiModelProperty(required = true)
 	@NotNull
 	private BigDecimal vendorHandling;
 

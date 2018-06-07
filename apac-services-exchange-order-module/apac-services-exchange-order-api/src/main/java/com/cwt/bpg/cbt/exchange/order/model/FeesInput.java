@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class FeesInput implements Serializable {
@@ -11,11 +12,13 @@ public class FeesInput implements Serializable {
 
 	private String countryCode;
 
-	@NotEmpty
-	private String clientType;
+    @ApiModelProperty(required = true)
+    @NotEmpty
+    private String clientType;
 
-	@NotEmpty
-	private String profileName;
+    @ApiModelProperty(required = true)
+    @NotEmpty
+    private String profileName;
 
 	public String getCountryCode() {
 		return countryCode;

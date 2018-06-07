@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -43,7 +44,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 			}
 		}
 
-		int scale = scaleConfig.getScale(input.getCountryCode());
+		int scale = scaleConfig.getScale(Country.INDIA.getCode());
 
 		if (input.isCommissionByPercent()) {
 			commission = round(calculatePercentage(input.getCostAmount(), input.getCommissionPercent()),

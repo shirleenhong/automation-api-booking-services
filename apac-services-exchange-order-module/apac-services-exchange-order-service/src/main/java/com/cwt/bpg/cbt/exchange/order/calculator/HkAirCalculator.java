@@ -5,6 +5,7 @@ import java.math.MathContext;
 import java.util.Arrays;
 import java.util.List;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +42,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator<AirF
 			return result;
 		}
 
-		int scale = scaleConfig.getScale(input.getCountryCode());
+		int scale = scaleConfig.getScale(Country.HONG_KONG.getCode());
 
 		BigDecimal totalSellingFare;
 		BigDecimal nettCost;

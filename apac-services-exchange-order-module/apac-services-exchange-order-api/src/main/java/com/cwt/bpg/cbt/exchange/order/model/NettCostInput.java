@@ -1,14 +1,16 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
 public class NettCostInput {
-
+	@ApiModelProperty(required = true)
 	@NotNull
 	protected BigDecimal sellingPrice;
-
+	@ApiModelProperty(required = true)
 	@NotNull
 	private Double commissionPct;
 

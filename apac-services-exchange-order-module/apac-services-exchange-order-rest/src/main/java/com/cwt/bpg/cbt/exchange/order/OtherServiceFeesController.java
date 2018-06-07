@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,7 +28,7 @@ public class OtherServiceFeesController {
 	@ApiOperation(value = "Computes non air fees.")
 	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFee(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") InNonAirFeesInput input) {
-
+		input.setCountryCode(Country.INDIA.getCode());
 		return new ResponseEntity<>(service.calculateInNonAirFee(input), HttpStatus.OK);
 	}
 
@@ -38,7 +39,7 @@ public class OtherServiceFeesController {
 	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFee(
 			@PathVariable String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NonAirFeesInput input) {
-
+		input.setCountryCode(countryCode.toUpperCase());
 		return new ResponseEntity<>(service.calculateNonAirFee(input), HttpStatus.OK);
 	}
 

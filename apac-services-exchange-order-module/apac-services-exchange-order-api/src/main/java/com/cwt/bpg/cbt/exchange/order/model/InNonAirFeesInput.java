@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -8,7 +10,7 @@ public class InNonAirFeesInput extends FeesInput {
 
 	private String fopType;
 	private boolean commissionByPercent;
-
+	@ApiModelProperty(required = true)
 	@NotNull
 	private BigDecimal costAmount;
 	private Double commissionPercent;
@@ -17,7 +19,7 @@ public class InNonAirFeesInput extends FeesInput {
 	private BigDecimal discount;
 	private boolean discountByPercent;
 	private int fopMode;
-
+	@ApiModelProperty(required = true)
 	@NotNull
 	private InProduct product;
 	private String acctType;
