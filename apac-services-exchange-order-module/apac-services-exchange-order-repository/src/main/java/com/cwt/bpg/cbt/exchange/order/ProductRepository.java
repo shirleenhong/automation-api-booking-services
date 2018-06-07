@@ -56,15 +56,14 @@ public class ProductRepository {
 	}
 
 	private void sort(List<Product> products) {
-		if (!products.isEmpty()) {
-			for (Product product : products) {
-				if (!product.getVendors().isEmpty()) {
-					product.getVendors()
-							.sort(Comparator.comparing(Vendor::getVendorName, String.CASE_INSENSITIVE_ORDER));
-				}
+		
+		for (Product product : products) {
+			if (!product.getVendors().isEmpty()) {
+				product.getVendors()
+						.sort(Comparator.comparing(Vendor::getVendorName, String.CASE_INSENSITIVE_ORDER));
 			}
-			products.sort(Comparator.comparing(Product::getDescription, String.CASE_INSENSITIVE_ORDER));
 		}
+		products.sort(Comparator.comparing(Product::getDescription, String.CASE_INSENSITIVE_ORDER));
 	}
 
 }
