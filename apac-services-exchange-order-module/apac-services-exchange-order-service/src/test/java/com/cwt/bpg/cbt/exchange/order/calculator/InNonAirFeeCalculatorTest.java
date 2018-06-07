@@ -172,8 +172,8 @@ public class InNonAirFeeCalculatorTest {
 		NonAirFeesBreakdown result = calculator.calculate(input, client, client);
 
 		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
-		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
-		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1436.06D)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(26.71D)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1462.77D)));
 		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70D)));
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
@@ -270,8 +270,8 @@ public class InNonAirFeeCalculatorTest {
 		NonAirFeesBreakdown result = calculator.calculate(input, client, client);
 
 		assertThat(result.getGstAmount().doubleValue(), is(equalTo(182D)));
-		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
-		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1482D)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(27.56D)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1509.56D)));
 		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1300D)));
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
