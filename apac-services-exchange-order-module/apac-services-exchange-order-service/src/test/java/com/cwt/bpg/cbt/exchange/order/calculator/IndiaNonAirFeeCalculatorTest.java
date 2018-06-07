@@ -1,12 +1,12 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
+import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +19,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.google.common.collect.ImmutableList;
 
 public class IndiaNonAirFeeCalculatorTest {
 
@@ -72,8 +73,8 @@ public class IndiaNonAirFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
-		client.setMfProducts(Arrays.asList(pf));
-		client.setMfBanks(Arrays.asList(bank));
+		client.setMfProducts(singletonList(pf));
+		client.setMfBanks(singletonList(bank));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
@@ -100,8 +101,8 @@ public class IndiaNonAirFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(true);
 		pf.setProductCode("01");
-		client.setMfProducts(Arrays.asList(pf));
-		client.setMfBanks(Arrays.asList(bank));
+		client.setMfProducts(singletonList(pf));
+		client.setMfBanks(singletonList(bank));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
@@ -128,8 +129,8 @@ public class IndiaNonAirFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
-		client.setMfProducts(Arrays.asList(pf));
-		client.setMfBanks(Arrays.asList(bank));
+		client.setMfProducts(ImmutableList.of(pf));
+		client.setMfBanks(singletonList(bank));
 		client.setApplyMfCc(true);
 		client.setApplyMfBank(true);
 
@@ -157,13 +158,13 @@ public class IndiaNonAirFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
-		client.setMfProducts(Arrays.asList(pf));
-		client.setMfBanks(Arrays.asList(bank));
+		client.setMfProducts(singletonList(pf));
+		client.setMfBanks(singletonList(bank));
 		CreditCardVendor cc = new CreditCardVendor();
 		cc.setPercentage(2D);
 		cc.setStandard(false);
 		cc.setVendorName("Visa");
-		client.setMfCcs(Arrays.asList(cc));
+		client.setMfCcs(singletonList(cc));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
@@ -188,13 +189,13 @@ public class IndiaNonAirFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
-		client.setMfProducts(Arrays.asList(pf));
+		client.setMfProducts(singletonList(pf));
 
 		CreditCardVendor cc = new CreditCardVendor();
 		cc.setPercentage(2D);
 		cc.setStandard(true);
 		cc.setVendorName("Visa");
-		client.setMfCcs(Arrays.asList(cc));
+		client.setMfCcs(singletonList(cc));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(true);
 
@@ -217,13 +218,13 @@ public class IndiaNonAirFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
-		client.setMfProducts(Arrays.asList(pf));
+		client.setMfProducts(singletonList(pf));
 
 		CreditCardVendor cc = new CreditCardVendor();
 		cc.setPercentage(2D);
 		cc.setStandard(true);
 		cc.setVendorName("Visa");
-		client.setMfCcs(Arrays.asList(cc));
+		client.setMfCcs(singletonList(cc));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(true);
 
@@ -261,7 +262,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		bank.setStandard(false);
 		bank.setPercentage(2D);
 
-		client.setMfBanks(Arrays.asList(bank));
+		client.setMfBanks(singletonList(bank));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
@@ -292,8 +293,8 @@ public class IndiaNonAirFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(true);
 		pf.setProductCode("01");
-		client.setMfProducts(Arrays.asList(pf));
-		client.setMfBanks(Arrays.asList(bank));
+		client.setMfProducts(singletonList(pf));
+		client.setMfBanks(singletonList(bank));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
@@ -323,8 +324,8 @@ public class IndiaNonAirFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
-		client.setMfProducts(Arrays.asList(pf));
-		client.setMfBanks(Arrays.asList(bank));
+		client.setMfProducts(singletonList(pf));
+		client.setMfBanks(singletonList(bank));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
@@ -360,9 +361,9 @@ public class IndiaNonAirFeeCalculatorTest {
 		cc.setPercentage(2D);
 		cc.setStandard(true);
 		cc.setVendorName("Visa");
-		client.setMfCcs(Arrays.asList(cc));
-		client.setMfProducts(Arrays.asList(pf));
-		client.setMfBanks(Arrays.asList(bank));
+		client.setMfCcs(singletonList(cc));
+		client.setMfProducts(singletonList(pf));
+		client.setMfBanks(singletonList(bank));
 		client.setApplyMfCc(true);
 		client.setApplyMfBank(true);
 
@@ -395,8 +396,8 @@ public class IndiaNonAirFeeCalculatorTest {
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
 		client.setStandardMfProduct(true);
-		client.setMfProducts(Arrays.asList(pf));
-		client.setMfBanks(Arrays.asList(bank));
+		client.setMfProducts(singletonList(pf));
+		client.setMfBanks(singletonList(bank));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 		
@@ -423,15 +424,15 @@ public class IndiaNonAirFeeCalculatorTest {
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
 		client.setStandardMfProduct(false);
-		client.setMfProducts(Arrays.asList(pf));
-		client.setMfBanks(Arrays.asList(bank));
+		client.setMfProducts(singletonList(pf));
+		client.setMfBanks(singletonList(bank));
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 		
 		ProductMerchantFee pf2 = new ProductMerchantFee();
 		pf2.setSubjectToMf(true);
 		pf2.setProductCode("01");
-		defaultClient.setMfProducts(Arrays.asList(pf2));
+		defaultClient.setMfProducts(singletonList(pf2));
 		NonAirFeesBreakdown result = calculator.calculate(input, client, defaultClient);
 
 		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
