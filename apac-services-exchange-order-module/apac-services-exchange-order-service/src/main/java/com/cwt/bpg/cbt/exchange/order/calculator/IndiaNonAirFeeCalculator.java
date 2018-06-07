@@ -17,7 +17,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 
 	@Autowired
 	private ScaleConfig scaleConfig;
-	private static final int BTC_FOP_MODE = 3;
+	private static final int BILL_TO_COMPANY = 3;
 
 	public NonAirFeesBreakdown calculate(InNonAirFeesInput input, 
 			Client client, 
@@ -33,7 +33,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 		BigDecimal discount = safeValue(input.getDiscount());
 		Double mfPercent = 0D;
 
-		if (input.getFopMode() != BTC_FOP_MODE) {
+		if (input.getFopMode() != BILL_TO_COMPANY) {
 
 			ProductMerchantFee product = getProduct(client, input.getProduct());
 			if (product != null && product.isSubjectToMf()) {

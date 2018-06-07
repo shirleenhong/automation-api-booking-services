@@ -14,15 +14,14 @@ import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.WriteResult;
 
 /**
- * T ->	class type or class entity used in morphia
- * <p> DataType -> data type of unique key in db
+ * T ->	class type or class entity used in Morphia
+ * <p> D -> data type of unique key in DB
  * 
  * @param <T> 
  * @param <D>
  */
 class CommonRepository<T, D> {
 
-	//TODO Adjust to support get by Id and get by field?
 	@Autowired
 	protected MorphiaComponent morphia;
 

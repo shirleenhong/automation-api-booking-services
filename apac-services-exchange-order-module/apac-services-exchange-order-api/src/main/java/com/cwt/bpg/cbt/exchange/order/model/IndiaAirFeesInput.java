@@ -23,6 +23,7 @@ public class IndiaAirFeesInput extends FeesInput
 	private boolean overheadCommissionEnabled;
 	private boolean markupEnabled;
 	private boolean discountEnabled;
+	private int airSegmentForPricingCount;
 	
 	private InProduct product;
 	
@@ -180,6 +181,14 @@ public class IndiaAirFeesInput extends FeesInput
 
 	public void setTax2(BigDecimal tax2) {
 		this.tax2 = tax2;
+	}
+
+	public int getAirSegmentForPricingCount() {
+		return airSegmentForPricingCount;
+	}
+
+	public void setAirSegmentForPricingCount(int airSegmentForPricingCount) {
+		this.airSegmentForPricingCount = airSegmentForPricingCount;
 	}
 	
 }

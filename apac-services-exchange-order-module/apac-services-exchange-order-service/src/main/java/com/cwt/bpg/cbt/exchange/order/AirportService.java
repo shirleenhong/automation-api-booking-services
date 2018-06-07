@@ -19,7 +19,7 @@ public class AirportService {
         return repository.getAll();
     }
 
-    @Cacheable(cacheNames = "airports", key = "#airportCode")
+    @Cacheable(cacheNames = "airports", key = "#airportCode", condition="#airportCode != null")
     public Airport getAirport(String airportCode) {
         return repository.get(airportCode);
     }

@@ -10,24 +10,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
-public class ProductRepository
-{
+public class ProductRepository {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepository.class);
-    private static final String INDIA_COUNTRY_CODE = "IN";
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepository.class);
 
-    @Autowired
+	@Autowired
 	private MorphiaComponent morphia;
 
 	public List<Product> getProducts(String countryCode) {
 
 		List<Product> products = new ArrayList<>();
 		try {
-			if (INDIA_COUNTRY_CODE.equalsIgnoreCase(countryCode)) {
+			if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
 				products.addAll(getInProducts(countryCode));
 			}
 			else {
@@ -56,19 +55,16 @@ public class ProductRepository
 		return productList == null ? Collections.<InProduct>emptyList() : productList.getProducts();
 	}
 
-    private void sort(List<Product> products)
-    {
-        if (!products.isEmpty())
-        {
-            for (Product product : products)
-            {
-                if (!product.getVendors().isEmpty())
-                {
-                    product.getVendors().sort(Comparator.comparing(Vendor::getVendorName, String.CASE_INSENSITIVE_ORDER));
-                }
-            }
-            products.sort(Comparator.comparing(Product::getDescription, String.CASE_INSENSITIVE_ORDER));
-        }
-    }
+	private void sort(List<Product> products) {
+		if (!products.isEmpty()) {
+			for (Product product : products) {
+				if (!product.getVendors().isEmpty()) {
+					product.getVendors()
+							.sort(Comparator.comparing(Vendor::getVendorName, String.CASE_INSENSITIVE_ORDER));
+				}
+			}
+			products.sort(Comparator.comparing(Product::getDescription, String.CASE_INSENSITIVE_ORDER));
+		}
+	}
 
 }

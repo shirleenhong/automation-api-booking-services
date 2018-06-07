@@ -15,7 +15,9 @@ public class FeeCalculator extends CommonCalculator {
 	private static final String COUPON = "C";
 	private static final String TICKET = "T";
 	private static final String NA = "NA";
-	private static final String ALL = "ALL";
+	private static final String ALL = "ALL";	
+	private static final String SOLO = "SOLO";
+	private static final String GROUP = "GROUP";
 
 	public IndiaAirFeesBreakdown calculate(IndiaAirFeesInput input,
 										   AirlineRule airlineRule,
@@ -32,7 +34,7 @@ public class FeeCalculator extends CommonCalculator {
 			gstAmount = BigDecimal.ZERO;
 		}
 
-		if(!airlineRule.isIncludeYqCommission()) {
+		if(airlineRule != null && !airlineRule.isIncludeYqCommission()) {
 			yqTax = BigDecimal.ZERO;
 		}
 
@@ -129,7 +131,7 @@ public class FeeCalculator extends CommonCalculator {
 						result = getFeeByPnr(input, airport, clientPricing, baseAmount);
 					}
 					else if (feeOption.equals(COUPON)) {
-						result = getFeeByCoupon();
+						result = getFeeByCoupon(input, clientPricing);
 					}
 					else if (feeOption.equals(TICKET)) {
 						result = getFeeByTicket(input, airport, clientPricing, baseAmount);
@@ -184,9 +186,38 @@ public class FeeCalculator extends CommonCalculator {
 		return result;
 	}
 
-	private BigDecimal getFeeByCoupon() {
-		// TODO Auto-generated method stub
-		return null;
+	private BigDecimal getFeeByCoupon(IndiaAirFeesInput input, ClientPricing pricing) {
+		
+		TransactionFee tf = getFee(pricing); 
+		BigDecimal tfAmount = BigDecimal.ZERO;
+		int segmentCount = input.getAirSegmentForPricingCount();
+			
+		if(SOLO.equalsIgnoreCase(tf.getType())) {
+			
+			if(tf.getStartCoupon() <= segmentCount && segmentCount <= tf.getEndCoupon()) {
+					
+			   tfAmount = tf.getAmount();
+			}
+		}			
+		else if(GROUP.equalsIgnoreCase(tf.getType())) {
+		
+			for(int i = 0; i < segmentCount; i++) {
+			
+				if (tf.getStartCoupon() <= segmentCount && segmentCount <= tf.getEndCoupon()
+				 || segmentCount > tf.getEndCoupon()) {
+					
+					   tfAmount = tfAmount.add(safeValue(tf.getAmount()));
+				}
+			}
+		}
+		
+		
+		return tfAmount;
+	}
+
+	private TransactionFee getFee(ClientPricing pricing) {
+		
+		return pricing.getTransactionFees().get(0);		
 	}
 
 	private BigDecimal getFeeByPnr(
