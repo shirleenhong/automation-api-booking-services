@@ -43,7 +43,7 @@ public class ProductsRepositoryTest {
 		MockitoAnnotations.initMocks(this);
 		Mockito.when(morphia.getDatastore()).thenReturn(dataStore);
 		
-		HkSgProduct prodA = new HkSgProduct();
+		DefaultProduct prodA = new DefaultProduct();
 
 		prodA.setProductCode("00");
 		prodA.setDescription("BSP Ticket And MPD");
@@ -70,7 +70,7 @@ public class ProductsRepositoryTest {
 
 		prodA.getVendors().add(vendorA);
 
-		HkSgProduct prodB = new HkSgProduct();
+		DefaultProduct prodB = new DefaultProduct();
 		prodB.setProductCode("01");
 		prodB.setDescription("AA SEGMENT BOOKING FEE");
 		prodB.setGst(0D);
@@ -94,7 +94,7 @@ public class ProductsRepositoryTest {
 		vendorB.setSortKey("BSP");
 		vendorB.setVendorName("BANK SETTLEMENT PLAN");
 		prodB.getVendors().add(vendorB);
-		List<HkSgProduct> prodList = new ArrayList<>();
+		List<DefaultProduct> prodList = new ArrayList<>();
 		prodList.add(prodA);
 		prodList.add(prodB);
 		productList.setProducts(prodList);

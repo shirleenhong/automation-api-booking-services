@@ -41,108 +41,108 @@ public class OtherServiceFeesControllerNonAirFeeTest {
             MediaType.APPLICATION_JSON.getSubtype(),                        
             Charset.forName("utf8")                     
             );
-	
+
 	@Test
 	public void shouldReturnFeesBreakdown() throws Exception {
 
 		NonAirFeesInput input = new NonAirFeesInput();
-		
-		input.setFopType("CX");	  
-	    input.setClientType("CT");
-	    input.setGstPercent(2D);
-	    input.setProfileName("PN");
-	    
-        mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isOk());
+
+		input.setFopType("CX");
+		input.setClientType("CT");
+		input.setGstPercent(2D);
+		input.setProfileName("PN");
+
+		mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(input)))
+				.andExpect(status().isOk());
 	}
 
-	
+
 	@Test
 	public void shouldReturnBadRequestOnEmptyFOPType() throws Exception {
-						
+
 		NonAirFeesInput input = new NonAirFeesInput();
-		
-	    input.setClientType("CT");
-	    input.setGstPercent(2D);
-	    input.setProfileName("PN");
-	    
-	    mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
-		
-		input.setFopType("");
-		
+
+		input.setClientType("CT");
+		input.setGstPercent(2D);
+		input.setProfileName("PN");
+
 		mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(input)))
+				.andExpect(status().isBadRequest());
+
+		input.setFopType("");
+
+		mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(input)))
+				.andExpect(status().isBadRequest());
 	}
-	
+
 	@Test
 	public void shouldReturnBadRequestOnEmptyClientType() throws Exception {
-						
+
 		NonAirFeesInput input = new NonAirFeesInput();
-		
-	    input.setFopType("CX");
-	    input.setGstPercent(2D);
-	    input.setProfileName("PN");
-	    
-	    mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
-		
-	    input.setClientType("");
-		
+
+		input.setFopType("CX");
+		input.setGstPercent(2D);
+		input.setProfileName("PN");
+
 		mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(input)))
+				.andExpect(status().isBadRequest());
+
+		input.setClientType("");
+
+		mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(input)))
+				.andExpect(status().isBadRequest());
 	}
-	
+
 	@Test
 	public void shouldReturnBadRequestOnEmptyGst() throws Exception {
-						
+
 		NonAirFeesInput input = new NonAirFeesInput();
-		
-	    input.setFopType("CX");
-	    input.setProfileName("PN");
-        input.setCountryCode("HK");
-	    
-	    mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
+
+		input.setFopType("CX");
+		input.setProfileName("PN");
+		input.setCountryCode("HK");
+
+		mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(input)))
+				.andExpect(status().isBadRequest());
 
 	}
-	
+
 	@Test
 	public void shouldReturnBadRequestOnEmptyProdName() throws Exception {
-						
+
 		NonAirFeesInput input = new NonAirFeesInput();
-		
-	    input.setFopType("CX");
-	    input.setGstPercent(2D);
-	    
-	    mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
-		
-	    input.setProfileName("");
-		
+
+		input.setFopType("CX");
+		input.setGstPercent(2D);
+
 		mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(input)))
+				.andExpect(status().isBadRequest());
+
+		input.setProfileName("");
+
+		mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(input)))
+				.andExpect(status().isBadRequest());
 	}
-	
+
 	public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return mapper.writeValueAsBytes(object);
-    }
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		return mapper.writeValueAsBytes(object);
+	}
 }

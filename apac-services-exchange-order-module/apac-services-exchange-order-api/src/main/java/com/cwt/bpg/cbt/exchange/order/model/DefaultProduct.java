@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-public class HkSgProduct extends Product {
+public class DefaultProduct extends Product {
 
 	private static final long serialVersionUID = 2104719481136370225L;
 	

@@ -42,11 +42,11 @@ public class ProductRepository
 		return products;
 	}
 
-	private List<HkSgProduct> getHkSgProducts(String countryCode) {
+	private List<DefaultProduct> getHkSgProducts(String countryCode) {
 		HkSgProductList productList = morphia.getDatastore().createQuery(HkSgProductList.class)
 				.field("countryCode").equal(countryCode).get();
 
-		return productList == null ? Collections.<HkSgProduct>emptyList() : productList.getProducts();
+		return productList == null ? Collections.<DefaultProduct>emptyList() : productList.getProducts();
 	}
 
 	private List<IndiaProduct> getInProducts(String countryCode) {

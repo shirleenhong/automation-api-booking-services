@@ -16,7 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.ProductRepository;
-import com.cwt.bpg.cbt.exchange.order.model.HkSgProduct;
+import com.cwt.bpg.cbt.exchange.order.model.DefaultProduct;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
@@ -82,7 +82,7 @@ public class ProductsServiceTest {
 	}
 
 	private static List<Product> createListOfProducts() {
-		Product product1 = new HkSgProduct();
+		Product product1 = new DefaultProduct();
 		String productCode = "ProductCode";
 		List<Vendor> vendors = Arrays.asList(new Vendor() {
 			private static final long serialVersionUID = -6678379343715153605L;
@@ -93,7 +93,7 @@ public class ProductsServiceTest {
 		});
 		product1.setVendors(vendors);
 		product1.setProductCode(productCode);
-		Product product2 = new HkSgProduct();
+		Product product2 = new DefaultProduct();
 		return Arrays.asList(product1, product2);
 	}
 
