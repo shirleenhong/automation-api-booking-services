@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -16,7 +17,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.ProductRepository;
-import com.cwt.bpg.cbt.exchange.order.model.DefaultProduct;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
@@ -44,12 +44,12 @@ public class ProductsServiceTest {
 	public void canFilterProducts() {
 
 		final String countryCode = "HK";
-		List<Product> value = createListOfProducts();
+		List<BaseProduct> value = createListOfProducts();
 		when(repo.getProducts(countryCode)).thenReturn(value);
 		
-		List<Product> products = service.getProducts(countryCode);
+		List<BaseProduct> baseProducts = service.getProducts(countryCode);
 		
-		assertEquals(1, products.size());
+		assertEquals(1, baseProducts.size());
 		Mockito.verify(repo, Mockito.times(1)).getProducts(countryCode);
 	}
 	
@@ -58,11 +58,11 @@ public class ProductsServiceTest {
 
 		final String countryCode = "HK";
 		final String productCode = "ProductCode";
-		List<Product> value = createListOfProducts();
+		List<BaseProduct> value = createListOfProducts();
 		when(repo.getProducts(countryCode)).thenReturn(value);
 		
-		Product product = service.getProductByCode(countryCode, productCode);
-		assertNotNull(product);
+		BaseProduct baseProduct = service.getProductByCode(countryCode, productCode);
+		assertNotNull(baseProduct);
 		
 		Mockito.verify(repo, Mockito.times(1)).getProducts(countryCode);
 	}
@@ -72,17 +72,17 @@ public class ProductsServiceTest {
 
 		final String countryCode = "HK";
 		final String productCode = "P";
-		List<Product> value = createListOfProducts();
+		List<BaseProduct> value = createListOfProducts();
 		when(repo.getProducts(countryCode)).thenReturn(value);
 		
-		Product product = service.getProductByCode(countryCode, productCode);
-		assertNull(product);
+		BaseProduct baseProduct = service.getProductByCode(countryCode, productCode);
+		assertNull(baseProduct);
 		
 		Mockito.verify(repo, Mockito.times(1)).getProducts(countryCode);
 	}
 
-	private static List<Product> createListOfProducts() {
-		Product product1 = new DefaultProduct();
+	private static List<BaseProduct> createListOfProducts() {
+		BaseProduct baseProduct1 = new Product();
 		String productCode = "ProductCode";
 		List<Vendor> vendors = Arrays.asList(new Vendor() {
 			private static final long serialVersionUID = -6678379343715153605L;
@@ -91,10 +91,10 @@ public class ProductsServiceTest {
 				setVendorNumber("000012");
 			}
 		});
-		product1.setVendors(vendors);
-		product1.setProductCode(productCode);
-		Product product2 = new DefaultProduct();
-		return Arrays.asList(product1, product2);
+		baseProduct1.setVendors(vendors);
+		baseProduct1.setProductCode(productCode);
+		BaseProduct baseProduct2 = new Product();
+		return Arrays.asList(baseProduct1, baseProduct2);
 	}
 
 }

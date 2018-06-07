@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -15,7 +16,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 public class ProductsControllerTest {
@@ -34,7 +34,7 @@ public class ProductsControllerTest {
 	@Test
 	public void shouldReturnProduct() {
 						
-		ResponseEntity<List<Product>> result = controller.getProducts("HK");
+		ResponseEntity<List<BaseProduct>> result = controller.getProducts("HK");
 		
 		Mockito.when(service.getProducts("HK")).thenReturn(new ArrayList<>());
 		assertNotNull(result.getBody());
