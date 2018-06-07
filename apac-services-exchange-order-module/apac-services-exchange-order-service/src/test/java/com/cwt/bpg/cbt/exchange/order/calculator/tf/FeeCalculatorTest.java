@@ -126,8 +126,8 @@ public class FeeCalculatorTest {
 	@Test
 	public void shouldGetTotalOrCom2() {
 		input.setTripType("I");
-		input.setAirlineOrCommission(airlineCommission);
-		input.setReturnOrCommissionPercent(airlineCommissionPercent);
+		input.setAirlineOverheadCommission(airlineCommission);
+		input.setOverheadCommissionPercent(airlineCommissionPercent);
 		BigDecimal totalOrCom2 = calculator.getTotalOrCom2(input);
 
 		assertEquals(new BigDecimal(0.25), totalOrCom2);
@@ -137,8 +137,8 @@ public class FeeCalculatorTest {
 	@Test
 	public void shouldGetTotalOrCom2Null() {
 		input.setTripType("D");
-		input.setAirlineOrCommission(airlineCommission);
-		input.setReturnOrCommissionPercent(airlineCommissionPercent);
+		input.setAirlineOverheadCommission(airlineCommission);
+		input.setOverheadCommissionPercent(airlineCommissionPercent);
 
 		assertNull(calculator.getTotalOrCom2(input));
 

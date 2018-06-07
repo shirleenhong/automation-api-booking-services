@@ -10,8 +10,8 @@ public class IndiaAirFeesInput extends FeesInput
 	private BigDecimal baseFare;
 	private BigDecimal yqTax;
 	private BigDecimal airlineCommission;
-	private BigDecimal airlineOrCommission;
-	private Double returnOrCommissionPercent;
+	private BigDecimal airlineOverheadCommission;
+	private Double overheadCommissionPercent;
 	private Double airlineCommissionPercent;
 	private Double merchantFeePercent;
 	private BigDecimal tax1;
@@ -69,22 +69,6 @@ public class IndiaAirFeesInput extends FeesInput
 
 	public void setAirlineCommission(BigDecimal airlineCommission) {
 		this.airlineCommission = airlineCommission;
-	}
-
-	public BigDecimal getAirlineOrCommission() {
-		return airlineOrCommission;
-	}
-
-	public void setAirlineOrCommission(BigDecimal airlineOrCommission) {
-		this.airlineOrCommission = airlineOrCommission;
-	}
-
-	public Double getReturnOrCommissionPercent() {
-		return returnOrCommissionPercent;
-	}
-
-	public void setReturnOrCommissionPercent(Double returnOrCommissionPercent) {
-		this.returnOrCommissionPercent = returnOrCommissionPercent;
 	}
 
 	public Double getAirlineCommissionPercent() {
@@ -190,5 +174,20 @@ public class IndiaAirFeesInput extends FeesInput
 	public void setAirSegmentForPricingCount(int airSegmentForPricingCount) {
 		this.airSegmentForPricingCount = airSegmentForPricingCount;
 	}
-	
+
+	public BigDecimal getAirlineOverheadCommission() {
+		return airlineOverheadCommission;
+	}
+
+	public void setAirlineOverheadCommission(BigDecimal airlineOverheadCommission) {
+		this.airlineOverheadCommission = airlineOverheadCommission;
+	}
+
+	public Double getOverheadCommissionPercent() {
+		return overheadCommissionPercent;
+	}
+
+	public void setOverheadCommissionPercent(Double overheadCommissionPercent) {
+		this.overheadCommissionPercent = overheadCommissionPercent;
+	}
 }

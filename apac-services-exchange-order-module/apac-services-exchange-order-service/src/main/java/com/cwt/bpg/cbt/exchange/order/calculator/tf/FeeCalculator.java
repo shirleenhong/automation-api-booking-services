@@ -312,7 +312,7 @@ public class FeeCalculator extends CommonCalculator {
 		if(TripTypes.isInternational(input.getTripType())) {
 			return calculatePercentage(calculatePercentage(safeValue(input.getBaseFare())
 						.subtract(input.getAirlineCommission()), input.getAirlineCommissionPercent()),
-					input.getReturnOrCommissionPercent());
+					input.getOverheadCommissionPercent());
 		}
 		return null;
 	}
@@ -320,8 +320,8 @@ public class FeeCalculator extends CommonCalculator {
 	public BigDecimal getTotalOrCom2(IndiaAirFeesInput input) {
 		
 		if(TripTypes.isInternational(input.getTripType())) {
-			return calculatePercentage(input.getAirlineOrCommission(), 
-					input.getReturnOrCommissionPercent());
+			return calculatePercentage(input.getAirlineOverheadCommission(), 
+					input.getOverheadCommissionPercent());
 		}
 		
 		return null;
