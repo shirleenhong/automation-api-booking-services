@@ -61,7 +61,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 				.subtract(safeValue(discount));
 
 		BigDecimal tax = round(
-				calculatePercentage(grossSell, Double.valueOf(safeValue(input.getProduct().getGst()))),
+				calculatePercentage(grossSell, safeValue(input.getProduct().getGst())),
 				scale);
 
 		BigDecimal gstAmount = round(safeValue(tax)
@@ -140,7 +140,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 		if (client.getMfCcs() != null) {
 
 			Optional<CreditCardVendor> vendor = client.getMfCcs().stream()
-					.filter(item -> item.getVendorName().equals(acctType) && isStandard).findFirst();
+					.filter(item -> item.getVendorName().equals(acctType) && item.isStandard() == isStandard).findFirst();
 
 			if (vendor.isPresent()) {
 				return vendor.get();
@@ -155,7 +155,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 		if (client.getMfBanks() != null) {
 
 			Optional<Bank> bank = client.getMfBanks().stream()
-					.filter(item -> fopNumber.startsWith(item.getCcNumberPrefix()) && isStandard).findFirst();
+					.filter(item -> fopNumber.startsWith(item.getCcNumberPrefix()) && item.isStandard() == isStandard).findFirst();
 
 			if (bank.isPresent()) {
 				return bank.get();
