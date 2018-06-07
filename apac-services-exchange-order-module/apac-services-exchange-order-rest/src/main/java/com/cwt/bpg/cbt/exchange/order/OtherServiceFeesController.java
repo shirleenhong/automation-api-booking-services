@@ -34,7 +34,7 @@ public class OtherServiceFeesController {
 		return new ResponseEntity<>(service.calculateIndiaNonAirFees(input), HttpStatus.OK);
 	}
 
-	@PostMapping(path = "/non-air-fees/{countryCode:HK|SG|hk|sg}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+	@PostMapping(path = "/non-air-fees/{countryCode:hk|sg}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes non air fees.")
