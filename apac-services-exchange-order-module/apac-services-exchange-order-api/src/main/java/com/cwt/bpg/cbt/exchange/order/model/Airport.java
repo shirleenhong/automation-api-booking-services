@@ -1,6 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
+
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -10,17 +13,20 @@ public class Airport implements Serializable {
 
 	private static final long serialVersionUID = 7858317666413989443L;
 
-	@NotNull
+	@NotEmpty
+	@ApiModelProperty(required = true)
     private String code;
 
     private String name;
 
-    @NotNull
+    @NotEmpty
+    @ApiModelProperty(required = true)
     private String cityCode;
 
     private String regionCode;
 
-    @NotNull
+    @NotEmpty
+    @ApiModelProperty(required = true)
     private String countryCode;
 
     public String getName() {
