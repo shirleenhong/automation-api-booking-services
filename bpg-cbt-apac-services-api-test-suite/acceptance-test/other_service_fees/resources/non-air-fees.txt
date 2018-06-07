@@ -23,13 +23,13 @@ Append Fields For Non-Air Fees For India
     Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
     Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "profileName":"${pro_name_value}"
     Run Keyword If    "${acct_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "acctType":"${acct_type_value}"
-    Run Keyword If    "${cost_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "costAmount":"${cost_amount_value}"
+    Run Keyword If    "${cost_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "costAmount":${cost_amount_value}
     Run Keyword If    "${comm_by_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionByPercent":${comm_by_percent_value}
     Run Keyword If    "${comm_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionPercent":${comm_percentage_value}
-    Run Keyword If    "${commission_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionAmount":${commission_value}
+    Run Keyword If    "${commission_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commission":${commission_value}
     Run Keyword If    "${discount_by_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountByPercent":${discount_by_percent_value}
     Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountPercent":${discount_percentage_value}
-    Run Keyword If    "${discount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountAmount":${discount_value}
+    Run Keyword If    "${discount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discount":${discount_value}
     Run Keyword If    "${fop_mode_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopMode":${fop_mode_value}
     Run Keyword If    "${fop_number_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopNumber":"${fop_number_value}"
     Run Keyword If    "${gst_percentage_value}"!="null"    Append To List    ${product_request_list}    "gst":${gst_percentage_value}
@@ -56,7 +56,7 @@ Calculate Non-Air Fees For HK/SG
     Calculate Non-Air Fees Selling Price In DI
     Run Keyword If    ${total_selling_price_value}>${nett_cost_value}    Calculate Non-Air Fees Commission
     ...    ELSE    Set Commission Value
-    Run Keyword If    "${country.upper()}" == "HK"    Remove Decimal Places
+    Run Keyword If    "${country.lower()}" == "hk"    Remove Decimal Places
 
 Calculate Non-Air Fees GST
     ${calculated_value}    Evaluate    ${selling_price_value}*(${gst_percent_value}*0.01)
@@ -91,7 +91,7 @@ Calculate Non-Air Fees Merchant Fee Percentage
     Set Test Variable    ${merchant_fee_percentage_amount}
 
 Calculate Non-Air Fees Commission
-    ${formula}    Set Variable If    "${country}"!="IN"    ${total_selling_price_value}-${nett_cost_value}    (${cost_amount_value}*(${comm_percentage_value}*0.01))
+    ${formula}    Set Variable If    "${country}"!="in"    ${total_selling_price_value}-${nett_cost_value}    (${cost_amount_value}*(${comm_percentage_value}*0.01))
     ${calculated_value}    Evaluate    ${formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
@@ -145,14 +145,14 @@ Create Test Variables For Non-Air Fees
     \    ${fees_item}    Split String    ${fees}    ,
     \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
     Set Test Variable    ${fees_list}
-    Set Test Variable    ${country}    ${country.upper()}
+    Set Test Variable    ${country}    ${country.lower()}
     Set Test Variable    ${service_fee_name}    non-air-fees
 
 Generate Test Variables For Non-Air Fees
     [Arguments]    ${fees_list}    ${country}=sg
     Create Test Variables For Non-Air Fees    ${fees_list}    ${country}
-    Run Keyword If    "${country}"=="SG" or "${country}"=="IN"    Set Test Variable    ${decimal_place}    2    ELSE    Set Test Variable    ${decimal_place}    0
-    Run Keyword If    "${country}"=="IN"    Calculate Non-Air Fees For IN    ELSE    Calculate Non-Air Fees For HK/SG
+    Run Keyword If    "${country}"=="sg" or "${country}"=="in"    Set Test Variable    ${decimal_place}    2    ELSE    Set Test Variable    ${decimal_place}    0
+    Run Keyword If    "${country}"=="in"    Calculate Non-Air Fees For IN    ELSE    Calculate Non-Air Fees For HK/SG
 
 Get Rounding Rules
     Send Currency Get Request
@@ -185,7 +185,7 @@ Send Other Service Fees For Non-Air Fees Post Request
     ...    ELSE    Create Dictionary    Content-Type=application/json
     ${other_service_fees_request_list}    Create List
     ${product_request_list}    Create List
-    Run Keyword If    "${country}"!="IN"    Append Fields For Non-Air Fees For HK/SG     ${other_service_fees_request_list}   ELSE    Append Fields For Non-Air Fees For India     ${other_service_fees_request_list}    ${product_request_list}
+    Run Keyword If    "${country}"!="in"    Append Fields For Non-Air Fees For HK/SG     ${other_service_fees_request_list}   ELSE    Append Fields For Non-Air Fees For India     ${other_service_fees_request_list}    ${product_request_list}
     ${list_count_1}    Get Length    ${other_service_fees_request_list}
     : FOR    ${i}    IN RANGE    0    ${list_count_1}
     \    ${fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${fees_list},
@@ -194,7 +194,7 @@ Send Other Service Fees For Non-Air Fees Post Request
     : FOR    ${i}    IN RANGE    0    ${list_count_2}
     \    ${products_fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${products_fees_list},
     \    ${products_fees_list}    Set Variable    ${products_fees_list}${product_request_list[${i}]}
-    ${data}    Set Variable If    "${country}"!="IN"    {${fees_list}}    {${fees_list},"product":{${products_fees_list}}}
+    ${data}    Set Variable If    "${country}"!="in"    {${fees_list}}    {${fees_list},"product":{${products_fees_list}}}
     Log    ${data}
     ${response}    Post Request    fees    /apac-services-rest/api/other-service-fees/non-air-fees/${country}    data=${data}    headers=${headers}
     Set Test Variable    ${response}
@@ -203,17 +203,17 @@ Send Other Service Fees For Non-Air Fees Post Request
     Set Test Variable    ${api_flag}    fees
 
 Set Commission Value
-    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${commission_value}    0.00
+    Run Keyword If    "${country}"=="sg"    Set Test Variable    ${commission_value}    0.00
     ...    ELSE    Set Test Variable    ${commission_value}    0
 
 Set GST And Nett Cost GST
-    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${gst_amount_value}    0.00
+    Run Keyword If    "${country}"=="sg"    Set Test Variable    ${gst_amount_value}    0.00
     ...    ELSE    Set Test Variable    ${gst_amount_value}    0
-    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${nett_cost_gst_value}    0.00
+    Run Keyword If    "${country}"=="sg"    Set Test Variable    ${nett_cost_gst_value}    0.00
     ...    ELSE    Set Test Variable    ${nett_cost_gst_value}    0
 
 Set Merchant Fee
-    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${merchant_fee_value}    0.00
+    Run Keyword If    "${country}"=="sg"    Set Test Variable    ${merchant_fee_value}    0.00
     ...    ELSE    Set Test Variable    ${merchant_fee_value}    0
 
 Verify Calculated Non-Air Fees Are Not Returned
@@ -221,7 +221,7 @@ Verify Calculated Non-Air Fees Are Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "merchantFee"
     Verify String Does Not Contain Substring    ${response.content}    "gstAmount"
     Verify String Does Not Contain Substring    ${response.content}    "grossSellingPrice"
-    Run Keyword If    "${country}"!="IN"    Verify String Does Not Contain Substring    ${response.content}    "commission"
+    Run Keyword If    "${country}"!="in"    Verify String Does Not Contain Substring    ${response.content}    "commission"
     
    
 Verify Calculated Non-Air Fees Are Returned Correctly
