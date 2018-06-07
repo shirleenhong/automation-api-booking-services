@@ -11,7 +11,7 @@ import org.mongodb.morphia.annotations.Indexes;
 @Indexes(@Index(fields = @Field("countryCode")))
 public class InProductList {
 	private String countryCode;
-	private List<InProduct> products;
+	private List<IndiaProduct> products;
 
 	public String getCountryCode() {
 		return countryCode;
@@ -21,11 +21,11 @@ public class InProductList {
 		this.countryCode = countryCode;
 	}
 
-	public List<InProduct> getProducts() {
+	public List<IndiaProduct> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<InProduct> products) {
+	public void setProducts(List<IndiaProduct> products) {
 		this.products = products;
 	}
 }

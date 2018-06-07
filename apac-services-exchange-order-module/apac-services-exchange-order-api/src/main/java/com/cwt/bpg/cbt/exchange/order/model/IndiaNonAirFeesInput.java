@@ -21,7 +21,7 @@ public class IndiaNonAirFeesInput extends FeesInput {
 	private int fopMode;
 	@ApiModelProperty(required = true)
 	@NotNull
-	private InProduct product;
+	private IndiaProduct product;
 	private String acctType;
 	private String fopNumber;
 	
@@ -81,11 +81,11 @@ public class IndiaNonAirFeesInput extends FeesInput {
 		this.fopMode = fopMode;
 	}
 
-	public InProduct getProduct() {
+	public IndiaProduct getProduct() {
 		return product;
 	}
 
-	public void setProduct(InProduct product) {
+	public void setProduct(IndiaProduct product) {
 		this.product = product;
 	}
 

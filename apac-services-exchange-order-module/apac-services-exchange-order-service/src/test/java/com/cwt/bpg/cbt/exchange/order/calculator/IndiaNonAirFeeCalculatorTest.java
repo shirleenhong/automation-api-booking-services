@@ -51,7 +51,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		input.setFopNumber("1234");
 		input.setFopType(FOPTypes.CWT.getCode());
 		
-		InProduct product= new InProduct();
+		IndiaProduct product= new IndiaProduct();
 		product.setGst(6D);
 		product.setOt1(3D);
 		product.setOt2(5D);

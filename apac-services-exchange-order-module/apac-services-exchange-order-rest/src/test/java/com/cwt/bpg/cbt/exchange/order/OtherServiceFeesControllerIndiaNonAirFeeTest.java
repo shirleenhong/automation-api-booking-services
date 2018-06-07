@@ -23,7 +23,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.cwt.bpg.cbt.exchange.order.model.InProduct;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
 
 import net.minidev.json.JSONObject;
 
@@ -57,7 +57,7 @@ public class OtherServiceFeesControllerIndiaNonAirFeeTest {
     public void shouldReturnFeesBreakdown() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
-    	InProduct product = new InProduct();
+    	IndiaProduct product = new IndiaProduct();
     	product.setGst(2D);
     	product.setOt1(5D);
     	product.setOt2(10D);
@@ -88,7 +88,7 @@ public class OtherServiceFeesControllerIndiaNonAirFeeTest {
     public void shouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
-    	InProduct product = new InProduct();
+    	IndiaProduct product = new IndiaProduct();
     	product.setGst(2D);
     	product.setOt1(5D);
     	product.setOt2(10D);
@@ -121,7 +121,7 @@ public class OtherServiceFeesControllerIndiaNonAirFeeTest {
         jsonObj.put("acctType", "001");
         jsonObj.put("fopType", 2);
         jsonObj.put("fopMode", 3);
-        jsonObj.put("product", new InProduct());
+        jsonObj.put("product", new IndiaProduct());
 
         mockMvc.perform(post("/other-service-fees/non-air-fees/in")
                 .contentType(APPLICATION_JSON_UTF8)
@@ -135,7 +135,7 @@ public class OtherServiceFeesControllerIndiaNonAirFeeTest {
     public void shouldReturnBadRequestOnEmptyCostAmount() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
-        InProduct product = new InProduct();
+        IndiaProduct product = new IndiaProduct();
         product.setGst(2D);
         product.setOt1(5D);
         product.setOt2(10D);
