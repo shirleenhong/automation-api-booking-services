@@ -4,11 +4,14 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity(value = "airlineRules", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("code")))
@@ -17,7 +20,8 @@ public class AirlineRule implements Serializable {
 	private static final long serialVersionUID = -3604480842389246624L;
 
 	@Id
-	@NotNull
+	@NotEmpty
+	@ApiModelProperty(required = true)
 	private String code;
 	private boolean includeYqCommission;
 

@@ -12,6 +12,7 @@ public class VisaFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = -5761273312586606568L;
 
+	@ApiModelProperty(required = true)
 	@NotEmpty
 	private String clientType;
 
