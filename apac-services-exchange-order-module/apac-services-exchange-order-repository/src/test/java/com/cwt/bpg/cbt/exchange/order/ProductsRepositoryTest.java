@@ -203,8 +203,6 @@ public class ProductsRepositoryTest {
 		
 		InProductList inProductList = new InProductList();
 		inProductList.setCountryCode(Country.INDIA.getCode());
-		products.add(new InProduct());
-		inProductList.setCountryCode("IN");
 		List<IndiaProduct> products = new ArrayList<>();
 		products.add(new IndiaProduct());
 		inProductList.setProducts(products);
