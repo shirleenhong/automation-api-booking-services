@@ -1,11 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 
@@ -17,13 +13,13 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
-import com.cwt.bpg.cbt.exchange.order.model.HkSgAirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.HkSgAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public class SgAirCalculatorTest {
 
-	private Calculator calculator = new SgAirCalculator();
+	private Calculator<AirFeesBreakdown, AirFeesInput> calculator = new SgAirCalculator();
 
 	@Mock
 	private ScaleConfig scaleConfig;
@@ -40,14 +36,14 @@ public class SgAirCalculatorTest {
 
 	@Test
 	public void shouldCalculate() {
-		HkSgAirFeesBreakdown HkSgAirFeesBreakdown = (HkSgAirFeesBreakdown) calculator
+		AirFeesBreakdown AirFeesBreakdown = calculator
 				.calculate(null, null);
-		assertNotNull(HkSgAirFeesBreakdown);
+		assertNotNull(AirFeesBreakdown);
 	}
 
 	@Test
 	public void shouldCalculateNotApplyFormulaWithProductTypeNotCT() {
-		HkSgAirFeesInput input = new HkSgAirFeesInput();
+		AirFeesInput input = new AirFeesInput();
 		input.setSellingPrice(bigDecimal("500"));
 		input.setDiscount(bigDecimal("150"));
 		input.setTax1(bigDecimal("23"));
@@ -56,7 +52,7 @@ public class SgAirCalculatorTest {
 		input.setCommission(bigDecimal("15"));
 		input.setNettFare(bigDecimal("300"));
 		input.setCountryCode("HK");
-		HkSgAirFeesBreakdown afb = (HkSgAirFeesBreakdown) calculator.calculate(input, null);
+		AirFeesBreakdown afb = calculator.calculate(input, null);
 
 		assertThat(afb.getCommission(), nullValue());
 		assertThat(afb.getDiscount(), nullValue());
@@ -68,7 +64,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateNotApplyFormulaWithProductTypeCT() {
 
-		HkSgAirFeesInput input = new HkSgAirFeesInput();
+		AirFeesInput input = new AirFeesInput();
 		input.setProductType("CT");
 		input.setNettFare(bigDecimal("300"));
 		input.setDiscountByPercent(false);
@@ -78,7 +74,7 @@ public class SgAirCalculatorTest {
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommission(bigDecimal("15"));
 
-		HkSgAirFeesBreakdown afb = (HkSgAirFeesBreakdown) calculator.calculate(input, null);
+		AirFeesBreakdown afb = calculator.calculate(input, null);
 
 		assertThat(afb.getCommission(), nullValue());
 		assertThat(afb.getDiscount(), nullValue());
@@ -90,7 +86,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateNotDiscountByPercent() {
 
-		HkSgAirFeesInput input = new HkSgAirFeesInput();
+		AirFeesInput input = new AirFeesInput();
 		input.setProductType("CX");
 		input.setApplyFormula(true);
 		input.setDiscountByPercent(false);
@@ -101,7 +97,7 @@ public class SgAirCalculatorTest {
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommission(bigDecimal("15"));
 
-		HkSgAirFeesBreakdown afb = (HkSgAirFeesBreakdown) calculator.calculate(input, null);
+		AirFeesBreakdown afb = calculator.calculate(input, null);
 
 		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(150D)));
@@ -113,7 +109,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithApplyFormula() {
 
-		HkSgAirFeesInput input = new HkSgAirFeesInput();
+		AirFeesInput input = new AirFeesInput();
 		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
 		input.setSellingPrice(bigDecimal("200"));
@@ -126,7 +122,7 @@ public class SgAirCalculatorTest {
 		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setCountryCode("SG");
 
-		HkSgAirFeesBreakdown afb = (HkSgAirFeesBreakdown) calculator.calculate(input, null);
+		AirFeesBreakdown afb = calculator.calculate(input, null);
 
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(0D)));
 		assertThat(afb.getCommission().doubleValue(), is(equalTo(60D)));
@@ -138,7 +134,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithApplyFormulaAndProductTypeCTAndFOPTypeCXIncMF() {
 
-		HkSgAirFeesInput input = new HkSgAirFeesInput();
+		AirFeesInput input = new AirFeesInput();
 		MerchantFee merchantFee = new MerchantFee();
 		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
@@ -159,7 +155,7 @@ public class SgAirCalculatorTest {
 		merchantFee.setMerchantFeePercent(Double.parseDouble("25"));
 		input.setTransactionFee(bigDecimal("75"));
 		input.setCountryCode("SG");
-		HkSgAirFeesBreakdown afb = (HkSgAirFeesBreakdown) calculator.calculate(input,
+		AirFeesBreakdown afb = calculator.calculate(input,
 				merchantFee);
 
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
@@ -172,7 +168,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithApplyFormulaAndProductTypeCTAndFOPTypeCX() {
 
-		HkSgAirFeesInput input = new HkSgAirFeesInput();
+		AirFeesInput input = new AirFeesInput();
 		MerchantFee merchantFee = new MerchantFee();
 		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
@@ -194,7 +190,7 @@ public class SgAirCalculatorTest {
 		input.setTransactionFee(bigDecimal("75"));
 		input.setCountryCode("SG");
 
-		HkSgAirFeesBreakdown afb = (HkSgAirFeesBreakdown) calculator.calculate(input,
+		AirFeesBreakdown afb = calculator.calculate(input,
 				merchantFee);
 
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
@@ -207,7 +203,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithApplyFormulaAndProductTypeCTAndFOPTypeCXIncMerFee() {
 
-		HkSgAirFeesInput input = new HkSgAirFeesInput();
+		AirFeesInput input = new AirFeesInput();
 		MerchantFee merchantFee = new MerchantFee();
 		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
@@ -229,7 +225,7 @@ public class SgAirCalculatorTest {
 		input.setTransactionFee(bigDecimal("75"));
 		input.setCountryCode("SG");
 
-		HkSgAirFeesBreakdown afb = (HkSgAirFeesBreakdown) calculator.calculate(input,
+		AirFeesBreakdown afb = calculator.calculate(input,
 				merchantFee);
 
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
@@ -242,7 +238,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithApplyFormulaAndProductTypeCTAndFOPTypeCXIncMerFee2() {
 
-		HkSgAirFeesInput input = new HkSgAirFeesInput();
+		AirFeesInput input = new AirFeesInput();
 		MerchantFee merchantFee = new MerchantFee();
 		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
@@ -264,7 +260,7 @@ public class SgAirCalculatorTest {
 		input.setTransactionFee(bigDecimal("75"));
 		input.setCountryCode("SG");
 
-		HkSgAirFeesBreakdown afb = (HkSgAirFeesBreakdown) calculator.calculate(input,
+		AirFeesBreakdown afb = calculator.calculate(input,
 				merchantFee);
 
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
@@ -277,7 +273,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateWithApplyFormulaAndProductTypeCTAndFOPTypeCXIncMerFee3() {
 
-		HkSgAirFeesInput input = new HkSgAirFeesInput();
+		AirFeesInput input = new AirFeesInput();
 		MerchantFee merchantFee = new MerchantFee();
 		input.setApplyFormula(true);
 		input.setNettFare(bigDecimal("300"));
@@ -299,7 +295,7 @@ public class SgAirCalculatorTest {
 		input.setTransactionFee(bigDecimal("75"));
 		input.setCountryCode("SG");
 
-		HkSgAirFeesBreakdown afb = (HkSgAirFeesBreakdown) calculator.calculate(input,
+		AirFeesBreakdown afb = calculator.calculate(input,
 				merchantFee);
 
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
@@ -319,7 +315,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculateNoMerchantFee() {
 
-		HkSgAirFeesInput input = new HkSgAirFeesInput();
+		AirFeesInput input = new AirFeesInput();
 		input.setApplyFormula(true);
 		input.setCwtAbsorb(false);
 		input.setFopType("CX");
@@ -335,7 +331,7 @@ public class SgAirCalculatorTest {
 		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setCountryCode("SG");
 
-		HkSgAirFeesBreakdown afb = (HkSgAirFeesBreakdown) calculator.calculate(input, null);
+		AirFeesBreakdown afb = calculator.calculate(input, null);
 
 		assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(0D)));
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(0D)));

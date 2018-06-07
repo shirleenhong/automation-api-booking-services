@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
 
 public class BaseAndYqCalculatorTest {
 
@@ -18,11 +18,11 @@ public class BaseAndYqCalculatorTest {
 	public void getTotalFeeShouldReturnSumOfBaseFareAndYqTax() {
 		BigDecimal baseFare = new BigDecimal(1), yqTax = new BigDecimal(1);
 
-		InAirFeesInput input = new InAirFeesInput();
+		IndiaAirFeesInput input = new IndiaAirFeesInput();
 		input.setBaseFare(baseFare);
 		input.setYqTax(yqTax);
 
-		InAirFeesBreakdown breakdown = new InAirFeesBreakdown();
+		IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
 
 		BigDecimal expectedResult = baseFare.add(yqTax);
 		BigDecimal actualResult = baseAndYqCalculator.getTotalFee(input, breakdown);

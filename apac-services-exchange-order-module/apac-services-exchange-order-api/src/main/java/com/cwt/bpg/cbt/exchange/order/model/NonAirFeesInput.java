@@ -1,30 +1,50 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.NotEmpty;
+import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 public class NonAirFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = 7271039286429340584L;
-	@ApiModelProperty(required = true)
+
+    @ApiModelProperty(required = true)
 	@NotEmpty
-	protected String fopType;
-	protected BigDecimal sellingPrice;
-	protected boolean isMerchantFeeWaive;
+	private String clientType;
+
+    @ApiModelProperty(required = true)
+	@NotEmpty
+    private String fopType;
+
+	private BigDecimal sellingPrice;
+	private boolean isMerchantFeeWaive;
 	private boolean isGstAbsorb;
-	protected boolean isMerchantFeeAbsorb;
+	private boolean isMerchantFeeAbsorb;
+
 	@ApiModelProperty(required = true)
 	@NotNull
-	protected Double gstPercent;
-	protected BigDecimal nettCost;
+    private Double gstPercent;
+
+	private BigDecimal nettCost;
 
 	public NonAirFeesInput() {
         this.sellingPrice = BigDecimal.ZERO;
         this.gstPercent = 0d;
     }
+
+	public String getClientType()
+	{
+		return clientType;
+	}
+
+	public void setClientType(String clientType)
+	{
+		this.clientType = clientType;
+	}
 
 	public boolean isMerchantFeeWaive() {
 		return isMerchantFeeWaive;
@@ -82,3 +102,4 @@ public class NonAirFeesInput extends FeesInput {
 		this.nettCost = nettCost;
 	}
 }
+

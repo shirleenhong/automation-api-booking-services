@@ -7,18 +7,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class FeesInput implements Serializable {
 
-	//TODO Review validation
 	private static final long serialVersionUID = -5237125856544162255L;
 
 	private String countryCode;
 
     @ApiModelProperty(required = true)
-    @NotEmpty
-    private String clientType;
-
-    @ApiModelProperty(required = true)
-    @NotEmpty
-    private String profileName;
+	@NotEmpty
+	private String profileName;
 
 	public String getCountryCode() {
 		return countryCode;
@@ -26,14 +21,6 @@ public class FeesInput implements Serializable {
 
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
-	}
-
-	public String getClientType() {
-		return clientType;
-	}
-
-	public void setClientType(String clientType) {
-		this.clientType = clientType;
 	}
 
 	public String getProfileName() {

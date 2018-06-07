@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
 
 public class NoFeeCalculatorTest {
     private NoFeeCalculator noFeeCalc = new NoFeeCalculator();
@@ -31,7 +31,7 @@ public class NoFeeCalculatorTest {
     @Test
     public void getMerchantFeeShouldReturnNotNull() {
     	assertNotNull(noFeeCalc.getMerchantFee(
-    			new InAirFeesInput(), new InAirFeesBreakdown()));
+    			new IndiaAirFeesInput(), new IndiaAirFeesBreakdown()));
     }
 
     @Test
@@ -46,13 +46,13 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getTotalFeeShouldReturnNull() {
-        assertNull(noFeeCalc.getTotalFee(new InAirFeesInput(), new InAirFeesBreakdown()));
+        assertNull(noFeeCalc.getTotalFee(new IndiaAirFeesInput(), new IndiaAirFeesBreakdown()));
     }
 
     @Test
     public void getTotalSellingFareShouldReturnNotNull() {
     	
-    	InAirFeesBreakdown breakdown = new InAirFeesBreakdown();
+    	IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
     	breakdown.setTotalSellFare(new BigDecimal(100));
     	breakdown.setTotalGst(new BigDecimal(50));
     	breakdown.setTotalMerchantFee(new BigDecimal(10));
@@ -63,7 +63,7 @@ public class NoFeeCalculatorTest {
     @Test
     public void getTotalChargeShouldReturnNotNull() {
 
-    	InAirFeesBreakdown breakdown = new InAirFeesBreakdown();
+    	IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
     	breakdown.setTotalSellFare(new BigDecimal(100));
     	breakdown.setTotalGst(new BigDecimal(50));
     	breakdown.setTotalMerchantFee(new BigDecimal(10));

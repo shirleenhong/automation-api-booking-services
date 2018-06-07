@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
 
 public class FareCalculatorTest {
 
@@ -19,8 +19,8 @@ public class FareCalculatorTest {
 	private BigDecimal totalIataCommission;
 	private BigDecimal expectedPositiveValue;
 	private BigDecimal expectedNegativeValue;
-	private InAirFeesInput input;
-	private InAirFeesBreakdown breakdown;
+	private IndiaAirFeesInput input;
+	private IndiaAirFeesBreakdown breakdown;
 	
 	@Before
 	public void setup() {
@@ -28,8 +28,8 @@ public class FareCalculatorTest {
 		totalIataCommission = new BigDecimal(4);
 		expectedPositiveValue = new BigDecimal(1);
 		expectedNegativeValue = new BigDecimal(-1);
-		input = new InAirFeesInput();
-		breakdown = new InAirFeesBreakdown();
+		input = new IndiaAirFeesInput();
+		breakdown = new IndiaAirFeesBreakdown();
 	}
 
 	@Test

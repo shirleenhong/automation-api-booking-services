@@ -1,12 +1,12 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import com.cwt.bpg.cbt.exchange.order.calculator.InNonAirFeeCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.InNonAirFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
@@ -57,7 +57,9 @@ public class OtherServiceFeesService {
 	private ProductService productService;
 
 	public NonAirFeesBreakdown calculateNonAirFee(NonAirFeesInput input) {
-		return this.hkSgNonAirFeeCalculator.calculate(input, getMerchantFeePct(input));
+        MerchantFee merchantFee = exchangeOrderService
+                .getMerchantFee(input.getCountryCode(), input.getClientType(), input.getProfileName());
+		return this.hkSgNonAirFeeCalculator.calculate(input, merchantFee);
 	}
 
 	public NonAirFeesBreakdown calculateInNonAirFee(InNonAirFeesInput input) {
@@ -68,25 +70,23 @@ public class OtherServiceFeesService {
 		return this.inNonAirFeeCalculator.calculate(input, client, defaultClient);
 	}
 
-	public AirFeesBreakdown calculateAirFee(AirFeesInput input) {
-		String countryCode = input.getCountryCode();
-		if ("IN".equalsIgnoreCase(countryCode)) {
-			final Client client = clientService.getClient(input.getProfileName());
-			final int pricingId = getPricingId(input.getProfileName());
-			final InAirFeesInput inAirFeesInput = (InAirFeesInput) input;
-			final AirlineRule airlineRule = airlineRuleService
-					.getAirlineRule(inAirFeesInput.getPlatCarrier());
-			final Airport airport = getAirport(inAirFeesInput.getCityCode());
-			final Product airproduct = getProduct(Country.INDIA.getCode(), AIR_PRODUCT_CODE);
-
-			return this.tfFactory.getCalculator(pricingId)
-					.calculate(inAirFeesInput, airlineRule, client, airport, airproduct);
-		}
-		else {
-			return this.osFactory.getCalculator(countryCode).calculate((HkSgAirFeesInput) input,
-					getMerchantFeePct(input));
-		}
+	public AirFeesBreakdown calculateAirFees(AirFeesInput input) {
+        MerchantFee merchantFee = exchangeOrderService
+                .getMerchantFee(input.getCountryCode(), input.getClientType(), input.getProfileName());
+	    return this.osFactory.getCalculator(input.getCountryCode()).calculate(input, merchantFee);
 	}
+
+    public IndiaAirFeesBreakdown calculateIndiaAirFees(IndiaAirFeesInput input)
+    {
+        final Client client = clientService.getClient(input.getProfileName());
+        final int pricingId = getPricingId(input.getProfileName());
+        final AirlineRule airlineRule = airlineRuleService.getAirlineRule(input.getPlatCarrier());
+        final Airport airport = getAirport(input.getCityCode());
+        final Product airProduct = getProduct(Country.INDIA.getCode(), AIR_PRODUCT_CODE);
+
+        return this.tfFactory.getCalculator(pricingId)
+                .calculate(input, airlineRule, client, airport, airProduct);
+    }
 
 	private Product getProduct(String countryCode, String productCode) {
 		return productService.getProductByCode(countryCode, productCode);
@@ -102,16 +102,13 @@ public class OtherServiceFeesService {
 	}
 
 	public VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {
-		return this.visaFeesCalculator.calculate(input, getMerchantFeePct(input));
+        MerchantFee merchantFee = exchangeOrderService
+                .getMerchantFee(input.getCountryCode(), input.getClientType(), input.getProfileName());
+        return this.visaFeesCalculator.calculate(input, merchantFee);
 	}
 
 	public AirFeesBreakdown calculateNettCost(NettCostInput input) {
 		return nettCostCalculator.calculateFee(input.getSellingPrice(), input.getCommissionPct());
 	}
 
-	private MerchantFee getMerchantFeePct(FeesInput input) {
-
-		return exchangeOrderService
-				.getMerchantFee(input.getCountryCode(), input.getClientType(), input.getProfileName());
-	}
 }
