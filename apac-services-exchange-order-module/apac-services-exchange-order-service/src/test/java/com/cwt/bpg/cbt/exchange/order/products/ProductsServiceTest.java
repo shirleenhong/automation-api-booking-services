@@ -1,6 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order.products;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -50,9 +52,38 @@ public class ProductsServiceTest {
 		assertEquals(1, products.size());
 		Mockito.verify(repo, Mockito.times(1)).getProducts(countryCode);
 	}
+	
+	@Test
+	public void canFilterProductsByCode() {
+
+		final String countryCode = "HK";
+		final String productCode = "ProductCode";
+		List<Product> value = createListOfProducts();
+		when(repo.getProducts(countryCode)).thenReturn(value);
+		
+		Product product = service.getProductByCode(countryCode, productCode);
+		assertNotNull(product);
+		
+		Mockito.verify(repo, Mockito.times(1)).getProducts(countryCode);
+	}
+	
+	@Test
+	public void canFilterProductsByCodeNull() {
+
+		final String countryCode = "HK";
+		final String productCode = "P";
+		List<Product> value = createListOfProducts();
+		when(repo.getProducts(countryCode)).thenReturn(value);
+		
+		Product product = service.getProductByCode(countryCode, productCode);
+		assertNull(product);
+		
+		Mockito.verify(repo, Mockito.times(1)).getProducts(countryCode);
+	}
 
 	private static List<Product> createListOfProducts() {
 		Product product1 = new HkSgProduct();
+		String productCode = "ProductCode";
 		List<Vendor> vendors = Arrays.asList(new Vendor() {
 			private static final long serialVersionUID = -6678379343715153605L;
 			{
@@ -61,6 +92,7 @@ public class ProductsServiceTest {
 			}
 		});
 		product1.setVendors(vendors);
+		product1.setProductCode(productCode);
 		Product product2 = new HkSgProduct();
 		return Arrays.asList(product1, product2);
 	}

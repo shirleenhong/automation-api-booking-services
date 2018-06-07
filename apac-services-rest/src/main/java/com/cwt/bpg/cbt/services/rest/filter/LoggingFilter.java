@@ -42,7 +42,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 		READABLE_APP_MEDIA_TYPES.add(MediaType.APPLICATION_XML.toString());
 	}
 
-	protected static final Logger LOGGER = LoggerFactory.getLogger(LoggingFilter.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(LoggingFilter.class);
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -89,7 +89,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 						.append(new String(requestWrapper.toByteArray(), charEncoding));
 			}
 			catch (IOException e) {
-				LOGGER.warn("Failed to parse request payload", e);
+				LOG.warn("Failed to parse request payload", e);
 			}
 			
 		}
@@ -98,8 +98,8 @@ public class LoggingFilter extends OncePerRequestFilter {
 	}
 	
 	private void log(String message) {
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug(message);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(message);
 		}
 	}
 
@@ -119,7 +119,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 			}			
 		}
 		catch (UnsupportedEncodingException e) {
-			LOGGER.warn("Failed to parse response payload", e);
+			LOG.warn("Failed to parse response payload", e);
 		}
 		
 		log(b.toString());
