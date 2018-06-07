@@ -7,17 +7,17 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
 
 public class BasicCalculatorTest {
 	private BasicCalculator basicCalculator = new BasicCalculator();
 
 	@Test
 	public void getTotalFeeShouldReturnBaseFare() {
-		InAirFeesInput input = new InAirFeesInput();
+		IndiaAirFeesInput input = new IndiaAirFeesInput();
 		input.setBaseFare(new BigDecimal(6));
-		InAirFeesBreakdown breakdown = new InAirFeesBreakdown();
+		IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
 
 		BigDecimal expectedResult = input.getBaseFare();
 		BigDecimal actualResult = basicCalculator.getTotalFee(input, breakdown);

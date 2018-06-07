@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
 
 public class FullFareCalculatorTest {
 
@@ -19,9 +19,9 @@ public class FullFareCalculatorTest {
 		BigDecimal baseFare = new BigDecimal(1);
 		BigDecimal totalTaxes = new BigDecimal(1);
 
-		InAirFeesInput input = new InAirFeesInput();
+		IndiaAirFeesInput input = new IndiaAirFeesInput();
 		input.setBaseFare(baseFare);
-		InAirFeesBreakdown breakdown = new InAirFeesBreakdown();
+		IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
 		breakdown.setTotalTaxes(totalTaxes);
 
 		BigDecimal expectedResult = baseFare.add(totalTaxes);

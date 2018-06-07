@@ -1,17 +1,19 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.model.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import com.cwt.bpg.cbt.calculator.model.Country;
+import com.cwt.bpg.cbt.exchange.order.model.*;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping(path = "/other-service-fees")
@@ -43,14 +45,26 @@ public class OtherServiceFeesController {
 		return new ResponseEntity<>(service.calculateNonAirFee(input), HttpStatus.OK);
 	}
 
-	@PostMapping(path = "/air-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+    @PostMapping(path = "/air-fees/in", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+            consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+    @ResponseBody
+    @ApiOperation(value = "Computes air fees. Applicable to India air products.")
+    public ResponseEntity<IndiaAirFeesBreakdown> computeIndiaAirFees(
+            @Valid @RequestBody @ApiParam(value = "Values needed for calculation") IndiaAirFeesInput input) {
+
+        return new ResponseEntity<>(service.calculateIndiaAirFees(input), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/air-fees/{countryCode:hk|sg}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Computes air fees. Applicable to air products.")
+	@ApiOperation(value = "Computes air fees. Applicable to non-India air products.")
 	public ResponseEntity<AirFeesBreakdown> computeAirFees(
+			@PathVariable String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") AirFeesInput input) {
 
-		return new ResponseEntity<>(service.calculateAirFee(input), HttpStatus.OK);
+		input.setCountryCode(countryCode.toUpperCase());
+		return new ResponseEntity<>(service.calculateAirFees(input), HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/visa-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },

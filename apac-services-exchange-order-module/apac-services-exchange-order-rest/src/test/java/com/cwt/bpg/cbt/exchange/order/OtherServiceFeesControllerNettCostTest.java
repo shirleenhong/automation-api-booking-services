@@ -21,7 +21,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.cwt.bpg.cbt.exchange.order.model.HkSgAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,7 +58,7 @@ public class OtherServiceFeesControllerNettCostTest {
 	    input.setCommissionPct(2D);
 	    input.setSellingPrice(new BigDecimal(250));
 
-		HkSgAirFeesBreakdown breakdown = new HkSgAirFeesBreakdown();
+		AirFeesBreakdown breakdown = new AirFeesBreakdown();
 		when(service.calculateNettCost(input)).thenReturn(breakdown);
 
 		mockMvc.perform(post("/other-service-fees/nett-cost")

@@ -1,5 +1,15 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.when;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.InNonAirFeeCalculator;
@@ -10,15 +20,6 @@ import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculato
 import com.cwt.bpg.cbt.exchange.order.calculator.tf.FeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.when;
 
 public class OtherServiceFeesServiceTest {
 
@@ -32,7 +33,7 @@ public class OtherServiceFeesServiceTest {
 	private Calculator<NonAirFeesBreakdown, NonAirFeesInput> hkSgNonAirFeeCalculator;
 
 	@Mock
-	private Calculator<AirFeesBreakdown, HkSgAirFeesInput> hkCalculator;
+	private Calculator<AirFeesBreakdown, AirFeesInput> hkCalculator;
 
 	@Mock
 	private FeeCalculator tfCalculator;
@@ -84,16 +85,16 @@ public class OtherServiceFeesServiceTest {
 			.thenReturn(hkCalculator);
 
 		when(hkCalculator.calculate(anyObject(), anyObject()))
-			.thenReturn(new HkSgAirFeesBreakdown());
+			.thenReturn(new AirFeesBreakdown());
 
-		assertNotNull(service.calculateAirFee(new HkSgAirFeesInput()));
+		assertNotNull(service.calculateAirFees(new AirFeesInput()));
 	}
 
 	@Test
 	public void shouldReturnNettCost() {
 
 		when(nettCostCalculator.calculateFee(anyObject(), anyObject()))
-			.thenReturn(new HkSgAirFeesBreakdown());
+			.thenReturn(new AirFeesBreakdown());
 		assertNotNull(service.calculateNettCost(new NettCostInput()));
 	}
 
@@ -105,7 +106,7 @@ public class OtherServiceFeesServiceTest {
 
 		when(tfCalculator.calculate(anyObject(), anyObject(), anyObject(),
 				anyObject(), anyObject()))
-			.thenReturn(new InAirFeesBreakdown());
+			.thenReturn(new IndiaAirFeesBreakdown());
 
 		when(airlineRuleService.getAirlineRule(anyString())).thenReturn(new AirlineRule());
 		when(airportService.getAirport(anyString())).thenReturn(new Airport());
@@ -115,10 +116,10 @@ public class OtherServiceFeesServiceTest {
 		when(clientService.getClient(anyString()))
 				.thenReturn(client);
 
-		InAirFeesInput input = new InAirFeesInput();
+		IndiaAirFeesInput input = new IndiaAirFeesInput();
 		input.setCountryCode(Country.INDIA.getCode());
 
-		assertNotNull(service.calculateAirFee(input));
+		assertNotNull(service.calculateIndiaAirFees(input));
 	}
 
 	@Test
