@@ -53,7 +53,7 @@ public class FeeCalculatorTest {
 		Client client = new Client();
 		IndiaAirFeesInput input = new IndiaAirFeesInput();
 		AirlineRule airlineRule = new AirlineRule();
-		InProduct product = new InProduct();
+		IndiaProduct product = new IndiaProduct();
 		List<ClientPricing> clientPricings = new ArrayList<>();
 		ClientPricing clientPricing = new ClientPricing();
 		List<TransactionFee> transactionFees = new ArrayList<>();
@@ -101,7 +101,7 @@ public class FeeCalculatorTest {
 		client.setIntDdlFeeApply("N");
 		client.setClientPricings(clientPricings);
 
-		calculator.calculate(input, airlineRule, client, new Airport(), new InProduct());
+		calculator.calculate(input, airlineRule, client, new Airport(), new IndiaProduct());
 	}
 
 

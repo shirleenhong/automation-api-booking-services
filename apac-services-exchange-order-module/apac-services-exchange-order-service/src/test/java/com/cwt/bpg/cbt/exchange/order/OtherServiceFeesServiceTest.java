@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.InNonAirFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.IndiaNonAirFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
@@ -57,7 +57,7 @@ public class OtherServiceFeesServiceTest {
 	private VisaFeesCalculator visaFeesCalculator;
 
 	@Mock
-	private InNonAirFeeCalculator inNonAirFeeCalculator;
+	private IndiaNonAirFeeCalculator indiaNonAirFeeCalculator;
 
 	@Mock
 	private ProductService productService;
@@ -75,7 +75,7 @@ public class OtherServiceFeesServiceTest {
 
 		when(hkSgNonAirFeeCalculator.calculate(anyObject(), anyObject()))
 			.thenReturn(new NonAirFeesBreakdown());
-		assertNotNull(service.calculateNonAirFee(new NonAirFeesInput()));
+		assertNotNull(service.calculateNonAirFees(new NonAirFeesInput()));
 	}
 
 	@Test
@@ -135,17 +135,17 @@ public class OtherServiceFeesServiceTest {
 
 	@Test
 	public void shouldReturnNonAirFeeIndia() {
-		when(inNonAirFeeCalculator.calculate(anyObject(), anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
+		when(indiaNonAirFeeCalculator.calculate(anyObject(), anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
 
 		Client client = new Client();
 		client.setPricingId(20);
 		client.setStandardMfProduct(false);
 		when(clientService.getClient(anyString())).thenReturn(client);
 
-		InNonAirFeesInput input = new InNonAirFeesInput();
+		IndiaNonAirFeesInput input = new IndiaNonAirFeesInput();
 		input.setCountryCode(Country.INDIA.getCode());
 
-		assertNotNull(service.calculateInNonAirFee(input));
+		assertNotNull(service.calculateIndiaNonAirFees(input));
 	}
 
 	@Test
@@ -160,6 +160,6 @@ public class OtherServiceFeesServiceTest {
 		NonAirFeesInput input = new NonAirFeesInput();
 		input.setCountryCode(Country.HONG_KONG.getCode());
 		
-		assertNotNull(service.calculateNonAirFee(input));
+		assertNotNull(service.calculateNonAirFees(input));
 	}
 }

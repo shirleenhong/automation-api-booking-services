@@ -37,7 +37,7 @@ public class FeeCalculator extends CommonCalculator {
 		}
 
 		if(input.isGstEnabled() && client.isExemptTax()) {
-			final InProduct product = input.getProduct();
+			final IndiaProduct product = input.getProduct();
 			final BigDecimal baseFarePlusYqTax = safeValue(input.getBaseFare())
 							.add(input.getYqTax());
 			
@@ -76,7 +76,7 @@ public class FeeCalculator extends CommonCalculator {
 		breakdown.setTotalMerchantFee(getMerchantFee(input, breakdown));
 		
 		breakdown.setMerchantFeeOnTf(getMfOnTf(input, breakdown, 
-								getGstOnTf((InProduct) airProduct, breakdown.getFee())));
+								getGstOnTf((IndiaProduct) airProduct, breakdown.getFee())));
 		breakdown.setTotalSellFare(getTotalSellingFare(breakdown));		
 		breakdown.setTotalCharge(getTotalCharge(breakdown));
 				
@@ -97,7 +97,7 @@ public class FeeCalculator extends CommonCalculator {
 		return breakdown;
 	}
 
-	private BigDecimal getGstOnTf(InProduct airProduct, BigDecimal fee) {
+	private BigDecimal getGstOnTf(IndiaProduct airProduct, BigDecimal fee) {
 
 		return calculatePercentage(fee, airProduct.getGst())
 				.add(calculatePercentage(fee, airProduct.getOt1()))

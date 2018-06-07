@@ -20,17 +20,17 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
-public class InNonAirFeeCalculatorTest {
+public class IndiaNonAirFeeCalculatorTest {
 
 	@InjectMocks
-	private InNonAirFeeCalculator calculator = new InNonAirFeeCalculator();
+	private IndiaNonAirFeeCalculator calculator = new IndiaNonAirFeeCalculator();
 
 	@Mock
 	private ScaleConfig scaleConfig;
 
 	private Client client;
 
-	private InNonAirFeesInput input = new InNonAirFeesInput();
+	private IndiaNonAirFeesInput input = new IndiaNonAirFeesInput();
 
 	@Before
 	public void setup() {
@@ -51,7 +51,7 @@ public class InNonAirFeeCalculatorTest {
 		input.setFopNumber("1234");
 		input.setFopType(FOPTypes.CWT.getCode());
 		
-		InProduct product= new InProduct();
+		IndiaProduct product= new IndiaProduct();
 		product.setGst(6D);
 		product.setOt1(3D);
 		product.setOt2(5D);
@@ -244,7 +244,7 @@ public class InNonAirFeeCalculatorTest {
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
 
-		assertNotNull(calculator.calculate(new InNonAirFeesInput(), null, null));
+		assertNotNull(calculator.calculate(new IndiaNonAirFeesInput(), null, null));
 		assertNotNull(calculator.calculate(null, new Client(), null));
 	}
 
