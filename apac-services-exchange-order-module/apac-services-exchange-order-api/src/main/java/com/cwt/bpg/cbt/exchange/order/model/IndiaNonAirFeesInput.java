@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-public class InNonAirFeesInput extends FeesInput {
+public class IndiaNonAirFeesInput extends FeesInput {
 	private static final long serialVersionUID = 7271039286429340584L;
 
 	private String fopType;
@@ -21,7 +21,7 @@ public class InNonAirFeesInput extends FeesInput {
 	private int fopMode;
 	@ApiModelProperty(required = true)
 	@NotNull
-	private InProduct product;
+	private IndiaProduct product;
 	private String acctType;
 	private String fopNumber;
 	
@@ -81,11 +81,11 @@ public class InNonAirFeesInput extends FeesInput {
 		this.fopMode = fopMode;
 	}
 
-	public InProduct getProduct() {
+	public IndiaProduct getProduct() {
 		return product;
 	}
 
-	public void setProduct(InProduct product) {
+	public void setProduct(IndiaProduct product) {
 		this.product = product;
 	}
 

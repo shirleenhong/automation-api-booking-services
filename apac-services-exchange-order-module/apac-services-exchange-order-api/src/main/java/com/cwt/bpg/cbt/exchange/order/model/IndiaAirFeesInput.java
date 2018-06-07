@@ -25,7 +25,7 @@ public class IndiaAirFeesInput extends FeesInput
 	private boolean discountEnabled;
 	private int airSegmentForPricingCount;
 	
-	private InProduct product;
+	private IndiaProduct product;
 	
 	private boolean feeOverride;
 	
@@ -127,11 +127,11 @@ public class IndiaAirFeesInput extends FeesInput
 		this.gstEnabled = gstEnabled;
 	}
 
-	public InProduct getProduct() {
+	public IndiaProduct getProduct() {
 		return product;
 	}
 
-	public void setProduct(InProduct product) {
+	public void setProduct(IndiaProduct product) {
 		this.product = product;
 	}
 

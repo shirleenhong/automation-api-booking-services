@@ -48,11 +48,11 @@ public class ProductRepository {
 		return productList == null ? Collections.<HkSgProduct>emptyList() : productList.getProducts();
 	}
 
-	private List<InProduct> getInProducts(String countryCode) {
+	private List<IndiaProduct> getInProducts(String countryCode) {
 		InProductList productList = morphia.getDatastore().createQuery(InProductList.class)
 				.field("countryCode").equal(countryCode).get();
 
-		return productList == null ? Collections.<InProduct>emptyList() : productList.getProducts();
+		return productList == null ? Collections.<IndiaProduct>emptyList() : productList.getProducts();
 	}
 
 	private void sort(List<Product> products) {

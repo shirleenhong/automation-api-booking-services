@@ -203,8 +203,10 @@ public class ProductsRepositoryTest {
 		
 		InProductList inProductList = new InProductList();
 		inProductList.setCountryCode(Country.INDIA.getCode());
-		List<InProduct> products = new ArrayList<>();
 		products.add(new InProduct());
+		inProductList.setCountryCode("IN");
+		List<IndiaProduct> products = new ArrayList<>();
+		products.add(new IndiaProduct());
 		inProductList.setProducts(products);
 
 		Query query = Mockito.mock(Query.class);

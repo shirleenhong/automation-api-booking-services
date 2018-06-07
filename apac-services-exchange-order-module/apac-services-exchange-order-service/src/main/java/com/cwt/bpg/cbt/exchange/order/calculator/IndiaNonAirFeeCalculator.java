@@ -19,7 +19,7 @@ public class IndiaNonAirFeeCalculator extends CommonCalculator {
 	private ScaleConfig scaleConfig;
 	private static final int BILL_TO_COMPANY = 3;
 
-	public NonAirFeesBreakdown calculate(InNonAirFeesInput input, 
+	public NonAirFeesBreakdown calculate(IndiaNonAirFeesInput input,
 			Client client, 
 			Client defaultClient) {
 
@@ -84,7 +84,7 @@ public class IndiaNonAirFeeCalculator extends CommonCalculator {
 		return result;
 	}
 
-	private Double calculateMfPercent(InNonAirFeesInput input, 
+	private Double calculateMfPercent(IndiaNonAirFeesInput input,
 			Client client, 
 			Client defaultClient) {
 
