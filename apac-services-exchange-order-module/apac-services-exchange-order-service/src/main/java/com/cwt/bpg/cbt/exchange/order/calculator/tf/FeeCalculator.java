@@ -185,7 +185,6 @@ public class FeeCalculator extends CommonCalculator {
 	}
 
 	private BigDecimal getFeeByCoupon() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
