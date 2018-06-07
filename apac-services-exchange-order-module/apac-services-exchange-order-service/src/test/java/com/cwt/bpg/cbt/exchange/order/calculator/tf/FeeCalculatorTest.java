@@ -579,8 +579,8 @@ public class FeeCalculatorTest {
 		input.setAirlineOrCommission(airlineCommission);
 		input.setReturnOrCommissionPercent(airlineCommissionPercent);
 
-		assertNull(calculator.getTotalOrCom2(input));
-
+		BigDecimal totalOrCom2 = calculator.getTotalOrCom2(input);
+		assertNull(totalOrCom2);
 	}
 
 
