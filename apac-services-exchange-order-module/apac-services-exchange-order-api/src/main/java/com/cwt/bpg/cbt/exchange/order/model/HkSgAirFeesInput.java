@@ -2,12 +2,14 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class HkSgAirFeesInput extends AirFeesInput
 {
     private static final long serialVersionUID = -5169667744324661769L;
 
+    @ApiModelProperty(required = true)
     @NotEmpty
     private String fopType;
     private BigDecimal sellingPrice;

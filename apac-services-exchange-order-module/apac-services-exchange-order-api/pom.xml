@@ -20,5 +20,10 @@
 			<artifactId>morphia</artifactId>
 			<version>${mongodb.morphia.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.cwt.bpg.cbt</groupId>
+			<artifactId>apac-services-documentation</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 </project>

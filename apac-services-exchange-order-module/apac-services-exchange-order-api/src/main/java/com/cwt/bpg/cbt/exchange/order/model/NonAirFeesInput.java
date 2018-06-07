@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -8,13 +9,14 @@ import java.math.BigDecimal;
 public class NonAirFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = 7271039286429340584L;
-
+	@ApiModelProperty(required = true)
 	@NotEmpty
 	protected String fopType;
 	protected BigDecimal sellingPrice;
 	protected boolean isMerchantFeeWaive;
 	private boolean isGstAbsorb;
 	protected boolean isMerchantFeeAbsorb;
+	@ApiModelProperty(required = true)
 	@NotNull
 	protected Double gstPercent;
 	protected BigDecimal nettCost;

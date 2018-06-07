@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 
 import java.math.BigDecimal;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,7 @@ public class SgAirCalculator extends CommonCalculator implements Calculator<AirF
 			return result;
 		}
 
-		int scale = scaleConfig.getScale(input.getCountryCode());
+		int scale = scaleConfig.getScale(Country.SINGAPORE.getCode());
 
 		BigDecimal totalSellingFare;
 		BigDecimal nettCost;
