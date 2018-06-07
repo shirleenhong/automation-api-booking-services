@@ -31,7 +31,7 @@ public class OtherServiceFeesControllerVisaFeeTest {
 	@Test
 	public void canComputeVisaFees() {
 		VisaFeesInput input = new VisaFeesInput();
-		ResponseEntity<VisaFeesBreakdown> computeVisaFee = controller.computeVisaFee(input);
+		ResponseEntity<VisaFeesBreakdown> computeVisaFee = controller.computeVisaFees(input);
 		
 		assertEquals(HttpStatus.OK, computeVisaFee.getStatusCode());
 	}

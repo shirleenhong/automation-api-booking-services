@@ -13,13 +13,13 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
-public class InNonAirFeeCalculator extends CommonCalculator {
+public class IndiaNonAirFeeCalculator extends CommonCalculator {
 
 	@Autowired
 	private ScaleConfig scaleConfig;
 	private static final int BTC_FOP_MODE = 3;
 
-	public NonAirFeesBreakdown calculate(InNonAirFeesInput input, 
+	public NonAirFeesBreakdown calculate(IndiaNonAirFeesInput input,
 			Client client, 
 			Client defaultClient) {
 
@@ -84,7 +84,7 @@ public class InNonAirFeeCalculator extends CommonCalculator {
 		return result;
 	}
 
-	private Double calculateMfPercent(InNonAirFeesInput input, 
+	private Double calculateMfPercent(IndiaNonAirFeesInput input,
 			Client client, 
 			Client defaultClient) {
 
