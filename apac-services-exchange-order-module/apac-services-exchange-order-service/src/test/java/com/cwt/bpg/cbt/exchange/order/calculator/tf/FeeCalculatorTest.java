@@ -1,8 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,8 +14,8 @@ import com.cwt.bpg.cbt.exchange.order.model.*;
 public class FeeCalculatorTest {
 
 	private FeeCalculator calculator;
-	private InAirFeesInput input;
-	private InAirFeesBreakdown breakdown;
+	private IndiaAirFeesInput input;
+	private IndiaAirFeesBreakdown breakdown;
 	private BigDecimal baseFare;
 	private BigDecimal yqTax;
 	private BigDecimal airlineCommission;
@@ -35,12 +33,11 @@ public class FeeCalculatorTest {
 	private Double ot1;
 	private Double ot2;
 
-	
 	@Before
 	public void setup() {
 		calculator = new FeeCalculator();
-		breakdown = new InAirFeesBreakdown();
-		input = new InAirFeesInput();
+		breakdown = new IndiaAirFeesBreakdown();
+		input = new IndiaAirFeesInput();
 		baseFare = new BigDecimal(5);
 		yqTax = new BigDecimal(5);
 		airlineCommission = new BigDecimal(5);
@@ -54,17 +51,18 @@ public class FeeCalculatorTest {
 	@Test
 	public void shouldCalculate() {
 		Client client = new Client();
+		IndiaAirFeesInput input = new IndiaAirFeesInput();
 		AirlineRule airlineRule = new AirlineRule();
 		InProduct product = new InProduct();
 		List<ClientPricing> clientPricings = new ArrayList<>();
 		ClientPricing clientPricing = new ClientPricing();
 		List<TransactionFee> transactionFees = new ArrayList<>();
 		TransactionFee transactionFee = new TransactionFee();
-		
+
 		product.setGst(gst);
 		product.setOt1(ot1);
 		product.setOt2(ot2);
-		
+
 		input.setGstEnabled(true);
 		input.setProduct(product);
 		input.setCommissionEnabled(true);
@@ -79,7 +77,7 @@ public class FeeCalculatorTest {
 		input.setTripType("I");
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
-		
+
 		breakdown.setTotalIataCommission(totalIataCommission);
 		breakdown.setClientDiscountPercent(clientDiscountPercent);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
@@ -87,12 +85,12 @@ public class FeeCalculatorTest {
 		breakdown.setTotalDiscount(totalDiscount);
 		breakdown.setTotalTaxes(totalTaxes);
 		breakdown.setTotalGst(totalGst);
-		
+
 		airlineRule.setIncludeYqCommission(false);
-		
+
 		clientPricing.setFeeOption("P");
 		clientPricing.setTripType("I");
-		
+
 		transactionFee.setTerritoryCodes(new ArrayList<>());
 		transactionFees.add(transactionFee);
 		clientPricing.setTransactionFees(transactionFees);
@@ -113,7 +111,7 @@ public class FeeCalculatorTest {
 	public void shouldGetTotalDiscountNotInternational() {
 		input.setTripType("D");
 		BigDecimal totalDiscount = calculator.getTotalDiscount(input, breakdown);
-		
+
 		assertEquals(new BigDecimal("0.0"), totalDiscount);
 	}
 
@@ -121,7 +119,7 @@ public class FeeCalculatorTest {
 	public void shouldGetTotalOverheadCommission() {
 		input.setTripType("D");
 		BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission(input);
-		
+
 		assertNull(totalOverheadCommission);
 	}
 
@@ -131,19 +129,19 @@ public class FeeCalculatorTest {
 		input.setAirlineOrCommission(airlineCommission);
 		input.setReturnOrCommissionPercent(airlineCommissionPercent);
 		BigDecimal totalOrCom2 = calculator.getTotalOrCom2(input);
-		
+
 		assertEquals(new BigDecimal(0.25), totalOrCom2);
-		
+
 	}
-	
+
 	@Test
 	public void shouldGetTotalOrCom2Null() {
 		input.setTripType("D");
 		input.setAirlineOrCommission(airlineCommission);
 		input.setReturnOrCommissionPercent(airlineCommissionPercent);
-		
+
 		assertNull(calculator.getTotalOrCom2(input));
-		
+
 	}
 
 
@@ -151,7 +149,7 @@ public class FeeCalculatorTest {
 	public void shouldGetTotalNettFare() {
 		input.setBaseFare(baseFare);
 		BigDecimal totalNetFare = calculator.getTotalNettFare(input);
-		
+
 		assertEquals(new BigDecimal(5), totalNetFare);
 	}
 

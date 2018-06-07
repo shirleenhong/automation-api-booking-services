@@ -1,13 +1,17 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class NonAirFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = 7271039286429340584L;
+
+	@NotEmpty
+	private String clientType;
 
 	@NotEmpty
 	protected String fopType;
@@ -23,6 +27,16 @@ public class NonAirFeesInput extends FeesInput {
         this.sellingPrice = BigDecimal.ZERO;
         this.gstPercent = 0d;
     }
+
+	public String getClientType()
+	{
+		return clientType;
+	}
+
+	public void setClientType(String clientType)
+	{
+		this.clientType = clientType;
+	}
 
 	public boolean isMerchantFeeWaive() {
 		return isMerchantFeeWaive;

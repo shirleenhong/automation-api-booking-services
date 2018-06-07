@@ -13,7 +13,7 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
-public class HkAirCalculator extends CommonCalculator implements Calculator<AirFeesBreakdown, HkSgAirFeesInput> {
+public class HkAirCalculator extends CommonCalculator implements Calculator<AirFeesBreakdown, AirFeesInput> {
 
 	@Autowired
 	private ScaleConfig scaleConfig;
@@ -33,9 +33,9 @@ public class HkAirCalculator extends CommonCalculator implements Calculator<AirF
 			ClientTypes.TF.getCode());
 
 	@Override
-	public AirFeesBreakdown calculate(HkSgAirFeesInput input, MerchantFee merchantFee) {
+	public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFee) {
 
-		HkSgAirFeesBreakdown result = new HkSgAirFeesBreakdown();
+		AirFeesBreakdown result = new AirFeesBreakdown();
 		
 		if (input == null) {
 			return result;
@@ -100,7 +100,7 @@ public class HkAirCalculator extends CommonCalculator implements Calculator<AirF
 		return result;
 	}
 
-	private BigDecimal getCommission(HkSgAirFeesInput input, int scale, BigDecimal nettFare) {
+	private BigDecimal getCommission(AirFeesInput input, int scale, BigDecimal nettFare) {
 
 		BigDecimal commission = nettFare
 				.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPercent())),
@@ -114,8 +114,8 @@ public class HkAirCalculator extends CommonCalculator implements Calculator<AirF
 		return round(commission, scale);
 	}
 
-	private BigDecimal applyMerchantFee(MerchantFee merchantFee, HkSgAirFeesInput input, int scale,
-			BigDecimal nettFare, BigDecimal tax1, BigDecimal tax2) {
+	private BigDecimal applyMerchantFee(MerchantFee merchantFee, AirFeesInput input, int scale,
+                                        BigDecimal nettFare, BigDecimal tax1, BigDecimal tax2) {
 
 		BigDecimal merchantFeeAmount = null;
 
@@ -149,8 +149,8 @@ public class HkAirCalculator extends CommonCalculator implements Calculator<AirF
 		return merchantFeeAmount;
 	}
 
-	private BigDecimal applyDiscount(HkSgAirFeesInput input, BigDecimal commission, BigDecimal discount,
-			BigDecimal nettFare) {
+	private BigDecimal applyDiscount(AirFeesInput input, BigDecimal commission, BigDecimal discount,
+                                     BigDecimal nettFare) {
 
 		BigDecimal result = discount;
 

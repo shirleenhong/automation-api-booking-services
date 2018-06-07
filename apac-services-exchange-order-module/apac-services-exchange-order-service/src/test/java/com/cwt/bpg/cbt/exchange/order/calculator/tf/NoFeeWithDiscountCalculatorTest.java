@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.TripTypes;
 
 public class NoFeeWithDiscountCalculatorTest {
@@ -17,14 +17,14 @@ public class NoFeeWithDiscountCalculatorTest {
 
 	@Test
 	public void getMfOnTfShouldReturnNullIfTripTypeInt() {
-        InAirFeesInput input = new InAirFeesInput();
+        IndiaAirFeesInput input = new IndiaAirFeesInput();
         input.setTripType(TripTypes.INTERNATIONAL.getCode());
-		assertNull(noFeeWithDiscountCalculator.getMfOnTf(input, new InAirFeesBreakdown(), new BigDecimal(1)));
+		assertNull(noFeeWithDiscountCalculator.getMfOnTf(input, new IndiaAirFeesBreakdown(), new BigDecimal(1)));
 	}
 
     @Test
     public void getMfOnTfShouldReturnNotNullIfTripTypeNotInt() {
-        InAirFeesInput input = new InAirFeesInput();
-        assertNotNull(noFeeWithDiscountCalculator.getMfOnTf(input, new InAirFeesBreakdown(), new BigDecimal(1)));
+        IndiaAirFeesInput input = new IndiaAirFeesInput();
+        assertNotNull(noFeeWithDiscountCalculator.getMfOnTf(input, new IndiaAirFeesBreakdown(), new BigDecimal(1)));
     }
 }

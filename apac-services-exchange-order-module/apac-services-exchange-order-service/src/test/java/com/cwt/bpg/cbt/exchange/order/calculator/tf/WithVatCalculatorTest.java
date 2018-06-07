@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.InAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
 
 public class WithVatCalculatorTest {
 	private WithVatCalculator withVatCalculator = new WithVatCalculator();
@@ -22,9 +22,9 @@ public class WithVatCalculatorTest {
 		BigDecimal totalAirlineCommission = new BigDecimal(1);
 		BigDecimal totalReturnableOr = new BigDecimal(1);
 
-		InAirFeesInput input = new InAirFeesInput();
+		IndiaAirFeesInput input = new IndiaAirFeesInput();
 		input.setBaseFare(baseFare);
-		InAirFeesBreakdown breakdown = new InAirFeesBreakdown();
+		IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
 		breakdown.setTotalTaxes(new BigDecimal(1));
 		breakdown.setTotalGst(new BigDecimal(1));
 		breakdown.setTotalIataCommission(new BigDecimal(1));

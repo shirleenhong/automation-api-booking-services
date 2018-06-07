@@ -4,9 +4,14 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class VisaFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = -5761273312586606568L;
+
+	@NotEmpty
+	private String clientType;
 
 	private boolean nettCostMerchantFeeChecked;
 	private boolean cwtHandlingMerchantFeeChecked;
@@ -16,7 +21,17 @@ public class VisaFeesInput extends FeesInput {
 	@NotNull
 	private BigDecimal vendorHandling;
 
-	public BigDecimal getNettCost() {
+    public String getClientType()
+    {
+        return clientType;
+    }
+
+    public void setClientType(String clientType)
+    {
+        this.clientType = clientType;
+    }
+
+    public BigDecimal getNettCost() {
 		return nettCost;
 	}
 
