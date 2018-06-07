@@ -104,7 +104,8 @@ public class FeeCalculatorTest {
 		client.setIntDdlFeeApply("N");
 		client.setClientPricings(clientPricings);
 
-		assertNotNull(calculator.calculate(input, airlineRule, client, new Airport(), new IndiaProduct()));
+		breakdown = calculator.calculate(input, airlineRule, client, new Airport(), new IndiaProduct());
+		assertNotNull(breakdown);
 	}
 
 	@Test
@@ -159,7 +160,8 @@ public class FeeCalculatorTest {
 		client.setIntDdlFeeApply("N");
 		client.setClientPricings(clientPricings);
 
-		assertNotNull(calculator.calculate(input, airlineRule, client, new Airport(), new IndiaProduct()));
+		breakdown = calculator.calculate(input, airlineRule, client, new Airport(), new IndiaProduct());
+		assertNotNull(breakdown);
 	}
 	
 	@Test
@@ -217,10 +219,11 @@ public class FeeCalculatorTest {
 		client.setLccSameAsInt(true);
 		client.setIntDdlFeeApply("N");
 		client.setClientPricings(clientPricings);
-		
+
 		airport.setCityCode("code1");
 
-		assertNotNull(calculator.calculate(input, airlineRule, client, airport, new IndiaProduct()));
+		breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
+		assertNotNull(breakdown);
 	}
 	
 	@Test
@@ -282,7 +285,8 @@ public class FeeCalculatorTest {
 		
 		airport.setCityCode("code1");
 
-		assertNotNull(calculator.calculate(input, airlineRule, client, airport, new IndiaProduct()));
+		breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
+		assertNotNull(breakdown);
 	}
 	
 	@Test
@@ -343,8 +347,9 @@ public class FeeCalculatorTest {
 		client.setClientPricings(clientPricings);
 		
 		airport.setCityCode("code1");
-
-		assertNotNull(calculator.calculate(input, airlineRule, client, airport, new IndiaProduct()));
+		
+		breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
+		assertNotNull(breakdown);
 	}
 	
 	@Test
@@ -407,7 +412,8 @@ public class FeeCalculatorTest {
 		
 		airport.setCityCode("code1");
 
-		assertNotNull(calculator.calculate(input, airlineRule, client, airport, new IndiaProduct()));
+		breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
+		assertNotNull(breakdown);
 	}
 	
 	@Test
@@ -471,7 +477,8 @@ public class FeeCalculatorTest {
 		
 		airport.setCityCode("code1");
 
-		assertNotNull(calculator.calculate(input, airlineRule, client, airport, new IndiaProduct()));
+		breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
+		assertNotNull(breakdown);
 	}
 
 	@Test
@@ -535,7 +542,8 @@ public class FeeCalculatorTest {
 		
 		airport.setCityCode("code1");
 
-		assertNotNull(calculator.calculate(input, airlineRule, client, airport, new IndiaProduct()));
+		breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
+		assertNotNull(breakdown);
 	}
 
 	@Test
