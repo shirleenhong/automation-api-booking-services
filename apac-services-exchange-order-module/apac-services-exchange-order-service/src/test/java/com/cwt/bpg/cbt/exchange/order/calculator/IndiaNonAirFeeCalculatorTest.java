@@ -19,7 +19,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
-import com.google.common.collect.ImmutableList;
 
 public class IndiaNonAirFeeCalculatorTest {
 
@@ -129,7 +128,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
-		client.setMfProducts(ImmutableList.of(pf));
+		client.setMfProducts(singletonList(pf));
 		client.setMfBanks(singletonList(bank));
 		client.setApplyMfCc(true);
 		client.setApplyMfBank(true);
