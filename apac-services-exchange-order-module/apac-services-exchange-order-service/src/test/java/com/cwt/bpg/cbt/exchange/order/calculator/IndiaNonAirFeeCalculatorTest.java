@@ -20,10 +20,10 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
-public class InNonAirFeeCalculatorTest {
+public class IndiaNonAirFeeCalculatorTest {
 
 	@InjectMocks
-	private InNonAirFeeCalculator calculator = new InNonAirFeeCalculator();
+	private IndiaNonAirFeeCalculator calculator = new IndiaNonAirFeeCalculator();
 
 	@Mock
 	private ScaleConfig scaleConfig;

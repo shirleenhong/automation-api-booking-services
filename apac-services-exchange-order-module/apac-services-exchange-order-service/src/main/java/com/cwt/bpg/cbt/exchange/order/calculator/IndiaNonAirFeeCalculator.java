@@ -13,7 +13,7 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
-public class InNonAirFeeCalculator extends CommonCalculator {
+public class IndiaNonAirFeeCalculator extends CommonCalculator {
 
 	@Autowired
 	private ScaleConfig scaleConfig;

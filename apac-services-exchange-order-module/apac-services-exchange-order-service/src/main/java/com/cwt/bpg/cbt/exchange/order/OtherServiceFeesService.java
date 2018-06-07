@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.InNonAirFeeCalculator;
+import com.cwt.bpg.cbt.exchange.order.calculator.IndiaNonAirFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
@@ -25,7 +25,7 @@ public class OtherServiceFeesService {
 
 	@Autowired
 	@Qualifier(value = "inNonAirFeeCalculator")
-	private InNonAirFeeCalculator inNonAirFeeCalculator;
+	private IndiaNonAirFeeCalculator inNonAirFeeCalculator;
 
 	@Autowired
 	@Qualifier(value = "nettCostCalculator")
