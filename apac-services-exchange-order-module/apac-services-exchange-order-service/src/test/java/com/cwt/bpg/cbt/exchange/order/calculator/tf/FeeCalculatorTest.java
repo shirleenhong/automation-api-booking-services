@@ -117,11 +117,11 @@ public class FeeCalculatorTest {
 		ClientPricing clientPricing = new ClientPricing();
 		List<TransactionFee> transactionFees = new ArrayList<>();
 		TransactionFee transactionFee = new TransactionFee();
-		
+
 		product.setGst(gst);
 		product.setOt1(ot1);
 		product.setOt2(ot2);
-		
+
 		input.setGstEnabled(true);
 		input.setProduct(product);
 		input.setCommissionEnabled(true);
@@ -136,7 +136,7 @@ public class FeeCalculatorTest {
 		input.setTripType("I");
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
-		
+
 		breakdown.setTotalIataCommission(totalIataCommission);
 		breakdown.setClientDiscountPercent(clientDiscountPercent);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
@@ -144,12 +144,12 @@ public class FeeCalculatorTest {
 		breakdown.setTotalDiscount(totalDiscount);
 		breakdown.setTotalTaxes(totalTaxes);
 		breakdown.setTotalGst(totalGst);
-		
+
 		airlineRule.setIncludeYqCommission(false);
-		
+
 		clientPricing.setFeeOption("C");
 		clientPricing.setTripType("I");
-		
+
 		transactionFee.setTerritoryCodes(new ArrayList<>());
 		transactionFees.add(transactionFee);
 		clientPricing.setTransactionFees(transactionFees);
@@ -163,7 +163,7 @@ public class FeeCalculatorTest {
 		breakdown = calculator.calculate(input, airlineRule, client, new Airport(), new IndiaProduct());
 		assertNotNull(breakdown);
 	}
-	
+
 	@Test
 	public void shouldCalculateFeeOptionTicket() {
 		Client client = new Client();
@@ -178,7 +178,7 @@ public class FeeCalculatorTest {
 		product.setGst(gst);
 		product.setOt1(ot1);
 		product.setOt2(ot2);
-		
+
 		input.setGstEnabled(true);
 		input.setProduct(product);
 		input.setCommissionEnabled(true);
@@ -193,7 +193,7 @@ public class FeeCalculatorTest {
 		input.setTripType("I");
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
-		
+
 		breakdown.setTotalIataCommission(totalIataCommission);
 		breakdown.setClientDiscountPercent(clientDiscountPercent);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
@@ -201,12 +201,12 @@ public class FeeCalculatorTest {
 		breakdown.setTotalDiscount(totalDiscount);
 		breakdown.setTotalTaxes(totalTaxes);
 		breakdown.setTotalGst(totalGst);
-		
+
 		airlineRule.setIncludeYqCommission(false);
-		
+
 		clientPricing.setFeeOption("T");
 		clientPricing.setTripType("I");
-		
+
 		territorryCodes.add("code1");
 		transactionFee.setTerritoryCodes(territorryCodes);
 		transactionFee.setStartAmount(baseFare);
@@ -225,7 +225,7 @@ public class FeeCalculatorTest {
 		breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
 		assertNotNull(breakdown);
 	}
-	
+
 	@Test
 	public void shouldCalculateFeeOptionTicketWithTfOperatorF() {
 		Client client = new Client();
@@ -240,7 +240,7 @@ public class FeeCalculatorTest {
 		product.setGst(gst);
 		product.setOt1(ot1);
 		product.setOt2(ot2);
-		
+
 		input.setGstEnabled(true);
 		input.setProduct(product);
 		input.setCommissionEnabled(true);
@@ -255,7 +255,7 @@ public class FeeCalculatorTest {
 		input.setTripType("I");
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
-		
+
 		breakdown.setTotalIataCommission(totalIataCommission);
 		breakdown.setClientDiscountPercent(clientDiscountPercent);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
@@ -263,12 +263,12 @@ public class FeeCalculatorTest {
 		breakdown.setTotalDiscount(totalDiscount);
 		breakdown.setTotalTaxes(totalTaxes);
 		breakdown.setTotalGst(totalGst);
-		
+
 		airlineRule.setIncludeYqCommission(false);
-		
+
 		clientPricing.setFeeOption("T");
 		clientPricing.setTripType("I");
-		
+
 		territorryCodes.add("code1");
 		transactionFee.setTerritoryCodes(territorryCodes);
 		transactionFee.setStartAmount(baseFare);
@@ -282,13 +282,13 @@ public class FeeCalculatorTest {
 		client.setLccSameAsInt(true);
 		client.setIntDdlFeeApply("N");
 		client.setClientPricings(clientPricings);
-		
+
 		airport.setCityCode("code1");
 
 		breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
 		assertNotNull(breakdown);
 	}
-	
+
 	@Test
 	public void shouldCalculateFeeOptionTicketWithTfOperatorM() {
 		Client client = new Client();
@@ -303,7 +303,7 @@ public class FeeCalculatorTest {
 		product.setGst(gst);
 		product.setOt1(ot1);
 		product.setOt2(ot2);
-		
+
 		input.setGstEnabled(true);
 		input.setProduct(product);
 		input.setCommissionEnabled(true);
@@ -318,7 +318,7 @@ public class FeeCalculatorTest {
 		input.setTripType("I");
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
-		
+
 		breakdown.setTotalIataCommission(totalIataCommission);
 		breakdown.setClientDiscountPercent(clientDiscountPercent);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
@@ -326,12 +326,12 @@ public class FeeCalculatorTest {
 		breakdown.setTotalDiscount(totalDiscount);
 		breakdown.setTotalTaxes(totalTaxes);
 		breakdown.setTotalGst(totalGst);
-		
+
 		airlineRule.setIncludeYqCommission(false);
-		
+
 		clientPricing.setFeeOption("T");
 		clientPricing.setTripType("I");
-		
+
 		territorryCodes.add("code1");
 		transactionFee.setTerritoryCodes(territorryCodes);
 		transactionFee.setStartAmount(baseFare);
@@ -345,13 +345,13 @@ public class FeeCalculatorTest {
 		client.setLccSameAsInt(true);
 		client.setIntDdlFeeApply("N");
 		client.setClientPricings(clientPricings);
-		
+
 		airport.setCityCode("code1");
-		
+
 		breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
 		assertNotNull(breakdown);
 	}
-	
+
 	@Test
 	public void shouldCalculateFeeOptionTicketWithTfOperatorD() {
 		Client client = new Client();
@@ -366,7 +366,7 @@ public class FeeCalculatorTest {
 		product.setGst(gst);
 		product.setOt1(ot1);
 		product.setOt2(ot2);
-		
+
 		input.setGstEnabled(true);
 		input.setProduct(product);
 		input.setCommissionEnabled(true);
@@ -381,7 +381,7 @@ public class FeeCalculatorTest {
 		input.setTripType("I");
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
-		
+
 		breakdown.setTotalIataCommission(totalIataCommission);
 		breakdown.setClientDiscountPercent(clientDiscountPercent);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
@@ -389,12 +389,12 @@ public class FeeCalculatorTest {
 		breakdown.setTotalDiscount(totalDiscount);
 		breakdown.setTotalTaxes(totalTaxes);
 		breakdown.setTotalGst(totalGst);
-		
+
 		airlineRule.setIncludeYqCommission(false);
-		
+
 		clientPricing.setFeeOption("T");
 		clientPricing.setTripType("I");
-		
+
 		territorryCodes.add("code1");
 		transactionFee.setTerritoryCodes(territorryCodes);
 		transactionFee.setStartAmount(baseFare);
@@ -409,13 +409,13 @@ public class FeeCalculatorTest {
 		client.setLccSameAsInt(true);
 		client.setIntDdlFeeApply("N");
 		client.setClientPricings(clientPricings);
-		
+
 		airport.setCityCode("code1");
 
 		breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
 		assertNotNull(breakdown);
 	}
-	
+
 	@Test
 	public void shouldCalculateFeeOptionTicketWithTfOperatorDWithMaxAmt() {
 		Client client = new Client();
@@ -430,7 +430,7 @@ public class FeeCalculatorTest {
 		product.setGst(gst);
 		product.setOt1(ot1);
 		product.setOt2(ot2);
-		
+
 		input.setGstEnabled(true);
 		input.setProduct(product);
 		input.setCommissionEnabled(true);
@@ -445,7 +445,7 @@ public class FeeCalculatorTest {
 		input.setTripType("I");
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
-		
+
 		breakdown.setTotalIataCommission(totalIataCommission);
 		breakdown.setClientDiscountPercent(clientDiscountPercent);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
@@ -453,12 +453,12 @@ public class FeeCalculatorTest {
 		breakdown.setTotalDiscount(totalDiscount);
 		breakdown.setTotalTaxes(totalTaxes);
 		breakdown.setTotalGst(totalGst);
-		
+
 		airlineRule.setIncludeYqCommission(false);
-		
+
 		clientPricing.setFeeOption("T");
 		clientPricing.setTripType("I");
-		
+
 		territorryCodes.add("code1");
 		transactionFee.setTerritoryCodes(territorryCodes);
 		transactionFee.setStartAmount(baseFare);
@@ -474,7 +474,7 @@ public class FeeCalculatorTest {
 		client.setLccSameAsInt(true);
 		client.setIntDdlFeeApply("N");
 		client.setClientPricings(clientPricings);
-		
+
 		airport.setCityCode("code1");
 
 		breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
@@ -495,7 +495,7 @@ public class FeeCalculatorTest {
 		product.setGst(gst);
 		product.setOt1(ot1);
 		product.setOt2(ot2);
-		
+
 		input.setGstEnabled(true);
 		input.setProduct(product);
 		input.setCommissionEnabled(true);
@@ -510,7 +510,7 @@ public class FeeCalculatorTest {
 		input.setTripType("I");
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
-		
+
 		breakdown.setTotalIataCommission(totalIataCommission);
 		breakdown.setClientDiscountPercent(clientDiscountPercent);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
@@ -518,12 +518,12 @@ public class FeeCalculatorTest {
 		breakdown.setTotalDiscount(totalDiscount);
 		breakdown.setTotalTaxes(totalTaxes);
 		breakdown.setTotalGst(totalGst);
-		
+
 		airlineRule.setIncludeYqCommission(false);
-		
+
 		clientPricing.setFeeOption("P");
 		clientPricing.setTripType("I");
-		
+
 		territorryCodes.add("code1");
 		transactionFee.setTerritoryCodes(territorryCodes);
 		transactionFee.setStartAmount(baseFare);
@@ -539,7 +539,7 @@ public class FeeCalculatorTest {
 		client.setLccSameAsInt(true);
 		client.setIntDdlFeeApply("N");
 		client.setClientPricings(clientPricings);
-		
+
 		airport.setCityCode("code1");
 
 		breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());

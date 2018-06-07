@@ -240,12 +240,9 @@ public class FeeCalculator extends CommonCalculator {
 							&& amount.compareTo(i.getEndAmount()) >= 0
 							)
 				).findFirst();
-		
-		if(result.isPresent()) {
-			return result.get();
-		}
-		
-		return null;
+
+		return result.orElse(null);
+
 	}
 
 	public BigDecimal getTotalAirCommission(IndiaAirFeesInput input) {

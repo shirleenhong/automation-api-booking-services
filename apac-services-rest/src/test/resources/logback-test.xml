@@ -1,7 +1,6 @@
 <configuration>
 
-	<contextListener
-		class="ch.qos.logback.classic.jul.LevelChangePropagator" />
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator" />
 
 	<property name="PATTERN"
 		value="[%d{ISO8601}] [%X{UUID}] [%t] [%p] [%c{1}] [%m]%n" />
@@ -13,40 +12,34 @@
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>DEBUG</level>
 		</filter>
-		<encoder
-			class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
 			<layout class="ch.qos.logback.classic.PatternLayout">
 				<pattern>${PATTERN}</pattern>
 			</layout>
 		</encoder>
 		<param name="File" value="${LOG_DIR}/${APPLICATION}.log" />
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<FileNamePattern>${LOG_DIR}/${APPLICATION}.%d{yyyy-MM-dd-HH}.log
 			</FileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 	</appender>
 
-	<appender name="STDOUT"
-		class="ch.qos.logback.core.ConsoleAppender">
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<pattern>${PATTERN}</pattern>
 		</encoder>
 	</appender>
 
-	<appender name="ASYNC-WARNINGS"
-		class="ch.qos.logback.classic.AsyncAppender">
+	<appender name="ASYNC-WARNINGS" class="ch.qos.logback.classic.AsyncAppender">
 		<appender-ref ref="WARNINGS" />
 	</appender>
 
-	<logger name="org.apache.http.wire" level="DEBUG"
-		additivity="false">
+	<logger name="org.apache.http.wire" level="DEBUG" additivity="false">
 		<appender-ref ref="ASYNC-WARNINGS" />
 	</logger>
 
-	<logger name="org.mongodb.driver" level="DEBUG"
-		additivity="false">
+	<logger name="org.mongodb.driver" level="DEBUG" additivity="false">
 		<appender-ref ref="ASYNC-WARNINGS" />
 	</logger>
 
@@ -64,16 +57,14 @@
 		<appender-ref ref="STDOUT" />
 	</logger>
 
-	<logger name="org.apache.catalina" level="INFO"
-		additivity="true">
+	<logger name="org.apache.catalina" level="INFO" additivity="true">
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
-	<logger
-		name="com.cwt.bpg.cbt.services.rest.filter.LoggingFilter">
-		<level value="DEBUG" />
+	<logger name="org.springframework.web.servlet.mvc.method.annotation" level="DEBUG" additivity="true">
+		<appender-ref ref="STDOUT" />
 	</logger>
-
+	
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 	</root>
