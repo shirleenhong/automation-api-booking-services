@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-@Component("hkSgNonAirFeeCalculator")
-public class HkSgNonAirFeeCalculator extends CommonCalculator implements Calculator<NonAirFeesBreakdown, NonAirFeesInput> {
+@Component("nonAirFeeCalculator")
+public class NonAirFeeCalculator extends CommonCalculator implements Calculator<NonAirFeesBreakdown, NonAirFeesInput> {
 
 	@Autowired
 	private ScaleConfig scaleConfig;

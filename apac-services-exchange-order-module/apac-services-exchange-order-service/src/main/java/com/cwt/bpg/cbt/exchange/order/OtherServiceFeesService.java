@@ -20,8 +20,8 @@ public class OtherServiceFeesService {
 	private static final String AIR_PRODUCT_CODE = "35";
 
 	@Autowired
-	@Qualifier(value = "hkSgNonAirFeeCalculator")
-	private Calculator<NonAirFeesBreakdown, NonAirFeesInput> hkSgNonAirFeeCalculator;
+	@Qualifier(value = "nonAirFeeCalculator")
+	private Calculator<NonAirFeesBreakdown, NonAirFeesInput> nonAirFeeCalculator;
 
 	@Autowired
 	@Qualifier(value = "indiaNonAirFeeCalculator")
@@ -59,7 +59,7 @@ public class OtherServiceFeesService {
 	public NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input) {
         MerchantFee merchantFee = exchangeOrderService
                 .getMerchantFee(input.getCountryCode(), input.getClientType(), input.getProfileName());
-		return this.hkSgNonAirFeeCalculator.calculate(input, merchantFee);
+		return this.nonAirFeeCalculator.calculate(input, merchantFee);
 	}
 
 	public NonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
