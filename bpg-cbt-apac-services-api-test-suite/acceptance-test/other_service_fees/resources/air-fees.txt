@@ -34,7 +34,7 @@ Calculate Air Fees-HK Merchant Fee
     ...    ELSE    Calculate Air Fees-HK Merchant Fee Without UATP
 
 Calculate Air Fees-HK Merchant Fee With UATP
-    ${merchant_fee_formula}    Set Variable If    "${country}" == "HK" and "${client_type_value.upper()}" == "TF"    ${transaction_fee_value}*(${merchant_fee_percentage_value}*0.01)    "${country}" == "HK" and "${client_type_value.upper()}" != "TF"    (${nett_fare_amount}-${nett_fare_original_value}-${tax_1_value}-${tax_2_value})*(${merchant_fee_percentage_value}*0.01)
+    ${merchant_fee_formula}    Set Variable If    "${country}" == "hk" and "${client_type_value.upper()}" == "TF"    ${transaction_fee_value}*(${merchant_fee_percentage_value}*0.01)    "${country}" == "hk" and "${client_type_value.upper()}" != "TF"    (${nett_fare_amount}-${nett_fare_original_value}-${tax_1_value}-${tax_2_value})*(${merchant_fee_percentage_value}*0.01)
     ${calculated_value}    Evaluate    ${merchant_fee_formula}
     Comment    ${calculated_value}    Round Up    ${calculated_value}    ${decimal_place}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
@@ -206,17 +206,17 @@ Create Test Variables For Air Fees-HK
     \    ${fees_item}    Split String    ${fees}    ,
     \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
     Set Test Variable    ${fees_list}
-    Set Test Variable    ${country}    ${country.upper()}
+    Set Test Variable    ${country}    ${country.lower()}
     Set Test Variable    ${service_fee_name}    air-fees
 
 Generate Test Variables For Air Fees-HK
     [Arguments]    ${fees_list}    ${country}
     Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
-    ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
+    ${decimal_place}    Set Variable If    "${country.lower()}" == "sg"    2    0
     Set Test Variable    ${decimal_place}
     Run Keyword If    "${apply_formula_value}" == "true"    Generate Test Variables For Air Fees-HK With Formula
     ...    ELSE    Generate Test Variables For Air Fees-HK Without Formula
-    Run Keyword If    "${country.upper()}" != "SG"    Remove Decimal Places For Air Fees-HK
+    Run Keyword If    "${country.lower()}" != "sg"    Remove Decimal Places For Air Fees-HK
 
 Generate Test Variables For Air Fees-HK With Formula
     Run Keyword If    "${commission_percent_flag_value}" == "true"    Run Keywords    Calculate Air Fees-HK Commission
@@ -244,7 +244,7 @@ Generate Test Variables For Air Fees-HK Without Formula
 Generate Test Variables For Air Fees-SG
     [Arguments]    ${fees_list}    ${country}
     Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
-    ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
+    ${decimal_place}    Set Variable If    "${country.lower()}" == "sg"    2    0
     Set Test Variable    ${decimal_place}
     Run Keyword If    "${apply_formula_value}" == "true"    Generate Test Variables For Air Fees-SG With Formula
     ...    ELSE    Generate Test Variables For Air Fees-SG Without Formula
@@ -307,7 +307,7 @@ Send Other Service Fees For Air Fees Post Request
     Run Keyword If    "${tax_1_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax1":${tax_1_value}
     Run Keyword If    "${tax_2_value}"!="null"    Append To List    ${other_service_fees_request_list}    "tax2":${tax_2_value}
     Run Keyword If    "${web_fare_flag_value}"!="null"    Append To List    ${other_service_fees_request_list}    "webFareSelected":${web_fare_flag_value}
-    ${selling_price_exists}    Run Keyword If    "${country}"=="SG"    Run Keyword And Return Status    Variable Should Exist    ${selling_price_value}
+    ${selling_price_exists}    Run Keyword If    "${country}"=="sg"    Run Keyword And Return Status    Variable Should Exist    ${selling_price_value}
     ...    ELSE    Set Variable    False
     Run Keyword If    "${selling_price_exists}"=="True"    Append To List    ${other_service_fees_request_list}    "sellingPrice":${selling_price_value}
     ${transaction_fee_exists}    Run Keyword And Return Status    Variable Should Exist    ${transaction_fee_value}
