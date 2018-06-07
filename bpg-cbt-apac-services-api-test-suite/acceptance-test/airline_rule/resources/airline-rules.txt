@@ -58,7 +58,7 @@ Send Put Request For Airline Rules
     Create Session    airline-rules    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${data}    Set Variable    {"code":"${airline_code}","includeYqComm":${include_yq_comm}}
+    ${data}    Set Variable    {"code":"${airline_code}","includeYqCommission":${include_yq_comm}}
     ${data}    Replace String    ${data}    "null"    null
     ${response}    Put Request    airline-rules    /apac-services-rest/api/airline-rules    data=${data}    headers=${headers}
     Set Test Variable    ${response}
@@ -85,4 +85,4 @@ Verify Airline Rules Are Correctly Retrieved
     
 Verify Airline Rules Are Not Retrieved
     Verify String Does Not Contain Substring    ${response.content}    "code"
-    Verify String Does Not Contain Substring    ${response.content}    "includeYqComm"
+    Verify String Does Not Contain Substring    ${response.content}    "includeYqCommission"
