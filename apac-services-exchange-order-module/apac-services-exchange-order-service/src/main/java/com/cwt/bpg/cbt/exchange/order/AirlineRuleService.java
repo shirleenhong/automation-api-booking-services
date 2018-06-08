@@ -31,7 +31,7 @@ public class AirlineRuleService {
 		return repository.remove(airlineCode);
 	}
 	
-	@Cacheable(cacheNames = "airline-rules", key = "#airlineCode")
+	@Cacheable(cacheNames = "airline-rules", key = "#airlineCode", condition="#airlineCode != null")
 	public AirlineRule getAirlineRule(String airlineCode) {
 		return repository.get(airlineCode);
 	}

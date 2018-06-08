@@ -8,7 +8,13 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 public class FeeCalculatorTest {
@@ -19,7 +25,7 @@ public class FeeCalculatorTest {
 	private BigDecimal baseFare;
 	private BigDecimal yqTax;
 	private BigDecimal airlineCommission;
-	private BigDecimal totalIataCommission;
+	private BigDecimal totalAirlineCommission;
 	private BigDecimal totalOverheadCommission;
 	private BigDecimal tax1;
 	private BigDecimal tax2;
@@ -30,24 +36,33 @@ public class FeeCalculatorTest {
 	private BigDecimal maxAmount;
 	private Double gst;
 	private Double airlineCommissionPercent;
-	private Double clientDiscountPercent;
 	private Double ot1;
 	private Double ot2;
 
+	@Mock
+	private ScaleConfig scaleConfig;
+	
 	@Before
 	public void setup() {
+		MockitoAnnotations.initMocks(this);
+
 		calculator = new FeeCalculator();
+		
+		Mockito.when(scaleConfig.getScale(Mockito.eq("IN"))).thenReturn(2);
+		
+		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
+		
 		breakdown = new IndiaAirFeesBreakdown();
 		input = new IndiaAirFeesInput();
+		input.setCountryCode(Country.INDIA.getCode());
 		baseFare = new BigDecimal(5);
 		yqTax = new BigDecimal(5);
 		airlineCommission = new BigDecimal(5);
-		totalIataCommission = new BigDecimal(5);
+		totalAirlineCommission = new BigDecimal(5);
 		totalSellFare = new BigDecimal(1000);
 		maxAmount = new BigDecimal(4);
 		gst = new Double(30);
 		airlineCommissionPercent = new Double(5);
-		clientDiscountPercent = new Double(5);
 		ot1 = new Double(5);
 		ot2 = new Double(5);
 	}
@@ -55,6 +70,7 @@ public class FeeCalculatorTest {
 	public void shouldCalculate() {
 		Client client = new Client();
 		IndiaAirFeesInput input = new IndiaAirFeesInput();
+		input.setCountryCode(Country.INDIA.getCode());
 		AirlineRule airlineRule = new AirlineRule();
 		IndiaProduct product = new IndiaProduct();
 		List<ClientPricing> clientPricings = new ArrayList<>();
@@ -81,8 +97,7 @@ public class FeeCalculatorTest {
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
 
-		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		breakdown.setTotalAirlineCommission(totalAirlineCommission);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -137,8 +152,7 @@ public class FeeCalculatorTest {
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
 
-		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		breakdown.setTotalAirlineCommission(totalAirlineCommission);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -194,8 +208,7 @@ public class FeeCalculatorTest {
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
 
-		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		breakdown.setTotalAirlineCommission(totalAirlineCommission);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -256,8 +269,7 @@ public class FeeCalculatorTest {
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
 
-		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		breakdown.setTotalAirlineCommission(totalAirlineCommission);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -319,8 +331,8 @@ public class FeeCalculatorTest {
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
 
-		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		breakdown.setTotalAirlineCommission(totalAirlineCommission);
+		
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -382,8 +394,8 @@ public class FeeCalculatorTest {
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
 
-		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		breakdown.setTotalAirlineCommission(totalAirlineCommission);
+		
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -446,8 +458,8 @@ public class FeeCalculatorTest {
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
 
-		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		breakdown.setTotalAirlineCommission(totalAirlineCommission);
+		
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -511,8 +523,8 @@ public class FeeCalculatorTest {
 		input.setAirlineCommissionPercent(airlineCommissionPercent);
 		input.setFeeOverride(false);
 
-		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		breakdown.setTotalAirlineCommission(totalAirlineCommission);
+		
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -563,23 +575,23 @@ public class FeeCalculatorTest {
 	}
 
 	@Test
-	public void shouldGetTotalOrCom2() {
+	public void shouldGetOverheadComission2() {
 		input.setTripType("I");
-		input.setAirlineOrCommission(airlineCommission);
-		input.setReturnOrCommissionPercent(airlineCommissionPercent);
-		BigDecimal totalOrCom2 = calculator.getTotalOrCom2(input);
+		input.setAirlineOverheadCommission(airlineCommission);
+		input.setOverheadCommissionPercent(airlineCommissionPercent);
+		BigDecimal totalOrCom2 = calculator.getTotalOverheadComission2(input);
 
 		assertEquals(new BigDecimal(0.25), totalOrCom2);
 
 	}
 
 	@Test
-	public void shouldGetTotalOrCom2Null() {
+	public void shouldGetTotalOverheadCommission2Null() {
 		input.setTripType("D");
-		input.setAirlineOrCommission(airlineCommission);
-		input.setReturnOrCommissionPercent(airlineCommissionPercent);
+		input.setAirlineOverheadCommission(airlineCommission);
+		input.setOverheadCommissionPercent(airlineCommissionPercent);
 
-		BigDecimal totalOrCom2 = calculator.getTotalOrCom2(input);
+		BigDecimal totalOrCom2 = calculator.getTotalOverheadComission2(input);
 		assertNull(totalOrCom2);
 	}
 

@@ -10,24 +10,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
-public class ProductRepository
-{
+public class ProductRepository {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepository.class);
-    private static final String INDIA_COUNTRY_CODE = "IN";
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepository.class);
 
-    @Autowired
+	@Autowired
 	private MorphiaComponent morphia;
 
 	public List<BaseProduct> getProducts(String countryCode) {
 
 		List<BaseProduct> baseProducts = new ArrayList<>();
 		try {
-			if (INDIA_COUNTRY_CODE.equalsIgnoreCase(countryCode)) {
+			if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
 				baseProducts.addAll(getIndiaProducts(countryCode));
 			}
 			else {
@@ -46,7 +45,7 @@ public class ProductRepository
 		HkSgProductList productList = morphia.getDatastore().createQuery(HkSgProductList.class)
 				.field("countryCode").equal(countryCode).get();
 
-		return productList == null ? Collections.<Product>emptyList() : productList.getProducts();
+		return productList == null ? Collections.emptyList() : productList.getProducts();
 	}
 
 	private List<IndiaProduct> getIndiaProducts(String countryCode) {
@@ -56,19 +55,15 @@ public class ProductRepository
 		return productList == null ? Collections.emptyList() : productList.getProducts();
 	}
 
-    private void sort(List<BaseProduct> baseProducts)
-    {
-        if (!baseProducts.isEmpty())
-        {
-            for (BaseProduct baseProduct : baseProducts)
-            {
-                if (!baseProduct.getVendors().isEmpty())
-                {
-                    baseProduct.getVendors().sort(Comparator.comparing(Vendor::getVendorName, String.CASE_INSENSITIVE_ORDER));
-                }
-            }
-            baseProducts.sort(Comparator.comparing(BaseProduct::getDescription, String.CASE_INSENSITIVE_ORDER));
-        }
-    }
+	private void sort(List<BaseProduct> baseProducts) {
+
+		for (BaseProduct baseProduct : baseProducts) {
+			if (!baseProduct.getVendors().isEmpty()) {
+                baseProduct.getVendors()
+						.sort(Comparator.comparing(Vendor::getVendorName, String.CASE_INSENSITIVE_ORDER));
+			}
+		}
+        baseProducts.sort(Comparator.comparing(BaseProduct::getDescription, String.CASE_INSENSITIVE_ORDER));
+	}
 
 }

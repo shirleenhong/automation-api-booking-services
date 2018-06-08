@@ -16,7 +16,7 @@ public class FareCalculatorTest {
 	private FareCalculator fareCalc = new FareCalculator();
 	
 	private BigDecimal baseFare;
-	private BigDecimal totalIataCommission;
+	private BigDecimal totalAirlineCommission;
 	private BigDecimal expectedPositiveValue;
 	private BigDecimal expectedNegativeValue;
 	private IndiaAirFeesInput input;
@@ -25,7 +25,7 @@ public class FareCalculatorTest {
 	@Before
 	public void setup() {
 		baseFare = new BigDecimal(5);
-		totalIataCommission = new BigDecimal(4);
+		totalAirlineCommission = new BigDecimal(4);
 		expectedPositiveValue = new BigDecimal(1);
 		expectedNegativeValue = new BigDecimal(-1);
 		input = new IndiaAirFeesInput();
@@ -35,7 +35,7 @@ public class FareCalculatorTest {
 	@Test
 	public void shouldGetTotalFeeValidParams() {
 		input.setBaseFare(baseFare);
-		breakdown.setTotalIataCommission(totalIataCommission);
+		breakdown.setTotalAirlineCommission(totalAirlineCommission);
 		
 		assertNotNull(fareCalc.getTotalFee(input, breakdown));
 
@@ -44,7 +44,7 @@ public class FareCalculatorTest {
 	@Test
 	public void shouldGetTotalFeeDifference() {
 		input.setBaseFare(baseFare);
-		breakdown.setTotalIataCommission(totalIataCommission);
+		breakdown.setTotalAirlineCommission(totalAirlineCommission);
 		
 		BigDecimal actualTotalFee = fareCalc.getTotalFee(input, breakdown);
 		assertEquals(expectedPositiveValue, actualTotalFee);
@@ -53,15 +53,15 @@ public class FareCalculatorTest {
 	@Test
 	public void shouldGetTotalFeeNullValues() {
 		input.setBaseFare(null);
-		breakdown.setTotalIataCommission(null);
+		breakdown.setTotalAirlineCommission(null);
 		
 		assertNotNull(fareCalc.getTotalFee(input, breakdown));
 	}
 	
 	@Test
 	public void shouldGetTotalFeeNegativeDiff() {
-		input.setBaseFare(totalIataCommission);
-		breakdown.setTotalIataCommission(baseFare);
+		input.setBaseFare(totalAirlineCommission);
+		breakdown.setTotalAirlineCommission(baseFare);
 
 		
 		BigDecimal actualTotalFee = fareCalc.getTotalFee(input, breakdown);

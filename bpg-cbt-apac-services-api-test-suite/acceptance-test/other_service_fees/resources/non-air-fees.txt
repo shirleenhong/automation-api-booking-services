@@ -6,10 +6,9 @@ Resource    ../../resources/api-variables.txt
 *** Keywords ***
 Append Fields For Non-Air Fees For HK/SG
     [Arguments]    ${other_service_fees_request_list}
-    Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
-    ${client_type}    Set Variable If    "${client_type_value}"=="NULL"    null    "${client_type_value}"=="None"    None    "${client_type_value}"
-    Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":${client_type}
+    Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":"${client_type_value}"
     Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "profileName":"${pro_name_value}"
+    Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
     Run Keyword If    "${merchant_fee_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeAbsorb":${merchant_fee_absorb_value}
     Run Keyword If    "${merchant_fee_waive_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeWaive":${merchant_fee_waive_value}
     Run Keyword If    "${selling_price_value}"!="null"    Append To List    ${other_service_fees_request_list}    "sellingPrice":${selling_price_value}
@@ -195,6 +194,8 @@ Send Other Service Fees For Non-Air Fees Post Request
     \    ${products_fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${products_fees_list},
     \    ${products_fees_list}    Set Variable    ${products_fees_list}${product_request_list[${i}]}
     ${data}    Set Variable If    "${country}"!="in"    {${fees_list}}    {${fees_list},"product":{${products_fees_list}}}
+    ${data}    Replace String    ${data}    "None"    None
+    ${data}    Replace String    ${data}    "NULL"    NULL
     Log    ${data}
     ${response}    Post Request    fees    /apac-services-rest/api/other-service-fees/non-air-fees/${country}    data=${data}    headers=${headers}
     Set Test Variable    ${response}
