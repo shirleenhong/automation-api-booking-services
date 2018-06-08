@@ -8,7 +8,13 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 public class FeeCalculatorTest {
@@ -33,11 +39,22 @@ public class FeeCalculatorTest {
 	private Double ot1;
 	private Double ot2;
 
+	@Mock
+	private ScaleConfig scaleConfig;
+	
 	@Before
 	public void setup() {
+		MockitoAnnotations.initMocks(this);
+
 		calculator = new FeeCalculator();
+		
+		Mockito.when(scaleConfig.getScale(Mockito.eq("IN"))).thenReturn(2);
+		
+		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
+		
 		breakdown = new IndiaAirFeesBreakdown();
 		input = new IndiaAirFeesInput();
+		input.setCountryCode(Country.INDIA.getCode());
 		baseFare = new BigDecimal(5);
 		yqTax = new BigDecimal(5);
 		airlineCommission = new BigDecimal(5);
@@ -53,6 +70,7 @@ public class FeeCalculatorTest {
 	public void shouldCalculate() {
 		Client client = new Client();
 		IndiaAirFeesInput input = new IndiaAirFeesInput();
+		input.setCountryCode(Country.INDIA.getCode());
 		AirlineRule airlineRule = new AirlineRule();
 		IndiaProduct product = new IndiaProduct();
 		List<ClientPricing> clientPricings = new ArrayList<>();
@@ -557,7 +575,7 @@ public class FeeCalculatorTest {
 	}
 
 	@Test
-	public void shouldGetTotalOrCom2() {
+	public void shouldGetOverheadComission2() {
 		input.setTripType("I");
 		input.setAirlineOverheadCommission(airlineCommission);
 		input.setOverheadCommissionPercent(airlineCommissionPercent);
@@ -568,7 +586,7 @@ public class FeeCalculatorTest {
 	}
 
 	@Test
-	public void shouldGetTotalOrCom2Null() {
+	public void shouldGetTotalOverheadCommission2Null() {
 		input.setTripType("D");
 		input.setAirlineOverheadCommission(airlineCommission);
 		input.setOverheadCommissionPercent(airlineCommissionPercent);

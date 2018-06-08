@@ -3,9 +3,11 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component("tfCalculator")
@@ -18,6 +20,9 @@ public class FeeCalculator extends CommonCalculator {
 	private static final String ALL = "X";	
 	private static final String SOLO = "SOLO";
 	private static final String GROUP = "GROUP";
+	
+	@Autowired
+	ScaleConfig scaleConfig;
 
 	public IndiaAirFeesBreakdown calculate(IndiaAirFeesInput input,
 										   AirlineRule airlineRule,
@@ -29,6 +34,8 @@ public class FeeCalculator extends CommonCalculator {
 		BigDecimal yqTax = null;
 		
 		IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
+		
+		int scale = scaleConfig.getScale(input.getCountryCode().toUpperCase());
 		
 		if(input.isGstEnabled()) {
 			gstAmount = BigDecimal.ZERO;
@@ -49,39 +56,39 @@ public class FeeCalculator extends CommonCalculator {
 		}
 				
 		if(input.isCommissionEnabled()) {
-			breakdown.setTotalAirlineCommission(getTotalAirCommission(input));
+			breakdown.setTotalAirlineCommission(round(getTotalAirCommission(input), scale));
 		} 
 		
 		if(input.isOverheadCommissionEnabled()) {
-			breakdown.setTotalOverheadCommission(getTotalOverheadCommission(input));
+			breakdown.setTotalOverheadCommission(round(getTotalOverheadCommission(input), scale));
 		}
 		
 		if(input.isMarkupEnabled()) {
-			breakdown.setTotalMarkup(getTotalMarkup());
+			breakdown.setTotalMarkup(round(getTotalMarkup(), scale));
 		}
 		
 		if(input.isDiscountEnabled()) {
-			breakdown.setTotalDiscount(getTotalDiscount(input, breakdown));
+			breakdown.setTotalDiscount(round(getTotalDiscount(input, breakdown), scale));
 		}		
 		
-		breakdown.setTotalTaxes(safeValue(input.getYqTax())
+		breakdown.setTotalTaxes(round(safeValue(input.getYqTax())
 									.add(safeValue(input.getTax1()))
-									.add(safeValue(input.getTax2())));
+									.add(safeValue(input.getTax2())), scale));
 		
-		breakdown.setTotalGst(gstAmount);
-		breakdown.setTotalSellFare(getTotalFare(input));
-		breakdown.setBaseAmount(getTotalFee(input, breakdown));
+		breakdown.setTotalGst(round(gstAmount, scale));
+		breakdown.setTotalSellFare(round(getTotalFare(input), scale));
+		breakdown.setBaseAmount(round(getTotalFee(input, breakdown), scale));
 		
-		breakdown.setFee(getTransactionFee(client, input, airport, breakdown.getBaseAmount()));
+		breakdown.setFee(round(getTransactionFee(client, input, airport, breakdown.getBaseAmount()), scale));
 		
-		breakdown.setTotalMerchantFee(getMerchantFee(input, breakdown));
+		breakdown.setTotalMerchantFee(round(getMerchantFee(input, breakdown), scale));
 		
-		breakdown.setMerchantFeeOnTf(getMfOnTf(input, breakdown, 
-								getGstOnTf((IndiaProduct) airProduct, breakdown.getFee())));
-		breakdown.setTotalSellingFare(getTotalSellingFare(breakdown));		
-		breakdown.setTotalCharge(getTotalCharge(breakdown));
+		breakdown.setMerchantFeeOnTf(round(getMfOnTf(input, breakdown, 
+								getGstOnTf((IndiaProduct) airProduct, breakdown.getFee())), scale));
+		breakdown.setTotalSellingFare(round(getTotalSellingFare(breakdown), scale));		
+		breakdown.setTotalCharge(round(getTotalCharge(breakdown), scale));
 				
-		breakdown.setYqTax(yqTax);
+		breakdown.setYqTax(round(yqTax, scale));
 		breakdown.setFee(null);
 		
 		return breakdown;
