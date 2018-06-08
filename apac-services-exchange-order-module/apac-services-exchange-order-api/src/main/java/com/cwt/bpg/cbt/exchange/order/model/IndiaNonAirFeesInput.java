@@ -3,7 +3,6 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModelProperty;
 
 public class IndiaNonAirFeesInput extends FeesInput {
@@ -23,17 +22,17 @@ public class IndiaNonAirFeesInput extends FeesInput {
 	@ApiModelProperty(required = true)
 	@NotNull
 	private IndiaProduct product;
-	private String acctType;
+	private String ccType;
 	private String fopNumber;
 	
-	public String getAcctType() {
-		return acctType;
+	public String getCcType() {
+		return ccType;
 	}
 
-	public void setAcctType(String acctType) {
-		this.acctType = acctType;
+	public void setCcType(String ccType) {
+		this.ccType = ccType;
 	}
-	
+
 	public boolean isCommissionByPercent() {
 		return commissionByPercent;
 	}

@@ -40,7 +40,7 @@ public class IndiaNonAirFeeCalculatorTest {
 
 		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
 
-		input.setAcctType("acctType");
+		input.setCcType("VI");
 		input.setCommissionByPercent(true);
 		input.setCommissionPercent(2D);
 		input.setCostAmount(round(new BigDecimal(1300)));
@@ -146,7 +146,7 @@ public class IndiaNonAirFeeCalculatorTest {
 	@Test
 	public void nonStandardCC() {
 
-		input.setAcctType("Visa");
+		input.setCcType("Visa");
 		input.setProfileName("profileName");
 
 		client = new Client();
@@ -181,7 +181,7 @@ public class IndiaNonAirFeeCalculatorTest {
 
 	@Test
 	public void standardCC() {
-		input.setAcctType("Visa");
+		input.setCcType("Visa");
 		input.setProfileName("profileName");
 
 		client = new Client();
@@ -210,7 +210,7 @@ public class IndiaNonAirFeeCalculatorTest {
 
 	@Test
 	public void standardCCAcctTypeNotEqual() {
-		input.setAcctType("Visas");
+		input.setCcType("Visas");
 		input.setProfileName("profileName");
 
 		client = new Client();
@@ -342,7 +342,7 @@ public class IndiaNonAirFeeCalculatorTest {
 
 	@Test
 	public void nonPresentVendorBank() {
-		input.setAcctType("MasterCard");
+		input.setCcType("MasterCard");
 		input.setFopType("");
 		input.setProfileName("profileName");
 
