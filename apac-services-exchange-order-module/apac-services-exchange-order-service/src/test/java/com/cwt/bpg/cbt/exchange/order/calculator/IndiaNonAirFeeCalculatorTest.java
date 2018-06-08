@@ -135,10 +135,10 @@ public class IndiaNonAirFeeCalculatorTest {
 
 		NonAirFeesBreakdown result = calculator.calculate(input, client, client);
 
-		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
-		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(26.71D)));
-		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1462.77D)));
-		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70D)));
+		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36d)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(28.72d)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1464.78d)));
+		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70d)));
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
 	}
@@ -153,14 +153,14 @@ public class IndiaNonAirFeeCalculatorTest {
 		Bank bank = new Bank();
 		bank.setCcNumberPrefix("1234");
 		bank.setStandard(false);
-		bank.setPercentage(2D);
+		bank.setPercentage(2d);
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
 		client.setMfProducts(singletonList(pf));
 		client.setMfBanks(singletonList(bank));
 		CreditCardVendor cc = new CreditCardVendor();
-		cc.setPercentage(2D);
+		cc.setPercentage(2d);
 		cc.setStandard(false);
 		cc.setVendorName("Visa");
 		client.setMfCcs(singletonList(cc));
@@ -171,10 +171,10 @@ public class IndiaNonAirFeeCalculatorTest {
 
 		NonAirFeesBreakdown result = calculator.calculate(input, client, client);
 
-		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
-		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(26.71D)));
-		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1462.77D)));
-		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70D)));
+		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36d)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(28.72d)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1464.78d)));
+		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70d)));
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
 	}
@@ -191,7 +191,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setMfProducts(singletonList(pf));
 
 		CreditCardVendor cc = new CreditCardVendor();
-		cc.setPercentage(2D);
+		cc.setPercentage(2d);
 		cc.setStandard(true);
 		cc.setVendorName("Visa");
 		client.setMfCcs(singletonList(cc));
@@ -200,10 +200,10 @@ public class IndiaNonAirFeeCalculatorTest {
 
 		NonAirFeesBreakdown result = calculator.calculate(input, client, client);
 
-		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
-		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(26.71D)));
-		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1462.77D)));
-		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70D)));
+		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36d)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(28.72d)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1464.78d)));
+		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70d)));
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
 	}
@@ -220,7 +220,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setMfProducts(singletonList(pf));
 
 		CreditCardVendor cc = new CreditCardVendor();
-		cc.setPercentage(2D);
+		cc.setPercentage(2d);
 		cc.setStandard(true);
 		cc.setVendorName("Visa");
 		client.setMfCcs(singletonList(cc));
@@ -259,7 +259,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		Bank bank = new Bank();
 		bank.setCcNumberPrefix("1234");
 		bank.setStandard(false);
-		bank.setPercentage(2D);
+		bank.setPercentage(2d);
 
 		client.setMfBanks(singletonList(bank));
 		client.setApplyMfBank(false);
@@ -269,10 +269,10 @@ public class IndiaNonAirFeeCalculatorTest {
 
 		NonAirFeesBreakdown result = calculator.calculate(input, client, client);
 
-		assertThat(result.getGstAmount().doubleValue(), is(equalTo(182D)));
-		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(27.56D)));
-		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1509.56D)));
-		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1300D)));
+		assertThat(result.getGstAmount().doubleValue(), is(equalTo(182d)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(29.64d)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1511.64d)));
+		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1300d)));
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
 	}
@@ -288,7 +288,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		Bank bank = new Bank();
 		bank.setCcNumberPrefix("1234");
 		bank.setStandard(false);
-		bank.setPercentage(2D);
+		bank.setPercentage(2d);
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(true);
 		pf.setProductCode("01");
@@ -301,10 +301,10 @@ public class IndiaNonAirFeeCalculatorTest {
 
 		NonAirFeesBreakdown result = calculator.calculate(input, client, client);
 
-		assertThat(result.getGstAmount().doubleValue(), is(equalTo(182D)));
-		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
-		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1482D)));
-		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1300D)));
+		assertThat(result.getGstAmount().doubleValue(), is(equalTo(182d)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0d)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1482d)));
+		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1300d)));
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
 	}
@@ -319,7 +319,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		Bank bank = new Bank();
 		bank.setCcNumberPrefix("1234");
 		bank.setStandard(false);
-		bank.setPercentage(2D);
+		bank.setPercentage(2d);
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
@@ -332,10 +332,10 @@ public class IndiaNonAirFeeCalculatorTest {
 
 		NonAirFeesBreakdown result = calculator.calculate(input, client, client);
 
-		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
-		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
-		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1436.06D)));
-		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70D)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0d)));
+		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36d)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1436.06d)));
+		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70d)));
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
 	}
@@ -347,17 +347,17 @@ public class IndiaNonAirFeeCalculatorTest {
 		input.setProfileName("profileName");
 
 		client = new Client();
-		client.setMerchantFee(3D);
+		client.setMerchantFee(3d);
 
 		Bank bank = new Bank();
 		bank.setCcNumberPrefix("");
 		bank.setStandard(false);
-		bank.setPercentage(2D);
+		bank.setPercentage(2d);
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("02");
 		CreditCardVendor cc = new CreditCardVendor();
-		cc.setPercentage(2D);
+		cc.setPercentage(2d);
 		cc.setStandard(true);
 		cc.setVendorName("Visa");
 		client.setMfCcs(singletonList(cc));
@@ -370,10 +370,10 @@ public class IndiaNonAirFeeCalculatorTest {
 
 		NonAirFeesBreakdown result = calculator.calculate(input, client, client);
 
-		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(40.06D)));
-		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
-		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1476.12D)));
-		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70D)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(43.08d)));
+		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36d)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1479.14d)));
+		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70d)));
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
 	}
@@ -390,7 +390,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		Bank bank = new Bank();
 		bank.setCcNumberPrefix("12345");
 		bank.setStandard(false);
-		bank.setPercentage(2D);
+		bank.setPercentage(2d);
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
@@ -402,10 +402,10 @@ public class IndiaNonAirFeeCalculatorTest {
 		
 		NonAirFeesBreakdown result = calculator.calculate(input, client, client);
 
-		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
-		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
-		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1436.06D)));
-		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70D)));
+		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36d)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0d)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1436.06d)));
+		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70d)));
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
 	}
@@ -418,7 +418,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		Bank bank = new Bank();
 		bank.setCcNumberPrefix("12345");
 		bank.setStandard(false);
-		bank.setPercentage(2D);
+		bank.setPercentage(2d);
 		ProductMerchantFee pf = new ProductMerchantFee();
 		pf.setSubjectToMf(false);
 		pf.setProductCode("01");
@@ -434,10 +434,10 @@ public class IndiaNonAirFeeCalculatorTest {
 		defaultClient.setMfProducts(singletonList(pf2));
 		NonAirFeesBreakdown result = calculator.calculate(input, client, defaultClient);
 
-		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36D)));
-		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0D)));
-		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1436.06D)));
-		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70D)));
+		assertThat(result.getGstAmount().doubleValue(), is(equalTo(176.36d)));
+		assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0d)));
+		assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1436.06d)));
+		assertThat(result.getGrossSellingPrice().doubleValue(), is(equalTo(1259.70d)));
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
 	}
