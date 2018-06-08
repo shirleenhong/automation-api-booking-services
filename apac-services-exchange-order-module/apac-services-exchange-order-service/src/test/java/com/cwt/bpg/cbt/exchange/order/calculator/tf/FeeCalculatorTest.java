@@ -135,7 +135,6 @@ public class FeeCalculatorTest {
 		input.setFeeOverride(false);
 
 		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -192,7 +191,6 @@ public class FeeCalculatorTest {
 		input.setFeeOverride(false);
 
 		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -254,7 +252,6 @@ public class FeeCalculatorTest {
 		input.setFeeOverride(false);
 
 		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -317,7 +314,7 @@ public class FeeCalculatorTest {
 		input.setFeeOverride(false);
 
 		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -380,7 +377,7 @@ public class FeeCalculatorTest {
 		input.setFeeOverride(false);
 
 		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -444,7 +441,7 @@ public class FeeCalculatorTest {
 		input.setFeeOverride(false);
 
 		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
@@ -509,7 +506,7 @@ public class FeeCalculatorTest {
 		input.setFeeOverride(false);
 
 		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
+		
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);
