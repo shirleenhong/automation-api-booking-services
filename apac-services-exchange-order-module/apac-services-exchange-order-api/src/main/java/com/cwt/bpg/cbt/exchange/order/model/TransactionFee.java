@@ -19,9 +19,9 @@ public class TransactionFee implements Serializable {
 	private BigDecimal maxAmount;
 	private BigDecimal startAmount;
 	private BigDecimal endAmount;
-	private BigDecimal startCoupon;
-	private BigDecimal endCoupon;
-	private BigDecimal threshold;
+	private int startCoupon;
+	private int endCoupon;
+	private int threshold;
 
 	public Integer getFeeId() {
 		return feeId;
@@ -103,30 +103,6 @@ public class TransactionFee implements Serializable {
 		this.endAmount = endAmount;
 	}
 
-	public BigDecimal getStartCoupon() {
-		return startCoupon;
-	}
-
-	public void setStartCoupon(BigDecimal startCoupon) {
-		this.startCoupon = startCoupon;
-	}
-
-	public BigDecimal getEndCoupon() {
-		return endCoupon;
-	}
-
-	public void setEndCoupon(BigDecimal endCoupon) {
-		this.endCoupon = endCoupon;
-	}
-
-	public BigDecimal getThreshold() {
-		return threshold;
-	}
-
-	public void setThreshold(BigDecimal threshold) {
-		this.threshold = threshold;
-	}
-
 	public Double getPerAmount() {
 		return perAmount;
 	}
@@ -134,4 +110,30 @@ public class TransactionFee implements Serializable {
 	public void setPerAmount(Double perAmount) {
 		this.perAmount = perAmount;
 	}
+
+	public int getStartCoupon() {
+		return startCoupon;
+	}
+
+	public void setStartCoupon(int startCoupon) {
+		this.startCoupon = startCoupon;
+	}
+
+	public int getEndCoupon() {
+		return endCoupon;
+	}
+
+	public void setEndCoupon(int endCoupon) {
+		this.endCoupon = endCoupon;
+	}
+
+	public int getThreshold() {
+		return threshold;
+	}
+
+	public void setThreshold(int threshold) {
+		this.threshold = threshold;
+	}
+	
+	
 }

@@ -415,10 +415,10 @@ public class ClientDAOImpl {
 				TransactionFee transactionFee = new TransactionFee();
 				transactionFee.setFeeId(rs.getInt("feeid"));
 				transactionFee.setType(rs.getString("type"));
-				transactionFee.setStartCoupon(rs.getBigDecimal("startcoupon"));
-				transactionFee.setEndCoupon(rs.getBigDecimal("endcoupon"));
+				transactionFee.setStartCoupon(rs.getInt("startcoupon"));
+				transactionFee.setEndCoupon(rs.getInt("endcoupon"));
 				transactionFee.setAmount(rs.getBigDecimal("tfamount"));
-				transactionFee.setThreshold(rs.getBigDecimal("threshold"));
+				transactionFee.setThreshold(rs.getInt("threshold"));
 				resultList.add(transactionFee);
 			}
 		}

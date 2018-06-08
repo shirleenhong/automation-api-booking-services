@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.nio.charset.Charset;
 
-import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirFeesInput;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +22,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
 
 import net.minidev.json.JSONObject;
@@ -71,7 +72,7 @@ public class OtherServiceFeesControllerIndiaNonAirFeeTest {
         jsonObj.put("fopMode", 3);
         jsonObj.put("product", product);
         jsonObj.put("profileName", "proName");
-        jsonObj.put("countryCode", "IN");
+        jsonObj.put("countryCode", Country.INDIA.getCode());
         jsonObj.put("clientType", "Z");
 
         mockMvc.perform(post("/other-service-fees/non-air-fees/in")

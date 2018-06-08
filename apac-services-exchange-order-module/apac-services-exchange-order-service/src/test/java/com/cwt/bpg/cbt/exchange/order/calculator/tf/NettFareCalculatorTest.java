@@ -16,7 +16,7 @@ public class NettFareCalculatorTest {
 	private NettFareCalculator netFareCalc = new NettFareCalculator();
 	
 	private BigDecimal baseFare;
-	private BigDecimal totalIataCommission;
+	private BigDecimal totalAirlineCommission;
 	private BigDecimal expectedPositiveValue;
 	private BigDecimal expectedNegativeValue;
 	private BigDecimal returnableOr;
@@ -26,7 +26,7 @@ public class NettFareCalculatorTest {
 	@Before
 	public void setup() {
 		baseFare = new BigDecimal(5);
-		totalIataCommission = new BigDecimal(4);
+		totalAirlineCommission = new BigDecimal(4);
 		expectedPositiveValue = new BigDecimal(1);
 		returnableOr = new BigDecimal(0);
 		expectedNegativeValue = new BigDecimal(-1);
@@ -37,7 +37,7 @@ public class NettFareCalculatorTest {
 	@Test
 	public void shouldGetTotalFeeValidParams() {
 		input.setBaseFare(baseFare);
-		breakdown.setTotalIataCommission(totalIataCommission);
+		breakdown.setTotalAirlineCommission(totalAirlineCommission);
 		breakdown.setTotalOverheadCommission(returnableOr);
 		
 		assertNotNull(netFareCalc.getTotalFee(input, breakdown));
@@ -47,7 +47,7 @@ public class NettFareCalculatorTest {
 	@Test
 	public void shouldGetTotalFeeDifference() {
 		input.setBaseFare(baseFare);
-		breakdown.setTotalIataCommission(totalIataCommission);
+		breakdown.setTotalAirlineCommission(totalAirlineCommission);
 		breakdown.setTotalOverheadCommission(returnableOr);
 		
 		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown);
@@ -57,7 +57,7 @@ public class NettFareCalculatorTest {
 	@Test
 	public void shouldGetTotalFeeNullValues() {
 		input.setBaseFare(null);
-		breakdown.setTotalIataCommission(null);
+		breakdown.setTotalAirlineCommission(null);
 		breakdown.setTotalOverheadCommission(null);
 		
 		assertNotNull(netFareCalc.getTotalFee(input, breakdown));
@@ -65,8 +65,8 @@ public class NettFareCalculatorTest {
 	
 	@Test
 	public void shouldGetTotalFeeNegativeDiff() {
-		input.setBaseFare(totalIataCommission);
-		breakdown.setTotalIataCommission(baseFare);
+		input.setBaseFare(totalAirlineCommission);
+		breakdown.setTotalAirlineCommission(baseFare);
 		breakdown.setTotalOverheadCommission(returnableOr);
 		
 		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown);

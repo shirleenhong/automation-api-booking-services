@@ -36,7 +36,7 @@ public class IndiaNonAirFeeCalculatorTest {
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 
-		Mockito.when(scaleConfig.getScale(Mockito.eq("IN"))).thenReturn(2);
+		Mockito.when(scaleConfig.getScale(Mockito.eq(Country.INDIA.getCode()))).thenReturn(2);
 
 		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
 
