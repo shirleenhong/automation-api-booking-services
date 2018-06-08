@@ -22,26 +22,26 @@ public class ProductRepository {
 	@Autowired
 	private MorphiaComponent morphia;
 
-	public List<Product> getProducts(String countryCode) {
+	public List<BaseProduct> getProducts(String countryCode) {
 
-		List<Product> products = new ArrayList<>();
+		List<BaseProduct> baseProducts = new ArrayList<>();
 		try {
 			if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
-				products.addAll(getIndiaProducts(countryCode));
+				baseProducts.addAll(getIndiaProducts(countryCode));
 			}
 			else {
-				products.addAll(getNonIndiaProducts(countryCode));
+				baseProducts.addAll(getNonIndiaProducts(countryCode));
 			}
-			sort(products);
+			sort(baseProducts);
 		}
 		catch (Exception e) {
 			LOGGER.error("Unable to parse product list for {} {}", countryCode, e.getMessage());
 		}
 
-		return products;
+		return baseProducts;
 	}
 
-	private List<HkSgProduct> getNonIndiaProducts(String countryCode) {
+	private List<Product> getNonIndiaProducts(String countryCode) {
 		HkSgProductList productList = morphia.getDatastore().createQuery(HkSgProductList.class)
 				.field("countryCode").equal(countryCode).get();
 
@@ -55,15 +55,15 @@ public class ProductRepository {
 		return productList == null ? Collections.emptyList() : productList.getProducts();
 	}
 
-	private void sort(List<Product> products) {
-		
-		for (Product product : products) {
-			if (!product.getVendors().isEmpty()) {
-				product.getVendors()
+	private void sort(List<BaseProduct> baseProducts) {
+
+		for (BaseProduct baseProduct : baseProducts) {
+			if (!baseProduct.getVendors().isEmpty()) {
+                baseProduct.getVendors()
 						.sort(Comparator.comparing(Vendor::getVendorName, String.CASE_INSENSITIVE_ORDER));
 			}
 		}
-		products.sort(Comparator.comparing(Product::getDescription, String.CASE_INSENSITIVE_ORDER));
+        baseProducts.sort(Comparator.comparing(BaseProduct::getDescription, String.CASE_INSENSITIVE_ORDER));
 	}
 
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cwt.bpg.cbt.exchange.order.model.Product;
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 import io.swagger.annotations.Api;
@@ -28,7 +28,7 @@ public class ProductsController
     @GetMapping(path = "/products/{countryCode}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
     @ApiOperation(value = "Pulls list of products and vendors for a specific market")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<List<BaseProduct>> getProducts(
             @PathVariable
             @ApiParam(value = "Country code of the requested market") 
             String countryCode) {

@@ -12,7 +12,7 @@ import org.mongodb.morphia.annotations.Indexes;
 public class HkSgProductList {
 	private String countryCode;
 
-	private List<HkSgProduct> products;
+	private List<Product> products;
 
 	public String getCountryCode() {
 		return countryCode;
@@ -22,11 +22,11 @@ public class HkSgProductList {
 		this.countryCode = countryCode;
 	}
 
-	public List<HkSgProduct> getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<HkSgProduct> products) {
+	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
 }

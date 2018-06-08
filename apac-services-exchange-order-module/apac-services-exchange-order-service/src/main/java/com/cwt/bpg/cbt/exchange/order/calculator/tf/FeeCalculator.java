@@ -28,7 +28,7 @@ public class FeeCalculator extends CommonCalculator {
 										   AirlineRule airlineRule,
 										   Client client,
 										   Airport airport,
-										   Product airProduct) {
+										   BaseProduct airProduct) {
 		
 		BigDecimal gstAmount = null;
 		BigDecimal yqTax = null;

@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-public class IndiaProduct extends Product {
+public class IndiaProduct extends BaseProduct {
 	
 	private static final long serialVersionUID = 1L;
 	private String gdsCode;

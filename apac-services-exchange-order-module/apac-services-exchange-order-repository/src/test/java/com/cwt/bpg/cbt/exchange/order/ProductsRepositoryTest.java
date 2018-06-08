@@ -45,7 +45,7 @@ public class ProductsRepositoryTest {
 		MockitoAnnotations.initMocks(this);
 		when(morphia.getDatastore()).thenReturn(dataStore);
 		
-		HkSgProduct prodA = new HkSgProduct();
+		Product prodA = new Product();
 
 		prodA.setProductCode("00");
 		prodA.setDescription("BSP Ticket And MPD");
@@ -72,7 +72,7 @@ public class ProductsRepositoryTest {
 
 		prodA.getVendors().add(vendorA);
 
-		HkSgProduct prodB = new HkSgProduct();
+		Product prodB = new Product();
 		prodB.setProductCode("01");
 		prodB.setDescription("AA SEGMENT BOOKING FEE");
 		prodB.setGst(0D);
@@ -96,7 +96,7 @@ public class ProductsRepositoryTest {
 		vendorB.setSortKey("BSP");
 		vendorB.setVendorName("BANK SETTLEMENT PLAN");
 		prodB.getVendors().add(vendorB);
-		List<HkSgProduct> prodList = new ArrayList<>();
+		List<Product> prodList = new ArrayList<>();
 		prodList.add(prodA);
 		prodList.add(prodB);
 		productList.setProducts(prodList);
@@ -109,19 +109,19 @@ public class ProductsRepositoryTest {
 		FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(dataStore.createQuery(HkSgProductList.class)).thenReturn(query);
 		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal("SG")).thenReturn(query);		
+		when(fieldEnd.equal("SG")).thenReturn(query);
 		when(query.get()).thenReturn(productList);
 		
-		List<Product> products = repository.getProducts("SG");
+		List<BaseProduct> baseProducts = repository.getProducts("SG");
 
-		assertNotNull(products);
-		assertEquals(2, products.size());
+		assertNotNull(baseProducts);
+		assertEquals(2, baseProducts.size());
 
-		assertEquals("AA SEGMENT BOOKING FEE", products.get(0).getDescription());
-		assertEquals("BANK SETTLEMENT PLAN", products.get(0).getVendors().get(0).getVendorName());
+		assertEquals("AA SEGMENT BOOKING FEE", baseProducts.get(0).getDescription());
+		assertEquals("BANK SETTLEMENT PLAN", baseProducts.get(0).getVendors().get(0).getVendorName());
 		
-		assertEquals("BSP Ticket And MPD", products.get(1).getDescription());
-		assertEquals("BANK SETTLEMENT PLAN", products.get(1).getVendors().get(0).getVendorName());
+		assertEquals("BSP Ticket And MPD", baseProducts.get(1).getDescription());
+		assertEquals("BANK SETTLEMENT PLAN", baseProducts.get(1).getVendors().get(0).getVendorName());
 	}
 
 	@Test
@@ -131,13 +131,13 @@ public class ProductsRepositoryTest {
 		FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(dataStore.createQuery(HkSgProductList.class)).thenReturn(query);
 		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal(Country.INDIA.getCode())).thenReturn(query);		
+		when(fieldEnd.equal(Country.INDIA.getCode())).thenReturn(query);
 		when(query.get()).thenReturn(null);
-				
-		List<Product> products = repository.getProducts(Country.INDIA.getCode());
 
-		assertNotNull(products);
-		assertEquals(0, products.size());
+        List<BaseProduct> baseProducts = repository.getProducts(Country.INDIA.getCode());
+
+		assertNotNull(baseProducts);
+		assertEquals(0, baseProducts.size());
 
 	}
 	
@@ -154,11 +154,11 @@ public class ProductsRepositoryTest {
 		when(query.get()).thenReturn(null);
 		when(morphia.getDatastore().createQuery(InProductList.class)
 				.field("countryCode").equal(Country.INDIA.getCode()).get()).thenReturn(null);
-				
-		List<Product> products = repository.getProducts(Country.INDIA.getCode());
 
-		assertNotNull(products);
-		assertEquals(0, products.size());
+        List<BaseProduct> baseProducts = repository.getProducts(Country.INDIA.getCode());
+
+		assertNotNull(baseProducts);
+		assertEquals(0, baseProducts.size());
 
 	}
 	
@@ -176,10 +176,10 @@ public class ProductsRepositoryTest {
 		when(morphia.getDatastore().createQuery(HkSgProductList.class).field("countryCode").equal("HK").get())
 				.thenReturn(null);
 
-		List<Product> products = repository.getProducts("HK");
+		List<BaseProduct> baseProducts = repository.getProducts("HK");
 
-		assertNotNull(products);
-		assertEquals(0, products.size());
+		assertNotNull(baseProducts);
+		assertEquals(0, baseProducts.size());
 
 	}
 
@@ -190,13 +190,13 @@ public class ProductsRepositoryTest {
 		FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(dataStore.createQuery(HkSgProductList.class)).thenReturn(query);
 		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal(Country.INDIA.getCode())).thenReturn(query);		
+		when(fieldEnd.equal(Country.INDIA.getCode())).thenReturn(query);
 		when(query.get()).thenThrow(IOException.class);
-		
-		List<Product> products = repository.getProducts(Country.INDIA.getCode());
 
-		assertNotNull(products);
-		assertEquals(0, products.size());
+        List<BaseProduct> baseProducts = repository.getProducts(Country.INDIA.getCode());
+
+		assertNotNull(baseProducts);
+		assertEquals(0, baseProducts.size());
 	}
 	
 	@Test
@@ -212,10 +212,10 @@ public class ProductsRepositoryTest {
 		FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(dataStore.createQuery(InProductList.class)).thenReturn(query);
 		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal(Country.INDIA.getCode())).thenReturn(query);		
+		when(fieldEnd.equal(Country.INDIA.getCode())).thenReturn(query);
 		when(query.get()).thenReturn(inProductList);
-		
-		List<Product> result = repository.getProducts(Country.INDIA.getCode());
+
+        List<BaseProduct> result = repository.getProducts(Country.INDIA.getCode());
 
 		assertNotNull(products);
 		assertEquals(1, result.size());
