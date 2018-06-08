@@ -108,11 +108,7 @@ Verify That Error Is Encountered When Invalid Country Code Value Is Used
 
 Verify That Error Is Encountered When Invalid FOP Type Value Is Used
     [Tags]    functional
-    Generate Test Variables For Non-Air Fees    fees_list=cc,${EMPTY}|pro_name,SIEMENSINVPNQ|acct_type,AX|comm_by_percent,true|comm_percentage,3.00|commission,null|cost_amount,400|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,3|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,null|apply_mf_bank,null|merchant_fee_percentage,null|gst_percentage,14|apply_mf_cc,null    country=in
-    Send Other Service Fees For Non-Air Fees Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Calculated Non-Air Fees Are Not Returned
-    Generate Test Variables For Non-Air Fees    fees_list=cc,NULL|pro_name,SIEMENSINVPNQ|acct_type,AX|comm_by_percent,true|comm_percentage,3.00|commission,null|cost_amount,400|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,3|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,null|apply_mf_bank,null|merchant_fee_percentage,null|gst_percentage,14|apply_mf_cc,null    country=in
+    Generate Test Variables For Non-Air Fees    fees_list=cc,None|pro_name,SIEMENSINVPNQ|acct_type,AX|comm_by_percent,true|comm_percentage,3.00|commission,null|cost_amount,400|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,3|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,null|apply_mf_bank,null|merchant_fee_percentage,null|gst_percentage,14|apply_mf_cc,null    country=in
     Send Other Service Fees For Non-Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Non-Air Fees Are Not Returned
@@ -217,14 +213,11 @@ Verify That Error Is Encountered When Invalid Profile Name Value Is Used
     
 Verify That Error Is Encountered When Invalid Account Type Value Is Used
     [Tags]    functional
-    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,SIEMENSINVPNQ|acct_type,${EMPTY}|comm_by_percent,true|comm_percentage,3.00|commission,null|cost_amount,400|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,3|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,null|apply_mf_bank,null|merchant_fee_percentage,null|gst_percentage,14|apply_mf_cc,null    country=in
+    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,SIEMENSINVPNQ|acct_type,None|comm_by_percent,true|comm_percentage,3.00|commission,null|cost_amount,400|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,3|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,null|apply_mf_bank,null|merchant_fee_percentage,null|gst_percentage,14|apply_mf_cc,null    country=in
     Send Other Service Fees For Non-Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Non-Air Fees Are Not Returned
-    Generate Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,SIEMENSINVPNQ|acct_type,NULL|comm_by_percent,true|comm_percentage,3.00|commission,null|cost_amount,400|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,3|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,null|apply_mf_bank,null|merchant_fee_percentage,null|gst_percentage,14|apply_mf_cc,null    country=in
-    Send Other Service Fees For Non-Air Fees Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Calculated Non-Air Fees Are Not Returned
+
 Verify That Error Is Encountered When Invalid Cost Amount Value Is Used
     [Tags]    functional    not-ready
     Create Test Variables For Non-Air Fees    fees_list=cc,CX|pro_name,SIEMENSINVPNQ|acct_type,AX|comm_by_percent,true|comm_percentage,3.00|commission,null|cost_amount,${EMPTY}|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,3|fop_number,1234|ot1,0.5|ot2,0.5|product_code,8|cc_number,1234|subject_to_mf,null|apply_mf_bank,null|merchant_fee_percentage,null|gst_percentage,14|apply_mf_cc,null    country=in
