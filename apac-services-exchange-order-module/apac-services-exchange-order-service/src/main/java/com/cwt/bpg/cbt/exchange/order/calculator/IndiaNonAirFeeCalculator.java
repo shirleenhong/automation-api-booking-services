@@ -58,8 +58,8 @@ public class IndiaNonAirFeeCalculator extends CommonCalculator {
 					scale);
 		}
 
-		BigDecimal grossSell = safeValue(input.getCostAmount()).add(safeValue(commission))
-				.subtract(safeValue(discount));
+		BigDecimal grossSell = round(safeValue(input.getCostAmount()).add(safeValue(commission))
+				.subtract(safeValue(discount)), scale);
 
 		BigDecimal tax = round(
 				calculatePercentage(grossSell, safeValue(input.getProduct().getGst())),
