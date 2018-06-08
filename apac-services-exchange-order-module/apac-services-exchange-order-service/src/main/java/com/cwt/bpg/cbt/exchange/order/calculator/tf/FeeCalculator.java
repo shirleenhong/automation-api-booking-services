@@ -262,8 +262,9 @@ public class FeeCalculator extends CommonCalculator {
 				.filter(i -> i.getTerritoryCodes().stream()
 						.anyMatch(code -> 
 							code.equals(territoryCode)
-							&& amount.compareTo(i.getStartAmount()) <= 0
-							&& amount.compareTo(i.getEndAmount()) >= 0
+							&& amount.compareTo(i.getStartAmount()) >= 0
+							&& (amount.compareTo(i.getEndAmount()) <= 0 
+							  || i.getEndAmount().compareTo(BigDecimal.ZERO) == 0)
 							)
 				).findFirst();
 
