@@ -11,8 +11,6 @@ import io.swagger.annotations.ApiModelProperty;
 public class IndiaNonAirFeesInput extends FeesInput {
 	private static final long serialVersionUID = 7271039286429340584L;
 
-	@ApiModelProperty(required = true)
-	@NotEmpty
 	private String fopType;
 	private boolean commissionByPercent;
 	@ApiModelProperty(required = true)
@@ -27,17 +25,17 @@ public class IndiaNonAirFeesInput extends FeesInput {
 	@ApiModelProperty(required = true)
 	@NotNull
 	private IndiaProduct product;
-	private String acctType;
+	private String ccType;
 	private String fopNumber;
 	
-	public String getAcctType() {
-		return acctType;
+	public String getCcType() {
+		return ccType;
 	}
 
-	public void setAcctType(String acctType) {
-		this.acctType = acctType;
+	public void setCcType(String ccType) {
+		this.ccType = ccType;
 	}
-	
+
 	public boolean isCommissionByPercent() {
 		return commissionByPercent;
 	}

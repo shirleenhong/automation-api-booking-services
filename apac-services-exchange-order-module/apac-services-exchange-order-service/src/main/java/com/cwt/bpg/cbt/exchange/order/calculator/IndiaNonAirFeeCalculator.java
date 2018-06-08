@@ -101,7 +101,7 @@ public class IndiaNonAirFeeCalculator extends CommonCalculator {
 				mfPercent = bank.getPercentage();
 			}
 			else if (!StringUtils.isEmpty(input.getFopType())) {
-				CreditCardVendor vendor = getCreditCard(client, input.getAcctType(), client.isApplyMfCc());
+				CreditCardVendor vendor = getCreditCard(client, input.getCcType(), client.isApplyMfCc());
 				mfPercent = vendor != null ? vendor.getPercentage() : 0D;
 			}	
 		}
