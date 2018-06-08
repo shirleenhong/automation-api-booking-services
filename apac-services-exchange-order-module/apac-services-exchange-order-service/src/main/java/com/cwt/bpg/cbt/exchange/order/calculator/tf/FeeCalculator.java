@@ -198,10 +198,9 @@ public class FeeCalculator extends CommonCalculator {
 		
 			for(int i = 0; i < segmentCount; i++) {
 			
-				if (tf.getStartCoupon() <= segmentCount && segmentCount <= tf.getEndCoupon()
-				 || segmentCount > tf.getEndCoupon()) {
+				if (tf.getStartCoupon() <= segmentCount) {
 					
-					   tfAmount = tfAmount.add(safeValue(tf.getAmount()));
+					tfAmount = tfAmount.add(safeValue(tf.getAmount()));
 				}
 			}
 		}
