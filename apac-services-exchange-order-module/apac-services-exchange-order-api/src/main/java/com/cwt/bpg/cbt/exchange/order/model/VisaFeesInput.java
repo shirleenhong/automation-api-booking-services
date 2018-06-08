@@ -1,29 +1,32 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import io.swagger.annotations.ApiModelProperty;
-
 import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class VisaFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = -5761273312586606568L;
 
+	@ApiModelProperty(required = true)
 	@NotEmpty
 	private String clientType;
+
+	@ApiModelProperty(required = true)
+	@NotNull
+	private BigDecimal cwtHandling;
+
+	@ApiModelProperty(required = true)
+	@NotNull
+	private BigDecimal vendorHandling;
 
 	private boolean nettCostMerchantFeeChecked;
 	private boolean cwtHandlingMerchantFeeChecked;
 	private BigDecimal nettCost;
-	@ApiModelProperty(required = true)
-	@NotNull
-	private BigDecimal cwtHandling;
-	@ApiModelProperty(required = true)
-	@NotNull
-	private BigDecimal vendorHandling;
 
     public String getClientType()
     {

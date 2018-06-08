@@ -42,7 +42,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 		READABLE_APP_MEDIA_TYPES.add(MediaType.APPLICATION_XML.toString());
 	}
 
-	protected static final Logger LOGGER = LoggerFactory.getLogger(LoggingFilter.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(LoggingFilter.class);
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -62,7 +62,6 @@ public class LoggingFilter extends OncePerRequestFilter {
 			logRequest(wrappedRequest, requestId);
 			logResponse((ResponseWrapper) wrappedResponse, response);
 		}
-
 	}
 
 	private void logRequest(final HttpServletRequest request, long requestId) {
@@ -89,20 +88,12 @@ public class LoggingFilter extends OncePerRequestFilter {
 						.append(new String(requestWrapper.toByteArray(), charEncoding));
 			}
 			catch (IOException e) {
-				LOGGER.warn("Failed to parse request payload", e);
+				LOG.warn("Failed to parse request payload", e);
 			}
-			
 		}
-		
-		log(b.toString());
+		LOG.info(b.toString());
 	}
 	
-	private void log(String message) {
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug(message);
-		}
-	}
-
 	private void logResponse(final ResponseWrapper response, HttpServletResponse httpResponse) {
 		
 		final long requestId = response.getId();
@@ -119,21 +110,18 @@ public class LoggingFilter extends OncePerRequestFilter {
 			}			
 		}
 		catch (UnsupportedEncodingException e) {
-			LOGGER.warn("Failed to parse response payload", e);
+			LOG.warn("Failed to parse response payload", e);
 		}
 		
-		log(b.toString());
+		LOG.info(b.toString());
 	}
 
 	private void printPrefixedHeaders(StringBuilder b, long id, String prefix,
 			HttpServletResponse response) {
-		
+
 		Iterator<String> headers = response.getHeaderNames().iterator();
-
 		while (headers.hasNext()) {
-
 			String key = headers.next();
-			
 			prefixId(b, id)
 				.append(prefix)
 				.append(key)
@@ -141,7 +129,6 @@ public class LoggingFilter extends OncePerRequestFilter {
 				.append(response.getHeader(key))
 				.append("\n");
 		}
-		
 	}
 
 	private void printRequestLine(final StringBuilder b, final String note, final long id,
@@ -171,9 +158,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 		Enumeration<String> headers = request.getHeaderNames();
 
 		while (headers.hasMoreElements()) {
-
 			String key = headers.nextElement();
-			
 			prefixId(b, id)
 				.append(prefix)
 				.append(key)
@@ -183,19 +168,15 @@ public class LoggingFilter extends OncePerRequestFilter {
 		}
 	}
 	
-	static boolean isReadable(String type)
-    {
-        if (type != null)
-        {
-            for (String readableMediaType : READABLE_APP_MEDIA_TYPES)
-            {
-                if (type.contains(readableMediaType))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+	static boolean isReadable(String type) {
+		if (type != null) {
+			for (String readableMediaType : READABLE_APP_MEDIA_TYPES) {
+				if (type.contains(readableMediaType)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 }

@@ -4,17 +4,22 @@ import java.math.BigDecimal;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class AirFeesInput extends FeesInput
 {
     private static final long serialVersionUID = -5169667744324661769L;
 
+    @ApiModelProperty(required = true)
     @NotEmpty
     private String clientType;
 
+    @ApiModelProperty(required = true)
     @NotEmpty
     private String fopType;
+
     private BigDecimal sellingPrice;
-    private boolean isMerchantFeeWaive;
+    private boolean merchantFeeWaive;
     private boolean applyFormula;
     private boolean commissionByPercent;
     private boolean discountByPercent;
@@ -65,12 +70,12 @@ public class AirFeesInput extends FeesInput
 
     public boolean isMerchantFeeWaive()
     {
-        return isMerchantFeeWaive;
+        return merchantFeeWaive;
     }
 
     public void setMerchantFeeWaive(boolean merchantFeeWaive)
     {
-        isMerchantFeeWaive = merchantFeeWaive;
+        this.merchantFeeWaive = merchantFeeWaive;
     }
 
     public boolean isApplyFormula()
