@@ -14,7 +14,7 @@ public class IndiaAirFeesBreakdown extends FeesBreakdown
 	private Double merchantFeePercent;
 	private Double subMerchantFeePercent;
 	private BigDecimal baseAmount;
-	private BigDecimal totalIataCommission;
+	private BigDecimal totalAirlineCommission;
 	private BigDecimal totalOverheadCommission;
 	private BigDecimal totalDiscount;
 	private BigDecimal totalMarkup;
@@ -84,12 +84,12 @@ public class IndiaAirFeesBreakdown extends FeesBreakdown
 		this.baseAmount = baseAmount;
 	}
 
-	public BigDecimal getTotalIataCommission() {
-		return totalIataCommission;
+	public BigDecimal getTotalAirlineCommission() {
+		return totalAirlineCommission;
 	}
 
-	public void setTotalIataCommission(BigDecimal totalIataCommission) {
-		this.totalIataCommission = totalIataCommission;
+	public void setTotalAirlineCommission(BigDecimal totalCommission) {
+		this.totalAirlineCommission = totalCommission;
 	}
 
 	public BigDecimal getTotalOverheadCommission() {

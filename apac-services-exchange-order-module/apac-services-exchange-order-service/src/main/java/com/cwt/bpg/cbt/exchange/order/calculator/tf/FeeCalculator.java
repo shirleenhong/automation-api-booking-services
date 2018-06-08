@@ -49,7 +49,7 @@ public class FeeCalculator extends CommonCalculator {
 		}
 				
 		if(input.isCommissionEnabled()) {
-			breakdown.setTotalIataCommission(getTotalAirCommission(input));
+			breakdown.setTotalAirlineCommission(getTotalAirCommission(input));
 		} 
 		
 		if(input.isOverheadCommissionEnabled()) {
@@ -278,7 +278,7 @@ public class FeeCalculator extends CommonCalculator {
 			IndiaAirFeesInput input,
 			IndiaAirFeesBreakdown breakdown) {
 		
-		BigDecimal discountAmount = calculatePercentage(breakdown.getTotalIataCommission(),
+		BigDecimal discountAmount = calculatePercentage(breakdown.getTotalAirlineCommission(),
 				input.getDiscountPercent());
 		
 		if(TripTypes.isInternational(input.getTripType())) {
@@ -301,7 +301,7 @@ public class FeeCalculator extends CommonCalculator {
 		return null;
 	}
 
-	public BigDecimal getTotalOrCom2(IndiaAirFeesInput input) {
+	public BigDecimal getTotalOverheadComission2(IndiaAirFeesInput input) {
 		
 		if(TripTypes.isInternational(input.getTripType())) {
 			return calculatePercentage(input.getAirlineOverheadCommission(), 
