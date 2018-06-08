@@ -29,7 +29,6 @@ public class FeeCalculatorTest {
 	private BigDecimal totalGst;
 	private Double gst;
 	private Double airlineCommissionPercent;
-	private Double clientDiscountPercent;
 	private Double ot1;
 	private Double ot2;
 
@@ -44,7 +43,6 @@ public class FeeCalculatorTest {
 		totalIataCommission = new BigDecimal(5);
 		gst = new Double(30);
 		airlineCommissionPercent = new Double(5);
-		clientDiscountPercent = new Double(5);
 		ot1 = new Double(5);
 		ot2 = new Double(5);
 	}
@@ -79,7 +77,6 @@ public class FeeCalculatorTest {
 		input.setFeeOverride(false);
 
 		breakdown.setTotalIataCommission(totalIataCommission);
-		breakdown.setClientDiscountPercent(clientDiscountPercent);
 		breakdown.setTotalOverheadCommission(totalOverheadCommission);
 		breakdown.setTotalSellFare(totalSellFare);
 		breakdown.setTotalDiscount(totalDiscount);

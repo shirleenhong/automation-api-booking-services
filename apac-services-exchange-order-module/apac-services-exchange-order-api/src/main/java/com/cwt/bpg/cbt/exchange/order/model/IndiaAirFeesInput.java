@@ -24,6 +24,7 @@ public class IndiaAirFeesInput extends FeesInput
 	private boolean markupEnabled;
 	private boolean discountEnabled;
 	private int airSegmentForPricingCount;
+	private Double discountPercent;
 	
 	private IndiaProduct product;
 	
@@ -189,5 +190,13 @@ public class IndiaAirFeesInput extends FeesInput
 
 	public void setOverheadCommissionPercent(Double overheadCommissionPercent) {
 		this.overheadCommissionPercent = overheadCommissionPercent;
+	}
+
+	public Double getDiscountPercent() {
+		return discountPercent;
+	}
+
+	public void setDiscountPercent(Double discountPercent) {
+		this.discountPercent = discountPercent;
 	}
 }

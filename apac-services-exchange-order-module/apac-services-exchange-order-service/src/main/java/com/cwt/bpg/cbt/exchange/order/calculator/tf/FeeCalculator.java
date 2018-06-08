@@ -15,7 +15,7 @@ public class FeeCalculator extends CommonCalculator {
 	private static final String COUPON = "C";
 	private static final String TICKET = "T";
 	private static final String NA = "NA";
-	private static final String ALL = "ALL";	
+	private static final String ALL = "X";	
 	private static final String SOLO = "SOLO";
 	private static final String GROUP = "GROUP";
 
@@ -69,30 +69,18 @@ public class FeeCalculator extends CommonCalculator {
 									.add(safeValue(input.getTax2())));
 		
 		breakdown.setTotalGst(gstAmount);
-		breakdown.setTotalSellingFare(getTotalFare(input));
+		breakdown.setTotalSellFare(getTotalFare(input));
 		breakdown.setBaseAmount(getTotalFee(input, breakdown));
 		
-		BigDecimal baseAmount = getTotalFee(input, breakdown);
-		breakdown.setFee(getTransactionFee(client, input, airport, baseAmount));
+		breakdown.setFee(getTransactionFee(client, input, airport, breakdown.getBaseAmount()));
 		
 		breakdown.setTotalMerchantFee(getMerchantFee(input, breakdown));
 		
 		breakdown.setMerchantFeeOnTf(getMfOnTf(input, breakdown, 
 								getGstOnTf((IndiaProduct) airProduct, breakdown.getFee())));
-		breakdown.setTotalSellFare(getTotalSellingFare(breakdown));		
+		breakdown.setTotalSellingFare(getTotalSellingFare(breakdown));		
 		breakdown.setTotalCharge(getTotalCharge(breakdown));
 				
-		/*
-		**txtRefFare = Base Amount + Total Tax(es)
-		
-		If txtDeclineFare < ((Total Sell Fare - Total Discount) + Total Tax(es)) Then
-			txtLowFare = txtDeclineFare
-			txtLowFareCarrier = txtDeclineAirline
-		Else
-			txtLowFare = (Total Sell Fare - Total Discount) + Total Tax(es)
-			txtLowFareCarrier = cmbPlatCarrier.Text
-		End If			
-		*/
 		breakdown.setYqTax(yqTax);
 		breakdown.setFee(null);
 		
@@ -294,14 +282,14 @@ public class FeeCalculator extends CommonCalculator {
 			IndiaAirFeesInput input,
 			IndiaAirFeesBreakdown breakdown) {
 		
-		BigDecimal commissionAmount = calculatePercentage(breakdown.getTotalIataCommission(),
-				breakdown.getClientDiscountPercent());
+		BigDecimal discountAmount = calculatePercentage(breakdown.getTotalIataCommission(),
+				input.getDiscountPercent());
 		
 		if(TripTypes.isInternational(input.getTripType())) {
-			return commissionAmount.add(safeValue(breakdown.getTotalOverheadCommission()));
+			return discountAmount.add(safeValue(breakdown.getTotalOverheadCommission()));
 		}
 		
-		return commissionAmount;
+		return discountAmount;
 	}
 	
 	public BigDecimal getTotalFare(IndiaAirFeesInput input) {
@@ -329,8 +317,7 @@ public class FeeCalculator extends CommonCalculator {
 	
 	public BigDecimal getMerchantFee(
 			IndiaAirFeesInput input,
-			IndiaAirFeesBreakdown breakdown
-			) {
+			IndiaAirFeesBreakdown breakdown) {
 		
 		return calculatePercentage(safeValue(breakdown.getTotalSellFare())
 					.subtract(safeValue(breakdown.getTotalDiscount()))

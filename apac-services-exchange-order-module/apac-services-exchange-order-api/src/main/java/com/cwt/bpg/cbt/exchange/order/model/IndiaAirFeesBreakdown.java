@@ -8,7 +8,6 @@ public class IndiaAirFeesBreakdown extends FeesBreakdown
 	private static final long serialVersionUID = 3942100881048994637L;
 
 	private Double overheadPercent;
-	private Double clientDiscountPercent;
 	private Double gstPercent;
 	private Double ot1Percent;
 	private Double ot2Percent;
@@ -35,14 +34,6 @@ public class IndiaAirFeesBreakdown extends FeesBreakdown
 
 	public void setOverheadPercent(Double percent) {
 		this.overheadPercent = percent;
-	}
-
-	public Double getClientDiscountPercent() {
-		return clientDiscountPercent;
-	}
-
-	public void setClientDiscountPercent(Double clientDiscountPercent) {
-		this.clientDiscountPercent = clientDiscountPercent;
 	}
 
 	public Double getGstPercent() {
