@@ -206,9 +206,8 @@ public class FeeCalculator extends CommonCalculator {
 	private TransactionFee getFee(ClientPricing pricing) {
 		
 		return pricing.getTransactionFees().get(0);		
-	}
-
-	private BigDecimal getFeeByPnr(
+  }
+    private BigDecimal getFeeByPnr(
 			IndiaAirFeesInput input,
 			Airport airport,
 			ClientPricing pricing, BigDecimal totalFee) {
@@ -260,12 +259,9 @@ public class FeeCalculator extends CommonCalculator {
 							&& amount.compareTo(i.getEndAmount()) >= 0
 							)
 				).findFirst();
-		
-		if(result.isPresent()) {
-			return result.get();
-		}
-		
-		return null;
+
+		return result.orElse(null);
+
 	}
 
 	public BigDecimal getTotalAirCommission(IndiaAirFeesInput input) {

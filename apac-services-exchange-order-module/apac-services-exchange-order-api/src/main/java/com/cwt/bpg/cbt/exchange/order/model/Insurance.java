@@ -7,15 +7,19 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity(value = "insurance", noClassnameStored = true)
 public class Insurance implements Serializable {
 
 	private static final long serialVersionUID = 5189419687629453470L;
 
 	@NotEmpty
+	@ApiModelProperty(required = true)
 	private String type;
 	
 	@NotNull
+	@ApiModelProperty(required = true)
 	private Float commission;
 
 	public Float getCommission() {

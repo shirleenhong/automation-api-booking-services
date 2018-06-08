@@ -30,8 +30,8 @@ public class ProductsController
     @ApiOperation(value = "Pulls list of products and vendors for a specific market")
     public ResponseEntity<List<Product>> getProducts(
             @PathVariable
-            @ApiParam(value = "Country code of the requested market") String countryCode)
-    {
+            @ApiParam(value = "Country code of the requested market") 
+            String countryCode) {
         return new ResponseEntity<>(service.getProducts(countryCode), HttpStatus.OK);
     }
 

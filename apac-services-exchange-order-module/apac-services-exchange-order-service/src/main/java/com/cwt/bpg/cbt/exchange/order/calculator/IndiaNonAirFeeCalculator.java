@@ -3,13 +3,13 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import com.cwt.bpg.cbt.calculator.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
@@ -66,8 +66,8 @@ public class IndiaNonAirFeeCalculator extends CommonCalculator {
 				scale);
 
 		BigDecimal gstAmount = round(safeValue(tax)
-				.add(safeValue(calculatePercentage(grossSell, safeValue(input.getProduct().getOt1()))))
-				.add(calculatePercentage(grossSell, safeValue(input.getProduct().getOt2()))), scale);
+				.add(round(calculatePercentage(grossSell, safeValue(input.getProduct().getOt1())), scale))
+				.add(round(calculatePercentage(grossSell, safeValue(input.getProduct().getOt2())), scale)), scale);
 
 		BigDecimal merchantFeeAmount = round(calculatePercentage(safeValue(grossSell).add(tax), mfPercent),
 				scale);
