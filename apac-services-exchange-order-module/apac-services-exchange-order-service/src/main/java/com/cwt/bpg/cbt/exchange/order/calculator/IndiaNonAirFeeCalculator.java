@@ -3,13 +3,13 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import com.cwt.bpg.cbt.calculator.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
@@ -17,7 +17,7 @@ public class IndiaNonAirFeeCalculator extends CommonCalculator {
 
 	@Autowired
 	private ScaleConfig scaleConfig;
-	private static final int BTC_FOP_MODE = 3;
+	private static final int BILL_TO_COMPANY = 3;
 
 	public NonAirFeesBreakdown calculate(IndiaNonAirFeesInput input,
 			Client client, 
@@ -33,7 +33,7 @@ public class IndiaNonAirFeeCalculator extends CommonCalculator {
 		BigDecimal discount = safeValue(input.getDiscount());
 		Double mfPercent = 0D;
 
-		if (input.getFopMode() != BTC_FOP_MODE) {
+		if (input.getFopMode() != BILL_TO_COMPANY) {
 
 			ProductMerchantFee product = getProduct(client, input.getProduct());
 			if (product != null && product.isSubjectToMf()) {
@@ -58,16 +58,16 @@ public class IndiaNonAirFeeCalculator extends CommonCalculator {
 					scale);
 		}
 
-		BigDecimal grossSell = safeValue(input.getCostAmount()).add(safeValue(commission))
-				.subtract(safeValue(discount));
+		BigDecimal grossSell = round(safeValue(input.getCostAmount()).add(safeValue(commission))
+				.subtract(safeValue(discount)), scale);
 
 		BigDecimal tax = round(
 				calculatePercentage(grossSell, safeValue(input.getProduct().getGst())),
 				scale);
 
 		BigDecimal gstAmount = round(safeValue(tax)
-				.add(safeValue(calculatePercentage(grossSell, safeValue(input.getProduct().getOt1()))))
-				.add(calculatePercentage(grossSell, safeValue(input.getProduct().getOt2()))), scale);
+				.add(round(calculatePercentage(grossSell, safeValue(input.getProduct().getOt1())), scale))
+				.add(round(calculatePercentage(grossSell, safeValue(input.getProduct().getOt2())), scale)), scale);
 
 		BigDecimal merchantFeeAmount = round(calculatePercentage(safeValue(grossSell).add(tax), mfPercent),
 				scale);
@@ -124,10 +124,10 @@ public class IndiaNonAirFeeCalculator extends CommonCalculator {
 		return false;
 	}
 
-	private ProductMerchantFee getProduct(Client client, Product product) {
+	private ProductMerchantFee getProduct(Client client, BaseProduct baseProduct) {
 		if (client.getMfProducts() != null) {
 			Optional<ProductMerchantFee> result = client.getMfProducts().stream()
-					.filter(item -> item.getProductCode().equals(product.getProductCode())).findFirst();
+					.filter(item -> item.getProductCode().equals(baseProduct.getProductCode())).findFirst();
 
 			if (result.isPresent()) {
 				return result.get();

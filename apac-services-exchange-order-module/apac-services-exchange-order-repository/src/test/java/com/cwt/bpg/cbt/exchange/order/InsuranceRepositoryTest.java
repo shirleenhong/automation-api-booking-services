@@ -2,11 +2,10 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.Insurance;
 
 public class InsuranceRepositoryTest {

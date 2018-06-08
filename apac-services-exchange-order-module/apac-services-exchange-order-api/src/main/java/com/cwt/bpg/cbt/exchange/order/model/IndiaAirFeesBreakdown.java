@@ -8,14 +8,13 @@ public class IndiaAirFeesBreakdown extends FeesBreakdown
 	private static final long serialVersionUID = 3942100881048994637L;
 
 	private Double overheadPercent;
-	private Double clientDiscountPercent;
 	private Double gstPercent;
 	private Double ot1Percent;
 	private Double ot2Percent;
 	private Double merchantFeePercent;
 	private Double subMerchantFeePercent;
 	private BigDecimal baseAmount;
-	private BigDecimal totalIataCommission;
+	private BigDecimal totalAirlineCommission;
 	private BigDecimal totalOverheadCommission;
 	private BigDecimal totalDiscount;
 	private BigDecimal totalMarkup;
@@ -35,14 +34,6 @@ public class IndiaAirFeesBreakdown extends FeesBreakdown
 
 	public void setOverheadPercent(Double percent) {
 		this.overheadPercent = percent;
-	}
-
-	public Double getClientDiscountPercent() {
-		return clientDiscountPercent;
-	}
-
-	public void setClientDiscountPercent(Double clientDiscountPercent) {
-		this.clientDiscountPercent = clientDiscountPercent;
 	}
 
 	public Double getGstPercent() {
@@ -93,12 +84,12 @@ public class IndiaAirFeesBreakdown extends FeesBreakdown
 		this.baseAmount = baseAmount;
 	}
 
-	public BigDecimal getTotalIataCommission() {
-		return totalIataCommission;
+	public BigDecimal getTotalAirlineCommission() {
+		return totalAirlineCommission;
 	}
 
-	public void setTotalIataCommission(BigDecimal totalIataCommission) {
-		this.totalIataCommission = totalIataCommission;
+	public void setTotalAirlineCommission(BigDecimal totalCommission) {
+		this.totalAirlineCommission = totalCommission;
 	}
 
 	public BigDecimal getTotalOverheadCommission() {

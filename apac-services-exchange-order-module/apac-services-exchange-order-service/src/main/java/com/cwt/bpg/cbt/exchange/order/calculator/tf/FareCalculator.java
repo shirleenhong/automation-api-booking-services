@@ -12,6 +12,6 @@ public class FareCalculator extends FeeCalculator {
 
 	@Override
 	public BigDecimal getTotalFee(IndiaAirFeesInput input, IndiaAirFeesBreakdown breakdown) {
-		return safeValue(input.getBaseFare()).subtract(safeValue(breakdown.getTotalIataCommission()));
+		return safeValue(input.getBaseFare()).subtract(safeValue(breakdown.getTotalAirlineCommission()));
 	}
 }

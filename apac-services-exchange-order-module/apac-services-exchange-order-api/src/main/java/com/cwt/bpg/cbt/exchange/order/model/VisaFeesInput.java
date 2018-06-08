@@ -1,12 +1,12 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import io.swagger.annotations.ApiModelProperty;
-
 import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 public class VisaFeesInput extends FeesInput {
 
@@ -16,15 +16,17 @@ public class VisaFeesInput extends FeesInput {
 	@NotEmpty
 	private String clientType;
 
-	private boolean nettCostMerchantFeeChecked;
-	private boolean cwtHandlingMerchantFeeChecked;
-	private BigDecimal nettCost;
 	@ApiModelProperty(required = true)
 	@NotNull
 	private BigDecimal cwtHandling;
+
 	@ApiModelProperty(required = true)
 	@NotNull
 	private BigDecimal vendorHandling;
+
+	private boolean nettCostMerchantFeeChecked;
+	private boolean cwtHandlingMerchantFeeChecked;
+	private BigDecimal nettCost;
 
     public String getClientType()
     {

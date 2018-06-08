@@ -30,7 +30,7 @@ public class OtherServiceFeesServiceTest {
 	private TransactionFeeCalculatorFactory tfFactory;
 	
 	@Mock
-	private Calculator<NonAirFeesBreakdown, NonAirFeesInput> hkSgNonAirFeeCalculator;
+	private Calculator<NonAirFeesBreakdown, NonAirFeesInput> nonAirFeeCalculator;
 
 	@Mock
 	private Calculator<AirFeesBreakdown, AirFeesInput> hkCalculator;
@@ -73,7 +73,7 @@ public class OtherServiceFeesServiceTest {
 	@Test
 	public void shouldReturnFeesBreakdown() {
 
-		when(hkSgNonAirFeeCalculator.calculate(anyObject(), anyObject()))
+		when(nonAirFeeCalculator.calculate(anyObject(), anyObject()))
 			.thenReturn(new NonAirFeesBreakdown());
 		assertNotNull(service.calculateNonAirFees(new NonAirFeesInput()));
 	}
@@ -150,7 +150,7 @@ public class OtherServiceFeesServiceTest {
 
 	@Test
 	public void shouldReturnNonAirFeeHkSg() {
-		when(hkSgNonAirFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
+		when(nonAirFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
 		
 		Client client = new Client();
 		client.setPricingId(20);

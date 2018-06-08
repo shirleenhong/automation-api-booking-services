@@ -3,9 +3,6 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
 import io.swagger.annotations.ApiModelProperty;
 
 public class IndiaNonAirFeesInput extends FeesInput {
