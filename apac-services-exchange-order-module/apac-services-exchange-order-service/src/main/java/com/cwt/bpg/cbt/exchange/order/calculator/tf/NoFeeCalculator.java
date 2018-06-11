@@ -25,7 +25,7 @@ public class NoFeeCalculator extends FeeCalculator {
     }
 
 	@Override
-    public BigDecimal getTotalOverheadComission2( 
+    public BigDecimal getTotalOverheadCommission2(
 			IndiaAirFeesInput input) {
         return null;
     }
