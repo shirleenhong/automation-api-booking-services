@@ -13,16 +13,16 @@ import com.cwt.bpg.cbt.exchange.order.model.*;
 @Component("tfCalculator")
 public class FeeCalculator extends CommonCalculator {
 	
-	private static final String PNR = "P";
-	private static final String COUPON = "C";
-	private static final String TICKET = "T";
+	static final String PNR = "P";
+	static final String COUPON = "C";
+	static final String TICKET = "T";
 	private static final String NA = "NA";
 	private static final String ALL = "X";	
-	private static final String SOLO = "SOLO";
-	private static final String GROUP = "GROUP";
+	static final String SOLO = "SOLO";
+	static final String GROUP = "GROUP";
 	
 	@Autowired
-	ScaleConfig scaleConfig;
+	private ScaleConfig scaleConfig;
 
 	public IndiaAirFeesBreakdown calculate(IndiaAirFeesInput input,
 										   AirlineRule airlineRule,
@@ -151,7 +151,7 @@ public class FeeCalculator extends CommonCalculator {
 			baseAmount = input.getBaseFare();
 		}
 		
-		TransactionFee tf = getFeeByTerritorry(airport, pricing, baseAmount);
+		TransactionFee tf = getFeeByTerritory(airport, pricing, baseAmount);
 
 		if(tf != null) {
 		
@@ -225,7 +225,7 @@ public class FeeCalculator extends CommonCalculator {
 			baseAmount = input.getBaseFare();
 		}
 		
-		TransactionFee transactionFee = getFeeByTerritorry(airport, pricing, baseAmount);
+		TransactionFee transactionFee = getFeeByTerritory(airport, pricing, baseAmount);
 		
 		if(transactionFee != null) {
 			result = transactionFee.getAmount();
@@ -234,7 +234,7 @@ public class FeeCalculator extends CommonCalculator {
 		return result;
 	}
 
-	private TransactionFee getFeeByTerritorry(Airport airport, ClientPricing pricing, BigDecimal baseAmount) {
+	private TransactionFee getFeeByTerritory(Airport airport, ClientPricing pricing, BigDecimal baseAmount) {
 		TransactionFee transactionFee = getFeeByTerritory(pricing, airport.getCityCode(), baseAmount);
 		
 		if(transactionFee == null) {
@@ -308,7 +308,7 @@ public class FeeCalculator extends CommonCalculator {
 		return null;
 	}
 
-	public BigDecimal getTotalOverheadComission2(IndiaAirFeesInput input) {
+	public BigDecimal getTotalOverheadCommission2(IndiaAirFeesInput input) {
 		
 		if(TripTypes.isInternational(input.getTripType())) {
 			return calculatePercentage(input.getAirlineOverheadCommission(), 
