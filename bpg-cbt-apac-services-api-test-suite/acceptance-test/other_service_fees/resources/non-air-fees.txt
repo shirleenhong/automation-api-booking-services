@@ -21,7 +21,7 @@ Append Fields For Non-Air Fees For India
     [Arguments]    ${other_service_fees_request_list}    ${product_request_list}
     Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
     Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "profileName":"${pro_name_value}"
-    Run Keyword If    "${acct_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "acctType":"${acct_type_value}"
+    Run Keyword If    "${acct_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "ccType":"${acct_type_value}"
     Run Keyword If    "${cost_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "costAmount":${cost_amount_value}
     Run Keyword If    "${comm_by_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionByPercent":${comm_by_percent_value}
     Run Keyword If    "${comm_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionPercent":${comm_percentage_value}
