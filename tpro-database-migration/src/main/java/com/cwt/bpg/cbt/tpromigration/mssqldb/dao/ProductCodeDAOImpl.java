@@ -14,10 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.exchange.order.model.HkSgProduct;
+import com.cwt.bpg.cbt.exchange.order.model.Product;
 
 @Repository
-public class ProductCodeDAOImpl implements ProductCodeDAO<HkSgProduct> {
+public class ProductCodeDAOImpl implements ProductCodeDAO<Product> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductCodeDAOImpl.class);
 
@@ -25,8 +25,8 @@ public class ProductCodeDAOImpl implements ProductCodeDAO<HkSgProduct> {
 	private DataSource dataSource;
 
 	@Override
-	public List<HkSgProduct> listProductCodes() {
-		List<HkSgProduct> productCodeList = new ArrayList<>();
+	public List<Product> listProductCodes() {
+		List<Product> productCodeList = new ArrayList<>();
 		String sql = "SELECT * FROM tblProductCodes";
 		
 		Connection conn = null;
@@ -37,7 +37,7 @@ public class ProductCodeDAOImpl implements ProductCodeDAO<HkSgProduct> {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				HkSgProduct productCode = new HkSgProduct();
+				Product productCode = new Product();
 				productCode.setProductCode(rs.getString("ProductCode"));
 				productCode.setDescription(rs.getString("Description").trim().replaceAll(" +", " "));
 				productCode.setEnableCcFop(rs.getObject("EnableCCFOP") == null ? null : rs.getBoolean("EnableCCFOP"));
