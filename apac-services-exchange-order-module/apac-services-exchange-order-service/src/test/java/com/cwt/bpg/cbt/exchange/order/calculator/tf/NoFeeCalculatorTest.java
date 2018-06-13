@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -46,7 +47,7 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getTotalFeeShouldReturnNull() {
-        assertNull(noFeeCalc.getTotalFee(new IndiaAirFeesInput(), new IndiaAirFeesBreakdown()));
+        assertNull(noFeeCalc.getTotalFee(new IndiaAirFeesInput(), new IndiaAirFeesBreakdown(), BigDecimal.ZERO));
     }
 
     @Test
@@ -57,7 +58,7 @@ public class NoFeeCalculatorTest {
     	breakdown.setTotalGst(new BigDecimal(50));
     	breakdown.setTotalMerchantFee(new BigDecimal(10));
     	
-        assertNotNull(noFeeCalc.getTotalSellingFare(breakdown));
+        assertEquals(new BigDecimal(160), noFeeCalc.getTotalSellingFare(breakdown));
     }
 
     @Test
@@ -68,6 +69,6 @@ public class NoFeeCalculatorTest {
     	breakdown.setTotalGst(new BigDecimal(50));
     	breakdown.setTotalMerchantFee(new BigDecimal(10));
     	
-        assertNotNull(noFeeCalc.getTotalCharge(breakdown));
+        assertEquals(new BigDecimal(100), noFeeCalc.getTotalCharge(breakdown));
     }
 }

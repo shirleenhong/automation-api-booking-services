@@ -11,7 +11,9 @@ import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
 public class BaseAndYqCalculator extends FeeCalculator {
 
 	@Override
-	public BigDecimal getTotalFee(IndiaAirFeesInput input, IndiaAirFeesBreakdown breakdown) {
-		return safeValue(input.getBaseFare()).add(safeValue(input.getYqTax()));
+	public BigDecimal getTotalFee(IndiaAirFeesInput input,
+			IndiaAirFeesBreakdown breakdown,
+			BigDecimal yqTax) {
+		return safeValue(input.getBaseFare()).add(safeValue(yqTax)); 
 	}
 }

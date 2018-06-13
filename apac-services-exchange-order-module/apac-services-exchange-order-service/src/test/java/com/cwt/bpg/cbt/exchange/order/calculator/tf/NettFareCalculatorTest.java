@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 
@@ -17,19 +16,15 @@ public class NettFareCalculatorTest {
 	
 	private BigDecimal baseFare;
 	private BigDecimal totalAirlineCommission;
-	private BigDecimal expectedPositiveValue;
-	private BigDecimal expectedNegativeValue;
 	private BigDecimal returnableOr;
 	private IndiaAirFeesInput input;
 	private IndiaAirFeesBreakdown breakdown;
 	
 	@Before
 	public void setup() {
-		baseFare = new BigDecimal(5);
+		baseFare = new BigDecimal(500);
 		totalAirlineCommission = new BigDecimal(4);
-		expectedPositiveValue = new BigDecimal(1);
 		returnableOr = new BigDecimal(0);
-		expectedNegativeValue = new BigDecimal(-1);
 		input = new IndiaAirFeesInput();
 		breakdown = new IndiaAirFeesBreakdown();
 	}
@@ -40,7 +35,7 @@ public class NettFareCalculatorTest {
 		breakdown.setTotalAirlineCommission(totalAirlineCommission);
 		breakdown.setTotalOverheadCommission(returnableOr);
 		
-		assertNotNull(netFareCalc.getTotalFee(input, breakdown));
+		assertEquals(new BigDecimal(496), netFareCalc.getTotalFee(input, breakdown, BigDecimal.ZERO));
 
 	}
 
@@ -50,8 +45,8 @@ public class NettFareCalculatorTest {
 		breakdown.setTotalAirlineCommission(totalAirlineCommission);
 		breakdown.setTotalOverheadCommission(returnableOr);
 		
-		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown);
-		assertEquals(expectedPositiveValue, actualTotalFee);
+		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown, BigDecimal.ZERO);
+		assertEquals(new BigDecimal(496), actualTotalFee);
 	}
 	
 	@Test
@@ -60,7 +55,7 @@ public class NettFareCalculatorTest {
 		breakdown.setTotalAirlineCommission(null);
 		breakdown.setTotalOverheadCommission(null);
 		
-		assertNotNull(netFareCalc.getTotalFee(input, breakdown));
+		assertEquals(new BigDecimal(0), (netFareCalc.getTotalFee(input, breakdown, BigDecimal.ZERO)));
 	}
 	
 	@Test
@@ -69,7 +64,7 @@ public class NettFareCalculatorTest {
 		breakdown.setTotalAirlineCommission(baseFare);
 		breakdown.setTotalOverheadCommission(returnableOr);
 		
-		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown);
-		assertEquals(expectedNegativeValue, actualTotalFee);
+		BigDecimal actualTotalFee = netFareCalc.getTotalFee(input, breakdown, BigDecimal.ZERO);
+		assertEquals(new BigDecimal(-496), actualTotalFee);
 	}
 }

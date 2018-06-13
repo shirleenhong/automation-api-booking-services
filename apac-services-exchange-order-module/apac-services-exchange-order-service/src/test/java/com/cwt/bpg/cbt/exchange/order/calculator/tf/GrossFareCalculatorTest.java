@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 
@@ -18,16 +17,14 @@ public class GrossFareCalculatorTest {
 	private BigDecimal baseFare;
 	private BigDecimal totalTaxes;
 	private BigDecimal totalGst;
-	private BigDecimal expectedValue;
 	private IndiaAirFeesInput input;
 	private IndiaAirFeesBreakdown breakdown;
 	
 	@Before
 	public void setup() {
-		baseFare = new BigDecimal(5);
+		baseFare = new BigDecimal(500);
 		totalTaxes = new BigDecimal(4);
-		totalGst = new BigDecimal(1);
-		expectedValue = new BigDecimal(10);
+		totalGst = new BigDecimal(2);
 		input = new IndiaAirFeesInput();
 		breakdown = new IndiaAirFeesBreakdown();
 	}
@@ -38,7 +35,7 @@ public class GrossFareCalculatorTest {
 		breakdown.setTotalTaxes(totalTaxes);
 		breakdown.setTotalGst(totalGst);
 		
-		assertNotNull(grossFareCalc.getTotalFee(input, breakdown));
+		assertEquals(new BigDecimal(506), grossFareCalc.getTotalFee(input, breakdown, BigDecimal.ZERO));
 
 	}
 
@@ -48,8 +45,8 @@ public class GrossFareCalculatorTest {
 		breakdown.setTotalTaxes(totalTaxes);
 		breakdown.setTotalGst(totalGst);
 		
-		BigDecimal actualTotalFee = grossFareCalc.getTotalFee(input, breakdown);
-		assertEquals(expectedValue, actualTotalFee);
+		BigDecimal actualTotalFee = grossFareCalc.getTotalFee(input, breakdown, BigDecimal.ZERO);
+		assertEquals(new BigDecimal(506), actualTotalFee);
 	}
 	
 	@Test
@@ -58,7 +55,7 @@ public class GrossFareCalculatorTest {
 		breakdown.setTotalTaxes(null);
 		breakdown.setTotalGst(null);
 		
-		assertNotNull(grossFareCalc.getTotalFee(input, breakdown));
+		assertEquals(BigDecimal.ZERO, grossFareCalc.getTotalFee(input, breakdown, BigDecimal.ZERO));
 	}
 	
 }
