@@ -6,7 +6,7 @@ Resource          resources/merchant.txt
 
 *** Test Cases ***
 Verify That Merchant Fee Percentages Are Correctly Retrieved For Singapore
-    [Tags]    functional    not-ready
+    [Tags]    functional
     Create Test Variables For Merchant Fee Percentage
     Send Get Request For Merchant Fee Percentage
     Verify Response Status Code Is Correct For Merchant Fee Percentage    200
