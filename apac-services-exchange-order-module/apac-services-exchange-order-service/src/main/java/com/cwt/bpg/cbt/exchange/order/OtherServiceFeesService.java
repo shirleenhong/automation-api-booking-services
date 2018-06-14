@@ -110,5 +110,9 @@ public class OtherServiceFeesService {
 	public AirFeesBreakdown calculateNettCost(NettCostInput input) {
 		return nettCostCalculator.calculateFee(input.getSellingPrice(), input.getCommissionPct());
 	}
+	
+	public String saveExchangeOrder(ExchangeOrder input) {
+		return null;
+	}
 
 }
