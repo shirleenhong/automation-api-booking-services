@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
 public class MerchantFeeController {
 
 	@Autowired
-	private ExchangeOrderService exchangeOrderService;
+	private MerchantFeeService exchangeOrderService;
 
 	@Internal
 	@GetMapping(path = "/merchant/{countryCode}/{clientType}/{profileName}",

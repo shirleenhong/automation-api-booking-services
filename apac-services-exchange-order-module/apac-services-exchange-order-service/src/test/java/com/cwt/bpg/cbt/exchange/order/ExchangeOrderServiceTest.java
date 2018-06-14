@@ -7,48 +7,29 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 
 public class ExchangeOrderServiceTest {
 
 	@Mock
-	private MerchantFeeRepository merchantFeeApi;
+	private ExchangeOrderRepository repo;
 	
 	@InjectMocks
 	private ExchangeOrderService service;
-	
-	@Mock
-	private ClientRepository clientRepo;
-	
+		
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 	}
 	
 	@Test
-	public void canGetMerchantFee() {
-		String countryCode = "SG";
-		String clientType = "CL";
-		String profileName = "PN";
-		service.getMerchantFee(countryCode, clientType, profileName);
-		verify(merchantFeeApi, times(1)).getMerchantFee(countryCode, clientType, profileName);
+	public void shouldCallSaveOrUpdate() {
+		ExchangeOrder eo = new ExchangeOrder();
+		eo.setCountryCode("HK");
+		service.saveExchangeOrder(eo);
+		verify(repo, times(1)).saveOrUpdate(eo);
 	}
 	
-	
-	@Test
-	public void canPutMerchantFee() {
-		MerchantFee fee = new MerchantFee();
-		service.putMerchantFee(fee);
-		Mockito.verify(merchantFeeApi, Mockito.times(1)).putMerchantFee(fee);
-	}
-	
-	@Test
-	public void canRemoveMerchantFee() {
-		MerchantFee fee = new MerchantFee();
-		service.remove(fee);
-		Mockito.verify(merchantFeeApi, Mockito.times(1)).removeMerchantFee(fee);
-	}
 }

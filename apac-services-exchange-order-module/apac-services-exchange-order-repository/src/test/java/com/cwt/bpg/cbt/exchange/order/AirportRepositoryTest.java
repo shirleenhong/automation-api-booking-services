@@ -20,34 +20,34 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AirportRepositoryTest {
-    @Mock
-    private Datastore dataStore;
+	
+	@Mock
+	private Datastore dataStore;
 
-    @Mock
-    private MorphiaComponent morphia;
+	@Mock
+	private MorphiaComponent morphia;
 
-    @InjectMocks
-    private AirportRepository repository;
+	@InjectMocks
+	private AirportRepository repository;
 
-    @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-        Mockito.when(morphia.getDatastore()).thenReturn(dataStore);
-    }
+	@Before
+	public void init() {
+		MockitoAnnotations.initMocks(this);
+		Mockito.when(morphia.getDatastore()).thenReturn(dataStore);
+	}
 
-    @Test
-    public void getAirportShouldReturnAirport() {
-        Query query = Mockito.mock(Query.class);
-        FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-        Mockito.when(dataStore.createQuery(Airport.class)).thenReturn(query);
-        Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
-        Mockito.when(fieldEnd.equal(anyString())).thenReturn(query);
+	@Test
+	public void getAirportShouldReturnAirport() {
+		Query query = Mockito.mock(Query.class);
+		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
+		Mockito.when(dataStore.createQuery(Airport.class)).thenReturn(query);
+		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
+		Mockito.when(fieldEnd.equal(anyString())).thenReturn(query);
 
-        repository.get("MNL");
+		repository.get("MNL");
 
-        verify(morphia, times(1)).getDatastore();
-        verify(dataStore, times(1)).createQuery(Airport.class);
-    }
-
+		verify(morphia, times(1)).getDatastore();
+		verify(dataStore, times(1)).createQuery(Airport.class);
+	}
 
 }

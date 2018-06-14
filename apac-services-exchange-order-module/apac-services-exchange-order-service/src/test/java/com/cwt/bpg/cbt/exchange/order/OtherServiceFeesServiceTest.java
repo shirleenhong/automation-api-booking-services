@@ -42,7 +42,7 @@ public class OtherServiceFeesServiceTest {
 	private NettCostCalculator nettCostCalculator;
 
 	@Mock
-	private ExchangeOrderService orderService;
+	private MerchantFeeService orderService;
 
 	@Mock
 	private ClientService clientService;

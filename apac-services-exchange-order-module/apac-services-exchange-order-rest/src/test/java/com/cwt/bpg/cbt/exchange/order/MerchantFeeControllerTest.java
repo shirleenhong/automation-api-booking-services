@@ -17,7 +17,7 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 public class MerchantFeeControllerTest {
 	
 	@Mock
-	private ExchangeOrderService service;
+	private MerchantFeeService service;
 	
 	@InjectMocks
 	private MerchantFeeController controller = new MerchantFeeController();

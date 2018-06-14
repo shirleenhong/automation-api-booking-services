@@ -27,7 +27,8 @@ public class AirportServiceTest {
 
     @Test
     public void getAllShouldGetAllAirports() {
-        List<Airport> airports = mock(List.class);
+        @SuppressWarnings("unchecked")
+		List<Airport> airports = mock(List.class);
         when(service.getAll()).thenReturn(airports);
 
         List<Airport> result = service.getAll();
