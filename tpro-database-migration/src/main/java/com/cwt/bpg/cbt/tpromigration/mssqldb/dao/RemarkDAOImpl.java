@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class RemarkDAOIMpl implements RemarkDAO {
-    private static final Logger logger = LoggerFactory.getLogger(RemarkDAOIMpl.class);
+public class RemarkDAOImpl implements RemarkDAO {
+    private static final Logger logger = LoggerFactory.getLogger(RemarkDAOImpl.class);
 
     @Autowired
     private DataSource dataSource;
