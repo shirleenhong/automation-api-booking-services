@@ -26,7 +26,7 @@ public class OtherServiceFeesController {
 	@PostMapping(path = "/non-air-fees/in", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Computes non air fees.")
+	@ApiOperation(value = "Computes non air fees. Applicable to India air products.")
 	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") IndiaNonAirFeesInput input) {
 		input.setCountryCode(Country.INDIA.getCode());
@@ -38,7 +38,7 @@ public class OtherServiceFeesController {
 	@ResponseBody
 	@ApiOperation(value = "Computes non air fees.")
 	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(
-			@PathVariable String countryCode,
+			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NonAirFeesInput input) {
 		input.setCountryCode(countryCode.toUpperCase());
 		return new ResponseEntity<>(service.calculateNonAirFees(input), HttpStatus.OK);
@@ -59,7 +59,7 @@ public class OtherServiceFeesController {
 	@ResponseBody
 	@ApiOperation(value = "Computes air fees. Applicable to non-India air products.")
 	public ResponseEntity<AirFeesBreakdown> computeAirFees(
-			@PathVariable String countryCode,
+			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") AirFeesInput input) {
 
 		input.setCountryCode(countryCode.toUpperCase());
@@ -69,7 +69,7 @@ public class OtherServiceFeesController {
 	@PostMapping(path = "/visa-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Computes visa processing fees, not be used for visa cost and handling fee")
+	@ApiOperation(value = "Computes visa processing fees. Not be used for visa cost and handling fee.")
 	public ResponseEntity<VisaFeesBreakdown> computeVisaFees(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") VisaFeesInput input) {
 
@@ -79,7 +79,7 @@ public class OtherServiceFeesController {
 	@PostMapping(path = "/nett-cost", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Computes nett cost")
+	@ApiOperation(value = "Computes nett cost.")
 	public ResponseEntity<AirFeesBreakdown> computeNettCost(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NettCostInput input) {
 
