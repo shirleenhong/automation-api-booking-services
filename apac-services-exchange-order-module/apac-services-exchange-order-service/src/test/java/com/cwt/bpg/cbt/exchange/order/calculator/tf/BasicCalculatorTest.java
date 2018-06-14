@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 
@@ -11,6 +10,7 @@ import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
 
 public class BasicCalculatorTest {
+	
 	private BasicCalculator basicCalculator = new BasicCalculator();
 
 	@Test
@@ -20,9 +20,8 @@ public class BasicCalculatorTest {
 		IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
 
 		BigDecimal expectedResult = input.getBaseFare();
-		BigDecimal actualResult = basicCalculator.getTotalFee(input, breakdown);
+		BigDecimal actualResult = basicCalculator.getTotalFee(input, breakdown, BigDecimal.ZERO);
 
-		assertNotNull(actualResult);
 		assertEquals(expectedResult, actualResult);
 	}
 }

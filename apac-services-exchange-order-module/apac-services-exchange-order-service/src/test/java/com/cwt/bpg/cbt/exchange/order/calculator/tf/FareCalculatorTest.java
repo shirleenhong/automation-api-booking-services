@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 
@@ -17,17 +16,13 @@ public class FareCalculatorTest {
 	
 	private BigDecimal baseFare;
 	private BigDecimal totalAirlineCommission;
-	private BigDecimal expectedPositiveValue;
-	private BigDecimal expectedNegativeValue;
 	private IndiaAirFeesInput input;
 	private IndiaAirFeesBreakdown breakdown;
 	
 	@Before
 	public void setup() {
-		baseFare = new BigDecimal(5);
-		totalAirlineCommission = new BigDecimal(4);
-		expectedPositiveValue = new BigDecimal(1);
-		expectedNegativeValue = new BigDecimal(-1);
+		baseFare = new BigDecimal(500);
+		totalAirlineCommission = new BigDecimal(40);
 		input = new IndiaAirFeesInput();
 		breakdown = new IndiaAirFeesBreakdown();
 	}
@@ -37,7 +32,7 @@ public class FareCalculatorTest {
 		input.setBaseFare(baseFare);
 		breakdown.setTotalAirlineCommission(totalAirlineCommission);
 		
-		assertNotNull(fareCalc.getTotalFee(input, breakdown));
+		assertEquals(new BigDecimal(460), fareCalc.getTotalFee(input, breakdown, BigDecimal.ZERO));
 
 	}
 
@@ -46,8 +41,8 @@ public class FareCalculatorTest {
 		input.setBaseFare(baseFare);
 		breakdown.setTotalAirlineCommission(totalAirlineCommission);
 		
-		BigDecimal actualTotalFee = fareCalc.getTotalFee(input, breakdown);
-		assertEquals(expectedPositiveValue, actualTotalFee);
+		BigDecimal actualTotalFee = fareCalc.getTotalFee(input, breakdown, BigDecimal.ZERO);
+		assertEquals(new BigDecimal(460), actualTotalFee);
 	}
 	
 	@Test
@@ -55,7 +50,7 @@ public class FareCalculatorTest {
 		input.setBaseFare(null);
 		breakdown.setTotalAirlineCommission(null);
 		
-		assertNotNull(fareCalc.getTotalFee(input, breakdown));
+		assertEquals(new BigDecimal(0), fareCalc.getTotalFee(input, breakdown, BigDecimal.ZERO));
 	}
 	
 	@Test
@@ -64,7 +59,7 @@ public class FareCalculatorTest {
 		breakdown.setTotalAirlineCommission(baseFare);
 
 		
-		BigDecimal actualTotalFee = fareCalc.getTotalFee(input, breakdown);
-		assertEquals(expectedNegativeValue, actualTotalFee);
+		BigDecimal actualTotalFee = fareCalc.getTotalFee(input, breakdown, BigDecimal.ZERO);
+		assertEquals(new BigDecimal(-460), actualTotalFee);
 	}
 }

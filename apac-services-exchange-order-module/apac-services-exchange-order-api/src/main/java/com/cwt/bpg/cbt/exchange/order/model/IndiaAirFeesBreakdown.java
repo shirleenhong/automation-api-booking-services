@@ -26,7 +26,6 @@ public class IndiaAirFeesBreakdown extends FeesBreakdown
 	private BigDecimal merchantFeeOnTf;
 	private BigDecimal totalCharge;
 	private BigDecimal fee;
-	private BigDecimal yqTax;
 
 	public Double getOverheadPercent() {
 		return overheadPercent;
@@ -179,13 +178,4 @@ public class IndiaAirFeesBreakdown extends FeesBreakdown
 	public void setFee(BigDecimal fee) {
 		this.fee = fee;
 	}
-
-	public BigDecimal getYqTax() {
-		return yqTax;
-	}
-
-	public void setYqTax(BigDecimal yqTax) {
-		this.yqTax = yqTax;
-	}
-
 }

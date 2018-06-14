@@ -5,9 +5,15 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.mongodb.morphia.annotations.*;
+
+@Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
+@Indexes(@Index(fields = @Field("sequenceNumber")))
 public class ExchangeOrder implements Serializable {
 
     private static final long serialVersionUID = 79442657760597469L;
+    
+    @Id
     private String sequenceNumber;
     private BigDecimal commission;
     private BigDecimal gstAmount;

@@ -11,6 +11,7 @@ import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
 
 public class WithVatCalculatorTest {
+	
 	private WithVatCalculator withVatCalculator = new WithVatCalculator();
 
 	@Test
@@ -24,6 +25,7 @@ public class WithVatCalculatorTest {
 
 		IndiaAirFeesInput input = new IndiaAirFeesInput();
 		input.setBaseFare(baseFare);
+		
 		IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
 		breakdown.setTotalTaxes(new BigDecimal(1));
 		breakdown.setTotalGst(new BigDecimal(1));
@@ -33,9 +35,9 @@ public class WithVatCalculatorTest {
 		BigDecimal expectedResult = baseFare.add(totalTaxes).add(totalGst).subtract(totalAirlineCommission)
 				.subtract(totalReturnableOr);
 
-		BigDecimal actualResult = withVatCalculator.getTotalFee(input, breakdown);
+		BigDecimal actualResult = withVatCalculator.getTotalFee(input, breakdown, BigDecimal.ZERO);
 
 		assertNotNull(actualResult);
-		assertEquals(expectedResult, actualResult);
+		assertEquals(expectedResult, actualResult); 
 	}
 }

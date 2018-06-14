@@ -47,8 +47,7 @@ class CommonRepository<T, D> {
 
 	T put(T object) {
 		final D keyValue = getKeyValue(object);
-		if (keyValue != null)
-        {
+		if (keyValue != null) {
             remove(keyValue);
             final Datastore datastore = morphia.getDatastore();
             Key<T> newKey = datastore.save(object);

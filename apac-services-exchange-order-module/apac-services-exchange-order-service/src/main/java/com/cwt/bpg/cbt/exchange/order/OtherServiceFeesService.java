@@ -82,7 +82,7 @@ public class OtherServiceFeesService {
         final int pricingId = getPricingId(input.getProfileName());
         final AirlineRule airlineRule = airlineRuleService.getAirlineRule(input.getPlatCarrier());
         final Airport airport = getAirport(input.getCityCode());
-        final BaseProduct airProduct = getProduct(Country.INDIA.getCode(), AIR_PRODUCT_CODE);
+        final IndiaProduct airProduct = (IndiaProduct) getProduct(Country.INDIA.getCode(), AIR_PRODUCT_CODE);
 
         return this.tfFactory.getCalculator(pricingId)
                 .calculate(input, airlineRule, client, airport, airProduct);

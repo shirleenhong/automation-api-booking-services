@@ -16,19 +16,20 @@ public class FullFareCalculatorTest {
 
 	@Test
 	public void getTotalFeeShouldReturnNotNull() {
-		BigDecimal baseFare = new BigDecimal(1);
-		BigDecimal totalTaxes = new BigDecimal(1);
+		BigDecimal baseFare = new BigDecimal(1000);
+		BigDecimal totalTaxes = new BigDecimal(50);
 
 		IndiaAirFeesInput input = new IndiaAirFeesInput();
 		input.setBaseFare(baseFare);
+		
 		IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
 		breakdown.setTotalTaxes(totalTaxes);
 
 		BigDecimal expectedResult = baseFare.add(totalTaxes);
 
-		BigDecimal actualResult = fullFareCalculator.getTotalFee(input, breakdown);
+		BigDecimal actualResult = fullFareCalculator.getTotalFee(input, breakdown, BigDecimal.ZERO);
 
 		assertNotNull(actualResult);
-		assertEquals(expectedResult, actualResult);
+		assertEquals(expectedResult, actualResult); 
 	}
 }

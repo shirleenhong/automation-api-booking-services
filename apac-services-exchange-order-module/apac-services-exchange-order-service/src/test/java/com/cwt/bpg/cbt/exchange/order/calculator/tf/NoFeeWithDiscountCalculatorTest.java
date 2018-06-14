@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
-import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
@@ -23,8 +23,13 @@ public class NoFeeWithDiscountCalculatorTest {
 	}
 
     @Test
-    public void getMfOnTfShouldReturnNotNullIfTripTypeNotInt() {
+    public void getMfOnTfShouldReturnNotNullIfTripTypeNotInt() { 
         IndiaAirFeesInput input = new IndiaAirFeesInput();
-        assertNotNull(noFeeWithDiscountCalculator.getMfOnTf(input, new IndiaAirFeesBreakdown(), new BigDecimal(1)));
+        input.setMerchantFeePercent(2D);
+        IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
+        breakdown.setFee(new BigDecimal(1000));
+        
+        BigDecimal result = noFeeWithDiscountCalculator.getMfOnTf(input, breakdown, new BigDecimal(2)); 
+        assertEquals(new BigDecimal(20).setScale(2), result);
     }
 }
