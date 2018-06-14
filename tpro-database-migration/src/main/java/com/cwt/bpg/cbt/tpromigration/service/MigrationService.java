@@ -66,14 +66,13 @@ public class MigrationService {
 		LOGGER.info("start migration...");
 
 		List<Vendor> vendorList = vendorDAOFactory.getVendorDAO().listVendors();
-		List<Product> products = productDAOFactory.getProductCodeDAO().listProductCodes();
+		List<BaseProduct> products = productDAOFactory.getProductCodeDAO().listProductCodes();
 		
-		Map<String, Product> productsMap = products.stream()
-				.collect(Collectors.toMap(Product::getProductCode, product -> product));
+		Map<String, BaseProduct> productsMap = products.stream()
+				.collect(Collectors.toMap(BaseProduct::getProductCode, product -> product));
 		String countryCode = System.getProperty("spring.profiles.default");
 
 		vendorList.forEach(vendor -> {
-			vendor.setCountryCode(countryCode);
 			List<String> productCodes = vendor.getProductCodes();
 
 			LOGGER.info("vendor:{}", vendor);
