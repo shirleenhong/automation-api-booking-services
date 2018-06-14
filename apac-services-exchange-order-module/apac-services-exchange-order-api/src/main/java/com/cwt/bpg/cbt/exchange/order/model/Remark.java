@@ -5,7 +5,7 @@ import org.mongodb.morphia.annotations.Entity;
 
 import java.io.Serializable;
 
-@Entity(value = "remarks", noClassnameStored = true)
+@Entity(value = "remarkList", noClassnameStored = true)
 public class Remark implements Serializable {
     private static final long serialVersionUID = -756695804842165089L;
 
