@@ -2,6 +2,8 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 public class ExchangeOrder implements Serializable {
 
@@ -10,6 +12,28 @@ public class ExchangeOrder implements Serializable {
     private BigDecimal commission;
     private BigDecimal gstAmount;
     private BigDecimal merchantFee;
+    private String countryCode;
+    private String fopType;
+
+    private CreditCard creditCard;
+
+    private String description;
+    private String btaDescription;
+    private Date date;
+    private String exchangeOrderNumber;
+    private String vendorContactPerson;
+    private String productCode;
+    private String vendorCode;
+    private String pnr;
+    private String accountNumber;
+    private String passengerName;
+    private Date createDateTime;
+    private String agentId;
+    private String pcc;
+    private String vendorEmail;
+    private String faxNumber;
+
+    private List<Remark> remarks;
 
     public String getSequenceNumber() {
         return sequenceNumber;
@@ -41,5 +65,157 @@ public class ExchangeOrder implements Serializable {
 
     public void setMerchantFee(BigDecimal merchantFee) {
         this.merchantFee = merchantFee;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getFopType() {
+        return fopType;
+    }
+
+    public void setFopType(String fopType) {
+        this.fopType = fopType;
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getBtaDescription() {
+        return btaDescription;
+    }
+
+    public void setBtaDescription(String btaDescription) {
+        this.btaDescription = btaDescription;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getExchangeOrderNumber() {
+        return exchangeOrderNumber;
+    }
+
+    public void setExchangeOrderNumber(String exchangeOrderNumber) {
+        this.exchangeOrderNumber = exchangeOrderNumber;
+    }
+
+    public String getVendorContactPerson() {
+        return vendorContactPerson;
+    }
+
+    public void setVendorContactPerson(String vendorContactPerson) {
+        this.vendorContactPerson = vendorContactPerson;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    public String getVendorCode() {
+        return vendorCode;
+    }
+
+    public void setVendorCode(String vendorCode) {
+        this.vendorCode = vendorCode;
+    }
+
+    public String getPnr() {
+        return pnr;
+    }
+
+    public void setPnr(String pnr) {
+        this.pnr = pnr;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public String getPassengerName() {
+        return passengerName;
+    }
+
+    public void setPassengerName(String passengerName) {
+        this.passengerName = passengerName;
+    }
+
+    public Date getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(Date createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public String getAgentId() {
+        return agentId;
+    }
+
+    public void setAgentId(String agentId) {
+        this.agentId = agentId;
+    }
+
+    public String getPcc() {
+        return pcc;
+    }
+
+    public void setPcc(String pcc) {
+        this.pcc = pcc;
+    }
+
+    public String getVendorEmail() {
+        return vendorEmail;
+    }
+
+    public void setVendorEmail(String vendorEmail) {
+        this.vendorEmail = vendorEmail;
+    }
+
+    public String getFaxNumber() {
+        return faxNumber;
+    }
+
+    public void setFaxNumber(String faxNumber) {
+        this.faxNumber = faxNumber;
+    }
+
+    public List<Remark> getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(List<Remark> remarks) {
+        this.remarks = remarks;
     }
 }
