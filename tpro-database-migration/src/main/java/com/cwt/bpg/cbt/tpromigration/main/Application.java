@@ -25,10 +25,11 @@ public class Application {
 				service.migrateMerchantFees();
 				service.migrateClientPricing();
 			}
-			
-			service.migrateProductList();*/
-
+			service.migrateProductList();
 			service.migrateRemarks();
+			*/
+
+
 		}
 	}
 
