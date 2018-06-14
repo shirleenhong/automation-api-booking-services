@@ -91,7 +91,7 @@ public class OtherServiceFeesController {
 	@ResponseBody
 	@ApiOperation(value = "Save new exchange order transaction")
 	public ResponseEntity<String> saveExchangeOrder(
-			@Valid @RequestBody @ApiParam(value = "Values needed for generation") ExchangeOrder input) {
+			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) {
 
 		return new ResponseEntity<>(service.saveExchangeOrder(input), HttpStatus.OK);
 	}
