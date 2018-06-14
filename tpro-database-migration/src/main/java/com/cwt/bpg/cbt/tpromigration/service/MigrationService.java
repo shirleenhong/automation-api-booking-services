@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.tpromigration.service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.RemarkList;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -321,15 +322,13 @@ public class MigrationService {
 
 	@SuppressWarnings("unchecked")
 	public void migrateRemarks() throws JsonProcessingException {
-		List<Remark> remarks = remarkDAO.getRemarks();
+		String countryCode = System.getProperty("spring.profiles.default");
+		RemarkList remarkList = new RemarkList();
+		remarkList.setCountryCode(countryCode);
+		remarkList.setRemarks(remarkDAO.getRemarks());
 
-		List<Document> docs = new ArrayList<>();
-
-		for (Remark remark : remarks) {
-			docs.add(dBObjectMapper.mapAsDbDocument(remark.getText(), remark));
-		}
-
-		mongoDbConnection.getCollection(AIRPORT_COLLECTION).insertMany(docs);
+		mongoDbConnection.getCollection("remarkList")
+				.insertOne(dBObjectMapper.mapAsDbDocument(remarkList.getCountryCode(), remarkList));
 	}
 
 }
