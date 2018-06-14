@@ -3,7 +3,7 @@ package com.cwt.bpg.cbt.tpromigration.service;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.RemarkList;
+import com.cwt.bpg.cbt.exchange.order.model.RemarkList;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

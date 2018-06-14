@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.tpromigration.mssqldb.model;
+package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.util.List;
 
