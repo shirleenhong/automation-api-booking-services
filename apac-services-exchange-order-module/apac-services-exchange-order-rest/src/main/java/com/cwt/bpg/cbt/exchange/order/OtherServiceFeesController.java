@@ -85,5 +85,15 @@ public class OtherServiceFeesController {
 
 		return new ResponseEntity<>(service.calculateNettCost(input), HttpStatus.OK);
 	}
+	
+	@PostMapping(path = "/exchange-order", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Generate a unique number to each new exchange order transaction")
+	public ResponseEntity<String> saveExchangeOrder(
+			@Valid @RequestBody @ApiParam(value = "Values needed for generation") ExchangeOrder input) {
 
+		return new ResponseEntity<>(service.saveExchangeOrder(input), HttpStatus.OK);
+	}
+	
 }
