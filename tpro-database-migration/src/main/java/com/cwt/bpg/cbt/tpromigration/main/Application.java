@@ -16,11 +16,17 @@ public class Application {
 		try(ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");)
 		{			
 		    MigrationService service = context.getBean(MigrationService.class);
-			if ("IN".equals(System.getProperty("spring.profiles.default"))) {
+		    
+			/*if ("IN".equals(System.getProperty("spring.profiles.default"))) {
+				service.migrateAirlineRules();
+				service.migrateAirports();
 				service.migrateClients();
 			} else {
 				service.migrateMerchantFees();
+				service.migrateClientPricing();
 			}
+			
+			service.migrateProductList();*/
 		}
 	}
 
