@@ -51,6 +51,9 @@ public class MigrationService {
 	@Autowired
 	private AirportDAO airportDAO;
 
+    @Autowired
+    private RemarkDAO remarkDAO;
+
 	@Value("${com.cwt.tpromigration.mongodb.dbuser}")
 	private String dbUser;
 
@@ -60,7 +63,7 @@ public class MigrationService {
 	@Value("${com.cwt.tpromigration.mongodb.dbname}")
 	private String dbName;
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
 	public void migrateProductList() throws JsonProcessingException {
 
 		LOGGER.info("start migration...");
@@ -314,6 +317,19 @@ public class MigrationService {
 
 	public void migrateClientPricing() {
 
+	}
+
+	@SuppressWarnings("unchecked")
+	public void migrateRemarks() throws JsonProcessingException {
+		List<Remark> remarks = remarkDAO.getRemarks();
+
+		List<Document> docs = new ArrayList<>();
+
+		for (Remark remark : remarks) {
+			docs.add(dBObjectMapper.mapAsDbDocument(remark.getText(), remark));
+		}
+
+		mongoDbConnection.getCollection(AIRPORT_COLLECTION).insertMany(docs);
 	}
 
 }
