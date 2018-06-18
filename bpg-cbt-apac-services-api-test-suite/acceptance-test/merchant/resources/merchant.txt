@@ -37,7 +37,7 @@ Send Get Request For Merchant Fee Percentage
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
     : FOR    ${index}    IN RANGE    0    ${merchant_fee_list_length}
-    \    ${response}    Get Request    merchant    /apac-services-rest/api/merchant/${country}/${client_type_${index}}/${profile_name_${index}}    headers=${headers}
+    \    ${response}    Get Request    merchant    /apac-services-rest/api/merchant/${country}/${profile_name_${index}}    headers=${headers}
     \    Set Test Variable    ${response_${index}}    ${response}
     \    Log    ${response_${index}.headers}
     \    Log    ${response_${index}.content}
@@ -48,8 +48,8 @@ Verify Merchant Fee Percentage Is Correctly Retrieved
     \    Set Test Variable    ${response}    ${response_${index}}
     \    Verify Json Value Is Correct    $.countryCode    ${country}
     \    Verify Json Value Is Correct    $.clientName    ${client_name_${index}}
-    \    Verify Json Value Is Correct    $.profileName    ${profile_name_${index}}
     \    Verify Json Value Is Correct    $.clientType    ${client_type_${index}}
+    \    Verify Json Value Is Correct    $.profileName    ${profile_name_${index}}
     \    Verify Json Value Is Correct    $.merchantFeePercent    ${merchant_fee_percent_${index}}    float
     \    Verify Json Value Is Correct    $.includeTransactionFee    ${merchant_fee_flag_${index}}    boolean
 

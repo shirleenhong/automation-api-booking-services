@@ -1,0 +1,40 @@
+*** Settings ***
+Suite Setup
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/exchange-order.txt
+
+*** Test Cases ***
+Verify That Exchange Order Is Generated And Saved Successfully For Singapore
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Number Is Returned Correctly
+    Verify Exchange Order Creation Date Is Returned Correctly
+    Send Other Service Fees For Exchange Order Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Is Saved Correctly   
+
+Verify That Exchange Order Is Generated And Saved Successfully For Hong Kong
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,HK|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Number Is Returned Correctly
+    Verify Exchange Order Creation Date Is Returned Correctly
+    Send Other Service Fees For Exchange Order Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Is Saved Correctly   
+    
+Verify That Exchange Order Is Generated And Saved Successfully For India
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,IN|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Number Is Returned Correctly
+    Verify Exchange Order Creation Date Is Returned Correctly
+    Send Other Service Fees For Exchange Order Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Is Saved Correctly   
