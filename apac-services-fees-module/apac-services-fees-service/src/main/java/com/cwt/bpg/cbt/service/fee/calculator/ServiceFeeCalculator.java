@@ -1,15 +1,16 @@
 package com.cwt.bpg.cbt.service.fee.calculator;
 
+import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
+
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.service.fee.model.PriceBreakdown;
 import com.cwt.bpg.cbt.service.fee.model.PriceCalculationInput;
 
-public class ServiceFeeCalculator extends CommonCalculator {
+public class ServiceFeeCalculator {
 
 	@Autowired
 	private ScaleConfig scaleConfig;	
