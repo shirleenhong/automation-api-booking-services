@@ -41,7 +41,7 @@ public class MerchantFeeControllerTest {
 	@Test
 	public void canGetMerchantFee() {
 		MerchantFee merchantFee = new MerchantFee();
-		Mockito.when(service.getMerchantFee(Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(merchantFee);
+		Mockito.when(service.getMerchantFee(Mockito.anyString(), Mockito.anyString())).thenReturn(merchantFee);
 		
 		ResponseEntity<MerchantFee> result = controller.getMerchantFee("SG", "TF", "product");
 

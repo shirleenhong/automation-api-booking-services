@@ -30,16 +30,14 @@ public class VisaFeesCalculator implements Calculator<VisaFeesBreakdown, VisaFee
         BigDecimal nettCost = safeValue(input.getNettCost());
 
         if (input.isNettCostMerchantFeeChecked()) {
-            mfNettCost = round(calculatePercentage(nettCost,
-                    merchantFeePercent), scale);
+            mfNettCost = round(calculatePercentage(nettCost, merchantFeePercent), scale);
             result.setNettCostMerchantFee(mfNettCost);
         }
 
         BigDecimal mfCwtHandling = BigDecimal.ZERO;
         if (input.isCwtHandlingMerchantFeeChecked()) {
             mfCwtHandling = round(calculatePercentage(
-                    input.getCwtHandling().add(input.getVendorHandling()),
-                    merchantFeePercent), scale);
+                    input.getCwtHandling().add(input.getVendorHandling()), merchantFeePercent), scale);
             result.setCwtHandlingMerchantFee(mfCwtHandling);
         }
 

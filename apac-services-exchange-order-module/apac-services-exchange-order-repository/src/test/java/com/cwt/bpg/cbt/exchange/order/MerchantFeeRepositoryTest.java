@@ -49,27 +49,11 @@ public class MerchantFeeRepositoryTest {
 		when(fieldEnd.equal(anyString())).thenReturn(query);
 		when(query.get()).thenReturn(new MerchantFee());
 		
-		impl.getMerchantFee(countryCode, "TF", "ALCATEL SG");
+		impl.getMerchantFee(countryCode, "ALCATEL SG");
 
-		verify(query, times(3)).field(anyString());
+		verify(query, times(2)).field(anyString());
         verify(dataStore, times(1)).createQuery(MerchantFee.class);
         verify(morphia, times(1)).getDatastore();
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Test
-	public void canGetMerchantFeeWhenClientTypeIsNull() {
-		final String countryCode = "SG";
-		FieldEnd fieldEnd = mock(FieldEnd.class);
-		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal(anyString())).thenReturn(query);
-		when(query.get()).thenReturn(new MerchantFee());
-
-		impl.getMerchantFee(countryCode, null, "ALCATEL SG");
-
-        verify(query, times(2)).field(anyString());
-        verify(dataStore, times(1)).createQuery(MerchantFee.class);
-		verify(morphia, times(1)).getDatastore();
 	}
 	
 	@Test
@@ -87,7 +71,7 @@ public class MerchantFeeRepositoryTest {
 		
 		impl.putMerchantFee(fee);
 		
-		verify(query, times(3)).filter(anyString(), anyObject());
+		verify(query, times(2)).filter(anyString(), anyObject());
 		verify(morphia, times(2)).getDatastore();
 		verify(dataStore, times(1)).delete(query);
 		verify(dataStore, times(1)).save(fee);
