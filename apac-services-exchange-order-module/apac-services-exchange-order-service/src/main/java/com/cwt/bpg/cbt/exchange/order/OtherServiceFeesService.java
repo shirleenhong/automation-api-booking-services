@@ -58,7 +58,7 @@ public class OtherServiceFeesService {
 
 	public NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input) {
         MerchantFee merchantFee = exchangeOrderService
-                .getMerchantFee(input.getCountryCode(), input.getClientType(), input.getProfileName());
+                .getMerchantFee(input.getCountryCode(), null, input.getProfileName());
 		return this.nonAirFeeCalculator.calculate(input, merchantFee);
 	}
 

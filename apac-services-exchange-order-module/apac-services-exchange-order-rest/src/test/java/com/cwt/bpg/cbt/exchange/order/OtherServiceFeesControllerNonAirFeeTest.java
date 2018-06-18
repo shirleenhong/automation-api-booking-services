@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,7 +50,6 @@ public class OtherServiceFeesControllerNonAirFeeTest {
         NonAirFeesInput input = new NonAirFeesInput();
 
         input.setFopType("CX");
-        input.setClientType("CT");
         input.setGstPercent(2D);
         input.setProfileName("PN");
 
@@ -56,6 +57,8 @@ public class OtherServiceFeesControllerNonAirFeeTest {
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isOk());
+
+        verify(service, times(1)).calculateNonAirFees(any(NonAirFeesInput.class));
     }
 
 
@@ -64,7 +67,6 @@ public class OtherServiceFeesControllerNonAirFeeTest {
 
         NonAirFeesInput input = new NonAirFeesInput();
 
-        input.setClientType("CT");
         input.setGstPercent(2D);
         input.setProfileName("PN");
 
@@ -79,32 +81,12 @@ public class OtherServiceFeesControllerNonAirFeeTest {
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isBadRequest());
+
+        verifyZeroInteractions(service);
     }
 
     @Test
-    public void shouldReturnBadRequestOnEmptyClientType() throws Exception {
-
-        NonAirFeesInput input = new NonAirFeesInput();
-
-        input.setFopType("CX");
-        input.setGstPercent(2D);
-        input.setProfileName("PN");
-
-        mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
-
-        input.setClientType("");
-
-        mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    public void shouldReturnBadRequestOnEmptyGst() throws Exception {
+    public void shouldReturnOkOnEmptyGst() throws Exception {
 
         NonAirFeesInput input = new NonAirFeesInput();
 
@@ -115,8 +97,9 @@ public class OtherServiceFeesControllerNonAirFeeTest {
         mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isOk());
 
+        verify(service, times(1)).calculateNonAirFees(any(NonAirFeesInput.class));
     }
 
     @Test
@@ -138,9 +121,11 @@ public class OtherServiceFeesControllerNonAirFeeTest {
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isBadRequest());
+
+        verifyZeroInteractions(service);
     }
 
-    public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
+    static byte[] convertObjectToJsonBytes(Object object) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return mapper.writeValueAsBytes(object);
