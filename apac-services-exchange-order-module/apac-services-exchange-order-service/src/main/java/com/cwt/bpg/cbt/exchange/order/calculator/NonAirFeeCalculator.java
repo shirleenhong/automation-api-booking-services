@@ -1,19 +1,21 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
-import com.cwt.bpg.cbt.calculator.CommonCalculator;
+import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.FOPTypes;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 @Component("nonAirFeeCalculator")
-public class NonAirFeeCalculator extends CommonCalculator implements Calculator<NonAirFeesBreakdown, NonAirFeesInput> {
+public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonAirFeesInput> {
 
 	@Autowired
 	private ScaleConfig scaleConfig;

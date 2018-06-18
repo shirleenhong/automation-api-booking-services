@@ -56,13 +56,13 @@ public class OtherServiceFeesService {
 	@Autowired
 	private ProductService productService;
 
-	public NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input) {
+	NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input) {
         MerchantFee merchantFee = exchangeOrderService
                 .getMerchantFee(input.getCountryCode(), input.getClientType(), input.getProfileName());
 		return this.nonAirFeeCalculator.calculate(input, merchantFee);
 	}
 
-	public NonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
+	NonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
 
 		final Client client = clientService.getClient(input.getProfileName());
 		final Client defaultClient = clientService.getDefaultClient();
@@ -70,13 +70,13 @@ public class OtherServiceFeesService {
 		return this.indiaNonAirFeeCalculator.calculate(input, client, defaultClient);
 	}
 
-	public AirFeesBreakdown calculateAirFees(AirFeesInput input) {
+	AirFeesBreakdown calculateAirFees(AirFeesInput input) {
         MerchantFee merchantFee = exchangeOrderService
                 .getMerchantFee(input.getCountryCode(), input.getClientType(), input.getProfileName());
 	    return this.osFactory.getCalculator(input.getCountryCode()).calculate(input, merchantFee);
 	}
 
-    public IndiaAirFeesBreakdown calculateIndiaAirFees(IndiaAirFeesInput input)
+    IndiaAirFeesBreakdown calculateIndiaAirFees(IndiaAirFeesInput input)
     {
         final Client client = clientService.getClient(input.getProfileName());
         final int pricingId = getPricingId(input.getProfileName());
@@ -101,17 +101,17 @@ public class OtherServiceFeesService {
 		return client != null ? client.getPricingId() : 0;
 	}
 
-	public VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {
+	VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {
         MerchantFee merchantFee = exchangeOrderService
                 .getMerchantFee(input.getCountryCode(), input.getClientType(), input.getProfileName());
         return this.visaFeesCalculator.calculate(input, merchantFee);
 	}
 
-	public AirFeesBreakdown calculateNettCost(NettCostInput input) {
+	AirFeesBreakdown calculateNettCost(NettCostInput input) {
 		return nettCostCalculator.calculateFee(input.getSellingPrice(), input.getCommissionPct());
 	}
 	
-	public String saveExchangeOrder(ExchangeOrder input) {
+	String saveExchangeOrder(ExchangeOrder input) {
 		return null;
 	}
 
