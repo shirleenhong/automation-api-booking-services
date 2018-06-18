@@ -24,9 +24,9 @@ public class MerchantFeeController {
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(
-			value = "Pulls merchant fee based on a [country code | client type | profile name] combination")
+			value = "Pulls merchant fee based on a [country code | profile name] combination")
 	public ResponseEntity<MerchantFee> getMerchantFee(@PathVariable String countryCode,
-			@PathVariable String clientType, @PathVariable String profileName) {
+			@PathVariable String profileName) {
 
 		return new ResponseEntity<>(exchangeOrderService.getMerchantFee(countryCode, profileName), HttpStatus.OK);
 	}
