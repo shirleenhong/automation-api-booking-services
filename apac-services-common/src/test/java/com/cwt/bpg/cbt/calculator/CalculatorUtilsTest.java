@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.calculator;
 
+import static com.cwt.bpg.cbt.calculator.CalculatorUtils.safeValue;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.junit.Assert.assertThat;
@@ -14,29 +15,29 @@ public class CalculatorUtilsTest
 	@Test
 	public void shouldReturnSafeBigDecimal() {
 		BigDecimal input = null;
-		BigDecimal safeValue = CalculatorUtils.safeValue(input);
+		BigDecimal safeValue = safeValue(input);
 		assertThat(safeValue, is(equalTo(BigDecimal.ZERO)));
 
 		input = new BigDecimal(10.00);
-		safeValue = CalculatorUtils.safeValue(input);
+		safeValue = safeValue(input);
 		assertThat(safeValue, is(equalTo(input)));
 	}
 
 	@Test
 	public void shouldReturnSafeString() {
 		String input = null;
-		String safeValue = CalculatorUtils.safeValue(input);
+		String safeValue = safeValue(input);
 		assertThat(safeValue, isEmptyString());
 
 		input = "abc";
-		safeValue = CalculatorUtils.safeValue(input);
+		safeValue = safeValue(input);
 		assertThat(safeValue, is(equalTo(input)));
 	}
 
 	@Test
 	public void safeValueShouldDoNothingWhenValueIsNotNull() {
 		BigDecimal decimal = new BigDecimal(10.00);
-		BigDecimal safeValue = CalculatorUtils.safeValue(decimal);
+		BigDecimal safeValue = safeValue(decimal);
 		assertThat(safeValue, is(equalTo(safeValue)));
 	}
 
@@ -109,11 +110,11 @@ public class CalculatorUtilsTest
 	@Test
 	public void shouldReturnSafeInteger() {
 		Integer input = null;
-		Integer safeValue = CalculatorUtils.safeValue(input);
+		Integer safeValue = safeValue(input);
 		assertThat(safeValue, is(equalTo(Integer.valueOf(0))));
 
 		input = 100;
-		safeValue = CalculatorUtils.safeValue(input);
+		safeValue = safeValue(input);
 		assertThat(safeValue, is(equalTo(input)));
 	}
 
