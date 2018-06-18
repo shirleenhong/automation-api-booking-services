@@ -2,7 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.util.List;
 
-public class RemarkList<Remark> {
+public class RemarkList {
 
     private String countryCode;
 
