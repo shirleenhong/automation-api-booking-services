@@ -14,10 +14,6 @@ public class NonAirFeesInput extends FeesInput {
 
     @ApiModelProperty(required = true)
 	@NotEmpty
-	private String clientType;
-
-    @ApiModelProperty(required = true)
-	@NotEmpty
     private String fopType;
 
 	private BigDecimal sellingPrice;
@@ -35,16 +31,6 @@ public class NonAirFeesInput extends FeesInput {
         this.sellingPrice = BigDecimal.ZERO;
         this.gstPercent = 0d;
     }
-
-	public String getClientType()
-	{
-		return clientType;
-	}
-
-	public void setClientType(String clientType)
-	{
-		this.clientType = clientType;
-	}
 
 	public boolean isMerchantFeeWaive() {
 		return isMerchantFeeWaive;

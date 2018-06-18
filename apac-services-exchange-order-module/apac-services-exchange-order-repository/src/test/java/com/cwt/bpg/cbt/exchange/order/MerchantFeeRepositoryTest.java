@@ -1,12 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.anyObject;
-import static org.mockito.Mockito.anyString;
-
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +16,7 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.WriteResult;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class MerchantFeeRepositoryTest {
 
 	@Mock
@@ -29,32 +24,51 @@ public class MerchantFeeRepositoryTest {
 	
 	@Mock
 	private MorphiaComponent morphia;
-	
-	@InjectMocks
+
+    @Mock
+    private Query<MerchantFee> query;
+
+    @InjectMocks
 	private MerchantFeeRepository impl;
-	
-	@Before
+
+
+    @Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		when(morphia.getDatastore()).thenReturn(dataStore);
-	}
+        when(dataStore.createQuery(MerchantFee.class)).thenReturn(query);
+        when(morphia.getDatastore()).thenReturn(dataStore);
+    }
 	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void canGetMerchantFee() {
 		final String countryCode = "SG";
-		
-
-		Query<MerchantFee> query = mock(Query.class);
-		FieldEnd fieldEnd = mock(FieldEnd.class);
-		when(dataStore.createQuery(MerchantFee.class)).thenReturn(query);
+        FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(query.field(anyString())).thenReturn(fieldEnd);
 		when(fieldEnd.equal(anyString())).thenReturn(query);
 		when(query.get()).thenReturn(new MerchantFee());
 		
 		impl.getMerchantFee(countryCode, "TF", "ALCATEL SG");
-		
+
+		verify(query, times(3)).field(anyString());
+        verify(dataStore, times(1)).createQuery(MerchantFee.class);
+        verify(morphia, times(1)).getDatastore();
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Test
+	public void canGetMerchantFeeWhenClientTypeIsNull() {
+		final String countryCode = "SG";
+		FieldEnd fieldEnd = mock(FieldEnd.class);
+		when(query.field(anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equal(anyString())).thenReturn(query);
+		when(query.get()).thenReturn(new MerchantFee());
+
+		impl.getMerchantFee(countryCode, null, "ALCATEL SG");
+
+        verify(query, times(2)).field(anyString());
+        verify(dataStore, times(1)).createQuery(MerchantFee.class);
 		verify(morphia, times(1)).getDatastore();
 	}
 	
