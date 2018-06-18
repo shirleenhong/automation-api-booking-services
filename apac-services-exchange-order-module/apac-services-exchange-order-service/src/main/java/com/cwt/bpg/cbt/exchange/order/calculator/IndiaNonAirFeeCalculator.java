@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
+import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
+
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -7,13 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
-public class IndiaNonAirFeeCalculator extends CommonCalculator {
+public class IndiaNonAirFeeCalculator {
 
 	@Autowired
 	private ScaleConfig scaleConfig;

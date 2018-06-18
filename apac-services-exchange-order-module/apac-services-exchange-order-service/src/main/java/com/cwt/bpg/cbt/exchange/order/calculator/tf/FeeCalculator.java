@@ -1,26 +1,18 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
+import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
+
 import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
-import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
-import com.cwt.bpg.cbt.exchange.order.model.Airport;
-import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
-import com.cwt.bpg.cbt.exchange.order.model.Client;
-import com.cwt.bpg.cbt.exchange.order.model.ClientPricing;
-import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
-import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFee;
-import com.cwt.bpg.cbt.exchange.order.model.TripTypes;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component("tfCalculator")
-public class FeeCalculator extends CommonCalculator {
+public class FeeCalculator {
 	
 	static final String PNR = "P";
 	static final String COUPON = "C";

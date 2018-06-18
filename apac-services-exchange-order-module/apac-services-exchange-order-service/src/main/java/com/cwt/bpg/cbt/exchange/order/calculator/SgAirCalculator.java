@@ -1,17 +1,18 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
+import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
+
 import java.math.BigDecimal;
 
-import com.cwt.bpg.cbt.calculator.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cwt.bpg.cbt.calculator.CommonCalculator;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
-public class SgAirCalculator extends CommonCalculator implements Calculator<AirFeesBreakdown, AirFeesInput> {
+public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInput> {
 
 	@Autowired
 	private ScaleConfig scaleConfig;
