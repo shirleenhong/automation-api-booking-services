@@ -1,0 +1,142 @@
+*** Setting ***
+Resource    ../../resources/api-imports.txt
+Resource    ../../resources/api-utilities.txt
+Resource    ../../resources/api-variables.txt
+
+***Keywords***
+Create Test Variables For Exchange Order
+    [Arguments]    ${eo_data}    
+    ${eo_data_list}    Split String    ${eo_data}    |
+    ${eo_data_list_length}    Get Length    ${eo_data_list}
+    Set Test Variable    ${eo_data_list_length}
+    Set Test Variable    ${eo_data_list}
+    : FOR    ${data}    IN    @{eo_data_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Set Test Variable    ${${data_item[0]}_value}    ${data_item[1]}
+
+Generate Exchange Order Number
+    [Arguments]    ${unique_key}=C
+    ${current_datetime}    Get Current Date
+    ${epoch_datetime}    Convert Date    ${current_datetime}    epoch
+    ${uuid}    Evaluate    str(${epoch_datetime}-1400000000).replace(".","${unique_key}")
+    Set Test Variable    ${exchange_order_number}    ${uuid}
+
+Get Current Date/Time
+    ${current_time}    Get Current Date    
+    Set Test Variable    ${current_time}
+
+Send Other Service Fees For Exchange Order Get Request 
+    [Arguments]    ${exchange_order_number}=${exchange_order_number}    ${token}=${default_token}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    exchange-order    /apac-services-rest/api/other-service-fees/exchange-order/${exchange_order_number}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    exchange-order
+
+Send Other Service Fees For Exchange Order Post Request 
+    [Arguments]    ${token}=${default_token}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    Generate Exchange Order Number    
+    Get Current Date/Time
+    ${exchange_order_request_list}    Create List
+    Run Keyword If    "${country_value}"!="null"    Append To List    ${exchange_order_request_list}    "countryCode":"${country_value}"
+    Run Keyword If    "${commission_value}"!="null"    Append To List    ${exchange_order_request_list}    "commission":"${commission_value}"
+    Run Keyword If    "${gst_amount_value}"!="null"    Append To List    ${exchange_order_request_list}    "gstAmount":${gst_amount_value}
+    Run Keyword If    "${merchant_fee_value}"!="null"    Append To List    ${exchange_order_request_list}    "merchantFee":"${merchant_fee_value}"
+    Run Keyword If    "${fop_type_value}"!="null"    Append To List    ${exchange_order_request_list}    "fopType":${fop_type_value}
+    Run Keyword If    "${cc_type_value}"!="null"    Append To List    ${exchange_order_request_list}    "ccType":${cc_type_value}
+    Run Keyword If    "${cc_number_value}"!="null"    Append To List    ${exchange_order_request_list}    "ccNumber":${cc_number_value}
+    Run Keyword If    "${expiry_date_value}"!="null"    Append To List    ${exchange_order_request_list}    "expiryDate":${expiry_date_value}
+    Run Keyword If    "${description_value}"!="null"    Append To List    ${exchange_order_request_list}    "description":${description_value}
+    Run Keyword If    "${bta_description_value}"!="null"    Append To List    ${exchange_order_request_list}    "btaDescription":${bta_description_value}
+    Run Keyword If    "${date_value}"!="null"    Append To List    ${exchange_order_request_list}    "date":${date_value}
+    Run Keyword If    "${vendor_contact_value}"!="null"    Append To List    ${exchange_order_request_list}    "vendorContact":${vendor_contact_value}
+    Run Keyword If    "${product_code_value}"!="null"    Append To List    ${exchange_order_request_list}    "productCode":${product_code_value}
+    Run Keyword If    "${vendor_code_value}"!="null"    Append To List    ${exchange_order_request_list}    "vendorCode":${vendor_code_value}
+    Run Keyword If    "${pnr_value}"!="null"    Append To List    ${exchange_order_request_list}    "pnr":${pnr_value}
+    Run Keyword If    "${account_number_value}"!="null"    Append To List    ${exchange_order_request_list}    "accountNumber":${account_number_value}
+    Run Keyword If    "${passenger_name_value}"!="null"    Append To List    ${exchange_order_request_list}    "passengerName":${passenger_name_value}
+    Run Keyword If    "${agent_id_value}"!="null"    Append To List    ${exchange_order_request_list}    "agentId":${agent_id_value}
+    Run Keyword If    "${pcc_value}"!="null"    Append To List    ${exchange_order_request_list}    "pcc":${pcc_value}
+    Run Keyword If    "${vendor_email_value}"!="null"    Append To List    ${exchange_order_request_list}    "vendorEmail":${vendor_email_value}
+    Run Keyword If    "${vendor_fax_value}"!="null"    Append To List    ${exchange_order_request_list}    "vendorFax":${vendor_fax_value}
+    Run Keyword If    "${remarks_value}"!="null"    Append To List    ${exchange_order_request_list}    "remarks":${remarks_value}
+    Run Keyword If    "${exchange_order_number}"!="null"    Append To List    ${exchange_order_request_list}    "exchangeOrderNumber":${exchange_order_number}
+    Run Keyword If    "${current_time}"!="null"    Append To List    ${exchange_order_request_list}    "creationDateTime":${current_time}    
+    ${list_count}    Get Length    ${exchange_order_request_list}
+    : FOR    ${i}    IN RANGE    0    ${list_count}
+    \    ${eo_list}    Set Variable If    ${i}==0    ${EMPTY}    ${eo_list},
+    \    ${eo_list}    Set Variable    ${eo_list}${exchange_order_request_list[${i}]}
+    ${data}    Set Variable    {${eo_list}}
+    ${data}    Replace String    ${data}    "NULL"    null
+    ${data}    Replace String    ${data}    "None"    None
+    Log    ${data}
+    ${response}    Post Request    exchange-order    /apac-services-rest/api/other-service-fees/exchange-order    data=${data}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    exchange-order
+
+Verify Exchange Order Creation Date Is Returned Correctly
+    Verify Json Value Is Correct    $.creationDateTime    ${current_time} 
+
+Verify Exchange Order Number Is Returned Correctly
+    Verify Json Value Is Correct    $.exchangeOrderNumber    ${exchange_order_number}    
+
+Verify Exchange Order Is Saved Correctly
+    Verify Json Value Is Correct    $.countryCode    ${country_value} 
+    Verify Json Value Is Correct    $.commission    ${commission_value} 
+    Verify Json Value Is Correct    $.gstAmount    ${gst_amount_value} 
+    Verify Json Value Is Correct    $.merchantFee    ${merchant_fee_value} 
+    Verify Json Value Is Correct    $.fopType    ${fop_type_value} 
+    Verify Json Value Is Correct    $.ccType    ${cc_type_value} 
+    Verify Json Value Is Correct    $.ccNumber    ${cc_number_value} 
+    Verify Json Value Is Correct    $.expiryDate    ${expiry_date_value} 
+    Verify Json Value Is Correct    $.description    ${description_value} 
+    Verify Json Value Is Correct    $.btaDescription    ${bta_description_value} 
+    Verify Json Value Is Correct    $.date    ${date_value} 
+    Verify Json Value Is Correct    $.vendorContact    ${vendor_contact_value} 
+    Verify Json Value Is Correct    $.productCode    ${product_code_value} 
+    Verify Json Value Is Correct    $.vendorCode    ${vendor_code_value} 
+    Verify Json Value Is Correct    $.pnr    ${pnr_value}
+    Verify Json Value Is Correct    $.accountNumber    ${account_number_value} 
+    Verify Json Value Is Correct    $.passengerName    ${passenger_name_value} 
+    Verify Json Value Is Correct    $.agentId    ${agent_id_value} 
+    Verify Json Value Is Correct    $.pcc    ${pcc_value} 
+    Verify Json Value Is Correct    $.vendorEmail    ${vendor_email_value} 
+    Verify Json Value Is Correct    $.vendorFax    ${vendor_fax_value} 
+    Verify Json Value Is Correct    $.remarks    ${remarks_value} 
+    Verify Json Value Is Correct    $.exchangeOrderNumber    ${exchange_order_number} 
+    Verify Json Value Is Correct    $.creationDateTime    ${current_time} 
+    
+Verify Exchange Order Is Not Returned
+    Verify String Does Not Contain Substring    ${response.content}    "countryCode"
+    Verify String Does Not Contain Substring    ${response.content}    "commission"
+    Verify String Does Not Contain Substring    ${response.content}    "gstAmount"
+    Verify String Does Not Contain Substring    ${response.content}    "merchantFee"
+    Verify String Does Not Contain Substring    ${response.content}    "fopType"
+    Verify String Does Not Contain Substring    ${response.content}    "ccType"
+    Verify String Does Not Contain Substring    ${response.content}    "ccNumber"
+    Verify String Does Not Contain Substring    ${response.content}    "expiryDate"
+    Verify String Does Not Contain Substring    ${response.content}    "description"
+    Verify String Does Not Contain Substring    ${response.content}    "btaDescription"
+    Verify String Does Not Contain Substring    ${response.content}    "date"
+    Verify String Does Not Contain Substring    ${response.content}    "vendorContact"
+    Verify String Does Not Contain Substring    ${response.content}    "productCode"
+    Verify String Does Not Contain Substring    ${response.content}    "vendorCode"
+    Verify String Does Not Contain Substring    ${response.content}    "pnr"
+    Verify String Does Not Contain Substring    ${response.content}    "accountNumber"
+    Verify String Does Not Contain Substring    ${response.content}    "passengerName"
+    Verify String Does Not Contain Substring    ${response.content}    "agentId"
+    Verify String Does Not Contain Substring    ${response.content}    "pcc"
+    Verify String Does Not Contain Substring    ${response.content}    "vendorEmail"
+    Verify String Does Not Contain Substring    ${response.content}    "vendorFax"
+    Verify String Does Not Contain Substring    ${response.content}    "remarks"
+    Verify String Does Not Contain Substring    ${response.content}    "exchangeOrderNumber"
+    Verify String Does Not Contain Substring    ${response.content}    "creationDateTime"
+    

@@ -6,7 +6,6 @@ Resource    ../../resources/api-variables.txt
 *** Keywords ***
 Append Fields For Non-Air Fees For HK/SG
     [Arguments]    ${other_service_fees_request_list}
-    Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":"${client_type_value}"
     Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "profileName":"${pro_name_value}"
     Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
     Run Keyword If    "${merchant_fee_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeAbsorb":${merchant_fee_absorb_value}

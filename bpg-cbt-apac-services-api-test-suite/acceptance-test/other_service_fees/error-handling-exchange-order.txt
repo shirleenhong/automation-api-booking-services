@@ -1,0 +1,405 @@
+*** Settings ***
+Suite Setup
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/exchange-order.txt
+
+***Test Cases***
+Verify Error Is Encountered When Invalid Token Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request    token=!@#$%^&*().!@#$%^&*().!@#$%^&*()
+    Verify Response Status Code Is Correct    401
+    Verify Exchange Order Is Not Returned        
+    
+Verify Error Is Encountered When Null Token Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Empty Token Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    401
+    Verify Exchange Order Is Not Returned
+
+Verify Error Is Encountered When No Token Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request    token=None
+    Verify Response Status Code Is Correct    401
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Exchange Order Number Is Used For Get Request
+    [Arguments]    functional    not-ready
+    Send Other Service Fees For Exchange Order Get Request    exchange_order_number=1x1x1x
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Send Other Service Fees For Exchange Order Get Request    exchange_order_number=abcabcabc
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Send Other Service Fees For Exchange Order Get Request    exchange_order_number=!@#$%^&*()
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Null Exchange Order Number Is Used For Get Request
+    [Arguments]    functional    not-ready
+    Send Other Service Fees For Exchange Order Get Request    exchange_order_number=null
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Empty Exchange Order Number Is Used For Get Request
+    [Arguments]    functional    not-ready
+    Send Other Service Fees For Exchange Order Get Request    exchange_order_number=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When No Exchange Order Number Is Used For Get Request
+    [Arguments]    functional    not-ready
+    Send Other Service Fees For Exchange Order Get Request    exchange_order_number=None
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Country Code Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,${EMPTY}|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,NULL|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,None|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+
+    
+Verify Error Is Encountered When Invalid Commission Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,xxxx|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,${EMPTY}|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,None|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid GST Amount Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,xxxx|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,${EMPTY}|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,None|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Merchant Fee Amount Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,xxxx|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,${EMPTY}|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,None|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid FOP Type Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,${EMPTY}|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,NULL|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,None|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid CC Type Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,${EMPTY}|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,NULL|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,None|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid CC Number Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,${EMPTY}|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,NULL|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,None|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Expiry Date Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,${EMPTY}|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,NULL|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,None|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Description Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,${EMPTY}|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,NULL|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,None|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid BTA Description Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,${EMPTY}|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,NULL|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,None|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Date Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,${EMPTY}|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,NULL|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,None|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Vendor Contact Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,${EMPTY}|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,NULL|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,None|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Product Code Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,${EMPTY}|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,NULL|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,None|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Vendor Code Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,${EMPTY}|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,NULL|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,None|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid PNR Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,${EMPTY}|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,NULL|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,None|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Account Number Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,${EMPTY}|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,NULL|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,None|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Passenger Name Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,${EMPTY}|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,NULL|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,None|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Agent ID Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,${EMPTY}|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,NULL|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,None|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid PCC Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,${EMPTY}|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,NULL|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,None|vendor_email,test@test.com|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Vendor Email Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,${EMPTY}|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,NULL|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,None|vendor_fax,1234567|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Vendor Fax Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,${EMPTY}|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,NULL|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,None|remarks,test1234
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    
+Verify Error Is Encountered When Invalid Remarks Value Is Used
+    [Arguments]    functional    not-ready
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,${EMPTY}
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,NULL
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    Create Test Variables For Exchange Order    country,SG|commission,1000|gst_amount,220|merchant_fee,145|fop_type,CX|cc_type,AX|cc_number,1234|expiry_date,1120|description,test_description|bta_description,test_bta|date,06142018|vendor_contact,test 1|product_code,PR01|vendor_code,VEN090909|PNR,PNR1234|account_number,987654321|passenger_name,Kalyan Dodla|agent_id,U001XXX|pcc,SIN1234|vendor_email,test@test.com|vendor_fax,1234567|remarks,None
+    Send Other Service Fees For Exchange Order Post Request
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Is Not Returned
+    

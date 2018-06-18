@@ -4,7 +4,7 @@ Resource    ../../resources/api-imports.txt
 Resource    ../../resources/api-utilities.txt
 Resource    ../../resources/api-variables.txt
 *** Keywords ***
-Create New List
+Create New Product List
     [Arguments]    ${product_number}
     ${all_product_list_length}    Get Length    ${all_product_list}
     ${index}    Set Variable    ${all_product_list_length}    
@@ -15,10 +15,19 @@ Create New List
     Set Test Variable    ${index}    
     Set Test Variable    ${all_product_list}
 
+Create New Remarks List
+    [Arguments]    ${product_number}
+    ${remarks_list}    Create List
+    Set Test Variable    ${${product_number}_remarks_list}    ${remarks_list}
+    Append To List    ${product_remarks_list}    ${product_number} 
+    Set Test Variable    ${product_remarks_list}
+
 Create Test Variables For Products And Vendors
     [Arguments]    ${country}
     @{all_product_list}    Create List
+    @{product_remarks_list}    Create List
     Set Test Variable    ${all_product_list}
+    Set Test Variable    ${product_remarks_list}
     ${data_list_1}    Split String    ${${country}_data_list_1}    |
     : FOR    ${data}    IN    @{data_list_1}
     \    ${character}    Run Keyword If    "${country}"=="in"    Set Variable    _    ELSE    Set Variable    ,        
@@ -27,19 +36,37 @@ Create Test Variables For Products And Vendors
     \    ${item_number}    Get Substring    ${data_item[0]}    3
     \    ${data_type}    Set Variable If    "${data_type.upper()}"=="PRO"    product    vendor
     \    Set Test Variable    ${${data_type}_code_${item_number}}    ${data_item[1]}
+    \    ${bta_description}    Get Substring    ${data_item[1]}     0    20   
+    \    Run Keyword If    "${data_type}"=="product"    Set Test Variable    ${${data_type}_bta_desciption_${item_number}}    ${bta_description}   
+    \    Run Keyword If    "${data_type}"=="product"    Set Test Variable    ${${data_type}_type_${item_number}}    ${data_item[2]}
     ${data_list_2}    Split String    ${${country}_data_list_2}    |
     : FOR    ${data}    IN    @{data_list_2}
     \    ${data_item}    Split String    ${data}    ,
     \    ${product_number}    Get Substring    ${data_item[0]}    3
     \    ${vendor_number}    Get Substring    ${data_item[1]}    3
     \    ${is_list_created}    Run Keyword And Return Status    Variable Should Exist    ${${product_number}_list}
-    \    Run Keyword If    "${is_list_created}"=="False"    Create New List    ${product_number}    
-    \    Append To List    ${product_list_${index}}    ${vendor_number}  
+    \    Run Keyword If    "${is_list_created}"=="False"    Create New Product List    ${product_number}    
+    \    Append To List    ${product_list_${index}}    ${vendor_number}
     : FOR    ${item}    IN RANGE    0    ${index}+1
     \    Set Test Variable    ${product_list_${item}}
     \    Log    ${product_list_${item}}
+    ${remarks_data_list}    Split String    ${${country}_data_list_3}    |
+    ${remarks_data_list_length}    Get Length    ${remarks_data_list}
+    :FOR    ${index}    IN RANGE    0    ${remarks_data_list_length}
+    \    ${remarks_data_item}    Split String    ${remarks_data_list[${index}]}    ,
+    \    ${product_number}    Get Substring    ${remarks_data_item[0]}    2
+    \    ${is_list_created}    Run Keyword And Return Status    Variable Should Exist    ${${product_number}_remarks_list}
+    \    Run Keyword If    "${is_list_created}"=="False"    Create New Remarks List    ${product_number}    
+    \    ${remarks_index}    Get Length    ${${product_number}_remarks_list}
+    \    Append To List    ${${product_number}_remarks_list}    ${remarks_index}
+    \    Set Test Variable    ${${product_number}_product_type_${remarks_index}}    ${remarks_data_item[1]}
+    \    Set Test Variable    ${${product_number}_remark_type_${remarks_index}}    ${remarks_data_item[2]}
+    \    Set Test Variable    ${${product_number}_remark_text_${remarks_index}}    ${remarks_data_item[3]}
+    \    ${index}    Evaluate    ${index}+1
+    \    Set Test Variable    ${${product_number}_remarks_list}  
     Set Test Variable    ${country}    ${country.upper()}
     Set Test Variable    ${all_product_list}
+
 
 Send Product Get Request
     [Arguments]    ${token}=${default_token}    ${country}=${country}
@@ -71,9 +98,19 @@ Verify Products And Vendors Are Retrieved Correctly
     : FOR    ${index}    IN RANGE    ${all_product_list_length}
     \    ${item_product_code}    Get Json Value As String    ${response.content}    $.[${index}].productCode
     \    Verify Json Value Is Correct    $[${index}].description    ${product_code_${item_product_code}}
+    \    Verify Json Value Is Correct    $[${index}].btaDescription    ${product_bta_desciption_${item_product_code}}
     \    Verify Vendors Are Retrieved Correctly    ${index}    ${product_list_${index}}
+    \    Verify Remarks Are Retrieved Correctly    ${index}    ${item_product_code}
     ${index}    Evaluate    ${index}+1
     Verify Json Element Does Not Exist    $[${index}].description
+
+Verify Remarks Are Retrieved Correctly
+    [Arguments]    ${index}    ${item_product_code}
+    ${remark_list_length}    Get Length    ${${item_product_code}_remarks_list}
+    : FOR    ${remarks_index}    IN RANGE    0    ${remark_list_length}
+    \    Verify Json Value Is Correct     $[${index}].remarks.[${remarks_index}].productType    ${${item_product_code}_product_type_${remarks_index}}
+    \    Verify Json Value Is Correct     $[${index}].remarks.[${remarks_index}].type    ${${item_product_code}_remark_type_${remarks_index}}
+    \    Verify Json Value Is Correct     $[${index}].remarks.[${remarks_index}].text    ${${item_product_code}_remark_text_${remarks_index}}
 
 Verify Vendors Are Retrieved Correctly
     [Arguments]    ${index}    ${item_vendor_list}
