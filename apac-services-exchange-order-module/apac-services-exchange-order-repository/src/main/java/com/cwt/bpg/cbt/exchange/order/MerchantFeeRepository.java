@@ -1,6 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import org.apache.commons.lang.StringUtils;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
@@ -21,19 +20,12 @@ public class MerchantFeeRepository {
 	@Autowired
 	private MorphiaComponent morphia;
 
-	public MerchantFee getMerchantFee(String countryCode, String clientType, String profileName) {
-		Query<MerchantFee> query = morphia.getDatastore().createQuery(MerchantFee.class)
+	public MerchantFee getMerchantFee(String countryCode, String profileName) {
+		return morphia.getDatastore().createQuery(MerchantFee.class)
 				.field("countryCode")
 				.equal(countryCode)
 				.field("profileName")
-				.equal(profileName);
-
-		if (StringUtils.isNotBlank(clientType)) {
-			query.field("clientType")
-					.equal(clientType);
-		}
-
-		return query.get();
+				.equal(profileName).get();
 	}
 	
 	public MerchantFee putMerchantFee(MerchantFee fee) {
@@ -51,7 +43,6 @@ public class MerchantFeeRepository {
 		
 		final Query<MerchantFee> clientMerchantFee = datastore.createQuery(MerchantFee.class)
                 .filter("countryCode", merchantFee.getCountryCode())
-                .filter("clientType", merchantFee.getClientType())
                 .filter("profileName", merchantFee.getProfileName());
 		
 		WriteResult delete = datastore.delete(clientMerchantFee);

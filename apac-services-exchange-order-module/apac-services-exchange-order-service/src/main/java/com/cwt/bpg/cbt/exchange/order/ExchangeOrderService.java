@@ -17,17 +17,17 @@ public class ExchangeOrderService {
 	@Autowired
 	private MerchantFeeRepository merchantFeeRepo;
 	
-	@Cacheable(cacheNames="merchant-fee", key="{#countryCode, #clientType, #profileName}")
-	public MerchantFee getMerchantFee(String countryCode, String clientType, String profileName) {
-		return merchantFeeRepo.getMerchantFee(countryCode, clientType, profileName);
+	@Cacheable(cacheNames="merchant-fee", key="{#countryCode, #profileName}")
+	public MerchantFee getMerchantFee(String countryCode, String profileName) {
+		return merchantFeeRepo.getMerchantFee(countryCode, profileName);
 	}
 
-	@CachePut(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.clientType, #fee.profileName}")
+	@CachePut(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.profileName}")
 	public MerchantFee putMerchantFee(MerchantFee fee) {
 		return merchantFeeRepo.putMerchantFee(fee);
 	}
 	
-	@CacheEvict(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.clientType, #fee.profileName}")
+	@CacheEvict(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.profileName}")
 	public MerchantFee remove(MerchantFee fee) {
 		return merchantFeeRepo.removeMerchantFee(fee);
 	}
