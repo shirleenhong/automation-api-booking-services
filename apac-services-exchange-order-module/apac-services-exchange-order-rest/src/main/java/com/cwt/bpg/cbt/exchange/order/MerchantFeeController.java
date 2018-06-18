@@ -20,7 +20,7 @@ public class MerchantFeeController {
 	private ExchangeOrderService exchangeOrderService;
 
 	@Internal
-	@GetMapping(path = "/merchant/{countryCode}/{clientType}/{profileName}",
+	@GetMapping(path = "/merchant/{countryCode}/{profileName}",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(
