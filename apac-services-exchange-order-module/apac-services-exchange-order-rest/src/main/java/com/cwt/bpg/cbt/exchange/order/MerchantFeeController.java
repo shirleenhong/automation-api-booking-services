@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiOperation;
 public class MerchantFeeController {
 
 	@Autowired
-	private MerchantFeeService exchangeOrderService;
+	private MerchantFeeService service;
 
 	@Internal
 	@GetMapping(path = "/merchant/{countryCode}/{profileName}",
@@ -28,7 +28,7 @@ public class MerchantFeeController {
 	public ResponseEntity<MerchantFee> getMerchantFee(@PathVariable String countryCode,
 			@PathVariable String profileName) {
 
-		return new ResponseEntity<>(exchangeOrderService.getMerchantFee(countryCode, profileName), HttpStatus.OK);
+		return new ResponseEntity<>(service.getMerchantFee(countryCode, profileName), HttpStatus.OK);
 	}
 
 	@Internal
@@ -38,7 +38,7 @@ public class MerchantFeeController {
 	@ApiOperation(value = "Updates merchant fee configuration of a given market")
 	public ResponseEntity<MerchantFee> updateMerchantFee(@RequestBody MerchantFee merchantFee) {
 
-		return new ResponseEntity<>(exchangeOrderService.putMerchantFee(merchantFee), HttpStatus.OK);
+		return new ResponseEntity<>(service.putMerchantFee(merchantFee), HttpStatus.OK);
 	}
 
 	@Internal
@@ -48,7 +48,7 @@ public class MerchantFeeController {
 	@ApiOperation(value = "remove merchant fee configuration of a given market")
 	public ResponseEntity<MerchantFee> removeMerchantFee(@RequestBody MerchantFee merchantFee) {
 
-		return new ResponseEntity<>(exchangeOrderService.remove(merchantFee), HttpStatus.OK);
+		return new ResponseEntity<>(service.remove(merchantFee), HttpStatus.OK);
 	}
 
 }
