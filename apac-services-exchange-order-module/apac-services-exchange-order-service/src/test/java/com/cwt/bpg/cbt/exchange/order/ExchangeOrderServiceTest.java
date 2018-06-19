@@ -16,6 +16,9 @@ public class ExchangeOrderServiceTest {
 	@Mock
 	private ExchangeOrderRepository repo;
 	
+	@Mock
+	private SequenceNumberRepository sequentNumberRepo;
+	
 	@InjectMocks
 	private ExchangeOrderService service;
 
@@ -24,6 +27,7 @@ public class ExchangeOrderServiceTest {
 		MockitoAnnotations.initMocks(this);
 	}
   
+	@Test
 	public void shouldCallSaveOrUpdate() {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setCountryCode("HK");
