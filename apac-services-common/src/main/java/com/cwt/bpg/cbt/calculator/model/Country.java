@@ -2,11 +2,11 @@ package com.cwt.bpg.cbt.calculator.model;
 
 public enum Country {
 
-	HONG_KONG("HK", "852"),
-	SINGAPORE("SG", "65"),
-	AUSTRALIA("AU", "61"),
-	NEW_ZEALAND("NZ", "64"),
-	INDIA("IN", "91");
+	HONG_KONG("HK", "1"),
+	SINGAPORE("SG", "2"),
+	AUSTRALIA("AU", "4"),
+	NEW_ZEALAND("NZ", "5"),
+	INDIA("IN", "3");
 
 	private final String code;
 	private final String id;
