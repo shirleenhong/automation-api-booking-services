@@ -20,9 +20,6 @@ public class MerchantFeeServiceTest {
 	@InjectMocks
 	private MerchantFeeService service;
 	
-	@Mock
-	private ClientRepository clientRepo;
-	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
@@ -35,7 +32,6 @@ public class MerchantFeeServiceTest {
 		service.getMerchantFee(countryCode, profileName);
 		verify(merchantFeeApi, times(1)).getMerchantFee(countryCode, profileName);
 	}
-	
 	
 	@Test
 	public void canPutMerchantFee() {
