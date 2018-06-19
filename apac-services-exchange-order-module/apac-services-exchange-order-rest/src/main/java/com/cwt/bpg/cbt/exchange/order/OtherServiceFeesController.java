@@ -23,9 +23,6 @@ public class OtherServiceFeesController {
 	@Autowired
 	private OtherServiceFeesService service;
 	
-	@Autowired
-	private ExchangeOrderService eoService;
-
 	@PostMapping(path = "/non-air-fees/in", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
