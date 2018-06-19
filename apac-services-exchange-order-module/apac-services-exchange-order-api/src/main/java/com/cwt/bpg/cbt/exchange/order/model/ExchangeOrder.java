@@ -8,13 +8,13 @@ import java.util.List;
 import org.mongodb.morphia.annotations.*;
 
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
-@Indexes(@Index(fields = @Field("sequenceNumber")))
+@Indexes(@Index(fields = @Field("eoNumber")))
 public class ExchangeOrder implements Serializable {
 
     private static final long serialVersionUID = 79442657760597469L;
     
     @Id
-    private String sequenceNumber;
+    private String eoNumber;
     private BigDecimal commission;
     private BigDecimal gstAmount;
     private BigDecimal merchantFee;
@@ -26,7 +26,6 @@ public class ExchangeOrder implements Serializable {
     private String description;
     private String btaDescription;
     private Date date;
-    private String exchangeOrderNumber;
     private String vendorContactPerson;
     private String productCode;
     private String vendorCode;
@@ -41,15 +40,16 @@ public class ExchangeOrder implements Serializable {
 
     private List<Remark> remarks;
 
-    public String getSequenceNumber() {
-        return sequenceNumber;
-    }
 
-    public void setSequenceNumber(String sequenceNumber) {
-        this.sequenceNumber = sequenceNumber;
-    }
+    public String getEoNumber() {
+		return eoNumber;
+	}
 
-    public BigDecimal getCommission() {
+	public void setEoNumber(String eoNumber) {
+		this.eoNumber = eoNumber;
+	}
+
+	public BigDecimal getCommission() {
         return commission;
     }
 
@@ -119,14 +119,6 @@ public class ExchangeOrder implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public String getExchangeOrderNumber() {
-        return exchangeOrderNumber;
-    }
-
-    public void setExchangeOrderNumber(String exchangeOrderNumber) {
-        this.exchangeOrderNumber = exchangeOrderNumber;
     }
 
     public String getVendorContactPerson() {

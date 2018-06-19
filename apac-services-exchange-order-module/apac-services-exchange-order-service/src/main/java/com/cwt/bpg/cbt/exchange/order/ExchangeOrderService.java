@@ -1,34 +1,31 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import com.cwt.bpg.cbt.calculator.model.Country;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 
-/**
- * Service facade for Exchange Order module
- */
 @Service
 public class ExchangeOrderService {
 
 	@Autowired
-	private MerchantFeeRepository merchantFeeRepo;
+	private ExchangeOrderRepository exchangeOrderRepo;
 	
-	@Cacheable(cacheNames="merchant-fee", key="{#countryCode, #profileName}")
-	public MerchantFee getMerchantFee(String countryCode, String profileName) {
-		return merchantFeeRepo.getMerchantFee(countryCode, profileName);
+	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder) {
+		
+		exchangeOrder.setEoNumber(setEoNumber(exchangeOrder.getCountryCode()));
+		
+		ExchangeOrder result = new ExchangeOrder();
+		result.setEoNumber(exchangeOrderRepo.saveOrUpdate(exchangeOrder));
+		
+		return result;
 	}
 
-	@CachePut(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.profileName}")
-	public MerchantFee putMerchantFee(MerchantFee fee) {
-		return merchantFeeRepo.putMerchantFee(fee);
+	private String setEoNumber(String countryCode) {
+
+		return Country.getCountry(countryCode).getId()
+				.concat(String.valueOf(System.currentTimeMillis()));
 	}
-	
-	@CacheEvict(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.profileName}")
-	public MerchantFee remove(MerchantFee fee) {
-		return merchantFeeRepo.removeMerchantFee(fee);
-	}
+
 }

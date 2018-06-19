@@ -40,25 +40,22 @@ public class InsuranceServiceTest {
 		assertNotNull(insuranceList);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	public void canPutInsurance() {
 		Insurance insurance = new Insurance();
 		when(insuranceRepository.put(insurance)).thenReturn(insurance);
 		
-		Insurance putInsurance = service.putInsurance(insurance);
+		service.putInsurance(insurance);
 		
 		verify(insuranceRepository, times(1)).put(insurance);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	public void canRemoveInsurance() {
-		Insurance insurance = new Insurance();
 		final String removeObjectId = "Test";
 		when(insuranceRepository.remove(removeObjectId)).thenReturn(removeObjectId);
 		
-		String remove = service.remove(removeObjectId);
+		service.remove(removeObjectId);
 		
 		verify(insuranceRepository, times(1)).remove(removeObjectId);
 	}

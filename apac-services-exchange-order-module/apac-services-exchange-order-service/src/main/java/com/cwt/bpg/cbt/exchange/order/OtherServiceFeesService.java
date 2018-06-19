@@ -42,7 +42,7 @@ public class OtherServiceFeesService {
 	private TransactionFeeCalculatorFactory tfFactory;
 
 	@Autowired
-	private ExchangeOrderService exchangeOrderService;
+	private MerchantFeeService exchangeOrderService;
 
 	@Autowired
 	private ClientService clientService;

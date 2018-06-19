@@ -4,17 +4,11 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import io.swagger.annotations.ApiModelProperty;
 
 public class VisaFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = -5761273312586606568L;
-
-	@ApiModelProperty(required = true)
-	@NotEmpty
-	private String clientType;
 
 	@ApiModelProperty(required = true)
 	@NotNull
@@ -27,16 +21,6 @@ public class VisaFeesInput extends FeesInput {
 	private boolean nettCostMerchantFeeChecked;
 	private boolean cwtHandlingMerchantFeeChecked;
 	private BigDecimal nettCost;
-
-    public String getClientType()
-    {
-        return clientType;
-    }
-
-    public void setClientType(String clientType)
-    {
-        this.clientType = clientType;
-    }
 
     public BigDecimal getNettCost() {
 		return nettCost;
