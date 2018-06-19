@@ -325,13 +325,13 @@ public class MigrationService {
 		String countryCode = System.getProperty("spring.profiles.default");
 		for(Remark remark: remarkDAO.getRemarks()) {
 			remark.setCountryCode(countryCode);
-			mongoDbConnection.getCollection("remarkListTest")
+			mongoDbConnection.getCollection("remarkList")
 					.insertOne(dBObjectMapper.mapAsDbDocument(remark));
 		}
 //		RemarkList remarkList = new RemarkList();
 //		remarkList.setCountryCode(countryCode);
 //		remarkList.setRemarks(remarkDAO.getRemarks());
-//		mongoDbConnection.getCollection("remarkListTest")
+//		mongoDbConnection.getCollection("remarkList")
 //				.insertOne(dBObjectMapper.mapAsDbDocument(remarkList.getCountryCode(), remarkList));
 	}
 

@@ -9,7 +9,7 @@ import org.mongodb.morphia.annotations.Indexes;
 
 import java.io.Serializable;
 
-@Entity(value = "remarkListTest", noClassnameStored = true)
+@Entity(value = "remarkList", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("_id")))
 public class Remark implements Serializable {
 	private static final long serialVersionUID = -756695804842165089L;
