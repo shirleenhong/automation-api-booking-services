@@ -1,7 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.UpdateOperations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +16,9 @@ public class ExchangeOrderRepository {
 	@Autowired
 	private MorphiaComponent morphia;
 	
-	public ExchangeOrder saveOrUpdate(ExchangeOrder eo) {
-		LOGGER.info("Save or update: Exchange order, [{}]", eo.getSequenceNumber());
-		final Datastore datastore = morphia.getDatastore();
-		UpdateOperations<ExchangeOrder> ops = datastore.createUpdateOperations(ExchangeOrder.class);
-		datastore.update(eo, ops);
-		return eo;
+	public String saveOrUpdate(ExchangeOrder eo) {		
+		morphia.getDatastore().save(eo);
+		LOGGER.info("Save or update: Exchange order, [{}]", eo.getEoNumber());
+		return eo.getEoNumber();
 	}
 }

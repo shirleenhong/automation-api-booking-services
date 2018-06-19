@@ -39,16 +39,14 @@ public class ExchangeOrderRepositoryTest {
 	@Test
 	public void canSaveOrUpdate() {
 		ExchangeOrder eo = new ExchangeOrder();
-		eo.setSequenceNumber("123098");
+		eo.setEoNumber("123098");
 		
 		when(dataStore.createUpdateOperations(ExchangeOrder.class)).thenReturn(operation);
+				
+		String result = repository.saveOrUpdate(eo);
 		
-		
-		ExchangeOrder saveOrUpdate = repository.saveOrUpdate(eo);
-		
-		verify(dataStore, times(1)).createUpdateOperations(ExchangeOrder.class);
-		verify(dataStore, times(1)).update(eo, operation);
-		assertEquals("123098", saveOrUpdate.getSequenceNumber());
+		verify(dataStore, times(1)).save(eo);
+		assertEquals(eo.getEoNumber(), result);
 	}
 
 }
