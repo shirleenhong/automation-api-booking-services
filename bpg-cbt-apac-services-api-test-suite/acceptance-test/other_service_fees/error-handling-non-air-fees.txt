@@ -83,17 +83,6 @@ Verify That Error Is Encountered When No Token Is Used
     Send Other Service Fees For Non-Air Fees Post Request    token=None
     Verify Response Status Code Is Correct    400
     Verify Calculated Non-Air Fees Are Not Returned
-
-Verify That Error Is Encountered When Invalid Client Type Value Is Used
-    [Tags]    functional
-    Create Test Variables For Non-Air Fees    cc,CX|client_type,${EMPTY}|pro_name,ACCEHK|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=hk
-    Send Other Service Fees For Non-Air Fees Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Calculated Non-Air Fees Are Not Returned
-    Create Test Variables For Non-Air Fees    cc,CX|client_type,NULL|pro_name,ACCEHK|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,100|nett_cost,0|gst_percent,7|gst_absorb,true    country=hk
-    Send Other Service Fees For Non-Air Fees Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Calculated Non-Air Fees Are Not Returned
     
 Verify That Error Is Encountered When Invalid Country Code Value Is Used
     [Tags]    functional

@@ -93,8 +93,9 @@ public class OtherServiceFeesController {
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Save new exchange order transaction")
-	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
+	public ResponseEntity<String> saveExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) {
-		return new ResponseEntity<>(eoService.saveExchangeOrder(input), HttpStatus.OK);
+
+		return new ResponseEntity<>(service.saveExchangeOrder(input), HttpStatus.OK);
 	}
 }

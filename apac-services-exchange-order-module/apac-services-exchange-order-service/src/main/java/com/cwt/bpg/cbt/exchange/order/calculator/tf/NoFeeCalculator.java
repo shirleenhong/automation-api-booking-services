@@ -1,5 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
+import static com.cwt.bpg.cbt.calculator.CalculatorUtils.calculatePercentage;
+import static com.cwt.bpg.cbt.calculator.CalculatorUtils.safeValue;
+
 import java.math.BigDecimal;
 
 import org.springframework.stereotype.Component;

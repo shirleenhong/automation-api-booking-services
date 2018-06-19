@@ -27,5 +27,5 @@ public class ExchangeOrderService {
 		return Country.getCountry(countryCode).getId()
 				.concat(String.valueOf(System.currentTimeMillis()));
 	}
-	
+
 }

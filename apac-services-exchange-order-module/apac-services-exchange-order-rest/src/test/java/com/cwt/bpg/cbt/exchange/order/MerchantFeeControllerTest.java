@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class MerchantFeeControllerTest {
 	@Test
 	public void canPutMerchantFee() {
 		MerchantFee merchantFee = new MerchantFee();
-		Mockito.when(service.putMerchantFee(merchantFee)).thenReturn(merchantFee);
+		when(service.putMerchantFee(merchantFee)).thenReturn(merchantFee);
 		
 		ResponseEntity<MerchantFee> result = controller.updateMerchantFee(merchantFee);
 
@@ -41,9 +42,9 @@ public class MerchantFeeControllerTest {
 	@Test
 	public void canGetMerchantFee() {
 		MerchantFee merchantFee = new MerchantFee();
-		Mockito.when(service.getMerchantFee(Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(merchantFee);
+		when(service.getMerchantFee(Mockito.anyString(), Mockito.anyString())).thenReturn(merchantFee);
 		
-		ResponseEntity<MerchantFee> result = controller.getMerchantFee("SG", "TF", "product");
+		ResponseEntity<MerchantFee> result = controller.getMerchantFee("SG", "product");
 
 		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());
@@ -52,7 +53,7 @@ public class MerchantFeeControllerTest {
 	@Test
 	public void canRemoveMerchantFee() {
 		MerchantFee merchantFee = new MerchantFee();
-		Mockito.when(service.remove(merchantFee)).thenReturn(merchantFee);
+		when(service.remove(merchantFee)).thenReturn(merchantFee);
 		
 		ResponseEntity<MerchantFee> result = controller.removeMerchantFee(merchantFee);
 

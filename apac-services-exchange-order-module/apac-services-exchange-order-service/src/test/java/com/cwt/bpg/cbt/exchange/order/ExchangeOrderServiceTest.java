@@ -18,18 +18,17 @@ public class ExchangeOrderServiceTest {
 	
 	@InjectMocks
 	private ExchangeOrderService service;
-		
+
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 	}
-	
-	@Test
+  
 	public void shouldCallSaveOrUpdate() {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setCountryCode("HK");
 		service.saveExchangeOrder(eo);
 		verify(repo, times(1)).saveOrUpdate(eo);
 	}
-	
+
 }

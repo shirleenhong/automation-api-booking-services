@@ -14,16 +14,12 @@ public class NonAirFeesInput extends FeesInput {
 
     @ApiModelProperty(required = true)
 	@NotEmpty
-	private String clientType;
-
-    @ApiModelProperty(required = true)
-	@NotEmpty
     private String fopType;
 
 	private BigDecimal sellingPrice;
-	private boolean isMerchantFeeWaive;
-	private boolean isGstAbsorb;
-	private boolean isMerchantFeeAbsorb;
+	private boolean merchantFeeWaive;
+	private boolean gstAbsorb;
+	private boolean merchantFeeAbsorb;
 
 	@ApiModelProperty(required = true)
 	@NotNull
@@ -36,22 +32,12 @@ public class NonAirFeesInput extends FeesInput {
         this.gstPercent = 0d;
     }
 
-	public String getClientType()
-	{
-		return clientType;
-	}
-
-	public void setClientType(String clientType)
-	{
-		this.clientType = clientType;
-	}
-
 	public boolean isMerchantFeeWaive() {
-		return isMerchantFeeWaive;
+		return merchantFeeWaive;
 	}
 
 	public void setMerchantFeeWaive(boolean merchantFeeWaive) {
-		isMerchantFeeWaive = merchantFeeWaive;
+		this.merchantFeeWaive = merchantFeeWaive;
 	}
 
 	public String getFopType() {
@@ -63,11 +49,11 @@ public class NonAirFeesInput extends FeesInput {
 	}
 
 	public boolean isGstAbsorb() {
-		return isGstAbsorb;
+		return gstAbsorb;
 	}
 
-	public void setGstAbsorb(boolean isGstAbsorb) {
-		this.isGstAbsorb = isGstAbsorb;
+	public void setGstAbsorb(boolean gstAbsorb) {
+		this.gstAbsorb = gstAbsorb;
 	}
 
 	public BigDecimal getSellingPrice() {
@@ -79,11 +65,11 @@ public class NonAirFeesInput extends FeesInput {
 	}
 
 	public boolean isMerchantFeeAbsorb() {
-		return isMerchantFeeAbsorb;
+		return merchantFeeAbsorb;
 	}
 
 	public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
-		isMerchantFeeAbsorb = merchantFeeAbsorb;
+		this.merchantFeeAbsorb = merchantFeeAbsorb;
 	}
 
 	public Double getGstPercent() {
