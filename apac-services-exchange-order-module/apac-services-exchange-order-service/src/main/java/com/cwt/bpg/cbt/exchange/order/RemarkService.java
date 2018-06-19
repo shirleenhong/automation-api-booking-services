@@ -37,7 +37,7 @@ public class RemarkService {
 		return repository.get(new ObjectId(id));
 	}
 	
-//	@Cacheable(cacheNames = "remarks")
+	@Cacheable(cacheNames = "remarks", key="{#countryCode, #productType, #remarkType}")
 	public List<Remark> getRemarks(String countryCode, String productType, String remarkType) {
 		return repository.getRemarks(countryCode, productType, remarkType);
 	}
