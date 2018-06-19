@@ -36,4 +36,8 @@ public class ExchangeOrderService {
 				.concat(Country.getCountry(countryCode).getId())
 				.concat(String.valueOf(sequenceNumberRepo.getSequenceNumber()));
 	}
+
+    public ExchangeOrder getExchangeOrder(String eoNumber) {
+        return exchangeOrderRepo.getExchangeOrder(eoNumber);
+    }
 }

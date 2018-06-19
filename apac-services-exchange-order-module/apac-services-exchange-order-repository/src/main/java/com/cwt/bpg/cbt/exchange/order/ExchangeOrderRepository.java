@@ -21,4 +21,11 @@ public class ExchangeOrderRepository {
 		LOGGER.info("Save or update: Exchange order, [{}]", eo.getEoNumber());
 		return eo.getEoNumber();
 	}
+	
+	public ExchangeOrder getExchangeOrder(String eoNumber) {
+		return morphia.getDatastore().createQuery(ExchangeOrder.class)
+			.field("eoNumber")
+			.equal(eoNumber).get();
+	}
+
 }
