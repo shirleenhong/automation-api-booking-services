@@ -28,6 +28,7 @@ public class Application {
 			service.migrateProductList();
 			service.migrateRemarks();
 			*/
+			service.migrateRemarks();
 
 
 		}

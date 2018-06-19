@@ -49,11 +49,11 @@ class CommonRepository<T, D> {
 		final D keyValue = getKeyValue(object);
 		if (keyValue != null) {
             remove(keyValue);
-            final Datastore datastore = morphia.getDatastore();
-            Key<T> newKey = datastore.save(object);
-
-            LoggerFactory.getLogger(typeClass).info("Save Result: {}", newKey);
         }
+        final Datastore datastore = morphia.getDatastore();
+        Key<T> newKey = datastore.save(object);
+
+        LoggerFactory.getLogger(typeClass).info("Save Result: {}", newKey);
 		return object;
 	}
 
