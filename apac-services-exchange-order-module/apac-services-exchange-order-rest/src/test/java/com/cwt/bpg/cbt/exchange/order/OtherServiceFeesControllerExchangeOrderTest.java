@@ -1,7 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,6 +36,9 @@ public class OtherServiceFeesControllerExchangeOrderTest {
 	@Mock
 	private OtherServiceFeesService service;
 	
+	@Mock
+	private ExchangeOrderService eoService;
+	
 	@InjectMocks
 	private OtherServiceFeesController controller;
 	
@@ -64,7 +67,7 @@ public class OtherServiceFeesControllerExchangeOrderTest {
 						
 		ExchangeOrder order = new ExchangeOrder();
 
-		when(service.saveExchangeOrder(order)).thenReturn(anyString());
+		when(eoService.saveExchangeOrder(order)).thenReturn(anyObject());
 
 		mockMvc.perform(post(url)
 				.contentType(APPLICATION_JSON_UTF8)
@@ -73,7 +76,7 @@ public class OtherServiceFeesControllerExchangeOrderTest {
 				.andReturn()
 				.getResponse();
 
-		verify(service,times(1)).saveExchangeOrder(any(ExchangeOrder.class));
+		verify(eoService,times(1)).saveExchangeOrder(any(ExchangeOrder.class));
 	}
 	
 			

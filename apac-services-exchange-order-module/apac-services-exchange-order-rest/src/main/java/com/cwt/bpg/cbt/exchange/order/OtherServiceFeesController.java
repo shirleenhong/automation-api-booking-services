@@ -23,6 +23,9 @@ public class OtherServiceFeesController {
 	@Autowired
 	private OtherServiceFeesService service;
 	
+	@Autowired
+	private ExchangeOrderService eoService;
+	
 	@PostMapping(path = "/non-air-fees/in", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
@@ -90,9 +93,9 @@ public class OtherServiceFeesController {
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Save new exchange order transaction")
-	public ResponseEntity<String> saveExchangeOrder(
+	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) {
 
-		return new ResponseEntity<>(service.saveExchangeOrder(input), HttpStatus.OK);
+		return new ResponseEntity<>(eoService.saveExchangeOrder(input), HttpStatus.OK);
 	}
 }

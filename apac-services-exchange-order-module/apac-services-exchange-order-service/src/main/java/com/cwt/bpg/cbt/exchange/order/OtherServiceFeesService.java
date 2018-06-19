@@ -42,7 +42,7 @@ public class OtherServiceFeesService {
 	private TransactionFeeCalculatorFactory tfFactory;
 
 	@Autowired
-	private MerchantFeeService exchangeOrderService;
+	private MerchantFeeService merchantFeeService;
 
 	@Autowired
 	private ClientService clientService;
@@ -57,7 +57,7 @@ public class OtherServiceFeesService {
 	private ProductService productService;
 
 	NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input) {
-        MerchantFee merchantFee = exchangeOrderService.getMerchantFee(input.getCountryCode(), input.getProfileName());
+        MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getProfileName());
 		return this.nonAirFeeCalculator.calculate(input, merchantFee);
 	}
 
@@ -70,7 +70,7 @@ public class OtherServiceFeesService {
 	}
 
 	AirFeesBreakdown calculateAirFees(AirFeesInput input) {
-        MerchantFee merchantFee = exchangeOrderService.getMerchantFee(input.getCountryCode(), input.getProfileName());
+        MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getProfileName());
 	    return this.osFactory.getCalculator(input.getCountryCode()).calculate(input, merchantFee);
 	}
 
@@ -100,16 +100,12 @@ public class OtherServiceFeesService {
 	}
 
 	VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {
-        MerchantFee merchantFee = exchangeOrderService.getMerchantFee(input.getCountryCode(), input.getProfileName());
+        MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getProfileName());
         return this.visaFeesCalculator.calculate(input, merchantFee);
 	}
 
 	AirFeesBreakdown calculateNettCost(NettCostInput input) {
 		return nettCostCalculator.calculateFee(input.getSellingPrice(), input.getCommissionPct());
-	}
-	
-	String saveExchangeOrder(ExchangeOrder input) {
-		return null;
 	}
 
 }
