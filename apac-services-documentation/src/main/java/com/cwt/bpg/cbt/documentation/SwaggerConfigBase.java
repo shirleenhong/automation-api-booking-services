@@ -16,7 +16,6 @@ import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfigBase
 {
     @Value("${com.bpg.cbt.apac.service.version}")
