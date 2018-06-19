@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,7 +18,6 @@ import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
-import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
@@ -31,6 +31,9 @@ public class ExchangeOrderRepositoryTest {
 	
 	@Mock
 	private Datastore dataStore;
+	
+    @Mock
+    private Query<ExchangeOrder> query;
 	
 	@InjectMocks
 	private ExchangeOrderRepository repository;
@@ -54,20 +57,20 @@ public class ExchangeOrderRepositoryTest {
 		assertEquals(eo.getEoNumber(), result);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void canGetExchangeOrder() {
-		Query<ExchangeOrder> query = Mockito.mock(Query.class);
-		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-		Mockito.when(dataStore.createQuery(ExchangeOrder.class)).thenReturn(query);
-		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
-		Mockito.when(fieldEnd.equal("eoNumber")).thenReturn(query);
-		Mockito.when(query.get()).thenReturn(new ExchangeOrder());
+		FieldEnd fieldEnd = mock(FieldEnd.class);
+		when(dataStore.createQuery(ExchangeOrder.class)).thenReturn(query);
+		when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equal("eoNumber")).thenReturn(query);
+		when(query.get()).thenReturn(new ExchangeOrder());
 		
 		
 		ExchangeOrder result = repository.getExchangeOrder("eoNumber");
 		
-		Mockito.verify(morphia, Mockito.times(1)).getDatastore();
-		Mockito.verify(dataStore, Mockito.times(1)).createQuery(ExchangeOrder.class);
+		verify(morphia, times(1)).getDatastore();
+		verify(dataStore, times(1)).createQuery(ExchangeOrder.class);
 		
 		assertNotNull(result);
 	}

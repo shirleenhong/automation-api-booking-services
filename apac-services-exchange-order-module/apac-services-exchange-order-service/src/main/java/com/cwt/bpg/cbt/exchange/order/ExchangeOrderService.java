@@ -38,7 +38,7 @@ public class ExchangeOrderService {
 				.concat(String.valueOf(sequenceNumberRepo.getSequenceNumber()));
 	}
 
-	@Cacheable(cacheNames = "exchangeOrderTransactions", key = "#eoNumber")
+	@Cacheable(cacheNames = "exchange-orders", key = "#eoNumber")
     public ExchangeOrder getExchangeOrder(String eoNumber) {
         return exchangeOrderRepo.getExchangeOrder(eoNumber);
     }
