@@ -4,9 +4,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -86,17 +86,26 @@ public class CommonRepositoryTest {
 
     @Test
     public void shouldInsertOrUpdateWhenKeyValueIsEmpty() {
-        repo = new CommonRepository<>(Insurance.class, "notKeyColumn");
-        MockitoAnnotations.initMocks(this);
 
-        Insurance insurance = new Insurance();
-        insurance.setType("insurance-type");
+		Insurance insurance = new Insurance();
+
+		Key<Insurance> key = mock(Key.class);
+		Query<Insurance> query = mock(Query.class);
+		FieldEnd fieldEnd = mock(FieldEnd.class);
+		when(datastore.createQuery(Insurance.class)).thenReturn(query);
+		when(query.field("type")).thenReturn(fieldEnd);
+		when(fieldEnd.equal(insurance.getType())).thenReturn(query);
+		when(datastore.save(insurance)).thenReturn(key);
+		WriteResult dkey = new WriteResult(1, true, null);
+		when(datastore.delete(query)).thenReturn(dkey);
+		
 
         Insurance result = repo.put(insurance);
 
         assertThat(result, is(equalTo(insurance)));
-        verifyZeroInteractions(morphia);
-        verifyZeroInteractions(datastore);
+        verify(morphia, times(1)).getDatastore();
+        verify(datastore, times(1)).save(insurance);
+		verify(datastore, never()).delete(query);
     }
 
 	@SuppressWarnings("rawtypes")

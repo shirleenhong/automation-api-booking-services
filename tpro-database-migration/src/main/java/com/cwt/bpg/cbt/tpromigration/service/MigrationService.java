@@ -3,7 +3,7 @@ package com.cwt.bpg.cbt.tpromigration.service;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.cwt.bpg.cbt.exchange.order.model.RemarkList;
+//import com.cwt.bpg.cbt.exchange.order.model.RemarkList;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -323,12 +323,16 @@ public class MigrationService {
 	@SuppressWarnings("unchecked")
 	public void migrateRemarks() throws JsonProcessingException {
 		String countryCode = System.getProperty("spring.profiles.default");
-		RemarkList remarkList = new RemarkList();
-		remarkList.setCountryCode(countryCode);
-		remarkList.setRemarks(remarkDAO.getRemarks());
-
-		mongoDbConnection.getCollection("remarkList")
-				.insertOne(dBObjectMapper.mapAsDbDocument(remarkList.getCountryCode(), remarkList));
+		for(Remark remark: remarkDAO.getRemarks()) {
+			remark.setCountryCode(countryCode);
+			mongoDbConnection.getCollection("remarkList")
+					.insertOne(dBObjectMapper.mapAsDbDocument(remark));
+		}
+//		RemarkList remarkList = new RemarkList();
+//		remarkList.setCountryCode(countryCode);
+//		remarkList.setRemarks(remarkDAO.getRemarks());
+//		mongoDbConnection.getCollection("remarkList")
+//				.insertOne(dBObjectMapper.mapAsDbDocument(remarkList.getCountryCode(), remarkList));
 	}
 
 }
