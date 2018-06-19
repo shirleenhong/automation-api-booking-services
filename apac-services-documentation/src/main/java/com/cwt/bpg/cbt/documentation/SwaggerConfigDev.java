@@ -17,9 +17,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Profile("dev")
 public class SwaggerConfigDev extends SwaggerConfigBase
 {
-
-    private static final String ACTUATOR_PATH_PATTERNS = "/(auditevents|autoconfig|configprops|dump|info|mappings|springbeans|trace|env|health|heapdump|loggers|metrics).*";
-
     @Bean
     public Docket swaggerForDev()
     {
@@ -27,7 +24,6 @@ public class SwaggerConfigDev extends SwaggerConfigBase
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(Predicates.and(
-                        Predicates.not(PathSelectors.regex(ACTUATOR_PATH_PATTERNS)),
                         Predicates.not(PathSelectors.regex("/error.*"))))
                 .build()
                 .groupName("apac-services")
@@ -35,19 +31,5 @@ public class SwaggerConfigDev extends SwaggerConfigBase
                 .tags(appInfo(), exchangeOrder(), merchantFee(), serviceFees())
                 .securitySchemes(Lists.newArrayList(securityScheme()))
                 .securityContexts(Lists.newArrayList(securityContext()));
-    }
-
-    @Bean
-    public Docket swaggerForActuator()
-    {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(Predicates.and(
-                        PathSelectors.regex(ACTUATOR_PATH_PATTERNS),
-                        Predicates.not(PathSelectors.regex("/error.*"))))
-                .build()
-                .groupName("spring-boot-actuator")
-                .apiInfo(apiInfo());
     }
 }
