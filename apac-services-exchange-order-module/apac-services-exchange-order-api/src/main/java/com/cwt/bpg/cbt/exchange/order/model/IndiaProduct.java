@@ -4,8 +4,8 @@ public class IndiaProduct extends BaseProduct {
 	
 	private static final long serialVersionUID = 1L;
 	private String gdsCode;
-	private Double ot1;
-	private Double ot2;
+	private Double ot1Percent;
+	private Double ot2Percent;
 	private Boolean requireCdr;
 	private Boolean requireTicket;
 	private Boolean suppressMi;
@@ -70,20 +70,20 @@ public class IndiaProduct extends BaseProduct {
 		this.hotelFee = hotelFee;
 	}
 
-	public Double getOt1() {
-		return ot1;
+	public Double getOt1Percent() {
+		return ot1Percent;
 	}
 
-	public void setOt1(Double ot1) {
-		this.ot1 = ot1;
+	public void setOt1Percent(Double ot1Percent) {
+		this.ot1Percent = ot1Percent;
 	}
 
-	public Double getOt2() {
-		return ot2;
+	public Double getOt2Percent() {
+		return ot2Percent;
 	}
 
-	public void setOt2(Double ot2) {
-		this.ot2 = ot2;
+	public void setOt2Percent(Double ot2Percent) {
+		this.ot2Percent = ot2Percent;
 	}
 
 	public Boolean getRequireCdr() {

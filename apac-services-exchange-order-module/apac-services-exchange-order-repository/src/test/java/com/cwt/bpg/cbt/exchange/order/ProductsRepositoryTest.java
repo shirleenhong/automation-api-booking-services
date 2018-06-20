@@ -49,7 +49,7 @@ public class ProductsRepositoryTest {
 
 		prodA.setProductCode("00");
 		prodA.setDescription("BSP Ticket And MPD");
-		prodA.setGst(0D);
+		prodA.setGstPercent(0D);
 		prodA.setMi(false);
 		prodA.setSortKey("00");
 		prodA.setTicketNumber(false);
@@ -75,7 +75,7 @@ public class ProductsRepositoryTest {
 		Product prodB = new Product();
 		prodB.setProductCode("01");
 		prodB.setDescription("AA SEGMENT BOOKING FEE");
-		prodB.setGst(0D);
+		prodB.setGstPercent(0D);
 		prodB.setMi(false);
 		prodB.setSortKey("01");
 		prodB.setTicketNumber(false);

@@ -105,18 +105,18 @@ public class FeeCalculatorTest {
     private IndiaProduct createProduct()
     {
         IndiaProduct product = new IndiaProduct();
-        product.setGst(7d);
-        product.setOt1(5d);
-        product.setOt2(3d);
+        product.setGstPercent(7d);
+        product.setOt1Percent(5d);
+        product.setOt2Percent(3d);
         return product;
     }
 
     private IndiaProduct createAirProduct()
     {
         IndiaProduct product = new IndiaProduct();
-        product.setGst(8d);
-        product.setOt1(6d);
-        product.setOt2(4d);
+        product.setGstPercent(8d);
+        product.setOt1Percent(6d);
+        product.setOt2Percent(4d);
         return product;
     }
 

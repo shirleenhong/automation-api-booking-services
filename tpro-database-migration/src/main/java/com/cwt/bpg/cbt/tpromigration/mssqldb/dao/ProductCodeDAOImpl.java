@@ -42,7 +42,7 @@ public class ProductCodeDAOImpl implements ProductCodeDAO<Product> {
 				productCode.setDescription(rs.getString("Description").trim().replaceAll(" +", " "));
 				productCode.setEnableCcFop(rs.getObject("EnableCCFOP") == null ? null : rs.getBoolean("EnableCCFOP"));
 				productCode.setFullCommission(rs.getObject("FullComm") == null ? null : rs.getBoolean("FullComm"));
-				productCode.setGst(rs.getObject("GST") == null ? null : rs.getDouble("GST"));
+				productCode.setGstPercent(rs.getObject("GST") == null ? null : rs.getDouble("GST"));
 				productCode.setMi(rs.getObject("MI") == null ? null : rs.getBoolean("MI"));
 				productCode.setSortKey(rs.getString("SortKey"));
 				productCode.setTicketNumber(rs.getObject("TktNo") == null ? null : rs.getBoolean("TktNo"));
