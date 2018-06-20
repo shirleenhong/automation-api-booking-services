@@ -32,7 +32,7 @@
 		<mongodb.morphia.version>1.3.2</mongodb.morphia.version>
 		<springfox.swagger.version>2.8.0</springfox.swagger.version>
 		<javax.ws.rs.version>2.0.1</javax.ws.rs.version>
-		<scm.repo.url>https://github.com/cwt-dev/bpg-cbt-contact-tracking-services.git</scm.repo.url>
+		<scm.repo.url>https://github.com/cwt-dev/bpg-cbt-apac-services.git</scm.repo.url>
 	</properties>
 
 	<scm>
