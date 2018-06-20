@@ -33,6 +33,7 @@
 		<springfox.swagger.version>2.8.0</springfox.swagger.version>
 		<javax.ws.rs.version>2.0.1</javax.ws.rs.version>
 		<scm.repo.url>https://github.com/cwt-dev/bpg-cbt-apac-services.git</scm.repo.url>
+		<project.scm.id>aws-command-runner-scm</project.scm.id>
 	</properties>
 
 	<scm>
