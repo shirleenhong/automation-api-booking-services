@@ -34,5 +34,13 @@ public class ExchangeOrderServiceTest {
 		service.saveExchangeOrder(eo);
 		verify(repo, times(1)).saveOrUpdate(eo);
 	}
+	
+	@Test
+	public void shouldCallGetExchangeOrder() {
+		
+		String eoNumber = "1806100005";
+		service.getExchangeOrder(eoNumber);
+		verify(repo, times(1)).getExchangeOrder(eoNumber);
+	}
 
 }
