@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.times;
@@ -16,14 +18,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -43,6 +49,7 @@ public class OtherServiceFeesControllerExchangeOrderTest {
 	private OtherServiceFeesController controller;
 	
 	private String url;
+	
 
 	@Before
 	public void setUp() {
@@ -52,9 +59,8 @@ public class OtherServiceFeesControllerExchangeOrderTest {
 				.standaloneSetup(controller)
 				.build();
 		
-		controller = new OtherServiceFeesController();
-		
 		url = "/other-service-fees/exchange-order";
+		
 	}
 
 	public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -77,6 +83,17 @@ public class OtherServiceFeesControllerExchangeOrderTest {
 				.getResponse();
 
 		verify(eoService,times(1)).saveExchangeOrder(any(ExchangeOrder.class));
+	}
+	
+	@Test
+	public void shouldGetExchangeOrderNumber() {
+
+		String eoNumber = "1806100005";
+		
+		ResponseEntity<?> result = controller.getExchangeOrder(eoNumber);
+		verify(eoService, times(1)).getExchangeOrder(eoNumber);
+		assertEquals(HttpStatus.OK, result.getStatusCode());
+	
 	}
 	
 			

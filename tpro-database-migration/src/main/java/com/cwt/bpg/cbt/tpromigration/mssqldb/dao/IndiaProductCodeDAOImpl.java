@@ -43,9 +43,9 @@ public class IndiaProductCodeDAOImpl implements ProductCodeDAO<InProduct> {
                 productCode.setType(rs.getString("Type"));
                 productCode.setTicketPrefix(rs.getString("TktPrefix"));
                 productCode.setGdsCode(rs.getString("GDSCode"));
-                productCode.setGst(rs.getObject("GST") == null ? null : rs.getDouble("GST"));
-                productCode.setOt1(rs.getObject("OT1") == null ? null : rs.getDouble("OT1"));
-                productCode.setOt2(rs.getObject("OT2") == null ? null : rs.getDouble("OT2"));
+                productCode.setGstPercent(rs.getObject("GST") == null ? null : rs.getDouble("GST"));
+                productCode.setOt1Percent(rs.getObject("OT1") == null ? null : rs.getDouble("OT1"));
+                productCode.setOt2Percent(rs.getObject("OT2") == null ? null : rs.getDouble("OT2"));
                 productCode.setRequireCdr(rs.getObject("RequireCDR") == null ? null : rs.getBoolean("RequireCDR"));
                 productCode.setRequireTicket(rs.getObject("RequireTicket") == null ? null : rs.getBoolean("RequireTicket"));
                 productCode.setSuppressMi(rs.getObject("SuppressMI") == null ? null : rs.getBoolean("SuppressMI"));

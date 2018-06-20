@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
@@ -96,4 +97,9 @@ public class ExchangeOrderService {
 		
 		LOGGER.info("Reset sequence numbers {}", result);
 	}
+
+	@Cacheable(cacheNames = "exchange-orders", key = "#eoNumber")
+    public ExchangeOrder getExchangeOrder(String eoNumber) {
+        return exchangeOrderRepo.getExchangeOrder(eoNumber);
+    }
 }

@@ -132,7 +132,7 @@ Verify String Does Not Contain Substring
     [Arguments]    ${string}    ${substring}
     Log    Actual String: ${string}
     Log    Expected Substring: ${substring}
-    ${string}    Decode Bytes To String    ${string}    UTF8
+    #${string}    Decode Bytes To String    ${string}    UTF8
     Run Keyword And Continue On Failure    Should Not Contain    ${string}    ${substring}    String "${string}" contains substring "${substring}"    FALSE
 
 Verify String Does Not Match Pattern

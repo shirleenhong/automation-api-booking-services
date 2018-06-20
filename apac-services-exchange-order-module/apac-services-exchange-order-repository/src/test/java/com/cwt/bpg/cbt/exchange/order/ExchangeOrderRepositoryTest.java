@@ -1,6 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,8 +11,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.FieldEnd;
+import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
@@ -26,6 +31,9 @@ public class ExchangeOrderRepositoryTest {
 	
 	@Mock
 	private Datastore dataStore;
+	
+    @Mock
+    private Query<ExchangeOrder> query;
 	
 	@InjectMocks
 	private ExchangeOrderRepository repository;
@@ -47,6 +55,24 @@ public class ExchangeOrderRepositoryTest {
 		
 		verify(dataStore, times(1)).save(eo);
 		assertEquals(eo.getEoNumber(), result);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Test
+	public void canGetExchangeOrder() {
+		FieldEnd fieldEnd = mock(FieldEnd.class);
+		when(dataStore.createQuery(ExchangeOrder.class)).thenReturn(query);
+		when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equal("eoNumber")).thenReturn(query);
+		when(query.get()).thenReturn(new ExchangeOrder());
+		
+		
+		ExchangeOrder result = repository.getExchangeOrder("eoNumber");
+		
+		verify(morphia, times(1)).getDatastore();
+		verify(dataStore, times(1)).createQuery(ExchangeOrder.class);
+		
+		assertNotNull(result);
 	}
 
 }

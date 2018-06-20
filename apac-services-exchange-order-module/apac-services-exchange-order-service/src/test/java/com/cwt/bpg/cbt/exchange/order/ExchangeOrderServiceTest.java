@@ -81,6 +81,14 @@ public class ExchangeOrderServiceTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldThrowException() {
+	
+	@Test
+	public void shouldCallGetExchangeOrder() {
+		
+		String eoNumber = "1806100005";
+		service.getExchangeOrder(eoNumber);
+		verify(repo, times(1)).getExchangeOrder(eoNumber);
+	}
 
 		SequenceNumber sn = mock(SequenceNumber.class);
 		when(sequentNumberRepo.get(anyString())).thenReturn(sn);		

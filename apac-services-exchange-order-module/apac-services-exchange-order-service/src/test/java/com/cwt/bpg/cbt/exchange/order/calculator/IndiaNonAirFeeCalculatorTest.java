@@ -52,9 +52,9 @@ public class IndiaNonAirFeeCalculatorTest {
 		input.setFopType(FOPTypes.CWT.getCode());
 		
 		IndiaProduct product= new IndiaProduct();
-		product.setGst(6D);
-		product.setOt1(3D);
-		product.setOt2(5D);
+		product.setGstPercent(6D);
+		product.setOt1Percent(3D);
+		product.setOt2Percent(5D);
 		product.setProductCode("01");
 		input.setProduct(product);
 	}

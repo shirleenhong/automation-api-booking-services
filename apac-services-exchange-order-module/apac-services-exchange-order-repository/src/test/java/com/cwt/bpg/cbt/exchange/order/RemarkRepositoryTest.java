@@ -47,7 +47,7 @@ public class RemarkRepositoryTest {
         when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
         when(fieldEnd.equal(anyString())).thenReturn(query);
 
-        repository.getRemarks("HL","E");
+        repository.getRemarks("SG", "HL","E");
 
         verify(morphia, times(1)).getDatastore();
         verify(dataStore, times(1)).createQuery(Remark.class);

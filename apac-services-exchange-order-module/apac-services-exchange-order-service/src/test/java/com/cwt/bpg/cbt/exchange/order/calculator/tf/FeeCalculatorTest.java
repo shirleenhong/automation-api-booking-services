@@ -47,13 +47,13 @@ public class FeeCalculatorTest {
 		input.setBaseFare(new BigDecimal(500));
 		input.setYqTax(new BigDecimal(50));
 		input.setAirlineCommission(new BigDecimal(45));
-		input.setAirlineCommissionPercent(5d);
+		input.setAirlineOverheadCommissionPercent(5d);
 		input.setTax1(new BigDecimal(25));
 		input.setTax2(new BigDecimal(35));
         input.setGstEnabled(true);
         input.setCommissionEnabled(true);
         input.setOverheadCommissionEnabled(true);
-        input.setOverheadCommissionPercent(15d);
+        input.setClientOverheadCommissionPercent(15d);
         input.setMarkupEnabled(true);
         input.setDiscountEnabled(true);
         input.setDiscountPercent(5d);
@@ -105,18 +105,18 @@ public class FeeCalculatorTest {
     private IndiaProduct createProduct()
     {
         IndiaProduct product = new IndiaProduct();
-        product.setGst(7d);
-        product.setOt1(5d);
-        product.setOt2(3d);
+        product.setGstPercent(7d);
+        product.setOt1Percent(5d);
+        product.setOt2Percent(3d);
         return product;
     }
 
     private IndiaProduct createAirProduct()
     {
         IndiaProduct product = new IndiaProduct();
-        product.setGst(8d);
-        product.setOt1(6d);
-        product.setOt2(4d);
+        product.setGstPercent(8d);
+        product.setOt1Percent(6d);
+        product.setOt2Percent(4d);
         return product;
     }
 
@@ -387,8 +387,8 @@ public class FeeCalculatorTest {
         input.setTripType(TripTypes.INTERNATIONAL.getCode());
         input.setBaseFare(new BigDecimal(100));
         input.setAirlineCommission(new BigDecimal(15));
-        input.setAirlineCommissionPercent(10d);
-        input.setOverheadCommissionPercent(50d);
+        input.setAirlineOverheadCommissionPercent(10d);
+        input.setClientOverheadCommissionPercent(50d);
 
         BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission(input);
 
@@ -409,7 +409,7 @@ public class FeeCalculatorTest {
         input.setTripType(TripTypes.INTERNATIONAL.getCode());
         input.setBaseFare(new BigDecimal(100));
         input.setAirlineOverheadCommission(new BigDecimal(15));
-        input.setOverheadCommissionPercent(50d);
+        input.setClientOverheadCommissionPercent(50d);
 
         BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission2(input);
 
@@ -493,7 +493,7 @@ public class FeeCalculatorTest {
         input.setGstEnabled(false);
         input.setCommissionEnabled(false);
         input.setOverheadCommissionEnabled(false);
-        input.setOverheadCommissionPercent(15d);
+        input.setClientOverheadCommissionPercent(15d);
         input.setMarkupEnabled(false);
         input.setDiscountEnabled(false);
         input.setFeeOverride(false);
