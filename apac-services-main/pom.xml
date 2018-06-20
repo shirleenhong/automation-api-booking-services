@@ -11,7 +11,7 @@
   <artifactId>apac-services-main</artifactId>
   <packaging>jar</packaging>
 
-  <name>>apac-services-main</name>
+  <name>&gt;apac-services-main</name>
 
   <dependencies>
     <dependency>
