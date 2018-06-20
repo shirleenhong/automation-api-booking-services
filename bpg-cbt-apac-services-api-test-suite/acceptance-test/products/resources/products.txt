@@ -15,13 +15,6 @@ Create New Product List
     Set Test Variable    ${index}    
     Set Test Variable    ${all_product_list}
 
-Create New Remarks List
-    [Arguments]    ${product_number}
-    ${remarks_list}    Create List
-    Set Test Variable    ${${product_number}_remarks_list}    ${remarks_list}
-    Append To List    ${product_remarks_list}    ${product_number} 
-    Set Test Variable    ${product_remarks_list}
-
 Create Test Variables For Products And Vendors
     [Arguments]    ${country}
     @{all_product_list}    Create List
@@ -48,26 +41,8 @@ Create Test Variables For Products And Vendors
     : FOR    ${item}    IN RANGE    0    ${index}+1
     \    Set Test Variable    ${product_list_${item}}
     \    Log    ${product_list_${item}}
-    Run Keyword If    "${country}"!="in"    Create Test Variables For Product Remarks    ${country}
     Set Test Variable    ${country}    ${country.upper()}
     Set Test Variable    ${all_product_list}
-
-Create Test Variables For Product Remarks
-    [Arguments]    ${country}
-    ${remarks_data_list}    Split String    ${${country}_data_list_3}    |
-    ${remarks_data_list_length}    Get Length    ${remarks_data_list}
-    :FOR    ${index}    IN RANGE    0    ${remarks_data_list_length}
-    \    ${remarks_data_item}    Split String    ${remarks_data_list[${index}]}    ,
-    \    ${product_number}    Get Substring    ${remarks_data_item[0]}    2
-    \    ${is_list_created}    Run Keyword And Return Status    Variable Should Exist    ${${product_number}_remarks_list}
-    \    Run Keyword If    "${is_list_created}"=="False"    Create New Remarks List    ${product_number}    
-    \    ${remarks_index}    Get Length    ${${product_number}_remarks_list}
-    \    Append To List    ${${product_number}_remarks_list}    ${remarks_index}
-    \    Set Test Variable    ${${product_number}_product_type_${remarks_index}}    ${remarks_data_item[1]}
-    \    Set Test Variable    ${${product_number}_remark_type_${remarks_index}}    ${remarks_data_item[2]}
-    \    Set Test Variable    ${${product_number}_remark_text_${remarks_index}}    ${remarks_data_item[3]}
-    \    ${index}    Evaluate    ${index}+1
-    \    Set Test Variable    ${${product_number}_remarks_list}
 
 Send Product Get Request
     [Arguments]    ${token}=${default_token}    ${country}=${country}
@@ -100,17 +75,8 @@ Verify Products And Vendors Are Retrieved Correctly
     \    ${item_product_code}    Get Json Value As String    ${response.content}    $.[${index}].productCode
     \    Verify Json Value Is Correct    $[${index}].description    ${product_code_${item_product_code}}
     \    Verify Vendors Are Retrieved Correctly    ${index}    ${product_list_${index}}
-    \    Run Keyword If    "${country}"!="IN"    Verify Remarks Are Retrieved Correctly    ${index}    ${item_product_code}
     ${index}    Evaluate    ${index}+1
     Verify Json Element Does Not Exist    $[${index}].description
-
-Verify Remarks Are Retrieved Correctly
-    [Arguments]    ${index}    ${item_product_code}
-    ${remark_list_length}    Get Length    ${${item_product_code}_remarks_list}
-    : FOR    ${remarks_index}    IN RANGE    0    ${remark_list_length}
-    \    Verify Json Value Is Correct     $[${index}].remarks.[${remarks_index}].productType    ${${item_product_code}_product_type_${remarks_index}}
-    \    Verify Json Value Is Correct     $[${index}].remarks.[${remarks_index}].type    ${${item_product_code}_remark_type_${remarks_index}}
-    \    Verify Json Value Is Correct     $[${index}].remarks.[${remarks_index}].text    ${${item_product_code}_remark_text_${remarks_index}}
 
 Verify Vendors Are Retrieved Correctly
     [Arguments]    ${index}    ${item_vendor_list}
