@@ -2,6 +2,8 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class Vendor implements Serializable {
 
 	private static final long serialVersionUID = -6536616212682978836L;
@@ -28,6 +30,7 @@ public class Vendor implements Serializable {
 
 	private Boolean misc;
 
+	@ApiModelProperty(value="Missing raiseType is equivalent to null value")
 	private String raiseType;
 
 	private String sortKey;
