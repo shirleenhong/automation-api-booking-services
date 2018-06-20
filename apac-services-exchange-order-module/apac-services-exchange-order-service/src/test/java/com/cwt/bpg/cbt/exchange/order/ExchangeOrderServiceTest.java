@@ -81,7 +81,12 @@ public class ExchangeOrderServiceTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldThrowException() {
-	
+		SequenceNumber sn = mock(SequenceNumber.class);
+		when(sequentNumberRepo.get(anyString())).thenReturn(sn);		
+		when(sequentNumberRepo.save(eq(sn))).thenThrow(ConcurrentModificationException.class);
+		service.getSequenceNumber("HK");
+		verify(sequentNumberRepo, times(3)).save(sn);
+	}
 	@Test
 	public void shouldCallGetExchangeOrder() {
 		
@@ -89,14 +94,7 @@ public class ExchangeOrderServiceTest {
 		service.getExchangeOrder(eoNumber);
 		verify(repo, times(1)).getExchangeOrder(eoNumber);
 	}
-
-		SequenceNumber sn = mock(SequenceNumber.class);
-		when(sequentNumberRepo.get(anyString())).thenReturn(sn);		
-		when(sequentNumberRepo.save(eq(sn))).thenThrow(ConcurrentModificationException.class);
-		service.getSequenceNumber("HK");
-		verify(sequentNumberRepo, times(3)).save(sn);
-	}
-	
+		
 	@Test
 	public void testResetSchedule(){
 	    
