@@ -63,12 +63,12 @@ public class IndiaNonAirFeeCalculator {
 				.subtract(safeValue(discount)), scale);
 
 		BigDecimal tax = round(
-				calculatePercentage(grossSell, safeValue(input.getProduct().getGst())),
+				calculatePercentage(grossSell, safeValue(input.getProduct().getGstPercent())),
 				scale);
 
 		BigDecimal gstAmount = round(safeValue(tax)
-				.add(round(calculatePercentage(grossSell, safeValue(input.getProduct().getOt1())), scale))
-				.add(round(calculatePercentage(grossSell, safeValue(input.getProduct().getOt2())), scale)), scale);
+				.add(round(calculatePercentage(grossSell, safeValue(input.getProduct().getOt1Percent())), scale))
+				.add(round(calculatePercentage(grossSell, safeValue(input.getProduct().getOt2Percent())), scale)), scale);
 
 		BigDecimal merchantFeeAmount = round(calculatePercentage(safeValue(grossSell).add(gstAmount), mfPercent),
 				scale);

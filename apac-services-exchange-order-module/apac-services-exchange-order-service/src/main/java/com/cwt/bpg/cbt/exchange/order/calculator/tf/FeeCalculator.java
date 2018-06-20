@@ -47,9 +47,9 @@ public class FeeCalculator {
 			final BigDecimal baseFarePlusYqTax = safeValue(input.getBaseFare())
 							.add(yqTax);
 			
-			gstAmount = calculatePercentage(baseFarePlusYqTax, product.getGst())
-					.add(calculatePercentage(baseFarePlusYqTax, product.getOt1()))
-					.add(calculatePercentage(baseFarePlusYqTax, product.getOt2()));
+			gstAmount = calculatePercentage(baseFarePlusYqTax, product.getGstPercent())
+					.add(calculatePercentage(baseFarePlusYqTax, product.getOt1Percent()))
+					.add(calculatePercentage(baseFarePlusYqTax, product.getOt2Percent()));
 		}
 				
 		if(input.isCommissionEnabled()) {
@@ -101,9 +101,9 @@ public class FeeCalculator {
 
 	private BigDecimal getGstOnTf(IndiaProduct airProduct, BigDecimal fee) {
 
-		return calculatePercentage(fee, airProduct.getGst())
-				.add(calculatePercentage(fee, airProduct.getOt1()))
-				.add(calculatePercentage(fee, airProduct.getOt2()));
+		return calculatePercentage(fee, airProduct.getGstPercent())
+				.add(calculatePercentage(fee, airProduct.getOt1Percent()))
+				.add(calculatePercentage(fee, airProduct.getOt2Percent()));
 	}
 
 	private BigDecimal getTransactionFee(Client client, 

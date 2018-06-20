@@ -14,7 +14,7 @@ public class BaseProduct implements Serializable {
 
 	private String description;
 
-	private Double gst;
+	private Double gstPercent;
 
 	private String sortKey;
 
@@ -50,12 +50,12 @@ public class BaseProduct implements Serializable {
 		this.description = description;
 	}
 
-	public Double getGst() {
-		return gst;
+	public Double getGstPercent() {
+		return gstPercent;
 	}
 
-	public void setGst(Double gst) {
-		this.gst = gst;
+	public void setGstPercent(Double gstPercent) {
+		this.gstPercent = gstPercent;
 	}
 
 	public String getSortKey() {

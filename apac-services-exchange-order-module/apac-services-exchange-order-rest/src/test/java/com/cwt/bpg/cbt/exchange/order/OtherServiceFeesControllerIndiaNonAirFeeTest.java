@@ -59,9 +59,9 @@ public class OtherServiceFeesControllerIndiaNonAirFeeTest {
         JSONObject jsonObj = new JSONObject();
 
     	IndiaProduct product = new IndiaProduct();
-    	product.setGst(2D);
-    	product.setOt1(5D);
-    	product.setOt2(10D);
+    	product.setGstPercent(2D);
+    	product.setOt1Percent(5D);
+    	product.setOt2Percent(10D);
         
         jsonObj.put("commissionByPercent", true);
         jsonObj.put("costAmount", 100);
@@ -90,9 +90,9 @@ public class OtherServiceFeesControllerIndiaNonAirFeeTest {
         JSONObject jsonObj = new JSONObject();
 
     	IndiaProduct product = new IndiaProduct();
-    	product.setGst(2D);
-    	product.setOt1(5D);
-    	product.setOt2(10D);
+    	product.setGstPercent(2D);
+    	product.setOt1Percent(5D);
+    	product.setOt2Percent(10D);
         
         jsonObj.put("commissionByPercent", true);
         jsonObj.put("costAmount", 100);
@@ -137,9 +137,9 @@ public class OtherServiceFeesControllerIndiaNonAirFeeTest {
         JSONObject jsonObj = new JSONObject();
 
         IndiaProduct product = new IndiaProduct();
-        product.setGst(2D);
-        product.setOt1(5D);
-        product.setOt2(10D);
+        product.setGstPercent(2D);
+        product.setOt1Percent(5D);
+        product.setOt2Percent(10D);
 
         jsonObj.put("commissionByPercent", true);
         jsonObj.put("commissionPercent", 10);
