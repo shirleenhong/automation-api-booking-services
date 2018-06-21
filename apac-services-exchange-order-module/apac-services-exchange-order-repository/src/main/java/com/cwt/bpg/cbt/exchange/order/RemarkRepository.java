@@ -17,6 +17,7 @@ public class RemarkRepository extends CommonRepository<Remark, ObjectId>{
 
     public List<Remark> getRemarks(String countryCode, String productType, String remarkType) {
         List<Remark> remarks =  morphia.getDatastore().createQuery(Remark.class)
+        		.order("text")
                 .field("countryCode")
                 .equal(countryCode)
                 .field("productType")
