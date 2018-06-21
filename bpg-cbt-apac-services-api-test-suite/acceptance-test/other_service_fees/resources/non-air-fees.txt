@@ -30,9 +30,9 @@ Append Fields For Non-Air Fees For India
     Run Keyword If    "${discount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discount":${discount_value}
     Run Keyword If    "${fop_mode_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopMode":${fop_mode_value}
     Run Keyword If    "${fop_number_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopNumber":"${fop_number_value}"
-    Run Keyword If    "${gst_percentage_value}"!="null"    Append To List    ${product_request_list}    "gst":${gst_percentage_value}
-    Run Keyword If    "${ot1_value}"!="null"    Append To List    ${product_request_list}    "ot1":${ot1_value}
-    Run Keyword If    "${ot2_value}"!="null"    Append To List    ${product_request_list}    "ot2":${ot2_value}
+    Run Keyword If    "${gst_percentage_value}"!="null"    Append To List    ${product_request_list}    "gstPercent":${gst_percentage_value}
+    Run Keyword If    "${ot1_value}"!="null"    Append To List    ${product_request_list}    "ot1Percent":${ot1_value}
+    Run Keyword If    "${ot2_value}"!="null"    Append To List    ${product_request_list}    "ot2Percent":${ot2_value}
     Run Keyword If    "${product_code_value}"!="null"    Append To List    ${product_request_list}    "productCode":"${product_code_value}"
     Set Test Variable    ${other_service_fees_request_list}
     Set Test Variable    ${product_request_list}
