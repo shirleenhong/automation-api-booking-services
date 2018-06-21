@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -35,16 +36,16 @@ public class RemarkRepositoryTest {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        Mockito.when(morphia.getDatastore()).thenReturn(dataStore);
+        when(morphia.getDatastore()).thenReturn(dataStore);
     }
 
     @Test
-    public void getAllShouldReturnRemarks(){
+    public void shouldReturnRemarks(){
         Query query = Mockito.mock(Query.class);
         FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-        Mockito.when(dataStore.createQuery(Remark.class)).thenReturn(query);
-        Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
-        Mockito.when(fieldEnd.equal(anyString())).thenReturn(query);
+        when(dataStore.createQuery(Remark.class)).thenReturn(query);
+        when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
+        when(fieldEnd.equal(anyString())).thenReturn(query);
 
         repository.getRemarks("SG", "HL","E");
 
