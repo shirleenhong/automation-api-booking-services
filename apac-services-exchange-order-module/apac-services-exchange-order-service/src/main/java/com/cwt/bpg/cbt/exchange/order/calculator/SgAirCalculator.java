@@ -37,7 +37,7 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 		BigDecimal inDiscount = safeValue(input.getDiscount());
 		BigDecimal inCommission = safeValue(input.getCommission());
 		Boolean isConstTkt = "CT".equals(input.getProductType());
-		Boolean isFopTypeCX = safeValue(input.getFopType()).equals(FOPTypes.CWT.getCode());
+		Boolean isFopTypeCX = safeValue(input.getFopType()).equals(FopTypes.CWT.getCode());
 		String inClientType = safeValue(input.getClientType());
 
 		if (!input.isApplyFormula()) {

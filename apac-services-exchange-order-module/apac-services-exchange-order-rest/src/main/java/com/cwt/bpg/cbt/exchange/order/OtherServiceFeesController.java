@@ -93,7 +93,7 @@ public class OtherServiceFeesController {
 	@PostMapping(path = "/exchange-order", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Save new exchange order transaction")
+	@ApiOperation(value = "Saves new exchange order transaction.")
 	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) {
 
@@ -103,7 +103,7 @@ public class OtherServiceFeesController {
 	@Internal
 	@GetMapping(path = "/exchange-order/{eoNumber}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Retrieve exchange order transaction")
+	@ApiOperation(value = "Pulls exchange order transaction.")
 	public ResponseEntity<ExchangeOrder> getExchangeOrder(@PathVariable String eoNumber) {
 
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
