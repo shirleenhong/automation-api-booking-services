@@ -97,30 +97,30 @@ public class ExchangeOrderService {
 	@Scheduled(cron = "${exchange.order.reset.schedule.india}")
 	protected void resetIndiaSequenceNumber() {
 		
-		List<SequenceNumber> sequenceNums = sequenceNumberRepo.get(Country.INDIA.getCode());
+		List<SequenceNumber> sequenceNumbers = sequenceNumberRepo.get(Country.INDIA.getCode());
 		
-		Iterable<Key<SequenceNumber>> result = reset(sequenceNums);
+		Iterable<Key<SequenceNumber>> result = reset(sequenceNumbers);
 		
 		LOGGER.info("Reset India sequence numbers {}", result);
 	}
 
-	private Iterable<Key<SequenceNumber>> reset(List<SequenceNumber> sequenceNums) {
+	private Iterable<Key<SequenceNumber>> reset(List<SequenceNumber> sequenceNumbers) {
 		
-		for(SequenceNumber sn : sequenceNums) {
+		for(SequenceNumber sn : sequenceNumbers) {
 			sn.setValue(0);			
 		}	
 		
-		return sequenceNumberRepo.save(sequenceNums);
+		return sequenceNumberRepo.save(sequenceNumbers);
 	}
 	
 	@Scheduled(cron = "${exchange.order.reset.schedule.hk.sg}")
 	protected void resetHkSgSequenceNumber() {
 		
-		List<SequenceNumber> sequenceNums = sequenceNumberRepo.get(
+		List<SequenceNumber> sequenceNumbers = sequenceNumberRepo.get(
 				Country.SINGAPORE.getCode(), 
 				Country.HONG_KONG.getCode());
 		
-		Iterable<Key<SequenceNumber>> result = reset(sequenceNums);
+		Iterable<Key<SequenceNumber>> result = reset(sequenceNumbers);
 		
 		LOGGER.info("Reset HK and SG sequence numbers {}", result);
 	}

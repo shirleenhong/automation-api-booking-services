@@ -93,10 +93,10 @@ public class SequenceNumberRepositoryTest {
 
 	@Test
 	public void shouldSaveSequenceNumber() {
-		SequenceNumber sequenceNum = new SequenceNumber();
+		SequenceNumber sequenceNumber = new SequenceNumber();
 		Key<SequenceNumber> mockKey = mock(Key.class);
-		when(dataStore.save(sequenceNum)).thenReturn(mockKey);
-		Key<SequenceNumber> result = repository.save(sequenceNum);
+		when(dataStore.save(sequenceNumber)).thenReturn(mockKey);
+		Key<SequenceNumber> result = repository.save(sequenceNumber);
 		assertNotNull(result);
 	}
 
@@ -112,9 +112,9 @@ public class SequenceNumberRepositoryTest {
 
 	@Test
 	public void shouldSaveListOfSequenceNumber() {
-		SequenceNumber sequenceNum = new SequenceNumber();		
+		SequenceNumber sequenceNumber = new SequenceNumber();		
 		when(dataStore.save(anyList())).thenReturn(mock(Iterable.class));
-		Iterable<Key<SequenceNumber>> result = repository.save(Arrays.asList(sequenceNum));
+		Iterable<Key<SequenceNumber>> result = repository.save(Arrays.asList(sequenceNumber));
 		assertNotNull(result);		
 	}
 
