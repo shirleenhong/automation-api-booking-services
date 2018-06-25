@@ -23,9 +23,9 @@ public class MerchantFeeRepository {
 	public MerchantFee getMerchantFee(String countryCode, String profileName) {
 		return morphia.getDatastore().createQuery(MerchantFee.class)
 				.field("countryCode")
-				.equal(countryCode)
+				.equalIgnoreCase(countryCode)
 				.field("profileName")
-				.equal(profileName).get();
+				.equalIgnoreCase(profileName).get();
 	}
 	
 	public MerchantFee putMerchantFee(MerchantFee fee) {

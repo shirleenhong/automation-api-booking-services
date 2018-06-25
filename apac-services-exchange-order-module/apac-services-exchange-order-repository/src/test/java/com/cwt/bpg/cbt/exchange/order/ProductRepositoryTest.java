@@ -12,11 +12,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
@@ -25,9 +23,9 @@ import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
-@RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class ProductsRepositoryTest {
+public class ProductRepositoryTest
+{
 
 	@Mock
 	private Datastore dataStore;
@@ -109,7 +107,7 @@ public class ProductsRepositoryTest {
 		FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(dataStore.createQuery(HkSgProductList.class)).thenReturn(query);
 		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal("SG")).thenReturn(query);
+		when(fieldEnd.equalIgnoreCase("SG")).thenReturn(query);
 		when(query.get()).thenReturn(productList);
 		
 		List<BaseProduct> baseProducts = repository.getProducts("SG");
@@ -131,7 +129,7 @@ public class ProductsRepositoryTest {
 		FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(dataStore.createQuery(HkSgProductList.class)).thenReturn(query);
 		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal(Country.INDIA.getCode())).thenReturn(query);
+		when(fieldEnd.equalIgnoreCase(Country.INDIA.getCode())).thenReturn(query);
 		when(query.get()).thenReturn(null);
 
         List<BaseProduct> baseProducts = repository.getProducts(Country.INDIA.getCode());
@@ -150,10 +148,10 @@ public class ProductsRepositoryTest {
 		when(morphia.getDatastore()).thenReturn(dataStore);
 		when(morphia.getDatastore().createQuery(InProductList.class)).thenReturn(query);
 		when(morphia.getDatastore().createQuery(InProductList.class).field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal(Country.INDIA.getCode())).thenReturn(query);
+		when(fieldEnd.equalIgnoreCase(Country.INDIA.getCode())).thenReturn(query);
 		when(query.get()).thenReturn(null);
 		when(morphia.getDatastore().createQuery(InProductList.class)
-				.field("countryCode").equal(Country.INDIA.getCode()).get()).thenReturn(null);
+				.field("countryCode").equalIgnoreCase(Country.INDIA.getCode()).get()).thenReturn(null);
 
         List<BaseProduct> baseProducts = repository.getProducts(Country.INDIA.getCode());
 
@@ -171,9 +169,9 @@ public class ProductsRepositoryTest {
 		when(morphia.getDatastore()).thenReturn(dataStore);
 		when(morphia.getDatastore().createQuery(HkSgProductList.class)).thenReturn(query);
 		when(morphia.getDatastore().createQuery(HkSgProductList.class).field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal("HK")).thenReturn(query);
+		when(fieldEnd.equalIgnoreCase("HK")).thenReturn(query);
 		when(query.get()).thenReturn(null);
-		when(morphia.getDatastore().createQuery(HkSgProductList.class).field("countryCode").equal("HK").get())
+		when(morphia.getDatastore().createQuery(HkSgProductList.class).field("countryCode").equalIgnoreCase("HK").get())
 				.thenReturn(null);
 
 		List<BaseProduct> baseProducts = repository.getProducts("HK");
@@ -190,7 +188,7 @@ public class ProductsRepositoryTest {
 		FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(dataStore.createQuery(HkSgProductList.class)).thenReturn(query);
 		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal(Country.INDIA.getCode())).thenReturn(query);
+		when(fieldEnd.equalIgnoreCase(Country.INDIA.getCode())).thenReturn(query);
 		when(query.get()).thenThrow(IOException.class);
 
         List<BaseProduct> baseProducts = repository.getProducts(Country.INDIA.getCode());
@@ -212,7 +210,7 @@ public class ProductsRepositoryTest {
 		FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(dataStore.createQuery(InProductList.class)).thenReturn(query);
 		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal(Country.INDIA.getCode())).thenReturn(query);
+		when(fieldEnd.equalIgnoreCase(Country.INDIA.getCode())).thenReturn(query);
 		when(query.get()).thenReturn(inProductList);
 
         List<BaseProduct> result = repository.getProducts(Country.INDIA.getCode());

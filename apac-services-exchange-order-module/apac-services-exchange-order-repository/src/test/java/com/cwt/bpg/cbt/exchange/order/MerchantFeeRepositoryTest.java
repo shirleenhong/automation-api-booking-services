@@ -46,7 +46,7 @@ public class MerchantFeeRepositoryTest {
 		final String countryCode = "SG";
         FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal(anyString())).thenReturn(query);
+		when(fieldEnd.equalIgnoreCase(anyString())).thenReturn(query);
 		when(query.get()).thenReturn(new MerchantFee());
 		
 		impl.getMerchantFee(countryCode, "ALCATEL SG");

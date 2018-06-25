@@ -4,10 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +53,7 @@ public class SequenceNumberRepositoryTest {
 
 		when(dataStore.createQuery(SequenceNumber.class)).thenReturn(query);
 		when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal(anyString())).thenReturn(mock(CriteriaContainerImpl.class));
+		when(fieldEnd.equalIgnoreCase(anyString())).thenReturn(mock(CriteriaContainerImpl.class));
 		when(query.criteria(anyString())).thenReturn(fieldEnd);
 		
 		SequenceNumber sn = new SequenceNumber();
@@ -75,7 +72,7 @@ public class SequenceNumberRepositoryTest {
 
 		when(dataStore.createQuery(SequenceNumber.class)).thenReturn(query);
 		when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal(anyString())).thenReturn(mock(CriteriaContainerImpl.class));
+		when(fieldEnd.equalIgnoreCase(anyString())).thenReturn(mock(CriteriaContainerImpl.class));
 		when(query.criteria(anyString())).thenReturn(fieldEnd);
 		
 		SequenceNumber sn = new SequenceNumber();
