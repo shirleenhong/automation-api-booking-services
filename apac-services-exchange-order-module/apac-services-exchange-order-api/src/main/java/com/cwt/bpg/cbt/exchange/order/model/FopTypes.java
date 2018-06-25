@@ -1,6 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-public enum FOPTypes {
+@SuppressWarnings("unused")
+public enum FopTypes
+{
 
 	CWT("CX"), 
 	CREDIT_CARD("CC"), 
@@ -8,7 +10,7 @@ public enum FOPTypes {
 
 	private final String code;
 
-	private FOPTypes(String code) {
+	FopTypes(String code) {
 		this.code = code;
 	}
 

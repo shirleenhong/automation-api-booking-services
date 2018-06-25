@@ -1,13 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Field;
-import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Index;
-import org.mongodb.morphia.annotations.Indexes;
-
 import java.io.Serializable;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.mongodb.morphia.annotations.*;
 
 @Entity(value = "remarkList", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("_id")))

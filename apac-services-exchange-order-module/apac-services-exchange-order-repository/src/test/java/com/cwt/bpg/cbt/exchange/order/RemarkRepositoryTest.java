@@ -44,6 +44,7 @@ public class RemarkRepositoryTest {
         Query query = Mockito.mock(Query.class);
         FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
         when(dataStore.createQuery(Remark.class)).thenReturn(query);
+        when(query.order(Mockito.anyString())).thenReturn(query);
         when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
         when(fieldEnd.equal(anyString())).thenReturn(query);
 

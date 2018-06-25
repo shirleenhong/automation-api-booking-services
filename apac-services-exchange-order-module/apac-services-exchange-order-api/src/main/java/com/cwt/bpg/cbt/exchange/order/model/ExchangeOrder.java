@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.mongodb.morphia.annotations.*;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("eoNumber")))
 public class ExchangeOrder implements Serializable {
@@ -19,6 +21,8 @@ public class ExchangeOrder implements Serializable {
     private BigDecimal gstAmount;
     private BigDecimal merchantFee;
     private String countryCode;
+
+    @ApiModelProperty(allowableValues = "CX,CC,INV")
     private String fopType;
 
     private CreditCard creditCard;

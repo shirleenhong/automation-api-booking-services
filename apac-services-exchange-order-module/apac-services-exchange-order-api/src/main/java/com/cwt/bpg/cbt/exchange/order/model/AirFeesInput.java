@@ -6,15 +6,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class AirFeesInput extends FeesInput
 {
     private static final long serialVersionUID = -5169667744324661769L;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, allowableValues = "DU,DB,MN,TF,MG,TP")
     @NotEmpty
     private String clientType;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, allowableValues = "CX,CC,INV")
     @NotEmpty
     private String fopType;
 
@@ -23,8 +24,10 @@ public class AirFeesInput extends FeesInput
     private boolean applyFormula;
     private boolean commissionByPercent;
     private boolean discountByPercent;
-    // TODO : should inform Power Express to pass true if all items are selected
+
+    @ApiModelProperty(hidden = true, notes = "Deprecated. Remove after Power Express has integrated.")
     private boolean webFareSelected;
+
     private boolean cwtAbsorb;
     private boolean uatp;
     private BigDecimal nettFare;

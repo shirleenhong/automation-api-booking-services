@@ -3,25 +3,32 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
+
 import io.swagger.annotations.ApiModelProperty;
 
 public class IndiaNonAirFeesInput extends FeesInput {
 	private static final long serialVersionUID = 7271039286429340584L;
 
+	@ApiModelProperty(allowableValues = "CX,CC,INV")
 	private String fopType;
+
 	private boolean commissionByPercent;
+
 	@ApiModelProperty(required = true)
 	@NotNull
 	private BigDecimal costAmount;
+
 	private Double commissionPercent;
 	private BigDecimal commission;
 	private Double discountPercent;
 	private BigDecimal discount;
 	private boolean discountByPercent;
 	private int fopMode;
+
 	@ApiModelProperty(required = true)
 	@NotNull
-	private IndiaProduct product;
+
+	private IndiaNonAirProductInput product;
 	private String ccType;
 	private String fopNumber;
 	
@@ -81,11 +88,11 @@ public class IndiaNonAirFeesInput extends FeesInput {
 		this.fopMode = fopMode;
 	}
 
-	public IndiaProduct getProduct() {
+	public IndiaNonAirProductInput getProduct() {
 		return product;
 	}
 
-	public void setProduct(IndiaProduct product) {
+	public void setProduct(IndiaNonAirProductInput product) {
 		this.product = product;
 	}
 

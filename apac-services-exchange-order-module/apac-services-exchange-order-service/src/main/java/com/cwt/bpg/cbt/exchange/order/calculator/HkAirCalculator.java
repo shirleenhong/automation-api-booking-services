@@ -121,7 +121,7 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 
 		BigDecimal merchantFeeAmount = null;
 
-		if (!input.isCwtAbsorb() && FOPTypes.CWT.getCode().equals(input.getFopType())
+		if (!input.isCwtAbsorb() && FopTypes.CWT.getCode().equals(input.getFopType())
 				&& !input.isMerchantFeeWaive()) {
 
 			BigDecimal mFTotal;
