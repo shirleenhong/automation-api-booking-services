@@ -158,8 +158,7 @@ public class ExchangeOrderServiceTest {
 	private Date getNextExecutionTime(
 			Calendar today, String schedule) {
 		
-		org.springframework.scheduling.support.CronTrigger trigger = 
-                new CronTrigger(schedule);
+		CronTrigger trigger = new CronTrigger(schedule);
 		
 		final Date firstOfMonth = today.getTime();
 	    
