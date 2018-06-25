@@ -27,7 +27,7 @@ public class SequenceNumberRepository {
 		CriteriaContainer[] criteria = new CriteriaContainerImpl[countryCodes.length];
 		
 		for(int i=0 ; i<countryCodes.length; i++) {
-			criteria[i] = query.criteria("countryCode").equal(countryCodes[i]);
+			criteria[i] = query.criteria("countryCode").equalIgnoreCase(countryCodes[i]);
 		}
 		
 		query.or(criteria);
