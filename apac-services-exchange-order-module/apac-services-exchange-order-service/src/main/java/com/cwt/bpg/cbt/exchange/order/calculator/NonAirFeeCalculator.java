@@ -41,12 +41,18 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 		BigDecimal merchantFeeAmount = null;
 		if (!input.isMerchantFeeAbsorb() && FopTypes.CWT.getCode().equals(input.getFopType())
 				&& !input.isMerchantFeeWaive()) {
-			merchantFeeAmount = round(
-					calculatePercentage(
-							input.getSellingPrice()
-									.multiply(BigDecimal.ONE.add(percentDecimal(input.getGstPercent()))),
-							merchantFee.getMerchantFeePercent()),
-					scale);
+
+			if (merchantFee == null) {
+				merchantFeeAmount = BigDecimal.ZERO;
+			}
+			else {
+				merchantFeeAmount = round(
+						calculatePercentage(
+								input.getSellingPrice()
+										.multiply(BigDecimal.ONE.add(percentDecimal(input.getGstPercent()))),
+								merchantFee.getMerchantFeePercent()),
+						scale);
+			}
 		}
 
 		BigDecimal sellingPriceInDi = round(input.getSellingPrice().add(safeValue(gstAmount))
