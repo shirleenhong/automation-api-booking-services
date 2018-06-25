@@ -328,11 +328,6 @@ public class MigrationService {
 			mongoDbConnection.getCollection("remarkList")
 					.insertOne(dBObjectMapper.mapAsDbDocument(remark));
 		}
-//		RemarkList remarkList = new RemarkList();
-//		remarkList.setCountryCode(countryCode);
-//		remarkList.setRemarks(remarkDAO.getRemarks());
-//		mongoDbConnection.getCollection("remarkList")
-//				.insertOne(dBObjectMapper.mapAsDbDocument(remarkList.getCountryCode(), remarkList));
 	}
 
 }

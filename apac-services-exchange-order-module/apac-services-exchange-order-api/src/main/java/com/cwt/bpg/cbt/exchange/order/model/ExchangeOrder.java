@@ -2,10 +2,15 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.mongodb.morphia.annotations.*;
+
+import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -29,14 +34,22 @@ public class ExchangeOrder implements Serializable {
 
     private String description;
     private String btaDescription;
-    private Date date;
+    
+    @ApiModelProperty(value = "Date in GMT", example="2008-05-29 14:09:00")
+    @JsonSerialize(using=DateSerializer.class)    
+    @JsonDeserialize(using=DateDeserializer.class)
+    private LocalDateTime additionalInfoDate;
     private String vendorContactPerson;
     private String productCode;
     private String vendorCode;
     private String pnr;
     private String accountNumber;
     private String passengerName;
-    private Date createDateTime;
+    
+    @ApiModelProperty(value = "Date in GMT", example="2008-05-29 14:09:00")
+    @JsonSerialize(using=DateSerializer.class)
+    @JsonDeserialize(using=DateDeserializer.class)
+    private LocalDateTime createDateTime;
     private String agentId;
     private String pcc;
     private String vendorEmail;
@@ -117,12 +130,12 @@ public class ExchangeOrder implements Serializable {
         this.btaDescription = btaDescription;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getAdditionalInfoDate() {
+        return additionalInfoDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setAdditionalInfoDate(LocalDateTime date) {
+        this.additionalInfoDate = date;
     }
 
     public String getVendorContactPerson() {
@@ -173,11 +186,11 @@ public class ExchangeOrder implements Serializable {
         this.passengerName = passengerName;
     }
 
-    public Date getCreateDateTime() {
+    public LocalDateTime getCreateDateTime() {
         return createDateTime;
     }
 
-    public void setCreateDateTime(Date createDateTime) {
+    public void setCreateDateTime(LocalDateTime createDateTime) {
         this.createDateTime = createDateTime;
     }
 
