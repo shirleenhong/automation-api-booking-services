@@ -61,5 +61,4 @@ public class VisaFeesInput extends FeesInput {
 	public void setVendorHandling(BigDecimal vendorHandling) {
 		this.vendorHandling = vendorHandling;
 	}
-
 }

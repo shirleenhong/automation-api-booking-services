@@ -17,7 +17,6 @@ public enum TripTypes {
 	}
 
 	public static boolean isInternational(String tripType) {
-		
 		return INTERNATIONAL.getCode().equalsIgnoreCase(tripType);
 	}
 }
