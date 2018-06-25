@@ -43,14 +43,14 @@ public class ProductRepository {
 
 	private List<Product> getNonIndiaProducts(String countryCode) {
 		HkSgProductList productList = morphia.getDatastore().createQuery(HkSgProductList.class)
-				.field("countryCode").equal(countryCode).get();
+				.field("countryCode").equalIgnoreCase(countryCode).get();
 
 		return productList == null ? Collections.emptyList() : productList.getProducts();
 	}
 
 	private List<IndiaProduct> getIndiaProducts(String countryCode) {
 		InProductList productList = morphia.getDatastore().createQuery(InProductList.class)
-				.field("countryCode").equal(countryCode).get();
+				.field("countryCode").equalIgnoreCase(countryCode).get();
 
 		return productList == null ? Collections.emptyList() : productList.getProducts();
 	}
