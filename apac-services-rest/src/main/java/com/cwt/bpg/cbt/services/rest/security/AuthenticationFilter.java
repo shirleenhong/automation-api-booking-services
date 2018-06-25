@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.services.rest.security;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import com.cwt.bpg.cbt.security.service.TokenService;
 public class AuthenticationFilter extends GenericFilterBean {
 
 	private static final String BEARER = "Bearer ";
+	private static final String UUID_KEY = "UUID";
 	private TokenService tokenService;
 
 	public AuthenticationFilter(TokenService tokenService) {
@@ -36,12 +38,20 @@ public class AuthenticationFilter extends GenericFilterBean {
 			return;
 		}
 
-		String token = authHeader.replace(BEARER, "").trim();
-		if (!tokenService.isTokenExist(token)) {
-			httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token.");
+		try {
+			String token = authHeader.replace(BEARER, "").trim();
+			if (!tokenService.isTokenExist(token)) {
+				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token.");
+				return;
+			}
+			chain.doFilter(request, response);
+
+		} catch (RuntimeException e) {
+			httpResponse.setHeader(UUID_KEY, UUID.randomUUID().toString());
+			httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getLocalizedMessage());
 			return;
 		}
-		chain.doFilter(request, response);
+			
 	}
 
 }
