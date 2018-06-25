@@ -28,7 +28,7 @@ public class IndiaNonAirFeesInput extends FeesInput {
 	@ApiModelProperty(required = true)
 	@NotNull
 
-	private IndiaProduct product;
+	private IndiaNonAirProductInput product;
 	private String ccType;
 	private String fopNumber;
 	
