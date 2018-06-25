@@ -2,12 +2,14 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import org.mongodb.morphia.Key;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,7 +25,8 @@ public class ExchangeOrderService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderService.class);
 	
-	private static final int MAX_RETRY_COUNT = 3;
+	@Value("${exchange.order.max.retry.count}")
+	private int maxRetryCount;
 	
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMM");
 	
@@ -35,7 +38,9 @@ public class ExchangeOrderService {
 	
 	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder) {
 		
-		exchangeOrder.setEoNumber(getEoNumber(exchangeOrder.getCountryCode()));
+		if(exchangeOrder.getEoNumber() == null) {
+			exchangeOrder.setEoNumber(getEoNumber(exchangeOrder.getCountryCode()));
+		}
 		
 		ExchangeOrder result = new ExchangeOrder();
 		result.setEoNumber(exchangeOrderRepo.saveOrUpdate(exchangeOrder));
@@ -58,8 +63,8 @@ public class ExchangeOrderService {
 		do {
 			
 			try {		
-				SequenceNumber sequenceNum = sequenceNumberRepo.get(countryCode);
-					
+				SequenceNumber sequenceNum = getSequenceNum(sequenceNumberRepo.get(countryCode));
+				
 				if(sequenceNum != null) {
 					newSequenceNum = sequenceNum.getValue() + 1;						
 				}
@@ -73,29 +78,51 @@ public class ExchangeOrderService {
 								
 				sequenceNumberRepo.save(sequenceNum);
 			}
-			catch(Exception e) {
+			catch(ConcurrentModificationException e) {
 				LOGGER.error("Exception encountered while saving sequence number", e);
-				LOGGER.debug("Retrying {}", retryCount++);
+				LOGGER.info("Retrying {}", retryCount++);
 				newSequenceNum = -1;
 			}		
 		}
-		while(retryCount < MAX_RETRY_COUNT && newSequenceNum == -1);
+		while(retryCount < maxRetryCount && newSequenceNum == -1);
 		
 		return newSequenceNum;
 	}
 	
-	@Scheduled(cron = "0 0 12 1 * ?")
-	protected void resetSequenceNumber() {
+	private SequenceNumber getSequenceNum(List<SequenceNumber> list) {
 		
-		List<SequenceNumber> sequenceNums = sequenceNumberRepo.getAll();
+		return !list.isEmpty() ? list.get(0) : null;
+	}
+
+	@Scheduled(cron = "${exchange.order.reset.schedule.india}")
+	protected void resetIndiaSequenceNumber() {
+		
+		List<SequenceNumber> sequenceNums = sequenceNumberRepo.get(Country.INDIA.getCode());
+		
+		Iterable<Key<SequenceNumber>> result = reset(sequenceNums);
+		
+		LOGGER.info("Reset India sequence numbers {}", result);
+	}
+
+	private Iterable<Key<SequenceNumber>> reset(List<SequenceNumber> sequenceNums) {
 		
 		for(SequenceNumber sn : sequenceNums) {
 			sn.setValue(0);			
 		}	
 		
-		Iterable<Key<SequenceNumber>> result = sequenceNumberRepo.save(sequenceNums);
+		return sequenceNumberRepo.save(sequenceNums);
+	}
+	
+	@Scheduled(cron = "${exchange.order.reset.schedule.hk.sg}")
+	protected void resetHkSgSequenceNumber() {
 		
-		LOGGER.info("Reset sequence numbers {}", result);
+		List<SequenceNumber> sequenceNums = sequenceNumberRepo.get(
+				Country.SINGAPORE.getCode(), 
+				Country.HONG_KONG.getCode());
+		
+		Iterable<Key<SequenceNumber>> result = reset(sequenceNums);
+		
+		LOGGER.info("Reset HK and SG sequence numbers {}", result);
 	}
 
 	@Cacheable(cacheNames = "exchange-orders", key = "#eoNumber")

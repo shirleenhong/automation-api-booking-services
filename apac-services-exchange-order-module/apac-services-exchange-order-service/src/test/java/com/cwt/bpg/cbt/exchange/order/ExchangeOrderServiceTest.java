@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
@@ -21,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.support.CronTrigger;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
@@ -39,6 +41,7 @@ public class ExchangeOrderServiceTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
+		ReflectionTestUtils.setField(service, "maxRetryCount", 3);
 	}
   
 	@Test
@@ -50,10 +53,22 @@ public class ExchangeOrderServiceTest {
 	}
 	
 	@Test
+	public void shouldCallSaveOrUpdateExisting() {
+		ExchangeOrder eo = new ExchangeOrder();
+		eo.setEoNumber("eoNumber");
+		eo.setCountryCode("HK");
+		when(repo.saveOrUpdate(eo)).thenReturn(eo.getEoNumber());
+		
+		ExchangeOrder result = service.saveExchangeOrder(eo);		
+		verify(repo, times(1)).saveOrUpdate(eo);
+		assertEquals(eo.getEoNumber(), result.getEoNumber());		
+	}
+	
+	@Test
 	public void shouldCallSaveOrUpdateUpdated() {
 		
 		SequenceNumber sn = mock(SequenceNumber.class);
-		when(sequentNumberRepo.get(anyString())).thenReturn(sn);
+		when(sequentNumberRepo.get(anyString())).thenReturn(Arrays.asList(sn));
 		
 		ExchangeOrder order = new ExchangeOrder();
 		order.setCountryCode("HK");
@@ -63,18 +78,34 @@ public class ExchangeOrderServiceTest {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
-	public void resetSequenceNumber() {
+	public void resetSgHkSequenceNumber() {
 		
 		SequenceNumber sn = mock(SequenceNumber.class);
 		List list = new ArrayList<SequenceNumber>();
 		list.add(sn);
 		list.add(sn);
 				
-		when(sequentNumberRepo.getAll()).thenReturn(list);
+		when(sequentNumberRepo.get("SG","HK")).thenReturn(list);
 		
-		service.resetSequenceNumber();
+		service.resetHkSgSequenceNumber();
 		
 		verify(sn, times(2)).setValue(0);
+		verify(sequentNumberRepo, times(1)).save(list);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Test
+	public void resetIndiaSequenceNumber() {
+		
+		SequenceNumber sn = mock(SequenceNumber.class);
+		List list = new ArrayList<SequenceNumber>();
+		list.add(sn);
+				
+		when(sequentNumberRepo.get("IN")).thenReturn(list);
+		
+		service.resetIndiaSequenceNumber();
+		
+		verify(sn, times(1)).setValue(0);
 		verify(sequentNumberRepo, times(1)).save(list);
 	}
 	
@@ -82,7 +113,7 @@ public class ExchangeOrderServiceTest {
 	@Test
 	public void shouldThrowException() {
 		SequenceNumber sn = mock(SequenceNumber.class);
-		when(sequentNumberRepo.get(anyString())).thenReturn(sn);		
+		when(sequentNumberRepo.get(anyString())).thenReturn(Arrays.asList(sn));		
 		when(sequentNumberRepo.save(eq(sn))).thenThrow(ConcurrentModificationException.class);
 		service.getSequenceNumber("HK");
 		verify(sequentNumberRepo, times(3)).save(sn);
@@ -96,14 +127,41 @@ public class ExchangeOrderServiceTest {
 	}
 		
 	@Test
-	public void testResetSchedule(){
+	public void testResetIndiaSchedule(){
 	    
-	    org.springframework.scheduling.support.CronTrigger trigger = 
-	                                      new CronTrigger("0 0 12 1 * ?");
-	    Calendar today = Calendar.getInstance();
-	    today.set(Calendar.DAY_OF_MONTH, 1);
+		Calendar today = Calendar.getInstance();
+	    
+	    Date nextExecutionTime = getNextExecutionTime(today, "0 30 11 1 * ?");
 
-	    final Date firstOfMonth = today.getTime();
+	    Calendar result = Calendar.getInstance();	    
+	    result.setTime(nextExecutionTime);
+	    
+	    assertEquals(1, result.get(Calendar.DAY_OF_MONTH));
+	    assertEquals(11, result.get(Calendar.HOUR_OF_DAY));
+	    assertEquals(30, result.get(Calendar.MINUTE));
+	}
+	
+	@Test
+	public void testResetSgHkSchedule(){
+	    
+	    Calendar today = Calendar.getInstance();
+	    Date nextExecutionTime = getNextExecutionTime(today, "0 0 9 1 * ?");
+	    
+	    Calendar result = Calendar.getInstance();
+	    result.setTime(nextExecutionTime);
+	    
+	    assertEquals(1, result.get(Calendar.DAY_OF_MONTH));
+	    assertEquals(9, result.get(Calendar.HOUR_OF_DAY));
+
+	}
+
+	private Date getNextExecutionTime(
+			Calendar today, String schedule) {
+		
+		org.springframework.scheduling.support.CronTrigger trigger = 
+                new CronTrigger(schedule);
+		
+		final Date firstOfMonth = today.getTime();
 	    
 	    Date nextExecutionTime = trigger.nextExecutionTime(
 	        new TriggerContext() {
@@ -123,12 +181,6 @@ public class ExchangeOrderServiceTest {
 	                return firstOfMonth;
 	            }
 	        });
-
-	    Calendar result = Calendar.getInstance();
-	    
-	    result.setTime(nextExecutionTime);
-	    assertEquals(1, result.get(Calendar.DAY_OF_MONTH));
-	    assertEquals(today.get(Calendar.MONTH) + 1, result.get(Calendar.MONTH));   
-
+		return nextExecutionTime;
 	}
 }
