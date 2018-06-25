@@ -63,20 +63,20 @@ public class ExchangeOrderService {
 		do {
 			
 			try {		
-				SequenceNumber sequenceNum = getSequenceNum(sequenceNumberRepo.get(countryCode));
+				SequenceNumber sequenceNumber = getSequenceNum(sequenceNumberRepo.get(countryCode));
 				
-				if(sequenceNum != null) {
-					newSequenceNum = sequenceNum.getValue() + 1;						
+				if(sequenceNumber != null) {
+					newSequenceNum = sequenceNumber.getValue() + 1;						
 				}
 				else {
 					newSequenceNum = 1;
-					sequenceNum = new SequenceNumber();										
-					sequenceNum.setCountryCode(countryCode);					
+					sequenceNumber = new SequenceNumber();										
+					sequenceNumber.setCountryCode(countryCode);					
 				}
 				
-				sequenceNum.setValue(newSequenceNum);
+				sequenceNumber.setValue(newSequenceNum);
 								
-				sequenceNumberRepo.save(sequenceNum);
+				sequenceNumberRepo.save(sequenceNumber);
 			}
 			catch(ConcurrentModificationException e) {
 				LOGGER.error("Exception encountered while saving sequence number", e);
