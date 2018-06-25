@@ -2,8 +2,8 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.anyList;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -20,12 +20,14 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
+import org.mongodb.morphia.query.CriteriaContainerImpl;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class SequenceNumberRepositoryTest {
 
 	@Mock
@@ -37,61 +39,82 @@ public class SequenceNumberRepositoryTest {
 	@InjectMocks
 	private SequenceNumberRepository repository;
 
+	@Mock
+	private Query query;
+	
+	@Mock
+	private FieldEnd fieldEnd;
+	
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
 		when(morphia.getDatastore()).thenReturn(dataStore);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldGetSequenceNumber() {
 
-		Query query = Mockito.mock(Query.class);
-		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
 		when(dataStore.createQuery(SequenceNumber.class)).thenReturn(query);
 		when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal(anyString())).thenReturn(query);
-
+		when(fieldEnd.equal(anyString())).thenReturn(mock(CriteriaContainerImpl.class));
+		when(query.criteria(anyString())).thenReturn(fieldEnd);
+		
 		SequenceNumber sn = new SequenceNumber();
 		sn.setValue(2);
-		when(query.get()).thenReturn(sn);
-
-		SequenceNumber result = repository.get("HK");
+		when(query.asList()).thenReturn(Arrays.asList(sn));
+		
+		SequenceNumber result = repository.get("HK").get(0);
 		assertEquals(2, result.getValue());
 		verify(morphia, times(1)).getDatastore();
 		verify(dataStore, times(1)).createQuery(SequenceNumber.class);
 
 	}
 
-	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldGetMultiSequenceNumber() {
+
+		when(dataStore.createQuery(SequenceNumber.class)).thenReturn(query);
+		when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equal(anyString())).thenReturn(mock(CriteriaContainerImpl.class));
+		when(query.criteria(anyString())).thenReturn(fieldEnd);
+		
+		SequenceNumber sn = new SequenceNumber();
+		sn.setValue(2);
+		when(query.asList()).thenReturn(Arrays.asList(sn, sn));
+		
+		List<SequenceNumber> result = repository.get("HK", "SG");
+		assertEquals(2, result.get(0).getValue());
+		
+		verify(query, times(2)).criteria(anyString());
+		verify(morphia, times(1)).getDatastore();
+		verify(dataStore, times(1)).createQuery(SequenceNumber.class);
+
+	}
+
 	@Test
 	public void shouldSaveSequenceNumber() {
-		SequenceNumber sequenceNum = new SequenceNumber();
+		SequenceNumber sequenceNumber = new SequenceNumber();
 		Key<SequenceNumber> mockKey = mock(Key.class);
-		when(dataStore.save(sequenceNum)).thenReturn(mockKey);
-		Key<SequenceNumber> result = repository.save(sequenceNum);
+		when(dataStore.save(sequenceNumber)).thenReturn(mockKey);
+		Key<SequenceNumber> result = repository.save(sequenceNumber);
 		assertNotNull(result);
 	}
 
-	@SuppressWarnings({ "unused", "rawtypes", "unchecked" })
 	@Test
 	public void shouldGetAll() {
-		Query query = Mockito.mock(Query.class);
-		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
 		when(dataStore.createQuery(SequenceNumber.class)).thenReturn(query);
 		when(query.asList()).thenReturn(Arrays.asList(new SequenceNumber()));
+		when(query.criteria(anyString())).thenReturn(fieldEnd);		
 
-		List<SequenceNumber> result = repository.getAll();
+		List<SequenceNumber> result = repository.get("HK", "SG");
 		assertEquals(1, result.size());
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldSaveListOfSequenceNumber() {
-		SequenceNumber sequenceNum = new SequenceNumber();		
+		SequenceNumber sequenceNumber = new SequenceNumber();		
 		when(dataStore.save(anyList())).thenReturn(mock(Iterable.class));
-		Iterable<Key<SequenceNumber>> result = repository.save(Arrays.asList(sequenceNum));
+		Iterable<Key<SequenceNumber>> result = repository.save(Arrays.asList(sequenceNumber));
 		assertNotNull(result);		
 	}
 

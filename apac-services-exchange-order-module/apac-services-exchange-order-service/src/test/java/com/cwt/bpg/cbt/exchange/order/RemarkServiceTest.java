@@ -54,7 +54,8 @@ public class RemarkServiceTest {
         verify(repository, times(1)).get(new ObjectId("5b2870d6284b8d1ac84300ac"));
     }
 
-    @Test
+    @SuppressWarnings("unchecked")
+	@Test
     public void getRemarksShouldReturnRemarks() {
     	List<Remark> remarks = mock(List.class);
         when(service.getRemarks("HK", "HL", "E")).thenReturn(remarks);
