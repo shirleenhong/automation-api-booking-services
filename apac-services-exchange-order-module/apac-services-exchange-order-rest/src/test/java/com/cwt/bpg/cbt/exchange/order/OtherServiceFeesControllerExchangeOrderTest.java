@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.times;
@@ -12,13 +11,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.time.Instant;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,8 +27,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -71,8 +70,8 @@ public class OtherServiceFeesControllerExchangeOrderTest {
 	@Test
 	public void shouldReturnExchangeOrderNumber() throws Exception {
 						
-		ExchangeOrder order = new ExchangeOrder();
-
+		ExchangeOrder order = createExchangeOrder();
+		
 		when(eoService.saveExchangeOrder(order)).thenReturn(anyObject());
 
 		mockMvc.perform(post(url)
@@ -96,6 +95,28 @@ public class OtherServiceFeesControllerExchangeOrderTest {
 	
 	}
 	
+	private ExchangeOrder createExchangeOrder() {
+		
+		ExchangeOrder order = new ExchangeOrder();
+		order.setFopType("CX");
+		order.setDescription("test_description");
+		order.setAdditionalInfoDate(Instant.now());
+		order.setProductCode("PR01");
+		order.setVendorCode("VEN090909");
+		order.setPnr("PNR1234");
+		order.setAccountNumber("987654321");
+		order.setPassengerName("Passenger");
+		order.setAgentId("U001XXX");
+		order.setPcc("SIN1234");
+		
+		CreditCard creditCard = new CreditCard();
+		creditCard.setCcNumber("1234");
+		creditCard.setCcType("AX");
+		creditCard.setExpiryDate("11/2020");
+		order.setCreditCard(creditCard);
+		
+		return order;
+	}
 			
 	public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
