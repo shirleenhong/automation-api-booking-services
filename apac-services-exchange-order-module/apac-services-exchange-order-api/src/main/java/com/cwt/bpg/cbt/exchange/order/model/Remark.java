@@ -2,8 +2,11 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
+import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.*;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity(value = "remarkList", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("_id")))
@@ -11,26 +14,27 @@ public class Remark implements Serializable {
 	private static final long serialVersionUID = -756695804842165089L;
 
 	@Id
-	private String id;
+	@JsonSerialize(using = ObjectIdSerializer.class)
+	private ObjectId id;
 	
 	@NotEmpty
-	private String productType;
+	protected String productType;
 
 	@NotEmpty
-	private String remarkType;
+	protected String remarkType;
 	
 	@NotEmpty
-	private String countryCode;
+	protected String countryCode;
 
 	@NotEmpty
-	private String text;
+	protected String text;
 
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
