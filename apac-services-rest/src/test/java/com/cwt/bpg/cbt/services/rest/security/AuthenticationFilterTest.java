@@ -87,6 +87,22 @@ public class AuthenticationFilterTest {
 		verify(response, never()).sendError(eq(HttpServletResponse.SC_UNAUTHORIZED), anyString());
 		verify(chain, times(1)).doFilter(any(HttpServletRequest.class), any(HttpServletResponse.class));
 	}
+	
+	@Test
+	public void shouldCatchRunTimeException() throws RuntimeException, IOException, ServletException {
+		MockedHttpRequest request = new MockedHttpRequest(mock(HttpServletRequest.class));
+		request.addHeader("Authorization", "Bearer 1234567890");
+		MockedTokenImpl tokenApi = new MockedTokenImpl();
+		tokenApi.setTokenExists(true);
+		AuthenticationFilter customFilter = new AuthenticationFilter(null);
+		HttpServletResponse response = mock(HttpServletResponse.class);
+		FilterChain chain = mock(FilterChain.class);
+		customFilter.doFilter(request, response, chain);
+
+		verify(response, times(1)).setHeader(eq("UUID"), anyString());
+		verify(response, times(1)).sendError(eq(HttpServletResponse.SC_INTERNAL_SERVER_ERROR), anyString());
+		verify(chain, never()).doFilter(any(HttpServletRequest.class), any(HttpServletResponse.class));
+	}
 }
 
 class MockedTokenImpl extends TokenService {
