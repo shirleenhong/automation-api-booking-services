@@ -125,10 +125,10 @@ public class IndiaNonAirFeeCalculator {
 		return false;
 	}
 
-	private ProductMerchantFee getProduct(Client client, BaseProduct baseProduct) {
+	private ProductMerchantFee getProduct(Client client, IndiaNonAirProductInput indiaProduct) {
 		if (client.getMfProducts() != null) {
 			Optional<ProductMerchantFee> result = client.getMfProducts().stream()
-					.filter(item -> item.getProductCode().equals(baseProduct.getProductCode())).findFirst();
+					.filter(item -> item.getProductCode().equals(indiaProduct.getProductCode())).findFirst();
 
 			if (result.isPresent()) {
 				return result.get();

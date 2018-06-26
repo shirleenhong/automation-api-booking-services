@@ -12,12 +12,15 @@ public class NonAirFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = 7271039286429340584L;
 
-    @ApiModelProperty(required = true)
+	@ApiModelProperty(required = true, allowableValues = "CX,CC,INV")
 	@NotEmpty
     private String fopType;
 
 	private BigDecimal sellingPrice;
+
+	@ApiModelProperty(hidden = true, notes = "Not available in Power Express UI.")
 	private boolean merchantFeeWaive;
+
 	private boolean gstAbsorb;
 	private boolean merchantFeeAbsorb;
 

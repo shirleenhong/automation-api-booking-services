@@ -1,17 +1,14 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
@@ -19,7 +16,6 @@ import org.mongodb.morphia.query.Query;
 import com.cwt.bpg.cbt.exchange.order.model.Remark;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
-@RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class RemarkRepositoryTest {
 
@@ -35,16 +31,17 @@ public class RemarkRepositoryTest {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        Mockito.when(morphia.getDatastore()).thenReturn(dataStore);
+        when(morphia.getDatastore()).thenReturn(dataStore);
     }
 
     @Test
-    public void getAllShouldReturnRemarks(){
+    public void shouldReturnRemarks(){
         Query query = Mockito.mock(Query.class);
         FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-        Mockito.when(dataStore.createQuery(Remark.class)).thenReturn(query);
-        Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
-        Mockito.when(fieldEnd.equal(anyString())).thenReturn(query);
+        when(dataStore.createQuery(Remark.class)).thenReturn(query);
+        when(query.order(Mockito.anyString())).thenReturn(query);
+        when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
+        when(fieldEnd.equalIgnoreCase(anyString())).thenReturn(query);
 
         repository.getRemarks("SG", "HL","E");
 

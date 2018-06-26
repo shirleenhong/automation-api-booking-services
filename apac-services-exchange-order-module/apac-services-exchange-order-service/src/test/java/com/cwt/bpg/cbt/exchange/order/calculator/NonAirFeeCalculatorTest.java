@@ -1,16 +1,11 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -21,6 +16,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
 
 public class NonAirFeeCalculatorTest {
 	
@@ -56,7 +53,7 @@ public class NonAirFeeCalculatorTest {
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1528.27));
 
-		NonAirFeesBreakdown result = (NonAirFeesBreakdown) calculator.calculate(input, merchantFee);
+		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee);
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(new BigDecimal(60.03), 2), result.getGstAmount());
@@ -77,7 +74,7 @@ public class NonAirFeeCalculatorTest {
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1228.27));
 		
-		NonAirFeesBreakdown result = (NonAirFeesBreakdown) calculator.calculate(input, merchantFee);
+		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee);
 
 		assertEquals(round(new BigDecimal(362.68)), result.getCommission());
 		assertEquals(round(new BigDecimal(75.025)), result.getGstAmount());
@@ -99,7 +96,7 @@ public class NonAirFeeCalculatorTest {
 		input.setMerchantFeeAbsorb(true);
 		input.setNettCost(new BigDecimal(1528.27));
 		
-		NonAirFeesBreakdown result = (NonAirFeesBreakdown) calculator.calculate(input, merchantFee);
+		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee);
 
 		assertEquals(round(BigDecimal.ZERO), result.getCommission());
 		assertNull(result.getGstAmount());
@@ -111,21 +108,21 @@ public class NonAirFeeCalculatorTest {
 
 	@Test
 	public void shouldNotFailOnNullInput() {
-		NonAirFeesBreakdown result = (NonAirFeesBreakdown) calculator.calculate(null, null);
+		NonAirFeesBreakdown result = calculator.calculate(null, null);
 
 		assertThat(result.getCommission(), is(nullValue(BigDecimal.class)));
 		assertThat(result.getGstAmount(), is(nullValue(BigDecimal.class)));
 		assertThat(result.getMerchantFee(), is(nullValue(BigDecimal.class)));
 		assertThat(result.getNettCostGst(), is(nullValue(BigDecimal.class)));
 		assertThat(result.getTotalSellingPrice(), is(nullValue(BigDecimal.class)));
-		assertNull(result.getGrossSellingPrice());
+		assertThat(result.getGrossSellingPrice(), is(nullValue(BigDecimal.class)));
 	}
 
 	@Test
 	public void shouldNotFailOnEmptyInput() {
 		NonAirFeesInput input = new NonAirFeesInput();
 		input.setCountryCode("SG");
-		NonAirFeesBreakdown result = (NonAirFeesBreakdown) calculator.calculate(input, null);
+		NonAirFeesBreakdown result = calculator.calculate(input, null);
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(BigDecimal.ZERO, 2), result.getGstAmount());
@@ -134,8 +131,29 @@ public class NonAirFeeCalculatorTest {
 		assertEquals(round(BigDecimal.ZERO, 2), result.getTotalSellingPrice());
 		assertNull(result.getGrossSellingPrice());
 	}
-	
-	private BigDecimal round(BigDecimal value, int scale) {
+
+	@Test
+	public void shouldNotFailWhenFopTypeIsCXAndMerchantFeeIsNull() {
+		NonAirFeesInput input = new NonAirFeesInput();
+		input.setCountryCode("SG");
+		input.setFopType("CX");
+        input.setSellingPrice(new BigDecimal(1200.50));
+        input.setGstPercent(5D);
+        input.setNettCost(new BigDecimal(1528.27));
+
+        NonAirFeesBreakdown result = calculator.calculate(input, null);
+
+        assertThat(result.getCommission().doubleValue(), is(equalTo(0d)));
+        assertThat(result.getGstAmount().doubleValue(), is(equalTo(60.03d)));
+        assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0d)));
+        assertThat(result.getNettCostGst().doubleValue(), is(equalTo(76.41d)));
+        assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1200.50d)));
+        assertThat(result.getGrossSellingPrice(), is(nullValue(BigDecimal.class)));
+	}
+
+
+	@SuppressWarnings("SameParameterValue")
+    private BigDecimal round(BigDecimal value, int scale) {
 		return value.setScale(scale, RoundingMode.HALF_UP);
 	}
 

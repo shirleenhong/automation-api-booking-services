@@ -102,9 +102,9 @@ public class FeeCalculatorTest {
         return airlineRule;
     }
 
-    private IndiaProduct createProduct()
+    private IndiaAirProductInput createProduct()
     {
-        IndiaProduct product = new IndiaProduct();
+    	IndiaAirProductInput product = new IndiaAirProductInput();
         product.setGstPercent(7d);
         product.setOt1Percent(5d);
         product.setOt2Percent(3d);

@@ -4,24 +4,28 @@ import java.io.Serializable;
 
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Version;
 
-@Entity(value = "sequenceNumber")
+@Entity(value = "sequenceNumbers", noClassnameStored = true)
 public class SequenceNumber implements Serializable {
-	
+
 	private static final long serialVersionUID = 1702591795635681138L;
-	
+
 	@Id
-	public String id; 
+	private String countryCode;
+
+	@Version
+	private Long version;
 	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	private int value;
+		
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
 
 	public int getValue() {
 		return value;
@@ -30,5 +34,12 @@ public class SequenceNumber implements Serializable {
 	public void setValue(int value) {
 		this.value = value;
 	}
+	
+	public String getCountryCode() {
+		return countryCode;
+	}
 
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 }

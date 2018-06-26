@@ -43,7 +43,7 @@ public class FeeCalculator {
 		}
 
 		if(input.isGstEnabled() && client.isExemptTax()) {
-			final IndiaProduct product = input.getProduct();
+			final IndiaAirProductInput product = input.getProduct();
 			final BigDecimal baseFarePlusYqTax = safeValue(input.getBaseFare())
 							.add(yqTax);
 			
