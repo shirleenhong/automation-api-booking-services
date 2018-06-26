@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ConcurrentModificationException;
@@ -39,6 +40,7 @@ public class ExchangeOrderService {
 	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder) {
 		
 		if(exchangeOrder.getEoNumber() == null) {
+			exchangeOrder.setCreateDateTime(Instant.now());
 			exchangeOrder.setEoNumber(getEoNumber(exchangeOrder.getCountryCode()));
 		}
 		
@@ -94,7 +96,7 @@ public class ExchangeOrderService {
 		return !list.isEmpty() ? list.get(0) : null;
 	}
 
-	@Scheduled(cron = "${exchange.order.reset.schedule.india}")
+	@Scheduled(cron = "${exchange.order.reset.schedule.in}")
 	protected void resetIndiaSequenceNumber() {
 		
 		List<SequenceNumber> sequenceNumbers = sequenceNumberRepo.get(Country.INDIA.getCode());
