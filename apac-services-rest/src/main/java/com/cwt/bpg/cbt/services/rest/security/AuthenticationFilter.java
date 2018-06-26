@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.GenericFilterBean;
 
 import com.cwt.bpg.cbt.security.service.TokenService;
@@ -20,6 +22,8 @@ public class AuthenticationFilter extends GenericFilterBean {
 	private static final String BEARER = "Bearer ";
 	private static final String UUID_KEY = "UUID";
 	private TokenService tokenService;
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationFilter.class);
 
 	public AuthenticationFilter(TokenService tokenService) {
 		this.tokenService = tokenService;
@@ -33,7 +37,9 @@ public class AuthenticationFilter extends GenericFilterBean {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
 		String authHeader = httpRequest.getHeader("Authorization");
+		
 		if (StringUtils.isBlank(authHeader) || !authHeader.startsWith(BEARER)) {
+			setUUIDHeader(httpResponse);
 			httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Authorization header needed");
 			return;
 		}
@@ -41,17 +47,24 @@ public class AuthenticationFilter extends GenericFilterBean {
 		try {
 			String token = authHeader.replace(BEARER, "").trim();
 			if (!tokenService.isTokenExist(token)) {
+				setUUIDHeader(httpResponse);
 				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token.");
 				return;
 			}
 			chain.doFilter(request, response);
 
-		} catch (RuntimeException e) {
-			httpResponse.setHeader(UUID_KEY, UUID.randomUUID().toString());
-			httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getLocalizedMessage());
+		} 
+		catch (RuntimeException e) {
+			LOGGER.error("Server caught an exception: {}", e.getLocalizedMessage());
+			setUUIDHeader(httpResponse);
+			httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Server Error");
 			return;
 		}
 			
+	}
+
+	private void setUUIDHeader(HttpServletResponse httpResponse) {
+		httpResponse.setHeader(UUID_KEY, UUID.randomUUID().toString());
 	}
 
 }
