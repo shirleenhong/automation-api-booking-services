@@ -18,16 +18,16 @@ public class Remark implements Serializable {
 	private ObjectId id;
 	
 	@NotEmpty
-	protected String productType;
+	private String productType;
 
 	@NotEmpty
-	protected String remarkType;
+	private String remarkType;
 	
 	@NotEmpty
-	protected String countryCode;
+	private String countryCode;
 
 	@NotEmpty
-	protected String text;
+	private String text;
 
 
 	public ObjectId getId() {
