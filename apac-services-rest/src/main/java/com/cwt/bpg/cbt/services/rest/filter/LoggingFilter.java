@@ -49,13 +49,15 @@ public class LoggingFilter extends OncePerRequestFilter {
 			final FilterChain filterChain) throws ServletException, IOException {
 
 		MDC.put(ResponseWrapper.START_TIME_KEY, String.valueOf(System.currentTimeMillis()));
+		String uuid = UUID.randomUUID().toString();
+		MDC.put(UUID_KEY, uuid);
 		final long requestId = id.incrementAndGet();
 		
 		RequestWrapper wrappedRequest = new RequestWrapper(requestId, request);
 		ResponseWrapper wrappedResponse = new ResponseWrapper(requestId, response);
 
 		try {
-			response.addHeader(UUID_KEY, UUID.randomUUID().toString());
+			response.addHeader(UUID_KEY, uuid);
 			filterChain.doFilter(wrappedRequest, wrappedResponse);
 		}
 		finally {
