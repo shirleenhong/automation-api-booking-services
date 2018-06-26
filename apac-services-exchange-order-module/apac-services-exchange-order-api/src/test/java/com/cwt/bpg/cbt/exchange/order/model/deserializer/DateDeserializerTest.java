@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,14 +34,16 @@ public class DateDeserializerTest {
 	
 	@Test
 	public void testDeserialize() throws IOException {
-		when(parser.getText()).thenReturn("2018-01-02 03:04:05");
-		LocalDateTime result = deserializer.deserialize(parser, null);
-		assertEquals(2018, result.getYear());
-		assertEquals(1, result.getMonthValue());
-		assertEquals(2, result.getDayOfMonth());
-		assertEquals(3, result.getHour());
-		assertEquals(4, result.getMinute());
-		assertEquals(5, result.getSecond());
+		when(parser.getText()).thenReturn("2018-01-02T03:04:05.000Z");
+		Instant result = deserializer.deserialize(parser, null);
+
+        LocalDateTime ldt = LocalDateTime.ofInstant(result, ZoneOffset.UTC);
+		assertEquals(2018, ldt.getYear());
+		assertEquals(1, ldt.getMonthValue());
+		assertEquals(2, ldt.getDayOfMonth());
+		assertEquals(3, ldt.getHour());
+		assertEquals(4, ldt.getMinute());
+		assertEquals(5, ldt.getSecond());
 	}
 
 }

@@ -6,7 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import java.io.IOException;
 import java.time.DateTimeException;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,19 +37,20 @@ public class DateSerializerTest {
 	
 	@Test
 	public void testDeserialize() throws IOException {
-		LocalDateTime dateTime = LocalDateTime
-				.of(2018, 1, 2, 3, 4, 5);
-
-		serializer.serialize(dateTime, generator, null);
-		verify(generator, times(1)).writeString("2018-01-02 03:04:05");
+				
+		Instant instant = Instant.parse("2018-01-02T03:04:05.000Z");
+		serializer.serialize(instant, generator, null);
+		verify(generator, times(1)).writeString("2018-01-02T03:04:05.000Z");
 	}
 	
 	@Test(expected=DateTimeException.class)
 	public void testDeserializeWithException() throws IOException {
-		LocalDateTime dateTime = LocalDateTime
-				.of(2018, 13, 1, 3, 4, 5);
-
-		serializer.serialize(dateTime, generator, null);
+		
+		Instant instant = Instant.parse("2018-13-02T03:04:05.00Z");
+		
+		serializer.serialize(instant, generator, null);
+		
+		verify(generator, times(1)).writeString("2018-13-02T03:04:05.00Z");
 	}
 }
 

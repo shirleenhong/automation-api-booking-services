@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ConcurrentModificationException;
@@ -39,6 +40,7 @@ public class ExchangeOrderService {
 	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder) {
 		
 		if(exchangeOrder.getEoNumber() == null) {
+			exchangeOrder.setCreateDateTime(Instant.now());
 			exchangeOrder.setEoNumber(getEoNumber(exchangeOrder.getCountryCode()));
 		}
 		
