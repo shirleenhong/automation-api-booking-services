@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.time.Instant;
-import java.time.LocalDate;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -29,7 +28,9 @@ public class ExchangeOrderService {
 	@Value("${exchange.order.max.retry.count}")
 	private int maxRetryCount;
 	
-	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMM");
+	private final DateTimeFormatter formatter = DateTimeFormatter
+				.ofPattern("yyMM")
+				.withZone(ZoneId.of("UTC"));
 	
 	@Autowired
 	private ExchangeOrderRepository exchangeOrderRepo;
