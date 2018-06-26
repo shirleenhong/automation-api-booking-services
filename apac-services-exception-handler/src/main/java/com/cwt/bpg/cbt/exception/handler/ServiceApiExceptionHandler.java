@@ -1,14 +1,14 @@
 package com.cwt.bpg.cbt.exception.handler;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -25,7 +25,7 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),
 				error);
-		
+
 		return new ResponseEntity<>(apiError, new HttpHeaders(),
 				apiError.getStatus());
 	}
@@ -43,21 +43,34 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 				apiError.getStatus());
 	}
 
-
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(
 			HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status,
 			WebRequest request) {
-		
+
 		Throwable mostSpecificCause = ex.getMostSpecificCause();
-		 
-		List<String> errors = new ArrayList<>();
-		errors.add(mostSpecificCause.getMessage());
-		
-		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),
-				errors);
-		
+		String error = "";
+
+		if(mostSpecificCause instanceof JsonParseException){
+			error = "Invalid JSON";
+		}
+		else if(mostSpecificCause instanceof InvalidFormatException){
+			InvalidFormatException x = (InvalidFormatException)mostSpecificCause;
+			error = "["+x.getValue()+"] should be of type ["+x.getTargetType().getName().split("\\." )[x.getTargetType().getName().split("\\." ).length-1]+"]";
+		}
+
+		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Invalid Input", error);
+
 		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(),
 				request);
 	}
+
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Object> handleInternalServerError(Exception ex) {
+		logger.error("Server caught an exception: {}", ex);
+		ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", "");
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
+
 }
