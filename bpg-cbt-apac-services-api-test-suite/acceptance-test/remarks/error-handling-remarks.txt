@@ -1,0 +1,80 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/remarks.txt
+
+Force Tags
+*** Test Cases ***
+Verify That Error Is Encountered When Invalid Token Is Used
+    [Tags]    functional
+    Create Test Variables For Remarks
+    Send Remarks Get Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct For Remarks Get Request    401
+    Verify Remarks Are Not Retrieved
+    Send Remarks Get Request    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct For Remarks Get Request    401
+    Verify Remarks Are Not Retrieved
+    Send Remarks Get Request    token=!@#$%^&*().!@#$%^&*().!@#$%^&*()
+    Verify Response Status Code Is Correct For Remarks Get Request    401
+    Verify Remarks Are Not Retrieved
+
+Verify That Error Is Encountered When Null Token Is Used
+    [Tags]    functional
+    Create Test Variables For Remarks
+    Send Remarks Get Request    token=null
+    Verify Response Status Code Is Correct For Remarks Get Request    401
+    Verify Remarks Are Not Retrieved
+
+Verify That Error Is Encountered When Empty Token Is Used
+    [Tags]    functional
+    Create Test Variables For Remarks
+    Send Remarks Get Request    token=${EMPTY}
+    Verify Response Status Code Is Correct For Remarks Get Request    400
+    Verify Remarks Are Not Retrieved
+
+Verify That Error Is Encountered When No Token Is Used
+    [Tags]    functional
+    Create Test Variables For Remarks
+    Send Remarks Get Request    token=None
+    Verify Response Status Code Is Correct For Remarks Get Request    400
+    Verify Remarks Are Not Retrieved
+
+Verify That Error Is Encountered When Invalid Country Is Used
+    [Tags]    functional
+    Create Test Variables For Remarks
+    Send Remarks Get Request    country=${EMPTY}
+    Verify Response Status Code Is Correct For Remarks Get Request    500
+    Verify Remarks Are Not Retrieved
+
+Verify That Error Is Encountered When Invalid Product Type Is Used
+    [Tags]    functional
+    Create Test Variables For Remarks    country=invalid_PT    
+    Send Remarks Get Request    country=hk
+    Verify Response Status Code Is Correct For Remarks Get Request    500
+    Verify Remarks Are Not Retrieved
+
+Verify That Error Is Encountered When Invalid Remark Type Is Used
+    [Tags]    functional
+    Create Test Variables For Remarks    country=hk    
+    Send Remarks Get Request    type=${EMPTY}
+    Verify Response Status Code Is Correct For Remarks Get Request    404
+    Verify Remarks Are Not Retrieved
+
+Verify That Error Is Encountered When Invalid ID Is Used For Delete Request
+    [Tags]    functional
+    Send Remarks Delete Request    id=${EMPTY}
+    Verify Response Status Code Is Correct    405
+    Verify Remarks Are Not Retrieved
+
+Verify That Error Is Encountered When Null ID Is Used For Delete Request
+    [Tags]    functional
+    Send Remarks Delete Request    id=null
+    Verify Response Status Code Is Correct    400
+    Verify Remarks Are Not Retrieved
+    
+Verify That Error Is Encountered When Null ID Is Used For Delete Request
+    [Tags]    functional
+    Send Remarks Delete Request    id=None
+    Verify Response Status Code Is Correct    400
+    Verify Remarks Are Not Retrieved

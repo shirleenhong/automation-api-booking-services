@@ -22,6 +22,14 @@ Create Test Variables For Exchange Order
     \    Set Test Variable    ${product_type_value_${index}}    ${data_item[0]}
     \    Set Test Variable    ${remark_type_value_${index}}    ${data_item[1]}
     \    Set Test Variable    ${text_value_${index}}    ${data_item[2]}
+    ${current_date_time}    Get Current Date    time_zone=utc
+    ${current_year}    Get Substring    ${current_date_time}     2    4
+    ${current_month}    Get Substring    ${current_date_time}    5    7
+    ${market}    Set Variable If    "${country_value}"=="HK"    1    "${country_value}"=="SG"    2    3
+    Set Test Variable    ${current_date_time}
+    Set Test Variable    ${current_year}
+    Set Test Variable    ${current_month}
+    Set Test Variable    ${market} 
     
 Send Other Service Fees For Exchange Order Get Request 
     [Arguments]    ${exchange_order_number}=${exchange_order_number}    ${token}=${default_token}
@@ -49,7 +57,7 @@ Send Other Service Fees For Exchange Order Post Request
     Run Keyword If    "${fop_type_value}"!="null"    Append To List    ${exchange_order_request_list}    "fopType":"${fop_type_value}"
     Run Keyword If    "${description_value}"!="null"    Append To List    ${exchange_order_request_list}    "description":"${description_value}"
     Run Keyword If    "${bta_description_value}"!="null"    Append To List    ${exchange_order_request_list}    "btaDescription":"${bta_description_value}"
-    Run Keyword If    "${date_value}"!="null"    Append To List    ${exchange_order_request_list}    "date":"${date_value}"
+    Run Keyword If    "${date_value}"!="null"    Append To List    ${exchange_order_request_list}    "additionalInfoDate":"${date_value}"
     Run Keyword If    "${vendor_contact_value}"!="null"    Append To List    ${exchange_order_request_list}    "vendorContactPerson":"${vendor_contact_value}"
     Run Keyword If    "${product_code_value}"!="null"    Append To List    ${exchange_order_request_list}    "productCode":"${product_code_value}"
     Run Keyword If    "${vendor_code_value}"!="null"    Append To List    ${exchange_order_request_list}    "vendorCode":"${vendor_code_value}"
@@ -64,10 +72,11 @@ Send Other Service Fees For Exchange Order Post Request
     Run Keyword If    "${cc_number_value}"!="null"    Append To List    ${exchange_order_cc_request_list}    "ccNumber":"${cc_number_value}"
     Run Keyword If    "${expiry_date_value}"!="null"    Append To List    ${exchange_order_cc_request_list}    "expiryDate":"${expiry_date_value}"
     : FOR    ${index}    IN RANGE    0    ${remarks_data_list_length}
-    \    ${product}    Run Keyword If    "${product_type_value_${index}}"!="null"    Set Variable    "productType":"${product_type_value_${index}}"    ELSE    Set Variable    ${EMPTY}        
-    \    ${type}    Run Keyword If    "${remark_type_value_${index}}"!="null"    Set Variable    "remarkType":"${remark_type_value_${index}}"    ELSE    Set Variable    ${EMPTY}
-    \    ${text}    Run Keyword If    "${text_value_${index}}"!="null"    Set Variable    "text":"${text_value_${index}}"    ELSE    Set Variable    ${EMPTY}
-    \    ${remarks_parameter_list}    Set Variable    {${product},${type},${text}}
+    \    ${country}    Set Variable If    "${country_value}"!="null"    "countryCode":"${country_value}"    ${EMPTY}
+    \    ${product}    Set Variable If    "${product_type_value_${index}}"!="null"    "productType":"${product_type_value_${index}}"    ${EMPTY}        
+    \    ${type}    Set Variable If    "${remark_type_value_${index}}"!="null"    "remarkType":"${remark_type_value_${index}}"    ${EMPTY}
+    \    ${text}    Set Variable If    "${text_value_${index}}"!="null"    "text":"${text_value_${index}}"    ${EMPTY}
+    \    ${remarks_parameter_list}    Set Variable    {${country},${product},${type},${text}}
     \    ${remarks_parameter_list}    Replace String    ${remarks_parameter_list}    ,,    ,
     \    ${remarks_parameter_list}    Replace String    ${remarks_parameter_list}    {,    {
     \    ${remarks_parameter_list}    Replace String    ${remarks_parameter_list}    ,}    }
@@ -94,12 +103,18 @@ Send Other Service Fees For Exchange Order Post Request
     Log    ${response.content}
     Set Test Variable    ${api_flag}    exchange-order
 
-Verify Exchange Order Creation Date Is Returned Correctly
-    Verify Json Value Is Correct    $.creationDateTime    ${current_time} 
-
 Verify Exchange Order Number Is Returned Correctly
-    Verify Json Value Is Correct    $.exchangeOrderNumber    ${exchange_order_number}    
-
+    ${exchange_order_number}    Get Json Value As String    ${response.content}    $.eoNumber
+    Set Test Variable    ${exchange_order_number}   
+    ${eo_year}    Get Substring    ${exchange_order_number}    0    2
+    ${eo_month}    Get Substring    ${exchange_order_number}    2    4
+    ${eo_market}    Get Substring    ${exchange_order_number}    4    5   
+    ${eo_sequence}    Get Substring    ${exchange_order_number}    5    10
+    Verify Actual Value Matches Expected Value   ${eo_year}    ${current_year}
+    Verify Actual Value Matches Expected Value   ${eo_month}    ${current_month}
+    Verify Actual Value Matches Expected Value   ${eo_market}    ${market}
+    Verify String Matches Pattern    ${eo_sequence}    ^[0-9_]*$
+    
 Verify Exchange Order Is Saved Correctly
     Verify Json Value Is Correct    $.countryCode    ${country_value} 
     Verify Json Value Is Correct    $.commission    ${commission_value} 
@@ -111,7 +126,7 @@ Verify Exchange Order Is Saved Correctly
     Verify Json Value Is Correct    $.creditCard.expiryDate    ${expiry_date_value} 
     Verify Json Value Is Correct    $.description    ${description_value} 
     Verify Json Value Is Correct    $.btaDescription    ${bta_description_value} 
-    Verify Json Value Is Correct    $.date    ${date_value} 
+    Verify Json Value Is Correct    $.additionalInfoDate    ${date_value} 
     Verify Json Value Is Correct    $.vendorContactPerson    ${vendor_contact_value} 
     Verify Json Value Is Correct    $.productCode    ${product_code_value} 
     Verify Json Value Is Correct    $.vendorCode    ${vendor_code_value} 
@@ -122,9 +137,15 @@ Verify Exchange Order Is Saved Correctly
     Verify Json Value Is Correct    $.pcc    ${pcc_value} 
     Verify Json Value Is Correct    $.vendorEmail    ${vendor_email_value} 
     Verify Json Value Is Correct    $.faxNumber    ${vendor_fax_value} 
-    Verify Json Value Matches Pattern    $.exchangeOrderNumber    ^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]+$
+    Verify Json Value Is Correct    $.eoNumber    ${exchange_order_number}
+    ${expected_date_time}    Get Substring    ${current_date_time}    0    18
+    ${expected_date_time}    Replace String    ${expected_date_time}    ${SPACE}    T
+    ${actual_date_time}    Get Json Value As String    ${response.content}    $.createDateTime
+    ${actual_date_time}    Get Substring    ${actual_date_time}    0    18
+    Verify Actual Value Matches Expected Value    ${actual_date_time}    ${expected_date_time}
     Verify Json Value Matches Pattern    $.createDateTime    ^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z+$
     : FOR    ${index}    IN RANGE    0    ${remarks_data_list_length}
+    \    Verify Json Value Is Correct    $.remarks.[${index}].countryCode    ${country_value}
     \    Verify Json Value Is Correct    $.remarks.[${index}].productType    ${product_type_value_${index}}
     \    Verify Json Value Is Correct    $.remarks.[${index}].remarkType    ${remark_type_value_${index}}
     \    Verify Json Value Is Correct    $.remarks.[${index}].text    ${text_value_${index}}
@@ -138,7 +159,7 @@ Verify Exchange Order Is Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "creditCard"
     Verify String Does Not Contain Substring    ${response.content}    "description"
     Verify String Does Not Contain Substring    ${response.content}    "btaDescription"
-    Verify String Does Not Contain Substring    ${response.content}    "date"
+    Verify String Does Not Contain Substring    ${response.content}    "additionalInfoDate"
     Verify String Does Not Contain Substring    ${response.content}    "vendorContactPerson"
     Verify String Does Not Contain Substring    ${response.content}    "productCode"
     Verify String Does Not Contain Substring    ${response.content}    "vendorCode"
@@ -150,6 +171,6 @@ Verify Exchange Order Is Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "vendorEmail"
     Verify String Does Not Contain Substring    ${response.content}    "faxNumber"
     Verify String Does Not Contain Substring    ${response.content}    "remarks"
-    Verify String Does Not Contain Substring    ${response.content}    "exchangeOrderNumber"
+    Verify String Does Not Contain Substring    ${response.content}    "eoNumber"
     Verify String Does Not Contain Substring    ${response.content}    "createDateTime"
     
