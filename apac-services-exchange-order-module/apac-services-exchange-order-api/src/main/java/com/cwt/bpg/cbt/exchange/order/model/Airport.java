@@ -1,12 +1,11 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import java.io.Serializable;
+
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
 
 import io.swagger.annotations.ApiModelProperty;
-
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @Entity(value = "airports", noClassnameStored = true)
 public class Airport implements Serializable {
