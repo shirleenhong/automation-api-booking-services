@@ -53,7 +53,8 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		if(mostSpecificCause instanceof JsonParseException){
 			error = "Invalid JSON";
-		}else if(mostSpecificCause instanceof InvalidFormatException){
+		}
+		else if(mostSpecificCause instanceof InvalidFormatException){
 			InvalidFormatException x = (InvalidFormatException)mostSpecificCause;
 			error = "["+x.getValue()+"] should be of type ["+x.getTargetType().getName().split("\\." )[x.getTargetType().getName().split("\\." ).length-1]+"]";
 		}
