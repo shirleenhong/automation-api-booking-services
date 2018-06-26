@@ -104,7 +104,7 @@ Verify Json Value Matches Pattern
     Log    Json Object: ${json_path}
     Log    Expected Pattern: ${expected_pattern}
     ${actual_value}    Get Json Value As String    ${response.content}    ${json_path}
-    Verify String Matches Pattern    ${actual_value[0]}    ${expected_pattern}
+    Verify String Matches Pattern    ${actual_value}    ${expected_pattern}
 
 Verify List Contains Value
     [Arguments]    ${list}    ${value}
