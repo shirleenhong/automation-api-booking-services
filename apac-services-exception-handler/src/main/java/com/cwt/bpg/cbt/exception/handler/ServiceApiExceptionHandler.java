@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.exception.handler;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.mongodb.util.JSONParseException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,13 +51,11 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 		Throwable mostSpecificCause = ex.getMostSpecificCause();
 		String error = "";
 
-		if(mostSpecificCause instanceof InvalidFormatException){
+		if(mostSpecificCause instanceof JsonParseException){
+			error = "Invalid JSON";
+		}else if(mostSpecificCause instanceof InvalidFormatException){
 			InvalidFormatException x = (InvalidFormatException)mostSpecificCause;
 			error = "["+x.getValue()+"] should be of type ["+x.getTargetType().getName().split("\\." )[x.getTargetType().getName().split("\\." ).length-1]+"]";
-		}
-
-		if(mostSpecificCause instanceof JSONParseException || mostSpecificCause instanceof JsonParseException){
-			error = "Invalid JSON";
 		}
 
 		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Invalid Input", error);
@@ -70,7 +67,7 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleInternalServerError(Exception ex) {
-
+		logger.error("Server caught an exception: {}", ex);
 		ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", "");
 		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}

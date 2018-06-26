@@ -23,7 +23,7 @@ public class ServiceApiExceptionHandlerTest {
 	@Test
 	public void canHandleNotReadableMessage() {
 		
-		String errorMessage = "json body not readable, can't parse json value";
+		String errorMessage = "Invalid Input";
 		HttpMessageNotReadableException ex = new HttpMessageNotReadableException(
 				errorMessage);
 
