@@ -3,11 +3,7 @@ package com.cwt.bpg.cbt.exchange.order;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,20 +107,20 @@ public class CommonRepositoryTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldDelete() {
-		final String toDelete = "test";
+		final String key = "test";
 
 		Query<Insurance> query = mock(Query.class);
 		when(datastore.createQuery(Insurance.class)).thenReturn(query);
 		FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(query.field("type")).thenReturn(fieldEnd);
-		when(fieldEnd.equal(toDelete)).thenReturn(query);
+		when(fieldEnd.equal(key)).thenReturn(query);
 
-		WriteResult key = new WriteResult(1, true, null);
-		when(datastore.delete(query)).thenReturn(key);
+		WriteResult writeResult = new WriteResult(1, true, null);
+		when(datastore.delete(query)).thenReturn(writeResult);
 
-        String result = repo.remove(toDelete);
+        String result = repo.remove(key);
 
-        assertThat(result, is(equalTo(key.toString())));
+        assertThat(result, is(equalTo(key)));
         verify(morphia, times(1)).getDatastore();
         verify(datastore, times(1)).delete(query);
 	}
