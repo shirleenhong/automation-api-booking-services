@@ -17,5 +17,6 @@
   	<module>apac-services-exchange-order-api</module>
   	<module>apac-services-exchange-order-service</module>
   	<module>apac-services-exchange-order-repository</module>
+	<module>apac-services-exchange-order-report</module>
   </modules>
 </project>
