@@ -52,7 +52,6 @@ public class RemarkController {
 	@PutMapping(path = "/remarks")
 	@ResponseBody
 	@ApiOperation(value = "Saves remark.")
-	@Internal
 	public ResponseEntity<Remark> putRemark(
 			@Valid @RequestBody @ApiParam(value = "Remark object to save") Remark remark) {
 		return new ResponseEntity<>(service.save(remark), HttpStatus.OK);
