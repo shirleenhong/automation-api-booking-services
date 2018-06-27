@@ -34,6 +34,8 @@ public class ExchangeOrder implements Serializable {
     @ApiModelProperty(allowableValues = "CX,CC,INV", required = true)
     private String fopType;
 
+    @NotNull
+    @ApiModelProperty(required = true)
     private CreditCard creditCard;
 
     @NotEmpty
@@ -65,7 +67,7 @@ public class ExchangeOrder implements Serializable {
     @ApiModelProperty(required = true)
     private String passengerName;
     
-    @ApiModelProperty(value = "Date in UTC", example="2008-05-29T14:09:000Z")
+    @ApiModelProperty(hidden = true, value = "Date in UTC", example="2008-05-29T14:09:000Z")
     @JsonSerialize(using=DateSerializer.class)     
     @JsonDeserialize(using=DateDeserializer.class) 
     private Instant createDateTime;
