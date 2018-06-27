@@ -65,7 +65,7 @@ class CommonRepository<T, D> {
 
 		LoggerFactory.getLogger(typeClass).info("Delete Result: {}", delete);
 
-		return delete.toString();
+		return keyValue.toString();
 	}
 
 	@SuppressWarnings("unchecked")
