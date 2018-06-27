@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.*;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
@@ -27,30 +30,54 @@ public class ExchangeOrder implements Serializable {
     private BigDecimal merchantFee;
     private String countryCode;
 
-    @ApiModelProperty(allowableValues = "CX,CC,INV")
+    @NotEmpty
+    @ApiModelProperty(allowableValues = "CX,CC,INV", required = true)
     private String fopType;
 
+    @NotNull
+    @ApiModelProperty(required = true)
     private CreditCard creditCard;
 
+    @NotEmpty
+    @ApiModelProperty(required = true)
     private String description;
     private String btaDescription;
     
-    @ApiModelProperty(value = "Date in UTC", example="2008-05-29T00:00:00.000Z")
+    
+    @NotNull
+    @ApiModelProperty(value = "Date in UTC", example="2008-05-29T00:00:00.000Z", required = true)
     @JsonSerialize(using=DateSerializer.class)     
-    @JsonDeserialize(using=DateDeserializer.class) 
+    @JsonDeserialize(using=DateDeserializer.class)
     private Instant additionalInfoDate;
     private String vendorContactPerson;
+    
+    @NotEmpty
+    @ApiModelProperty(required = true)
     private String productCode;
+    @NotEmpty
+    @ApiModelProperty(required = true)
     private String vendorCode;
+    @NotEmpty
+    @ApiModelProperty(required = true)
     private String pnr;
+    @NotEmpty
+    @ApiModelProperty(required = true)
     private String accountNumber;
+    @NotEmpty
+    @ApiModelProperty(required = true)
     private String passengerName;
     
-    @ApiModelProperty(value = "Date in UTC", example="2008-05-29T14:09:000Z")
+    @ApiModelProperty(hidden = true, value = "Date in UTC", example="2008-05-29T14:09:000Z")
     @JsonSerialize(using=DateSerializer.class)     
     @JsonDeserialize(using=DateDeserializer.class) 
     private Instant createDateTime;
+    
+    @NotEmpty
+    @ApiModelProperty(required = true)
     private String agentId;
+    
+    @NotEmpty
+    @ApiModelProperty(required = true)
     private String pcc;
     private String vendorEmail;
     private String faxNumber;
