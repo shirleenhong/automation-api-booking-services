@@ -126,7 +126,7 @@ public class FeeCalculator {
 							? client.getIntDdlFeeApply() 
 							: client.getLccDdlFeeApply();
 						
-				if (!applyFee.equals(NA)) {
+				if (applyFee != null && !applyFee.equals(NA)) {
 					if (feeOption.equals(PNR)) {
 						result = getFeeByPnr(input, airport, clientPricing, baseAmount);
 					}
