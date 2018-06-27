@@ -41,9 +41,18 @@ Create Test Variables For Products And Vendors
     : FOR    ${item}    IN RANGE    0    ${index}+1
     \    Set Test Variable    ${product_list_${item}}
     \    Log    ${product_list_${item}}
+    Run Keyword If    "${country}"!="in"    Create Test Data For Vendor Raise Type    ${country}
     Set Test Variable    ${country}    ${country.upper()}
     Set Test Variable    ${all_product_list}
 
+Create Test Data For Vendor Raise Type
+    [Arguments]    ${country}
+    ${data_list}    Split String    ${${country}_raise_type_list}    |
+    : FOR    ${data}    IN    @{data_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    ${item_number}    Get Substring    ${data_item[0]}    3
+    \    Set Test Variable    ${raise_type_${item_number}}    ${data_item[1]}
+    
 Send Product Get Request
     [Arguments]    ${token}=${default_token}    ${country}=${country}
     Create Session    product    ${${env}_base_url}    verify=True
@@ -86,5 +95,10 @@ Verify Vendors Are Retrieved Correctly
     \    ${list_item}    Get From List    ${item_vendor_list}    ${vendor_index}
     \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].vendorNumber    ${list_item}
     \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].vendorName    ${vendor_code_${list_item}}   
+    \    Run Keyword If    "${country}"!="IN"    Verify Vendor Raise Type Is Retrieved Correctly    ${index}    ${list_item}    ${vendor_index}
     \    ${vendor_index}    Evaluate    ${vendor_index}+1
     Verify Json Element Does Not Exist    $[${index}].vendors.[${vendor_index}].vendorName
+
+Verify Vendor Raise Type Is Retrieved Correctly
+    [Arguments]    ${index}    ${list_item}    ${vendor_index}
+    Run Keyword If    "${raise_type_${list_item}}"!="NULL"    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].raiseType    ${raise_type_${list_item}}    ELSE IF    "${country}"!="IN" and "${raise_type_${list_item}}"=="NULL"    Verify Json Element Does Not Exist    $[${index}].vendors.[${vendor_index}].raiseType

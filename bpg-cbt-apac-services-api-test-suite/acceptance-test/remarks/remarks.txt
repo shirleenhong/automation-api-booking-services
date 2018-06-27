@@ -1,0 +1,104 @@
+*** Settings ***
+Resource          resources/remarks.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-imports.txt
+
+*** Test Cases ***
+Verify That Exchange Order Remarks Are Retrieved Correctly For Hong Kong 
+    [Tags]    functional
+    Create Test Variables For Remarks
+    Send Remarks Get Request
+    Verify Response Status Code Is Correct For Remarks Get Request    200
+    Verify Remarks Are Retrieved Correctly
+
+Verify That Itinerary Remarks Are Retrieved Correctly For Hong Kong 
+    [Tags]    functional    
+    Create Test Variables For Remarks
+    Send Remarks Get Request    type=I
+    Verify Response Status Code Is Correct For Remarks Get Request    200
+    Verify Remarks Are Retrieved Correctly
+
+Verify That Exchange Order Remarks Are Retrieved Correctly For Singapore 
+    [Tags]    functional
+    Create Test Variables For Remarks    country=sg
+    Send Remarks Get Request
+    Verify Response Status Code Is Correct For Remarks Get Request    200
+    Verify Remarks Are Retrieved Correctly
+
+Verify That Itinerary Remarks Are Retrieved Correctly For Singapore 
+    [Tags]    functional    
+    Create Test Variables For Remarks    country=sg
+    Send Remarks Get Request    type=I
+    Verify Response Status Code Is Correct For Remarks Get Request    200
+    Verify Remarks Are Retrieved Correctly
+
+Verify That Remarks Are Updated Correctly After Put Request For Hong Kong
+    [Tags]    functional
+    Send Remarks Put Request    id=5b2a23c2550cfd2370cd5327     text=CHECK IN WITH VOUCHER COPY TEST  
+    Verify Response Status Code Is Correct    200
+    Evict Remarks Cache    
+    Send Remarks Get Request By ID
+    Verify Response Status Code Is Correct    200
+    Verify Remarks Are Retrieved Correctly By ID
+    [Teardown]    Update Remarks To Original Value And Evict Remarks Cache
+    
+Verify That Remarks Are Updated Correctly After Put Request For Singapore
+    [Tags]    functional
+    Send Remarks Put Request    country=sg    id=5b2a12a7550cfd0dc0d84b46     text=CHECK IN WITH VOUCHER COPY TEST   
+    Verify Response Status Code Is Correct    200
+    Evict Remarks Cache 
+    Send Remarks Get Request By ID   
+    Verify Response Status Code Is Correct    200 
+    Verify Remarks Are Retrieved Correctly By ID
+    [Teardown]    Update Remarks To Original Value And Evict Remarks Cache    country=sg    id=5b2a12a7550cfd0dc0d84b46
+    
+Verify That Remarks Are Added Correctly After Put Request For Hong Kong
+    [Tags]    functional
+    Send Remarks Put Request    id=fa482f4846c51719d1305dc1    text=TEST REMARKS TEST HONG KONG
+    Verify Response Status Code Is Correct    200
+    Evict Remarks Cache    
+    Send Remarks Get Request By ID    
+    Verify Response Status Code Is Correct    200    
+    Verify Remarks Are Retrieved Correctly By ID
+    [Teardown]    Delete Remarks And Evict Remarks Cache
+    
+Verify That Remarks Are Added Correctly After Put Request For Singapore
+    [Tags]    functional
+    Send Remarks Put Request    id=0efb0f16d852d4b1d6299c09    country=sg    text=TEST REMARKS TEST SG
+    Verify Response Status Code Is Correct    200
+    Evict Remarks Cache    
+    Send Remarks Get Request By ID   
+    Verify Response Status Code Is Correct    200     
+    Verify Remarks Are Retrieved Correctly By ID
+    [Teardown]    Delete Remarks And Evict Remarks Cache    id=1bb1bb1bb1bb
+
+Verify That Remarks Are Deleted Correctly After Delete Request For Hong Kong
+    [Tags]    functional
+    Send Remarks Put Request    id=fa482f4846c51719d1305dc1    text=TEST REMARKS TEST HONG KONG
+    Verify Response Status Code Is Correct    200
+    Evict Remarks Cache    
+    Send Remarks Get Request By ID    
+    Verify Response Status Code Is Correct    200    
+    Verify Remarks Are Retrieved Correctly By ID
+    Send Remarks Delete Request    id=fa482f4846c51719d1305dc1
+    Verify Response Status Code Is Correct    200
+    Evict Remarks Cache 
+    Send Remarks Get Request By ID
+    Verify Response Status Code Is Correct    200   
+    Verify Remarks Are Not Retrieved
+
+Verify That Remarks Are Deleted Correctly After Delete Request For Singapore
+    [Tags]    functional
+    Send Remarks Put Request    id=0efb0f16d852d4b1d6299c09    text=TEST REMARKS TEST SG
+    Verify Response Status Code Is Correct    200
+    Evict Remarks Cache    
+    Send Remarks Get Request By ID    
+    Verify Response Status Code Is Correct    200
+    Verify Remarks Are Retrieved Correctly By ID
+    Send Remarks Delete Request    id=0efb0f16d852d4b1d6299c09
+    Verify Response Status Code Is Correct    200
+    Evict Remarks Cache 
+    Send Remarks Get Request By ID
+    Verify Response Status Code Is Correct    200   
+    Verify Remarks Are Not Retrieved
