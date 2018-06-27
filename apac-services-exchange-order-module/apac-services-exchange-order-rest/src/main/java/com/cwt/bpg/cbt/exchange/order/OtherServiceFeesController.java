@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 import io.swagger.annotations.Api;
@@ -100,7 +99,6 @@ public class OtherServiceFeesController {
 		return new ResponseEntity<>(eoService.saveExchangeOrder(input), HttpStatus.OK);
 	}
 	
-	@Internal
 	@GetMapping(path = "/exchange-order/{eoNumber}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction.")
