@@ -14,7 +14,7 @@
 
 	<name>apac-services-exchange-order-report</name>
 	<description>apac-services-exchange-order-report</description>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>com.cwt.bpg.cbt</groupId>
@@ -25,6 +25,22 @@
 			<groupId>com.cwt.bpg.cbt</groupId>
 			<artifactId>apac-services-exchange-order-service</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>${freemarker.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy</artifactId>
+			<version>${groovy.version}</version>
 		</dependency>
 	</dependencies>
 
