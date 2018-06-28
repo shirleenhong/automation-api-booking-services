@@ -20,15 +20,15 @@ public class MerchantFeeController {
 	private MerchantFeeService service;
 
 	@Internal
-	@GetMapping(path = "/merchant/{countryCode}/{profileName}",
+	@GetMapping(path = "/merchant/{countryCode}/{clientAccountNumber}",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(
-			value = "Pulls merchant fee based on a [country code | profile name] combination")
+			value = "Pulls merchant fee based on a [country code | client account number] combination")
 	public ResponseEntity<MerchantFee> getMerchantFee(@PathVariable String countryCode,
-			@PathVariable String profileName) {
+			@PathVariable String clientAccountNumber) {
 
-		return new ResponseEntity<>(service.getMerchantFee(countryCode, profileName), HttpStatus.OK);
+		return new ResponseEntity<>(service.getMerchantFee(countryCode, clientAccountNumber), HttpStatus.OK);
 	}
 
 	@Internal

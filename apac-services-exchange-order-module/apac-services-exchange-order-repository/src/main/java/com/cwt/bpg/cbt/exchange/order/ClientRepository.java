@@ -13,9 +13,9 @@ public class ClientRepository extends CommonRepository<Client, Integer> {
 		super(Client.class, ID);
 	}
 
-	public Client getClient(String profileName) {
+	public Client getClient(String clientNumber) {
 		return morphia.getDatastore().createQuery(Client.class)
-			.field("profileName")
-			.equal(profileName).get();
+			.field("clientNumber")
+			.equal(clientNumber).get();
 	}
 }

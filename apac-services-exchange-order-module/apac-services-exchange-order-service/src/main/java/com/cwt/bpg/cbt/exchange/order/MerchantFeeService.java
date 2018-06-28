@@ -14,17 +14,17 @@ public class MerchantFeeService {
 	@Autowired
 	private MerchantFeeRepository merchantFeeRepo;
 	
-	@Cacheable(cacheNames="merchant-fee", key="{#countryCode, #profileName}")
-	public MerchantFee getMerchantFee(String countryCode, String profileName) {
-		return merchantFeeRepo.getMerchantFee(countryCode, profileName);
+	@Cacheable(cacheNames="merchant-fee", key="{#countryCode, #clientNumber}")
+	public MerchantFee getMerchantFee(String countryCode, String clientNumber) {
+		return merchantFeeRepo.getMerchantFee(countryCode, clientNumber);
 	}
 
-	@CachePut(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.profileName}")
+	@CachePut(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.clientNumber}")
 	public MerchantFee putMerchantFee(MerchantFee fee) {
 		return merchantFeeRepo.putMerchantFee(fee);
 	}
 	
-	@CacheEvict(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.profileName}")
+	@CacheEvict(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.clientNumber}")
 	public MerchantFee remove(MerchantFee fee) {
 		return merchantFeeRepo.removeMerchantFee(fee);
 	}

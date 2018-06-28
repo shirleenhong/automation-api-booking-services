@@ -58,13 +58,13 @@ public class ClientServiceTest {
 	}
 	
 	@Test
-	public void canGetSingleClientUsingProfileName() {
+	public void canGetSingleClientUsingClientNumber() {
 		Client client = new Client();
-		final String profile = "profile";
-		when(repository.getClient(profile)).thenReturn(client);
-		Client result = service.getClient(profile);
+		final String clientNumber = "clientNumber";
+		when(repository.getClient(clientNumber)).thenReturn(client);
+		Client result = service.getClient(clientNumber);
 		assertNotNull(result);
-		verify(repository, times(1)).getClient(profile);
+		verify(repository, times(1)).getClient(clientNumber);
 	}
 	
 	@Test

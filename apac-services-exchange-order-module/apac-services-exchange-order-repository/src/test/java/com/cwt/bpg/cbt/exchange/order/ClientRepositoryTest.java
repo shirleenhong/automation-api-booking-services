@@ -4,6 +4,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +35,7 @@ public class ClientRepositoryTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		Mockito.when(morphia.getDatastore()).thenReturn(dataStore);
+		when(morphia.getDatastore()).thenReturn(dataStore);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -41,13 +43,13 @@ public class ClientRepositoryTest {
 	public void canGetClient() {
 		Query<Client> query = Mockito.mock(Query.class);
 		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-		Mockito.when(dataStore.createQuery(Client.class)).thenReturn(query);
-		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
-		Mockito.when(fieldEnd.equal("profileName")).thenReturn(query);
-		Mockito.when(query.get()).thenReturn(new Client());
+		when(dataStore.createQuery(Client.class)).thenReturn(query);
+		when(query.field(anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equal("clientNumber")).thenReturn(query);
+		when(query.get()).thenReturn(new Client());
 		
 		
-		Client result = repo.getClient("profileName");
+		Client result = repo.getClient("clientNumber");
 		
 		Mockito.verify(morphia, Mockito.times(1)).getDatastore();
 		Mockito.verify(dataStore, Mockito.times(1)).createQuery(Client.class);
@@ -60,10 +62,10 @@ public class ClientRepositoryTest {
 	public void canGetDefaultClient() {
 		Query<Client> query = Mockito.mock(Query.class);
 		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-		Mockito.when(dataStore.createQuery(Client.class)).thenReturn(query);
-		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
-		Mockito.when(fieldEnd.equal(-1)).thenReturn(query);
-		Mockito.when(query.get()).thenReturn(new Client());
+		when(dataStore.createQuery(Client.class)).thenReturn(query);
+		when(query.field(anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equal(-1)).thenReturn(query);
+		when(query.get()).thenReturn(new Client());
 				
 		Client result = repo.get(-1);
 		

@@ -71,7 +71,7 @@ public class OtherServiceFeesControllerIndiaNonAirFeeTest {
         jsonObj.put("fopType", 2);
         jsonObj.put("fopMode", 3);
         jsonObj.put("product", product);
-        jsonObj.put("profileName", "proName");
+        jsonObj.put("clientAccountNumber", "caNumber");
         jsonObj.put("countryCode", Country.INDIA.getCode());
         jsonObj.put("clientType", "Z");
 

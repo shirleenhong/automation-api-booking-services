@@ -51,7 +51,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
 
         input.setFopType("CX");
         input.setGstPercent(2D);
-        input.setProfileName("PN");
+        input.setClientAccountNumber("1234");
 
         mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
                 .contentType(APPLICATION_JSON_UTF8)
@@ -68,7 +68,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
         NonAirFeesInput input = new NonAirFeesInput();
 
         input.setGstPercent(2D);
-        input.setProfileName("PN");
+        input.setClientAccountNumber("1234");
 
         mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
                 .contentType(APPLICATION_JSON_UTF8)
@@ -91,7 +91,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
         NonAirFeesInput input = new NonAirFeesInput();
 
         input.setFopType("CX");
-        input.setProfileName("PN");
+        input.setClientAccountNumber("1234");
         input.setCountryCode("HK");
 
         mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
@@ -115,7 +115,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isBadRequest());
 
-        input.setProfileName("");
+        input.setClientAccountNumber("");
 
         mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
                 .contentType(APPLICATION_JSON_UTF8)

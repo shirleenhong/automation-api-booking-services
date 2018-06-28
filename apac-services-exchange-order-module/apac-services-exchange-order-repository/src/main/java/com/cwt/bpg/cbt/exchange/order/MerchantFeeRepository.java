@@ -20,12 +20,12 @@ public class MerchantFeeRepository {
 	@Autowired
 	private MorphiaComponent morphia;
 
-	public MerchantFee getMerchantFee(String countryCode, String profileName) {
+	public MerchantFee getMerchantFee(String countryCode, String clientNumber) {
 		return morphia.getDatastore().createQuery(MerchantFee.class)
 				.field("countryCode")
 				.equalIgnoreCase(countryCode)
-				.field("profileName")
-				.equalIgnoreCase(profileName).get();
+				.field("clientNumber")
+				.equalIgnoreCase(clientNumber).get();
 	}
 	
 	public MerchantFee putMerchantFee(MerchantFee fee) {
@@ -43,7 +43,7 @@ public class MerchantFeeRepository {
 		
 		final Query<MerchantFee> clientMerchantFee = datastore.createQuery(MerchantFee.class)
                 .filter("countryCode", merchantFee.getCountryCode())
-                .filter("profileName", merchantFee.getProfileName());
+                .filter("clientNumber", merchantFee.getClientNumber());
 		
 		WriteResult delete = datastore.delete(clientMerchantFee);
 		
