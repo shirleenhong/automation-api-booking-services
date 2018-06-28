@@ -2,16 +2,29 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class IndiaAirFeesBreakdown extends FeesBreakdown
 {
 
 	private static final long serialVersionUID = 3942100881048994637L;
 
+	@ApiModelProperty(hidden = true, notes = "Passed as input")
 	private Double overheadPercent;
+	
+	@ApiModelProperty(hidden = true, notes = "Passed as input")
 	private Double gstPercent;
+	
+	@ApiModelProperty(hidden = true, notes = "Passed as input")
 	private Double ot1Percent;
+	
+	@ApiModelProperty(hidden = true, notes = "Passed as input")
 	private Double ot2Percent;
+	
+	@ApiModelProperty(hidden = true)
 	private Double merchantFeePercent;
+	
+	@ApiModelProperty(hidden = true)
 	private Double subMerchantFeePercent;
 	private BigDecimal baseAmount;
 	private BigDecimal totalAirlineCommission;
@@ -25,6 +38,8 @@ public class IndiaAirFeesBreakdown extends FeesBreakdown
 	private BigDecimal totalTaxes;
 	private BigDecimal merchantFeeOnTf;
 	private BigDecimal totalCharge;
+	
+	@ApiModelProperty(hidden = true, notes = "For transaction fee computation")
 	private BigDecimal fee;
 
 	public Double getOverheadPercent() {
