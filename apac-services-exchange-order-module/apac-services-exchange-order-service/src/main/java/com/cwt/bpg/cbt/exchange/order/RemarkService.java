@@ -22,7 +22,7 @@ public class RemarkService {
 		return repository.getAll();
 	}
 
-	@CachePut(cacheNames = "remarks", key = "#remark.id")
+	@CachePut(cacheNames = "remarks", key = "#result.id.toString()", unless = "#result.id.hashCode() > 0")
 	public Remark save(Remark remark) {
 		return repository.put(remark);
 	}
