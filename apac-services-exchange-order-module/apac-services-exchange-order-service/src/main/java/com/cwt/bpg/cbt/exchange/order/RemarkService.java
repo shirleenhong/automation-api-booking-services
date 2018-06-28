@@ -24,6 +24,7 @@ public class RemarkService {
 
 	@CachePut(cacheNames = "remarks", key = "#remark.id")
 	public Remark save(Remark remark) {
+		System.out.println(">>> " + remark.getId().toString());
 		return repository.put(remark);
 	}
 
