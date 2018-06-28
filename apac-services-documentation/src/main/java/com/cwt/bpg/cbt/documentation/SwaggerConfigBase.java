@@ -18,8 +18,7 @@ public class SwaggerConfigBase
     private String applicationVersion;
 
     @Bean
-    UiConfiguration uiConfig()
-    {
+    UiConfiguration uiConfig() {
         return UiConfigurationBuilder.builder()
                 .deepLinking(false)
                 .displayOperationId(false)
@@ -36,8 +35,7 @@ public class SwaggerConfigBase
                 .build();
     }
 
-    SecurityContext securityContext()
-    {
+    SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
                 .forPaths(Predicates.not(PathSelectors.regex("/app-info")))
@@ -53,38 +51,42 @@ public class SwaggerConfigBase
                 new SecurityReference("Power Express Token", authorizationScopes));
     }
 
-    ApiKey securityScheme()
-    {
-        return new ApiKey("Power Express Token", "Authorization", "header");
-    }
+	ApiKey securityScheme() {
+		return new ApiKey("Power Express Token", "Authorization", "header");
+	}
 
-    Tag merchantFee()
-    {
-        return new Tag("Merchant Fee", "Services related to Merchant Fee");
-    }
+	Tag merchantFee() {
+		return new Tag("Merchant Fee", "Services related to Merchant Fee");
+	}
 
-    Tag serviceFees()
-    {
+    Tag serviceFees() {
         return new Tag("Service Fees", "Services related to Service Fees");
     }
+    
+    Tag otherServiceFees() {
+        return new Tag("Other Service Fees", "Services related to Other Service Fees");
+    }
+    
+    Tag products() {
+        return new Tag("Products", "Services related to Products");
+    }
+    
+    Tag insurance() {
+        return new Tag("Insurance", "Services related to Insurance");
+    }
 
-    Tag exchangeOrder()
-    {
+    Tag exchangeOrder() {
         return new Tag("Exchange Order", "Services related to Exchange Order");
     }
 
-    Tag appInfo()
-    {
-        return new Tag("App Info", "Services that display application info");
-    }
+	Tag appInfo() {
+		return new Tag("App Info", "Services that display application info");
+	}
 
-    ApiInfo apiInfo()
-    {
-        return new ApiInfoBuilder()
-                .title("APAC Services API")
-                .license("Apache License Version 2.0")
-                .licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE")
-                .version(applicationVersion)
-                .build();
-    }
+	ApiInfo apiInfo() {
+		return new ApiInfoBuilder().title("APAC Services API")
+				.license("Apache License Version 2.0")
+				.licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE")
+				.version(applicationVersion).build();
+	}
 }
