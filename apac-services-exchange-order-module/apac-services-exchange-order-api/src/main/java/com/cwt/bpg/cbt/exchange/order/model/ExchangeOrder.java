@@ -83,6 +83,46 @@ public class ExchangeOrder implements Serializable {
     private String pcc;
     private String vendorEmail;
     private String faxNumber;
+    
+    @NotEmpty
+    @ApiModelProperty(required = true)
+    private String agentName;
+    
+    @NotEmpty
+    @ApiModelProperty(required = true)
+    private String recordLocator;
+    
+    @NotNull
+    @ApiModelProperty(required = true)
+    private BigDecimal nettCost;
+    
+    @NotNull
+    @ApiModelProperty(required = true)
+    private BigDecimal total;
+    
+    @NotEmpty
+    @ApiModelProperty(required = true)
+    private String eoAddress;
+    
+    @NotEmpty
+    @ApiModelProperty(required = true)
+    private String status;
+    
+    @NotEmpty
+    @ApiModelProperty(required = true)
+    private String raiseCheque;
+    
+    @NotEmpty
+    @ApiModelProperty(required = true)
+    private String headerAddress;
+    
+    @NotEmpty
+    @ApiModelProperty(required = true)
+    private String headerPhoneNumber;
+    
+    @NotEmpty
+    @ApiModelProperty(required = true)
+    private String headerFaxNumber;
 
     private List<Remark> remarks;
 
@@ -255,7 +295,87 @@ public class ExchangeOrder implements Serializable {
         this.faxNumber = faxNumber;
     }
 
-    public List<Remark> getRemarks() {
+    public String getAgentName() {
+		return agentName;
+	}
+
+	public void setAgentName(String agentName) {
+		this.agentName = agentName;
+	}
+
+	public String getRecordLocator() {
+		return recordLocator;
+	}
+
+	public void setRecordLocator(String recordLocator) {
+		this.recordLocator = recordLocator;
+	}
+
+	public BigDecimal getNettCost() {
+		return nettCost;
+	}
+
+	public void setNettCost(BigDecimal nettCost) {
+		this.nettCost = nettCost;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
+	public String getEoAddress() {
+		return eoAddress;
+	}
+
+	public void setEoAddress(String eoAddress) {
+		this.eoAddress = eoAddress;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getRaiseCheque() {
+		return raiseCheque;
+	}
+
+	public void setRaiseCheque(String raiseCheque) {
+		this.raiseCheque = raiseCheque;
+	}
+
+	public String getHeaderAddress() {
+		return headerAddress;
+	}
+
+	public void setHeaderAddress(String headerAddress) {
+		this.headerAddress = headerAddress;
+	}
+
+	public String getHeaderPhoneNumber() {
+		return headerPhoneNumber;
+	}
+
+	public void setHeaderPhoneNumber(String headerPhoneNumber) {
+		this.headerPhoneNumber = headerPhoneNumber;
+	}
+
+	public String getHeaderFaxNumber() {
+		return headerFaxNumber;
+	}
+
+	public void setHeaderFaxNumber(String headerFaxNumber) {
+		this.headerFaxNumber = headerFaxNumber;
+	}
+
+	public List<Remark> getRemarks() {
         return remarks;
     }
 

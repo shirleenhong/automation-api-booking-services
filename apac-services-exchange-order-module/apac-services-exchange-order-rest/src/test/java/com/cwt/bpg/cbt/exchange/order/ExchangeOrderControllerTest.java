@@ -6,10 +6,12 @@ import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.time.Instant;
 
@@ -50,13 +52,11 @@ public class ExchangeOrderControllerTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		
 		mockMvc = MockMvcBuilders
 				.standaloneSetup(controller)
 				.build();
 		
 		url = "/exchange-order";
-		
 	}
 
 	public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -69,7 +69,7 @@ public class ExchangeOrderControllerTest {
 						
 		ExchangeOrder order = createExchangeOrder();
 		
-		when(eoService.saveExchangeOrder(order)).thenReturn(anyObject());
+		when(eoService.saveExchangeOrder(order)).thenReturn(order);
 
 		mockMvc.perform(post(url)
 				.contentType(APPLICATION_JSON_UTF8)
@@ -82,14 +82,33 @@ public class ExchangeOrderControllerTest {
 	}
 	
 	@Test
-	public void shouldGetExchangeOrderNumber() {
+	public void shouldNotReturnExchangeOrder() throws Exception {
+						
+		ExchangeOrder order = new ExchangeOrder();
+		
+		when(eoService.saveExchangeOrder(order)).thenReturn(order);
+
+		mockMvc.perform(post(url)
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(order)))
+				.andExpect(status().isBadRequest())
+				.andReturn()
+				.getResponse();
+
+		verify(eoService,times(0)).saveExchangeOrder(any(ExchangeOrder.class));
+	}
+	
+	@Test
+	public void shouldGetExchangeOrderNumber() throws Exception {
 
 		String eoNumber = "1806100005";
+		ExchangeOrder order = new ExchangeOrder();
+		when(eoService.getExchangeOrder(eoNumber)).thenReturn(order);
 		
-		ResponseEntity<?> result = controller.getExchangeOrder(eoNumber);
-		verify(eoService, times(1)).getExchangeOrder(eoNumber);
-		assertEquals(HttpStatus.OK, result.getStatusCode());
+		mockMvc.perform(get(url + "/" + eoNumber))
+				.andExpect(status().isOk());
 	
+		verify(eoService, times(1)).getExchangeOrder(eoNumber);
 	}
 	
 	private ExchangeOrder createExchangeOrder() {
@@ -105,6 +124,16 @@ public class ExchangeOrderControllerTest {
 		order.setPassengerName("Passenger");
 		order.setAgentId("U001XXX");
 		order.setPcc("SIN1234");
+		order.setAgentName("Agent Name");
+		order.setRecordLocator("Record Locator");
+		order.setNettCost(new BigDecimal(0));
+		order.setTotal(new BigDecimal(0));
+		order.setEoAddress("EO Address");
+		order.setStatus("A");
+		order.setRaiseCheque("Raise Cheque");
+		order.setHeaderAddress("Header Address");
+		order.setHeaderPhoneNumber("02 4595900");
+		order.setHeaderFaxNumber("02 4595900");
 		
 		CreditCard creditCard = new CreditCard();
 		creditCard.setCcNumber("1234");
