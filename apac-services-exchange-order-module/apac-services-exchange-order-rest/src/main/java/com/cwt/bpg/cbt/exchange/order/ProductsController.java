@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@Api(tags = "Exchange Order")
+@Api(tags = "Products")
 public class ProductsController
 {
     @Autowired

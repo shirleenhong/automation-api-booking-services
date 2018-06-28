@@ -17,14 +17,12 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping(path = "/other-service-fees")
-@Api(tags = "Exchange Order")
+@Api(tags = "Other Service Fees")
 public class OtherServiceFeesController {
 
 	@Autowired
 	private OtherServiceFeesService service;
-	
-	@Autowired
-	private ExchangeOrderService eoService;
+
 	
 	@PostMapping(path = "/non-air-fees/in", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -87,24 +85,6 @@ public class OtherServiceFeesController {
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NettCostInput input) {
 
 		return new ResponseEntity<>(service.calculateNettCost(input), HttpStatus.OK);
-	}
-	
-	@PostMapping(path = "/exchange-order", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
-			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-	@ResponseBody
-	@ApiOperation(value = "Saves new exchange order transaction.")
-	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
-			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) {
-
-		return new ResponseEntity<>(eoService.saveExchangeOrder(input), HttpStatus.OK);
-	}
-	
-	@GetMapping(path = "/exchange-order/{eoNumber}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-	@ResponseBody
-	@ApiOperation(value = "Pulls exchange order transaction.")
-	public ResponseEntity<ExchangeOrder> getExchangeOrder(@PathVariable String eoNumber) {
-
-		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
 	}
 	
 }

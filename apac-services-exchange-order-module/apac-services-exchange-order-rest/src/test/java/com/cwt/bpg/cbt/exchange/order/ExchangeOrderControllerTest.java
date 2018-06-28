@@ -34,18 +34,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-public class OtherServiceFeesControllerExchangeOrderTest {
+public class ExchangeOrderControllerTest {
 
 	private MockMvc mockMvc;
-	
-	@Mock
-	private OtherServiceFeesService service;
 	
 	@Mock
 	private ExchangeOrderService eoService;
 	
 	@InjectMocks
-	private OtherServiceFeesController controller;
+	private ExchangeOrderController controller;
 	
 	private String url;
 	
@@ -58,7 +55,7 @@ public class OtherServiceFeesControllerExchangeOrderTest {
 				.standaloneSetup(controller)
 				.build();
 		
-		url = "/other-service-fees/exchange-order";
+		url = "/exchange-order";
 		
 	}
 

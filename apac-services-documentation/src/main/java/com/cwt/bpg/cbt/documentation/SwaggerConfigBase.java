@@ -67,6 +67,21 @@ public class SwaggerConfigBase
     {
         return new Tag("Service Fees", "Services related to Service Fees");
     }
+    
+    Tag otherServiceFees()
+    {
+        return new Tag("Other Service Fees", "Services related to Other Service Fees");
+    }
+    
+    Tag products()
+    {
+        return new Tag("Products", "Services related to Products");
+    }
+    
+    Tag insurance()
+    {
+        return new Tag("Insurance", "Services related to Insurance");
+    }
 
     Tag exchangeOrder()
     {
