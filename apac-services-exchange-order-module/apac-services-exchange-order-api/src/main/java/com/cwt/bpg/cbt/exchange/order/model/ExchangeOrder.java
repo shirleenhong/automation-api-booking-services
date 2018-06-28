@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -35,6 +36,7 @@ public class ExchangeOrder implements Serializable {
     private String fopType;
 
     @NotNull
+    @Valid
     @ApiModelProperty(required = true)
     private CreditCard creditCard;
 
