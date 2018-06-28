@@ -161,12 +161,4 @@ public class Client implements Serializable {
 	public void setMfBanks(List<Bank> mfBanks) {
 		this.mfBanks = mfBanks;
 	}
-
-	public String getClientAccountNumber() {
-		return clientAccountNumber;
-	}
-
-	public void setClientAccountNumber(String clientAccountNumber) {
-		this.clientAccountNumber = clientAccountNumber;
-	}	
 }
