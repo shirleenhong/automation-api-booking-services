@@ -1,0 +1,121 @@
+*** Settings ***
+Suite Setup    Create Dictionary For Clients
+Resource          resources/air-fees.txt
+Resource          ../resources/api-imports.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-variables.txt
+
+*** Test Cases ***  
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee Air Pricing And Transaction Fee By PNR
+    Generate Test Variables For Air Fees-IN    pro_name,SIEMENSINVPNQ|include_yq_comm,true|exempt_tax,false|city_code,080|plat_carrier,EY|trip_type,D|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,5|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee Air Pricing And Transaction Fee By Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee Air Pricing And Transaction Fee By Ticket
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Full Fare Air Pricing And Transaction Fee By PNR
+
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Full Fare Air Pricing And Transaction Fee By Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Full Fare Air Pricing And Transaction Fee By Ticket
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Net Fare Air Pricing And Transaction Fee By PNR
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Net Fare Air Pricing And Transaction Fee By Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Net Fare Air Pricing And Transaction Fee By Ticket
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Gross Fare Air Pricing And Transaction Fee By PNR
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Gross Fare Air Pricing And Transaction Fee By Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Gross Fare Air Pricing And Transaction Fee By Ticket
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Fare Less IATA Air Pricing And Transaction Fee By PNR
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Fare Less IATA Air Pricing And Transaction Fee By Coupon
+ 
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Fare Less IATA Air Pricing And Transaction Fee By Ticket
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Basic Air Pricing And Transaction Fee By PNR
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Basic Air Pricing And Transaction Fee By Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Basic Air Pricing And Transaction Fee By Ticket 
+    
+Verify That Air Fees Are Calculated Correctly Using No Fee Air Pricing And Transaction Fee By PNR
+    
+Verify That Air Fees Are Calculated Correctly Using No Fee Air Pricing And Transaction Fee By Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using No Fee Air Pricing And Transaction Fee By Ticket
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee Plus VAT(ts) Air Pricing And Transaction Fee By PNR
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee Plus VAT(ts) Air Pricing And Transaction Fee By Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee Plus VAT(ts) Air Pricing And Transaction Fee By Ticket
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee Rebate Air Pricing And Transaction Fee By PNR
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee Rebate Air Pricing And Transaction Fee By Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee Rebate Air Pricing And Transaction Fee By Ticket
+    
+Verify That Air Fees Are Calculated Correctly Using No Fee With Discount Air Pricing And Transaction Fee By PNR
+    
+Verify That Air Fees Are Calculated Correctly Using No Fee With Discount Air Pricing And Transaction Fee By Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using No Fee With Discount Air Pricing And Transaction Fee By Ticket
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Base & YQ Air Pricing And Transaction Fee By PNR
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Base & YQ Air Pricing And Transaction Fee By Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Base & YQ Air Pricing And Transaction Fee By Ticket
+    
+Verify That Air Fees Are Calculated Correctly Using Client Exempt Tax Only (YQ Comm Not Used)
+    
+Verify That Air Fees Are Calculated Correctly Using YQ Comm Only (Client Exempt Tax Not Used)
+    
+Verify That Air Fees Are Calculated Correctly Using Client Exempt Tax and YQ Comm
+    
+Verify That Air Fees Are Calculated Correctly Using Fee Override
+    
+Verify That Air Fees Are Calculated Correctly Using No Apply Fee
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By PNR With City Territory Code
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By PNR With Country Territory Code
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By PNR With Region Territory Code
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By PNR With All Territory Code
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon With No Air Segments
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon With SOLO Type Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon With GROUP Type Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon With SOLO And GROUP Type Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon With City Territory Code
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon With Country Territory Code
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon With Region Territory Code
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon With All Territory Code
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With Operator F
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With Operator M
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With Operator D
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With MaxAmount Greater Than Transaction Fee
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With MinAmount Greater Than Transaction Fee 
