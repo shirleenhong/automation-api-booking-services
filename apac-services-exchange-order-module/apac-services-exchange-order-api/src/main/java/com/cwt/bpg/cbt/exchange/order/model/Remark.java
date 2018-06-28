@@ -17,7 +17,6 @@ public class Remark implements Serializable {
 
 	@Id
 	@JsonSerialize(using = ObjectIdSerializer.class)
-	@ApiModelProperty(hidden = true, notes = "not needed for put remark")
 	private ObjectId id;
 	
 	@NotEmpty
