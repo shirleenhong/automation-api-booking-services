@@ -19,7 +19,7 @@ public class Client implements Serializable {
 	
 	private int clientId;
 	private String name;
-	private String clientNumber;
+	private String clientAccountNumber;
 	private Integer pricingId;
 	private boolean exemptTax;
 	private List<ProductMerchantFee> mfProducts;
@@ -50,12 +50,12 @@ public class Client implements Serializable {
 		this.name = name;
 	}
 
-	public String getClientNumber() {
-		return clientNumber;
+	public String getClientAccountNumber() {
+		return clientAccountNumber;
 	}
 
-	public void setClientNumber(String clientNumber) {
-		this.clientNumber = clientNumber;
+	public void setClientAccountNumber(String clientAccountNumber) {
+		this.clientAccountNumber = clientAccountNumber;
 	}
 
 	public Integer getPricingId() {

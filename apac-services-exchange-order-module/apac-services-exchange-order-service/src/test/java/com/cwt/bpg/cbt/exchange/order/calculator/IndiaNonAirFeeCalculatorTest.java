@@ -62,7 +62,7 @@ public class IndiaNonAirFeeCalculatorTest {
 	@Test
 	public void standardBank() {
 
-		input.setClientAccountNumber("clientNumber");
+		input.setClientAccountNumber("1234");
 
 		client = new Client();
 		Bank bank = new Bank();
@@ -90,7 +90,7 @@ public class IndiaNonAirFeeCalculatorTest {
 	@Test
 	public void standardBank2() {
 
-		input.setClientAccountNumber("clientNumber");
+		input.setClientAccountNumber("1234");
 
 		client = new Client();
 		Bank bank = new Bank();
@@ -118,7 +118,7 @@ public class IndiaNonAirFeeCalculatorTest {
 	@Test
 	public void nonStandardBank() {
 
-		input.setClientAccountNumber("clientNumber");
+		input.setClientAccountNumber("1234");
 
 		client = new Client();
 		Bank bank = new Bank();
@@ -147,7 +147,7 @@ public class IndiaNonAirFeeCalculatorTest {
 	public void nonStandardCC() {
 
 		input.setCcType("Visa");
-		input.setClientAccountNumber("clientNumber");
+		input.setClientAccountNumber("1234");
 
 		client = new Client();
 		Bank bank = new Bank();
@@ -182,7 +182,7 @@ public class IndiaNonAirFeeCalculatorTest {
 	@Test
 	public void standardCC() {
 		input.setCcType("Visa");
-		input.setClientAccountNumber("clientNumber");
+		input.setClientAccountNumber("1234");
 
 		client = new Client();
 		ProductMerchantFee pf = new ProductMerchantFee();
@@ -211,7 +211,7 @@ public class IndiaNonAirFeeCalculatorTest {
 	@Test
 	public void standardCCAcctTypeNotEqual() {
 		input.setCcType("Visas");
-		input.setClientAccountNumber("clientNumber");
+		input.setClientAccountNumber("1234");
 
 		client = new Client();
 		ProductMerchantFee pf = new ProductMerchantFee();
@@ -253,7 +253,7 @@ public class IndiaNonAirFeeCalculatorTest {
 
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(false);
-		input.setClientAccountNumber("clientNumber");
+		input.setClientAccountNumber("1234");
 
 		client = new Client();
 		Bank bank = new Bank();
@@ -282,7 +282,7 @@ public class IndiaNonAirFeeCalculatorTest {
 
 		input.setCommissionByPercent(false);
 		input.setDiscountByPercent(false);
-		input.setClientAccountNumber("clientNumber");
+		input.setClientAccountNumber("1234");
 
 		client = new Client();
 		Bank bank = new Bank();
@@ -313,7 +313,7 @@ public class IndiaNonAirFeeCalculatorTest {
 	public void btcFop() {
 
 		input.setFopMode(3);
-		input.setClientAccountNumber("clientNumber");
+		input.setClientAccountNumber("1234");
 
 		client = new Client();
 		Bank bank = new Bank();
@@ -344,7 +344,7 @@ public class IndiaNonAirFeeCalculatorTest {
 	public void nonPresentVendorBank() {
 		input.setCcType("MasterCard");
 		input.setFopType("");
-		input.setClientAccountNumber("clientNumber");
+		input.setClientAccountNumber("1234");
 
 		client = new Client();
 		client.setMerchantFee(3d);
@@ -384,7 +384,7 @@ public class IndiaNonAirFeeCalculatorTest {
 
 	@Test
 	public void standardMfProduct() {
-		input.setClientAccountNumber("clientNumber");
+		input.setClientAccountNumber("1234");
 
 		client = new Client();
 		Bank bank = new Bank();
@@ -412,7 +412,7 @@ public class IndiaNonAirFeeCalculatorTest {
 
 	@Test
 	public void standardMfProductDefaultClient() {
-		input.setClientAccountNumber("clientNumber");
+		input.setClientAccountNumber("1234");
 		Client defaultClient = new Client();
 		client = new Client();
 		Bank bank = new Bank();

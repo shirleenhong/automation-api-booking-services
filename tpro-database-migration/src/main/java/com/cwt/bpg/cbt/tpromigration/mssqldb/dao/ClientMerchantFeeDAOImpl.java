@@ -50,7 +50,7 @@ public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
 					merchantFee.setClientType(rs.getString("clientType").trim());
 				}
 				if(rs.getObject("cn") != null) {
-					merchantFee.setClientNumber(StringUtils.leftPad(rs.getString("cn"), 10, '0'));
+					merchantFee.setClientAccountNumber(StringUtils.leftPad(rs.getString("cn"), 10, '0'));
 				}else {
 					continue;
 				}

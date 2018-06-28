@@ -45,11 +45,11 @@ public class ClientRepositoryTest {
 		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
 		when(dataStore.createQuery(Client.class)).thenReturn(query);
 		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equal("clientNumber")).thenReturn(query);
+		when(fieldEnd.equal("clientAccountNumber")).thenReturn(query);
 		when(query.get()).thenReturn(new Client());
 		
 		
-		Client result = repo.getClient("clientNumber");
+		Client result = repo.getClient("clientAccountNumber");
 		
 		Mockito.verify(morphia, Mockito.times(1)).getDatastore();
 		Mockito.verify(dataStore, Mockito.times(1)).createQuery(Client.class);

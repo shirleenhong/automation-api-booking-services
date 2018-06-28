@@ -28,9 +28,9 @@ public class MerchantFeeServiceTest {
 	@Test
 	public void canGetMerchantFee() {
 		String countryCode = "SG";
-		String clientNumber = "1324";
-		service.getMerchantFee(countryCode, clientNumber);
-		verify(merchantFeeApi, times(1)).getMerchantFee(countryCode, clientNumber);
+		String clientAccountNumber = "1324";
+		service.getMerchantFee(countryCode, clientAccountNumber);
+		verify(merchantFeeApi, times(1)).getMerchantFee(countryCode, clientAccountNumber);
 	}
 	
 	@Test

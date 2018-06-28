@@ -94,8 +94,8 @@ public class OtherServiceFeesService {
 		return airportService.getAirport(cityCode);
 	}
 
-	private int getPricingId(String clientNumber) {
-		Client client = clientService.getClient(clientNumber);
+	private int getPricingId(String clientAccountNumber) {
+		Client client = clientService.getClient(clientAccountNumber);
 		return client != null ? client.getPricingId() : 0;
 	}
 

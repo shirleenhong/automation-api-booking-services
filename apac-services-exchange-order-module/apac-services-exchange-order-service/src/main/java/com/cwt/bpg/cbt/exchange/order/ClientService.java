@@ -36,9 +36,9 @@ public class ClientService {
 		return clientRepository.get(id);
 	}
 
-	@Cacheable(cacheNames="clients", key="#clientNumber", condition="#clientNumber != null")
-	public Client getClient(String clientNumber) {
-		return clientRepository.getClient(clientNumber);
+	@Cacheable(cacheNames="clients", key="#clientAccountNumber", condition="#clientAccountNumber != null")
+	public Client getClient(String clientAccountNumber) {
+		return clientRepository.getClient(clientAccountNumber);
 	}
 
 	public Client getDefaultClient() {

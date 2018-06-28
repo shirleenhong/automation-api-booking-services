@@ -8,7 +8,7 @@ import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
 @Entity(value = "clientMerchantFee", noClassnameStored = true)
-@Indexes(@Index(fields = {@Field("countryCode"), @Field("clientNumber")}))
+@Indexes(@Index(fields = {@Field("countryCode"), @Field("clientAccountNumber")}))
 public class MerchantFee implements Serializable {
 
 	private static final long serialVersionUID = -1922100420586710851L;
@@ -23,7 +23,7 @@ public class MerchantFee implements Serializable {
 	
 	private String countryCode;
 	
-	private String clientNumber;
+	private String clientAccountNumber;
 
 	public boolean isIncludeTransactionFee() {
 		return includeTransactionFee;
@@ -49,12 +49,12 @@ public class MerchantFee implements Serializable {
 		this.clientName = clientName;
 	}
 
-	public String getClientNumber() {
-		return clientNumber;
+	public String getClientAccountNumber() {
+		return clientAccountNumber;
 	}
 
-	public void setClientNumber(String clientNumber) {
-		this.clientNumber = clientNumber;
+	public void setClientAccountNumber(String clientAccountNumber) {
+		this.clientAccountNumber = clientAccountNumber;
 	}
 
 	public String getCountryCode() {
