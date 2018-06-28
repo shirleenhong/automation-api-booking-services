@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 
-@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class AirFeesInput extends FeesInput {
 	private static final long serialVersionUID = -5169667744324661769L;
 
