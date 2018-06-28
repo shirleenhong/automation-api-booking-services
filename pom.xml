@@ -34,8 +34,7 @@
 		<javax.ws.rs.version>2.0.1</javax.ws.rs.version>
 		<scm.repo.url>https://github.com/cwt-dev/bpg-cbt-apac-services.git</scm.repo.url>
 		<project.scm.id>aws-command-runner-scm</project.scm.id>			
-		<freemarker.version>2.3.26-incubating</freemarker.version>
-		<jasperreports.version>6.6.0</jasperreports.version>
+		<freemarker.version>2.3.26-incubating</freemarker.version>		
 		<groovy.version>2.5.0</groovy.version>
 	</properties>
 
