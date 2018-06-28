@@ -28,7 +28,7 @@ public class SwaggerConfigBase
                 .displayRequestDuration(false)
                 .docExpansion(DocExpansion.LIST)
                 .filter(true)
-                .maxDisplayedTags(10)
+                .maxDisplayedTags(30)
                 .operationsSorter(OperationsSorter.ALPHA)
                 .tagsSorter(TagsSorter.ALPHA)
                 .validatorUrl(null)
