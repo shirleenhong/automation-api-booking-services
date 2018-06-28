@@ -8,6 +8,8 @@ import org.mongodb.morphia.annotations.*;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity(value = "remarkList", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("_id")))
 public class Remark implements Serializable {
@@ -15,6 +17,7 @@ public class Remark implements Serializable {
 
 	@Id
 	@JsonSerialize(using = ObjectIdSerializer.class)
+	@ApiModelProperty(hidden = true, notes = "not needed for put remark")
 	private ObjectId id;
 	
 	@NotEmpty
