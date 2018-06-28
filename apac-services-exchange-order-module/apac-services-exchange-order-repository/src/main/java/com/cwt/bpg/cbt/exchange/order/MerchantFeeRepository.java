@@ -40,7 +40,7 @@ public class MerchantFeeRepository {
 	}
 
 	public MerchantFee removeMerchantFee(MerchantFee merchantFee) {
-    merchantFee.setClientAccountNumber(leftPadZeros(merchantFee.getClientAccountNumber()));
+    	merchantFee.setClientAccountNumber(leftPadZeros(merchantFee.getClientAccountNumber()));
 
 		final Datastore datastore = morphia.getDatastore();
 		
