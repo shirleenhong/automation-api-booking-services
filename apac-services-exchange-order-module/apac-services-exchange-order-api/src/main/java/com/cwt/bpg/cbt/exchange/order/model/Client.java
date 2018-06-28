@@ -160,5 +160,5 @@ public class Client implements Serializable {
 
 	public void setMfBanks(List<Bank> mfBanks) {
 		this.mfBanks = mfBanks;
-	}	
+	}
 }

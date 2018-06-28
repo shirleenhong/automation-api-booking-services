@@ -33,7 +33,7 @@ public class ClientDAOImpl {
 		List<Client> clients = new ArrayList<>();
 
 		String sql = "select " + 
-				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax," + 
+				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmaster.clientnumber, clientmapping.profilename, clientmasterpricing.pricingid, exempttax," + 
 				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee," + 
 				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply" + 
 				" from " + 
@@ -51,7 +51,7 @@ public class ClientDAOImpl {
 				" group by " + 
 				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmapping.profilename, clientmasterpricing.pricingid, exempttax," + 
 				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee," + 
-				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply" + 
+				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply, clientmaster.clientnumber" + 
 				" order by clientmaster.clientid";
 
 		Connection conn = null;
@@ -67,8 +67,8 @@ public class ClientDAOImpl {
 			while (rs.next()) {
 				Client client = new Client();
 				client.setClientId(rs.getInt("clientid"));
+				client.setClientAccountNumber(rs.getString("clientnumber"));
 				client.setName(rs.getString("name"));
-				client.setProfileName(rs.getString("profilename"));
 				client.setPricingId(rs.getInt("pricingid"));
 				client.setExemptTax(rs.getBoolean("exempttax"));
 				client.setApplyMfBank(rs.getBoolean("applymfbank"));
