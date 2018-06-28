@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.apache.commons.lang.StringUtils.leftPad;
+
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
@@ -25,20 +27,21 @@ public class MerchantFeeRepository {
 				.field("countryCode")
 				.equalIgnoreCase(countryCode)
 				.field("clientNumber")
-				.equalIgnoreCase(clientNumber).get();
+				.equalIgnoreCase(leftPadZeros(clientNumber)).get();
 	}
 	
-	public MerchantFee putMerchantFee(MerchantFee fee) {
+	public MerchantFee putMerchantFee(MerchantFee merchantFee) {
+		merchantFee = removeMerchantFee(merchantFee);
 
-		removeMerchantFee(fee);
-		
-		final Datastore datastore = morphia.getDatastore();
-		Key<MerchantFee> save = datastore.save(fee);
+        final Datastore datastore = morphia.getDatastore();
+		Key<MerchantFee> save = datastore.save(merchantFee);
 		LOGGER.info("Put Result: {}", save);
-		return fee;
+		return merchantFee;
 	}
 
 	public MerchantFee removeMerchantFee(MerchantFee merchantFee) {
+		merchantFee.setClientNumber(leftPadZeros(merchantFee.getClientNumber()));
+
 		final Datastore datastore = morphia.getDatastore();
 		
 		final Query<MerchantFee> clientMerchantFee = datastore.createQuery(MerchantFee.class)
@@ -51,5 +54,10 @@ public class MerchantFeeRepository {
 		
 		return merchantFee;
 	}
+
+    private String leftPadZeros(String value)
+    {
+        return leftPad(value, 10, '0');
+    }
 
 }
