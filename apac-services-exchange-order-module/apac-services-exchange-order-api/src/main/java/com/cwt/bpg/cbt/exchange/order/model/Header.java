@@ -28,7 +28,7 @@ public class Header implements Serializable {
     
     @NotEmpty
     @ApiModelProperty(required = true)
-    private String faxNumber;
+	private String faxNumber;
 
 	public String getAddress() {
 		return address;

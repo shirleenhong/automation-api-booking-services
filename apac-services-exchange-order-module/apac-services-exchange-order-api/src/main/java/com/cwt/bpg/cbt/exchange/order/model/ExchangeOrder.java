@@ -22,105 +22,103 @@ import io.swagger.annotations.ApiModelProperty;
 @Indexes(@Index(fields = @Field("eoNumber")))
 public class ExchangeOrder implements Serializable {
 
-    private static final long serialVersionUID = 79442657760597469L;
-    
-    @Id
-    private String eoNumber;
-    private BigDecimal commission;
-    private BigDecimal gstAmount;
-    private BigDecimal merchantFee;
-    private String countryCode;
+	private static final long serialVersionUID = 79442657760597469L;
 
-    @NotEmpty
-    @ApiModelProperty(allowableValues = "CX,CC,INV", required = true)
-    private String fopType;
+	@Id
+	private String eoNumber;
+	private BigDecimal commission;
+	private BigDecimal gstAmount;
+	private BigDecimal merchantFee;
+	private String countryCode;
 
-    @NotNull
-    @Valid
-    @ApiModelProperty(required = true)
-    private CreditCard creditCard;
+	@NotEmpty
+	@ApiModelProperty(allowableValues = "CX,CC,INV", required = true)
+	private String fopType;
 
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String description;
-    private String btaDescription;
-    
-    
-    @NotNull
-    @ApiModelProperty(value = "Date in UTC", example="2008-05-29T00:00:00.000Z", required = true)
-    @JsonSerialize(using=DateSerializer.class)     
-    @JsonDeserialize(using=DateDeserializer.class)
-    private Instant additionalInfoDate;
-    private String vendorContactPerson;
-    
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String productCode;
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String vendorCode;
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String pnr;
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String accountNumber;
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String passengerName;
-    
-    @ApiModelProperty(hidden = true, value = "Date in UTC", example="2008-05-29T14:09:000Z")
-    @JsonSerialize(using=DateSerializer.class)     
-    @JsonDeserialize(using=DateDeserializer.class) 
-    private Instant createDateTime;
-    
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String agentId;
-    
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String pcc;
-    private String vendorEmail;
-    private String faxNumber;
-    
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String agentName;
-    
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String recordLocator;
-    
-    @NotNull
-    @ApiModelProperty(required = true)
-    private BigDecimal nettCost;
-    
-    @NotNull
-    @ApiModelProperty(required = true)
-    private BigDecimal total;
-    
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String eoAddress;
-    
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String status;
-    
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String raiseCheque;
-    
-    @NotNull
-    @Valid
-    @ApiModelProperty(required = true)
-    private Header header;
+	@NotNull
+	@Valid
+	@ApiModelProperty(required = true)
+	private CreditCard creditCard;
 
-    private List<Remark> remarks;
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String description;
+	private String btaDescription;
 
+	@NotNull
+	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T00:00:00.000Z", required = true)
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
+	private Instant additionalInfoDate;
+	private String vendorContactPerson;
 
-    public String getEoNumber() {
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String productCode;
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String vendorCode;
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String pnr;
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String accountNumber;
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String passengerName;
+
+	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
+	private Instant createDateTime;
+
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String agentId;
+
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String pcc;
+	private String vendorEmail;
+	private String faxNumber;
+
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String agentName;
+
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String recordLocator;
+
+	@NotNull
+	@ApiModelProperty(required = true)
+	private BigDecimal nettCost;
+
+	@NotNull
+	@ApiModelProperty(required = true)
+	private BigDecimal total;
+
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String eoAddress;
+
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String status;
+
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String raiseCheque;
+
+	@NotNull
+	@Valid
+	@ApiModelProperty(required = true)
+	private Header header;
+
+	private List<Remark> remarks;
+
+	public String getEoNumber() {
 		return eoNumber;
 	}
 
@@ -129,166 +127,166 @@ public class ExchangeOrder implements Serializable {
 	}
 
 	public BigDecimal getCommission() {
-        return commission;
-    }
+		return commission;
+	}
 
-    public void setCommission(BigDecimal commission) {
-        this.commission = commission;
-    }
+	public void setCommission(BigDecimal commission) {
+		this.commission = commission;
+	}
 
-    public BigDecimal getGstAmount() {
-        return gstAmount;
-    }
+	public BigDecimal getGstAmount() {
+		return gstAmount;
+	}
 
-    public void setGstAmount(BigDecimal gstAmount) {
-        this.gstAmount = gstAmount;
-    }
+	public void setGstAmount(BigDecimal gstAmount) {
+		this.gstAmount = gstAmount;
+	}
 
-    public BigDecimal getMerchantFee() {
-        return merchantFee;
-    }
+	public BigDecimal getMerchantFee() {
+		return merchantFee;
+	}
 
-    public void setMerchantFee(BigDecimal merchantFee) {
-        this.merchantFee = merchantFee;
-    }
+	public void setMerchantFee(BigDecimal merchantFee) {
+		this.merchantFee = merchantFee;
+	}
 
-    public String getCountryCode() {
-        return countryCode;
-    }
+	public String getCountryCode() {
+		return countryCode;
+	}
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 
-    public String getFopType() {
-        return fopType;
-    }
+	public String getFopType() {
+		return fopType;
+	}
 
-    public void setFopType(String fopType) {
-        this.fopType = fopType;
-    }
+	public void setFopType(String fopType) {
+		this.fopType = fopType;
+	}
 
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
+	public CreditCard getCreditCard() {
+		return creditCard;
+	}
 
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
-    }
+	public void setCreditCard(CreditCard creditCard) {
+		this.creditCard = creditCard;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getBtaDescription() {
-        return btaDescription;
-    }
+	public String getBtaDescription() {
+		return btaDescription;
+	}
 
-    public void setBtaDescription(String btaDescription) {
-        this.btaDescription = btaDescription;
-    }
+	public void setBtaDescription(String btaDescription) {
+		this.btaDescription = btaDescription;
+	}
 
-    public Instant getAdditionalInfoDate() {
-        return additionalInfoDate;
-    }
+	public Instant getAdditionalInfoDate() {
+		return additionalInfoDate;
+	}
 
-    public void setAdditionalInfoDate(Instant date) {
-        this.additionalInfoDate = date;
-    }
+	public void setAdditionalInfoDate(Instant date) {
+		this.additionalInfoDate = date;
+	}
 
-    public String getVendorContactPerson() {
-        return vendorContactPerson;
-    }
+	public String getVendorContactPerson() {
+		return vendorContactPerson;
+	}
 
-    public void setVendorContactPerson(String vendorContactPerson) {
-        this.vendorContactPerson = vendorContactPerson;
-    }
+	public void setVendorContactPerson(String vendorContactPerson) {
+		this.vendorContactPerson = vendorContactPerson;
+	}
 
-    public String getProductCode() {
-        return productCode;
-    }
+	public String getProductCode() {
+		return productCode;
+	}
 
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
-    }
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
 
-    public String getVendorCode() {
-        return vendorCode;
-    }
+	public String getVendorCode() {
+		return vendorCode;
+	}
 
-    public void setVendorCode(String vendorCode) {
-        this.vendorCode = vendorCode;
-    }
+	public void setVendorCode(String vendorCode) {
+		this.vendorCode = vendorCode;
+	}
 
-    public String getPnr() {
-        return pnr;
-    }
+	public String getPnr() {
+		return pnr;
+	}
 
-    public void setPnr(String pnr) {
-        this.pnr = pnr;
-    }
+	public void setPnr(String pnr) {
+		this.pnr = pnr;
+	}
 
-    public String getAccountNumber() {
-        return accountNumber;
-    }
+	public String getAccountNumber() {
+		return accountNumber;
+	}
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
 
-    public String getPassengerName() {
-        return passengerName;
-    }
+	public String getPassengerName() {
+		return passengerName;
+	}
 
-    public void setPassengerName(String passengerName) {
-        this.passengerName = passengerName;
-    }
+	public void setPassengerName(String passengerName) {
+		this.passengerName = passengerName;
+	}
 
-    public Instant getCreateDateTime() {
-        return createDateTime;
-    }
+	public Instant getCreateDateTime() {
+		return createDateTime;
+	}
 
-    public void setCreateDateTime(Instant createDateTime) {
-        this.createDateTime = createDateTime;
-    }
+	public void setCreateDateTime(Instant createDateTime) {
+		this.createDateTime = createDateTime;
+	}
 
-    public String getAgentId() {
-        return agentId;
-    }
+	public String getAgentId() {
+		return agentId;
+	}
 
-    public void setAgentId(String agentId) {
-        this.agentId = agentId;
-    }
+	public void setAgentId(String agentId) {
+		this.agentId = agentId;
+	}
 
-    public String getPcc() {
-        return pcc;
-    }
+	public String getPcc() {
+		return pcc;
+	}
 
-    public void setPcc(String pcc) {
-        this.pcc = pcc;
-    }
+	public void setPcc(String pcc) {
+		this.pcc = pcc;
+	}
 
-    public String getVendorEmail() {
-        return vendorEmail;
-    }
+	public String getVendorEmail() {
+		return vendorEmail;
+	}
 
-    public void setVendorEmail(String vendorEmail) {
-        this.vendorEmail = vendorEmail;
-    }
+	public void setVendorEmail(String vendorEmail) {
+		this.vendorEmail = vendorEmail;
+	}
 
-    public String getFaxNumber() {
-        return faxNumber;
-    }
+	public String getFaxNumber() {
+		return faxNumber;
+	}
 
-    public void setFaxNumber(String faxNumber) {
-        this.faxNumber = faxNumber;
-    }
+	public void setFaxNumber(String faxNumber) {
+		this.faxNumber = faxNumber;
+	}
 
-    public String getAgentName() {
+	public String getAgentName() {
 		return agentName;
 	}
 
@@ -353,10 +351,10 @@ public class ExchangeOrder implements Serializable {
 	}
 
 	public List<Remark> getRemarks() {
-        return remarks;
-    }
+		return remarks;
+	}
 
-    public void setRemarks(List<Remark> remarks) {
-        this.remarks = remarks;
-    }
+	public void setRemarks(List<Remark> remarks) {
+		this.remarks = remarks;
+	}
 }
