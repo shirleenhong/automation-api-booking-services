@@ -1,17 +1,13 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-<<<<<<< HEAD
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.validation.Valid;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-=======
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import org.apache.commons.io.IOUtils;
->>>>>>> master
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,23 +15,17 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-<<<<<<< HEAD
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-=======
-import javax.validation.Valid;
-import java.io.IOException;
-import java.io.InputStream;
->>>>>>> master
 
 @RestController
 @Api(tags = "Exchange Order")
 public class ExchangeOrderController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderController.class);
 	
 	@Autowired
@@ -48,6 +38,7 @@ public class ExchangeOrderController {
 	@ApiOperation(value = "Saves new exchange order transaction.")
 	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) {
+
 		try {
 			return new ResponseEntity<>(eoService.saveExchangeOrder(input), HttpStatus.OK);
 		}
