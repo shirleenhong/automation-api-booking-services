@@ -2,6 +2,8 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.apache.commons.lang.StringUtils.leftPad;
 
+import java.util.Optional;
+
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
@@ -23,12 +25,12 @@ public class MerchantFeeRepository {
 	private MorphiaComponent morphia;
 
 	public MerchantFee getMerchantFee(String countryCode, String clientAccountNumber) {
-		MerchantFee merchantFee = morphia.getDatastore().createQuery(MerchantFee.class)
+		Optional<MerchantFee> merchantFee = Optional.ofNullable(morphia.getDatastore().createQuery(MerchantFee.class)
 				.field("countryCode")
 				.equalIgnoreCase(countryCode)
 				.field("clientAccountNumber")
-				.equalIgnoreCase(leftPadZeros(clientAccountNumber)).get();
-		return merchantFee != null ? merchantFee : new MerchantFee();
+				.equalIgnoreCase(leftPadZeros(clientAccountNumber)).get());
+		return merchantFee.orElse(new MerchantFee());
 	}
 	
 	public MerchantFee putMerchantFee(MerchantFee merchantFee) {

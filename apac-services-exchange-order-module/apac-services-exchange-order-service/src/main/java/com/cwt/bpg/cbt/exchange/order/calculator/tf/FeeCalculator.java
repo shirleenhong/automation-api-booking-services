@@ -129,17 +129,17 @@ public class FeeCalculator {
 
 				if (applyFee != null && !applyFee.equals(NA)) {
 					switch (feeOption) {
-					case PNR:
-						result = getFeeByPnr(input, airport, clientPricing, baseAmount);
-						break;
-					case COUPON:
-						result = getFeeByCoupon(input, clientPricing);
-						break;
-					case TICKET:
-						result = getFeeByTicket(input, airport, clientPricing, baseAmount);
-						break;
-					default:
-						break;
+						case PNR:
+							result = getFeeByPnr(input, airport, clientPricing, baseAmount);
+							break;
+						case COUPON:
+							result = getFeeByCoupon(input, clientPricing);
+							break;
+						case TICKET:
+							result = getFeeByTicket(input, airport, clientPricing, baseAmount);
+							break;
+						default:
+							break;
 					}
 				}
 			}

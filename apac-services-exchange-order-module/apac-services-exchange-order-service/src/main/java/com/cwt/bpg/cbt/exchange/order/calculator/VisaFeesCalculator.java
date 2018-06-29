@@ -26,7 +26,7 @@ public class VisaFeesCalculator implements Calculator<VisaFeesBreakdown, VisaFee
         int scale = scaleConfig.getScale(input.getCountryCode());
 
         BigDecimal mfNettCost = BigDecimal.ZERO;
-        Double merchantFeePercent = merchantFee != null ? merchantFee.getMerchantFeePercent() : 0d;
+        Double merchantFeePercent = merchantFee.getMerchantFeePercent();
         BigDecimal nettCost = safeValue(input.getNettCost());
 
         if (input.isNettCostMerchantFeeChecked()) {
