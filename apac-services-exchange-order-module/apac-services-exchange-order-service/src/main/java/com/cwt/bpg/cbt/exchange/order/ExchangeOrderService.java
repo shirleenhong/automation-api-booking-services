@@ -1,5 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ConcurrentModificationException;
@@ -145,4 +148,9 @@ public class ExchangeOrderService {
     public ExchangeOrder getExchangeOrder(String eoNumber) {
         return exchangeOrderRepo.getExchangeOrder(eoNumber);
     }
+
+	public InputStream generatePdf(String eoNumber) throws FileNotFoundException {
+		//TODO IMPLEMENT GENERATE PDF METHOD
+		return new FileInputStream("C:\\Users\\U003ALP\\Documents\\test.pdf");
+	}
 }
