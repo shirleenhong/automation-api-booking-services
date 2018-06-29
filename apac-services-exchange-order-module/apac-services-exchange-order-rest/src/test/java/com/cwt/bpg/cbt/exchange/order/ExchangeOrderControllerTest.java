@@ -1,6 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.times;
@@ -21,14 +20,13 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
 import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.Header;
@@ -64,6 +62,23 @@ public class ExchangeOrderControllerTest {
             MediaType.APPLICATION_JSON.getSubtype(),                        
             Charset.forName("utf8")                     
             );
+	
+	@Test
+	public void shouldHandleExchangeOrderNotFoundException() throws Exception {
+						
+		ExchangeOrder order = createExchangeOrder();
+		
+		when(eoService.saveExchangeOrder(anyObject())).thenThrow(new ExchangeOrderException("eo number not found"));
+
+		mockMvc.perform(post(url)
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(order)))
+				.andExpect(status().isNoContent())
+				.andReturn()
+				.getResponse();
+
+		verify(eoService,times(1)).saveExchangeOrder(any(ExchangeOrder.class));
+	}
 	
 	@Test
 	public void shouldReturnExchangeOrderNumber() throws Exception {

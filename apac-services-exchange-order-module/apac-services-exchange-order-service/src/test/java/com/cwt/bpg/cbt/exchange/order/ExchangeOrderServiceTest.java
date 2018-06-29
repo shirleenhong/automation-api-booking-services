@@ -24,6 +24,7 @@ import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
 
@@ -45,7 +46,7 @@ public class ExchangeOrderServiceTest {
 	}
   
 	@Test
-	public void shouldCallSaveOrUpdateNew() {
+	public void shouldCallSaveOrUpdateNew() throws ExchangeOrderException {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setCountryCode("HK");
 		service.saveExchangeOrder(eo);
@@ -53,10 +54,11 @@ public class ExchangeOrderServiceTest {
 	}
 	
 	@Test
-	public void shouldCallSaveOrUpdateExisting() {
+	public void shouldCallSaveOrUpdateExisting() throws ExchangeOrderException {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setEoNumber("eoNumber");
 		eo.setCountryCode("HK");
+		when(repo.getExchangeOrder(eo.getEoNumber())).thenReturn(eo);
 		when(repo.saveOrUpdate(eo)).thenReturn(eo.getEoNumber());
 		
 		ExchangeOrder result = service.saveExchangeOrder(eo);		
@@ -64,8 +66,16 @@ public class ExchangeOrderServiceTest {
 		assertEquals(eo.getEoNumber(), result.getEoNumber());		
 	}
 	
+	@Test(expected = ExchangeOrderException.class)
+	public void shouldNotUpdateIfEoNumberIsNotExisting() throws ExchangeOrderException {
+		ExchangeOrder eo = new ExchangeOrder();
+		eo.setEoNumber("1122334455");
+		eo.setCountryCode("HK");
+		service.saveExchangeOrder(eo);		
+	}
+	
 	@Test
-	public void shouldCallSaveOrUpdateUpdated() {
+	public void shouldCallSaveOrUpdateUpdated() throws ExchangeOrderException {
 		
 		SequenceNumber sn = mock(SequenceNumber.class);
 		when(sequentNumberRepo.get(anyString())).thenReturn(Arrays.asList(sn));
