@@ -309,7 +309,7 @@ Calculate Air Fees-SG Total Selling Fare Without Formula
     Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}
     
 Create Dictionary For Clients
-    ${clients_dict}    Create Dictionary    TEST3MG.air_pricing_id=20    SIEMENSINVPNQ.air_pricing_id=20    TEST5MN.air_pricing_id=22    TEST1MB.air_pricing_id=29    TEST2MF.air_pricing_id=30
+    ${clients_dict}    Create Dictionary    TEST3MG.air_pricing_id=20    1026100198.air_pricing_id=20    TEST5MN.air_pricing_id=22    TEST1MB.air_pricing_id=29    TEST2MF.air_pricing_id=30
     Set Suite Variable    ${clients_dict}    
 
 Create Test Variables For Air Fees-HK
@@ -357,7 +357,7 @@ Generate Test Variables For Air Fees-HK Without Formula
 Generate Test Variables For Air Fees-IN
     [Arguments]    ${fees_list}    ${country}
     Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
-    Set Test Variable    ${air_pricing_id}    ${clients_dict["${pro_name_value}.air_pricing_id"]}
+    Set Test Variable    ${air_pricing_id}    ${clients_dict["${client_account_number_value}.air_pricing_id"]}
     ${decimal_place}    Set Variable If    "${country.lower()}" == "hk"    0    2
     Set Test Variable    ${decimal_place}
     ${total_gst_amount}    Set Variable If    "${gst_enabled_value}" == "true"    0
@@ -431,6 +431,7 @@ Send Other Service Fees For Air Fees IN Post Request
     Run Keyword If    "${airline_overhead_commission_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineOverheadCommission":${airline_overhead_commission_value}
     Run Keyword If    "${base_fare_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "baseFare":${base_fare_value}
     Run Keyword If    "${city_code_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "cityCode":"${city_code_value}"
+    Run Keyword If    "${client_account_number_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "clientAccountNumber":"${client_account_number_value}"
     Run Keyword If    "${commission_enabled_value}"    Append To List    ${other_service_fees_request_list_1}    "commissionEnabled":${commission_enabled_value}
     Run Keyword If    "${country}"    Append To List    ${other_service_fees_request_list_1}    "countryCode":"${country.upper()}"
     Run Keyword If    "${discount_enabled_value}"    Append To List    ${other_service_fees_request_list_1}    "discountEnabled":${discount_enabled_value}
@@ -446,7 +447,6 @@ Send Other Service Fees For Air Fees IN Post Request
     Run Keyword If    "${products_ot1_percentage_value}"    Append To List    ${other_service_fees_products_list}    "ot1Percent":${products_ot1_percentage_value}
     Run Keyword If    "${products_ot2_percentage_value}"    Append To List    ${other_service_fees_products_list}    "ot2Percent":${products_ot2_percentage_value}
     Run Keyword If    "${products_override_pc_value}"    Append To List    ${other_service_fees_products_list}    "overridePc":${products_override_pc_value}
-    Run Keyword If    "${pro_name_value}"    Append To List    ${other_service_fees_request_list_2}    "profileName":"${pro_name_value}"
     Run Keyword If    "${tax_1_value}"    Append To List    ${other_service_fees_request_list_2}    "tax1":${tax_1_value}
     Run Keyword If    "${tax_2_value}"    Append To List    ${other_service_fees_request_list_2}    "tax2":${tax_2_value}
     Run Keyword If    "${trip_type_value}"    Append To List    ${other_service_fees_request_list_2}    "tripType":"${trip_type_value}"
@@ -480,7 +480,7 @@ Send Other Service Fees For Air Fees Post Request
     Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
     ${client_type}    Set Variable If    "${client_type_value}"=="NULL"    null    "${client_type_value}"=="None"    None    "${client_type_value}"
     Run Keyword If    "${client_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientType":${client_type}
-    Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "profileName":"${pro_name_value}"
+    Run Keyword If    "${client_account_number_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientAccountNumber":"${client_account_number_value}"
     Run Keyword If    "${merchant_fee_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeAbsorb":${merchant_fee_absorb_value}
     Run Keyword If    "${merchant_fee_waive_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeWaive":${merchant_fee_waive_value}
     Run Keyword If    "${apply_formula_value}"!="null"    Append To List    ${other_service_fees_request_list}    "applyFormula":${apply_formula_value}
