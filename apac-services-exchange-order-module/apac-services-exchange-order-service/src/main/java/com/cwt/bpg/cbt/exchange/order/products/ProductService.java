@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.ProductRepository;
 import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
 @Service
 public class ProductService {
@@ -36,5 +37,33 @@ public class ProductService {
 
 		return product.orElse(null);
 
+	}
+
+	public List<BaseProduct> getNonIndiaProducts(String[] countryCodes){
+		
+		return productRepo.getHkSgProducts(countryCodes);
+	}
+	
+	public BaseProduct getProductByCode(String[] countryCodes, String productCode) {
+
+		List<BaseProduct> baseProducts = getNonIndiaProducts(countryCodes);
+		
+		Optional<BaseProduct> product = baseProducts.stream()
+				.filter(p -> p.getProductCode().equalsIgnoreCase(productCode))
+				.findFirst();
+
+		return product.orElse(null);
+
+	}
+
+	public Vendor getVendorByVendorCode(String[] countryCodes, String productCode,
+			String vendorCode) {
+
+		BaseProduct baseProduct = getProductByCode(countryCodes, productCode);
+
+		Optional<Vendor> vendor = baseProduct.getVendors().stream()
+				.filter(v -> v.getVendorNumber().equals(vendorCode)).findFirst();
+
+		return vendor.orElse(null);
 	}
 }
