@@ -12,9 +12,9 @@ public class VendorDAOFactory {
     @Autowired
     private IndiaVendorDAOImpl indiaVendorDAO;
 
-    public VendorDAO getVendorDAO(){
+    public VendorDAO getVendorDAO(String countryCode){
 
-        if(System.getProperty("spring.profiles.default").trim().toLowerCase().equals("in")){
+        if(countryCode.equalsIgnoreCase("IN")){
             return indiaVendorDAO;
         }
 
