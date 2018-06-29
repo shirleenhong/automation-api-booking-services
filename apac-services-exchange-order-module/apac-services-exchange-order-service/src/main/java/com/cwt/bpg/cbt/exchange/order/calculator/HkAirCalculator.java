@@ -122,32 +122,29 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 		BigDecimal merchantFeeAmount = null;
 
 		if (!input.isCwtAbsorb() && FopTypes.CWT.getCode().equals(input.getFopType())
-				&& !input.isMerchantFeeWaive()) {
+                && !input.isMerchantFeeWaive()) {
 
-			BigDecimal mFTotal;
-			BigDecimal transactionFee = safeValue(input.getTransactionFee());
+            BigDecimal mFTotal;
+            BigDecimal transactionFee = safeValue(input.getTransactionFee());
 
-			if (input.isUatp()) {
-				if (ClientTypes.TF.getCode().equals(input.getClientType())) {
-					mFTotal = transactionFee;
-				}
-				else {
-					mFTotal = nettFare.subtract(input.getNettFare()).subtract(tax1).subtract(tax2);
-				}
-			}
-			else {
-				mFTotal = nettFare;
-				if (ClientTypes.TF.getCode().equals(input.getClientType())
-						&& merchantFee.isIncludeTransactionFee()) {
-					mFTotal = mFTotal.add(transactionFee);
-				}
-			}
+            if (input.isUatp()) {
+                if (ClientTypes.TF.getCode().equals(input.getClientType())) {
+                    mFTotal = transactionFee;
+                }
+                else {
+                    mFTotal = nettFare.subtract(input.getNettFare()).subtract(tax1).subtract(tax2);
+                }
+            }
+            else {
+                mFTotal = nettFare;
 
-			merchantFeeAmount = round(calculatePercentage(mFTotal, merchantFee.getMerchantFeePercent()), scale);
-			if (merchantFeeAmount.compareTo(BigDecimal.ZERO) < 0) {
-				merchantFeeAmount = BigDecimal.ZERO;
-			}
+                if (ClientTypes.TF.getCode().equals(input.getClientType()) && merchantFee.isIncludeTransactionFee()) {
+                    mFTotal = mFTotal.add(transactionFee);
+                }
+            }
+			merchantFeeAmount = BigDecimal.ZERO.max(round(calculatePercentage(mFTotal, merchantFee.getMerchantFeePercent()), scale));
 		}
+
 		return merchantFeeAmount;
 	}
 

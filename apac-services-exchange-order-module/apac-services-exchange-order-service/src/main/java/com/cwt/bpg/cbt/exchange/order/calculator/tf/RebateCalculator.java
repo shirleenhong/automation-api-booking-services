@@ -20,8 +20,8 @@ public class RebateCalculator extends FeeCalculator {
     }
 
 	@Override
-    public Boolean getDdlFeeApply() {
-        return null;
+    public boolean getDdlFeeApply() {
+        return false;
     }
 
     @Override

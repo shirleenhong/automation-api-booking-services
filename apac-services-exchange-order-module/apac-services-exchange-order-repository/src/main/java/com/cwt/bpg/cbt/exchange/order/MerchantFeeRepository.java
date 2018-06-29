@@ -23,11 +23,12 @@ public class MerchantFeeRepository {
 	private MorphiaComponent morphia;
 
 	public MerchantFee getMerchantFee(String countryCode, String clientAccountNumber) {
-		return morphia.getDatastore().createQuery(MerchantFee.class)
+		MerchantFee merchantFee = morphia.getDatastore().createQuery(MerchantFee.class)
 				.field("countryCode")
 				.equalIgnoreCase(countryCode)
 				.field("clientAccountNumber")
 				.equalIgnoreCase(leftPadZeros(clientAccountNumber)).get();
+		return merchantFee != null ? merchantFee : new MerchantFee();
 	}
 	
 	public MerchantFee putMerchantFee(MerchantFee merchantFee) {

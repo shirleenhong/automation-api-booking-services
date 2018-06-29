@@ -25,6 +25,11 @@ public class MerchantFee implements Serializable {
 	
 	private String clientAccountNumber;
 
+	public MerchantFee()
+	{
+		merchantFeePercent = 0d;
+	}
+
 	public boolean isIncludeTransactionFee() {
 		return includeTransactionFee;
 	}

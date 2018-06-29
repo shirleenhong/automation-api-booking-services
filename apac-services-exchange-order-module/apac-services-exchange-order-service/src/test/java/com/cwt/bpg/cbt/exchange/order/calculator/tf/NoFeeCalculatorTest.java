@@ -1,8 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 
@@ -42,7 +40,7 @@ public class NoFeeCalculatorTest {
 
     @Test
     public void getDdlFeeApplyShouldReturnNull() {
-        assertNull(noFeeCalc.getDdlFeeApply());
+        assertFalse(noFeeCalc.getDdlFeeApply());
     }
 
     @Test
