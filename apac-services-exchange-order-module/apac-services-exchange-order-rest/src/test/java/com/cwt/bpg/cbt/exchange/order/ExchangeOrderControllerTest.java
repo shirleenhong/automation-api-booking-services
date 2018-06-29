@@ -31,6 +31,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.Header;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -131,9 +132,13 @@ public class ExchangeOrderControllerTest {
 		order.setEoAddress("EO Address");
 		order.setStatus("A");
 		order.setRaiseCheque("Raise Cheque");
-		order.setHeaderAddress("Header Address");
-		order.setHeaderPhoneNumber("02 4595900");
-		order.setHeaderFaxNumber("02 4595900");
+		
+		Header header = new Header();
+		header.setAddress("Header Address");
+		header.setPhoneNumber("02 4595900");
+		header.setFaxNumber("02 4595900");
+		
+		order.setHeader(header);
 		
 		CreditCard creditCard = new CreditCard();
 		creditCard.setCcNumber("1234");

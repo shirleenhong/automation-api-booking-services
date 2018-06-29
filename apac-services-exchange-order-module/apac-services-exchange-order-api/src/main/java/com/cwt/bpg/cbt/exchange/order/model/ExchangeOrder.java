@@ -112,17 +112,10 @@ public class ExchangeOrder implements Serializable {
     @ApiModelProperty(required = true)
     private String raiseCheque;
     
-    @NotEmpty
+    @NotNull
+    @Valid
     @ApiModelProperty(required = true)
-    private String headerAddress;
-    
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String headerPhoneNumber;
-    
-    @NotEmpty
-    @ApiModelProperty(required = true)
-    private String headerFaxNumber;
+    private Header header;
 
     private List<Remark> remarks;
 
@@ -351,28 +344,12 @@ public class ExchangeOrder implements Serializable {
 		this.raiseCheque = raiseCheque;
 	}
 
-	public String getHeaderAddress() {
-		return headerAddress;
+	public Header getHeader() {
+		return header;
 	}
 
-	public void setHeaderAddress(String headerAddress) {
-		this.headerAddress = headerAddress;
-	}
-
-	public String getHeaderPhoneNumber() {
-		return headerPhoneNumber;
-	}
-
-	public void setHeaderPhoneNumber(String headerPhoneNumber) {
-		this.headerPhoneNumber = headerPhoneNumber;
-	}
-
-	public String getHeaderFaxNumber() {
-		return headerFaxNumber;
-	}
-
-	public void setHeaderFaxNumber(String headerFaxNumber) {
-		this.headerFaxNumber = headerFaxNumber;
+	public void setHeader(Header header) {
+		this.header = header;
 	}
 
 	public List<Remark> getRemarks() {
