@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.mongodb.morphia.query.CriteriaContainer;
-import org.mongodb.morphia.query.CriteriaContainerImpl;
-import org.mongodb.morphia.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,16 +42,6 @@ public class ProductRepository {
 
 		return baseProducts;
 	}
-	
-	public List<BaseProduct> getHkSgProducts(String[] countryCodes) {
-
-		List<BaseProduct> baseProducts = new ArrayList<>();
-		baseProducts.addAll(getNonIndiaProducts(countryCodes));
-
-		sort(baseProducts);
-		
-		return baseProducts;
-	}
 
 	private List<Product> getNonIndiaProducts(String countryCode) {
 		HkSgProductList productList = morphia.getDatastore().createQuery(HkSgProductList.class)
@@ -69,23 +56,18 @@ public class ProductRepository {
 
 		return productList == null ? Collections.emptyList() : productList.getProducts();
 	}
+	
 
-	private List<Product> getNonIndiaProducts(String[] countryCodes) {
-
-		Query<HkSgProductList> query = morphia.getDatastore()
-				.createQuery(HkSgProductList.class);
+	public List<Product> getProductsByCodeVendorCode(String productCode, String vendorCode) {
 		
-		CriteriaContainer[] criteria = new CriteriaContainerImpl[countryCodes.length];
+		final HkSgProductList productList = morphia.getDatastore().createQuery(HkSgProductList.class)
+                .filter("products.productCode", productCode)
+                .filter("products.vendors.vendorNumber", vendorCode).get();
 		
-		for (int i = 0; i < countryCodes.length; i++) {
-			criteria[i] = query.criteria("countryCode").equalIgnoreCase(countryCodes[i]);
-		}
-
-		query.or(criteria);
-		HkSgProductList productList = query.get();
-
+		
 		return productList == null ? Collections.emptyList() : productList.getProducts();
 	}
+	
 
 	private void sort(List<BaseProduct> baseProducts) {
 

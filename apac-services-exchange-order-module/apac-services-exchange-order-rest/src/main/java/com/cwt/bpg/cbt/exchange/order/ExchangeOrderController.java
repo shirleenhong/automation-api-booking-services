@@ -20,9 +20,11 @@ import java.io.InputStream;
 @Api(tags = "Exchange Order")
 public class ExchangeOrderController {
 
-	
 	@Autowired
 	private ExchangeOrderService eoService;
+	
+	@Autowired
+	private ExchangeOrderReportService eoReportService;
 	
 	
 	@PostMapping(path = "/exchange-order", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
@@ -50,9 +52,9 @@ public class ExchangeOrderController {
 
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
 
-		InputStream fileInputStream = eoService.generatePdf(eoNumber);
+		InputStream fileInputStream = eoReportService.generatePdf(eoNumber);
 
-		return new ResponseEntity<byte[]>(IOUtils.toByteArray(fileInputStream), headers, HttpStatus.OK);
+		return new ResponseEntity<>(IOUtils.toByteArray(fileInputStream), headers, HttpStatus.OK);
 	}
 	
 }

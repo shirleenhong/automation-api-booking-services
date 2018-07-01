@@ -41,6 +41,9 @@ public class ExchangeOrderControllerTest {
 	@Mock
 	private ExchangeOrderService eoService;
 	
+	@Mock
+	private ExchangeOrderReportService eoReportService;
+	
 	@InjectMocks
 	private ExchangeOrderController controller;
 	
@@ -160,11 +163,11 @@ public class ExchangeOrderControllerTest {
 		String exampleString = "example";
 		InputStream stream = new ByteArrayInputStream(exampleString.getBytes(StandardCharsets.UTF_8));
 
-		when(eoService.generatePdf(eoNumber)).thenReturn(stream);
+		when(eoReportService.generatePdf(eoNumber)).thenReturn(stream);
 
 		mockMvc.perform(get(url + "/generatePdf/" + eoNumber))
 				.andExpect(status().isOk());
 
-		verify(eoService, times(1)).generatePdf(Mockito.anyString());
+		verify(eoReportService, times(1)).generatePdf(Mockito.anyString());
 	}
 }

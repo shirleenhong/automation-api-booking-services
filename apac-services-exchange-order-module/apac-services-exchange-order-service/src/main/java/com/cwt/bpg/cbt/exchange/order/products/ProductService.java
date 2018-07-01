@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.ProductRepository;
 import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
 @Service
@@ -39,31 +40,26 @@ public class ProductService {
 
 	}
 
-	public List<BaseProduct> getNonIndiaProducts(String[] countryCodes){
+	public Vendor getVendor(String productCode, String vendorCode) {
 		
-		return productRepo.getHkSgProducts(countryCodes);
-	}
-	
-	public BaseProduct getProductByCode(String[] countryCodes, String productCode) {
+		Product product = getProductByCodeVendorCode(productCode, vendorCode);
+		Optional<Vendor> vendor = product.getVendors().stream()
+				.filter(v -> v.getVendorNumber().equalsIgnoreCase(vendorCode))
+				.findFirst();
 
-		List<BaseProduct> baseProducts = getNonIndiaProducts(countryCodes);
-		
-		Optional<BaseProduct> product = baseProducts.stream()
+		return vendor.orElse(null);
+	}
+
+	private Product getProductByCodeVendorCode(String productCode,
+			String vendorCode) {
+
+		List<Product> productList = productRepo.getProductsByCodeVendorCode(productCode,
+				vendorCode);
+		Optional<Product> product = productList.stream()
 				.filter(p -> p.getProductCode().equalsIgnoreCase(productCode))
 				.findFirst();
 
 		return product.orElse(null);
-
 	}
-
-	public Vendor getVendorByVendorCode(String[] countryCodes, String productCode,
-			String vendorCode) {
-
-		BaseProduct baseProduct = getProductByCode(countryCodes, productCode);
-
-		Optional<Vendor> vendor = baseProduct.getVendors().stream()
-				.filter(v -> v.getVendorNumber().equals(vendorCode)).findFirst();
-
-		return vendor.orElse(null);
-	}
+	
 }
