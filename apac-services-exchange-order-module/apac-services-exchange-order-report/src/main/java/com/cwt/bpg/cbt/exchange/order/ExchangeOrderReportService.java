@@ -1,8 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +32,7 @@ public class ExchangeOrderReportService {
 	private static final String pdfName = "exchange-order.jasper";
 
 	
-	public InputStream generatePdf(String eoNumber) {
+	public byte[] generatePdf(String eoNumber) {
 
 		ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
 
@@ -50,7 +47,6 @@ public class ExchangeOrderReportService {
 
 		final ClassPathResource resource = new ClassPathResource(pdfName);
 		byte[] report = null;
-		InputStream pdfInputStream = null;
 
 		try {
 			final JasperPrint jasperPrint = JasperFillManager.fillReport(
@@ -58,24 +54,13 @@ public class ExchangeOrderReportService {
 					new JRBeanArrayDataSource(new Object[] { exchangeOrder, vendor }));
 
 			report = JasperExportManager.exportReportToPdf(jasperPrint);
-			pdfInputStream = new ByteArrayInputStream(report);
 			
 		}
 		catch (Exception e) {
 			LOGGER.error("Exception encountered while generating report", e);
 		}
-		finally {
-			if(pdfInputStream != null) {
-				try {
-					pdfInputStream.close();
-				}
-				catch (IOException e) {
-					LOGGER.error("Exception encountered while generating report", e);
-				}
-			}
-		}
 		
-		return pdfInputStream;
+		return report;
 	}
 
 	private Map<String, Object> formReportHeaders(ExchangeOrder order) {

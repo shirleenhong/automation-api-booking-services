@@ -1,10 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import org.apache.commons.io.IOUtils;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,9 +9,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.io.IOException;
-import java.io.InputStream;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(tags = "Exchange Order")
@@ -45,16 +44,15 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/exchange-order/generatePdf/{eoNumber}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_PDF_VALUE })
-	public ResponseEntity<byte[]> generatePdf(@PathVariable String eoNumber) throws IOException
-	{
+	@RequestMapping(value = "/exchange-order/generatePdf/{eoNumber}", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_PDF_VALUE })
+	public ResponseEntity<byte[]> generatePdf(@PathVariable String eoNumber) {
 		final HttpHeaders headers = new HttpHeaders();
 
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
 
-		InputStream fileInputStream = eoReportService.generatePdf(eoNumber);
-
-		return new ResponseEntity<>(IOUtils.toByteArray(fileInputStream), headers, HttpStatus.OK);
+		return new ResponseEntity<>(eoReportService.generatePdf(eoNumber), headers,
+				HttpStatus.OK);
 	}
 	
 }
