@@ -33,19 +33,19 @@ public class ExchangeOrderReportService {
 	
 	public byte[] generatePdf(String eoNumber) throws ExchangeOrderException, Exception {
 
-		Optional<ExchangeOrder> isEoExist = Optional.ofNullable(
+		Optional<ExchangeOrder> eoExists = Optional.ofNullable(
 				getExchangeOrder(eoNumber));
 
-		ExchangeOrder exchangeOrder = isEoExist.orElseThrow(() -> {
+		ExchangeOrder exchangeOrder = eoExists.orElseThrow(() -> {
 			return new ExchangeOrderException(
 					"Exchange order number not found: [ " + eoNumber + " ]");
 		});
 		
-		Optional<Vendor> isVendorExists = Optional
+		Optional<Vendor> vendorExists = Optional
 				.ofNullable(getVendor(exchangeOrder.getCountryCode(),
 						exchangeOrder.getProductCode(), exchangeOrder.getVendorCode()));
 
-		Vendor vendor = isVendorExists.orElseThrow(() -> {
+		Vendor vendor = vendorExists.orElseThrow(() -> {
 			return new ExchangeOrderException(
 					"Vendor not found for exchange order number: [ " + eoNumber + " ]");
 		});
