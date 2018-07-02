@@ -175,4 +175,17 @@ public class ExchangeOrderControllerTest {
 		assertTrue(actualPdfName.contains(eoNumber+".pdf"));
 		verify(eoReportService, times(1)).generatePdf(Mockito.anyString());
 	}
+
+	@Test
+	public void shouldEmailPdf() throws Exception {
+
+		ExchangeOrder order = createExchangeOrder();
+
+		when(eoReportService.emailPdf(order)).thenReturn("");
+
+		mockMvc.perform(post(url+"/emailPdf/").contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+				.andExpect(status().isOk()).andReturn().getResponse();
+
+		verify(eoReportService, times(1)).emailPdf(any(ExchangeOrder.class));
+	}
 }

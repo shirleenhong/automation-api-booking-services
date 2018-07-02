@@ -89,5 +89,16 @@ public class ExchangeOrderController {
 
 		return new ResponseEntity<>(body, headers, status);
 	}
+
+	@PostMapping(path = "/exchange-order/emailPdf",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Saves new exchange order transaction.")
+	public ResponseEntity<String> emailPdf(
+			@Valid @RequestBody @ApiParam(value = "Exchange order to email")  ExchangeOrder input) {
+
+		return new ResponseEntity<>(eoReportService.emailPdf(input), HttpStatus.OK);
+	}
 	
 }

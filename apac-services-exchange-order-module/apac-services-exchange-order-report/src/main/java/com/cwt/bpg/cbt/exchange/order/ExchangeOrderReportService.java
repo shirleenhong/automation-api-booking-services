@@ -86,6 +86,11 @@ public class ExchangeOrderReportService {
 		return productService.getVendor(countryCode, productCode, vendorCode);
 	}
 
+	public String emailPdf(ExchangeOrder order){
+		//TODO IMPLEMENT THIS
+		return "";
+	}
+
 }
 
 	
