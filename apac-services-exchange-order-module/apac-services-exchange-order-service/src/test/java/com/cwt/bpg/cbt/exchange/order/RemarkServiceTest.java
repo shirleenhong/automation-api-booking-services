@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -14,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.model.Remark;
-import com.google.common.collect.Lists;
 
 public class RemarkServiceTest {
 
@@ -57,7 +57,7 @@ public class RemarkServiceTest {
     public void getRemarksShouldReturnRemarks() {
         Remark remark = mock(Remark.class);
         when(remark.getText()).thenReturn("ITIN REMARK");
-    	List<Remark> remarks = Lists.newArrayList(remark);
+    	List<Remark> remarks = Collections.singletonList(remark);
         when(repository.getRemarks("HK", "HL", "E")).thenReturn(remarks);
 
         List<String> result = service.getRemarks("HK", "HL", "E");
