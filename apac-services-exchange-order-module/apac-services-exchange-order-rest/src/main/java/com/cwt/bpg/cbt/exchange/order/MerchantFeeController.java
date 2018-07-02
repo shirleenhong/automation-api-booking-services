@@ -20,11 +20,11 @@ public class MerchantFeeController {
 	private MerchantFeeService service;
 
 	@Internal
-	@GetMapping(path = "/merchant/{countryCode}/{clientAccountNumber}",
+	@GetMapping(
+			path = "/merchant/{countryCode}/{clientAccountNumber}",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(
-			value = "Pulls merchant fee based on a [country code | client account number] combination")
+	@ApiOperation(value = "Pulls merchant fee based on a [country code | client account number] combination")
 	public ResponseEntity<MerchantFee> getMerchantFee(@PathVariable String countryCode,
 			@PathVariable String clientAccountNumber) {
 
@@ -32,7 +32,9 @@ public class MerchantFeeController {
 	}
 
 	@Internal
-	@PutMapping(path = "/merchant", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+	@PutMapping(
+			path = "/merchant",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Updates merchant fee configuration of a given market")
@@ -42,7 +44,9 @@ public class MerchantFeeController {
 	}
 
 	@Internal
-	@DeleteMapping(path = "/merchant", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+	@DeleteMapping(
+			path = "/merchant",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "remove merchant fee configuration of a given market")

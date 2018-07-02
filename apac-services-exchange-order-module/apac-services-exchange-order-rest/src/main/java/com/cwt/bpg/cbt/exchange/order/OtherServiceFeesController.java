@@ -23,18 +23,21 @@ public class OtherServiceFeesController {
 	@Autowired
 	private OtherServiceFeesService service;
 
-	
-	@PostMapping(path = "/non-air-fees/in", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+	@PostMapping(
+			path = "/non-air-fees/in",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes non air fees. Applicable to India air products.")
-	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(
-			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") IndiaNonAirFeesInput input) {
+	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(@Valid @RequestBody @ApiParam(
+			value = "Values needed for calculation") IndiaNonAirFeesInput input) {
 		input.setCountryCode(Country.INDIA.getCode());
 		return new ResponseEntity<>(service.calculateIndiaNonAirFees(input), HttpStatus.OK);
 	}
 
-	@PostMapping(path = "/non-air-fees/{countryCode:hk|sg}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+	@PostMapping(
+			path = "/non-air-fees/{countryCode:hk|sg}",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes non air fees.")
@@ -45,17 +48,21 @@ public class OtherServiceFeesController {
 		return new ResponseEntity<>(service.calculateNonAirFees(input), HttpStatus.OK);
 	}
 
-    @PostMapping(path = "/air-fees/in", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
-            consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-    @ResponseBody
-    @ApiOperation(value = "Computes air fees. Applicable to India air products.")
-    public ResponseEntity<IndiaAirFeesBreakdown> computeIndiaAirFees(
-            @Valid @RequestBody @ApiParam(value = "Values needed for calculation") IndiaAirFeesInput input) {
+	@PostMapping(
+			path = "/air-fees/in",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Computes air fees. Applicable to India air products.")
+	public ResponseEntity<IndiaAirFeesBreakdown> computeIndiaAirFees(
+			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") IndiaAirFeesInput input) {
 
-        return new ResponseEntity<>(service.calculateIndiaAirFees(input), HttpStatus.OK);
-    }
+		return new ResponseEntity<>(service.calculateIndiaAirFees(input), HttpStatus.OK);
+	}
 
-    @PostMapping(path = "/air-fees/{countryCode:hk|sg}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+	@PostMapping(
+			path = "/air-fees/{countryCode:hk|sg}",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes air fees. Applicable to non-India air products.")
@@ -67,7 +74,9 @@ public class OtherServiceFeesController {
 		return new ResponseEntity<>(service.calculateAirFees(input), HttpStatus.OK);
 	}
 
-	@PostMapping(path = "/visa-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+	@PostMapping(
+			path = "/visa-fees",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes visa processing fees. Not be used for visa cost and handling fee.")
@@ -77,7 +86,9 @@ public class OtherServiceFeesController {
 		return new ResponseEntity<>(service.calculateVisaFees(input), HttpStatus.OK);
 	}
 
-	@PostMapping(path = "/nett-cost", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+	@PostMapping(
+			path = "/nett-cost",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes nett cost.")
@@ -86,5 +97,5 @@ public class OtherServiceFeesController {
 
 		return new ResponseEntity<>(service.calculateNettCost(input), HttpStatus.OK);
 	}
-	
+
 }
