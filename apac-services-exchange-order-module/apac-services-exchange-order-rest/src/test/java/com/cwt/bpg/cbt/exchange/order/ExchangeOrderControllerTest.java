@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.times;
@@ -27,6 +28,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
@@ -163,14 +165,16 @@ public class ExchangeOrderControllerTest {
 	public void shouldGeneratePdf() throws Exception {
 
 		String eoNumber = "1806100005";
-
 		String exampleString = "example";
 		byte[] pdfByte = exampleString.getBytes(StandardCharsets.UTF_8);
-		when(eoReportService.generatePdf(eoNumber)).thenReturn(pdfByte);
+		when(eoReportService.generatePdf(Mockito.anyString())).thenReturn(pdfByte);
 
-		mockMvc.perform(get(url + "/generatePdf/" + eoNumber))
-				.andExpect(status().isOk());
+		MvcResult result = mockMvc.perform(get(url + "/generatePdf/" + eoNumber))
+				.andExpect(status().isOk()).andReturn();
 
+		String actualPdfName = result.getResponse().getHeaderValue("Content-Disposition").toString();
+
+		assertTrue(actualPdfName.contains(eoNumber+".pdf"));
 		verify(eoReportService, times(1)).generatePdf(Mockito.anyString());
 	}
 }
