@@ -1,11 +1,14 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-public class IndiaAirProductInput {
+import java.io.Serializable;
+
+public class IndiaAirProductInput implements Serializable {
+	
+	private static final long serialVersionUID = 4262078426836854023L;
 	
 	private Double ot1Percent;
 	private Double ot2Percent;
 	private Double gstPercent;
-
 	
 	public Double getOt1Percent() {
 		return ot1Percent;

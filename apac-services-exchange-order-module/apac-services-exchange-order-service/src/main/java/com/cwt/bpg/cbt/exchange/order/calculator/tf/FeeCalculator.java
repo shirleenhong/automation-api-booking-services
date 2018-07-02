@@ -40,18 +40,19 @@ public class FeeCalculator {
 
 		if (input.isGstEnabled()) {
 			gstAmount = BigDecimal.ZERO;
-		}
-
-		if (input.isGstEnabled() && client.isExemptTax()) {
-			final IndiaAirProductInput product = input.getProduct();
-			final BigDecimal baseFarePlusYqTax = safeValue(input.getBaseFare()).add(yqTax);
-
-			gstAmount = calculatePercentage(baseFarePlusYqTax, product.getGstPercent())
-					.add(calculatePercentage(baseFarePlusYqTax, product.getOt1Percent()))
-					.add(calculatePercentage(baseFarePlusYqTax, product.getOt2Percent()));
-		}
-
-		if (input.isCommissionEnabled()) {
+			
+			if(!client.isExemptTax()) {
+				final IndiaAirProductInput product = input.getProduct();
+				final BigDecimal baseFarePlusYqTax = safeValue(input.getBaseFare())
+								.add(yqTax);
+				
+				gstAmount = calculatePercentage(baseFarePlusYqTax, product.getGstPercent())
+						.add(calculatePercentage(baseFarePlusYqTax, product.getOt1Percent()))
+						.add(calculatePercentage(baseFarePlusYqTax, product.getOt2Percent()));
+			}
+		}		
+				
+		if(input.isCommissionEnabled()) {
 			breakdown.setTotalAirlineCommission(round(getTotalAirCommission(input, yqTax), scale));
 		}
 
@@ -279,10 +280,16 @@ public class FeeCalculator {
 		return result.orElse(null);
 	}
 
+	/**
+	 * Airline commission replaced by airlineOverheadCommissionPercent
+	 * @param input
+	 * @param yqTax
+	 * @return
+	 */
 	public BigDecimal getTotalAirCommission(IndiaAirFeesInput input, BigDecimal yqTax) {
-		return safeValue(input.getBaseFare())
-					.add(safeValue(yqTax))
-					.add(safeValue(input.getAirlineCommission()));
+		return calculatePercentage(safeValue(input.getBaseFare())
+					.add(safeValue(yqTax)),
+					input.getAirlineOverheadCommissionPercent());
 	}
 
 	public BigDecimal getTotalMarkup() {
