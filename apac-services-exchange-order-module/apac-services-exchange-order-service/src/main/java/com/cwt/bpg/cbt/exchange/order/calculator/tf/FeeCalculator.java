@@ -146,6 +146,10 @@ public class FeeCalculator {
 			}
 
 		}
+		else {
+			result = input.getFee();
+		}
+		
 		return result;
 	}
 

@@ -602,6 +602,7 @@ public class FeeCalculatorTest {
 		
 		input.setTripType(TripTypes.DOMESTIC.getCode());
 		input.setFeeOverride(true);
+		input.setFee(new BigDecimal(500));
 		
 		IndiaAirFeesBreakdown breakdown = calculator.calculate(input, null, client, 
 				new Airport(), airProduct);
@@ -624,7 +625,7 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getTotalSellingFare().doubleValue(), is(581.12d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(610d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(1110d));
         assertThat(breakdown.getFee(), is(nullValue()));        
         assertThat(breakdown.getCommission(), is(nullValue()));
 		
