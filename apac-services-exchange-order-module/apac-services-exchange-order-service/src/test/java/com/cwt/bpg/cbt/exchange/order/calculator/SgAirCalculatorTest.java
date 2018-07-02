@@ -312,8 +312,8 @@ public class SgAirCalculatorTest {
 		return new BigDecimal(amount);
 	}
 
-	@Test
-	public void shouldCalculateNoMerchantFee() {
+	@Test(expected = NullPointerException.class)
+	public void shouldThrowExceptionWhenMerchantFeeIsNull() {
 
 		AirFeesInput input = new AirFeesInput();
 		input.setApplyFormula(true);
@@ -331,12 +331,7 @@ public class SgAirCalculatorTest {
 		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setCountryCode("SG");
 
-		AirFeesBreakdown afb = calculator.calculate(input, null);
+		calculator.calculate(input, null);
 
-		assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(0D)));
-		assertThat(afb.getDiscount().doubleValue(), is(equalTo(0D)));
-		assertThat(afb.getCommission().doubleValue(), is(equalTo(60D)));
-		assertThat(afb.getNettCost().doubleValue(), is(equalTo(240D)));
-		assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(237D)));
 	}
 }

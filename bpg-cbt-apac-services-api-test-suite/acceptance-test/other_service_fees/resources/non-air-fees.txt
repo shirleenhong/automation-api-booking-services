@@ -6,7 +6,7 @@ Resource    ../../resources/api-variables.txt
 *** Keywords ***
 Append Fields For Non-Air Fees For HK/SG
     [Arguments]    ${other_service_fees_request_list}
-    Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "profileName":"${pro_name_value}"
+    Run Keyword If    "${client_account_number_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientAccountNumber":"${client_account_number_value}"
     Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
     Run Keyword If    "${merchant_fee_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeAbsorb":${merchant_fee_absorb_value}
     Run Keyword If    "${merchant_fee_waive_value}"!="null"    Append To List    ${other_service_fees_request_list}    "merchantFeeWaive":${merchant_fee_waive_value}
@@ -19,7 +19,7 @@ Append Fields For Non-Air Fees For HK/SG
 Append Fields For Non-Air Fees For India
     [Arguments]    ${other_service_fees_request_list}    ${product_request_list}
     Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
-    Run Keyword If    "${pro_name_value}"!="null"    Append To List    ${other_service_fees_request_list}    "profileName":"${pro_name_value}"
+    Run Keyword If    "${client_account_number_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientAccountNumber":"${client_account_number_value}"
     Run Keyword If    "${acct_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "ccType":"${acct_type_value}"
     Run Keyword If    "${cost_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "costAmount":${cost_amount_value}
     Run Keyword If    "${comm_by_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionByPercent":${comm_by_percent_value}

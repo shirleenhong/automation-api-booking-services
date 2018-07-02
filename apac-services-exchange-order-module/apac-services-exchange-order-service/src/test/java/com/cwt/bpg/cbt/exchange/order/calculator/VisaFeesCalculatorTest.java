@@ -1,9 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
 
@@ -15,7 +13,9 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.VisaFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.VisaFeesInput;
 
 public class VisaFeesCalculatorTest {
 
@@ -40,7 +40,7 @@ public class VisaFeesCalculatorTest {
 		input.setCwtHandling(new BigDecimal(100));
 		input.setVendorHandling(new BigDecimal(50));
 
-		VisaFeesBreakdown result = (VisaFeesBreakdown) calculator.calculate(input, createMerchantFee());
+		VisaFeesBreakdown result = calculator.calculate(input, createMerchantFee());
 
 		assertThat(result.getNettCostMerchantFee(), nullValue());
 		assertThat(result.getCwtHandlingMerchantFee(), nullValue());
@@ -58,7 +58,7 @@ public class VisaFeesCalculatorTest {
 		input.setCwtHandling(new BigDecimal(100));
 		input.setVendorHandling(new BigDecimal(50));
 
-		VisaFeesBreakdown result = (VisaFeesBreakdown) calculator.calculate(input, createMerchantFee());
+		VisaFeesBreakdown result = calculator.calculate(input, createMerchantFee());
 
 		assertThat(result.getNettCostMerchantFee().doubleValue(), is(equalTo(3D)));
 		assertThat(result.getCwtHandlingMerchantFee(), nullValue());
@@ -76,7 +76,7 @@ public class VisaFeesCalculatorTest {
 		input.setCwtHandling(new BigDecimal(100));
 		input.setVendorHandling(new BigDecimal(50));
 
-		VisaFeesBreakdown result = (VisaFeesBreakdown) calculator.calculate(input, createMerchantFee());
+		VisaFeesBreakdown result = calculator.calculate(input, createMerchantFee());
 
 		assertThat(result.getNettCostMerchantFee(), nullValue());
 		assertThat(result.getCwtHandlingMerchantFee().doubleValue(), is(equalTo(3D)));

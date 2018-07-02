@@ -20,19 +20,16 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(tags = "Products")
-public class ProductsController
-{
-    @Autowired
-    private ProductService service;
+public class ProductsController {
+	@Autowired
+	private ProductService service;
 
-    @GetMapping(path = "/products/{countryCode}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-    @ResponseBody
-    @ApiOperation(value = "Pulls list of products and vendors for a specific market")
-    public ResponseEntity<List<BaseProduct>> getProducts(
-            @PathVariable
-            @ApiParam(value = "Country code of the requested market") 
-            String countryCode) {
-        return new ResponseEntity<>(service.getProducts(countryCode), HttpStatus.OK);
-    }
+	@GetMapping(path = "/products/{countryCode}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Pulls list of products and vendors for a specific market")
+	public ResponseEntity<List<BaseProduct>> getProducts(
+			@PathVariable @ApiParam(value = "Country code of the requested market") String countryCode) {
+		return new ResponseEntity<>(service.getProducts(countryCode), HttpStatus.OK);
+	}
 
 }

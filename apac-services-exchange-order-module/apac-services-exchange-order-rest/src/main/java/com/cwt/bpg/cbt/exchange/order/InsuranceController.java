@@ -38,7 +38,9 @@ public class InsuranceController {
 	}
 
 	@Internal
-	@PutMapping(path = "/insurance", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+	@PutMapping(
+			path = "/insurance",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Add/Updates insurance plan")

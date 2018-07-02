@@ -116,7 +116,9 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private Header header;
 
-	private List<Remark> remarks;
+	private List<String> eoRemarks;
+
+	private List<String> itineraryRemarks;
 
 	public String getEoNumber() {
 		return eoNumber;
@@ -350,11 +352,19 @@ public class ExchangeOrder implements Serializable {
 		this.header = header;
 	}
 
-	public List<Remark> getRemarks() {
-		return remarks;
+	public List<String> getEoRemarks() {
+		return eoRemarks;
 	}
 
-	public void setRemarks(List<Remark> remarks) {
-		this.remarks = remarks;
+	public void setEoRemarks(List<String> eoRemarks) {
+		this.eoRemarks = eoRemarks;
+	}
+
+	public List<String> getItineraryRemarks() {
+		return itineraryRemarks;
+	}
+
+	public void setItineraryRemarks(List<String> itineraryRemarks) {
+		this.itineraryRemarks = itineraryRemarks;
 	}
 }

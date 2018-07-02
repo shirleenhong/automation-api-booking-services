@@ -14,15 +14,15 @@ public class MssqlDBConfiguration {
     @Autowired
     private Encryptor encryptor;
     
-    @Value("${com.cwt.tprodb.host}")//com.cwt.tprodb.host=localhost\\SQLEXPRESS
+    @Value("${com.cwt.tprodb.host}")
     private String dbHost;
-    @Value("${com.cwt.tprodb.port}")//com.cwt.tprodb.port=1433
+    @Value("${com.cwt.tprodb.port}")
     private String dbPort;
-    @Value("${com.cwt.tprodb.dbname}")//com.cwt.tprodb.dbname=TProSG_local
+    @Value("${com.cwt.tprodb.dbname}")
     private String dbName;
-    @Value("${com.cwt.tprodb.dbuser}")//com.cwt.tprodb.dbuser=ZEayOfMPeH3tni24l2hvFw==
+	@Value("${com.cwt.tprodb.dbuser}")
     private String dbuser;
-    @Value("${com.cwt.tprodb.dbpwd}")//com.cwt.tprodb.dbpwd=EDVhB6NgoPGJUrVAADbIzw==
+    @Value("${com.cwt.tprodb.dbpwd}")
     private String dbPwd;
 
 	@Bean

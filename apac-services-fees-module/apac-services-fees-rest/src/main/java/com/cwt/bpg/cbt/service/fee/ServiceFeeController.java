@@ -22,19 +22,17 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/service-fees")
 @Api(tags = "Service Fees")
-public class ServiceFeeController
-{
-    @Autowired
-    private ServiceFeeService service;
+public class ServiceFeeController {
+	@Autowired
+	private ServiceFeeService service;
 
-    @PostMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
-            consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-    @ResponseBody
-    @ApiOperation(value = "Calculates different service fees")
-    public ResponseEntity<PriceBreakdown> calculatePriceInput(
-            @Valid  @RequestBody
-            @ApiParam(value = "Values needed for calculation") PriceCalculationInput input)
-    {
-        return new ResponseEntity<>(service.calculate(input), HttpStatus.OK);
-    }
+	@PostMapping(
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Calculates different service fees")
+	public ResponseEntity<PriceBreakdown> calculatePriceInput(@Valid @RequestBody @ApiParam(
+			value = "Values needed for calculation") PriceCalculationInput input) {
+		return new ResponseEntity<>(service.calculate(input), HttpStatus.OK);
+	}
 }
