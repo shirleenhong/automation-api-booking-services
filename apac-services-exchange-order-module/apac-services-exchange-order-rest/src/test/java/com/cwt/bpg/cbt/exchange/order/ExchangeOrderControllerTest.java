@@ -16,7 +16,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -38,7 +37,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@Ignore
 public class ExchangeOrderControllerTest {
 
 	private MockMvc mockMvc;
