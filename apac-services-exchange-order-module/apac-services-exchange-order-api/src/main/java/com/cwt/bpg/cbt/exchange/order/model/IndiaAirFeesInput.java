@@ -2,8 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
 
-public class IndiaAirFeesInput extends FeesInput
-{
+public class IndiaAirFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = 8399565390820971940L;
 
@@ -25,13 +24,13 @@ public class IndiaAirFeesInput extends FeesInput
 	private boolean discountEnabled;
 	private int airSegmentCount;
 	private Double discountPercent;
-	
+
 	private IndiaAirProductInput product;
-	
+
 	private boolean feeOverride;
-	
+
 	private String cityCode;
-	
+
 	public String getCityCode() {
 		return cityCode;
 	}
