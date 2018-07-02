@@ -60,8 +60,8 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 				BigDecimal totalPlusTF = getTotal(totalNettFare,
 						input.getTransactionFee(),
 						inClientType,
-						getTransactionFeeFlag(merchantFeeObj));
-				merchantFee = getMerchantFee(totalPlusTF, safeMerchantFeePercent(merchantFeeObj), scale);
+						merchantFeeObj.isIncludeTransactionFee());
+				merchantFee = getMerchantFee(totalPlusTF, merchantFeeObj.getMerchantFeePercent(), scale);
 				result.setMerchantFee(merchantFee);
 			}
 
@@ -75,14 +75,6 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 		result.setTotalSellingFare(totalSellingFare);
 
 		return result;
-	}
-
-	private Double safeMerchantFeePercent(MerchantFee merchantFee) {
-		return (merchantFee != null) ? merchantFee.getMerchantFeePercent() : 0D;
-	}
-
-	private Boolean getTransactionFeeFlag(MerchantFee merchantFee) {
-		return (merchantFee != null) ? merchantFee.isIncludeTransactionFee() : Boolean.FALSE;
 	}
 
 	private BigDecimal getTotalNettFare(AirFeesInput input, BigDecimal discount, BigDecimal totalTax,
