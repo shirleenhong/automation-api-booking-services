@@ -272,6 +272,11 @@
 						<delimiter>@</delimiter>
 					</delimiters>
 					<useDefaultDelimiters>false</useDefaultDelimiters>
+					<nonFilteredFileExtensions>
+		                <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+		                <nonFilteredFileExtension>jasper</nonFilteredFileExtension>
+		                <nonFilteredFileExtension>jrxml</nonFilteredFileExtension>
+              </nonFilteredFileExtensions>
 				</configuration>
 			</plugin>
 
