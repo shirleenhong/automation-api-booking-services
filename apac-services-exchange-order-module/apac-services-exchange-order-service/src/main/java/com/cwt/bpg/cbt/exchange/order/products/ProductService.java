@@ -42,10 +42,14 @@ public class ProductService {
 	public Vendor getVendor(String countryCode, String productCode, String vendorCode) {
 
 		BaseProduct product = getProductByCode(countryCode, productCode);
-		Optional<Vendor> vendor = product.getVendors().stream()
-				.filter(v -> v.getVendorNumber().equalsIgnoreCase(vendorCode))
-				.findFirst();
-
+		Optional<Vendor> vendor = Optional.empty();
+		
+		if (product != null) {
+			vendor = product.getVendors().stream()
+					.filter(v -> v.getVendorNumber().equalsIgnoreCase(vendorCode))
+					.findFirst();
+		}
+		
 		return vendor.orElse(null);
 	}
 	

@@ -28,7 +28,7 @@ public class ExchangeOrderReportService {
 	private ProductService productService;
 
 
-	private static final String pdfName = "exchange-order.jasper";
+	private static final String PDFNAME = "exchange-order.jasper";
 
 	
 	public byte[] generatePdf(String eoNumber) throws ExchangeOrderException, Exception {
@@ -53,16 +53,14 @@ public class ExchangeOrderReportService {
 		
 		
 		Map<String, Object> parameters = formReportHeaders(exchangeOrder);
-		final ClassPathResource resource = new ClassPathResource(pdfName);
-		byte[] report = null;
+		final ClassPathResource resource = new ClassPathResource(PDFNAME);
 
 		final JasperPrint jasperPrint = JasperFillManager.fillReport(
 				resource.getInputStream(), parameters,
 				new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
 
-		report = JasperExportManager.exportReportToPdf(jasperPrint);
 		
-		return report;
+		return JasperExportManager.exportReportToPdf(jasperPrint);
 	}
 
 	private Map<String, Object> formReportHeaders(ExchangeOrder order) {
