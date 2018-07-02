@@ -33,7 +33,7 @@ public class RemarkController {
 	@GetMapping(path = "/remarks/{countryCode}/{productType}/{remarkType}")
 	@ResponseBody
 	@ApiOperation(value = "Pulls remarks given country code, product type, remark type.")
-	public ResponseEntity<List<Remark>> getRemarks(
+	public ResponseEntity<List<String>> getRemarks(
 			@PathVariable @ApiParam(value = "2-character country code", required = true) String countryCode,
 			@PathVariable @ApiParam(value= "Product type. Possible values: CT, CX, HL, TR, VI", required = true) String productType,
 			@PathVariable @ApiParam(value = "Remark type. Possible vales: E, I", required = true) String remarkType) {
