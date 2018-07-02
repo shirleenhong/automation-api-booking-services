@@ -69,7 +69,7 @@
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
-	<logger name="org.springframework.web.servlet.mvc.method.annotation" level="DEBUG" additivity="true">
+	<logger name="org.springframework.web.servlet.mvc.method.annotation" level="ERROR" additivity="true">
 		<appender-ref ref="ASYNC-WARNINGS" />
 	</logger>
 
