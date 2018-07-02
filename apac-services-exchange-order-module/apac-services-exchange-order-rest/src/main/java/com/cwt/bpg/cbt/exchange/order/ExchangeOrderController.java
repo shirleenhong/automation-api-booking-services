@@ -60,16 +60,17 @@ public class ExchangeOrderController {
 
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
 	}
-
-	@RequestMapping(value = "/exchange-order/generatePdf/{eoNumber}", method = RequestMethod.GET, produces = {
-			MediaType.APPLICATION_PDF_VALUE })
-	public ResponseEntity<byte[]> generatePdf(@PathVariable String eoNumber) {
-		final HttpHeaders headers = new HttpHeaders();
-
+  
+	@RequestMapping(value = "/exchange-order/generatePdf/{eoNumber}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_PDF_VALUE })
+	public ResponseEntity<byte[]> generatePdf(@PathVariable String eoNumber) throws IOException
+	{
+        String filename = eoNumber+".pdf";
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment;filename=\""+filename+"\"");
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
 
-		return new ResponseEntity<>(eoReportService.generatePdf(eoNumber), headers,
-				HttpStatus.OK);
+		InputStream fileInputStream = eoService.generatePdf(eoNumber);
+		return new ResponseEntity<byte[]>(IOUtils.toByteArray(fileInputStream), headers, HttpStatus.OK);
 	}
 	
 }
