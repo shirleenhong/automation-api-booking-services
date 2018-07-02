@@ -21,6 +21,7 @@ import com.cwt.bpg.cbt.exchange.order.model.Airport;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirProductInput;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
 
 public class BaseAndYqCalculatorTest {
@@ -70,6 +71,11 @@ public class BaseAndYqCalculatorTest {
 		rule.setIncludeYqCommission(false);
 		Client client = new Client();
 		client.setClientPricings(new ArrayList<>());
+		IndiaAirProductInput product = new IndiaAirProductInput();
+		product.setGstPercent(2d);
+		product.setOt1Percent(1.5d);
+		product.setOt2Percent(1.5d);
+		input.setProduct(product);
 
 		IndiaAirFeesBreakdown result = calculator.calculate(input, rule, client, new Airport(), new IndiaProduct());
 		
@@ -83,12 +89,12 @@ public class BaseAndYqCalculatorTest {
 		assertNull(result.getOverheadPercent());
 		assertNull(result.getSubMerchantFeePercent());
 		assertEquals(new BigDecimal(600).setScale(2), result.getTotalCharge());
-		assertEquals(new BigDecimal(12.18).setScale(2, RoundingMode.HALF_UP), result.getTotalDiscount());
-		assertEquals(new BigDecimal(0).setScale(2), result.getTotalGst());
+		assertEquals(new BigDecimal(0).setScale(2, RoundingMode.HALF_UP), result.getTotalDiscount());
+		assertEquals(new BigDecimal(30).setScale(2), result.getTotalGst());
 		assertNull(result.getTotalMarkup());
 		assertNull(result.getTotalOverheadCommission());
 		assertEquals(new BigDecimal(600).setScale(2), result.getTotalSellFare());
-		assertEquals(new BigDecimal(599.58).setScale(2, RoundingMode.HALF_UP), result.getTotalSellingFare());
+		assertEquals(new BigDecimal(642.6).setScale(2, RoundingMode.HALF_UP), result.getTotalSellingFare());
 		assertEquals(new BigDecimal(0).setScale(2), result.getTotalTaxes());
 	}
 }
