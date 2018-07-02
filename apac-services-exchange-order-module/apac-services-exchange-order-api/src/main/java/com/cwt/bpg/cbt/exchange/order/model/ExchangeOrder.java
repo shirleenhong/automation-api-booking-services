@@ -116,7 +116,11 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private Header header;
 
+	@ApiModelProperty(hidden = true, value = "For reports purposes only")
+	private Vendor vendor;
+
 	private List<Remark> remarks;
+	
 
 	public String getEoNumber() {
 		return eoNumber;
@@ -348,6 +352,14 @@ public class ExchangeOrder implements Serializable {
 
 	public void setHeader(Header header) {
 		this.header = header;
+	}
+
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
 	}
 
 	public List<Remark> getRemarks() {

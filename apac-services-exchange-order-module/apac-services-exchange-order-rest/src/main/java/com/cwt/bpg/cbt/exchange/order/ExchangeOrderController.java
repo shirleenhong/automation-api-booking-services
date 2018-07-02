@@ -1,11 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import javax.validation.Valid;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,8 +64,20 @@ public class ExchangeOrderController {
 
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
 
-		return new ResponseEntity<>(eoReportService.generatePdf(eoNumber), headers,
-				HttpStatus.OK);
+		try {
+			return new ResponseEntity<>(eoReportService.generatePdf(eoNumber), headers,
+					HttpStatus.OK);
+		}
+		catch (ExchangeOrderException e) {
+			LOGGER.error(e.getMessage());
+			headers.set("Error", "Unable to generate report for exchange order number: " + eoNumber);
+			return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+		}
+		catch(Exception e) {
+			LOGGER.error(e.getMessage());
+			headers.set("Error", "Unable to generate report for exchange order number: " + eoNumber);
+			return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 }
