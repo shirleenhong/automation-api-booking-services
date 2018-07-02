@@ -52,7 +52,6 @@ public class ExchangeOrderController {
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
 
 		InputStream fileInputStream = eoService.generatePdf(eoNumber);
-
 		return new ResponseEntity<byte[]>(IOUtils.toByteArray(fileInputStream), headers, HttpStatus.OK);
 	}
 	
