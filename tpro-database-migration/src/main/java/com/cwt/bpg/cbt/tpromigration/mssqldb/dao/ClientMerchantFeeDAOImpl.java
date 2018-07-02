@@ -26,7 +26,7 @@ public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
 	private DataSource dataSource;
 
 	@Override
-	public List<MerchantFee> listMerchantFees() {
+	public List<MerchantFee> listMerchantFees(String countryCode) {
 		List<MerchantFee> merchantFeeList = new ArrayList<>();
 		String sql = "SELECT clientname, cn, clientType, merchfeepct , tfincmf FROM tblClients";
 		
@@ -37,7 +37,7 @@ public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			String countryCode = System.getProperty("spring.profiles.default");
+			
 			while (rs.next()) {
 				
 				MerchantFee merchantFee = new MerchantFee();
