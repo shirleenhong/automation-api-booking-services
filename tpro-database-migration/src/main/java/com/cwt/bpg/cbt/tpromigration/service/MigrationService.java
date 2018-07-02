@@ -3,7 +3,6 @@ package com.cwt.bpg.cbt.tpromigration.service;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//import com.cwt.bpg.cbt.exchange.order.model.RemarkList;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,19 +62,20 @@ public class MigrationService {
 
 	@Value("${com.cwt.tpromigration.mongodb.dbname}")
 	private String dbName;
+	
+	private String countryCode;
 
     @SuppressWarnings("unchecked")
 	public void migrateProductList() throws JsonProcessingException {
 
 		LOGGER.info("start migration...");
 
-		List<Vendor> vendorList = vendorDAOFactory.getVendorDAO().listVendors();
-		List<BaseProduct> products = productDAOFactory.getProductCodeDAO().listProductCodes();
+		List<Vendor> vendorList = vendorDAOFactory.getVendorDAO(countryCode).listVendors();
+		List<BaseProduct> products = productDAOFactory.getProductCodeDAO(countryCode).listProductCodes();
 		
 		Map<String, BaseProduct> productsMap = products.stream()
 				.collect(Collectors.toMap(BaseProduct::getProductCode, product -> product));
-		String countryCode = System.getProperty("spring.profiles.default");
-
+		
 		vendorList.forEach(vendor -> {
 			List<String> productCodes = vendor.getProductCodes();
 
@@ -117,7 +117,7 @@ public class MigrationService {
 
 		LOGGER.info("Started merchant fee migration...");
 
-		List<MerchantFee> merchantFees = clientMerchantFeeDAO.listMerchantFees();
+		List<MerchantFee> merchantFees = clientMerchantFeeDAO.listMerchantFees(countryCode);
 
 		for (MerchantFee merchantFee : merchantFees) {
 			mongoDbConnection.getCollection("clientMerchantFee")
@@ -319,12 +319,20 @@ public class MigrationService {
 
 	@SuppressWarnings("unchecked")
 	public void migrateRemarks() throws JsonProcessingException {
-		String countryCode = System.getProperty("spring.profiles.default");
+		
 		for(Remark remark: remarkDAO.getRemarks()) {
 			remark.setCountryCode(countryCode);
 			mongoDbConnection.getCollection("remarkList")
 					.insertOne(dBObjectMapper.mapAsDbDocument(remark));
 		}
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 
 }

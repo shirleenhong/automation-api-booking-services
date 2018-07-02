@@ -12,9 +12,9 @@ public class ProductDAOFactory {
     @Autowired
     private IndiaProductCodeDAOImpl indiaProductCodeDAO;
 
-    public ProductCodeDAO getProductCodeDAO() {
+    public ProductCodeDAO getProductCodeDAO(String countryCode) {
 
-        if (System.getProperty("spring.profiles.default").trim().toLowerCase().equals("in")) {
+        if (countryCode.equalsIgnoreCase("IN")) {
             return indiaProductCodeDAO;
         }
 
