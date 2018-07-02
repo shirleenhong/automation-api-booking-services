@@ -46,8 +46,9 @@ public class ExchangeOrderController {
 	@RequestMapping(value = "/exchange-order/generatePdf/{eoNumber}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_PDF_VALUE })
 	public ResponseEntity<byte[]> generatePdf(@PathVariable String eoNumber) throws IOException
 	{
-		final HttpHeaders headers = new HttpHeaders();
-
+        String filename = eoNumber+".pdf";
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment;filename=\""+filename+"\"");
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
 
 		InputStream fileInputStream = eoService.generatePdf(eoNumber);
