@@ -58,17 +58,6 @@ public class ProductRepository {
 	}
 	
 
-	public List<Product> getProductsByCodeVendorCode(String productCode, String vendorCode) {
-		
-		final HkSgProductList productList = morphia.getDatastore().createQuery(HkSgProductList.class)
-                .filter("products.productCode", productCode)
-                .filter("products.vendors.vendorNumber", vendorCode).get();
-		
-		
-		return productList == null ? Collections.emptyList() : productList.getProducts();
-	}
-	
-
 	private void sort(List<BaseProduct> baseProducts) {
 
 		for (BaseProduct baseProduct : baseProducts) {

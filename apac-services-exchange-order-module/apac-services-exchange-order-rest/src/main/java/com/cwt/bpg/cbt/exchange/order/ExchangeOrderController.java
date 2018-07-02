@@ -1,11 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import javax.validation.Valid;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,16 +57,37 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
 	}
   
-	@RequestMapping(value = "/exchange-order/generatePdf/{eoNumber}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_PDF_VALUE })
-	public ResponseEntity<byte[]> generatePdf(@PathVariable String eoNumber) throws IOException
-	{
-        String filename = eoNumber+".pdf";
-		HttpHeaders headers = new HttpHeaders();
+	@RequestMapping(value = "/exchange-order/generatePdf/{eoNumber}", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_PDF_VALUE })
+	public ResponseEntity<byte[]> generatePdf(@PathVariable String eoNumber) {
+
+		String filename = eoNumber+".pdf";
+		
+		final HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Disposition", "attachment;filename=\""+filename+"\"");
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
+		
+		HttpStatus status = HttpStatus.OK;
+		byte[] body = null;
 
-		InputStream fileInputStream = eoService.generatePdf(eoNumber);
-		return new ResponseEntity<byte[]>(IOUtils.toByteArray(fileInputStream), headers, HttpStatus.OK);
+
+		try {
+			body = eoReportService.generatePdf(eoNumber);
+		}
+		catch (ExchangeOrderException e) {
+			LOGGER.error(e.getMessage());
+			headers.set("Error",
+					"Unable to generate report for exchange order number: " + eoNumber);
+			status = HttpStatus.NO_CONTENT;
+		}
+		catch (Exception e) {
+			LOGGER.error(e.getMessage());
+			headers.set("Error",
+					"Unable to generate report for exchange order number: " + eoNumber);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		return new ResponseEntity<>(body, headers, status);
 	}
 	
 }

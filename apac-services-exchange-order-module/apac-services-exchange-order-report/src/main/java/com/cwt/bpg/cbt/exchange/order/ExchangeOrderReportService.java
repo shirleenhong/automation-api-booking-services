@@ -2,13 +2,13 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
@@ -27,40 +27,40 @@ public class ExchangeOrderReportService {
 	@Autowired
 	private ProductService productService;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderReportService.class);
 
-	private static final String pdfName = "exchange-order.jasper";
+	private static final String PDFNAME = "exchange-order.jasper";
 
 	
-	public byte[] generatePdf(String eoNumber) {
+	public byte[] generatePdf(String eoNumber) throws ExchangeOrderException, Exception {
 
-		ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
+		Optional<ExchangeOrder> eoExists = Optional.ofNullable(
+				getExchangeOrder(eoNumber));
 
-		if (exchangeOrder == null) {
-			return null;
-		}
-
-		Vendor vendor = getVendor(exchangeOrder.getProductCode(),
-				exchangeOrder.getVendorCode());
-
-		Map<String, Object> parameters = formReportHeaders(exchangeOrder);
-
-		final ClassPathResource resource = new ClassPathResource(pdfName);
-		byte[] report = null;
-
-		try {
-			final JasperPrint jasperPrint = JasperFillManager.fillReport(
-					resource.getInputStream(), parameters,
-					new JRBeanArrayDataSource(new Object[] { exchangeOrder, vendor }));
-
-			report = JasperExportManager.exportReportToPdf(jasperPrint);
-			
-		}
-		catch (Exception e) {
-			LOGGER.error("Exception encountered while generating report", e);
-		}
+		ExchangeOrder exchangeOrder = eoExists.orElseThrow(() -> {
+			return new ExchangeOrderException(
+					"Exchange order number not found: [ " + eoNumber + " ]");
+		});
 		
-		return report;
+		Optional<Vendor> vendorExists = Optional
+				.ofNullable(getVendor(exchangeOrder.getCountryCode(),
+						exchangeOrder.getProductCode(), exchangeOrder.getVendorCode()));
+
+		Vendor vendor = vendorExists.orElseThrow(() -> {
+			return new ExchangeOrderException(
+					"Vendor not found for exchange order number: [ " + eoNumber + " ]");
+		});
+		exchangeOrder.setVendor(vendor);
+		
+		
+		Map<String, Object> parameters = formReportHeaders(exchangeOrder);
+		final ClassPathResource resource = new ClassPathResource(PDFNAME);
+
+		final JasperPrint jasperPrint = JasperFillManager.fillReport(
+				resource.getInputStream(), parameters,
+				new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
+
+		
+		return JasperExportManager.exportReportToPdf(jasperPrint);
 	}
 
 	private Map<String, Object> formReportHeaders(ExchangeOrder order) {
@@ -82,8 +82,8 @@ public class ExchangeOrderReportService {
 		return exchangeOrderService.getExchangeOrder(eoNumber);
 	}
 	
-	private Vendor getVendor(String productCode, String vendorCode) {
-		return productService.getVendor(productCode, vendorCode);
+	private Vendor getVendor(String countryCode, String productCode, String vendorCode) {
+		return productService.getVendor(countryCode, productCode, vendorCode);
 	}
 
 }

@@ -120,6 +120,21 @@ public class ExchangeOrder implements Serializable {
 
 	private List<String> itineraryRemarks;
 
+	@ApiModelProperty(hidden = true, value = "For reports purposes only")
+	private Vendor vendor;
+	
+	@ApiModelProperty(hidden = true, value = "For testing purposes only. Remove when final template is complete.")
+	private String test;
+	
+	
+	public String getTest() {
+		return test;
+	}
+
+	public void setTest(String test) {
+		this.test = test;
+	}
+
 	public String getEoNumber() {
 		return eoNumber;
 	}
@@ -366,5 +381,13 @@ public class ExchangeOrder implements Serializable {
 
 	public void setItineraryRemarks(List<String> itineraryRemarks) {
 		this.itineraryRemarks = itineraryRemarks;
+	}
+
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
 	}
 }
