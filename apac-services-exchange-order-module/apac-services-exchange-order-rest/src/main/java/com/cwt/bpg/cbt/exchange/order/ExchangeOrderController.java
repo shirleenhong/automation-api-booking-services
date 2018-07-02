@@ -60,24 +60,30 @@ public class ExchangeOrderController {
 	@RequestMapping(value = "/exchange-order/generatePdf/{eoNumber}", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_PDF_VALUE })
 	public ResponseEntity<byte[]> generatePdf(@PathVariable String eoNumber) {
+
 		final HttpHeaders headers = new HttpHeaders();
+		HttpStatus status = HttpStatus.OK;
+		byte[] body = null;
 
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
 
 		try {
-			return new ResponseEntity<>(eoReportService.generatePdf(eoNumber), headers,
-					HttpStatus.OK);
+			body = eoReportService.generatePdf(eoNumber);
 		}
 		catch (ExchangeOrderException e) {
 			LOGGER.error(e.getMessage());
-			headers.set("Error", "Unable to generate report for exchange order number: " + eoNumber);
-			return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+			headers.set("Error",
+					"Unable to generate report for exchange order number: " + eoNumber);
+			status = HttpStatus.NO_CONTENT;
 		}
-		catch(Exception e) {
+		catch (Exception e) {
 			LOGGER.error(e.getMessage());
-			headers.set("Error", "Unable to generate report for exchange order number: " + eoNumber);
-			return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+			headers.set("Error",
+					"Unable to generate report for exchange order number: " + eoNumber);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
+
+		return new ResponseEntity<>(body, headers, status);
 	}
 	
 }
