@@ -49,6 +49,8 @@ public class ExchangeOrderReportService {
 					"Vendor not found for exchange order number: [ " + eoNumber + " ]")
 		);
 		
+		vendor.setContactPerson(exchangeOrder.getVendor().getContactPerson());
+		
 		exchangeOrder.setVendor(vendor);		
 		
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
