@@ -31,6 +31,8 @@ public class ExchangeOrderController {
 	@Autowired
 	private ExchangeOrderReportService eoReportService;
 	
+	private static final String ERROR = "Error";
+	
 	
 	@PostMapping(path = "/exchange-order", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -45,7 +47,7 @@ public class ExchangeOrderController {
 		catch (ExchangeOrderException e) {
 			LOGGER.error(e.getMessage());
 			HttpHeaders headers = new HttpHeaders();
-			headers.set("Error", "Exchange order not found!");
+			headers.set(ERROR, "Exchange order not found!");
 			return new ResponseEntity<>(input, headers, HttpStatus.NO_CONTENT);
 		}
 	}
@@ -79,13 +81,13 @@ public class ExchangeOrderController {
 		}
 		catch (ExchangeOrderException e) {
 			LOGGER.error(e.getMessage());
-			headers.set("Error",
+			headers.set(ERROR,
 					"Unable to generate report for exchange order number: " + eoNumber);
 			status = HttpStatus.NO_CONTENT;
 		}
 		catch (Exception e) {
 			LOGGER.error(e.getMessage());
-			headers.set("Error",
+			headers.set(ERROR,
 					"Unable to generate report for exchange order number: " + eoNumber);
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}

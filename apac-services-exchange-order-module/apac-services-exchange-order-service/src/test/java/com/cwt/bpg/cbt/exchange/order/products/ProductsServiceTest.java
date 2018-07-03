@@ -3,7 +3,9 @@ package com.cwt.bpg.cbt.exchange.order.products;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,6 +67,31 @@ public class ProductsServiceTest {
 		assertNotNull(baseProduct);
 		
 		Mockito.verify(repo, Mockito.times(1)).getProducts(countryCode);
+	}
+	
+	@Test
+	public void shouldGetVendorByProductCodeVendorCode() {
+		final String countryCode = "HK";
+		final String productCode = "ProductCode";
+		final String vendorCode = "000012";
+		List<BaseProduct> value = createListOfProducts();
+		when(repo.getProducts(countryCode)).thenReturn(value);
+		
+		Vendor vendor = service.getVendor(countryCode, productCode, vendorCode);
+		assertNotNull(vendor);
+		assertThat(vendor.getVendorNumber(), is(vendorCode));
+	}
+	
+	@Test
+	public void shouldGetVendorByProductCodeVendorCodeNull() {
+		final String countryCode = "HK";
+		final String productCode = "ProductCode1";
+		final String vendorCode = "000012";
+		List<BaseProduct> value = createListOfProducts();
+		when(repo.getProducts(countryCode)).thenReturn(value);
+		
+		Vendor vendor = service.getVendor(countryCode, productCode, vendorCode);
+		assertNull(vendor);
 	}
 	
 	@Test
