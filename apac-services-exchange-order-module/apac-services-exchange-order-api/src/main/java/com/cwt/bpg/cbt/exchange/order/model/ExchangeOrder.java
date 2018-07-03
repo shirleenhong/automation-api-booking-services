@@ -140,10 +140,7 @@ public class ExchangeOrder implements Serializable {
 
 	@Valid
 	private Vendor vendor;
-	
-	//FIXME Remove: For testing only
-	private String test;
-		
+			
 	public String getEoNumber() {
 		return eoNumber;
 	}
@@ -398,14 +395,6 @@ public class ExchangeOrder implements Serializable {
 
 	public void setVendor(Vendor vendor) {
 		this.vendor = vendor;
-	}
-
-	public String getTest() {
-		return test;
-	}
-
-	public void setTest(String test) {
-		this.test = test;
 	}
 
 	public boolean isGstAbsorb() {
