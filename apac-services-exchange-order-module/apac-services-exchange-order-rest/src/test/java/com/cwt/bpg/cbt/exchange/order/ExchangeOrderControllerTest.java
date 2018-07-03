@@ -53,6 +53,7 @@ public class ExchangeOrderControllerTest {
 	private ExchangeOrderController controller;
 
 	private String url;
+	private String eoNumber;
 
 	@Before
 	public void setUp() {
@@ -60,6 +61,7 @@ public class ExchangeOrderControllerTest {
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
 		url = "/exchange-order";
+		eoNumber = "1806100005";
 	}
 
 	public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -94,7 +96,6 @@ public class ExchangeOrderControllerTest {
 	@Test
 	public void shouldGetExchangeOrderNumber() throws Exception {
 
-		String eoNumber = "1806100005";
 		ExchangeOrder order = new ExchangeOrder();
 		when(eoService.getExchangeOrder(eoNumber)).thenReturn(order);
 
@@ -162,7 +163,6 @@ public class ExchangeOrderControllerTest {
 	@Test
 	public void shouldGeneratePdf() throws Exception {
 
-		String eoNumber = "1806100005";
 		String exampleString = "example";
 		byte[] pdfByte = exampleString.getBytes(StandardCharsets.UTF_8);
 		when(eoReportService.generatePdf(Mockito.anyString())).thenReturn(pdfByte);
@@ -174,5 +174,31 @@ public class ExchangeOrderControllerTest {
 
 		assertTrue(actualPdfName.contains(eoNumber+".pdf"));
 		verify(eoReportService, times(1)).generatePdf(Mockito.anyString());
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldGeneratePdfCheckedException() throws Exception {
+
+		when(eoReportService.generatePdf(Mockito.anyString()))
+				.thenThrow(ExchangeOrderException.class);
+
+		mockMvc.perform(get(url + "/generatePdf/" + eoNumber))
+				.andExpect(status().isNoContent()).andReturn();
+		verify(eoReportService, times(1)).generatePdf(Mockito.anyString());
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldGeneratePdfUnCheckedException() throws Exception {
+
+		when(eoReportService.generatePdf(Mockito.anyString()))
+				.thenThrow(Exception.class);
+
+		mockMvc.perform(get(url + "/generatePdf/" + eoNumber))
+				.andExpect(status().isInternalServerError()).andReturn();
+		verify(eoReportService, times(1)).generatePdf(Mockito.anyString());
+
 	}
 }
