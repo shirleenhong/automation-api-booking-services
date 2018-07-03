@@ -120,7 +120,6 @@ public class ExchangeOrderControllerTest {
 		order.setAdditionalInfoDate(Instant.now());
 		order.setProductCode("PR01");
 		order.setVendorCode("VEN090909");
-		order.setPnr("PNR1234");
 		order.setAccountNumber("987654321");
 		order.setPassengerName("Passenger");
 		order.setAgentId("U001XXX");
@@ -129,9 +128,11 @@ public class ExchangeOrderControllerTest {
 		order.setRecordLocator("Record Locator");
 		order.setNettCost(new BigDecimal(0));
 		order.setTotal(new BigDecimal(0));
-		order.setEoAddress("EO Address");
+		order.setEoAction("EO Action");
 		order.setStatus("A");
 		order.setRaiseCheque("Raise Cheque");
+		order.setSellingPrice(new BigDecimal(0));
+		order.setTotalSellingPrice(new BigDecimal(0));
 		
 		Header header = new Header();
 		header.setAddress("Header Address");

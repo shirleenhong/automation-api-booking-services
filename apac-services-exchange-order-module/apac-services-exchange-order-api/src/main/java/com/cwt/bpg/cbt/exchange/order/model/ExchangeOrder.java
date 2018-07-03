@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -60,9 +61,6 @@ public class ExchangeOrder implements Serializable {
 	private String vendorCode;
 	@NotEmpty
 	@ApiModelProperty(required = true)
-	private String pnr;
-	@NotEmpty
-	@ApiModelProperty(required = true)
 	private String accountNumber;
 	@NotEmpty
 	@ApiModelProperty(required = true)
@@ -92,30 +90,53 @@ public class ExchangeOrder implements Serializable {
 	private String recordLocator;
 
 	@NotNull
+	@DecimalMin(value = "0")
 	@ApiModelProperty(required = true)
 	private BigDecimal nettCost;
 
 	@NotNull
+	@DecimalMin(value = "0")
 	@ApiModelProperty(required = true)
 	private BigDecimal total;
-
-	@NotEmpty
-	@ApiModelProperty(required = true)
-	private String eoAddress;
-
-	@NotEmpty
-	@ApiModelProperty(required = true)
-	private String status;
-
-	@NotEmpty
-	@ApiModelProperty(required = true)
-	private String raiseCheque;
 
 	@NotNull
 	@Valid
 	@ApiModelProperty(required = true)
 	private Header header;
 
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String eoAction;
+	
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String status;
+
+	@ApiModelProperty(required = false)
+	private String raiseCheque;
+
+	@ApiModelProperty(required = false)
+	private String tax1;
+	
+	@ApiModelProperty(required = false)
+	private String tax2;
+
+	@NotNull
+	@DecimalMin(value = "0")
+	@ApiModelProperty(required = true)
+	private BigDecimal sellingPrice;
+
+	@NotNull
+	@DecimalMin(value = "0")
+	@ApiModelProperty(required = true)
+	private BigDecimal totalSellingPrice;
+
+	@ApiModelProperty(required = false, value = "CWT Absorb Tag for GST")
+	private String absorbGst;
+
+	@ApiModelProperty(required = false, value = "CWT Absorb Tag for Merchant Fee")
+	private String absorbMerchantFee;
+	
 	private List<Remark> remarks;
 
 	public String getEoNumber() {
@@ -194,8 +215,8 @@ public class ExchangeOrder implements Serializable {
 		return additionalInfoDate;
 	}
 
-	public void setAdditionalInfoDate(Instant date) {
-		this.additionalInfoDate = date;
+	public void setAdditionalInfoDate(Instant additionalInfoDate) {
+		this.additionalInfoDate = additionalInfoDate;
 	}
 
 	public String getVendorContactPerson() {
@@ -220,14 +241,6 @@ public class ExchangeOrder implements Serializable {
 
 	public void setVendorCode(String vendorCode) {
 		this.vendorCode = vendorCode;
-	}
-
-	public String getPnr() {
-		return pnr;
-	}
-
-	public void setPnr(String pnr) {
-		this.pnr = pnr;
 	}
 
 	public String getAccountNumber() {
@@ -318,12 +331,20 @@ public class ExchangeOrder implements Serializable {
 		this.total = total;
 	}
 
-	public String getEoAddress() {
-		return eoAddress;
+	public Header getHeader() {
+		return header;
 	}
 
-	public void setEoAddress(String eoAddress) {
-		this.eoAddress = eoAddress;
+	public void setHeader(Header header) {
+		this.header = header;
+	}
+
+	public String getEoAction() {
+		return eoAction;
+	}
+
+	public void setEoAction(String eoAction) {
+		this.eoAction = eoAction;
 	}
 
 	public String getStatus() {
@@ -342,12 +363,52 @@ public class ExchangeOrder implements Serializable {
 		this.raiseCheque = raiseCheque;
 	}
 
-	public Header getHeader() {
-		return header;
+	public String getTax1() {
+		return tax1;
 	}
 
-	public void setHeader(Header header) {
-		this.header = header;
+	public void setTax1(String tax1) {
+		this.tax1 = tax1;
+	}
+
+	public String getTax2() {
+		return tax2;
+	}
+
+	public void setTax2(String tax2) {
+		this.tax2 = tax2;
+	}
+
+	public BigDecimal getSellingPrice() {
+		return sellingPrice;
+	}
+
+	public void setSellingPrice(BigDecimal sellingPrice) {
+		this.sellingPrice = sellingPrice;
+	}
+
+	public BigDecimal getTotalSellingPrice() {
+		return totalSellingPrice;
+	}
+
+	public void setTotalSellingPrice(BigDecimal totalSellingPrice) {
+		this.totalSellingPrice = totalSellingPrice;
+	}
+
+	public String getAbsorbGst() {
+		return absorbGst;
+	}
+
+	public void setAbsorbGst(String absorbGst) {
+		this.absorbGst = absorbGst;
+	}
+
+	public String getAbsorbMerchantFee() {
+		return absorbMerchantFee;
+	}
+
+	public void setAbsorbMerchantFee(String absorbMerchantFee) {
+		this.absorbMerchantFee = absorbMerchantFee;
 	}
 
 	public List<Remark> getRemarks() {
