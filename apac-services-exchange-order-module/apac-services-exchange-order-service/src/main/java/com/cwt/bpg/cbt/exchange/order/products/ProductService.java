@@ -46,7 +46,7 @@ public class ProductService {
 		
 		if (product != null) {
 			vendor = product.getVendors().stream()
-					.filter(v -> v.getVendorNumber().equalsIgnoreCase(vendorCode))
+					.filter(v -> v.getCode().equalsIgnoreCase(vendorCode))
 					.findFirst();
 		}
 		

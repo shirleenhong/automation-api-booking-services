@@ -31,8 +31,7 @@ public class ExchangeOrderController {
 	@Autowired
 	private ExchangeOrderReportService eoReportService;
 	
-	private static final String ERROR = "Error";
-	
+	private static final String ERROR = "Error";	
 	
 	@PostMapping(path = "/exchange-order", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -66,44 +65,47 @@ public class ExchangeOrderController {
 	@ApiOperation(value = "Generates exchange order pdf.")
 	public ResponseEntity<byte[]> generatePdf(@PathVariable String eoNumber) {
 
-		String filename = eoNumber+".pdf";
-		
+		String filename = eoNumber+".pdf";		
 		final HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment;filename=\""+filename+"\"");
-		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-		
 		HttpStatus status = HttpStatus.OK;
 		byte[] body = null;
-
 
 		try {
 			body = eoReportService.generatePdf(eoNumber);
 		}
 		catch (ExchangeOrderException e) {
-			LOGGER.error(e.getMessage());
-			headers.set(ERROR,
-					"Unable to generate report for exchange order number: " + eoNumber);
+			handleError(eoNumber, e.getMessage(), headers);
 			status = HttpStatus.NO_CONTENT;
 		}
 		catch (Exception e) {
-			LOGGER.error(e.getMessage());
-			headers.set(ERROR,
-					"Unable to generate report for exchange order number: " + eoNumber);
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			handleError(eoNumber, e.getMessage(), headers);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;			
+		}
+		
+		if(status == HttpStatus.OK) {
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+filename+"\"");
+			headers.setContentType(MediaType.parseMediaType(MediaType.APPLICATION_PDF_VALUE));
 		}
 
 		return new ResponseEntity<>(body, headers, status);
 	}
 
-	@PostMapping(path = "/exchange-order/email",
+	private void handleError(String eoNumber, String message, final HttpHeaders headers) {
+		
+		LOGGER.error(message);
+		headers.set(ERROR,
+				"Unable to generate report for exchange order number: " + eoNumber);
+	}
+
+	@PostMapping(path = "/exchange-order/email/{eoNumber}",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Emails exchange order pdf.")
-	public ResponseEntity<EmailResponse> emailPdf(
-			@Valid @RequestBody @ApiParam(value = "Exchange order to email")  ExchangeOrder input) {
+	@ApiOperation(value = "Emails exchange order pdf of the specified eoNumber")
+	public ResponseEntity<EmailResponse> email(
+			@RequestBody @ApiParam(value = "EoNumber of the exchange order to email")  @PathVariable String eoNumber) {
 
-		return new ResponseEntity<>(eoReportService.emailPdf(input), HttpStatus.OK);
+		return new ResponseEntity<>(eoReportService.emailPdf(eoNumber), HttpStatus.OK);
 	}
 	
 }

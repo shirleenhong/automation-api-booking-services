@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
 import java.util.Optional;
 
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
@@ -14,6 +13,7 @@ import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -28,55 +28,38 @@ public class ExchangeOrderReportService {
 	@Autowired
 	private ProductService productService;
 
-
-	private static final String PDFNAME = "exchange-order.jasper";
-
+	private static final String TEMPLATE = "exchange-order.jasper";
 	
-	public byte[] generatePdf(String eoNumber) throws Exception {
+	public byte[] generatePdf(String eoNumber) throws ExchangeOrderException, JRException, IOException {
 
 		Optional<ExchangeOrder> eoExists = Optional.ofNullable(
 				getExchangeOrder(eoNumber));
 
-		ExchangeOrder exchangeOrder = eoExists.orElseThrow(() -> {
-			return new ExchangeOrderException(
-					"Exchange order number not found: [ " + eoNumber + " ]");
-		});
+		ExchangeOrder exchangeOrder = eoExists.orElseThrow(() -> 
+			new ExchangeOrderException(
+					"Exchange order number not found: [ " + eoNumber + " ]")
+		);
 		
 		Optional<Vendor> vendorExists = Optional
 				.ofNullable(getVendor(exchangeOrder.getCountryCode(),
-						exchangeOrder.getProductCode(), exchangeOrder.getVendorCode()));
+						exchangeOrder.getProductCode(), exchangeOrder.getVendor().getCode()));
 
-		Vendor vendor = vendorExists.orElseThrow(() -> {
-			return new ExchangeOrderException(
-					"Vendor not found for exchange order number: [ " + eoNumber + " ]");
-		});
-		exchangeOrder.setVendor(vendor);
+		Vendor vendor = vendorExists.orElseThrow(() -> 
+			new ExchangeOrderException(
+					"Vendor not found for exchange order number: [ " + eoNumber + " ]")
+		);
 		
+		vendor.setContactPerson(exchangeOrder.getVendor().getContactPerson());
 		
-		Map<String, Object> parameters = formReportHeaders(exchangeOrder);
-		final ClassPathResource resource = new ClassPathResource(PDFNAME);
+		exchangeOrder.setVendor(vendor);		
+		
+		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
 
 		final JasperPrint jasperPrint = JasperFillManager.fillReport(
-				resource.getInputStream(), parameters,
+				resource.getInputStream(), null, 
 				new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
-
 		
 		return JasperExportManager.exportReportToPdf(jasperPrint);
-	}
-
-	private Map<String, Object> formReportHeaders(ExchangeOrder order) {
-		Map<String, Object> parameters = new HashMap<>();
-		
-		String headerAddress = order.getHeader().getAddress();
-		String headerTelephone = order.getHeader().getPhoneNumber();
-		String headerFax = order.getHeader().getFaxNumber();
-
-		parameters.put("headerAddress", headerAddress);
-		parameters.put("headerTelephone", headerTelephone);
-		parameters.put("headerFax", headerFax);
-		
-		return parameters;
-
 	}
 
 	private ExchangeOrder getExchangeOrder(String eoNumber) {
@@ -87,7 +70,7 @@ public class ExchangeOrderReportService {
 		return productService.getVendor(countryCode, productCode, vendorCode);
 	}
 
-	public EmailResponse emailPdf(ExchangeOrder order){
+	public EmailResponse emailPdf(String eoNumber){
 		//TODO IMPLEMENT THIS
 		return new EmailResponse();
 	}

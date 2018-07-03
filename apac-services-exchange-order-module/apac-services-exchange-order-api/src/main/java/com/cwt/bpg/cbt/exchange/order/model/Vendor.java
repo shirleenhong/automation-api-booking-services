@@ -2,6 +2,8 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import io.swagger.annotations.ApiModelProperty;
 
 public class Vendor implements Serializable {
@@ -9,8 +11,10 @@ public class Vendor implements Serializable {
 	private static final long serialVersionUID = -6536616212682978836L;
 	
 	private String countryCode;
-	
-	private String vendorNumber;
+
+	@NotEmpty
+	@ApiModelProperty(required = true)
+	private String code;
 
 	private String address1;
 
@@ -35,7 +39,33 @@ public class Vendor implements Serializable {
 
 	private String sortKey;
 
-	private String vendorName;
+	private String name;
+	
+	private String contactPerson;
+	
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getContactPerson() {
+		return contactPerson;
+	}
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
+	}
 
 	public String getCountryCode() {
 		return countryCode;
@@ -43,14 +73,6 @@ public class Vendor implements Serializable {
 
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
-	}
-
-	public String getVendorNumber() {
-		return vendorNumber;
-	}
-
-	public void setVendorNumber(String vendorNumber) {
-		this.vendorNumber = vendorNumber;
 	}
 
 	public String getAddress1() {
@@ -140,13 +162,4 @@ public class Vendor implements Serializable {
 	public void setSortKey(String sortKey) {
 		this.sortKey = sortKey;
 	}
-
-	public String getVendorName() {
-		return vendorName;
-	}
-
-	public void setVendorName(String vendorName) {
-		this.vendorName = vendorName;
-	}
-
 }

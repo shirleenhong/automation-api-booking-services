@@ -3,9 +3,7 @@ package com.cwt.bpg.cbt.exchange.order;
 import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,10 +18,7 @@ import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -32,9 +27,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
-import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.Header;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -125,13 +118,15 @@ public class ExchangeOrderControllerTest {
 		order.setDescription("test_description");
 		order.setAdditionalInfoDate(Instant.now());
 		order.setProductCode("PR01");
-		order.setVendorCode("VEN090909");
+		Vendor vendor = new Vendor();
+		vendor.setCode("VEN090909");
+		order.setVendor(vendor);
 		order.setAccountNumber("987654321");
 		order.setPassengerName("Passenger");
 		order.setAgentId("U001XXX");
 		order.setPcc("SIN1234");
 		order.setAgentName("Agent Name");
-		order.setRecordLocator("Record Locator");
+		order.setRecordLocator("PNR1234");
 		order.setNettCost(new BigDecimal(0));
 		order.setTotal(new BigDecimal(0));
 		order.setEoAction("EO Action");
@@ -153,6 +148,8 @@ public class ExchangeOrderControllerTest {
 		creditCard.setCcType("AX");
 		creditCard.setExpiryDate("11/2020");
 		order.setCreditCard(creditCard);
+		
+		order.setEoNumber("1807200001");
 
 		return order;
 	}
@@ -185,12 +182,15 @@ public class ExchangeOrderControllerTest {
 
 		ExchangeOrder order = createExchangeOrder();
 
-		when(eoReportService.emailPdf(order)).thenReturn(new EmailResponse());
+		when(eoReportService.emailPdf(order.getEoNumber())).thenReturn(new EmailResponse());
 
-		mockMvc.perform(post(url+"/email/").contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+		mockMvc.perform(post(url+"/email/"+order.getEoNumber())
+				.contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(order)))
 				.andExpect(status().isOk()).andReturn().getResponse();
 
-		verify(eoReportService, times(1)).emailPdf(any(ExchangeOrder.class));
+		verify(eoReportService, times(1)).emailPdf(eq(order.getEoNumber()));	
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Test
@@ -199,7 +199,7 @@ public class ExchangeOrderControllerTest {
 		when(eoReportService.generatePdf(Mockito.anyString()))
 				.thenThrow(ExchangeOrderException.class);
 
-		mockMvc.perform(get(url + "/generatePdf/" + eoNumber))
+		mockMvc.perform(get(url + "/pdf/" + eoNumber))
 				.andExpect(status().isNoContent()).andReturn();
 		verify(eoReportService, times(1)).generatePdf(Mockito.anyString());
 
@@ -212,7 +212,7 @@ public class ExchangeOrderControllerTest {
 		when(eoReportService.generatePdf(Mockito.anyString()))
 				.thenThrow(Exception.class);
 
-		mockMvc.perform(get(url + "/generatePdf/" + eoNumber))
+		mockMvc.perform(get(url + "/pdf/" + eoNumber))
 				.andExpect(status().isInternalServerError()).andReturn();
 		verify(eoReportService, times(1)).generatePdf(Mockito.anyString());
 

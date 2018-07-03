@@ -56,7 +56,7 @@ public class ProductRepositoryTest
 
 		Vendor vendorA = new Vendor();
 		vendorA.setCountry("SG");
-		vendorA.setVendorNumber("022000");
+		vendorA.setCode("022000");
 		vendorA.setAddress1("");
 		vendorA.setAddress2("");
 		vendorA.setCity("SINGAPORE");
@@ -66,7 +66,7 @@ public class ProductRepositoryTest
 		vendorA.setFaxNumber("");
 		vendorA.setMisc(false);
 		vendorA.setSortKey("BSP");
-		vendorA.setVendorName("BANK SETTLEMENT PLAN");
+		vendorA.setName("BANK SETTLEMENT PLAN");
 
 		prodA.getVendors().add(vendorA);
 
@@ -82,7 +82,7 @@ public class ProductRepositoryTest
 
 		Vendor vendorB = new Vendor();
 		vendorB.setCountryCode("SG");
-		vendorB.setVendorNumber("022000");
+		vendorB.setCode("022000");
 		vendorB.setAddress1("");
 		vendorB.setAddress2("");
 		vendorB.setCity("SINGAPORE");
@@ -92,7 +92,7 @@ public class ProductRepositoryTest
 		vendorB.setFaxNumber("");
 		vendorB.setMisc(false);
 		vendorB.setSortKey("BSP");
-		vendorB.setVendorName("BANK SETTLEMENT PLAN");
+		vendorB.setName("BANK SETTLEMENT PLAN");
 		prodB.getVendors().add(vendorB);
 		List<Product> prodList = new ArrayList<>();
 		prodList.add(prodA);
@@ -116,10 +116,10 @@ public class ProductRepositoryTest
 		assertEquals(2, baseProducts.size());
 
 		assertEquals("AA SEGMENT BOOKING FEE", baseProducts.get(0).getDescription());
-		assertEquals("BANK SETTLEMENT PLAN", baseProducts.get(0).getVendors().get(0).getVendorName());
+		assertEquals("BANK SETTLEMENT PLAN", baseProducts.get(0).getVendors().get(0).getName());
 		
 		assertEquals("BSP Ticket And MPD", baseProducts.get(1).getDescription());
-		assertEquals("BANK SETTLEMENT PLAN", baseProducts.get(1).getVendors().get(0).getVendorName());
+		assertEquals("BANK SETTLEMENT PLAN", baseProducts.get(1).getVendors().get(0).getName());
 	}
 
 	@Test
