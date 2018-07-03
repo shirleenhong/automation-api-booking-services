@@ -11,15 +11,13 @@ public class Header implements Serializable {
 	private static final long serialVersionUID = 2269819571493866673L;
 	
     @NotEmpty
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "Header Address")
     private String address;
     
-    @NotEmpty
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = false, value = "Header Phone Number")
     private String phoneNumber;
     
-    @NotEmpty
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = false, value = "Header Fax Number")
 	private String faxNumber;
 
 	public String getAddress() {
