@@ -137,8 +137,7 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = false, value = "CWT Absorb Tag for Merchant Fee")
 	private String absorbMerchantFee;
 	
-	private List<String> eo
-    s;
+	private List<String> eoRemarks;
 
 	private List<String> itineraryRemarks;
 
