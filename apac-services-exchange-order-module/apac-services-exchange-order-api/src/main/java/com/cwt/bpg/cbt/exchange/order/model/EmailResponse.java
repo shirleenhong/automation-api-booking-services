@@ -5,16 +5,16 @@ import java.io.Serializable;
 public class EmailResponse implements Serializable {
     private static final long serialVersionUID = -1769736417984864802L;
 
-    private boolean successful;
+    private boolean success;
 
     private boolean message;
 
-    public boolean isSuccessful() {
-        return successful;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setSuccessful(boolean successful) {
-        this.successful = successful;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public boolean isMessage() {
