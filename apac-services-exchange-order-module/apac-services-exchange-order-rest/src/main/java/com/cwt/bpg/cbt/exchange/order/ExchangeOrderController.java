@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import javax.validation.Valid;
 
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,10 +98,10 @@ public class ExchangeOrderController {
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Emails exchange order pdf.")
-	public ResponseEntity<String> emailPdf(
+	public ResponseEntity<EmailResponse> emailPdf(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to email")  ExchangeOrder input) {
 
-		return new ResponseEntity<>(eoReportService.emailPdf(input), HttpStatus.OK);
+		return new ResponseEntity<EmailResponse>(eoReportService.emailPdf(input), HttpStatus.OK);
 	}
 	
 }

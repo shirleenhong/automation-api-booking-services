@@ -16,6 +16,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -181,7 +182,7 @@ public class ExchangeOrderControllerTest {
 
 		ExchangeOrder order = createExchangeOrder();
 
-		when(eoReportService.emailPdf(order)).thenReturn("");
+		when(eoReportService.emailPdf(order)).thenReturn(new EmailResponse());
 
 		mockMvc.perform(post(url+"/email/").contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
 				.andExpect(status().isOk()).andReturn().getResponse();
