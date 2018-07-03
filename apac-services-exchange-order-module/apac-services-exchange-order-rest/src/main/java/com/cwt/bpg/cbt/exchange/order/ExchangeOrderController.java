@@ -103,7 +103,7 @@ public class ExchangeOrderController {
 	public ResponseEntity<EmailResponse> emailPdf(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to email")  ExchangeOrder input) {
 
-		return new ResponseEntity<EmailResponse>(eoReportService.emailPdf(input), HttpStatus.OK);
+		return new ResponseEntity<>(eoReportService.emailPdf(input), HttpStatus.OK);
 	}
 	
 }
