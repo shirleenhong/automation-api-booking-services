@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import javax.validation.Valid;
 
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +60,10 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
 	}
   
-	@RequestMapping(value = "/exchange-order/generatePdf/{eoNumber}", method = RequestMethod.GET, produces = {
-			MediaType.APPLICATION_PDF_VALUE })
+	@RequestMapping(value = "/exchange-order/pdf/{eoNumber}",
+			method = RequestMethod.GET,
+			produces = {MediaType.APPLICATION_PDF_VALUE })
+	@ApiOperation(value = "Generates exchange order pdf.")
 	public ResponseEntity<byte[]> generatePdf(@PathVariable String eoNumber) {
 
 		String filename = eoNumber+".pdf";
@@ -90,6 +93,17 @@ public class ExchangeOrderController {
 		}
 
 		return new ResponseEntity<>(body, headers, status);
+	}
+
+	@PostMapping(path = "/exchange-order/email",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Emails exchange order pdf.")
+	public ResponseEntity<EmailResponse> emailPdf(
+			@Valid @RequestBody @ApiParam(value = "Exchange order to email")  ExchangeOrder input) {
+
+		return new ResponseEntity<EmailResponse>(eoReportService.emailPdf(input), HttpStatus.OK);
 	}
 	
 }

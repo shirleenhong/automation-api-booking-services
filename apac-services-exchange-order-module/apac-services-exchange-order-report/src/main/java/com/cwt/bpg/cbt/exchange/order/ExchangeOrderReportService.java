@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -84,6 +85,11 @@ public class ExchangeOrderReportService {
 	
 	private Vendor getVendor(String countryCode, String productCode, String vendorCode) {
 		return productService.getVendor(countryCode, productCode, vendorCode);
+	}
+
+	public EmailResponse emailPdf(ExchangeOrder order){
+		//TODO IMPLEMENT THIS
+		return new EmailResponse();
 	}
 
 }

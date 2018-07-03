@@ -16,6 +16,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -167,7 +168,7 @@ public class ExchangeOrderControllerTest {
 		byte[] pdfByte = exampleString.getBytes(StandardCharsets.UTF_8);
 		when(eoReportService.generatePdf(Mockito.anyString())).thenReturn(pdfByte);
 
-		MvcResult result = mockMvc.perform(get(url + "/generatePdf/" + eoNumber))
+		MvcResult result = mockMvc.perform(get(url + "/pdf/" + eoNumber))
 				.andExpect(status().isOk()).andReturn();
 
 		String actualPdfName = result.getResponse().getHeaderValue("Content-Disposition").toString();
@@ -175,6 +176,19 @@ public class ExchangeOrderControllerTest {
 		assertTrue(actualPdfName.contains(eoNumber+".pdf"));
 		verify(eoReportService, times(1)).generatePdf(Mockito.anyString());
 	}
+
+
+	@Test
+	public void shouldEmailPdf() throws Exception {
+
+		ExchangeOrder order = createExchangeOrder();
+
+		when(eoReportService.emailPdf(order)).thenReturn(new EmailResponse());
+
+		mockMvc.perform(post(url+"/email/").contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+				.andExpect(status().isOk()).andReturn().getResponse();
+
+		verify(eoReportService, times(1)).emailPdf(any(ExchangeOrder.class));
 	
 	@SuppressWarnings("unchecked")
 	@Test
