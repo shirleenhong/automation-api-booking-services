@@ -148,6 +148,8 @@ public class ExchangeOrderControllerTest {
 		creditCard.setCcType("AX");
 		creditCard.setExpiryDate("11/2020");
 		order.setCreditCard(creditCard);
+		
+		order.setEoNumber("1807200001");
 
 		return order;
 	}
@@ -180,14 +182,14 @@ public class ExchangeOrderControllerTest {
 
 		ExchangeOrder order = createExchangeOrder();
 
-		when(eoReportService.emailPdf(order)).thenReturn(new EmailResponse());
+		when(eoReportService.emailPdf(order.getEoNumber())).thenReturn(new EmailResponse());
 
-		mockMvc.perform(post(url+"/email/")
+		mockMvc.perform(post(url+"/email/"+order.getEoNumber())
 				.contentType(APPLICATION_JSON_UTF8)
 				.content(convertObjectToJsonBytes(order)))
 				.andExpect(status().isOk()).andReturn().getResponse();
 
-		verify(eoReportService, times(1)).emailPdf(any(ExchangeOrder.class));	
+		verify(eoReportService, times(1)).emailPdf(eq(order.getEoNumber()));	
 	}
 	
 	@SuppressWarnings("unchecked")

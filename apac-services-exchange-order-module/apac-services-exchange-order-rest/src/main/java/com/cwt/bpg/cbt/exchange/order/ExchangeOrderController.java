@@ -97,15 +97,15 @@ public class ExchangeOrderController {
 				"Unable to generate report for exchange order number: " + eoNumber);
 	}
 
-	@PostMapping(path = "/exchange-order/email",
+	@PostMapping(path = "/exchange-order/email/{eoNumber}",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Emails exchange order pdf of the specified eoNumber")
 	public ResponseEntity<EmailResponse> email(
-			@Valid @RequestBody @ApiParam(value = "Exchange order to email")  ExchangeOrder input) {
+			@RequestBody @ApiParam(value = "EoNumber of the exchange order to email")  @PathVariable String eoNumber) {
 
-		return new ResponseEntity<>(eoReportService.emailPdf(input), HttpStatus.OK);
+		return new ResponseEntity<>(eoReportService.emailPdf(eoNumber), HttpStatus.OK);
 	}
 	
 }

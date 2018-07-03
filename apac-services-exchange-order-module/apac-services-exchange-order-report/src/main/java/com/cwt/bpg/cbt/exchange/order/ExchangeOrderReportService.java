@@ -70,7 +70,7 @@ public class ExchangeOrderReportService {
 		return productService.getVendor(countryCode, productCode, vendorCode);
 	}
 
-	public EmailResponse emailPdf(ExchangeOrder order){
+	public EmailResponse emailPdf(String eoNumber){
 		//TODO IMPLEMENT THIS
 		return new EmailResponse();
 	}
