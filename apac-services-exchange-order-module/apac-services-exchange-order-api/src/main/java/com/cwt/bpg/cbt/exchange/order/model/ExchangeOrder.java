@@ -128,11 +128,11 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private BigDecimal totalSellingPrice;
 
-	@ApiModelProperty(required = false, value = "CWT Absorb Tag for GST")
-	private String absorbGst;
+	@ApiModelProperty(value = "CWT Absorb Tag for GST")
+	private boolean gstAbsorb;
 
-	@ApiModelProperty(required = false, value = "CWT Absorb Tag for Merchant Fee")
-	private String absorbMerchantFee;
+	@ApiModelProperty(value = "CWT Absorb Tag for Merchant Fee")
+	private boolean merchantFeeAbsorb;
 	
 	private List<String> eoRemarks;
 
@@ -372,23 +372,7 @@ public class ExchangeOrder implements Serializable {
 	public void setTotalSellingPrice(BigDecimal totalSellingPrice) {
 		this.totalSellingPrice = totalSellingPrice;
 	}
-
-	public String getAbsorbGst() {
-		return absorbGst;
-	}
-
-	public void setAbsorbGst(String absorbGst) {
-		this.absorbGst = absorbGst;
-	}
-
-	public String getAbsorbMerchantFee() {
-		return absorbMerchantFee;
-	}
-
-	public void setAbsorbMerchantFee(String absorbMerchantFee) {
-		this.absorbMerchantFee = absorbMerchantFee;
-	}
-
+	
 	public List<String> getEoRemarks() {
 		return eoRemarks;
 	}
@@ -411,5 +395,21 @@ public class ExchangeOrder implements Serializable {
 
 	public void setVendor(Vendor vendor) {
 		this.vendor = vendor;
+	}
+
+	public boolean isGstAbsorb() {
+		return gstAbsorb;
+	}
+
+	public void setGstAbsorb(boolean gstAbsorb) {
+		this.gstAbsorb = gstAbsorb;
+	}
+
+	public boolean isMerchantFeeAbsorb() {
+		return merchantFeeAbsorb;
+	}
+
+	public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
+		this.merchantFeeAbsorb = merchantFeeAbsorb;
 	}
 }
