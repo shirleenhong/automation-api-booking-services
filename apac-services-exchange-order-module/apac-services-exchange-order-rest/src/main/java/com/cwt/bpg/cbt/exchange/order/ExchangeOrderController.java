@@ -57,7 +57,7 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
 	}
   
-	@RequestMapping(value = "/exchange-order/generate-pdf/{eoNumber}",
+	@RequestMapping(value = "/exchange-order/pdf/{eoNumber}",
 			method = RequestMethod.GET,
 			produces = {MediaType.APPLICATION_PDF_VALUE })
 	@ApiOperation(value = "Generates exchange order pdf.")
@@ -66,7 +66,7 @@ public class ExchangeOrderController {
 		String filename = eoNumber+".pdf";
 		
 		final HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-D5isposition", "attachment;filename=\""+filename+"\"");
+		headers.add("Content-Disposition", "attachment;filename=\""+filename+"\"");
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
 		
 		HttpStatus status = HttpStatus.OK;
@@ -92,7 +92,7 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(body, headers, status);
 	}
 
-	@PostMapping(path = "/exchange-order/email-pdf",
+	@PostMapping(path = "/exchange-order/email",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody

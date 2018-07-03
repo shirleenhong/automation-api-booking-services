@@ -167,7 +167,7 @@ public class ExchangeOrderControllerTest {
 		byte[] pdfByte = exampleString.getBytes(StandardCharsets.UTF_8);
 		when(eoReportService.generatePdf(Mockito.anyString())).thenReturn(pdfByte);
 
-		MvcResult result = mockMvc.perform(get(url + "/generatePdf/" + eoNumber))
+		MvcResult result = mockMvc.perform(get(url + "/pdf/" + eoNumber))
 				.andExpect(status().isOk()).andReturn();
 
 		String actualPdfName = result.getResponse().getHeaderValue("Content-Disposition").toString();
@@ -183,7 +183,7 @@ public class ExchangeOrderControllerTest {
 
 		when(eoReportService.emailPdf(order)).thenReturn("");
 
-		mockMvc.perform(post(url+"/emailPdf/").contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+		mockMvc.perform(post(url+"/email/").contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
 				.andExpect(status().isOk()).andReturn().getResponse();
 
 		verify(eoReportService, times(1)).emailPdf(any(ExchangeOrder.class));
