@@ -57,14 +57,16 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
 	}
   
-	@RequestMapping(value = "/exchange-order/generatePdf/{eoNumber}", method = RequestMethod.GET, produces = {
-			MediaType.APPLICATION_PDF_VALUE })
+	@RequestMapping(value = "/exchange-order/generate-pdf/{eoNumber}",
+			method = RequestMethod.GET,
+			produces = {MediaType.APPLICATION_PDF_VALUE })
+	@ApiOperation(value = "Generates exchange order pdf.")
 	public ResponseEntity<byte[]> generatePdf(@PathVariable String eoNumber) {
 
 		String filename = eoNumber+".pdf";
 		
 		final HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment;filename=\""+filename+"\"");
+		headers.add("Content-D5isposition", "attachment;filename=\""+filename+"\"");
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
 		
 		HttpStatus status = HttpStatus.OK;
@@ -90,11 +92,11 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(body, headers, status);
 	}
 
-	@PostMapping(path = "/exchange-order/emailPdf",
+	@PostMapping(path = "/exchange-order/email-pdf",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Saves new exchange order transaction.")
+	@ApiOperation(value = "Emails exchange order pdf.")
 	public ResponseEntity<String> emailPdf(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to email")  ExchangeOrder input) {
 
