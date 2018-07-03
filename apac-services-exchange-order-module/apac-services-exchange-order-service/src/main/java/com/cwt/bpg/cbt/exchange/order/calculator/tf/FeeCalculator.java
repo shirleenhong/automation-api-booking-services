@@ -53,11 +53,12 @@ public class FeeCalculator {
 		}		
 				
 		if(input.isCommissionEnabled()) {
-			breakdown.setTotalAirlineCommission(round(getTotalAirCommission(input, yqTax), scale));
+			breakdown.setTotalAirlineCommission(round(getTotalAirlineCommission(input, yqTax), scale));
 		}
 
 		if (input.isOverheadCommissionEnabled()) {
-			breakdown.setTotalOverheadCommission(round(getTotalOverheadCommission(input), scale));
+			breakdown.setTotalOverheadCommission(round(getTotalOverheadCommission(input,
+					breakdown.getTotalAirlineCommission()), scale));
 		}
 
 		if (input.isMarkupEnabled()) {
@@ -290,7 +291,7 @@ public class FeeCalculator {
 	 * @param yqTax
 	 * @return
 	 */
-	public BigDecimal getTotalAirCommission(IndiaAirFeesInput input, BigDecimal yqTax) {
+	public BigDecimal getTotalAirlineCommission(IndiaAirFeesInput input, BigDecimal yqTax) {
 		return calculatePercentage(safeValue(input.getBaseFare())
 					.add(safeValue(yqTax)),
 					input.getAirlineOverheadCommissionPercent());
@@ -314,10 +315,10 @@ public class FeeCalculator {
 		return discountAmount;
 	}
 
-	public BigDecimal getTotalOverheadCommission(IndiaAirFeesInput input) {
+	public BigDecimal getTotalOverheadCommission(IndiaAirFeesInput input, BigDecimal totalAirlineCommission) {
 		if (TripTypes.isInternational(input.getTripType())) {
 			return calculatePercentage(calculatePercentage(safeValue(input.getBaseFare())
-						.subtract(input.getAirlineCommission()), input.getAirlineOverheadCommissionPercent()),
+						.subtract(totalAirlineCommission), input.getAirlineOverheadCommissionPercent()),
 					input.getClientOverheadCommissionPercent());
 		}
 		return null;
@@ -373,7 +374,10 @@ public class FeeCalculator {
 	public BigDecimal getTotalCharge(IndiaAirFeesBreakdown breakdown) {
 
 		return safeValue(breakdown.getTotalSellFare())
-				.subtract(safeValue(breakdown.getMerchantFeeOnTf()))
+				.subtract(safeValue(breakdown.getTotalDiscount()))
+				.add(safeValue(breakdown.getTotalGst()))
+				.add(safeValue(breakdown.getTotalMerchantFee()))
+				.add(safeValue(breakdown.getMerchantFeeOnTf()))
 				.add(safeValue(breakdown.getFee()))
 				.add(safeValue(breakdown.getTotalTaxes()));
 	}
