@@ -2,11 +2,9 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -35,7 +33,7 @@ public class RemarkServiceTest {
     public void getAllShouldGetAllRemarks() {
         @SuppressWarnings("unchecked")
 		List<Remark> remarks = mock(List.class);
-        when(service.getAll()).thenReturn(remarks);
+        when(repository.getAll()).thenReturn(remarks);
 
         List<Remark> result = service.getAll();
 
@@ -46,7 +44,7 @@ public class RemarkServiceTest {
     @Test
     public void getRemarkShouldReturnRemark() {
         Remark remark = mock(Remark.class);
-        when(service.getRemark("5b2870d6284b8d1ac84300ac")).thenReturn(remark);
+        when(repository.get(new ObjectId("5b2870d6284b8d1ac84300ac"))).thenReturn(remark);
 
         Remark result = service.getRemark("5b2870d6284b8d1ac84300ac");
 
@@ -54,22 +52,25 @@ public class RemarkServiceTest {
         verify(repository, times(1)).get(new ObjectId("5b2870d6284b8d1ac84300ac"));
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked"})
 	@Test
     public void getRemarksShouldReturnRemarks() {
-    	List<Remark> remarks = mock(List.class);
-        when(service.getRemarks("HK", "HL", "E")).thenReturn(remarks);
+        Remark remark = mock(Remark.class);
+        when(remark.getText()).thenReturn("ITIN REMARK");
+    	List<Remark> remarks = Collections.singletonList(remark);
+        when(repository.getRemarks("HK", "HL", "E")).thenReturn(remarks);
 
-        List<Remark> result = service.getRemarks("HK", "HL", "E");
+        List<String> result = service.getRemarks("HK", "HL", "E");
 
         assertNotNull(result);
         verify(repository, times(1)).getRemarks("HK", "HL", "E");
+        verify(remark, times(1)).getText();
     }
 
     @Test
     public void saveShouldReturnSavedRemark() {
     	Remark remark = mock(Remark.class);
-        when(service.save(remark)).thenReturn(remark);
+        when(repository.put(remark)).thenReturn(remark);
 
         Remark result = service.save(remark);
 
@@ -80,7 +81,7 @@ public class RemarkServiceTest {
     @Test
     public void deleteShouldReturnWriteResult() {
     	String remarkId = "5b2870d6284b8d1ac84300ad";
-        when(service.delete(remarkId)).thenReturn("result");
+        when(repository.remove(new ObjectId(remarkId))).thenReturn("result");
 
         String result = service.delete(remarkId);
 

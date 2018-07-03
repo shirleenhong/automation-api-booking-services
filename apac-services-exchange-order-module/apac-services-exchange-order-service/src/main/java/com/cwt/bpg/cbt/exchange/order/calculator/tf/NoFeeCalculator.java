@@ -54,8 +54,8 @@ public class NoFeeCalculator extends FeeCalculator {
     }
 
 	@Override
-    public Boolean getDdlFeeApply() {
-        return null;
+    public boolean getDdlFeeApply() {
+        return false;
     }
 
 	@Override

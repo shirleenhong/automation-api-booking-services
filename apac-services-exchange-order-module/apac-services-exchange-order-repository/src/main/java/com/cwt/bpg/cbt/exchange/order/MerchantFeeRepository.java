@@ -1,5 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.apache.commons.lang.StringUtils.leftPad;
+
+import java.util.Optional;
+
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
@@ -20,30 +24,32 @@ public class MerchantFeeRepository {
 	@Autowired
 	private MorphiaComponent morphia;
 
-	public MerchantFee getMerchantFee(String countryCode, String profileName) {
-		return morphia.getDatastore().createQuery(MerchantFee.class)
+	public MerchantFee getMerchantFee(String countryCode, String clientAccountNumber) {
+		Optional<MerchantFee> merchantFee = Optional.ofNullable(morphia.getDatastore().createQuery(MerchantFee.class)
 				.field("countryCode")
 				.equalIgnoreCase(countryCode)
-				.field("profileName")
-				.equalIgnoreCase(profileName).get();
+				.field("clientAccountNumber")
+				.equalIgnoreCase(leftPadZeros(clientAccountNumber)).get());
+		return merchantFee.orElse(new MerchantFee());
 	}
 	
-	public MerchantFee putMerchantFee(MerchantFee fee) {
+	public MerchantFee putMerchantFee(MerchantFee merchantFee) {
+		merchantFee = removeMerchantFee(merchantFee);
 
-		removeMerchantFee(fee);
-		
-		final Datastore datastore = morphia.getDatastore();
-		Key<MerchantFee> save = datastore.save(fee);
+        final Datastore datastore = morphia.getDatastore();
+		Key<MerchantFee> save = datastore.save(merchantFee);
 		LOGGER.info("Put Result: {}", save);
-		return fee;
+		return merchantFee;
 	}
 
 	public MerchantFee removeMerchantFee(MerchantFee merchantFee) {
+    	merchantFee.setClientAccountNumber(leftPadZeros(merchantFee.getClientAccountNumber()));
+
 		final Datastore datastore = morphia.getDatastore();
 		
 		final Query<MerchantFee> clientMerchantFee = datastore.createQuery(MerchantFee.class)
                 .filter("countryCode", merchantFee.getCountryCode())
-                .filter("profileName", merchantFee.getProfileName());
+                .filter("clientAccountNumber", merchantFee.getClientAccountNumber());
 		
 		WriteResult delete = datastore.delete(clientMerchantFee);
 		
@@ -51,5 +57,9 @@ public class MerchantFeeRepository {
 		
 		return merchantFee;
 	}
+
+    private String leftPadZeros(String value) {
+        return leftPad(value, 10, '0');
+    }
 
 }

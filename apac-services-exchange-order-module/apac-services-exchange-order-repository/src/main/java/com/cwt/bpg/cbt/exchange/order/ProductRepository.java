@@ -17,10 +17,12 @@ import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 @Repository
 public class ProductRepository {
 
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepository.class);
 
 	@Autowired
 	private MorphiaComponent morphia;
+	
 
 	public List<BaseProduct> getProducts(String countryCode) {
 
@@ -54,6 +56,7 @@ public class ProductRepository {
 
 		return productList == null ? Collections.emptyList() : productList.getProducts();
 	}
+	
 
 	private void sort(List<BaseProduct> baseProducts) {
 

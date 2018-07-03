@@ -57,27 +57,27 @@ public class OtherServiceFeesService {
 	private ProductService productService;
 
 	NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input) {
-        MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getProfileName());
+        MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getClientAccountNumber());
 		return this.nonAirFeeCalculator.calculate(input, merchantFee);
 	}
 
 	NonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
 
-		final Client client = clientService.getClient(input.getProfileName());
+		final Client client = clientService.getClient(input.getClientAccountNumber());
 		final Client defaultClient = clientService.getDefaultClient();
 
 		return this.indiaNonAirFeeCalculator.calculate(input, client, defaultClient);
 	}
 
 	AirFeesBreakdown calculateAirFees(AirFeesInput input) {
-        MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getProfileName());
+        MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getClientAccountNumber());
 	    return this.osFactory.getCalculator(input.getCountryCode()).calculate(input, merchantFee);
 	}
 
     IndiaAirFeesBreakdown calculateIndiaAirFees(IndiaAirFeesInput input)
     {
-        final Client client = clientService.getClient(input.getProfileName());
-        final int pricingId = getPricingId(input.getProfileName());
+        final Client client = clientService.getClient(input.getClientAccountNumber());
+        final int pricingId = getPricingId(input.getClientAccountNumber());
         final AirlineRule airlineRule = airlineRuleService.getAirlineRule(input.getPlatCarrier());
         final Airport airport = getAirport(input.getCityCode());
         final IndiaProduct airProduct = (IndiaProduct) getProduct(Country.INDIA.getCode(), AIR_PRODUCT_CODE);
@@ -94,13 +94,13 @@ public class OtherServiceFeesService {
 		return airportService.getAirport(cityCode);
 	}
 
-	private int getPricingId(String profileName) {
-		Client client = clientService.getClient(profileName);
+	private int getPricingId(String clientAccountNumber) {
+		Client client = clientService.getClient(clientAccountNumber);
 		return client != null ? client.getPricingId() : 0;
 	}
 
 	VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {
-        MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getProfileName());
+        MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getClientAccountNumber());
         return this.visaFeesCalculator.calculate(input, merchantFee);
 	}
 

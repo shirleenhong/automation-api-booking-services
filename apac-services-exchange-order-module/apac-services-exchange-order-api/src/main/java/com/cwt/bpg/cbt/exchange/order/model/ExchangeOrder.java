@@ -137,9 +137,26 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = false, value = "CWT Absorb Tag for Merchant Fee")
 	private String absorbMerchantFee;
 	
-	private List<Remark> remarks;
+	private List<String> eo
+    s;
 
-	public String getEoNumber() {
+	private List<String> itineraryRemarks;
+
+	@ApiModelProperty(hidden = true, value = "For reports purposes only")
+	private Vendor vendor;
+	
+	@ApiModelProperty(hidden = true, value = "For testing purposes only. Remove when final template is complete.")
+	private String test;
+	
+	public String getTest() {
+		return test;
+	}
+
+	public void setTest(String test) {
+		this.test = test;
+	}
+
+  public String getEoNumber() {
 		return eoNumber;
 	}
 
@@ -411,11 +428,27 @@ public class ExchangeOrder implements Serializable {
 		this.absorbMerchantFee = absorbMerchantFee;
 	}
 
-	public List<Remark> getRemarks() {
-		return remarks;
+	public List<String> getEoRemarks() {
+		return eoRemarks;
 	}
 
-	public void setRemarks(List<Remark> remarks) {
-		this.remarks = remarks;
+	public void setEoRemarks(List<String> eoRemarks) {
+		this.eoRemarks = eoRemarks;
+	}
+
+	public List<String> getItineraryRemarks() {
+		return itineraryRemarks;
+	}
+
+	public void setItineraryRemarks(List<String> itineraryRemarks) {
+		this.itineraryRemarks = itineraryRemarks;
+	}
+
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
 	}
 }

@@ -6,6 +6,6 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public interface ClientMerchantFeeDAO {
 	
-	List<MerchantFee> listMerchantFees();
+	List<MerchantFee> listMerchantFees(String countryCode);
 
 }

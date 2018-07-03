@@ -9,11 +9,12 @@ public class FeesInput implements Serializable {
 
 	private static final long serialVersionUID = -5237125856544162255L;
 
+	@ApiModelProperty(hidden = true, notes = "Passed as path param.")
 	private String countryCode;
 
     @ApiModelProperty(required = true)
 	@NotEmpty
-	private String profileName;
+	private String clientAccountNumber;
 
 	public String getCountryCode() {
 		return countryCode;
@@ -23,12 +24,12 @@ public class FeesInput implements Serializable {
 		this.countryCode = countryCode;
 	}
 
-	public String getProfileName() {
-		return profileName;
+	public String getClientAccountNumber() {
+		return clientAccountNumber;
 	}
 
-	public void setProfileName(String profileName) {
-		this.profileName = profileName;
+	public void setClientAccountNumber(String clientAccountNumber) {
+		this.clientAccountNumber = clientAccountNumber;
 	}
 
 }

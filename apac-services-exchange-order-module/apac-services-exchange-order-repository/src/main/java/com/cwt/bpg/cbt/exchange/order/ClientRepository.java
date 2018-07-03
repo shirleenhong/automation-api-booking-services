@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.apache.commons.lang.StringUtils.leftPad;
+
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.exchange.order.model.Client;
@@ -13,9 +15,9 @@ public class ClientRepository extends CommonRepository<Client, Integer> {
 		super(Client.class, ID);
 	}
 
-	public Client getClient(String profileName) {
+	public Client getClient(String clientAccountNumber) {
 		return morphia.getDatastore().createQuery(Client.class)
-			.field("profileName")
-			.equal(profileName).get();
+			.field("clientAccountNumber")
+			.equal(leftPad(clientAccountNumber, 10, '0')).get();
 	}
 }

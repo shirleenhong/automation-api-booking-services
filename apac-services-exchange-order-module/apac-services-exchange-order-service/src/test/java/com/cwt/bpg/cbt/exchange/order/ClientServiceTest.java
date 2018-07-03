@@ -2,9 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -58,13 +56,13 @@ public class ClientServiceTest {
 	}
 	
 	@Test
-	public void canGetSingleClientUsingProfileName() {
+	public void canGetSingleClientUsingClientAccountNumber() {
 		Client client = new Client();
-		final String profile = "profile";
-		when(repository.getClient(profile)).thenReturn(client);
-		Client result = service.getClient(profile);
+		final String clientAccountNumber = "clientAccountNumber";
+		when(repository.getClient(clientAccountNumber)).thenReturn(client);
+		Client result = service.getClient(clientAccountNumber);
 		assertNotNull(result);
-		verify(repository, times(1)).getClient(profile);
+		verify(repository, times(1)).getClient(clientAccountNumber);
 	}
 	
 	@Test

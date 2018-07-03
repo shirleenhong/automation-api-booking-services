@@ -56,7 +56,7 @@ public class OtherServiceFeesControllerAirFeeTest {
 
         jsonObj.put("countryCode", "SG");
         jsonObj.put("clientType", "Z");
-        jsonObj.put("profileName", "testName");
+        jsonObj.put("clientAccountNumber", "testName");
         jsonObj.put("fopType", "Z");
         jsonObj.put("applyFormula", 111);
         jsonObj.put("commissionByPercent", 111);
@@ -76,7 +76,7 @@ public class OtherServiceFeesControllerAirFeeTest {
         JSONObject jsonObj = new JSONObject();
 
         jsonObj.put("clientType", "");
-        jsonObj.put("profileName", "testName");
+        jsonObj.put("clientAccountNumber", "testNumber");
         jsonObj.put("fopType", "Z");
         jsonObj.put("applyFormula", 111);
         jsonObj.put("commissionByPercent", 111);

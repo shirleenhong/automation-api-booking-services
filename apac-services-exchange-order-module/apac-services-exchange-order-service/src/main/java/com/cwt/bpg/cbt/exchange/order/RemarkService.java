@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class RemarkService {
 		return repository.getAll();
 	}
 
-	@CachePut(cacheNames = "remarks", key = "#remark.id")
+	@CachePut(cacheNames = "remarks", key = "#result.id.toString()", unless = "#result.id.hashCode() > 0")
 	public Remark save(Remark remark) {
 		return repository.put(remark);
 	}
@@ -38,7 +39,8 @@ public class RemarkService {
 	}
 	
 	@Cacheable(cacheNames = "remarks", key="{#countryCode, #productType, #remarkType}")
-	public List<Remark> getRemarks(String countryCode, String productType, String remarkType) {
-		return repository.getRemarks(countryCode, productType, remarkType);
+	public List<String> getRemarks(String countryCode, String productType, String remarkType) {
+		List<Remark> remarkList = repository.getRemarks(countryCode, productType, remarkType);
+		return remarkList.stream().map(Remark::getText).collect(Collectors.toList());
 	}
 }

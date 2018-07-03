@@ -1,9 +1,13 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ConcurrentModificationException;
 import java.util.List;
+import java.util.Optional;
 
 import org.mongodb.morphia.Key;
 import org.slf4j.Logger;
@@ -16,6 +20,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
 
@@ -38,13 +43,24 @@ public class ExchangeOrderService {
 	@Autowired
 	private SequenceNumberRepository sequenceNumberRepo;
 	
-	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder) {
+	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder) throws ExchangeOrderException {
 		
-		if(exchangeOrder.getEoNumber() == null) {
+		final String eoNumber = exchangeOrder.getEoNumber();
+		if(eoNumber == null) {
 			exchangeOrder.setCreateDateTime(Instant.now());
 			exchangeOrder.setEoNumber(getEoNumber(exchangeOrder.getCountryCode()));
 		}
-		
+		else {
+			Optional<ExchangeOrder> isEoExist = Optional.ofNullable(
+					getExchangeOrder(eoNumber));
+			
+			ExchangeOrder existingEoNumber = isEoExist.orElseThrow(() -> { 
+				return new ExchangeOrderException("Exchange order number not found: [ " + eoNumber + " ]") ; });
+			
+			LOGGER.info("Existing Exchange order number: {} with country code {}", 
+					existingEoNumber.getEoNumber(), 
+					existingEoNumber.getCountryCode());
+		}
 		ExchangeOrder result = new ExchangeOrder();
 		result.setEoNumber(exchangeOrderRepo.saveOrUpdate(exchangeOrder));
 		
@@ -132,4 +148,9 @@ public class ExchangeOrderService {
     public ExchangeOrder getExchangeOrder(String eoNumber) {
         return exchangeOrderRepo.getExchangeOrder(eoNumber);
     }
+
+	public InputStream generatePdf(String eoNumber) throws FileNotFoundException {
+		//TODO IMPLEMENT GENERATE PDF METHOD
+		return new FileInputStream("C:\\Users\\U003ALP\\Documents\\test.pdf");
+	}
 }

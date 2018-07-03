@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
@@ -132,8 +133,8 @@ public class NonAirFeeCalculatorTest {
 		assertNull(result.getGrossSellingPrice());
 	}
 
-	@Test
-	public void shouldNotFailWhenFopTypeIsCXAndMerchantFeeIsNull() {
+	@Test(expected = NullPointerException.class)
+	public void shouldThrowExceptionWhenFopTypeIsCXAndMerchantFeeIsNull() {
 		NonAirFeesInput input = new NonAirFeesInput();
 		input.setCountryCode("SG");
 		input.setFopType("CX");
@@ -141,14 +142,8 @@ public class NonAirFeeCalculatorTest {
         input.setGstPercent(5D);
         input.setNettCost(new BigDecimal(1528.27));
 
-        NonAirFeesBreakdown result = calculator.calculate(input, null);
+		calculator.calculate(input, null);
 
-        assertThat(result.getCommission().doubleValue(), is(equalTo(0d)));
-        assertThat(result.getGstAmount().doubleValue(), is(equalTo(60.03d)));
-        assertThat(result.getMerchantFee().doubleValue(), is(equalTo(0d)));
-        assertThat(result.getNettCostGst().doubleValue(), is(equalTo(76.41d)));
-        assertThat(result.getTotalSellingPrice().doubleValue(), is(equalTo(1200.50d)));
-        assertThat(result.getGrossSellingPrice(), is(nullValue(BigDecimal.class)));
 	}
 
 

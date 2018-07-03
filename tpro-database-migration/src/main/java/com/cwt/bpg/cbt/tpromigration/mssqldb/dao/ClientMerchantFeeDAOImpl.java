@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,9 @@ public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
 	private DataSource dataSource;
 
 	@Override
-	public List<MerchantFee> listMerchantFees() {
+	public List<MerchantFee> listMerchantFees(String countryCode) {
 		List<MerchantFee> merchantFeeList = new ArrayList<>();
-		String sql = "SELECT clientname, proname, clientType, merchfeepct , tfincmf FROM tblClients";
+		String sql = "SELECT clientname, cn, clientType, merchfeepct , tfincmf FROM tblClients";
 		
 		Connection conn = null;
 
@@ -36,7 +37,7 @@ public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			String countryCode = System.getProperty("spring.profiles.default");
+			
 			while (rs.next()) {
 				
 				MerchantFee merchantFee = new MerchantFee();
@@ -48,8 +49,8 @@ public class ClientMerchantFeeDAOImpl implements ClientMerchantFeeDAO {
 				if(rs.getObject("clientType") != null) {
 					merchantFee.setClientType(rs.getString("clientType").trim());
 				}
-				if(rs.getObject("proname") != null) {
-					merchantFee.setProfileName(rs.getObject("proname") == null ? null : rs.getString("proname").trim().replaceAll(" +", " "));
+				if(rs.getObject("cn") != null) {
+					merchantFee.setClientAccountNumber(StringUtils.leftPad(rs.getString("cn"), 10, '0'));
 				}else {
 					continue;
 				}

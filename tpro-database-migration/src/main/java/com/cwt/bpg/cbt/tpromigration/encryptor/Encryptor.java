@@ -32,7 +32,7 @@ public class Encryptor
         }
         catch (NoSuchAlgorithmException | UnsupportedEncodingException e)
         {
-//            LOGGER.error(e.getMessage(), e);
+        	LOGGER.error(e.getMessage(), e);
         }
     }
 
