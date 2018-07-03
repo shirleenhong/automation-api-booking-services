@@ -407,4 +407,20 @@ public class ExchangeOrder implements Serializable {
 	public void setTest(String test) {
 		this.test = test;
 	}
+
+	public boolean isGstAbsorb() {
+		return gstAbsorb;
+	}
+
+	public void setGstAbsorb(boolean gstAbsorb) {
+		this.gstAbsorb = gstAbsorb;
+	}
+
+	public boolean isMerchantFeeAbsorb() {
+		return merchantFeeAbsorb;
+	}
+
+	public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
+		this.merchantFeeAbsorb = merchantFeeAbsorb;
+	}
 }
