@@ -31,7 +31,7 @@ public class ExchangeOrderReportService {
 	private static final String PDFNAME = "exchange-order.jasper";
 
 	
-	public byte[] generatePdf(String eoNumber) throws ExchangeOrderException, Exception {
+	public byte[] generatePdf(String eoNumber) throws Exception {
 
 		Optional<ExchangeOrder> eoExists = Optional.ofNullable(
 				getExchangeOrder(eoNumber));
