@@ -2,45 +2,26 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exchange-order" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11876608-3e71-4654-8bad-9498a837d1ff">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="96"/>
 	<subDataset name="dataset1" uuid="445d1af9-e2c1-4cfc-9fac-574f362a3a97"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<field name="eoNumber" class="java.lang.String"/>
-	<field name="commission" class="java.math.BigDecimal"/>
-	<field name="gstAmount" class="java.math.BigDecimal"/>
-	<field name="merchantFee" class="java.math.BigDecimal"/>
-	<field name="countryCode" class="java.lang.String"/>
-	<field name="fopType" class="java.lang.String"/>
-	<field name="creditCard" class="com.cwt.bpg.cbt.exchange.order.model.CreditCard"/>
-	<field name="description" class="java.lang.String"/>
-	<field name="btaDescription" class="java.lang.String"/>
-	<field name="additionalInfoDate" class="java.time.Instant"/>
-	<field name="productCode" class="java.lang.String"/>
-	<field name="accountNumber" class="java.lang.String"/>
-	<field name="passengerName" class="java.lang.String"/>
-	<field name="createDateTime" class="java.time.Instant"/>
-	<field name="agentId" class="java.lang.String"/>
-	<field name="pcc" class="java.lang.String"/>
-	<field name="faxNumber" class="java.lang.String"/>
-	<field name="agentName" class="java.lang.String"/>
-	<field name="recordLocator" class="java.lang.String"/>
-	<field name="nettCost" class="java.math.BigDecimal"/>
-	<field name="total" class="java.math.BigDecimal"/>
 	<field name="header" class="com.cwt.bpg.cbt.exchange.order.model.Header"/>
-	<field name="eoAction" class="java.lang.String"/>
-	<field name="status" class="java.lang.String"/>
-	<field name="raiseCheque" class="java.lang.String"/>
+	<field name="vendor" class="com.cwt.bpg.cbt.exchange.order.model.Vendor"/>
+	<field name="eoNumber" class="java.lang.String"/>
+	<field name="passengerName" class="java.lang.String"/>
+	<field name="agentName" class="java.lang.String"/>
+	<field name="agentId" class="java.lang.String"/>
+	<field name="recordLocator" class="java.lang.String"/>
+	<field name="createDateTime" class="java.time.Instant"/>
+	<field name="nettCost" class="java.math.BigDecimal"/>
 	<field name="tax1" class="java.lang.String"/>
 	<field name="tax2" class="java.lang.String"/>
-	<field name="sellingPrice" class="java.math.BigDecimal"/>
-	<field name="totalSellingPrice" class="java.math.BigDecimal"/>
-	<field name="absorbGst" class="java.lang.String"/>
-	<field name="absorbMerchantFee" class="java.lang.String"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="description" class="java.lang.String"/>
 	<field name="eoRemarks" class="java.util.List"/>
 	<field name="itineraryRemarks" class="java.util.List"/>
-	<field name="vendor" class="com.cwt.bpg.cbt.exchange.order.model.Vendor"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
