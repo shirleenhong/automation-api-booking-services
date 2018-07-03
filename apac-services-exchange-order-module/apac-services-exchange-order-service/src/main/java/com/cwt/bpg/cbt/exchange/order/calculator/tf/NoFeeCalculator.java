@@ -22,8 +22,9 @@ public class NoFeeCalculator extends FeeCalculator {
     }
 
 	@Override
-    public BigDecimal getTotalOverheadCommission( 
-			IndiaAirFeesInput input) {
+    public BigDecimal getTotalOverheadCommission(
+            IndiaAirFeesInput input,
+			BigDecimal totalAirlineCommission) {
         return null;
     }
 
@@ -36,8 +37,7 @@ public class NoFeeCalculator extends FeeCalculator {
 	@Override
     public BigDecimal getMerchantFee(
     		IndiaAirFeesInput input,
-			IndiaAirFeesBreakdown breakdown
-			) {
+			IndiaAirFeesBreakdown breakdown) {
         return calculatePercentage(
         		safeValue(breakdown.getTotalSellFare())
         		.add(safeValue(breakdown.getTotalTaxes()))

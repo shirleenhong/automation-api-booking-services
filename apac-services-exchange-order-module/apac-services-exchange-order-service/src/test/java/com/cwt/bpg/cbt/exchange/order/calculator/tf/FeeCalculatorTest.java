@@ -144,16 +144,16 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(25d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.41d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.66d));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.56d));
+        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.81d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
         assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
         assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.34d));
+        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.19d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(60d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(560d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(555.19d));
         assertThat(breakdown.getFee(), is(nullValue()));
         
         assertThat(breakdown.getCommission(), is(nullValue()));
@@ -176,16 +176,16 @@ public class FeeCalculatorTest {
 		assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
 		assertThat(breakdown.getBaseAmount(), is(nullValue()));
 		assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(25d));
-		assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.41d));
-		assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.66d));
+		assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.56d));
+		assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.81d));
 		assertThat(breakdown.getTotalMarkup(), is(nullValue()));
 		assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
 		assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
 		assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-		assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.34d));
+		assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.19d));
 		assertThat(breakdown.getTotalTaxes().doubleValue(), is(60d));
 		assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-		assertThat(breakdown.getTotalCharge().doubleValue(), is(580d));
+		assertThat(breakdown.getTotalCharge().doubleValue(), is(575.19d));
 		assertThat(breakdown.getFee(), is(nullValue()));
 		
 		assertThat(breakdown.getCommission(), is(nullValue()));
@@ -210,16 +210,16 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(25d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.41d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.66d));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.56d));
+        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.81d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
         assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
         assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.34d));
+        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.19d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(60d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(560d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(555.19d));
         assertThat(breakdown.getFee(), is(nullValue()));
         
         assertThat(breakdown.getCommission(), is(nullValue()));
@@ -242,16 +242,16 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(25d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.41d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.66d));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.56d));
+        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.81d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
         assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
         assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.34d));
+        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.19d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(60d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(600d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(595.19d));
         assertThat(breakdown.getFee(), is(nullValue()));
         
         assertThat(breakdown.getCommission(), is(nullValue()));
@@ -276,16 +276,16 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(25d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.41d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.66d));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.56d));
+        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.81d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
         assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
         assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.34d));
+        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.19d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(60d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(600d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(595.19d));
         assertThat(breakdown.getFee(), is(nullValue()));
         
         assertThat(breakdown.getCommission(), is(nullValue()));
@@ -311,16 +311,16 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(25d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.41d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.66d));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.56d));
+        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.81d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
         assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
         assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.34d));
+        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.19d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(60d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(560d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(555.19d));
         assertThat(breakdown.getFee(), is(nullValue()));
         
         assertThat(breakdown.getCommission(), is(nullValue()));
@@ -341,16 +341,16 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(25d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.41d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.66d));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.56d));
+        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.81d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
         assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
         assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.34d));
+        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.19d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(60d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(560d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(555.19d));
         assertThat(breakdown.getFee(), is(nullValue()));
         
         assertThat(breakdown.getCommission(), is(nullValue()));
@@ -386,11 +386,10 @@ public class FeeCalculatorTest {
     public void shouldGetTotalOverheadCommissionInternational() {
         input.setTripType(TripTypes.INTERNATIONAL.getCode());
         input.setBaseFare(new BigDecimal(100));
-        input.setAirlineCommission(new BigDecimal(15));
         input.setAirlineOverheadCommissionPercent(10d);
         input.setClientOverheadCommissionPercent(50d);
 
-        BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission(input);
+        BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission(input, new BigDecimal(15));
 
         assertThat(totalOverheadCommission.doubleValue(), is(4.25d));
     }
@@ -399,7 +398,7 @@ public class FeeCalculatorTest {
     public void shouldGetTotalOverheadCommissionNotInternational() {
         input.setTripType(TripTypes.DOMESTIC.getCode());
 
-        BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission(input);
+        BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission(input, new BigDecimal(15));
 
         assertThat(totalOverheadCommission, is(nullValue(BigDecimal.class)));
     }
@@ -527,16 +526,16 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(27.5d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.41d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.79d));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.54d));
+        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.92d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
         assertThat(breakdown.getTotalGst().doubleValue(), is(82.5d));
         assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(577.71));
+        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(577.58));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(610d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(687.58d));
         assertThat(breakdown.getFee(), is(nullValue()));        
         assertThat(breakdown.getCommission(), is(nullValue()));
 	}
@@ -571,16 +570,16 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(27.5d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.41d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.79d));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.54d));
+        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.92d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
         assertThat(breakdown.getTotalGst().doubleValue(), is(82.5d));
         assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(577.71d));
+        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(577.58d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(610d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(687.58d));
         assertThat(breakdown.getFee(), is(nullValue()));        
         assertThat(breakdown.getCommission(), is(nullValue()));
 	}
@@ -603,7 +602,7 @@ public class FeeCalculatorTest {
 		input.setTripType(TripTypes.DOMESTIC.getCode());
 		input.setFeeOverride(true);
 		input.setFee(new BigDecimal(500));
-		
+
 		IndiaAirFeesBreakdown breakdown = calculator.calculate(input, null, client, 
 				new Airport(), airProduct);
 		
@@ -625,7 +624,7 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getTotalSellingFare().doubleValue(), is(581.12d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(1110d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(1191.12d));
         assertThat(breakdown.getFee(), is(nullValue()));        
         assertThat(breakdown.getCommission(), is(nullValue()));
 		
@@ -658,16 +657,16 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(27.5d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.41d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.79d));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.54d));
+        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.92d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
         assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
         assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.21d));
+        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.08d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(610d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(605.08d));
         assertThat(breakdown.getFee(), is(nullValue()));        
         assertThat(breakdown.getCommission(), is(nullValue()));
 	}
@@ -738,16 +737,16 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(25.00d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.41d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.66d));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.56d));
+        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.81d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
         assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
         assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.34d));
+        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.19d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(60d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(560d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(555.19d));
         assertThat(breakdown.getFee(), is(nullValue()));        
         assertThat(breakdown.getCommission(), is(nullValue()));
 		
@@ -770,16 +769,16 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(25.00d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.41d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.66d));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(3.56d));
+        assertThat(breakdown.getTotalDiscount().doubleValue(), is(4.81d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
         assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
         assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.34d));
+        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(495.19d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(60d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(560d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(555.19d));
         assertThat(breakdown.getFee(), is(nullValue()));        
         assertThat(breakdown.getCommission(), is(nullValue()));
 		
