@@ -42,7 +42,7 @@ public class VendorDAOImpl implements VendorDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Vendor tblVendor = new Vendor();
-                tblVendor.setVendorNumber(rs.getString("VendorNumber"));
+                tblVendor.setCode(rs.getString("VendorNumber"));
                 tblVendor.setAddress1(rs.getString("Address1"));
                 tblVendor.setAddress2(rs.getString("Address2"));
                 tblVendor.setCity(rs.getString("City"));
@@ -66,7 +66,7 @@ public class VendorDAOImpl implements VendorDAO {
                 }
                 
                 tblVendor.setSortKey(rs.getString("SortKey"));
-                tblVendor.setVendorName(rs.getString("VendorName").trim().replaceAll(" +", " "));
+                tblVendor.setName(rs.getString("VendorName").trim().replaceAll(" +", " "));
                 vendorList.add(tblVendor);
             }
             rs.close();

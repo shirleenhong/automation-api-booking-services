@@ -51,14 +51,11 @@ public class ExchangeOrder implements Serializable {
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant additionalInfoDate;
-	private String vendorContactPerson;
-
+	
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String productCode;
-	@NotEmpty
-	@ApiModelProperty(required = true)
-	private String vendorCode;
+	
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String accountNumber;
@@ -78,7 +75,7 @@ public class ExchangeOrder implements Serializable {
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String pcc;
-	private String vendorEmail;
+	
 	private String faxNumber;
 
 	@NotEmpty
@@ -141,21 +138,13 @@ public class ExchangeOrder implements Serializable {
 
 	private List<String> itineraryRemarks;
 
-	@ApiModelProperty(hidden = true, value = "For reports purposes only")
+	@Valid
 	private Vendor vendor;
 	
-	@ApiModelProperty(hidden = true, value = "For testing purposes only. Remove when final template is complete.")
+	//FIXME Remove: For testing only
 	private String test;
-	
-	public String getTest() {
-		return test;
-	}
-
-	public void setTest(String test) {
-		this.test = test;
-	}
-
-  public String getEoNumber() {
+		
+	public String getEoNumber() {
 		return eoNumber;
 	}
 
@@ -235,28 +224,12 @@ public class ExchangeOrder implements Serializable {
 		this.additionalInfoDate = additionalInfoDate;
 	}
 
-	public String getVendorContactPerson() {
-		return vendorContactPerson;
-	}
-
-	public void setVendorContactPerson(String vendorContactPerson) {
-		this.vendorContactPerson = vendorContactPerson;
-	}
-
 	public String getProductCode() {
 		return productCode;
 	}
 
 	public void setProductCode(String productCode) {
 		this.productCode = productCode;
-	}
-
-	public String getVendorCode() {
-		return vendorCode;
-	}
-
-	public void setVendorCode(String vendorCode) {
-		this.vendorCode = vendorCode;
 	}
 
 	public String getAccountNumber() {
@@ -297,14 +270,6 @@ public class ExchangeOrder implements Serializable {
 
 	public void setPcc(String pcc) {
 		this.pcc = pcc;
-	}
-
-	public String getVendorEmail() {
-		return vendorEmail;
-	}
-
-	public void setVendorEmail(String vendorEmail) {
-		this.vendorEmail = vendorEmail;
 	}
 
 	public String getFaxNumber() {
@@ -449,5 +414,13 @@ public class ExchangeOrder implements Serializable {
 
 	public void setVendor(Vendor vendor) {
 		this.vendor = vendor;
+	}
+
+	public String getTest() {
+		return test;
+	}
+
+	public void setTest(String test) {
+		this.test = test;
 	}
 }

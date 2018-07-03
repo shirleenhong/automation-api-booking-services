@@ -63,7 +63,7 @@ public class ProductRepository {
 		for (BaseProduct baseProduct : baseProducts) {
 			if (!baseProduct.getVendors().isEmpty()) {
                 baseProduct.getVendors()
-						.sort(Comparator.comparing(Vendor::getVendorName, String.CASE_INSENSITIVE_ORDER));
+						.sort(Comparator.comparing(Vendor::getName, String.CASE_INSENSITIVE_ORDER));
 			}
 		}
         baseProducts.sort(Comparator.comparing(BaseProduct::getDescription, String.CASE_INSENSITIVE_ORDER));

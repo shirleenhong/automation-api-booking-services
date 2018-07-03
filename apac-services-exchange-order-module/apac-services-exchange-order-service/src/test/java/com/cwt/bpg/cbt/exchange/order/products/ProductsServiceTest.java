@@ -79,7 +79,7 @@ public class ProductsServiceTest {
 		
 		Vendor vendor = service.getVendor(countryCode, productCode, vendorCode);
 		assertNotNull(vendor);
-		assertThat(vendor.getVendorNumber(), is(vendorCode));
+		assertThat(vendor.getCode(), is(vendorCode));
 	}
 	
 	@Test
@@ -114,8 +114,8 @@ public class ProductsServiceTest {
 		List<Vendor> vendors = Arrays.asList(new Vendor() {
 			private static final long serialVersionUID = -6678379343715153605L;
 			{
-				setVendorName("Pacific West Vendor");
-				setVendorNumber("000012");
+				setName("Pacific West Vendor");
+				setCode("000012");
 			}
 		});
 		baseProduct1.setVendors(vendors);

@@ -88,7 +88,11 @@ public class ExchangeOrderReportServiceTest {
 		
 		exchangeOrder.setCountryCode(countryCode);
 		exchangeOrder.setProductCode(productCode);
-		exchangeOrder.setVendorCode(vendorCode);
+		
+		Vendor vendor = new Vendor();
+		vendor.setCode(vendorCode);
+				
+		exchangeOrder.setVendor(vendor);
 		
 		Header header = new Header();
 		header.setAddress("Address1");
