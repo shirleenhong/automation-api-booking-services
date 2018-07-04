@@ -1,7 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.report;
 
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ import com.cwt.bpg.cbt.exchange.order.model.*;
 import freemarker.core.ParseException;
 import freemarker.template.*;
 
-public class EmailBodyProcessorTest {
+public class EmailContentProcessorTest {
 
 	@Mock
 	private Configuration config;
@@ -26,7 +26,7 @@ public class EmailBodyProcessorTest {
 	private Template template;
 	
 	@InjectMocks
-	private EmailBodyProcessor processor;
+	private EmailContentProcessor processor;
 	
 	@Before
 	public void setUp() throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException {
@@ -50,6 +50,18 @@ public class EmailBodyProcessorTest {
         input.put("headerFaxNumber", "-");        		
         
 		verify(template, times(1)).process(eq(input), anyObject());
+	}
+	
+	@Test
+	public void testGetEmailSubject() {
+		
+		ExchangeOrder eo = new ExchangeOrder();
+		eo.setPassengerName("Passenger Name");
+		eo.setRecordLocator("ABC123");
+		eo.setEoNumber("1807200009");
+		
+		String result = processor.getEmailSubject(eo);
+		assertEquals("CWT Exchange Order 1807200009: ABC123 - (Passenger Name)", result);
 	}
 
 }
