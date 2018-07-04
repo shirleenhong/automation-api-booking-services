@@ -1,5 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -34,21 +37,34 @@ public class ExchangeOrderController {
 
 	private static final String ERROR = "Error";
 
-	@PostMapping(path = "/exchange-order", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+	@PostMapping(
+			path = "/exchange-order",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Saves new exchange order transaction.")
-	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
+	public ResponseEntity<Map<String, Object>> saveExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) {
 
 		try {
-			return new ResponseEntity<>(eoService.saveExchangeOrder(input), HttpStatus.OK);
+			final ExchangeOrder saveExchangeOrder = eoService.saveExchangeOrder(input);
+			Map<String, Object> response = new HashMap<>(1);
+			response.put("eoNumber", saveExchangeOrder.getEoNumber());
+			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
 		catch (ExchangeOrderException e) {
 			LOGGER.error(e.getMessage());
+
 			HttpHeaders headers = new HttpHeaders();
 			headers.set(ERROR, "Exchange order not found!");
-			return new ResponseEntity<>(input, headers, HttpStatus.NO_CONTENT);
+
+			final String errorMessage = "Exchange order not found!";
+			headers.set(ERROR, errorMessage);
+
+			Map<String, Object> response = new HashMap<>(1);
+			response.put("Error", errorMessage);
+
+			return new ResponseEntity<>(response, headers, HttpStatus.NO_CONTENT);
 		}
 	}
 
@@ -61,7 +77,9 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/exchange-order/pdf/{eoNumber}", method = RequestMethod.GET,
+	@RequestMapping(
+			value = "/exchange-order/pdf/{eoNumber}",
+			method = RequestMethod.GET,
 			produces = { MediaType.APPLICATION_PDF_VALUE })
 	@ApiOperation(value = "Generates exchange order pdf.")
 	public ResponseEntity<byte[]> generatePdf(
@@ -93,13 +111,15 @@ public class ExchangeOrderController {
 	}
 
 	@GetMapping(path = "/exchange-order/email/{eoNumber}")
-    @ResponseBody
-    @ApiOperation(value = "Emails exchange order pdf of the specified eoNumber")
-    public ResponseEntity<EmailResponse> email(
-            @RequestBody @ApiParam(value = "EoNumber of the exchange order to email")  @PathVariable String eoNumber) throws Exception{
-        
-        return new ResponseEntity<>(eoReportService.emailPdf(eoNumber), HttpStatus.OK);
-    }
+	@ResponseBody
+	@ApiOperation(value = "Emails exchange order pdf of the specified eoNumber")
+	public ResponseEntity<EmailResponse> email(
+			@RequestBody @ApiParam(
+					value = "EoNumber of the exchange order to email") @PathVariable String eoNumber)
+			throws Exception {
+
+		return new ResponseEntity<>(eoReportService.emailPdf(eoNumber), HttpStatus.OK);
+	}
 
 	private void handleError(String eoNumber, String message, final HttpHeaders headers) {
 
