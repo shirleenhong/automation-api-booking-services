@@ -51,11 +51,11 @@ public class ExchangeOrder implements Serializable {
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant additionalInfoDate;
-	
+
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String productCode;
-	
+
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String accountNumber;
@@ -75,7 +75,7 @@ public class ExchangeOrder implements Serializable {
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String pcc;
-	
+
 	private String faxNumber;
 
 	@NotEmpty
@@ -104,18 +104,15 @@ public class ExchangeOrder implements Serializable {
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String eoAction;
-	
+
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String status;
 
-	@ApiModelProperty(required = false)
 	private String raiseCheque;
 
-	@ApiModelProperty(required = false)
 	private String tax1;
-	
-	@ApiModelProperty(required = false)
+
 	private String tax2;
 
 	@NotNull
@@ -133,14 +130,14 @@ public class ExchangeOrder implements Serializable {
 
 	@ApiModelProperty(value = "CWT Absorb Tag for Merchant Fee")
 	private boolean merchantFeeAbsorb;
-	
+
 	private List<String> eoRemarks;
 
 	private List<String> itineraryRemarks;
 
 	@Valid
 	private Vendor vendor;
-			
+
 	public String getEoNumber() {
 		return eoNumber;
 	}
@@ -372,7 +369,7 @@ public class ExchangeOrder implements Serializable {
 	public void setTotalSellingPrice(BigDecimal totalSellingPrice) {
 		this.totalSellingPrice = totalSellingPrice;
 	}
-	
+
 	public List<String> getEoRemarks() {
 		return eoRemarks;
 	}
