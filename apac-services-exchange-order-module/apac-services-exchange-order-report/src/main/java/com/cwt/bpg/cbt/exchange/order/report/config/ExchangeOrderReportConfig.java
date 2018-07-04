@@ -14,20 +14,17 @@ import freemarker.template.TemplateException;
 @Configuration("com.cwt.bpg.cbt.exchange.order.report.config")
 public class ExchangeOrderReportConfig {
 
-	@Bean(name="freemarkerConfig")
-    public freemarker.template.Configuration freemarkerConfig() throws ExchangeOrderException
-    {
-        FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
-        bean.setDefaultEncoding(StandardCharsets.UTF_8.name());
-        bean.setTemplateLoaderPath("classpath:templates");
+	@Bean(name = "freemarkerConfig")
+	public freemarker.template.Configuration freemarkerConfig() throws ExchangeOrderException {
+		FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
+		bean.setDefaultEncoding(StandardCharsets.UTF_8.name());
+		bean.setTemplateLoaderPath("classpath:templates");
 
-        try
-        {
-            return bean.createConfiguration();
-        }
-        catch (IOException | TemplateException e)
-        {
-            throw new ExchangeOrderException("Template error", e);
-        }
-    }
+		try {
+			return bean.createConfiguration();
+		}
+		catch (IOException | TemplateException e) {
+			throw new ExchangeOrderException("Template error", e);
+		}
+	}
 }

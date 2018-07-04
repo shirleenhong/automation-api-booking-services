@@ -46,10 +46,8 @@ public class EmailBodyProcessorTest {
         
         input.put("vendorEmail", "-");
         input.put("agentName", eo.getAgentName());
-        input.put("headerPhoneNumber", 
-        		"-");
-        input.put("headerFaxNumber", 
-        		"-");        		
+        input.put("headerPhoneNumber", "-");
+        input.put("headerFaxNumber", "-");        		
         
 		verify(template, times(1)).process(eq(input), anyObject());
 	}
