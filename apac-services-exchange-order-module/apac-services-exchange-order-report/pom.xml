@@ -26,7 +26,7 @@
 			<artifactId>apac-services-exchange-order-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
@@ -41,56 +41,60 @@
 			<artifactId>groovy</artifactId>
 		</dependency>
 	</dependencies>
+	<profiles>
+		<profile>
+			<id>generate-jasper</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>jasperreports-maven-plugin</artifactId>
+						<version>1.0-beta-2</version>
+						<configuration>
+							<sourceDirectory>src/main/resources/jasper</sourceDirectory>
+							<outputDirectory>src/main/resources/jasper</outputDirectory>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>compile</phase>
+								<goals>
+									<goal>compile-reports</goal>
+								</goals>
+							</execution>
+						</executions>
 
-  <build>
-    <plugins>
-      <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>jasperreports-maven-plugin</artifactId>
-          <version>1.0-beta-2</version>
-          <configuration>
-          		<sourceDirectory>src/main/resources/jasper</sourceDirectory>
-                <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-          </configuration>
-          <executions>
-            <execution>
-                <phase>compile</phase>
-                <goals>
-                  <goal>compile-reports</goal>
-                </goals>
-            </execution>
-          </executions>
-          
-          <dependencies>
-            <dependency>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jasperreports-maven-plugin</artifactId>
-                <version>1.0-beta-2</version>
-                <exclusions>
-                  <exclusion>
-                    <groupId>jasperreports</groupId>
-                    <artifactId>jasperreports</artifactId>
-                  </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>net.sf.jasperreports</groupId>
-                <artifactId>jasperreports</artifactId>
-      			<version>6.6.0</version>
-                <exclusions>
-                  <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                  </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <version>${groovy.version}</version>
-            </dependency>
-          </dependencies>
-        </plugin>
-    </plugins>
-  </build>
+						<dependencies>
+							<dependency>
+								<groupId>org.codehaus.mojo</groupId>
+								<artifactId>jasperreports-maven-plugin</artifactId>
+								<version>1.0-beta-2</version>
+								<exclusions>
+									<exclusion>
+										<groupId>jasperreports</groupId>
+										<artifactId>jasperreports</artifactId>
+									</exclusion>
+								</exclusions>
+							</dependency>
+							<dependency>
+								<groupId>net.sf.jasperreports</groupId>
+								<artifactId>jasperreports</artifactId>
+								<version>6.6.0</version>
+								<exclusions>
+									<exclusion>
+										<groupId>commons-logging</groupId>
+										<artifactId>commons-logging</artifactId>
+									</exclusion>
+								</exclusions>
+							</dependency>
+							<dependency>
+								<groupId>org.codehaus.groovy</groupId>
+								<artifactId>groovy-all</artifactId>
+								<version>${groovy.version}</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

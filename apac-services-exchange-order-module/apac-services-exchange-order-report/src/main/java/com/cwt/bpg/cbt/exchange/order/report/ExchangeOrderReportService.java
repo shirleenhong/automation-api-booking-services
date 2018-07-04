@@ -42,7 +42,7 @@ public class ExchangeOrderReportService {
     @Autowired
     public SimpleMailMessage messageTemplate;
 
-	private static final String TEMPLATE = "exchange-order.jasper";
+	private static final String TEMPLATE = "jasper/exchange-order.jasper";
 	
 	public byte[] generatePdf(String eoNumber) throws ExchangeOrderException, JRException, IOException {
 
