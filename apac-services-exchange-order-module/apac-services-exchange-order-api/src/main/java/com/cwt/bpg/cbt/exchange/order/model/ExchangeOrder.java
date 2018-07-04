@@ -135,6 +135,7 @@ public class ExchangeOrder implements Serializable {
 
 	private List<String> itineraryRemarks;
 
+	@NotNull
 	@Valid
 	private Vendor vendor;
 

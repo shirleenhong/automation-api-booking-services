@@ -77,9 +77,8 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
 	}
 
-	@RequestMapping(
+	@GetMapping(
 			value = "/exchange-order/pdf/{eoNumber}",
-			method = RequestMethod.GET,
 			produces = { MediaType.APPLICATION_PDF_VALUE })
 	@ApiOperation(value = "Generates exchange order pdf.")
 	public ResponseEntity<byte[]> generatePdf(
@@ -92,6 +91,8 @@ public class ExchangeOrderController {
 
 		try {
 			body = eoReportService.generatePdf(eoNumber);
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + filename + "\"");
+			headers.setContentType(MediaType.parseMediaType(MediaType.APPLICATION_PDF_VALUE));			
 		}
 		catch (ExchangeOrderException e) {
 			handleError(eoNumber, e.getMessage(), headers);
@@ -100,11 +101,6 @@ public class ExchangeOrderController {
 		catch (Exception e) {
 			handleError(eoNumber, e.getMessage(), headers);
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-
-		if (status == HttpStatus.OK) {
-			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + filename + "\"");
-			headers.setContentType(MediaType.parseMediaType(MediaType.APPLICATION_PDF_VALUE));
 		}
 
 		return new ResponseEntity<>(body, headers, status);
