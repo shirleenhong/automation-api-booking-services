@@ -1,22 +1,17 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.ConcurrentModificationException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.mongodb.morphia.Key;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
@@ -148,9 +143,4 @@ public class ExchangeOrderService {
     public ExchangeOrder getExchangeOrder(String eoNumber) {
         return exchangeOrderRepo.getExchangeOrder(eoNumber);
     }
-
-	public InputStream generatePdf(String eoNumber) throws FileNotFoundException {
-		//TODO IMPLEMENT GENERATE PDF METHOD
-		return new FileInputStream("C:\\Users\\U003ALP\\Documents\\test.pdf");
-	}
 }

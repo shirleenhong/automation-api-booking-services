@@ -14,10 +14,10 @@ public class Header implements Serializable {
     @ApiModelProperty(required = true, value = "Header Address")
     private String address;
     
-    @ApiModelProperty(required = false, value = "Header Phone Number")
+    @ApiModelProperty(value = "Header Phone Number")
     private String phoneNumber;
     
-    @ApiModelProperty(required = false, value = "Header Fax Number")
+    @ApiModelProperty(value = "Header Fax Number")
 	private String faxNumber;
 
 	public String getAddress() {
