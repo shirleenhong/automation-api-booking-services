@@ -25,6 +25,7 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNotFoundException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
 
@@ -66,8 +67,8 @@ public class ExchangeOrderServiceTest {
 		assertEquals(eo.getEoNumber(), result.getEoNumber());		
 	}
 	
-	@Test(expected = ExchangeOrderException.class)
-	public void shouldNotUpdateIfEoNumberIsNotExisting() throws ExchangeOrderException {
+	@Test(expected = ExchangeOrderNotFoundException.class)
+	public void shouldNotUpdateIfEoNumberIsNotExisting() throws ExchangeOrderNotFoundException {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setEoNumber("1122334455");
 		eo.setCountryCode("HK");

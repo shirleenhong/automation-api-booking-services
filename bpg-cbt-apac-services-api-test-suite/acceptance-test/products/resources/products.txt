@@ -93,8 +93,8 @@ Verify Vendors Are Retrieved Correctly
     ${vendor_index}    Set Variable    0
     :FOR    ${vendor_index}    IN RANGE    ${item_vendor_list_length}
     \    ${list_item}    Get From List    ${item_vendor_list}    ${vendor_index}
-    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].vendorNumber    ${list_item}
-    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].vendorName    ${vendor_code_${list_item}}   
+    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].code    ${list_item}
+    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].name    ${vendor_code_${list_item}}   
     \    Run Keyword If    "${country}"!="IN"    Verify Vendor Raise Type Is Retrieved Correctly    ${index}    ${list_item}    ${vendor_index}
     \    ${vendor_index}    Evaluate    ${vendor_index}+1
     Verify Json Element Does Not Exist    $[${index}].vendors.[${vendor_index}].vendorName

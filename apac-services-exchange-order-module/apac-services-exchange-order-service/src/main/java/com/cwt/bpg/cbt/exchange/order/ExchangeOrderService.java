@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNotFoundException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
 
@@ -38,7 +39,7 @@ public class ExchangeOrderService {
 	@Autowired
 	private SequenceNumberRepository sequenceNumberRepo;
 	
-	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder) throws ExchangeOrderException {
+	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder) throws ExchangeOrderNotFoundException {
 		
 		final String eoNumber = exchangeOrder.getEoNumber();
 		if(eoNumber == null) {
@@ -50,7 +51,7 @@ public class ExchangeOrderService {
 					getExchangeOrder(eoNumber));
 			
 			ExchangeOrder existingEoNumber = isEoExist.orElseThrow(() -> { 
-				return new ExchangeOrderException("Exchange order number not found: [ " + eoNumber + " ]") ; });
+				return new ExchangeOrderNotFoundException("Exchange order number not found: [ " + eoNumber + " ]") ; });
 			
 			LOGGER.info("Existing Exchange order number: {} with country code {}", 
 					existingEoNumber.getEoNumber(), 

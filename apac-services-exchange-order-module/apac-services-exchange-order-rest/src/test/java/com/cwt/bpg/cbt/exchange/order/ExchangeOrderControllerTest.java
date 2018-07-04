@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNotFoundException;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,8 +68,9 @@ public class ExchangeOrderControllerTest {
 	public void shouldReturnExchangeOrderNumber() throws Exception {
 
 		ExchangeOrder order = createExchangeOrder();
+		order.setEoNumber("1122334455");
 
-		when(eoService.saveExchangeOrder(order)).thenReturn(order);
+		when(eoService.saveExchangeOrder(any(ExchangeOrder.class))).thenReturn(order);
 
 		mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
 				.andExpect(status().isOk()).andReturn().getResponse();
@@ -82,7 +84,7 @@ public class ExchangeOrderControllerTest {
 		ExchangeOrder order = createExchangeOrder();
 
 		when(eoService.saveExchangeOrder(anyObject()))
-				.thenThrow(new ExchangeOrderException("eo number not found"));
+				.thenThrow(new ExchangeOrderNotFoundException("eo number not found"));
 
 		mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
 				.andExpect(status().isNoContent()).andReturn().getResponse();
@@ -186,7 +188,7 @@ public class ExchangeOrderControllerTest {
 
 		when(eoReportService.emailPdf(order.getEoNumber())).thenReturn(new EmailResponse());
 
-		mockMvc.perform(post(url+"/email/"+order.getEoNumber())
+		mockMvc.perform(get(url+"/email/"+order.getEoNumber())
 				.contentType(APPLICATION_JSON_UTF8)
 				.content(convertObjectToJsonBytes(order)))
 				.andExpect(status().isOk()).andReturn().getResponse();
