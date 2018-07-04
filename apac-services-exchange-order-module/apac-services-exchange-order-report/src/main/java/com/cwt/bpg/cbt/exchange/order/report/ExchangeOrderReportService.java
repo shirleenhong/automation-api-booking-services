@@ -1,14 +1,22 @@
-package com.cwt.bpg.cbt.exchange.order;
+package com.cwt.bpg.cbt.exchange.order.report;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
-import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
@@ -27,6 +35,12 @@ public class ExchangeOrderReportService {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+    private JavaMailSender mailSender;
+    
+    @Autowired
+    public SimpleMailMessage messageTemplate;
 
 	private static final String TEMPLATE = "exchange-order.jasper";
 	
@@ -70,9 +84,21 @@ public class ExchangeOrderReportService {
 		return productService.getVendor(countryCode, productCode, vendorCode);
 	}
 
-	public EmailResponse emailPdf(String eoNumber){
-		//TODO IMPLEMENT THIS
-		return new EmailResponse();
+	public EmailResponse emailPdf(String eoNumber) throws Exception{
+		String email="rodolfo.delapena@carlsonwagonlit.com";
+        byte[] pdf = generatePdf(eoNumber);
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, (pdf != null), StandardCharsets.UTF_8.name());
+//        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(email);
+        helper.setSubject("email with attachment");
+        
+        String text = String.format(messageTemplate.getText(),email); 
+        helper.setText(text);
+        
+        helper.addAttachment(eoNumber + ".pdf",new ByteArrayResource(pdf));
+        mailSender.send(message);
+        return new EmailResponse();
 	}
 
 }

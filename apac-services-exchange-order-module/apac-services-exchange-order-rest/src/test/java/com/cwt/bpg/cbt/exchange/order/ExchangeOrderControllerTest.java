@@ -15,6 +15,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
+import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

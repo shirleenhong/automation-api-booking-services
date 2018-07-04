@@ -14,6 +14,7 @@ import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.Header;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
+import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
   
 public class ExchangeOrderReportServiceTest {
 
