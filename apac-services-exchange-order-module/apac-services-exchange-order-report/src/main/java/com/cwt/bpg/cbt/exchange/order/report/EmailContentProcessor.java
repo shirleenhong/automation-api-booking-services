@@ -7,11 +7,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 
 import freemarker.template.*;
 
+@Service
 public class EmailContentProcessor {
 
 	private static final String SUBJECT_PREFIX = "CWT Exchange Order";

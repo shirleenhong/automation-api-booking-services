@@ -26,7 +26,7 @@ public class EmailBodyProcessorTest {
 	private Template template;
 	
 	@InjectMocks
-	private EmailBodyProcessor processor;
+	private EmailContentProcessor processor;
 	
 	@Before
 	public void setUp() throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException {
