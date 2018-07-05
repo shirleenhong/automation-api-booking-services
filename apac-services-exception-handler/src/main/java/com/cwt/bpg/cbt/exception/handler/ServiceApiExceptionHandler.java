@@ -73,11 +73,9 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 				request);
 	}
 
-	//@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleInternalServerError(Exception ex) {
 		logger.error("Server caught an exception: {}", ex);
-		
 		
 		if (ex instanceof ServiceException) {
 			ServiceException internalException = ((ServiceException) ex);
@@ -85,13 +83,11 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 			HttpHeaders headers = new HttpHeaders();
 			headers.putAll(optionalHeaders.orElse(new LinkedCaseInsensitiveMap<List<String>>(8, Locale.ENGLISH)));
 			
-			ApiError apiError = new ApiError(HttpStatus.valueOf(internalException.getStatusCode()), "There were exception found during the process");
+			ApiError apiError = new ApiError(HttpStatus.valueOf(internalException.getStatusCode()), "There were exception found during the process.");
 			return new ResponseEntity<>(apiError, headers, apiError.getStatus());
 		}
-		
 		
 		ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
 		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
-
 }
