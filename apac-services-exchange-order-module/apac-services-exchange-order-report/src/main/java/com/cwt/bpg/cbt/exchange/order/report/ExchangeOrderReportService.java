@@ -17,13 +17,11 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
-import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
-import com.cwt.bpg.cbt.exchange.order.report.exception.VendorNotFoundException;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
