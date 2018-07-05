@@ -7,24 +7,24 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 
 import freemarker.template.*;
 
-@Service
+@Component
 public class EmailContentProcessor {
 
 	private static final String SUBJECT_PREFIX = "CWT Exchange Order";
 
 	private static final String EO_EMAIL_BODY_FTL = "eo-email-body.ftl";
-
+	
+	private static final String DASH = "-";	
+	
 	@Qualifier("freemarkerConfig")
 	@Autowired
 	private Configuration templateConfig;
-	
-	private static final String DASH = "-";	
 	
 	public String getEmailBody(ExchangeOrder eo) throws IOException, TemplateException
     {
@@ -32,7 +32,7 @@ public class EmailContentProcessor {
         Template template = templateConfig.getTemplate(EO_EMAIL_BODY_FTL);
         Map<String, Object> input = new HashMap<>();
         
-        input.put("vendorEmail", getValue(eo.getVendor().getEmail()));
+        input.put("vendorSupportEmail", getValue(eo.getVendor().getSupportEmail()));
         input.put("agentName", eo.getAgentName());
         input.put("headerPhoneNumber", 
         		getValue(eo.getHeader().getPhoneNumber()));

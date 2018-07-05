@@ -75,8 +75,7 @@ public class ExchangeOrderController {
 	@ApiOperation(value = "Emails exchange order pdf of the specified eoNumber")
 	public ResponseEntity<EmailResponse> email(
 			@RequestBody @ApiParam(
-					value = "EoNumber of the exchange order to email") @PathVariable String eoNumber)
-			throws Exception {
+					value = "EoNumber of the exchange order to email") @PathVariable String eoNumber) {
 
 		return new ResponseEntity<>(eoReportService.emailPdf(eoNumber), HttpStatus.OK);
 	}
