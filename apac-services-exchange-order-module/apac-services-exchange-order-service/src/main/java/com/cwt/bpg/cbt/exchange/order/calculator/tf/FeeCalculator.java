@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -179,8 +180,8 @@ public class FeeCalculator {
 						.add(safeValue(tf.getExtraAmount()));
 			}
 			else if ("D".equals(tf.getOperator())) {
-				result = tf.getAmount()
-						.divide(new BigDecimal(100).subtract(percentDecimal(safeValue(tf.getPerAmount()))))
+				result = baseAmount
+						.divide(percentDecimal(new BigDecimal(100).subtract(new BigDecimal(safeValue(tf.getPerAmount())))),MathContext.DECIMAL128)
 						.add(safeValue(tf.getExtraAmount()))
 						.subtract(safeValue(baseAmount));
 			}

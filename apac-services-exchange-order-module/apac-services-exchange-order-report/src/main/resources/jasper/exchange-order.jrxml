@@ -2,9 +2,11 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exchange-order" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11876608-3e71-4654-8bad-9498a837d1ff">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="365"/>
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
-	<subDataset name="dataset1" uuid="445d1af9-e2c1-4cfc-9fac-574f362a3a97"/>
+	<subDataset name="dataset1" uuid="445d1af9-e2c1-4cfc-9fac-574f362a3a97">
+		<field name="_THIS" class="java.lang.String"/>
+	</subDataset>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -19,6 +21,7 @@
 	<field name="agentId" class="java.lang.String"/>
 	<field name="recordLocator" class="java.lang.String"/>
 	<field name="createDateTime" class="java.time.Instant"/>
+	<field name="updateDateTime" class="java.time.Instant"/>
 	<field name="gstAmount" class="java.math.BigDecimal"/>
 	<field name="nettCost" class="java.math.BigDecimal"/>
 	<field name="tax1" class="java.math.BigDecimal"/>
@@ -28,7 +31,6 @@
 	<field name="btaDescription" class="java.lang.String"/>
 	<field name="additionalInfoDate" class="java.time.Instant"/>
 	<field name="eoRemarks" class="java.util.List"/>
-	<field name="itineraryRemarks" class="java.util.List"/>
 	<variable name="tax1Label" class="java.lang.String">
 		<variableExpression><![CDATA[$F{gstAmount} != null ? "GST" : "Tax"]]></variableExpression>
 	</variable>
@@ -103,7 +105,7 @@
 				<text><![CDATA[EXCHANGE ORDER:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="143" width="120" height="1" uuid="4b7d2695-b9c5-4618-8aae-cf16c233e5fb"/>
+				<reportElement x="0" y="143" width="100" height="1" uuid="4b7d2695-b9c5-4618-8aae-cf16c233e5fb"/>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
 				</graphicElement>
@@ -217,7 +219,7 @@
 			</textField>
 			<textField>
 				<reportElement x="160" y="295" width="200" height="15" uuid="3df54278-a470-4528-bb7c-cced3fcf517f"/>
-				<textFieldExpression><![CDATA[$F{createDateTime}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{updateDateTime} != null ? $F{updateDateTime} : $F{createDateTime}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="340" width="200" height="15" uuid="9d80071b-0318-46cf-a234-ef0cb110af47"/>
@@ -240,14 +242,19 @@
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="160" y="460" width="200" height="60" uuid="4673f580-538f-4d0d-b5a8-f2db1137755c">
+				<reportElement x="160" y="460" width="350" height="60" uuid="4673f580-538f-4d0d-b5a8-f2db1137755c">
 					<printWhenExpression><![CDATA[$F{eoRemarks} != null]]></printWhenExpression>
 				</reportElement>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
-					<datasetRun subDataset="dataset1" uuid="065222d6-51a8-4303-b82d-d4a711819640">
-						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource(1)]]></dataSourceExpression>
+					<datasetRun subDataset="dataset1" uuid="bd173cb8-3e6d-4055-bb25-1f112332e1ea">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{eoRemarks})]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="60" width="200"/>
+					<jr:listContents height="53" width="350">
+						<textField>
+							<reportElement x="0" y="0" width="322" height="15" uuid="c01ba4be-f5ca-445a-a29a-7e013f76d50d"/>
+							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
 				</jr:list>
 			</componentElement>
 			<staticText>

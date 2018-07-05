@@ -36,4 +36,8 @@ public final class CalculatorUtils {
 	public static BigDecimal percentDecimal(Double value) {
 		return BigDecimal.valueOf(safeValue(value) * 0.01);
 	}
+
+	public static BigDecimal percentDecimal(BigDecimal value) {
+		return safeValue(value).multiply(BigDecimal.valueOf(0.01));
+	}
 }
