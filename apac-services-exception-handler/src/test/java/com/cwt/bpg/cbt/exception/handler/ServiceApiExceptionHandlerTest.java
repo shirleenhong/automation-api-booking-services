@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -129,6 +130,16 @@ public class ServiceApiExceptionHandlerTest {
 	@Test
 	public void canHandleServerError() {
 		NullPointerException ex = new NullPointerException("Null pointer");
+
+		ResponseEntity<Object> handleInternalServerError = exceptionHandler.handleInternalServerError(ex);
+
+		assertNotNull(handleInternalServerError);
+		assertTrue(handleInternalServerError.getBody() instanceof ApiError);
+	}
+
+	@Test
+	public void canHandleServiceException() {
+		ApiServiceException ex = new ApiServiceException("API Service Exception");
 
 		ResponseEntity<Object> handleInternalServerError = exceptionHandler.handleInternalServerError(ex);
 
