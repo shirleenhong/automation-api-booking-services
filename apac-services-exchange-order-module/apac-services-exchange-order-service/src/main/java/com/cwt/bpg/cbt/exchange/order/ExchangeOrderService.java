@@ -19,7 +19,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNotFoundException;
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
 
@@ -42,7 +42,7 @@ public class ExchangeOrderService {
 	private SequenceNumberRepository sequenceNumberRepo;
 
 	ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder)
-			throws ExchangeOrderNotFoundException {
+			throws ExchangeOrderNoContentException {
 
 		final String eoNumber = exchangeOrder.getEoNumber();
 		if (eoNumber == null) {
@@ -53,7 +53,7 @@ public class ExchangeOrderService {
 			Optional<ExchangeOrder> isEoExist = Optional.ofNullable(getExchangeOrder(eoNumber));
 
 			ExchangeOrder existingExchangeOrder = isEoExist
-					.orElseThrow(() -> new ExchangeOrderNotFoundException(
+					.orElseThrow(() -> new ExchangeOrderNoContentException(
 							"Exchange order number not found: [ " + eoNumber + " ]"));
 
 			existingExchangeOrder.setUpdateDateTime(Instant.now());

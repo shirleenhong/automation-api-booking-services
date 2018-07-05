@@ -25,7 +25,7 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
-import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNotFoundException;
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
 
@@ -47,7 +47,7 @@ public class ExchangeOrderServiceTest {
 	}
   
 	@Test
-	public void shouldCallSaveOrUpdateNew() throws ExchangeOrderException {
+	public void shouldCallSaveOrUpdateNew() throws ExchangeOrderNoContentException {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setCountryCode("HK");
 		service.saveExchangeOrder(eo);
@@ -55,7 +55,7 @@ public class ExchangeOrderServiceTest {
 	}
 	
 	@Test
-	public void shouldCallSaveOrUpdateExisting() throws ExchangeOrderException {
+	public void shouldCallSaveOrUpdateExisting() throws ExchangeOrderNoContentException {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setEoNumber("eoNumber");
 		eo.setCountryCode("HK");
@@ -67,8 +67,8 @@ public class ExchangeOrderServiceTest {
 		assertEquals(eo.getEoNumber(), result.getEoNumber());		
 	}
 	
-	@Test(expected = ExchangeOrderNotFoundException.class)
-	public void shouldNotUpdateIfEoNumberIsNotExisting() throws ExchangeOrderNotFoundException {
+	@Test(expected = ExchangeOrderNoContentException.class)
+	public void shouldNotUpdateIfEoNumberIsNotExisting() throws ExchangeOrderNoContentException {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setEoNumber("1122334455");
 		eo.setCountryCode("HK");
@@ -76,7 +76,7 @@ public class ExchangeOrderServiceTest {
 	}
 	
 	@Test
-	public void shouldCallSaveOrUpdateUpdated() throws ExchangeOrderException {
+	public void shouldCallSaveOrUpdateUpdated() throws ExchangeOrderNoContentException {
 		
 		SequenceNumber sn = mock(SequenceNumber.class);
 		when(sequentNumberRepo.get(anyString())).thenReturn(Arrays.asList(sn));

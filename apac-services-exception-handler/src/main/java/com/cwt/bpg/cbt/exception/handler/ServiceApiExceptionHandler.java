@@ -1,11 +1,19 @@
 package com.cwt.bpg.cbt.exception.handler;
 
+import com.cwt.bpg.cbt.exceptions.ApacServiceException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.util.LinkedCaseInsensitiveMap;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -65,11 +73,24 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 				request);
 	}
 
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	//@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleInternalServerError(Exception ex) {
 		logger.error("Server caught an exception: {}", ex);
-		ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", "");
+		
+		
+		if (ex instanceof ApacServiceException) {
+			ApacServiceException internalException = ((ApacServiceException) ex);
+			Optional<Map<String, List<String>>> optionalHeaders = Optional.ofNullable(internalException.getHeaders());
+			HttpHeaders headers = new HttpHeaders();
+			headers.putAll(optionalHeaders.orElse(new LinkedCaseInsensitiveMap<List<String>>(8, Locale.ENGLISH)));
+			
+			ApiError apiError = new ApiError(HttpStatus.valueOf(internalException.getStatusCode()), "There were exception found during the process");
+			return new ResponseEntity<>(apiError, headers, apiError.getStatus());
+		}
+		
+		
+		ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
 		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
