@@ -78,6 +78,8 @@ public class NoFeeCalculator extends FeeCalculator {
 			IndiaAirFeesBreakdown breakdown) {
 
         return safeValue(breakdown.getTotalSellFare())
-    			.add(safeValue(breakdown.getTotalTaxes()));
+				.add(safeValue(breakdown.getTotalGst()))
+				.add(safeValue(breakdown.getTotalMerchantFee())
+				.add(safeValue(breakdown.getTotalTaxes())));
     }
 }

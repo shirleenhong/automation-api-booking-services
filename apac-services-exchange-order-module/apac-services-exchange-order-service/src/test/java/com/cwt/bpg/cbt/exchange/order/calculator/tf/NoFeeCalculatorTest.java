@@ -66,7 +66,8 @@ public class NoFeeCalculatorTest {
     	breakdown.setTotalSellFare(new BigDecimal(100));
     	breakdown.setTotalGst(new BigDecimal(50));
     	breakdown.setTotalMerchantFee(new BigDecimal(10));
-    	
-        assertEquals(new BigDecimal(100), noFeeCalc.getTotalCharge(breakdown));
+    	breakdown.setTotalTaxes(new BigDecimal(1));
+
+        assertEquals(new BigDecimal(161), noFeeCalc.getTotalCharge(breakdown));
     }
 }
