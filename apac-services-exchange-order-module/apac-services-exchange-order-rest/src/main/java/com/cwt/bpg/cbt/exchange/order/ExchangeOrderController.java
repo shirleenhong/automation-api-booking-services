@@ -91,7 +91,6 @@ public class ExchangeOrderController {
 
 		try {
 			body = eoReportService.generatePdf(eoNumber);
-			
 			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + filename + "\"");
 			headers.setContentType(MediaType.parseMediaType(MediaType.APPLICATION_PDF_VALUE));			
 		}
