@@ -98,7 +98,7 @@ public class ExchangeOrderReportService {
 		return productService.getVendor(countryCode, productCode, vendorCode);
 	}
 
-	public EmailResponse emailPdf(String eoNumber) {
+	public EmailResponse emailPdf(String eoNumber) throws ApiServiceException {
 		
 		EmailResponse response = new EmailResponse();
 		
@@ -131,10 +131,8 @@ public class ExchangeOrderReportService {
 			response.setSuccess(true);
 		}
 		catch (Exception e) {
-			//TODO Should throw an exception for global error handler to handle
 			LOGGER.error(ERROR_MESSAGE, e);
-			response.setMessage(ERROR_MESSAGE);
-			response.setSuccess(false);			
+			throw new ApiServiceException(ERROR_MESSAGE);
 		}		
         
         return response;
