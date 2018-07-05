@@ -68,6 +68,11 @@ public class ExchangeOrder implements Serializable {
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant createDateTime;
 
+    @ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+    @JsonSerialize(using = DateSerializer.class)
+    @JsonDeserialize(using = DateDeserializer.class)
+	private Instant updateDateTime;
+
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String agentId;
@@ -111,9 +116,9 @@ public class ExchangeOrder implements Serializable {
 
 	private String raiseCheque;
 
-	private String tax1;
+	private BigDecimal tax1;
 
-	private String tax2;
+	private BigDecimal tax2;
 
 	@NotNull
 	@DecimalMin(value = "0")
@@ -251,7 +256,15 @@ public class ExchangeOrder implements Serializable {
 		this.createDateTime = createDateTime;
 	}
 
-	public String getAgentId() {
+    public Instant getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(Instant updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
+
+    public String getAgentId() {
 		return agentId;
 	}
 
@@ -339,19 +352,19 @@ public class ExchangeOrder implements Serializable {
 		this.raiseCheque = raiseCheque;
 	}
 
-	public String getTax1() {
+	public BigDecimal getTax1() {
 		return tax1;
 	}
 
-	public void setTax1(String tax1) {
+	public void setTax1(BigDecimal tax1) {
 		this.tax1 = tax1;
 	}
 
-	public String getTax2() {
+	public BigDecimal getTax2() {
 		return tax2;
 	}
 
-	public void setTax2(String tax2) {
+	public void setTax2(BigDecimal tax2) {
 		this.tax2 = tax2;
 	}
 

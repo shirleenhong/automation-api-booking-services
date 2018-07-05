@@ -15,13 +15,19 @@
 	<field name="agentId" class="java.lang.String"/>
 	<field name="recordLocator" class="java.lang.String"/>
 	<field name="createDateTime" class="java.time.Instant"/>
+	<field name="gstAmount" class="java.math.BigDecimal"/>
 	<field name="nettCost" class="java.math.BigDecimal"/>
-	<field name="tax1" class="java.lang.String"/>
-	<field name="tax2" class="java.lang.String"/>
+	<field name="tax1" class="java.math.BigDecimal"/>
+	<field name="tax2" class="java.math.BigDecimal"/>
 	<field name="total" class="java.math.BigDecimal"/>
 	<field name="description" class="java.lang.String"/>
+	<field name="btaDescription" class="java.lang.String"/>
+	<field name="additionalInfoDate" class="java.time.Instant"/>
 	<field name="eoRemarks" class="java.util.List"/>
 	<field name="itineraryRemarks" class="java.util.List"/>
+	<variable name="tax1Label" class="java.lang.String">
+		<variableExpression><![CDATA[$F{gstAmount} != null ? "GST" : "Tax"]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -212,7 +218,7 @@
 			</textField>
 			<textField>
 				<reportElement x="160" y="355" width="200" height="15" uuid="10d0c9d2-0e59-4831-b3c7-a563d04aa657"/>
-				<textFieldExpression><![CDATA[$F{tax1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{gstAmount} != null ? $F{gstAmount} : $F{tax1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="370" width="200" height="15" uuid="3f064f4c-5dd3-4644-83b1-a311841e8242"/>
@@ -223,7 +229,7 @@
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="400" width="200" height="60" uuid="ae632efd-d66c-4e7e-a8b8-3d5ea72ff7f7"/>
+				<reportElement x="160" y="400" width="200" height="15" uuid="ae632efd-d66c-4e7e-a8b8-3d5ea72ff7f7"/>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<componentElement>
@@ -247,6 +253,14 @@
 			<textField>
 				<reportElement x="45" y="20" width="200" height="15" uuid="49412d51-68ef-4563-ab01-48d46c03eace"/>
 				<textFieldExpression><![CDATA[$F{vendor}.getContactPerson()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="415" width="200" height="15" uuid="84bcfc6a-910d-4cbb-8c82-88e1322cc944"/>
+				<textFieldExpression><![CDATA[$F{btaDescription}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="430" width="200" height="15" uuid="d5dcbcdc-92aa-4a1c-9366-35d7be272427"/>
+				<textFieldExpression><![CDATA[$F{additionalInfoDate}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
