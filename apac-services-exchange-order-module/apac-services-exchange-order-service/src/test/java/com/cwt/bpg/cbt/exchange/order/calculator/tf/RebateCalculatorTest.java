@@ -25,12 +25,15 @@ public class RebateCalculatorTest {
     public void getIntTotalChargeShouldReturnNotNull() {
     	
     	IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
+    	breakdown.setTotalDiscount(new BigDecimal(1));
+        breakdown.setTotalGst(new BigDecimal(5));
+        breakdown.setTotalMerchantFee(new BigDecimal(14));
     	breakdown.setTotalSellFare(new BigDecimal(100));
     	breakdown.setTotalTaxes(new BigDecimal(10));
     	breakdown.setFee(new BigDecimal(50));    	
     	
         BigDecimal actualResult = rebateCalc.getTotalCharge(breakdown);
 
-        assertEquals(new BigDecimal(160), actualResult);
+        assertEquals(new BigDecimal(178), actualResult);
     }
 }
