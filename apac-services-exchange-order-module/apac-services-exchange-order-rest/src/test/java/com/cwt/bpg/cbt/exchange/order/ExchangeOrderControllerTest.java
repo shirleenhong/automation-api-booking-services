@@ -125,6 +125,7 @@ public class ExchangeOrderControllerTest {
 		Vendor vendor = new Vendor();
 		vendor.setCode("VEN090909");
 		order.setVendor(vendor);
+		order.setFaxNumber("111");
 		order.setAccountNumber("987654321");
 		order.setPassengerName("Passenger");
 		order.setAgentId("U001XXX");

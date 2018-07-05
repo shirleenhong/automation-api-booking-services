@@ -81,6 +81,8 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private String pcc;
 
+	@NotEmpty
+	@ApiModelProperty(required = true)
 	private String faxNumber;
 
 	@NotEmpty

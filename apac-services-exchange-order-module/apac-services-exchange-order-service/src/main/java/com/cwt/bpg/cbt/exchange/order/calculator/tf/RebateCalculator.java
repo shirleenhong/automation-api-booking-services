@@ -29,6 +29,9 @@ public class RebateCalculator extends FeeCalculator {
 			IndiaAirFeesBreakdown breakdown) {
     	
         return safeValue(breakdown.getTotalSellFare())
+                .subtract(safeValue(breakdown.getTotalDiscount()))
+                .add(safeValue(breakdown.getTotalGst()))
+                .add(safeValue(breakdown.getTotalMerchantFee()))
         		.add(safeValue(breakdown.getFee()))
 				.add(safeValue(breakdown.getTotalTaxes()));
     }
