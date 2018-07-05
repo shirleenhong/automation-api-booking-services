@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
+import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
@@ -28,15 +26,11 @@ import io.swagger.annotations.ApiParam;
 @Api(tags = "Exchange Order")
 public class ExchangeOrderController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderController.class);
-
 	@Autowired
 	private ExchangeOrderService eoService;
 
 	@Autowired
 	private ExchangeOrderReportService eoReportService;
-
-	private static final String ERROR = "Error";
 
 	@PostMapping(
 			path = "/exchange-order",
@@ -66,28 +60,14 @@ public class ExchangeOrderController {
 			produces = { MediaType.APPLICATION_PDF_VALUE })
 	@ApiOperation(value = "Generates exchange order pdf.")
 	public ResponseEntity<byte[]> generatePdf(
-			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
+			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) throws ExchangeOrderNoContentException, ApiServiceException {
 
-		String filename = eoNumber + ".pdf";
+		final String filename = eoNumber + ".pdf";
 		final HttpHeaders headers = new HttpHeaders();
-		HttpStatus status = HttpStatus.OK;
-		byte[] body = null;
-
-		try {
-			body = eoReportService.generatePdf(eoNumber);
-			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + filename + "\"");
-			headers.setContentType(MediaType.parseMediaType(MediaType.APPLICATION_PDF_VALUE));			
-		}
-		catch (ExchangeOrderException e) {
-			handleError(eoNumber, e.getMessage(), headers);
-			status = HttpStatus.NO_CONTENT;
-		}
-		catch (Exception e) {
-			handleError(eoNumber, e.getMessage(), headers);
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-
-		return new ResponseEntity<>(body, headers, status);
+		byte[] body = eoReportService.generatePdf(eoNumber);
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + filename + "\"");
+		headers.setContentType(MediaType.parseMediaType(MediaType.APPLICATION_PDF_VALUE));
+		return new ResponseEntity<>(body, headers, HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/exchange-order/email/{eoNumber}")
@@ -100,11 +80,4 @@ public class ExchangeOrderController {
 
 		return new ResponseEntity<>(eoReportService.emailPdf(eoNumber), HttpStatus.OK);
 	}
-
-	private void handleError(String eoNumber, String message, final HttpHeaders headers) {
-
-		LOGGER.error(message);
-		headers.set(ERROR, "Unable to generate report for exchange order number: " + eoNumber);
-	}
-
 }

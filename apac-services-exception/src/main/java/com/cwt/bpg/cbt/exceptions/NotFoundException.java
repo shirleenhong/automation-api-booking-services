@@ -2,7 +2,7 @@ package com.cwt.bpg.cbt.exceptions;
 /**
  * will give http status 404 - not found exception
  */
-public class NotFoundException extends ApacServiceException {
+public class NotFoundException extends ServiceException {
 
 	private static final long serialVersionUID = 2081556770053061161L;
 
