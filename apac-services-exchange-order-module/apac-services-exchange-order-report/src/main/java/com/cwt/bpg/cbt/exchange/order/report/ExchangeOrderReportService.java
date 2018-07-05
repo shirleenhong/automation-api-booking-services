@@ -15,12 +15,15 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
+import com.cwt.bpg.cbt.exchange.order.report.exception.VendorNotFoundException;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -45,21 +48,22 @@ public class ExchangeOrderReportService {
 
 	@Value("${exchange.order.mail.sender}")
 	private String eoMailSender;
+  
+	private static final String TEMPLATE = "jasper/exchange-order.jasper";
 
-	private static final String TEMPLATE = "exchange-order.jasper";
-	
-	public byte[] generatePdf(String eoNumber) throws ExchangeOrderException, JRException, IOException {
-
+	public byte[] generatePdf(String eoNumber)
+			throws ExchangeOrderNoContentException, ApiServiceException {
+    
 		Optional<ExchangeOrder> eoExists = Optional.ofNullable(getExchangeOrder(eoNumber));
 
 		ExchangeOrder exchangeOrder = eoExists.orElseThrow(
-				() -> new ExchangeOrderException("Exchange order number not found: [ " + eoNumber + " ]"));
+				() -> new ExchangeOrderNoContentException("Exchange order number not found: [ " + eoNumber + " ]"));
 
 		Optional<Vendor> vendorExists = Optional.ofNullable(getVendor(exchangeOrder.getCountryCode(),
 				exchangeOrder.getProductCode(),
 				exchangeOrder.getVendor().getCode()));
 
-		Vendor vendor = vendorExists.orElseThrow(() -> new ExchangeOrderException(
+		Vendor vendor = vendorExists.orElseThrow(() -> new ApiServiceException(
 				"Vendor not found for exchange order number: [ " + eoNumber + " ]"));
 
 		vendor.setContactPerson(exchangeOrder.getVendor().getContactPerson());
@@ -69,11 +73,15 @@ public class ExchangeOrderReportService {
 
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
 
-		final JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
-				null,
-				new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
-
-		return JasperExportManager.exportReportToPdf(jasperPrint);
+		try {
+			JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
+					null,
+					new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
+			return JasperExportManager.exportReportToPdf(jasperPrint);
+		}
+		catch (JRException | IOException e) {
+			throw new ApiServiceException(e.getMessage());
+		}
 	}
 
 	private ExchangeOrder getExchangeOrder(String eoNumber) {

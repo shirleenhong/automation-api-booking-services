@@ -9,8 +9,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.Header;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
@@ -58,7 +60,7 @@ public class ExchangeOrderReportServiceTest {
 		assertNotNull(jasperPrint);
 	}
 
-	@Test (expected = ExchangeOrderException.class)
+	@Test (expected = ExchangeOrderNoContentException.class)
 	public void shouldGeneratePdfNullEO() throws Exception {
 			
 		Vendor vendor = createVendor();
@@ -70,7 +72,7 @@ public class ExchangeOrderReportServiceTest {
 		assertNotNull(jasperPrint);
 	}
 
-	@Test (expected = ExchangeOrderException.class)
+	@Test (expected = ApiServiceException.class)
 	public void shouldGeneratePdfNullVendor() throws Exception {
 		
 		ExchangeOrder exchangeOrder = createExchangeOrder(countryCode, productCode,

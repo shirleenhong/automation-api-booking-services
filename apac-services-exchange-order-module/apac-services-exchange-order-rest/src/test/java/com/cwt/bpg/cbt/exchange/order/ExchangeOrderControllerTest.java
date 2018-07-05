@@ -89,8 +89,6 @@ public class ExchangeOrderControllerTest {
 
 		mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
 				.andExpect(status().isNoContent()).andReturn().getResponse();
-		
-		//verify(eoService, times(1)).saveExchangeOrder(any(ExchangeOrder.class));
 	}
 
 	@Test
@@ -199,7 +197,7 @@ public class ExchangeOrderControllerTest {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Test
+	@Test(expected = NestedServletException.class)
 	public void shouldGeneratePdfCheckedException() throws Exception {
 
 		when(eoReportService.generatePdf(Mockito.anyString()))
@@ -207,12 +205,10 @@ public class ExchangeOrderControllerTest {
 
 		mockMvc.perform(get(url + "/pdf/" + eoNumber))
 				.andExpect(status().isNoContent()).andReturn();
-		verify(eoReportService, times(1)).generatePdf(Mockito.anyString());
-
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Test
+	@Test(expected = NestedServletException.class)
 	public void shouldGeneratePdfUnCheckedException() throws Exception {
 
 		when(eoReportService.generatePdf(Mockito.anyString()))
@@ -220,7 +216,5 @@ public class ExchangeOrderControllerTest {
 
 		mockMvc.perform(get(url + "/pdf/" + eoNumber))
 				.andExpect(status().isInternalServerError()).andReturn();
-		verify(eoReportService, times(1)).generatePdf(Mockito.anyString());
-
 	}
 }
