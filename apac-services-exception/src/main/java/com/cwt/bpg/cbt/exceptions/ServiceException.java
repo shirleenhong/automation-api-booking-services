@@ -3,7 +3,7 @@ package com.cwt.bpg.cbt.exceptions;
 import java.util.List;
 import java.util.Map;
 
-public class ApacServiceException extends Exception {
+public class ServiceException extends Exception {
 
 	private static final long serialVersionUID = 8468026548368036885L;
 
@@ -13,25 +13,25 @@ public class ApacServiceException extends Exception {
 	
 	private String statusText;
 
-	public ApacServiceException(int statusCode) {
+	public ServiceException(int statusCode) {
 		super();
 		this.statusCode = statusCode;
 	}
 
-	public ApacServiceException(int statusCode, Map<String, List<String>> headers) {
+	public ServiceException(int statusCode, Map<String, List<String>> headers) {
 		super();
 		this.statusCode = statusCode;
 		this.headers = headers;
 	}
 
-	public ApacServiceException(int statusCode, Map<String, List<String>> headers, String statusText) {
+	public ServiceException(int statusCode, Map<String, List<String>> headers, String statusText) {
 		super(statusCode + " " + statusText);
 		this.statusCode = statusCode;
 		this.headers = headers;
 		this.statusText = statusText;
 	}
 
-	public ApacServiceException(int statusCode, String statusText) {
+	public ServiceException(int statusCode, String statusText) {
 		super(statusCode + " " + statusText);
 		this.statusText = statusText;
 		this.statusCode = statusCode;
