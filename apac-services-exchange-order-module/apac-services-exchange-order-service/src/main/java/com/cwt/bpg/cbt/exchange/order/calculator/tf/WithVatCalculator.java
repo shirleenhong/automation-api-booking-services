@@ -20,6 +20,6 @@ public class WithVatCalculator extends FeeCalculator {
 		return safeValue(input.getBaseFare()).add(safeValue(breakdown.getTotalTaxes()))
 				.add(safeValue(breakdown.getTotalGst()))
 				.subtract(safeValue(breakdown.getTotalAirlineCommission()))
-				.subtract(breakdown.getTotalOverheadCommission());
+				.subtract(safeValue(breakdown.getTotalOverheadCommission()));
 	}
 }
