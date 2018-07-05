@@ -46,12 +46,12 @@ public class ExchangeOrderReportService {
 
 	@Value("${exchange.order.mail.sender}")
 	private String eoMailSender;
-
+  
 	private static final String TEMPLATE = "jasper/exchange-order.jasper";
 
 	public byte[] generatePdf(String eoNumber)
 			throws ExchangeOrderNoContentException, ApiServiceException {
-
+    
 		Optional<ExchangeOrder> eoExists = Optional.ofNullable(getExchangeOrder(eoNumber));
 
 		ExchangeOrder exchangeOrder = eoExists.orElseThrow(
