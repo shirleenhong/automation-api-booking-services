@@ -86,7 +86,7 @@ public class BaseAndYqCalculatorTest {
 		assertThat(result.getTotalDiscount().doubleValue(), is(equalTo(0d)));
 		assertThat(result.getTotalGst().doubleValue(), is(equalTo(30d)));
 		assertThat(result.getTotalMarkup(), is(nullValue()));
-		assertThat(result.getTotalOverheadCommission().doubleValue(), is(equalTo(0.00d)));
+		assertThat(result.getTotalOverheadCommission().doubleValue(), is(equalTo(BigDecimal.ZERO.doubleValue())));
 		assertThat(result.getTotalSellFare().doubleValue(), is(equalTo(600d)));
 		assertThat(result.getTotalSellingFare().doubleValue(), is(equalTo(642.60d)));
 		assertThat(result.getTotalTaxes().doubleValue(), is(equalTo(0d)));

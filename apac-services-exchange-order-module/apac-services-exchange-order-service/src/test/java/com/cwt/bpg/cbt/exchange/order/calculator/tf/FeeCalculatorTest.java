@@ -615,7 +615,7 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(27.5d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(equalTo(0.00d)));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(equalTo(BigDecimal.ZERO.doubleValue())));
         assertThat(breakdown.getTotalDiscount().doubleValue(), is(1.38d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
