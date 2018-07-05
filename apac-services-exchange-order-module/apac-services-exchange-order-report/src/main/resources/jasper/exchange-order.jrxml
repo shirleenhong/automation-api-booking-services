@@ -10,6 +10,9 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
+	<parameter name="cwtLogo" class="java.awt.Image" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<field name="header" class="com.cwt.bpg.cbt.exchange.order.model.Header"/>
 	<field name="vendor" class="com.cwt.bpg.cbt.exchange.order.model.Vendor"/>
 	<field name="eoNumber" class="java.lang.String"/>
@@ -45,7 +48,7 @@
 				<textFieldExpression><![CDATA[$F{header}.getPhoneNumber()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="120" y="42" width="69" height="15" uuid="779b9858-5033-4d9b-ad51-d1def3745161"/>
+				<reportElement x="122" y="42" width="69" height="15" uuid="779b9858-5033-4d9b-ad51-d1def3745161"/>
 				<textFieldExpression><![CDATA[$F{header}.getFaxNumber()]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -53,7 +56,7 @@
 				<text><![CDATA[Tel:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="99" y="42" width="20" height="15" uuid="f2e68e60-d51d-4bab-8e7b-77c7e9efd9a4"/>
+				<reportElement x="99" y="42" width="22" height="15" uuid="f2e68e60-d51d-4bab-8e7b-77c7e9efd9a4"/>
 				<text><![CDATA[Fax:]]></text>
 			</staticText>
 			<staticText>
@@ -63,6 +66,10 @@
 				</textElement>
 				<text><![CDATA[Carlson Wagonlit Singapore Pte Ltd (Reg. No. 199600179G)]]></text>
 			</staticText>
+			<image isUsingCache="false">
+				<reportElement x="455" y="0" width="100" height="57" uuid="4af1ceb3-b9f4-46f2-83f8-34f5d4b875f0"/>
+				<imageExpression><![CDATA[$P{cwtLogo}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<detail>
@@ -235,16 +242,16 @@
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="160" y="460" width="367" height="53" uuid="4673f580-538f-4d0d-b5a8-f2db1137755c">
+				<reportElement x="160" y="460" width="373" height="15" uuid="4673f580-538f-4d0d-b5a8-f2db1137755c">
 					<printWhenExpression><![CDATA[$F{eoRemarks} != null]]></printWhenExpression>
 				</reportElement>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="dataset1" uuid="bd173cb8-3e6d-4055-bb25-1f112332e1ea">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{eoRemarks})]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="53" width="367">
+					<jr:listContents height="15" width="373">
 						<textField>
-							<reportElement x="0" y="0" width="322" height="15" uuid="c01ba4be-f5ca-445a-a29a-7e013f76d50d"/>
+							<reportElement x="0" y="0" width="373" height="15" uuid="c01ba4be-f5ca-445a-a29a-7e013f76d50d"/>
 							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
 						</textField>
 					</jr:listContents>
