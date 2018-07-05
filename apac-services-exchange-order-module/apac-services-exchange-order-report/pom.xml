@@ -40,7 +40,28 @@
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>local.jasperFontOverrides</groupId>
+  		 	<artifactId>local.jasperFontOverrides</artifactId>
+   			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/src/main/resources/jasper/fontextension.jar</systemPath>
+		</dependency>
 	</dependencies>
+	
+	<build>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources/jasper</directory>
+				<includes>
+					<include>*.jar</include>
+					<include>*.jasper</include>
+					<include>*.jpg</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+	
 	<profiles>
 		<profile>
 			<id>generate-jasper</id>

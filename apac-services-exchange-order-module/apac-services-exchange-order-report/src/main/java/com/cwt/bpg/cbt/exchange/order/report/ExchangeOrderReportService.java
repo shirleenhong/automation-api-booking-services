@@ -46,8 +46,8 @@ public class ExchangeOrderReportService {
 	@Value("${exchange.order.mail.sender}")
 	private String eoMailSender;
 
-	private static final String TEMPLATE = "jasper/exchange-order.jasper";
-
+	private static final String TEMPLATE = "exchange-order.jasper";
+	
 	public byte[] generatePdf(String eoNumber) throws ExchangeOrderException, JRException, IOException {
 
 		Optional<ExchangeOrder> eoExists = Optional.ofNullable(getExchangeOrder(eoNumber));
