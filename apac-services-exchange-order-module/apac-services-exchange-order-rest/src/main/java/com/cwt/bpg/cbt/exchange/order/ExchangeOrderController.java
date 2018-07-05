@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
@@ -44,28 +45,11 @@ public class ExchangeOrderController {
 	@ResponseBody
 	@ApiOperation(value = "Saves new exchange order transaction.")
 	public ResponseEntity<Map<String, Object>> saveExchangeOrder(
-			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) {
-
-		try {
-			final ExchangeOrder saveExchangeOrder = eoService.saveExchangeOrder(input);
-			Map<String, Object> response = new HashMap<>(1);
-			response.put("eoNumber", saveExchangeOrder.getEoNumber());
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		}
-		catch (ExchangeOrderException e) {
-			LOGGER.error(e.getMessage());
-
-			HttpHeaders headers = new HttpHeaders();
-			headers.set(ERROR, "Exchange order not found!");
-
-			final String errorMessage = "Exchange order not found!";
-			headers.set(ERROR, errorMessage);
-
-			Map<String, Object> response = new HashMap<>(1);
-			response.put("Error", errorMessage);
-
-			return new ResponseEntity<>(response, headers, HttpStatus.NO_CONTENT);
-		}
+			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) throws ExchangeOrderNoContentException {
+		final ExchangeOrder saveExchangeOrder = eoService.saveExchangeOrder(input);
+		Map<String, Object> response = new HashMap<>(1);
+		response.put("eoNumber", saveExchangeOrder.getEoNumber());
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/exchange-order/{eoNumber}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })

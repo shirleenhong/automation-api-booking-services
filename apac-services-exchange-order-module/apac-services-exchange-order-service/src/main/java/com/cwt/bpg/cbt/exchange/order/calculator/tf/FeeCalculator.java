@@ -321,7 +321,7 @@ public class FeeCalculator {
 						.subtract(totalAirlineCommission), input.getAirlineOverheadCommissionPercent()),
 					input.getClientOverheadCommissionPercent());
 		}
-		return null;
+		return BigDecimal.ZERO;
 	}
 
 	public BigDecimal getTotalOverheadCommission2(IndiaAirFeesInput input) {
