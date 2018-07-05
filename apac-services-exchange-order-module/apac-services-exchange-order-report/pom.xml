@@ -49,18 +49,18 @@
   		 	<artifactId>local.jasperFontOverrides</artifactId>
    			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/src/main/resources/jasper/fontextension.jar</systemPath>
+			<systemPath>${basedir}/src/main/resources/jasper/font-extension.jar</systemPath>
 		</dependency>
 	</dependencies>
 	
 	<build>
 		<resources>
 			<resource>
-				<directory>${basedir}/src/main/resources/jasper</directory>
+				<directory>${basedir}/src/main/resources</directory>
 				<includes>
-					<include>*.jar</include>
-					<include>*.jasper</include>
-					<include>*.jpg</include>
+					<include>/jasper/*.jar</include>
+					<include>/jasper/*.jasper</include>
+					<include>/jasper/*.jpg</include>
 				</includes>
 			</resource>
 		</resources>
