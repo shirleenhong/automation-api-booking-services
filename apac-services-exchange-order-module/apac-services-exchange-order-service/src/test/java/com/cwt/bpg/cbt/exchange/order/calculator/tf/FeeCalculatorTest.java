@@ -400,7 +400,7 @@ public class FeeCalculatorTest {
 
         BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission(input, new BigDecimal(15));
 
-        assertThat(totalOverheadCommission, is(nullValue(BigDecimal.class)));
+        assertThat(totalOverheadCommission.doubleValue(), is(equalTo(0.00d)));
     }
 
     @Test
@@ -615,7 +615,7 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
         assertThat(breakdown.getBaseAmount(), is(nullValue()));
         assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(27.5d));
-        assertThat(breakdown.getTotalOverheadCommission(), is(nullValue()));
+        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(equalTo(0.00d)));
         assertThat(breakdown.getTotalDiscount().doubleValue(), is(1.38d));
         assertThat(breakdown.getTotalMarkup(), is(nullValue()));
         assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
