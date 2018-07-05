@@ -1,8 +1,12 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ConcurrentModificationException;
+import java.util.List;
+import java.util.Optional;
 
 import org.mongodb.morphia.Key;
 import org.slf4j.Logger;
@@ -15,7 +19,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNotFoundException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
@@ -25,123 +28,124 @@ import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
 public class ExchangeOrderService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderService.class);
-	
+
 	@Value("${exchange.order.max.retry.count}")
 	private int maxRetryCount;
-	
-	private final DateTimeFormatter formatter = DateTimeFormatter
-				.ofPattern("yyMM")
-				.withZone(ZoneId.of("UTC"));
-	
+
+	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMM")
+			.withZone(ZoneId.of("UTC"));
+
 	@Autowired
 	private ExchangeOrderRepository exchangeOrderRepo;
-	
+
 	@Autowired
 	private SequenceNumberRepository sequenceNumberRepo;
-	
-	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder) throws ExchangeOrderNotFoundException {
-		
+
+	ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder)
+			throws ExchangeOrderNotFoundException {
+
 		final String eoNumber = exchangeOrder.getEoNumber();
-		if(eoNumber == null) {
+		if (eoNumber == null) {
 			exchangeOrder.setCreateDateTime(Instant.now());
 			exchangeOrder.setEoNumber(getEoNumber(exchangeOrder.getCountryCode()));
 		}
 		else {
-			Optional<ExchangeOrder> isEoExist = Optional.ofNullable(
-					getExchangeOrder(eoNumber));
-			
-			ExchangeOrder existingEoNumber = isEoExist.orElseThrow(() -> { 
-				return new ExchangeOrderNotFoundException("Exchange order number not found: [ " + eoNumber + " ]") ; });
-			
-			LOGGER.info("Existing Exchange order number: {} with country code {}", 
-					existingEoNumber.getEoNumber(), 
-					existingEoNumber.getCountryCode());
+			Optional<ExchangeOrder> isEoExist = Optional.ofNullable(getExchangeOrder(eoNumber));
+
+			ExchangeOrder existingExchangeOrder = isEoExist
+					.orElseThrow(() -> new ExchangeOrderNotFoundException(
+							"Exchange order number not found: [ " + eoNumber + " ]"));
+
+			existingExchangeOrder.setUpdateDateTime(Instant.now());
+
+			LOGGER.info("Existing Exchange order number: {} with country code {}",
+					existingExchangeOrder.getEoNumber(),
+					existingExchangeOrder.getCountryCode());
 		}
 		ExchangeOrder result = new ExchangeOrder();
 		result.setEoNumber(exchangeOrderRepo.saveOrUpdate(exchangeOrder));
-		
+
 		return result;
 	}
 
 	private String getEoNumber(String countryCode) {
-		 
+
 		return LocalDate.now().format(formatter)
-				.concat(Country.getCountry(countryCode).getId())
+                .concat(Country.getCountry(countryCode).getId())
 				.concat(String.format("%05d", getSequenceNumber(countryCode)));
 	}
 
-	public int getSequenceNumber(String countryCode) {
-		
-		int newSequenceNum = -1;		
+	int getSequenceNumber(String countryCode) {
+
+		int newSequenceNum;
 		int retryCount = 0;
-				
+
 		do {
-			
-			try {		
+
+			try {
 				SequenceNumber sequenceNumber = getSequenceNum(sequenceNumberRepo.get(countryCode));
-				
-				if(sequenceNumber != null) {
-					newSequenceNum = sequenceNumber.getValue() + 1;						
+
+				if (sequenceNumber != null) {
+					newSequenceNum = sequenceNumber.getValue() + 1;
 				}
 				else {
 					newSequenceNum = 1;
-					sequenceNumber = new SequenceNumber();										
-					sequenceNumber.setCountryCode(countryCode);					
+					sequenceNumber = new SequenceNumber();
+					sequenceNumber.setCountryCode(countryCode);
 				}
-				
+
 				sequenceNumber.setValue(newSequenceNum);
-								
+
 				sequenceNumberRepo.save(sequenceNumber);
 			}
-			catch(ConcurrentModificationException e) {
+			catch (ConcurrentModificationException e) {
 				LOGGER.error("Exception encountered while saving sequence number", e);
 				LOGGER.info("Retrying {}", retryCount++);
 				newSequenceNum = -1;
-			}		
+			}
 		}
-		while(retryCount < maxRetryCount && newSequenceNum == -1);
-		
+		while (retryCount < maxRetryCount && newSequenceNum == -1);
+
 		return newSequenceNum;
 	}
-	
+
 	private SequenceNumber getSequenceNum(List<SequenceNumber> list) {
-		
+
 		return !list.isEmpty() ? list.get(0) : null;
 	}
 
 	@Scheduled(cron = "${exchange.order.reset.schedule.in}")
-	protected void resetIndiaSequenceNumber() {
-		
+	void resetIndiaSequenceNumber() {
+
 		List<SequenceNumber> sequenceNumbers = sequenceNumberRepo.get(Country.INDIA.getCode());
-		
+
 		Iterable<Key<SequenceNumber>> result = reset(sequenceNumbers);
-		
+
 		LOGGER.info("Reset India sequence numbers {}", result);
 	}
 
 	private Iterable<Key<SequenceNumber>> reset(List<SequenceNumber> sequenceNumbers) {
-		
-		for(SequenceNumber sn : sequenceNumbers) {
-			sn.setValue(0);			
-		}	
-		
+
+		for (SequenceNumber sn : sequenceNumbers) {
+			sn.setValue(0);
+		}
+
 		return sequenceNumberRepo.save(sequenceNumbers);
 	}
-	
+
 	@Scheduled(cron = "${exchange.order.reset.schedule.hk.sg}")
-	protected void resetHkSgSequenceNumber() {
-		
-		List<SequenceNumber> sequenceNumbers = sequenceNumberRepo.get(
-				Country.SINGAPORE.getCode(), 
+	void resetHkSgSequenceNumber() {
+
+		List<SequenceNumber> sequenceNumbers = sequenceNumberRepo.get(Country.SINGAPORE.getCode(),
 				Country.HONG_KONG.getCode());
-		
+
 		Iterable<Key<SequenceNumber>> result = reset(sequenceNumbers);
-		
+
 		LOGGER.info("Reset HK and SG sequence numbers {}", result);
 	}
 
 	@Cacheable(cacheNames = "exchange-orders", key = "#eoNumber")
-    public ExchangeOrder getExchangeOrder(String eoNumber) {
-        return exchangeOrderRepo.getExchangeOrder(eoNumber);
-    }
+	public ExchangeOrder getExchangeOrder(String eoNumber) {
+		return exchangeOrderRepo.getExchangeOrder(eoNumber);
+	}
 }

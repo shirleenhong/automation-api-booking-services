@@ -42,6 +42,8 @@ public class Vendor implements Serializable {
 	private String name;
 	
 	private String contactPerson;
+
+	private String supportEmail;
 	
 	public String getCode() {
 		return code;
@@ -162,4 +164,12 @@ public class Vendor implements Serializable {
 	public void setSortKey(String sortKey) {
 		this.sortKey = sortKey;
 	}
+
+    public String getSupportEmail() {
+        return supportEmail;
+    }
+
+    public void setSupportEmail(String supportEmail) {
+        this.supportEmail = supportEmail;
+    }
 }
