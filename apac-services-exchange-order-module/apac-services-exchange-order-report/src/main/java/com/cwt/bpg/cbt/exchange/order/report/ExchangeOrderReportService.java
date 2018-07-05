@@ -7,9 +7,9 @@ import java.util.Optional;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,10 @@ public class ExchangeOrderReportService {
     private JavaMailSender mailSender;
     
     @Autowired
-    public SimpleMailMessage messageTemplate;
+    EmailContentProcessor emailContentProcessor;
+    
+    @Value("${exchange.order.mail.sender}")
+	private String eoMailSender;
 
 	private static final String TEMPLATE = "jasper/exchange-order.jasper";
 	
@@ -85,19 +88,21 @@ public class ExchangeOrderReportService {
 	}
 
 	public EmailResponse emailPdf(String eoNumber) throws Exception{
-		String email="rodolfo.delapena@carlsonwagonlit.com";
+		String email="mosesbrian.calma@carlsonwagonlit.com";//should be vendor email
+		
         byte[] pdf = generatePdf(eoNumber);
+        ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
+        
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, (pdf != null), StandardCharsets.UTF_8.name());
-//        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        
         helper.setTo(email);
-        helper.setSubject("email with attachment");
-        
-        String text = String.format(messageTemplate.getText(),email); 
-        helper.setText(text);
-        
+        helper.setFrom(eoMailSender);
+        helper.setSubject(emailContentProcessor.getEmailSubject(exchangeOrder));
+        helper.setText(emailContentProcessor.getEmailBody(exchangeOrder),true);
         helper.addAttachment(eoNumber + ".pdf",new ByteArrayResource(pdf));
         mailSender.send(message);
+        
         return new EmailResponse();
 	}
 
