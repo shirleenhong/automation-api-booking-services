@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -13,10 +14,10 @@
 
   <name>apac-services-exchange-order-module</name>
   <modules>
-  	<module>apac-services-exchange-order-rest</module>
-  	<module>apac-services-exchange-order-api</module>
-  	<module>apac-services-exchange-order-service</module>
-  	<module>apac-services-exchange-order-repository</module>
-	<module>apac-services-exchange-order-report</module>
+    <module>apac-services-exchange-order-rest</module>
+    <module>apac-services-exchange-order-api</module>
+    <module>apac-services-exchange-order-service</module>
+    <module>apac-services-exchange-order-repository</module>
+    <module>apac-services-exchange-order-report</module>
   </modules>
 </project>

@@ -3,7 +3,13 @@ package com.cwt.bpg.cbt.exchange.order.report;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
@@ -23,20 +29,27 @@ import org.springframework.util.StringUtils;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 
 @Service
 public class ExchangeOrderReportService {
-	
+
 	private static final String EMAIL_ERROR_MESSAGE = "Email cannot be empty.";
 
-	private static final String ERROR_MESSAGE = "Error encountered while sending email.";
+    private static final String ERROR_MESSAGE = "Error encountered while sending email.";
 
-	@Autowired
+    private static final String DATE_PATTERN = "dd-MMM-yyyy";
+
+    @Autowired
 	private ExchangeOrderService exchangeOrderService;
 
 	@Autowired
@@ -46,17 +59,17 @@ public class ExchangeOrderReportService {
 	private JavaMailSender mailSender;
 
 	@Autowired
-	EmailContentProcessor emailContentProcessor;
+    private EmailContentProcessor emailContentProcessor;
 
 	@Value("${exchange.order.mail.sender}")
 	private String eoMailSender;
-    
+
     @Value("${exchange.order.email.test.recipient}")
 	private String eoMailRecipient;
 
 	private static final String TEMPLATE = "jasper/exchange-order.jasper";
 	private static final String IMAGE_PATH = "/jasper/cwt-logo.png";
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderReportService.class);
 	
 	public byte[] generatePdf(String eoNumber)
@@ -64,8 +77,8 @@ public class ExchangeOrderReportService {
     
 		Optional<ExchangeOrder> eoExists = Optional.ofNullable(getExchangeOrder(eoNumber));
 
-		ExchangeOrder exchangeOrder = eoExists.orElseThrow(
-				() -> new ExchangeOrderNoContentException("Exchange order number not found: [ " + eoNumber + " ]"));
+		ExchangeOrder exchangeOrder = eoExists.orElseThrow(() -> new ExchangeOrderNoContentException(
+				"Exchange order number not found: [ " + eoNumber + " ]"));
 
 		Optional<Vendor> vendorExists = Optional.ofNullable(getVendor(exchangeOrder.getCountryCode(),
 				exchangeOrder.getProductCode(),
@@ -80,15 +93,16 @@ public class ExchangeOrderReportService {
 		exchangeOrder.setVendor(vendor);
 
 		Map<String, Object> parameters = new HashMap<>();
-		
+
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
 		final ClassPathResource resourceLogo = new ClassPathResource(IMAGE_PATH);
-		BufferedImage image = null;
 
 		try {
-			image = ImageIO.read(resourceLogo.getInputStream());
+            BufferedImage image = ImageIO.read(resourceLogo.getInputStream());
 			parameters.put("cwtLogo", image);
-			
+			parameters.put("date", getDate(exchangeOrder));
+			parameters.put("additionalInfoDate", formatDate(exchangeOrder.getAdditionalInfoDate()));
+
 			JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
 					parameters,
 					new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
@@ -97,6 +111,16 @@ public class ExchangeOrderReportService {
 		catch (JRException | IOException e) {
 			throw new ApiServiceException(e.getMessage());
 		}
+	}
+
+	private String getDate(ExchangeOrder exchangeOrder) {
+		Instant updateDateTime = exchangeOrder.getUpdateDateTime();
+		return formatDate(updateDateTime != null ? updateDateTime : exchangeOrder.getCreateDateTime());
+	}
+
+	private String formatDate(Instant instant) {
+		return instant == null ? "" : DateTimeFormatter.ofPattern(DATE_PATTERN)
+				.format(LocalDateTime.ofInstant(instant, ZoneOffset.UTC));
 	}
 
 	private ExchangeOrder getExchangeOrder(String eoNumber) {
@@ -108,23 +132,23 @@ public class ExchangeOrderReportService {
 	}
 
 	public EmailResponse emailPdf(String eoNumber) throws ApiServiceException {
-		
+
 		EmailResponse response = new EmailResponse();
-		
+
 		try {
-			
+
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
-			
+
 			String emailRecipient = getEmail(exchangeOrder.getVendor().getEmail());
 			if(StringUtils.isEmpty(emailRecipient)) {
 				LOGGER.error(EMAIL_ERROR_MESSAGE);
 				response.setMessage(EMAIL_ERROR_MESSAGE);
-				response.setSuccess(false);	
-				
+				response.setSuccess(false);
+
 				return response;
 			}
-			
-			byte[] pdf = generatePdf(eoNumber);			
+
+			byte[] pdf = generatePdf(eoNumber);
 
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, (pdf != null),
@@ -136,21 +160,21 @@ public class ExchangeOrderReportService {
 			helper.setText(emailContentProcessor.getEmailBody(exchangeOrder), true);
 			helper.addAttachment(eoNumber + ".pdf", new ByteArrayResource(pdf));
 			mailSender.send(message);
-			
+
 			response.setSuccess(true);
 		}
 		catch (Exception e) {
 			LOGGER.error(ERROR_MESSAGE, e);
 			throw new ApiServiceException(ERROR_MESSAGE);
-		}		
-        
+		}
+
         return response;
 	}
 
 	private String getEmail(String email) {
-		return !StringUtils.isEmpty(eoMailRecipient) 
+		return !StringUtils.isEmpty(eoMailRecipient)
 				? eoMailRecipient
-				: email;		
+				: email;
 	}
 
 }

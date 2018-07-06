@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exchange-order" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11876608-3e71-4654-8bad-9498a837d1ff">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="189"/>
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<subDataset name="dataset1" uuid="445d1af9-e2c1-4cfc-9fac-574f362a3a97">
 		<field name="_THIS" class="java.lang.String"/>
@@ -13,6 +13,8 @@
 	<parameter name="cwtLogo" class="java.awt.Image" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="date" class="java.lang.String"/>
+	<parameter name="additionalInfoDate" class="java.lang.String"/>
 	<field name="header" class="com.cwt.bpg.cbt.exchange.order.model.Header"/>
 	<field name="vendor" class="com.cwt.bpg.cbt.exchange.order.model.Vendor"/>
 	<field name="eoNumber" class="java.lang.String"/>
@@ -186,10 +188,6 @@
 				<text><![CDATA[Nett Cost]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="355" width="100" height="15" uuid="0d14788b-80be-4d99-aff7-e187fb41c2f1"/>
-				<text><![CDATA[Tax]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="0" y="370" width="100" height="15" uuid="7c934f45-80ee-4d25-9c25-bc9e06c4a235"/>
 				<text><![CDATA[Tax]]></text>
 			</staticText>
@@ -217,11 +215,11 @@
 				<reportElement x="160" y="280" width="200" height="15" uuid="12af925a-c461-4615-bf74-ea3a8d585424"/>
 				<textFieldExpression><![CDATA[$F{vendor}.getEmail()]]></textFieldExpression>
 			</textField>
-			<textField pattern="">
+			<textField>
 				<reportElement x="160" y="295" width="200" height="15" uuid="3df54278-a470-4528-bb7c-cced3fcf517f"/>
-				<textFieldExpression><![CDATA[$F{updateDateTime} != null ? $F{updateDateTime} : $F{createDateTime}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
 			</textField>
-			<textField pattern="">
+			<textField>
 				<reportElement x="160" y="340" width="200" height="15" uuid="9d80071b-0318-46cf-a234-ef0cb110af47"/>
 				<textFieldExpression><![CDATA[$F{nettCost}]]></textFieldExpression>
 				<patternExpression><![CDATA[$F{nettCost}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
@@ -233,12 +231,12 @@
 :
 $F{tax1}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
 			</textField>
-			<textField pattern="">
+			<textField>
 				<reportElement x="160" y="370" width="200" height="15" uuid="3f064f4c-5dd3-4644-83b1-a311841e8242"/>
 				<textFieldExpression><![CDATA[$F{tax2}]]></textFieldExpression>
 				<patternExpression><![CDATA[$F{tax2}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
 			</textField>
-			<textField pattern="">
+			<textField>
 				<reportElement x="160" y="385" width="200" height="15" uuid="69a6785f-0752-44c9-9030-a9dbca4971dd"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 				<patternExpression><![CDATA[$F{total}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
@@ -280,7 +278,11 @@ $F{tax1}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="430" width="200" height="15" uuid="d5dcbcdc-92aa-4a1c-9366-35d7be272427"/>
-				<textFieldExpression><![CDATA[$F{additionalInfoDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{additionalInfoDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="355" width="100" height="15" uuid="fe5f4374-8b78-4edf-91ac-f96573f64aa2"/>
+				<textFieldExpression><![CDATA[$F{gstAmount} != null ? "GST" : "Tax"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

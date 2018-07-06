@@ -37,7 +37,7 @@
 		<freemarker.version>2.3.26-incubating</freemarker.version>
 		<hibernate.validator.version>5.4.1.Final</hibernate.validator.version>
 		<jackson.version>2.9.5</jackson.version>
-		<groovy.version>2.5.0</groovy.version>
+		<groovy.version>2.4.15</groovy.version>
 		<jasper.report.version>6.6.0</jasper.report.version>
 	</properties>
 

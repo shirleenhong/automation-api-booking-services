@@ -46,7 +46,7 @@
 				<includes>
 					<include>/jasper/*.jar</include>
 					<include>/jasper/*.jasper</include>					
-                    <include>/jasper/*.png</include>
+					<include>/jasper/*.png</include>
 					<include>/properties/*.properties</include>
 					<include>/templates/*.ftl</include>
 				</includes>
