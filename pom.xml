@@ -89,7 +89,6 @@
 				<artifactId>validation-api</artifactId>
 				<version>${javax.validation.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
@@ -124,11 +123,6 @@
 		    	<groupId>org.springframework.boot</groupId>
 		    	<artifactId>spring-boot-starter-actuator</artifactId>
 				<version>${spring.boot.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-validator</artifactId>
-				<version>${hibernate.validator.version}</version>
 			</dependency>
 			<dependency>
 			  	<groupId>com.fasterxml.jackson.core</groupId>

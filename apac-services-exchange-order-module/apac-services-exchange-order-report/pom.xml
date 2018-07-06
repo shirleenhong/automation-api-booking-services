@@ -37,13 +37,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>local.jasperFontOverrides</groupId>
 			<artifactId>local.jasperFontOverrides</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/src/main/resources/jasper/font-extension.jar</systemPath>
-		</dependency>
+		</dependency> -->
 
 	</dependencies>
 
