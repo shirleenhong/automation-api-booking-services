@@ -4,14 +4,26 @@ import static com.cwt.bpg.cbt.calculator.CalculatorUtils.safeValue;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 
 import org.junit.Test;
 
 public class CalculatorUtilsTest
 {
-	
+	@Test(expected = InvocationTargetException.class)
+	public void shouldNotBeInstantiated() throws NoSuchMethodException, IllegalAccessException,
+			InvocationTargetException, InstantiationException {
+		Constructor<CalculatorUtils> constructor = CalculatorUtils.class.getDeclaredConstructor();
+		assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+		constructor.setAccessible(true);
+		constructor.newInstance();
+	}
+
 	@Test
 	public void shouldReturnSafeBigDecimal() {
 		BigDecimal input = null;
@@ -70,13 +82,21 @@ public class CalculatorUtilsTest
 
 	@Test
 	public void percentDecimalReturnsZeroWhenValueIsNull() {
-		BigDecimal percentDecimal = CalculatorUtils.percentDecimal(0D);
+		BigDecimal bigDecimal = null;
+		BigDecimal percentDecimal = CalculatorUtils.percentDecimal(bigDecimal);
+		assertThat(percentDecimal.doubleValue(), is(equalTo(0.00)));
+
+		Double nullDouble = null;
+		percentDecimal = CalculatorUtils.percentDecimal(nullDouble);
 		assertThat(percentDecimal.doubleValue(), is(equalTo(0.00)));
 	}
 
 	@Test
 	public void percentDecimalReturnsNonZeroWhenValueIsNotNull() {
 		BigDecimal percentDecimal = CalculatorUtils.percentDecimal(5D);
+		assertThat(percentDecimal.doubleValue(), is(equalTo(0.05)));
+
+		percentDecimal = CalculatorUtils.percentDecimal(new BigDecimal("5"));
 		assertThat(percentDecimal.doubleValue(), is(equalTo(0.05)));
 	}
 
