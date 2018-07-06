@@ -55,6 +55,7 @@
 					<include>/jasper/*.jar</include>
 					<include>/jasper/*.jasper</include>
 					<include>/jasper/*.jpg</include>
+					<include>/jasper/*.png</include>
 				</includes>
 			</resource>
 		</resources>
