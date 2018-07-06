@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.exchange.order.config;
+package com.cwt.bpg.cbt.exchange.order.report.config;
 
 import java.util.Properties;
 

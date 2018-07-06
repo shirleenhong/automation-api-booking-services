@@ -6,21 +6,17 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 
 @RestController
 @Api(tags = "Exchange Order")
@@ -39,7 +35,8 @@ public class ExchangeOrderController {
 	@ResponseBody
 	@ApiOperation(value = "Saves new exchange order transaction.")
 	public ResponseEntity<Map<String, Object>> saveExchangeOrder(
-			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) throws ExchangeOrderNoContentException {
+			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) 
+					throws ExchangeOrderNoContentException {
 		final ExchangeOrder saveExchangeOrder = eoService.saveExchangeOrder(input);
 		Map<String, Object> response = new HashMap<>(1);
 		response.put("eoNumber", saveExchangeOrder.getEoNumber());
@@ -60,7 +57,8 @@ public class ExchangeOrderController {
 			produces = { MediaType.APPLICATION_PDF_VALUE })
 	@ApiOperation(value = "Generates exchange order pdf.")
 	public ResponseEntity<byte[]> generatePdf(
-			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) throws ExchangeOrderNoContentException, ApiServiceException {
+			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) 
+					throws ExchangeOrderNoContentException, ApiServiceException {
 
 		final String filename = eoNumber + ".pdf";
 		final HttpHeaders headers = new HttpHeaders();
@@ -70,13 +68,14 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(body, headers, HttpStatus.OK);
 	}
 
+	@Internal
 	@GetMapping(path = "/exchange-order/email/{eoNumber}")
 	@ResponseBody
 	@ApiOperation(value = "Emails exchange order pdf of the specified eoNumber")
 	public ResponseEntity<EmailResponse> email(
 			@RequestBody @ApiParam(
-					value = "EoNumber of the exchange order to email") @PathVariable String eoNumber)
-			throws Exception {
+					value = "EoNumber of the exchange order to email") @PathVariable String eoNumber) 
+							throws ApiServiceException {
 
 		return new ResponseEntity<>(eoReportService.emailPdf(eoNumber), HttpStatus.OK);
 	}

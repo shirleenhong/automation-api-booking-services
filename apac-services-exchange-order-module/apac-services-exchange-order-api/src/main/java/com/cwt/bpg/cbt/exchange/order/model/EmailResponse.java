@@ -3,25 +3,26 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.io.Serializable;
 
 public class EmailResponse implements Serializable {
-    private static final long serialVersionUID = -1769736417984864802L;
+	private static final long serialVersionUID = -1769736417984864802L;
 
-    private boolean success;
+	private boolean success;
 
-    private boolean message;
+	private String message;
 
-    public boolean isSuccess() {
-        return success;
-    }
+	public boolean isSuccess() {
+		return success;
+	}
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
 
-    public boolean isMessage() {
-        return message;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public void setMessage(boolean message) {
-        this.message = message;
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 }

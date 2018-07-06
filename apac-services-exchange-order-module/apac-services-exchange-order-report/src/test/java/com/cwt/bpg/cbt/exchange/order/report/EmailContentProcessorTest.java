@@ -27,7 +27,7 @@ public class EmailContentProcessorTest {
 		
 		Map<String, Object> input = new HashMap<>();
         
-        input.put("vendorEmail", "-");
+        input.put("vendorSupportEmail", "-");
         input.put("agentName", eo.getAgentName());
         input.put("headerPhoneNumber", "-");
         input.put("headerFaxNumber", "-");        		

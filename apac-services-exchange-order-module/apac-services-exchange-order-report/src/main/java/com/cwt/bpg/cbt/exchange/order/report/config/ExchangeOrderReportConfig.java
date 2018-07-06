@@ -1,12 +1,20 @@
 package com.cwt.bpg.cbt.exchange.order.report.config;
 
-import org.springframework.context.annotation.Configuration;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+import org.springframework.context.annotation.*;
+import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
+
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
+
+import freemarker.template.TemplateException;
 
 
 @Configuration("com.cwt.bpg.cbt.exchange.order.report.config")
 public class ExchangeOrderReportConfig {
 
-	/*@Lazy
+	@Lazy
 	@Bean(name = "freemarkerConfig")
 	public freemarker.template.Configuration freemarkerConfig() throws ExchangeOrderException {
 		FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
@@ -19,5 +27,5 @@ public class ExchangeOrderReportConfig {
 		catch (IOException | TemplateException e) {
 			throw new ExchangeOrderException("Template error", e);
 		}
-	}*/
+	}
 }
