@@ -46,7 +46,7 @@ public class ExchangeOrderReportService {
 	private String eoMailSender;
   
 	private static final String TEMPLATE = "jasper/exchange-order.jasper";
-	private static final String IMAGE_PATH = "/jasper/cwt-logo.jpg";
+	private static final String IMAGE_PATH = "/jasper/cwt-logo.png";
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderReportService.class);
 	
