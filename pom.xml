@@ -34,7 +34,11 @@
 		<javax.ws.rs.version>2.0.1</javax.ws.rs.version>
 		<scm.repo.url>https://github.com/cwt-dev/bpg-cbt-apac-services.git</scm.repo.url>
 		<project.scm.id>aws-command-runner-scm</project.scm.id>			
-		<freemarker.version>2.3.23</freemarker.version>		
+		<freemarker.version>2.3.26-incubating</freemarker.version>
+		<hibernate.validator.version>5.4.1.Final</hibernate.validator.version>
+		<jackson.version>2.9.5</jackson.version>
+		<groovy.version>2.5.0</groovy.version>
+		<jasper.report.version>6.6.0</jasper.report.version>
 	</properties>
 
 	<scm>
@@ -85,7 +89,6 @@
 				<artifactId>validation-api</artifactId>
 				<version>${javax.validation.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
@@ -109,7 +112,42 @@
 			<dependency>
 				<groupId>org.freemarker</groupId>
 				<artifactId>freemarker</artifactId>
-	   		        <version>${freemarker.version}</version>
+				<version>${freemarker.version}</version>
+			</dependency>
+			<dependency>
+            	<groupId>org.springframework.boot</groupId>
+            	<artifactId>spring-boot-starter-mail</artifactId>
+				<version>${spring.boot.version}</version>
+        	</dependency>
+			<dependency>
+		    	<groupId>org.springframework.boot</groupId>
+		    	<artifactId>spring-boot-starter-actuator</artifactId>
+				<version>${spring.boot.version}</version>
+			</dependency>
+			<dependency>
+			  	<groupId>com.fasterxml.jackson.core</groupId>
+			  	<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+			  	<groupId>com.fasterxml.jackson.core</groupId>
+			  	<artifactId>jackson-core</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy</artifactId>
+				<version>${groovy.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-all</artifactId>
+				<version>${groovy.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.jasperreports</groupId>
+				<artifactId>jasperreports</artifactId>
+				<version>${jasper.report.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -171,25 +209,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-		</dependency>
-
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
 	</dependencies>
 
 	<build>

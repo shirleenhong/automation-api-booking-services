@@ -10,6 +10,7 @@ import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
 
 import freemarker.template.TemplateException;
 
+
 @Configuration("com.cwt.bpg.cbt.exchange.order.report.config")
 public class ExchangeOrderReportConfig {
 

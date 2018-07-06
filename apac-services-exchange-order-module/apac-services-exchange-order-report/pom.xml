@@ -16,59 +16,44 @@
 	<description>apac-services-exchange-order-report</description>
 
 	<dependencies>
-		<!--dependency>
-			<groupId>com.cwt.bpg.cbt</groupId>
-			<artifactId>apac-services-exchange-order-api</artifactId>
-			<version>${project.version}</version>
-		</dependency-->
 		<dependency>
 			<groupId>com.cwt.bpg.cbt</groupId>
 			<artifactId>apac-services-exchange-order-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!--dependency>
-			<groupId>com.cwt.bpg.cbt</groupId>
-			<artifactId>apac-services-exception</artifactId>
-			<version>${project.version}</version>
-		</dependency-->
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>2.3.28</version>
+		<dependency> 
+			<groupId>org.freemarker</groupId> 
+			<artifactId>freemarker</artifactId> 
 		</dependency>
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-			<version>6.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>local.jasperFontOverrides</groupId>
-  		 	<artifactId>local.jasperFontOverrides</artifactId>
-   			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/src/main/resources/jasper/font-extension.jar</systemPath>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
 				<includes>
 					<include>/jasper/*.jar</include>
-					<include>/jasper/*.jasper</include>
-					<include>/jasper/*.jpg</include>
+					<include>/jasper/*.jasper</include>					
+                    <include>/jasper/*.png</include>
 					<include>/properties/*.properties</include>
 					<include>/templates/*.ftl</include>
 				</includes>
 			</resource>
 		</resources>
 	</build>
-	
+
 	<profiles>
 		<profile>
 			<id>generate-jasper</id>

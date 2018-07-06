@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exchange-order" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11876608-3e71-4654-8bad-9498a837d1ff">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="364"/>
+	<property name="ireport.y" value="192"/>
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<subDataset name="dataset1" uuid="445d1af9-e2c1-4cfc-9fac-574f362a3a97">
 		<field name="_THIS" class="java.lang.String"/>
@@ -67,7 +67,7 @@
 				<text><![CDATA[Carlson Wagonlit Singapore Pte Ltd (Reg. No. 199600179G)]]></text>
 			</staticText>
 			<image isUsingCache="false">
-				<reportElement x="455" y="0" width="100" height="57" uuid="4af1ceb3-b9f4-46f2-83f8-34f5d4b875f0"/>
+				<reportElement x="483" y="0" width="71" height="57" uuid="4af1ceb3-b9f4-46f2-83f8-34f5d4b875f0"/>
 				<imageExpression><![CDATA[$P{cwtLogo}]]></imageExpression>
 			</image>
 		</band>
@@ -100,9 +100,9 @@
 			<staticText>
 				<reportElement x="0" y="126" width="143" height="15" uuid="8a8ef5a8-a725-418f-ac24-18a93c0ea3e4"/>
 				<textElement>
-					<font isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[EXCHANGE ORDER:]]></text>
+				<text><![CDATA[EXCHANGE ORDER]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="143" width="100" height="1" uuid="4b7d2695-b9c5-4618-8aae-cf16c233e5fb"/>
@@ -136,7 +136,7 @@
 			</textField>
 			<staticText>
 				<reportElement x="0" y="150" width="100" height="15" uuid="dc693b8d-5190-49d1-ba34-4d2f2af4e8e0"/>
-				<text><![CDATA[EO Number:]]></text>
+				<text><![CDATA[EO Number]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="165" width="100" height="15" uuid="17ba91b5-bd54-49eb-a726-5aac9e5ef57d"/>
@@ -203,7 +203,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="460" width="100" height="15" uuid="def95e52-200a-4f56-95cf-3c26f54cdca8"/>
-				<text><![CDATA[Remarks:]]></text>
+				<text><![CDATA[Remarks]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="160" y="250" width="200" height="15" uuid="f5aa0fb0-f4af-411b-bf50-cd5f5de45b0d"/>
@@ -217,25 +217,31 @@
 				<reportElement x="160" y="280" width="200" height="15" uuid="12af925a-c461-4615-bf74-ea3a8d585424"/>
 				<textFieldExpression><![CDATA[$F{vendor}.getEmail()]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="">
 				<reportElement x="160" y="295" width="200" height="15" uuid="3df54278-a470-4528-bb7c-cced3fcf517f"/>
 				<textFieldExpression><![CDATA[$F{updateDateTime} != null ? $F{updateDateTime} : $F{createDateTime}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="">
 				<reportElement x="160" y="340" width="200" height="15" uuid="9d80071b-0318-46cf-a234-ef0cb110af47"/>
 				<textFieldExpression><![CDATA[$F{nettCost}]]></textFieldExpression>
+				<patternExpression><![CDATA[$F{nettCost}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
 			</textField>
-			<textField>
+			<textField pattern="$#,##0" isBlankWhenNull="false">
 				<reportElement x="160" y="355" width="200" height="15" uuid="10d0c9d2-0e59-4831-b3c7-a563d04aa657"/>
 				<textFieldExpression><![CDATA[$F{gstAmount} != null ? $F{gstAmount} : $F{tax1}]]></textFieldExpression>
+				<patternExpression><![CDATA[$F{gstAmount}!=null ? ($F{gstAmount}.doubleValue()%1==0?"$#,##0" : "$#,##0.00")
+:
+$F{tax1}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
 			</textField>
-			<textField>
+			<textField pattern="">
 				<reportElement x="160" y="370" width="200" height="15" uuid="3f064f4c-5dd3-4644-83b1-a311841e8242"/>
 				<textFieldExpression><![CDATA[$F{tax2}]]></textFieldExpression>
+				<patternExpression><![CDATA[$F{tax2}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
 			</textField>
-			<textField>
+			<textField pattern="">
 				<reportElement x="160" y="385" width="200" height="15" uuid="69a6785f-0752-44c9-9030-a9dbca4971dd"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				<patternExpression><![CDATA[$F{total}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="400" width="200" height="15" uuid="ae632efd-d66c-4e7e-a8b8-3d5ea72ff7f7"/>
