@@ -1,26 +1,21 @@
 package com.cwt.bpg.cbt.exchange.order.report;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 
-import freemarker.template.*;
-
-@Service
+@Component
 public class EmailContentProcessor {
 
 	private static final String SUBJECT_PREFIX = "CWT Exchange Order";
 
 	private static final String EO_EMAIL_BODY_FTL = "eo-email-body.ftl";
-
-	@Qualifier("freemarkerConfig")
+	
+	private static final String DASH = "-";	
+	
+	/*@Qualifier("freemarkerConfig")
 	@Autowired
 	private Configuration templateConfig;
 	
@@ -42,7 +37,11 @@ public class EmailContentProcessor {
         template.process(input, writer);
 
         return writer.toString();
-    }
+    }*/
+	
+	public String getEmailBody(ExchangeOrder eo) throws IOException {
+		return "Content";
+	}
 	
 	public String getEmailSubject(ExchangeOrder eo) {
 
