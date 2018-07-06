@@ -1,9 +1,11 @@
 package com.cwt.bpg.cbt.exchange.order.report;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
+import java.util.*;
 
+import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -53,9 +55,10 @@ public class ExchangeOrderReportService {
 	private String eoMailRecipient;
 
 	private static final String TEMPLATE = "jasper/exchange-order.jasper";
+
+	private static final String IMAGE_PATH = "/jasper/cwt-logo.jpg";
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderReportService.class);
-	
 
 	public byte[] generatePdf(String eoNumber)
 			throws ExchangeOrderNoContentException, ApiServiceException {
@@ -77,11 +80,18 @@ public class ExchangeOrderReportService {
 
 		exchangeOrder.setVendor(vendor);
 
+		Map<String, Object> parameters = new HashMap<>();
+		
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
+		final ClassPathResource resourceLogo = new ClassPathResource(IMAGE_PATH);
+		BufferedImage image = null;
 
 		try {
+			image = ImageIO.read(resourceLogo.getInputStream());
+			parameters.put("cwtLogo", image);
+			
 			JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
-					null,
+					parameters,
 					new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
 			return JasperExportManager.exportReportToPdf(jasperPrint);
 		}
