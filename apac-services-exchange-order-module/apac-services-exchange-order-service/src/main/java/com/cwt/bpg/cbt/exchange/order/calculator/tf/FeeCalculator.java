@@ -211,6 +211,7 @@ public class FeeCalculator {
 				if (tf.getStartCoupon() <= segmentCount && segmentCount <= tf.getEndCoupon()) {
 
 					tfAmount = tf.getAmount();
+					break;
 				}
 			}
 			else if (GROUP.equalsIgnoreCase(tf.getType())) {
