@@ -11,7 +11,7 @@
   <artifactId>apac-services-main</artifactId>
   <packaging>jar</packaging>
 
-  <name>&gt;apac-services-main</name>
+  <name>apac-services-main</name>
 
   <dependencies>
     <dependency>
@@ -19,6 +19,11 @@
       <artifactId>apac-services-rest</artifactId>
       <version>${project.version}</version>
     </dependency>
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-actuator</artifactId>
+		<version>${spring.boot.version}</version>
+	</dependency>
   </dependencies>
   <build>
     <plugins>
