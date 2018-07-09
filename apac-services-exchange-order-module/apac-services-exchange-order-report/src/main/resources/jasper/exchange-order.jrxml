@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exchange-order" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11876608-3e71-4654-8bad-9498a837d1ff">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="189"/>
+	<property name="ireport.y" value="391"/>
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<subDataset name="dataset1" uuid="445d1af9-e2c1-4cfc-9fac-574f362a3a97">
 		<field name="_THIS" class="java.lang.String"/>
@@ -224,7 +224,7 @@
 				<textFieldExpression><![CDATA[$F{nettCost}]]></textFieldExpression>
 				<patternExpression><![CDATA[$F{nettCost}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
 			</textField>
-			<textField pattern="$#,##0" isBlankWhenNull="false">
+			<textField pattern="" isBlankWhenNull="false">
 				<reportElement x="160" y="355" width="200" height="15" uuid="10d0c9d2-0e59-4831-b3c7-a563d04aa657"/>
 				<textFieldExpression><![CDATA[$F{gstAmount} != null ? $F{gstAmount} : $F{tax1}]]></textFieldExpression>
 				<patternExpression><![CDATA[$F{gstAmount}!=null ? ($F{gstAmount}.doubleValue()%1==0?"$#,##0" : "$#,##0.00")
