@@ -48,13 +48,6 @@
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
-				<includes>
-					<include>/jasper/*.jar</include>
-					<include>/jasper/*.jasper</include>					
-					<include>/jasper/*.png</include>
-					<include>/properties/*.properties</include>
-					<include>/templates/*.ftl</include>
-				</includes>
 			</resource>
 		</resources>
 	</build>
