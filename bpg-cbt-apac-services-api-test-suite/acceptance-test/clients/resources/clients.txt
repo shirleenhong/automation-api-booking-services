@@ -145,9 +145,10 @@ Verify Client Are Correctly Retrieved
     Verify Client Pricings Transaction Fees Are Correctly Retrieved
 
 Verify Client Are Not Retrieved
-    Verify String Does Not Contain Substring    ${response.content}    "clientId"
-    Verify String Does Not Contain Substring    ${response.content}    "name"
-    Verify String Does Not Contain Substring    ${response.content}    "profileName"
+    ${response_str}    Decode Bytes To String    ${response.content}     UTF-8    
+    Verify String Does Not Contain Substring    ${response_str}    "clientId"
+    Verify String Does Not Contain Substring    ${response_str}    "name"
+    Verify String Does Not Contain Substring    ${response_str}    "clientAccountNumber"
 
 Verify Client Pricings Are Correctly Retrieved
     ${client_pricings_list_length}    Get Length    ${client_pricings_list}
