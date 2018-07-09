@@ -46,7 +46,6 @@ public class ServiceApiExceptionHandlerTest {
 		assertTrue(error instanceof ApiError);
 		assertEquals(errorMessage, error.getMessage());
 		assertEquals(HttpStatus.BAD_REQUEST, error.getStatus());
-		assertTrue(error.getErrors().size() == 1);
 	}
 
 	@Test
