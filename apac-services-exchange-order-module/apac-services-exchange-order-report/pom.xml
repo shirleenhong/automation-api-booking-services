@@ -103,4 +103,8 @@
 			</build>
 		</profile>
 	</profiles>
+
+	<properties>
+		<sonar.coverage.exclusions>**/*PropertyConfig.java</sonar.coverage.exclusions>
+	</properties>
 </project>
