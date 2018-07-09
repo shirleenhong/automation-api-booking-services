@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +59,7 @@ public class ExchangeOrderReportService {
 	private String eoMailRecipient;
 
 	private static final String TEMPLATE = "jasper/exchange-order.jasper";
-	private static final String IMAGE_PATH = "/jasper/cwt-logo.png";
+	private static final String IMAGE_PATH = "jasper/cwt-logo.png";
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderReportService.class);
 	
