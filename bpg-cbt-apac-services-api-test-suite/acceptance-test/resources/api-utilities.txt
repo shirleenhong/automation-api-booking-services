@@ -54,7 +54,7 @@ Verify Actual Numerical Value Matches Expected Numerical Value
     Log    Expected Value: ${expected_value}
     ${actual_value}    Convert To Number    ${actual_value}
     ${expected_value}    Convert To Number    ${expected_value}
-    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${actual_value}    ${expected_value}    Actual value "${actual_value}" matches expected value "${expected_value}"    FALSE
+    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${actual_value}    ${expected_value}    Actual value "${actual_value}" does not match expected value "${expected_value}"    FALSE
 
 Verify Actual Value Does Not Match Expected Value
     [Arguments]    ${actual_value}    ${expected_value}
