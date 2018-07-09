@@ -3,8 +3,7 @@ package com.cwt.bpg.cbt.exchange.order.report;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.mockito.*;
 
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;

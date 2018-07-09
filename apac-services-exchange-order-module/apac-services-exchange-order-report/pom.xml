@@ -37,24 +37,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-		<dependency>
-            <groupId>com.cwt.bpg.cbt</groupId>
-            <artifactId>font-extension</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
 	</dependencies>
 
 	<build>
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
-				<includes>
-					<include>/jasper/*.jar</include>
-					<include>/jasper/*.jasper</include>					
-					<include>/jasper/*.png</include>
-					<include>/properties/*.properties</include>
-					<include>/templates/*.ftl</include>
-				</includes>
 			</resource>
 		</resources>
 	</build>
