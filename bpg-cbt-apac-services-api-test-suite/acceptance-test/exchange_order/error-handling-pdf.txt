@@ -1,0 +1,66 @@
+*** Settings ***
+Suite Setup
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/exchange-order.txt
+
+***Test Cases***
+Verify That Error Is Encountered When Invalid Token Is Used
+    [Tags]    functional    not-ready
+    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000|country,SG|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX|gst_absorb,false|gst_amount,300|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45|merchant_fee_absorb,false|nett_cost,600|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,PRO1|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700|status,Test Status|tax_1,100|tax_2,120|total,1200|total_selling_price,1500|vendor_email,test@test.com|vendor_fax,099097668|vendor_contact,TEST Contact Person|vendor_code,VEN01    eo_remarks_data=CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    itin_remarks_data=COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
+    Send Exchange Order Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Number Is Returned Correctly
+    Send Exchange Order PDF Get Request    token=12345.12345.12345    
+    Verify Response Status Code Is Correct    401
+    Send Exchange Order PDF Get Request    token=abcde.abcde.abcde    
+    Verify Response Status Code Is Correct    401
+    Send Exchange Order PDF Get Request    token=!@#$%^&*().!@#$%^&*().!@#$%^&*()    
+    Verify Response Status Code Is Correct    401
+
+Verify That Error Is Encountered When Empty Token Is Used
+    [Tags]    functional    not-ready
+    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000|country,HK|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX|gst_absorb,false|gst_amount,300|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45|merchant_fee_absorb,false|nett_cost,600|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,PRO1|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700|status,Test Status|tax_1,100|tax_2,120|total,1200|total_selling_price,1500|vendor_email,test@test.com|vendor_fax,099097668|vendor_contact,TEST Contact Person|vendor_code,VEN01    eo_remarks_data=CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    itin_remarks_data=COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
+    Send Exchange Order Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Number Is Returned Correctly
+    Send Exchange Order PDF Get Request    token=${EMPTY}    
+    Verify Response Status Code Is Correct    401
+
+Verify That Error Is Encountered When Null Token Is Used
+    [Tags]    functional    not-ready
+    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000|country,SG|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX|gst_absorb,false|gst_amount,300|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45|merchant_fee_absorb,false|nett_cost,600|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,PRO1|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700|status,Test Status|tax_1,100|tax_2,120|total,1200|total_selling_price,1500|vendor_email,test@test.com|vendor_fax,099097668|vendor_contact,TEST Contact Person|vendor_code,VEN01    eo_remarks_data=CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    itin_remarks_data=COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
+    Send Exchange Order Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Number Is Returned Correctly
+    Send Exchange Order PDF Get Request    token=null    
+    Verify Response Status Code Is Correct    401
+
+Verify That Error Is Encountered When No Token Is Used
+    [Tags]    functional    not-ready
+    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000|country,HK|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX|gst_absorb,false|gst_amount,300|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45|merchant_fee_absorb,false|nett_cost,600|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,PRO1|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700|status,Test Status|tax_1,100|tax_2,120|total,1200|total_selling_price,1500|vendor_email,test@test.com|vendor_fax,099097668|vendor_contact,TEST Contact Person|vendor_code,VEN01    eo_remarks_data=CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    itin_remarks_data=COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
+    Send Exchange Order Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Number Is Returned Correctly
+    Send Exchange Order PDF Get Request    token=None
+    Verify Response Status Code Is Correct    401
+
+Verify That Error Is Encounred When Empty Exchange Order Number Is Used
+    [Tags]    functional    not-ready
+    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000|country,SG|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX|gst_absorb,false|gst_amount,300|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45|merchant_fee_absorb,false|nett_cost,600|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,PRO1|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700|status,Test Status|tax_1,100|tax_2,120|total,1200|total_selling_price,1500|vendor_email,test@test.com|vendor_fax,099097668|vendor_contact,TEST Contact Person|vendor_code,VEN01    eo_remarks_data=CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    itin_remarks_data=COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
+    Send Exchange Order Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Number Is Returned Correctly
+    Send Exchange Order PDF Get Request    exchange_order_number=${EMPTY}    
+    Verify Response Status Code Is Correct    405
+
+Verify That Error Is Encounred When Null Exchange Order Number Is Used
+    [Tags]    functional    not-ready
+    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000|country,HK|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX|gst_absorb,false|gst_amount,300|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45|merchant_fee_absorb,false|nett_cost,600|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,PRO1|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700|status,Test Status|tax_1,100|tax_2,120|total,1200|total_selling_price,1500|vendor_email,test@test.com|vendor_fax,099097668|vendor_contact,TEST Contact Person|vendor_code,VEN01    eo_remarks_data=CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    itin_remarks_data=COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
+    Send Exchange Order Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Number Is Returned Correctly
+    Send Exchange Order PDF Get Request    exchange_order_number=null    
+    Verify Response Status Code Is Correct    400
+                
