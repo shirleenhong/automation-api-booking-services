@@ -73,7 +73,7 @@
 		<appender-ref ref="ASYNC-WARNINGS" />
 	</logger>
 
-	<root level="DEBUG">
+	<root level="INFO">
 		<appender-ref ref="ASYNC-WARNINGS" />
 	</root>
 
