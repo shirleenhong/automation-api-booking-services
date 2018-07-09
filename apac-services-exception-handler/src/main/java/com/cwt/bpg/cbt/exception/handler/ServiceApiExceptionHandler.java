@@ -52,25 +52,31 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@Override
-	protected ResponseEntity<Object> handleHttpMessageNotReadable(
-			HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status,
-			WebRequest request) {
+	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
 		Throwable mostSpecificCause = ex.getMostSpecificCause();
-		String error = "";
+		StringBuilder error = new StringBuilder();
 
-		if(mostSpecificCause instanceof JsonParseException){
-			error = "Invalid JSON";
+		if (mostSpecificCause instanceof JsonParseException) {
+			error.append("Invalid JSON");
 		}
-		else if(mostSpecificCause instanceof InvalidFormatException){
-			InvalidFormatException x = (InvalidFormatException)mostSpecificCause;
-			error = "["+x.getValue()+"] should be of type ["+x.getTargetType().getName().split("\\." )[x.getTargetType().getName().split("\\." ).length-1]+"]";
+		else if (mostSpecificCause instanceof InvalidFormatException) {
+			InvalidFormatException x = (InvalidFormatException) mostSpecificCause;
+			error.append("[").append(x.getValue()).append("] should be of type [").append(x.getTargetType()
+					.getName().split("\\.")[x.getTargetType().getName().split("\\.").length - 1]).append("]");
+		}
+		
+		ApiError apiError;
+		
+		if (error.length() > 0) {
+			apiError = new ApiError(HttpStatus.BAD_REQUEST, "Invalid Input", error.toString());
+		}
+		else {
+			apiError = new ApiError(HttpStatus.BAD_REQUEST, "Invalid Input");
 		}
 
-		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Invalid Input", error);
-
-		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(),
-				request);
+		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
 	}
 
 	@ExceptionHandler(Exception.class)
