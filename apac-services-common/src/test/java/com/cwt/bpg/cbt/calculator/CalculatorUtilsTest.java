@@ -30,7 +30,7 @@ public class CalculatorUtilsTest
 		BigDecimal safeValue = safeValue(input);
 		assertThat(safeValue, is(equalTo(BigDecimal.ZERO)));
 
-		input = new BigDecimal(10.00);
+		input = new BigDecimal(10);
 		safeValue = safeValue(input);
 		assertThat(safeValue, is(equalTo(input)));
 	}
@@ -48,7 +48,7 @@ public class CalculatorUtilsTest
 
 	@Test
 	public void safeValueShouldDoNothingWhenValueIsNotNull() {
-		BigDecimal decimal = new BigDecimal(10.00);
+		BigDecimal decimal = new BigDecimal(10);
 		BigDecimal safeValue = safeValue(decimal);
 		assertThat(safeValue, is(equalTo(safeValue)));
 	}
@@ -82,49 +82,41 @@ public class CalculatorUtilsTest
 
 	@Test
 	public void percentDecimalReturnsZeroWhenValueIsNull() {
-		BigDecimal bigDecimal = null;
-		BigDecimal percentDecimal = CalculatorUtils.percentDecimal(bigDecimal);
-		assertThat(percentDecimal.doubleValue(), is(equalTo(0.00)));
-
-		Double nullDouble = null;
-		percentDecimal = CalculatorUtils.percentDecimal(nullDouble);
-		assertThat(percentDecimal.doubleValue(), is(equalTo(0.00)));
+		BigDecimal percentDecimal = CalculatorUtils.percentDecimal(null);
+		assertThat(percentDecimal.doubleValue(), is(equalTo(0d)));
 	}
 
 	@Test
 	public void percentDecimalReturnsNonZeroWhenValueIsNotNull() {
-		BigDecimal percentDecimal = CalculatorUtils.percentDecimal(5D);
-		assertThat(percentDecimal.doubleValue(), is(equalTo(0.05)));
-
-		percentDecimal = CalculatorUtils.percentDecimal(new BigDecimal("5"));
+		BigDecimal percentDecimal = CalculatorUtils.percentDecimal(5d);
 		assertThat(percentDecimal.doubleValue(), is(equalTo(0.05)));
 	}
 
 	@Test
 	public void calculatePercentageShouldReturnZeroWhenInputIsNullOrPercentIsNull() {
-		BigDecimal decimal = CalculatorUtils.calculatePercentage(null, 2D);
-		assertThat(decimal.doubleValue(), is(equalTo(0D)));
+		BigDecimal decimal = CalculatorUtils.calculatePercentage(null, 2d);
+		assertThat(decimal.doubleValue(), is(equalTo(0d)));
 
 		decimal = CalculatorUtils.calculatePercentage(new BigDecimal(20), null);
-		assertThat(decimal.doubleValue(), is(equalTo(0D)));
+		assertThat(decimal.doubleValue(), is(equalTo(0d)));
 	}
 
 	@Test
 	public void shouldCalculatePercentage() {
-		BigDecimal decimal = CalculatorUtils.calculatePercentage(new BigDecimal(20), 20D);
-		assertThat(decimal.doubleValue(), is(equalTo(4D)));
+		BigDecimal decimal = CalculatorUtils.calculatePercentage(new BigDecimal(20), 20d);
+		assertThat(decimal.doubleValue(), is(equalTo(4d)));
 	}
 
 	@Test
 	public void shouldRoundUp() {
-		assertThat(CalculatorUtils.round(new BigDecimal(3.5), 0).doubleValue(), is(equalTo(4D)));
-		assertThat(CalculatorUtils.round(new BigDecimal(3.51), 0).doubleValue(), is(equalTo(4D)));
+		assertThat(CalculatorUtils.round(new BigDecimal(3.5), 0).doubleValue(), is(equalTo(4d)));
+		assertThat(CalculatorUtils.round(new BigDecimal(3.51), 0).doubleValue(), is(equalTo(4d)));
 	}
 
 	@Test
 	public void shouldRoundDown() {
-		assertThat(CalculatorUtils.round(new BigDecimal(3.4), 0).doubleValue(), is(equalTo(3D)));
-		assertThat(CalculatorUtils.round(new BigDecimal(3.49), 0).doubleValue(), is(equalTo(3D)));
+		assertThat(CalculatorUtils.round(new BigDecimal(3.4), 0).doubleValue(), is(equalTo(3d)));
+		assertThat(CalculatorUtils.round(new BigDecimal(3.49), 0).doubleValue(), is(equalTo(3d)));
 	}
 
 	@Test
@@ -137,5 +129,4 @@ public class CalculatorUtilsTest
 		safeValue = safeValue(input);
 		assertThat(safeValue, is(equalTo(input)));
 	}
-
 }
