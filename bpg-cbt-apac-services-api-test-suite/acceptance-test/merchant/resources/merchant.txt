@@ -3,9 +3,24 @@ Resource    ../../resources/api-imports.txt
 Resource    ../../resources/api-utilities.txt
 Resource    ../../resources/api-variables.txt
 *** Keywords ***
-Create Test Variables For Merchant Fee Percentage
-    [Arguments]    ${country}=sg
+Create New Client Account Number List
+    [Arguments]    ${client_account_number}    ${cn_list}
     @{merchant_fee_list}    Create List
+    Set Test Variable    ${${client_account_number}_list}    ${merchant_fee_list}
+    Append To List    ${cn_list}    ${client_account_number}
+    Set Test Variable    ${cn_list}
+
+Create Test Variables For Merchant Fee Percentage
+    [Arguments]    ${country}=sg    ${mfee_list}=${EMPTY}
+    Run Keyword If    "${mfee_list}"=="${EMPTY}"    Create Test Variables ForMerchant Fee With Matching Client Account Number    ${country}    ELSE    Create Test Variables For Merchant Fee Without Matching Client Account Number    ${country}    ${mfee_list}
+    Set Test Variable    ${mfee_list}
+    ${country}    Get Substring    ${country}    \    2
+    Set Test Variable    ${country}    ${country.upper()}
+
+Create Test Variables ForMerchant Fee With Matching Client Account Number     
+    [Arguments]    ${country}=sg   
+    @{merchant_fee_list}    Create List
+    @{cn_list}    Create List
     Set Test Variable    ${merchant_fee_list}
     ${index}    Set Variable    0
     ${merchant_fee_list}    Run Keyword If    "${country.upper()}"=="SG"    Catenate    ${${country}_merchant_fee_1}    |    ${${country}_merchant_fee_2}
@@ -15,54 +30,97 @@ Create Test Variables For Merchant Fee Percentage
     ${merchant_fee_list}    Split String    ${merchant_fee_list}    |
     ${merchant_fee_list_length}    Get Length    ${merchant_fee_list}
     Set Test Variable    ${merchant_fee_list_length}
-    Log    ${merchant_fee_list_length}
     : FOR    ${data}    IN    @{merchant_fee_list}
     \    ${data_item}    Split String    ${data}    ,
-    \    Set Test Variable    ${client_name_${index}}    ${data_item[0]}
-    \    Set Test Variable    ${profile_name_${index}}    ${data_item[1]}
-    \    Set Test Variable    ${client_type_${index}}    ${data_item[2]}
-    \    ${value_with_decimal}    Run Keyword And Return Status    Should Contain    ${data_item[3]}    .
-    \    ${merchant_fee_percent}    Run Keyword If    "${value_with_decimal}"=="True"    Set Variable    ${data_item[3]}
-    \    ...    ELSE    Convert To Number    ${data_item[3]}
-    \    Set Test Variable    ${merchant_fee_percent_${index}}    ${merchant_fee_percent}
-    \    ${merchant_fee_flag}    Set Variable If    "${data_item[4]}"=="0"    false    true
-    \    Set Test Variable    ${merchant_fee_flag_${index}}    ${merchant_fee_flag}
+    \    Save Merchant Fee Values    ${data_item}    ${index}
+    \    ${is_list_created}    Run Keyword And Return Status    Variable Should Exist    ${${client_account_number_${index}}_list}
+    \    Run Keyword If    "${is_list_created}"=="False"    Create New Client Account Number List    ${client_account_number_${index}}    ${cn_list}
+    \    Append To List    ${${client_account_number_${index}}_list}    ${index}
+    \    Set Test Variable    ${${client_account_number_${index}}_list}
     \    ${index}    Evaluate    ${index}+1
-    ${country}    Get Substring    ${country}    \    2
-    Set Test Variable    ${country}    ${country.upper()}
+
+Create Test Variables For Merchant Fee Without Matching Client Account Number
+    [Arguments]    ${country}=sg    ${mfee_list}=${EMPTY}
+    @{cn_list}    Create List
+    ${data_item}    Split String    ${mfee_list}    ,
+    ${index}    Set Variable    0
+    Save Merchant Fee Values    ${data_item}    ${index}
+    Create New Client Account Number List    ${client_account_number_${index}}    ${cn_list}    
+
+Save Merchant Fee Values
+    [Arguments]    ${data_item}    ${index}
+    Set Test Variable    ${client_name_${index}}    ${data_item[0]}
+    Set Test Variable    ${client_account_number_${index}}    ${data_item[1]}
+    Set Test Variable    ${${client_account_number_${index}}_index}    ${index}
+    Set Test Variable    ${client_type_${index}}    ${data_item[2]}
+    ${value_with_decimal}    Run Keyword And Return Status    Should Contain    ${data_item[3]}    .
+    ${merchant_fee_percent}    Run Keyword If    "${value_with_decimal}"=="True"    Set Variable    ${data_item[3]}
+    ...    ELSE    Convert To Number    ${data_item[3]}
+    Set Test Variable    ${merchant_fee_percent_${index}}    ${merchant_fee_percent}
+    ${merchant_fee_flag}    Set Variable If    "${data_item[4]}"=="0"    false    true
+    Set Test Variable    ${merchant_fee_flag_${index}}    ${merchant_fee_flag}
 
 Send Get Request For Merchant Fee Percentage
-    [Arguments]    ${token}=${default_token}
+    [Arguments]    ${token}=${default_token}    ${country}=${country}
     Create Session    merchant    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    : FOR    ${index}    IN RANGE    0    ${merchant_fee_list_length}
-    \    ${response}    Get Request    merchant    /apac-services-rest/api/merchant/${country}/${profile_name_${index}}    headers=${headers}
-    \    Set Test Variable    ${response_${index}}    ${response}
-    \    Log    ${response_${index}.headers}
-    \    Log    ${response_${index}.content}
+    : FOR    ${data}    IN    @{cn_list}
+    \    ${response}    Get Request    merchant    /apac-services-rest/api/merchant/${country}/${data}    headers=${headers}
+    \    Set Test Variable    ${response_${data}}    ${response}
+    \    Log    ${response_${data}.headers}
+    \    Log    ${response_${data}.content}
+    Run Keyword If    "${mfee_list}"!="${EMPTY}"    Set Test Variable    ${data}
     Set Test Variable    ${api_flag}    merchant
 
+Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Multiple Client Accounts
+    [Arguments]    ${client_account_list}    ${data}
+    Log    ${client_account_list}
+    Log    ${data}
+    Set Test Variable    ${response}    ${response_${data}}
+    ${client_name}    Get Json Value As String    ${response.content}    $.clientName
+    ${client_type}    Get Json Value As String    ${response.content}    $.clientType
+    :FOR    ${data_item}    IN    @{client_account_list}
+    \    ${is_client_name_matched}    Run Keyword And Return Status    Verify Json Value Is Correct    $.clientName    ${client_name_${data_item}}
+    \    ${is_client_type_matched}    Run Keyword And Return Status    Verify Json Value Is Correct    $.clientType    ${client_type_${data_item}}
+    \    Run Keyword If    "${is_client_name_matched}"=="True" and "${is_client_type_matched}"=="True"    Run Keywords    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account    ${data_item}    AND    Exit For Loop    
+        
+Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account
+    [Arguments]    ${data}=${data}
+    Log    ${data}
+    Set Test Variable    ${response}    ${response_${data}}
+    ${index}    Set Variable    ${${data}_index}
+    Verify Json Value Is Correct    $.countryCode    ${country}
+    Verify Json Value Is Correct    $.clientName    ${client_name_${index}}
+    Verify Json Value Is Correct    $.clientType    ${client_type_${index}}
+    ${actual_cn}    Get Json Value As String    ${response.content}    $.clientAccountNumber
+    Run Keyword If    "${mfee_list}"=="${EMPTY}"    Verify Json Value Is Correct    $.clientAccountNumber    ${client_account_number_${index}}    ELSE    Verify String Contains Substring    ${actual_cn}    ${client_account_number_${index}}
+    Verify Json Value Is Correct    $.merchantFeePercent    ${merchant_fee_percent_${index}}    float
+    Verify Json Value Is Correct    $.includeTransactionFee    ${merchant_fee_flag_${index}}    boolean
+
 Verify Merchant Fee Percentage Is Correctly Retrieved
-    : FOR    ${index}    IN RANGE    0    ${merchant_fee_list_length}
-    \    Set Test Variable    ${response}    ${response_${index}}
-    \    Verify Json Value Is Correct    $.countryCode    ${country}
-    \    Verify Json Value Is Correct    $.clientName    ${client_name_${index}}
-    \    Verify Json Value Is Correct    $.clientType    ${client_type_${index}}
-    \    Verify Json Value Is Correct    $.profileName    ${profile_name_${index}}
-    \    Verify Json Value Is Correct    $.merchantFeePercent    ${merchant_fee_percent_${index}}    float
-    \    Verify Json Value Is Correct    $.includeTransactionFee    ${merchant_fee_flag_${index}}    boolean
+    : FOR    ${data}    IN    @{cn_list}
+    \    ${list_length}    Get Length    ${${data}_list}
+    \    Run Keyword If    ${list_length}>1    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Multiple Client Accounts    ${${data}_list}    ${data}    ELSE    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account    ${data}
+    #\    Set Test Variable    ${response}    ${response_${index}}
+    #\    ${client_name}    Get Json Value As String    ${response.content}    $.clientName
+    #\    Verify Json Value Is Correct    $.countryCode    ${country}
+    #\    Verify Json Value Is Correct    $.clientName    ${client_name_${index}}
+    #\    Verify Json Value Is Correct    $.clientType    ${client_type_${index}}
+    #\    Verify Json Value Is Correct    $.clientAccountNumber    ${client_account_number_${index}}
+    #\    Verify Json Value Is Correct    $.merchantFeePercent    ${merchant_fee_percent_${index}}    float
+    #\    Verify Json Value Is Correct    $.includeTransactionFee    ${merchant_fee_flag_${index}}    boolean
 
 Verify Merchant Fee Percentages Are Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "countryCode"
     Verify String Does Not Contain Substring    ${response.content}    "clientName"
-    Verify String Does Not Contain Substring    ${response.content}    "profileName"
+    Verify String Does Not Contain Substring    ${response.content}    "clientAccountNumber"
     Verify String Does Not Contain Substring    ${response.content}    "clientType"
     Verify String Does Not Contain Substring    ${response.content}    "merchantFeePercent"
     Verify String Does Not Contain Substring    ${response.content}    "includeTransactionFee"
 
 Verify Response Status Code Is Correct For Merchant Fee Percentage
     [Arguments]    ${status_code}
-    : FOR    ${index}    IN RANGE    0    ${merchant_fee_list_length}
-    \    Set Test Variable    ${response}    ${response_${index}}
+    : FOR    ${data}    IN    @{cn_list}
+    \    Set Test Variable    ${response}    ${response_${data}}
     \    Verify Response Status Code Is Correct    ${status_code}
