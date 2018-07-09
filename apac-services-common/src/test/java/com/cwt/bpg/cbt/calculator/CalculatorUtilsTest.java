@@ -82,13 +82,21 @@ public class CalculatorUtilsTest
 
 	@Test
 	public void percentDecimalReturnsZeroWhenValueIsNull() {
-		BigDecimal percentDecimal = CalculatorUtils.percentDecimal(null);
+		BigDecimal bigDecimal = null;
+		BigDecimal percentDecimal = CalculatorUtils.percentDecimal(bigDecimal);
+		assertThat(percentDecimal.doubleValue(), is(equalTo(0d)));
+
+		Double nullDouble = null;
+		percentDecimal = CalculatorUtils.percentDecimal(nullDouble);
 		assertThat(percentDecimal.doubleValue(), is(equalTo(0d)));
 	}
 
 	@Test
 	public void percentDecimalReturnsNonZeroWhenValueIsNotNull() {
 		BigDecimal percentDecimal = CalculatorUtils.percentDecimal(5d);
+		assertThat(percentDecimal.doubleValue(), is(equalTo(0.05)));
+
+		percentDecimal = CalculatorUtils.percentDecimal(new BigDecimal("5"));
 		assertThat(percentDecimal.doubleValue(), is(equalTo(0.05)));
 	}
 
