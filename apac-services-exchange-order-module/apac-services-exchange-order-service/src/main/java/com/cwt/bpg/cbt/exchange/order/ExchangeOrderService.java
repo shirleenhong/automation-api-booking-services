@@ -72,7 +72,7 @@ public class ExchangeOrderService {
 		Optional<BaseProduct> isProductExist = Optional.ofNullable(productService.getProductByCode(exchangeOrder.getCountryCode(),exchangeOrder.getProductCode()));
 
 		BaseProduct product = isProductExist
-				.orElseThrow(() -> new ExchangeOrderNoContentException(
+				.orElseThrow(() -> new IllegalArgumentException(
 						"Product not found: [ " + exchangeOrder.getProductCode() + " ]"));
 
 		Optional<Vendor> isVendorExist = product.getVendors().stream()
@@ -80,7 +80,7 @@ public class ExchangeOrderService {
 				.findFirst();
 
 		isVendorExist
-				.orElseThrow(() -> new ExchangeOrderNoContentException(
+				.orElseThrow(() -> new IllegalArgumentException(
 						"Vendor not found: [ " + exchangeOrder.getVendor().getCode() + " ]"));
 
 		ExchangeOrder result = new ExchangeOrder();
