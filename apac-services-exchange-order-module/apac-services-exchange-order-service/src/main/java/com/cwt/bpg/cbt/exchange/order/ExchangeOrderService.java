@@ -80,10 +80,11 @@ public class ExchangeOrderService {
 				.filter(i -> i.getCode().equals(exchangeOrder.getVendor().getCode()))
 				.findFirst();
 
-		isVendorExist
-				.orElseThrow(() -> new IllegalArgumentException(
+		if(!isVendorExist.isPresent()) {
+				throw new IllegalArgumentException(
 						"Vendor [ " + exchangeOrder.getVendor().getCode()
-                                + " ] not found in Product [ " + exchangeOrder.getProductCode() + " ] "));
+                                + " ] not found in Product [ " + exchangeOrder.getProductCode() + " ] ");
+		}
 
 		ExchangeOrder result = new ExchangeOrder();
 		result.setEoNumber(exchangeOrderRepo.saveOrUpdate(exchangeOrder));

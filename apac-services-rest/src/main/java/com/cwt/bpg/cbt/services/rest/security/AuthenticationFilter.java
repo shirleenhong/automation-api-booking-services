@@ -19,7 +19,7 @@ public class AuthenticationFilter extends GenericFilterBean {
 	private static final String UUID_KEY = "UUID";
 	private TokenService tokenService;
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationFilter.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AuthenticationFilter.class);
 
 	public AuthenticationFilter(TokenService tokenService) {
 		this.tokenService = tokenService;
@@ -51,7 +51,7 @@ public class AuthenticationFilter extends GenericFilterBean {
 
 		} 
 		catch (RuntimeException e) {
-			LOGGER.error("Server caught an exception: {}", e.getLocalizedMessage());
+			LOG.error("Server caught an exception: {}", e.getLocalizedMessage());
 			setUUIDHeader(httpResponse);
 			httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Server Error");
 			return;

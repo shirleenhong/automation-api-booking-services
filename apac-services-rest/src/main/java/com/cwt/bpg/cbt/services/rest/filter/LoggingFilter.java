@@ -93,7 +93,13 @@ public class LoggingFilter extends OncePerRequestFilter {
 				LOG.warn("Failed to parse request payload", e);
 			}
 		}
-		LOG.info(b.toString());
+		log(b);
+	}
+
+	private void log(final StringBuilder b) {
+		if(!b.toString().isEmpty()) {
+			LOG.info(b.toString());	
+		}		
 	}
 	
 	private void logResponse(final ResponseWrapper response, HttpServletResponse httpResponse) {
@@ -115,7 +121,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 			LOG.warn("Failed to parse response payload", e);
 		}
 		
-		LOG.info(b.toString());
+		log(b);
 	}
 
 	private void printPrefixedHeaders(StringBuilder b, long id, String prefix,

@@ -99,7 +99,6 @@ public class ServiceApiExceptionHandlerTest {
 	@Test
 	public void canHandleArgumentMisMatch() {
 
-		WebRequest request = Mockito.mock(WebRequest.class);
 		Object value = new String("test");
 		MethodParameter param = new MethodParameter(DummyType.class.getMethods()[0], 1);
 		Throwable cause = new Throwable("Invalid argument");
@@ -107,7 +106,7 @@ public class ServiceApiExceptionHandlerTest {
 				DummyType.class, "myrequired", param, cause);
 
 		ResponseEntity<Object> handleHttpMessageNotReadable = exceptionHandler
-				.handleMethodArgumentTypeMismatch(ex, request);
+				.handleMethodArgumentTypeMismatch(ex);
 
 		assertNotNull(handleHttpMessageNotReadable);
 		assertTrue(handleHttpMessageNotReadable.getBody() instanceof ApiError);
@@ -115,12 +114,10 @@ public class ServiceApiExceptionHandlerTest {
 
 	@Test
 	public void canHandleIllegalArgument() {
-		WebRequest request = Mockito.mock(WebRequest.class);
-
+		
 		IllegalArgumentException ex = new IllegalArgumentException("Illegal argument");
 
-		ResponseEntity<Object> handleHttpMessageNotReadable = exceptionHandler.handleIllegalArgument(ex,
-				request);
+		ResponseEntity<Object> handleHttpMessageNotReadable = exceptionHandler.handleIllegalArgument(ex);
 
 		assertNotNull(handleHttpMessageNotReadable);
 		assertTrue(handleHttpMessageNotReadable.getBody() instanceof ApiError);
