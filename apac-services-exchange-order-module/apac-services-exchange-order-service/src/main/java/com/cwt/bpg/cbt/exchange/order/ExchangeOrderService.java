@@ -73,7 +73,7 @@ public class ExchangeOrderService {
 
 		BaseProduct product = isProductExist
 				.orElseThrow(() -> new IllegalArgumentException(
-						"Product not found: [ " + exchangeOrder.getProductCode() + " ]"));
+						"Product [ " + exchangeOrder.getProductCode() + " ] not found."));
 
 		Optional<Vendor> isVendorExist = product.getVendors().stream()
 				.filter(i -> i.getCode().equals(exchangeOrder.getVendor().getCode()))
@@ -81,7 +81,7 @@ public class ExchangeOrderService {
 
 		isVendorExist
 				.orElseThrow(() -> new IllegalArgumentException(
-						"Vendor not found: [ " + exchangeOrder.getVendor().getCode() + " ]"));
+						"Vendor [ " + exchangeOrder.getVendor().getCode() + " ] not found in Product [ " + exchangeOrder.getProductCode() + " ] "));
 
 		ExchangeOrder result = new ExchangeOrder();
 		result.setEoNumber(exchangeOrderRepo.saveOrUpdate(exchangeOrder));
