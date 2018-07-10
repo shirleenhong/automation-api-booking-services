@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+
 import static org.mockito.Mockito.*;
 
 import java.util.*;
@@ -14,6 +15,7 @@ import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
@@ -31,11 +33,17 @@ public class ExchangeOrderServiceTest {
 
 	@Mock
 	private ProductService productService;
+	
+	@Mock
+	private ScaleConfig scaleConfig;
 
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		ReflectionTestUtils.setField(service, "maxRetryCount", 3);
+		
+		Mockito.when(scaleConfig.getScale(Mockito.eq("SG"))).thenReturn(2);
+		Mockito.when(scaleConfig.getScale(Mockito.eq("HK"))).thenReturn(0);
 	}
   
 	@Test
