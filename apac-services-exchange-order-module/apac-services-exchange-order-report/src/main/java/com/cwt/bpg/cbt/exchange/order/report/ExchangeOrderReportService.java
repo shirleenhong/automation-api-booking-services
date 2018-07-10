@@ -71,12 +71,9 @@ public class ExchangeOrderReportService {
 		ExchangeOrder exchangeOrder = eoExists.orElseThrow(() -> new ExchangeOrderNoContentException(
 				"Exchange order number not found: [ " + eoNumber + " ]"));
 
-		Optional<Vendor> vendorExists = Optional.ofNullable(getVendor(exchangeOrder.getCountryCode(),
+		Vendor vendor = getVendor(exchangeOrder.getCountryCode(),
 				exchangeOrder.getProductCode(),
-				exchangeOrder.getVendor().getCode()));
-
-		Vendor vendor = vendorExists.orElseThrow(() -> new ApiServiceException(
-				"Vendor not found for exchange order number: [ " + eoNumber + " ]"));
+				exchangeOrder.getVendor().getCode());
 
 		vendor.setContactPerson(exchangeOrder.getVendor().getContactPerson());
 		vendor.setSupportEmail(exchangeOrder.getVendor().getSupportEmail());
