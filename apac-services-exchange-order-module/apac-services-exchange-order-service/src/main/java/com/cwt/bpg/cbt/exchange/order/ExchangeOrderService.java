@@ -8,6 +8,9 @@ import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Optional;
 
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 import org.mongodb.morphia.Key;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +44,9 @@ public class ExchangeOrderService {
 	@Autowired
 	private SequenceNumberRepository sequenceNumberRepo;
 
+	@Autowired
+	private ProductService productService;
+
 	ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
 
@@ -62,6 +68,23 @@ public class ExchangeOrderService {
 					existingExchangeOrder.getEoNumber(),
 					existingExchangeOrder.getCountryCode());
 		}
+
+		Optional<BaseProduct> isProductExist = Optional.ofNullable(
+		        productService.getProductByCode(exchangeOrder.getCountryCode(),exchangeOrder.getProductCode()));
+
+		BaseProduct product = isProductExist
+				.orElseThrow(() -> new IllegalArgumentException(
+						"Product [ " + exchangeOrder.getProductCode() + " ] not found."));
+
+		Optional<Vendor> isVendorExist = product.getVendors().stream()
+				.filter(i -> i.getCode().equals(exchangeOrder.getVendor().getCode()))
+				.findFirst();
+
+		isVendorExist
+				.orElseThrow(() -> new IllegalArgumentException(
+						"Vendor [ " + exchangeOrder.getVendor().getCode()
+                                + " ] not found in Product [ " + exchangeOrder.getProductCode() + " ] "));
+
 		ExchangeOrder result = new ExchangeOrder();
 		result.setEoNumber(exchangeOrderRepo.saveOrUpdate(exchangeOrder));
 
