@@ -280,7 +280,19 @@ public class ServiceFeeCalculatorTest {
 	}
 
 	@Test
-	public void shouldUseNetFare() {
+	public void shouldUseNettFare() {
+		PriceCalculationInput input = new PriceCalculationInput();
 
+		input.setNettFare(new BigDecimal(2000));
+		input.setTotalTaxes(new BigDecimal(200));
+		input.setObFee(new BigDecimal(350));
+		input.setMarkupAmount(new BigDecimal(91));
+		input.setCommissionRebateAmount(new BigDecimal(200));
+		input.setCountryCode("SG");
+
+		PriceBreakdown priceBreakdown = calculator.calculateFee(input);
+
+		assertNotNull(priceBreakdown);
+		assertEquals(new BigDecimal("2441.00"), priceBreakdown.getAirFareWithTaxAmount());
 	}
 }
