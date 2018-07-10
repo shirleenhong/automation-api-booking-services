@@ -3,14 +3,13 @@ Suite Setup
 Resource          ../resources/api-variables.txt
 Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-imports.txt
-Resource          ../resources/test-variables.txt
 Resource          resources/exchange-order.txt
 
 
 *** Test Cases ***
 Verify That Exchange Order PDF Generation Is Successful For Singapore
-    [Tags]    functional    not-ready
-    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000.01|country,SG|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX|gst_absorb,false|gst_amount,300.01|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45.01|merchant_fee_absorb,false|nett_cost,600.01|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,18|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700|status,Test Status|tax_1,100.01|tax_2,120.01|total,1200.01|total_selling_price,1500.01|vendor_email,test@test.com|vendor_fax,099097668|vendor_contact,TEST Contact Person|vendor_code,021238|vendor_name,Carlson Wagonlit GST|vendor_address_1,INTERCOMPANY - TRADE|vendor_address_2,${EMPTY}|vendor_city,SIN|vendor_country,${EMPTY}|vendor_contact_number,${EMPTY}    eo_remarks_data=CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    itin_remarks_data=COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
+    [Tags]    functional
+    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000.01|country,SG|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fop_type,CX|gst_absorb,false|gst_amount,300.01|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45.01|merchant_fee_absorb,false|nett_cost,600.01|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,18|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700.01|status,Test Status|tax_1,100.01|tax_2,120.01|total,1200.01|total_selling_price,1500.01|vendor_email,${EMPTY}|vendor_fax,${EMPTY}|vendor_contact,TEST Contact Person|vendor_code,021238|vendor_name,Carlson Wagonlit GST|vendor_address_1,INTERCOMPANY - TRADE|vendor_address_2,${EMPTY}|vendor_city,SIN|vendor_country,${EMPTY}|vendor_contact_number,${EMPTY}    eo_remarks_data=CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    itin_remarks_data=COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
     Send Exchange Order Post Request
     Verify Response Status Code Is Correct    200
     Verify Exchange Order Number Is Returned Correctly
@@ -19,10 +18,11 @@ Verify That Exchange Order PDF Generation Is Successful For Singapore
     Verify Exchange Order Information For PDF Is Retrieved Correctly
    
 Verify That Exchange Order PDF Generation Is Successful For Hong Kong
-    [Tags]    functional    not-ready
-    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000|country,HK|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX|gst_absorb,false|gst_amount,300|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45|merchant_fee_absorb,false|nett_cost,600|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,18|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700|status,Test Status|tax_1,100|tax_2,120|total,1200|total_selling_price,1500|vendor_email,test@test.com|vendor_fax,099097668|vendor_contact,TEST Contact Person|vendor_code,000001|vendor_name,CWT|vendor_address_1,27/F ING TOWER|vendor_address_2,308 DES VOEUX ROAD CENTRAL|vendor_city,${EMPTY}|vendor_country,HONG KONG|vendor_contact_number,${EMPTY}    eo_remarks_data=REQUEST ADJOINING ROOMS    itin_remarks_data=EARLY CHECK IN HAS BEEN REQUESTED
+    [Tags]    functional
+    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000|country,HK|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fop_type,CX|gst_absorb,false|gst_amount,300|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45|merchant_fee_absorb,false|nett_cost,600|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,18|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700|status,Test Status|tax_1,199|tax_2,120|total,1200|total_selling_price,1500|vendor_email,${EMPTY}|vendor_fax,${EMPTY}|vendor_contact,TEST Contact Person|vendor_code,000001|vendor_name,CWT|vendor_address_1,27/F ING TOWER|vendor_address_2,308 DES VOEUX ROAD CENTRAL|vendor_city,${EMPTY}|vendor_country,HONG KONG|vendor_contact_number,${EMPTY}    eo_remarks_data=REQUEST ADJOINING ROOMS    itin_remarks_data=EARLY CHECK IN HAS BEEN REQUESTED
     Send Exchange Order Post Request
     Verify Response Status Code Is Correct    200
     Verify Exchange Order Number Is Returned Correctly
     Send Exchange Order PDF Get Request
     Verify Response Status Code Is Correct    200
+    Verify Exchange Order Information For PDF Is Retrieved Correctly
