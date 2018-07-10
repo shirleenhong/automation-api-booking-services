@@ -1,5 +1,6 @@
 import math
 import decimal
+import PyPDF2
 
 class ApacSvcLibrary:
     ROBOT_LIBRARY_SCOPE = 'TEST CASE'
@@ -30,3 +31,9 @@ class ApacSvcLibrary:
             return str(n) + '0'
         else:
             return n
+        
+    def get_pdf_text(self, dr):
+        pdfFileObj = open(dr, 'rb')
+        pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
+        pageObj = pdfReader.getPage(0)
+        return pageObj.extractText()
