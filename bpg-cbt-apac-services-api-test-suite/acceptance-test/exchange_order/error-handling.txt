@@ -107,21 +107,6 @@ Verify Error Is Encountered When Invalid Agent Name Value Is Used
     Send Exchange Order Post Request
     Verify Response Status Code Is Correct    400
     Verify Exchange Order Is Not Returned
-
-Verify Error Is Encountered When Invalid CC Number Value Is Used
-    [Tags]    functional
-    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000|country,SG|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX|gst_absorb,false|gst_amount,300|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45|merchant_fee_absorb,false|nett_cost,600|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,18|raise_cheque,Monthly|record_locator,PNR1234|selling_price,700|status,Test Status|tax_1,100|tax_2,120|total,1200|total_selling_price,1500|vendor_email,test@test.com|vendor_fax,099097668|vendor_contact,TEST Contact Person|vendor_code,021238|vendor_name,Carlson Wagonlit GST|vendor_address_1,INTERCOMPANY - TRADE|vendor_address_2,${EMPTY}|vendor_city,SIN|vendor_country,${EMPTY}|vendor_contact_number,${EMPTY}     CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
-    Send Exchange Order Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Exchange Order Is Not Returned
-    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000|country,SG|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX|gst_absorb,false|gst_amount,300|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45|merchant_fee_absorb,false|nett_cost,600|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,18|raise_cheque,Monthly|record_locator,PNR1234|selling_price,700|status,Test Status|tax_1,100|tax_2,120|total,1200|total_selling_price,1500|vendor_email,test@test.com|vendor_fax,099097668|vendor_contact,TEST Contact Person|vendor_code,021238|vendor_name,Carlson Wagonlit GST|vendor_address_1,INTERCOMPANY - TRADE|vendor_address_2,${EMPTY}|vendor_city,SIN|vendor_country,${EMPTY}|vendor_contact_number,${EMPTY}     CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
-    Send Exchange Order Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Exchange Order Is Not Returned
-    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000|country,SG|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX|gst_absorb,false|gst_amount,300|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45|merchant_fee_absorb,false|nett_cost,600|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,18|raise_cheque,Monthly|record_locator,PNR1234|selling_price,700|status,Test Status|tax_1,100|tax_2,120|total,1200|total_selling_price,1500|vendor_email,test@test.com|vendor_fax,099097668|vendor_contact,TEST Contact Person|vendor_code,021238|vendor_name,Carlson Wagonlit GST|vendor_address_1,INTERCOMPANY - TRADE|vendor_address_2,${EMPTY}|vendor_city,SIN|vendor_country,${EMPTY}|vendor_contact_number,${EMPTY}     CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
-    Send Exchange Order Post Request
-    Verify Response Status Code Is Correct    400
-    Verify Exchange Order Is Not Returned
 	
 Verify Error Is Encountered When Invalid CC Type Value Is Used
     [Tags]    functional
