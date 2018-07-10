@@ -28,6 +28,10 @@ public final class CalculatorUtils {
 	public static BigDecimal round(BigDecimal amount, int scale) {
 		return amount == null ? null : amount.setScale(scale, RoundingMode.HALF_UP);
 	}
+	
+	public static BigDecimal scale(BigDecimal amount, int scale) {
+		return amount == null ? null : amount.setScale(scale, RoundingMode.DOWN);
+	}
 
 	public static BigDecimal calculatePercentage(BigDecimal input, Double percent) {
 		return safeValue(input).multiply(percentDecimal(percent));

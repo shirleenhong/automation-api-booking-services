@@ -8,16 +8,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.ConcurrentModificationException;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
-import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -28,10 +20,13 @@ import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 public class ExchangeOrderServiceTest {
 
@@ -46,11 +41,17 @@ public class ExchangeOrderServiceTest {
 
 	@Mock
 	private ProductService productService;
+	
+	@Mock
+	private ScaleConfig scaleConfig;
 
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		ReflectionTestUtils.setField(service, "maxRetryCount", 3);
+		
+		Mockito.when(scaleConfig.getScale(Mockito.eq("SG"))).thenReturn(2);
+		Mockito.when(scaleConfig.getScale(Mockito.eq("HK"))).thenReturn(0);
 	}
   
 	@Test
