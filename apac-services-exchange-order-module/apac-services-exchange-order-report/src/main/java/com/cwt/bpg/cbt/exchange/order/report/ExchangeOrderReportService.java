@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.report;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -71,29 +72,31 @@ public class ExchangeOrderReportService {
 		ExchangeOrder exchangeOrder = eoExists.orElseThrow(() -> new ExchangeOrderNoContentException(
 				"Exchange order number not found: [ " + eoNumber + " ]"));
 
-		Optional<Vendor> vendorExists = Optional.ofNullable(getVendor(exchangeOrder.getCountryCode(),
+		Vendor vendor = getVendor(exchangeOrder.getCountryCode(),
 				exchangeOrder.getProductCode(),
-				exchangeOrder.getVendor().getCode()));
-
-		Vendor vendor = vendorExists.orElseThrow(() -> new ApiServiceException(
-				"Vendor not found for exchange order number: [ " + eoNumber + " ]"));
+				exchangeOrder.getVendor().getCode());
 
 		vendor.setContactPerson(exchangeOrder.getVendor().getContactPerson());
 		vendor.setSupportEmail(exchangeOrder.getVendor().getSupportEmail());
 
 		exchangeOrder.setVendor(vendor);
-
+		
 		Map<String, Object> parameters = new HashMap<>();
-
+		
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
 		final ClassPathResource resourceLogo = new ClassPathResource(IMAGE_PATH);
 
 		try {
             BufferedImage image = ImageIO.read(resourceLogo.getInputStream());
+            
 			parameters.put("cwtLogo", image);
 			parameters.put("date", getDate(exchangeOrder));
 			parameters.put("additionalInfoDate", formatDate(exchangeOrder.getAdditionalInfoDate()));
-
+			parameters.put("nettCost", formatAmount(exchangeOrder.getNettCost()));
+			parameters.put("tax2", formatAmount(exchangeOrder.getTax2()));
+			parameters.put("total", formatAmount(exchangeOrder.getTotal()));
+			parameters.put("gstAmountTax1", formatGstAmountTax1(exchangeOrder.getGstAmount(), exchangeOrder.getTax1()));
+			
 			JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
 					parameters,
 					new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
@@ -112,6 +115,21 @@ public class ExchangeOrderReportService {
 	private String formatDate(Instant instant) {
 		return instant == null ? "" : DateTimeFormatter.ofPattern(DATE_PATTERN)
 				.format(LocalDateTime.ofInstant(instant, ZoneOffset.UTC));
+	}
+	
+	private String formatAmount(BigDecimal amount) {
+
+		if (amount != null) {
+			if (amount.toString().contains(".00")) {
+				return "$#,##0.00";
+			}
+			return amount.doubleValue() % 1 == 0 ? "$#,##0" : "$#,##0.00";
+		}
+		return "";
+	}
+
+	private String formatGstAmountTax1(BigDecimal gstAmount, BigDecimal tax1) {
+		return gstAmount != null ? formatAmount(gstAmount) : formatAmount(tax1);
 	}
 
 	private ExchangeOrder getExchangeOrder(String eoNumber) {

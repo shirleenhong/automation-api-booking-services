@@ -37,7 +37,11 @@ class CommonRepository<T, D> {
 		return morphia.getDatastore().createQuery(typeClass).asList();
 	}
     
-    // Basic get based on Key Column
+    /**
+     * Basic get based on Key Column
+     * @param criteria
+     * @return
+     */
     T get(D criteria) {
     	return morphia.getDatastore().createQuery(typeClass)
     			.field(keyColumn)

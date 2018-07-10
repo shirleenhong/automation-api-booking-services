@@ -121,23 +121,6 @@ public class ProductRepositoryTest
 		assertEquals("BSP Ticket And MPD", baseProducts.get(1).getDescription());
 		assertEquals("BANK SETTLEMENT PLAN", baseProducts.get(1).getVendors().get(0).getName());
 	}
-
-	@Test
-	public void shouldGetNoProductList() {
-
-		Query query = mock(Query.class);
-		FieldEnd fieldEnd = mock(FieldEnd.class);
-		when(dataStore.createQuery(HkSgProductList.class)).thenReturn(query);
-		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equalIgnoreCase(Country.INDIA.getCode())).thenReturn(query);
-		when(query.get()).thenReturn(null);
-
-        List<BaseProduct> baseProducts = repository.getProducts(Country.INDIA.getCode());
-
-		assertNotNull(baseProducts);
-		assertEquals(0, baseProducts.size());
-
-	}
 	
 	@Test
 	public void shouldGetNullINProductList() {
@@ -179,22 +162,6 @@ public class ProductRepositoryTest
 		assertNotNull(baseProducts);
 		assertEquals(0, baseProducts.size());
 
-	}
-
-	@Test
-	public void shouldGetNoProductListWhenException() throws IOException {
-
-		Query query = mock(Query.class);
-		FieldEnd fieldEnd = mock(FieldEnd.class);
-		when(dataStore.createQuery(HkSgProductList.class)).thenReturn(query);
-		when(query.field(anyString())).thenReturn(fieldEnd);
-		when(fieldEnd.equalIgnoreCase(Country.INDIA.getCode())).thenReturn(query);
-		when(query.get()).thenThrow(IOException.class);
-
-        List<BaseProduct> baseProducts = repository.getProducts(Country.INDIA.getCode());
-
-		assertNotNull(baseProducts);
-		assertEquals(0, baseProducts.size());
 	}
 	
 	@Test

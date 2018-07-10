@@ -1,32 +1,26 @@
 package com.cwt.bpg.cbt.exception.handler;
 
-import com.cwt.bpg.cbt.exceptions.ServiceException;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import java.util.*;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.LinkedCaseInsensitiveMap;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.cwt.bpg.cbt.exceptions.ServiceException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 @ControllerAdvice
 public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler({ MethodArgumentTypeMismatchException.class })
 	public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
-			MethodArgumentTypeMismatchException ex, WebRequest request) {
+			MethodArgumentTypeMismatchException ex) {
 
 		String error = ex.getName() + " should be of type "
 				+ ex.getRequiredType().getName();
@@ -40,7 +34,7 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler({ IllegalArgumentException.class })
 	public ResponseEntity<Object> handleIllegalArgument(
-			IllegalArgumentException ex, WebRequest request) {
+			IllegalArgumentException ex) {
 
 		String error = ex.getMessage();
 
@@ -94,6 +88,7 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 		}
 		
 		ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
-		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+		
+		return new ResponseEntity<>(apiError, apiError.getStatus());
 	}
 }

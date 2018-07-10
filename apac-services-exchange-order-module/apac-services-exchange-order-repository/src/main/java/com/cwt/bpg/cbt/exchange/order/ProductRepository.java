@@ -1,12 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,9 +12,6 @@ import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 @Repository
 public class ProductRepository {
 
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepository.class);
-
 	@Autowired
 	private MorphiaComponent morphia;
 	
@@ -27,18 +19,14 @@ public class ProductRepository {
 	public List<BaseProduct> getProducts(String countryCode) {
 
 		List<BaseProduct> baseProducts = new ArrayList<>();
-		try {
-			if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
-				baseProducts.addAll(getIndiaProducts(countryCode));
-			}
-			else {
-				baseProducts.addAll(getNonIndiaProducts(countryCode));
-			}
-			sort(baseProducts);
+		
+		if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
+			baseProducts.addAll(getIndiaProducts(countryCode));
 		}
-		catch (Exception e) {
-			LOGGER.error("Unable to parse product list for {} {}", countryCode, e.getMessage());
+		else {
+			baseProducts.addAll(getNonIndiaProducts(countryCode));
 		}
+		sort(baseProducts);		
 
 		return baseProducts;
 	}

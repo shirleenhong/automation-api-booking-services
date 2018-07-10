@@ -172,7 +172,9 @@ Calculate Air Fees-IN Total GST
     Set Test Variable    ${total_gst_amount}    ${calculated_value}
     
 Calculate Air Fees-IN Total GST On TF
-    ${calculated_value}    Evaluate    (${transaction_fee_amount}*(${in_air_product_gst_percentage}/100))+(${transaction_fee_amount}*(${in_air_product_ot1_percentage}/100))+(${transaction_fee_amount}*(${in_air_product_ot2_percentage}/100))
+    ${calculated_value}    Evaluate    ${transaction_fee_amount}*(${in_air_product_gst_percentage}*0.01)
+    ${calculated_value}    Evaluate    ${calculated_value}+(${transaction_fee_amount}*(${in_air_product_ot1_percentage}*0.01))
+    ${calculated_value}    Evaluate    ${calculated_value}+(${transaction_fee_amount}*(${in_air_product_ot2_percentage}*0.01))
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}   

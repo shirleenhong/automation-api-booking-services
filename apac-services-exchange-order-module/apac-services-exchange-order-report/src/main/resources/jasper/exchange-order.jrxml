@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exchange-order" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11876608-3e71-4654-8bad-9498a837d1ff">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="391"/>
+	<property name="ireport.y" value="339"/>
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<subDataset name="dataset1" uuid="445d1af9-e2c1-4cfc-9fac-574f362a3a97">
 		<field name="_THIS" class="java.lang.String"/>
@@ -15,6 +15,10 @@
 	</parameter>
 	<parameter name="date" class="java.lang.String"/>
 	<parameter name="additionalInfoDate" class="java.lang.String"/>
+	<parameter name="nettCost" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="tax2" class="java.lang.String"/>
+	<parameter name="total" class="java.lang.String"/>
+	<parameter name="gstAmountTax1" class="java.lang.String"/>
 	<field name="header" class="com.cwt.bpg.cbt.exchange.order.model.Header"/>
 	<field name="vendor" class="com.cwt.bpg.cbt.exchange.order.model.Vendor"/>
 	<field name="eoNumber" class="java.lang.String"/>
@@ -22,8 +26,6 @@
 	<field name="agentName" class="java.lang.String"/>
 	<field name="agentId" class="java.lang.String"/>
 	<field name="recordLocator" class="java.lang.String"/>
-	<field name="createDateTime" class="java.time.Instant"/>
-	<field name="updateDateTime" class="java.time.Instant"/>
 	<field name="gstAmount" class="java.math.BigDecimal"/>
 	<field name="nettCost" class="java.math.BigDecimal"/>
 	<field name="tax1" class="java.math.BigDecimal"/>
@@ -31,7 +33,6 @@
 	<field name="total" class="java.math.BigDecimal"/>
 	<field name="description" class="java.lang.String"/>
 	<field name="btaDescription" class="java.lang.String"/>
-	<field name="additionalInfoDate" class="java.time.Instant"/>
 	<field name="eoRemarks" class="java.util.List"/>
 	<variable name="tax1Label" class="java.lang.String">
 		<variableExpression><![CDATA[$F{gstAmount} != null ? "GST" : "Tax"]]></variableExpression>
@@ -221,25 +222,27 @@
 			</textField>
 			<textField>
 				<reportElement x="160" y="340" width="200" height="15" uuid="9d80071b-0318-46cf-a234-ef0cb110af47"/>
+				<textElement textAlignment="Left"/>
 				<textFieldExpression><![CDATA[$F{nettCost}]]></textFieldExpression>
-				<patternExpression><![CDATA[$F{nettCost}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
+				<patternExpression><![CDATA[$P{nettCost}]]></patternExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement x="160" y="355" width="200" height="15" uuid="10d0c9d2-0e59-4831-b3c7-a563d04aa657"/>
+				<textElement textAlignment="Left"/>
 				<textFieldExpression><![CDATA[$F{gstAmount} != null ? $F{gstAmount} : $F{tax1}]]></textFieldExpression>
-				<patternExpression><![CDATA[$F{gstAmount}!=null ? ($F{gstAmount}.doubleValue()%1==0?"$#,##0" : "$#,##0.00")
-:
-$F{tax1}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
+				<patternExpression><![CDATA[$P{gstAmountTax1}]]></patternExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="370" width="200" height="15" uuid="3f064f4c-5dd3-4644-83b1-a311841e8242"/>
+				<textElement textAlignment="Left"/>
 				<textFieldExpression><![CDATA[$F{tax2}]]></textFieldExpression>
-				<patternExpression><![CDATA[$F{tax2}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
+				<patternExpression><![CDATA[$P{tax2}]]></patternExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="385" width="200" height="15" uuid="69a6785f-0752-44c9-9030-a9dbca4971dd"/>
+				<textElement textAlignment="Left"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
-				<patternExpression><![CDATA[$F{total}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
+				<patternExpression><![CDATA[$P{total}]]></patternExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="400" width="200" height="15" uuid="ae632efd-d66c-4e7e-a8b8-3d5ea72ff7f7"/>
@@ -290,7 +293,7 @@ $F{tax1}.doubleValue()%1==0?"$#,##0" : "$#,##0.00"]]></patternExpression>
 		<band height="50">
 			<staticText>
 				<reportElement x="0" y="0" width="286" height="15" uuid="308c953e-7211-4d3b-ad9e-5a49ba1cb19c"/>
-				<text><![CDATA[Please prepare document for our collection today]]></text>
+				<text><![CDATA[Please prepare document for our collection today.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="15" width="100" height="15" uuid="38a40067-856b-4753-bf46-cc6fe17ee1e2"/>

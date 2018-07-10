@@ -3,31 +3,22 @@ package com.cwt.bpg.cbt.exchange.order;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.ConcurrentModificationException;
-import java.util.Date;
-import java.util.List;
+import static org.mockito.Mockito.*;
+
+import java.util.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
+import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 public class ExchangeOrderServiceTest {
 
@@ -40,16 +31,33 @@ public class ExchangeOrderServiceTest {
 	@InjectMocks
 	private ExchangeOrderService service;
 
+	@Mock
+	private ProductService productService;
+	
+	@Mock
+	private ScaleConfig scaleConfig;
+
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		ReflectionTestUtils.setField(service, "maxRetryCount", 3);
+		
+		Mockito.when(scaleConfig.getScale(Mockito.eq("SG"))).thenReturn(2);
+		Mockito.when(scaleConfig.getScale(Mockito.eq("HK"))).thenReturn(0);
 	}
   
 	@Test
 	public void shouldCallSaveOrUpdateNew() throws ExchangeOrderNoContentException {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setCountryCode("HK");
+
+		BaseProduct baseProduct = new BaseProduct();
+		Vendor vendor = new Vendor();
+		vendor.setCode("022000");
+		eo.setVendor(vendor);
+		baseProduct.setVendors(Arrays.asList(vendor));
+		when(productService.getProductByCode(anyString(),anyString())).thenReturn(baseProduct);
+
 		service.saveExchangeOrder(eo);
 		verify(repo, times(1)).saveOrUpdate(eo);
 	}
@@ -59,6 +67,14 @@ public class ExchangeOrderServiceTest {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setEoNumber("eoNumber");
 		eo.setCountryCode("HK");
+
+		BaseProduct baseProduct = new BaseProduct();
+		Vendor vendor = new Vendor();
+		vendor.setCode("022000");
+		eo.setVendor(vendor);
+		baseProduct.setVendors(Arrays.asList(vendor));
+		when(productService.getProductByCode(anyString(),anyString())).thenReturn(baseProduct);
+
 		when(repo.getExchangeOrder(eo.getEoNumber())).thenReturn(eo);
 		when(repo.saveOrUpdate(eo)).thenReturn(eo.getEoNumber());
 		
@@ -83,6 +99,14 @@ public class ExchangeOrderServiceTest {
 		
 		ExchangeOrder order = new ExchangeOrder();
 		order.setCountryCode("HK");
+
+		BaseProduct baseProduct = new BaseProduct();
+		Vendor vendor = new Vendor();
+		vendor.setCode("022000");
+		order.setVendor(vendor);
+		baseProduct.setVendors(Arrays.asList(vendor));
+		when(productService.getProductByCode(anyString(),anyString())).thenReturn(baseProduct);
+
 		service.saveExchangeOrder(order);
 		verify(sn, times(1)).getValue();
 	}

@@ -8,6 +8,9 @@ import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Optional;
 
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 import org.mongodb.morphia.Key;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +21,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
+import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
 
 @Service
 @EnableScheduling
@@ -40,10 +45,19 @@ public class ExchangeOrderService {
 
 	@Autowired
 	private SequenceNumberRepository sequenceNumberRepo;
+	
+	@Autowired
+	private ScaleConfig scaleConfig;
 
+	@Autowired
+	private ProductService productService;
+	
+	//TODO: Add CachePut
 	ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
 
+		setScale(exchangeOrder);
+		
 		final String eoNumber = exchangeOrder.getEoNumber();
 		if (eoNumber == null) {
 			exchangeOrder.setCreateDateTime(Instant.now());
@@ -62,10 +76,43 @@ public class ExchangeOrderService {
 					existingExchangeOrder.getEoNumber(),
 					existingExchangeOrder.getCountryCode());
 		}
+
+		Optional<BaseProduct> isProductExist = Optional.ofNullable(
+		        productService.getProductByCode(exchangeOrder.getCountryCode(),exchangeOrder.getProductCode()));
+
+		BaseProduct product = isProductExist
+				.orElseThrow(() -> new IllegalArgumentException(
+						"Product [ " + exchangeOrder.getProductCode() + " ] not found."));
+
+		Optional<Vendor> isVendorExist = product.getVendors().stream()
+				.filter(i -> i.getCode().equals(exchangeOrder.getVendor().getCode()))
+				.findFirst();
+
+		if(!isVendorExist.isPresent()) {
+				throw new IllegalArgumentException(
+						"Vendor [ " + exchangeOrder.getVendor().getCode()
+                                + " ] not found in Product [ " + exchangeOrder.getProductCode() + " ] ");
+		}
+
 		ExchangeOrder result = new ExchangeOrder();
 		result.setEoNumber(exchangeOrderRepo.saveOrUpdate(exchangeOrder));
 
 		return result;
+	}
+
+	private void setScale(ExchangeOrder exchangeOrder) {
+		
+		int scale = scaleConfig.getScale(exchangeOrder.getCountryCode());
+		
+		exchangeOrder.setCommission(scale(exchangeOrder.getCommission(), scale));
+		exchangeOrder.setMerchantFee(scale(exchangeOrder.getMerchantFee(), scale));
+		exchangeOrder.setNettCost(scale(exchangeOrder.getNettCost(), scale));
+		exchangeOrder.setGstAmount(scale(exchangeOrder.getGstAmount(), scale));
+		exchangeOrder.setTax1(scale(exchangeOrder.getTax1(), scale));
+		exchangeOrder.setTax2(scale(exchangeOrder.getTax2(), scale));
+		exchangeOrder.setTotal(scale(exchangeOrder.getTotal(), scale));
+		exchangeOrder.setSellingPrice(scale(exchangeOrder.getSellingPrice(), scale));
+		exchangeOrder.setTotalSellingPrice(scale(exchangeOrder.getTotalSellingPrice(), scale));
 	}
 
 	private String getEoNumber(String countryCode) {
