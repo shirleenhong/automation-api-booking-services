@@ -88,6 +88,7 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 		}
 		
 		ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
+		
 		return new ResponseEntity<>(apiError, apiError.getStatus());
 	}
 }
