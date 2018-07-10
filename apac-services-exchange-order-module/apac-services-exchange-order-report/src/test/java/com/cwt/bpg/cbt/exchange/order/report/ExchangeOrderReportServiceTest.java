@@ -65,19 +65,6 @@ public class ExchangeOrderReportServiceTest {
 		assertNotNull(jasperPrint);
 	}
 
-	@Test (expected = ApiServiceException.class)
-	public void shouldGeneratePdfNullVendor() throws Exception {
-		
-		ExchangeOrder exchangeOrder = createExchangeOrder(countryCode, productCode,
-				vendorCode);
-	
-		when(eoService.getExchangeOrder(eoNumber)).thenReturn(exchangeOrder);
-		when(productService.getVendor(countryCode, productCode, vendorCode)).thenReturn(null);
-		
-		byte[] jasperPrint = eoReportService.generatePdf(eoNumber);
-		assertNotNull(jasperPrint);
-	}
-
 	private ExchangeOrder createExchangeOrder(String countryCode, String productCode,
 			String vendorCode) {
 		
