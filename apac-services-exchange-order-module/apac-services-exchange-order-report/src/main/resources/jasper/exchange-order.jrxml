@@ -223,26 +223,22 @@
 			<textField>
 				<reportElement x="160" y="340" width="200" height="15" uuid="9d80071b-0318-46cf-a234-ef0cb110af47"/>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$F{nettCost}]]></textFieldExpression>
-				<patternExpression><![CDATA[$P{nettCost}]]></patternExpression>
+				<textFieldExpression><![CDATA[$P{nettCost}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement x="160" y="355" width="200" height="15" uuid="10d0c9d2-0e59-4831-b3c7-a563d04aa657"/>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$F{gstAmount} != null ? $F{gstAmount} : $F{tax1}]]></textFieldExpression>
-				<patternExpression><![CDATA[$P{gstAmountTax1}]]></patternExpression>
+				<textFieldExpression><![CDATA[$P{gstAmountTax1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="370" width="200" height="15" uuid="3f064f4c-5dd3-4644-83b1-a311841e8242"/>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$F{tax2}]]></textFieldExpression>
-				<patternExpression><![CDATA[$P{tax2}]]></patternExpression>
+				<textFieldExpression><![CDATA[$P{tax2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="385" width="200" height="15" uuid="69a6785f-0752-44c9-9030-a9dbca4971dd"/>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
-				<patternExpression><![CDATA[$P{total}]]></patternExpression>
+				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="400" width="200" height="15" uuid="ae632efd-d66c-4e7e-a8b8-3d5ea72ff7f7"/>
