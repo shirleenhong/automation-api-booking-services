@@ -1,6 +1,6 @@
 import math
 import decimal
-import PyPDF2
+"""import PyPDF2"""
 
 class ApacSvcLibrary:
     ROBOT_LIBRARY_SCOPE = 'TEST CASE'
