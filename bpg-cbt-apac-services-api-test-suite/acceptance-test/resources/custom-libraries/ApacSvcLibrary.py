@@ -37,3 +37,6 @@ class ApacSvcLibrary:
         pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
         pageObj = pdfReader.getPage(0)
         return pageObj.extractText()
+    
+    def format_number(self, num):
+        return "{:,}".format(num)

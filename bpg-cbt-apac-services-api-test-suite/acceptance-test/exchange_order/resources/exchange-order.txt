@@ -40,7 +40,6 @@ Append Exchange Order Request Fields
     Run Keyword If    "${country_value}"!="null"    Append To List    ${exchange_order_request_list}    "countryCode":"${country_value}"
     Run Keyword If    "${description_value}"!="null"    Append To List    ${exchange_order_request_list}    "description":"${description_value}"
     Run Keyword If    "${eo_action_value}"!="null"    Append To List    ${exchange_order_request_list}    "eoAction":"${eo_action_value}"
-    Run Keyword If    "${fax_number_value}"!="null"    Append To List    ${exchange_order_request_list}    "faxNumber":"${fax_number_value}"
     Run Keyword If    "${fop_type_value}"!="null"    Append To List    ${exchange_order_request_list}    "fopType":"${fop_type_value}"
     Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${exchange_order_request_list}    "gstAbsorb":${gst_absorb_value}
     Run Keyword If    "${gst_amount_value}"!="null"    Append To List    ${exchange_order_request_list}    "gstAmount":${gst_amount_value}
@@ -83,9 +82,6 @@ Create Test Variables For Exchange Order
     \    Set Test Variable    ${${data_item[0]}_value}    ${data_item[1]}
     Run Keyword If    "${eo_remarks_data}"!="${EMPTY}"    Create Test Variables For Exchange Order Remarks    ${eo_remarks_data}    ELSE    Run Keywords    Set Test Variable    ${eo_remarks_list}    ${EMPTY}    AND    Set Test Variable    ${eo_remarks_data_length}    0
     Run Keyword If    "${itin_remarks_data}"!="${EMPTY}"    Create Test Variables For Itinerary Remarks    ${itin_remarks_data}    ELSE    Run Keywords    Set Test Variable    ${itin_remarks_list}    ${EMPTY}    AND    Set Test Variable    ${itin_remarks_data_length}    0
-    Run Keyword If    "${fax_number_value}"!="null" and "${vendor_fax_value}"!="null"    Set Test Variable    ${fax_number_count}    2
-    ...    ELSE IF    (("${fax_number_value}"=="null" and "${vendor_fax_value}"!="null") or ("${fax_number_value}"!="null" and "${vendor_fax_value}"=="null"))    Set Test Variable    ${fax_number_count}    1
-    ...    ELSE    Set Test Variable    ${fax_number_count}    0         
     ${current_date_time}    Get Current Date    time_zone=utc
     ${current_year}    Get Substring    ${current_date_time}     2    4
     ${current_month}    Get Substring    ${current_date_time}    5    7
@@ -94,6 +90,15 @@ Create Test Variables For Exchange Order
     Set Test Variable    ${current_year}
     Set Test Variable    ${current_month}
     Set Test Variable    ${market}
+    ${year}    Get Substring    ${current_date_time}     0    4
+    ${month}    Set Variable If    "${current_month}"=="01"    Jan    "${current_month}"=="02"    Feb    "${current_month}"=="03"    Mar    "${current_month}"=="04"    Apr    "${current_month}"=="05"    May    "${current_month}"=="06"    Jun    "${current_month}"=="07"    Jul    "${current_month}"=="08"    Aug    "${current_month}"=="09"    Sep    "${current_month}"=="10"    Oct    "${current_month}"=="11"    Nov    Dec
+    ${day}    Get Substring    ${current_date_time}     8    10
+    Set Test Variable    ${display_date}    ${day}-${month}-${year}
+    ${year}    Get Substring    ${date_value}     0    4
+    ${month}    Get Substring    ${date_value}    5    7
+    ${day}    Get Substring    ${date_value}     8    10    
+    ${month}    Set Variable If    "${month}"=="01"    Jan    "${month}"=="02"    Feb    "${month}"=="03"    Mar    "${month}"=="04"    Apr    "${month}"=="05"    May    "${month}"=="06"    Jun    "${month}"=="07"    Jul    "${month}"=="08"    Aug    "${month}"=="09"    Sep    "${month}"=="10"    Oct    "${month}"=="11"    Nov    Dec
+    Set Test Variable    ${display_additional_info_date}     ${day}-${month}-${year}                
 
 Create Exchange Order Request
     ${eo_rmk_list_length}    Get Length    ${exchange_order_eo_rmk_request_list}
@@ -148,7 +153,7 @@ Create Test Variables For Itinerary Remarks
 
 Decode String Response
     Create Binary File    ${CURDIR}${/}stest.pdf   ${response.content}
-    ${pdf_response}    Get Pdf Text    ${CURDIR}${/}stest.pdf
+    ${pdf_response}    Get Pdf Text    ${CURDIR}${/}test.pdf
     Set Test Variable    ${pdf_response}
     Log    ${pdf_response}
     
@@ -200,24 +205,24 @@ Send Exchange Order Post Request
 Verify Exchange Order Information For PDF Is Retrieved Correctly
     Decode String Response
     Verify Static Labels Is Retrieved Correctly
-    Verify String Contains Substring    ${pdf_response}    ${date_value}
+    Verify String Contains Substring    ${pdf_response}    ${display_date}
+    Verify String Contains Substring    ${pdf_response}    ${display_additional_info_date}
     Verify String Contains Substring    ${pdf_response}    ${agent_id_value}
     Verify String Contains Substring    ${pdf_response}    ${agent_name_value}
     Run Keyword If    "${bta_description_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${bta_description_value}    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${bta_description_value}
-    Verify String Contains Substring    ${pdf_response}    ${expected_date_time}
     Verify String Contains Substring    ${pdf_response}    ${description_value}
     Verify String Contains Substring    ${pdf_response}    ${exchange_order_number}
-    Run Keyword If    "${fax_number_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${fax_number_value}    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${fax_number_value}
-    Run Keyword If    "${gst_amount_value}"!="null" or "${gst_amount}"!="0"    Verify String Contains Substring    ${pdf_response}    ${gst_amount_value}
+    Run Keyword If    "${gst_amount_value}"!="null" or "${gst_amount_value}"!="0"    Verify String Contains Substring    ${pdf_response}    ${gst_amount_value}
     Verify String Contains Substring    ${pdf_response}    ${header_address_value}
     Run Keyword If    "${header_fax_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${header_fax_value}    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${header_fax_value}
     Run Keyword If    "${header_telephone_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${header_telephone_value}    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${header_telephone_value}
-    Verify String Contains Substring    ${pdf_response}    ${merchant_fee_absorb_value}
     Run Keyword If    "${nett_cost_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${nett_cost_value}    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${nett_cost_value}
     Verify String Contains Substring    ${pdf_response}    ${passenger_name_value}
     Verify String Contains Substring    ${pdf_response}    ${record_locator_value}
-    Run Keyword If    ("${gst_amount_value}"=="null" or "${gst_amount}"!="0") and "${tax_1_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${tax_1_value}    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${tax_1_value}
-    Run Keyword If    ("${gst_amount_value}"=="null" or "${gst_amount}"!="0") and "${tax_1_value}"!="null" and "${tax_2_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${tax_2_value}	ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${tax_2_value}
+    Run Keyword If    ("${gst_amount_value}"=="null" or "${gst_amount_value}"=="0") and "${tax_1_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${tax_1_value}    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${tax_1_value}
+    Run Keyword If    ("${tax_1_value}"!="null" or "${tax_1_value}"!="0") and "${tax_2_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${tax_2_value}	ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${tax_2_value}  
+    ${total_value}    Run Keyword If    "${country_value.upper()}"=="SG"    Convert To Number    ${total_value}    ELSE    Convert To Integer    ${total_value}    
+    ${total_value}    Format Number    ${total_value}
     Verify String Contains Substring    ${pdf_response}    ${total_value}
     Run Keyword If    "${vendor_email_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${vendor_email_value}    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${vendor_email_value}
     Verify String Contains Substring    ${pdf_response}    ${vendor_fax_value}
@@ -263,7 +268,6 @@ Verify Exchange Order Is Saved Correctly
     Verify Json Value Is Correct    $.description    ${description_value}
     Verify Json Value Is Correct    $.eoAction    ${eo_action_value}
     Verify Json Value Is Correct    $.eoNumber    ${exchange_order_number}
-    Verify Json Value Is Correct    $.faxNumber    ${fax_number_value}
     Verify Json Value Is Correct    $.fopType    ${fop_type_value}
     Run Keyword If    "${gst_absorb_value}"!="null"    Verify Json Value Is Correct    $.gstAbsorb    ${gst_absorb_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "gstAbsorb"
     Verify Json Value Is Correct    $.gstAmount    ${gst_amount_value}
@@ -313,7 +317,6 @@ Verify Exchange Order Is Not Returned
     Verify String Does Not Contain Substring    ${response.text}    "eoAction"
     Verify String Does Not Contain Substring    ${response.text}    "eoNumber"
     Verify String Does Not Contain Substring    ${response.text}    "eoRemarks"
-    Verify String Does Not Contain Substring    ${response.text}    "faxNumber"
     Verify String Does Not Contain Substring    ${response.text}    "fopType"
     Verify String Does Not Contain Substring    ${response.text}    "gstAmount"
     Verify String Does Not Contain Substring    ${response.text}    "gstAbsorb"
@@ -352,8 +355,8 @@ Verify Static Labels Is Retrieved Correctly
     Verify String Contains Substring    ${pdf_response}    Date
     Verify String Contains Substring    ${pdf_response}    SERVICE INFO
     Verify String Contains Substring    ${pdf_response}    Nett Cost
-    Run Keyword If    "${gst_amount}"!="null" or "${gst_amount}"!="0"    Verify String Contains Substring    ${pdf_response}    GST
-    Run Keyword If    "${gst_amount}"=="null" or "${gst_amount}"!="0"    Verify String Contains Substring X Times    ${pdf_response}    Tax    2    ELSE IF    "${gst_amount}"!="null"    Verify String Contains Substring X Times    ${pdf_response}    Tax    1
+    Run Keyword If    "${gst_amount_value}"!="null" or "${gst_amount_value}"!="0"    Verify String Contains Substring    ${pdf_response}    GST
+    Run Keyword If    "${gst_amount_value}"=="null" or "${gst_amount_value}"=="0"    Verify String Contains Substring X Times    ${pdf_response}    Tax    2    ELSE IF    "${gst_amount_value}"!="null" or "${gst_amount_value}"!="0"    Verify String Contains Substring X Times    ${pdf_response}    Tax    1
     Verify String Contains Substring    ${pdf_response}    Total
     Verify String Contains Substring    ${pdf_response}    Description
     Verify String Contains Substring    ${pdf_response}    Remarks
