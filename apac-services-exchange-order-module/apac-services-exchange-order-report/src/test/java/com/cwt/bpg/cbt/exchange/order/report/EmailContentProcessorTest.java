@@ -1,8 +1,28 @@
 package com.cwt.bpg.cbt.exchange.order.report;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.*;
+import static org.mockito.Matchers.anyString;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.times;
+
+import com.cwt.bpg.cbt.exchange.order.model.*;
+
+import freemarker.core.ParseException;
+import freemarker.template.*;
+
 public class EmailContentProcessorTest {
 
-	/*@Mock
+	@Mock
 	private Configuration config;
 	
 	@Mock
@@ -45,6 +65,6 @@ public class EmailContentProcessorTest {
 		
 		String result = processor.getEmailSubject(eo);
 		assertEquals("CWT Exchange Order 1807200009: ABC123 - (Passenger Name)", result);
-	}*/
+	}
 
 }
