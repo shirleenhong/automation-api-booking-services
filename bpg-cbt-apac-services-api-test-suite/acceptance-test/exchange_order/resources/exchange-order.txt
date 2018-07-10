@@ -82,7 +82,6 @@ Create Test Variables For Exchange Order
     \    Set Test Variable    ${${data_item[0]}_value}    ${data_item[1]}
     Run Keyword If    "${eo_remarks_data}"!="${EMPTY}"    Create Test Variables For Exchange Order Remarks    ${eo_remarks_data}    ELSE    Run Keywords    Set Test Variable    ${eo_remarks_list}    ${EMPTY}    AND    Set Test Variable    ${eo_remarks_data_length}    0
     Run Keyword If    "${itin_remarks_data}"!="${EMPTY}"    Create Test Variables For Itinerary Remarks    ${itin_remarks_data}    ELSE    Run Keywords    Set Test Variable    ${itin_remarks_list}    ${EMPTY}    AND    Set Test Variable    ${itin_remarks_data_length}    0
-    
     ${current_date_time}    Get Current Date    time_zone=utc
     ${current_year}    Get Substring    ${current_date_time}     2    4
     ${current_month}    Get Substring    ${current_date_time}    5    7

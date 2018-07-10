@@ -83,7 +83,7 @@ Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Multiple Client
     :FOR    ${data_item}    IN    @{client_account_list}
     \    ${is_client_name_matched}    Run Keyword And Return Status    Verify Json Value Is Correct    $.clientName    ${client_name_${data_item}}
     \    ${is_client_type_matched}    Run Keyword And Return Status    Verify Json Value Is Correct    $.clientType    ${client_type_${data_item}}
-    \    Run Keyword If    "${is_client_name_matched}"=="True" and "${is_client_type_matched}"=="True"    Run Keywords    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account    ${data_item}    AND    Exit For Loop    
+    \    Run Keyword If    "${is_client_name_matched}"=="True" and "${is_client_type_matched}"=="True"    Run Keywords    Set Test Variable    ${data_item}    ${client_account_number_${data_item}}    AND    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account    ${data_item}    AND    Exit For Loop    
         
 Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account
     [Arguments]    ${data}=${data}
@@ -102,14 +102,6 @@ Verify Merchant Fee Percentage Is Correctly Retrieved
     : FOR    ${data}    IN    @{cn_list}
     \    ${list_length}    Get Length    ${${data}_list}
     \    Run Keyword If    ${list_length}>1    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Multiple Client Accounts    ${${data}_list}    ${data}    ELSE    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account    ${data}
-    #\    Set Test Variable    ${response}    ${response_${index}}
-    #\    ${client_name}    Get Json Value As String    ${response.content}    $.clientName
-    #\    Verify Json Value Is Correct    $.countryCode    ${country}
-    #\    Verify Json Value Is Correct    $.clientName    ${client_name_${index}}
-    #\    Verify Json Value Is Correct    $.clientType    ${client_type_${index}}
-    #\    Verify Json Value Is Correct    $.clientAccountNumber    ${client_account_number_${index}}
-    #\    Verify Json Value Is Correct    $.merchantFeePercent    ${merchant_fee_percent_${index}}    float
-    #\    Verify Json Value Is Correct    $.includeTransactionFee    ${merchant_fee_flag_${index}}    boolean
 
 Verify Merchant Fee Percentages Are Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "countryCode"
