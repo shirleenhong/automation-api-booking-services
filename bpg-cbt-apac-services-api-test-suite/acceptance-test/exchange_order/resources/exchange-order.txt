@@ -82,6 +82,7 @@ Create Test Variables For Exchange Order
     \    Set Test Variable    ${${data_item[0]}_value}    ${data_item[1]}
     Run Keyword If    "${eo_remarks_data}"!="${EMPTY}"    Create Test Variables For Exchange Order Remarks    ${eo_remarks_data}    ELSE    Run Keywords    Set Test Variable    ${eo_remarks_list}    ${EMPTY}    AND    Set Test Variable    ${eo_remarks_data_length}    0
     Run Keyword If    "${itin_remarks_data}"!="${EMPTY}"    Create Test Variables For Itinerary Remarks    ${itin_remarks_data}    ELSE    Run Keywords    Set Test Variable    ${itin_remarks_list}    ${EMPTY}    AND    Set Test Variable    ${itin_remarks_data_length}    0
+    
     ${current_date_time}    Get Current Date    time_zone=utc
     ${current_year}    Get Substring    ${current_date_time}     2    4
     ${current_month}    Get Substring    ${current_date_time}    5    7
@@ -253,7 +254,7 @@ Verify Exchange Order Is Saved Correctly
     Verify Json Value Is Correct    $.additionalInfoDate    ${date_value}
     Verify Json Value Is Correct    $.agentId    ${agent_id_value}
     Verify Json Value Is Correct    $.agentName    ${agent_name_value}
-    Run Keyword If    "${bta_description_value}"!="null"    Verify Json Value Is Correct    $.btaDescription    ${bta_description_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "btaDescription"
+    Run Keyword If    "${bta_description_value}"!="null"    Verify Json Value Is Correct    $.btaDescription    ${bta_description_value}    ELSE    Verify Json Element Does Not Exist    $.btaDescription
     Verify Json Value Is Correct    $.commission    ${commission_value}
     Verify Json Value Is Correct    $.countryCode    ${country_value} 
     ${expected_date_time}    Get Substring    ${current_date_time}    0    18
@@ -269,34 +270,34 @@ Verify Exchange Order Is Saved Correctly
     Verify Json Value Is Correct    $.eoAction    ${eo_action_value}
     Verify Json Value Is Correct    $.eoNumber    ${exchange_order_number}
     Verify Json Value Is Correct    $.fopType    ${fop_type_value}
-    Run Keyword If    "${gst_absorb_value}"!="null"    Verify Json Value Is Correct    $.gstAbsorb    ${gst_absorb_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "gstAbsorb"
+    Run Keyword If    "${gst_absorb_value}"!="null"    Verify Json Value Is Correct    $.gstAbsorb    ${gst_absorb_value}    ELSE    Verify Json Element Does Not Exist    $.gstAbsorb
     Verify Json Value Is Correct    $.gstAmount    ${gst_amount_value}
     Verify Json Value Is Correct    $.header.address    ${header_address_value}
-    Run Keyword If    "${header_fax_value}"!="null"    Verify Json Value Is Correct    $.header.faxNumber    ${header_fax_value}    ELSE    Verify String Contains Substring X Times    ${response.text}    "faxNumber"    ${fax_number_count} 
-    Run Keyword If    "${header_telephone_value}"!="null"    Verify Json Value Is Correct    $.header.phoneNumber    ${header_telephone_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "phoneNumber"
+    Run Keyword If    "${header_fax_value}"!="null"    Verify Json Value Is Correct    $.header.faxNumber    ${header_fax_value}    ELSE    Verify Json Element Does Not Exist    $.header.faxNumber
+    Run Keyword If    "${header_telephone_value}"!="null"    Verify Json Value Is Correct    $.header.phoneNumber    ${header_telephone_value}    ELSE    Verify Json Element Does Not Exist    $.phoneNumber
     Verify Json Value Is Correct    $.merchantFee    ${merchant_fee_value}
-    Run Keyword If    "${merchant_fee_absorb_value}"!="null"    Verify Json Value Is Correct    $.merchantFeeAbsorb    ${merchant_fee_absorb_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "merchantFeeAbsorb"
+    Run Keyword If    "${merchant_fee_absorb_value}"!="null"    Verify Json Value Is Correct    $.merchantFeeAbsorb    ${merchant_fee_absorb_value}    ELSE    Verify Json Element Does Not Exist    $.merchantFeeAbsorb
     Verify Json Value Is Correct    $.nettCost    ${nett_cost_value}
     Verify Json Value Is Correct    $.passengerName    ${passenger_name_value}
     Verify Json Value Is Correct    $.pcc    ${pcc_value}  
     Verify Json Value Is Correct    $.productCode    ${product_code_value}
-    Run Keyword If    "${raise_cheque_value}"!="null"    Verify Json Value Is Correct    $.raiseCheque    ${raise_cheque_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "raiseCheque"
+    Run Keyword If    "${raise_cheque_value}"!="null"    Verify Json Value Is Correct    $.raiseCheque    ${raise_cheque_value}    ELSE    Verify Json Element Does Not Exist    $.raiseCheque
     Verify Json Value Is Correct    $.recordLocator    ${record_locator_value}
     Verify Json Value Is Correct    $.sellingPrice    ${selling_price_value}
     Verify Json Value Is Correct    $.status    ${status_value}
-    Run Keyword If    "${tax_1_value}"!="null"    Verify Json Value Is Correct    $.tax1    ${tax_1_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "tax1"
-    Run Keyword If    "${tax_2_value}"!="null"    Verify Json Value Is Correct    $.tax2    ${tax_2_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "tax2"
+    Run Keyword If    "${tax_1_value}"!="null"    Verify Json Value Is Correct    $.tax1    ${tax_1_value}    ELSE    Verify Json Element Does Not Exist    $.tax1
+    Run Keyword If    "${tax_2_value}"!="null"    Verify Json Value Is Correct    $.tax2    ${tax_2_value}    ELSE    Verify Json Element Does Not Exist    $.tax2
     Verify Json Value Is Correct    $.total    ${total_value}
     Verify Json Value Is Correct    $.totalSellingPrice    ${total_selling_price_value}
-    Run Keyword If    "${vendor_email_value}"!="null"    Verify Json Value Is Correct    $.vendor.email    ${vendor_email_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "email"
-    Run Keyword If    "${vendor_fax_value}"!="null"    Verify Json Value Is Correct    $.vendor.faxNumber    ${vendor_fax_value}    ELSE    Verify String Contains Substring X Times    ${response.text}    "faxNumber"    ${fax_number_count} 
-    Run Keyword If    "${vendor_contact_value}"!="null"    Verify Json Value Is Correct    $.vendor.contactPerson    ${vendor_contact_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "contactPerson"
+    Run Keyword If    "${vendor_email_value}"!="null"    Verify Json Value Is Correct    $.vendor.email    ${vendor_email_value}    ELSE    Verify Json Element Does Not Exist    $.vendor.email
+    Run Keyword If    "${vendor_fax_value}"!="null"    Verify Json Value Is Correct    $.vendor.faxNumber    ${vendor_fax_value}    ELSE    Verify Json Element Does Not Exist    $.vendor.faxNumber
+    Run Keyword If    "${vendor_contact_value}"!="null"    Verify Json Value Is Correct    $.vendor.contactPerson    ${vendor_contact_value}    ELSE    Verify Json Element Does Not Exist    $.vendor.contactPerson
     Verify Json Value Is Correct    $.vendor.code    ${vendor_code_value}
-    Run Keyword If    "${vendor_address_1_value}"!="null"    Verify Json Value Is Correct    $.vendor.address1    ${vendor_address_1_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "address1"
-    Run Keyword If    "${vendor_address_2_value}"!="null"    Verify Json Value Is Correct    $.vendor.address2    ${vendor_address_2_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "address2"
-    Run Keyword If    "${vendor_city_value}"!="null"    Verify Json Value Is Correct    $.vendor.city    ${vendor_city_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "city"
-    Run Keyword If    "${vendor_country_value}"!="null"    Verify Json Value Is Correct    $.vendor.country    ${vendor_country_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "country"
-    Run Keyword If    "${vendor_name_value}"!="null"    Verify Json Value Is Correct    $.vendor.name    ${vendor_name_value}    ELSE    Verify String Does Not Contain Substring    ${response.text}    "name"
+    Run Keyword If    "${vendor_address_1_value}"!="null"    Verify Json Value Is Correct    $.vendor.address1    ${vendor_address_1_value}    ELSE    Verify Json Element Does Not Exist    $.vendor.address
+    Run Keyword If    "${vendor_address_2_value}"!="null"    Verify Json Value Is Correct    $.vendor.address2    ${vendor_address_2_value}    ELSE    Verify Json Element Does Not Exist    $.vendor.address2
+    Run Keyword If    "${vendor_city_value}"!="null"    Verify Json Value Is Correct    $.vendor.city    ${vendor_city_value}    ELSE    Verify Json Element Does Not Exist    $.vendor.city
+    Run Keyword If    "${vendor_country_value}"!="null"    Verify Json Value Is Correct    $.vendor.country    ${vendor_country_value}    ELSE    Verify Json Element Does Not Exist    $.vendor.country
+    Run Keyword If    "${vendor_name_value}"!="null"    Verify Json Value Is Correct    $.vendor.name    ${vendor_name_value}    ELSE    Verify Json Element Does Not Exist    $.vendor.name
     : FOR    ${index}    IN RANGE    0    ${eo_remarks_data_length}
     \    Verify Json Value Is Correct    $.eoRemarks.[${index}]    ${eo_remark_text_${index}}
     : FOR    ${index}    IN RANGE    0    ${itin_remarks_data_length}
