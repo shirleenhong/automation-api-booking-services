@@ -6,3 +6,4 @@ Library           String
 Library           JSONLibrary
 Library           custom-libraries/ApacSvcLibrary.py
 Library           BuiltIn
+Library           OperatingSystem    

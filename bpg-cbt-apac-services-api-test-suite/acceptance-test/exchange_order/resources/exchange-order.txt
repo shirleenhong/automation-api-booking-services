@@ -147,7 +147,8 @@ Create Test Variables For Itinerary Remarks
     \    Set Test Variable    ${itin_remark_text_${index}}     ${itin_remarks_data[${index}]}
 
 Decode String Response
-    ${pdf_response}    Decode Bytes To String    ${response.content}    UTF-8
+    Create Binary File    ${CURDIR}${/}stest.pdf   ${response.content}
+    ${pdf_response}    Get Pdf Text    ${CURDIR}${/}stest.pdf
     Set Test Variable    ${pdf_response}
     Log    ${pdf_response}
     
