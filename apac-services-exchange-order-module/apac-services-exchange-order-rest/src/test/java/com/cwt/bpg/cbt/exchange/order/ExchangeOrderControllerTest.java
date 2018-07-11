@@ -14,6 +14,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
+import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 
@@ -29,7 +30,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.util.NestedServletException;
 
-import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -202,7 +202,7 @@ public class ExchangeOrderControllerTest {
 	public void shouldGeneratePdfCheckedException() throws Exception {
 
 		when(eoReportService.generatePdf(Mockito.anyString()))
-				.thenThrow(ExchangeOrderException.class);
+				.thenThrow(ApiServiceException.class);
 
 		mockMvc.perform(get(url + "/pdf/" + eoNumber))
 				.andExpect(status().isNoContent()).andReturn();

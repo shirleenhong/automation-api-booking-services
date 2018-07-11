@@ -39,7 +39,5 @@
 
 	<properties>
 		<sonar.coverage.exclusions>**/*PropertyConfig.java</sonar.coverage.exclusions>
-		<sonar.coverage.exclusions>**/ExchangeOrderException.java</sonar.coverage.exclusions>
-		<sonar.coverage.exclusions>**/ExchangeOrderNoContentException.java</sonar.coverage.exclusions>
 	</properties>
 </project>
