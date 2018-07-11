@@ -1,12 +1,15 @@
 package com.cwt.bpg.cbt.exchange.order.report;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
@@ -26,10 +29,13 @@ import org.springframework.util.StringUtils;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
-import com.cwt.bpg.cbt.exchange.order.products.ProductService;
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 
 @Service
@@ -43,9 +49,6 @@ public class ExchangeOrderReportService {
 
     @Autowired
 	private ExchangeOrderService exchangeOrderService;
-
-	@Autowired
-	private ProductService productService;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -72,39 +75,32 @@ public class ExchangeOrderReportService {
 		ExchangeOrder exchangeOrder = eoExists.orElseThrow(() -> new ExchangeOrderNoContentException(
 				"Exchange order number not found: [ " + eoNumber + " ]"));
 
-		Vendor vendor = getVendor(exchangeOrder.getCountryCode(),
-				exchangeOrder.getProductCode(),
-				exchangeOrder.getVendor().getCode());
-
-		vendor.setContactPerson(exchangeOrder.getVendor().getContactPerson());
-		vendor.setSupportEmail(exchangeOrder.getVendor().getSupportEmail());
-
-		exchangeOrder.setVendor(vendor);
-		
-		Map<String, Object> parameters = new HashMap<>();
-		
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
-		final ClassPathResource resourceLogo = new ClassPathResource(IMAGE_PATH);
 
 		try {
-            BufferedImage image = ImageIO.read(resourceLogo.getInputStream());
-            
-			parameters.put("cwtLogo", image);
-			parameters.put("date", getDate(exchangeOrder));
-			parameters.put("additionalInfoDate", formatDate(exchangeOrder.getAdditionalInfoDate()));
-			parameters.put("nettCost", formatAmount(exchangeOrder.getNettCost()));
-			parameters.put("tax2", formatAmount(exchangeOrder.getTax2()));
-			parameters.put("total", formatAmount(exchangeOrder.getTotal()));
-			parameters.put("gstAmountTax1", formatGstAmountTax1(exchangeOrder.getGstAmount(), exchangeOrder.getTax1()));
-			
 			JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
-					parameters,
+					prepareParameters(exchangeOrder),
 					new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
 			return JasperExportManager.exportReportToPdf(jasperPrint);
 		}
 		catch (JRException | IOException e) {
 			throw new ApiServiceException(e.getMessage());
 		}
+	}
+
+	private Map<String, Object> prepareParameters(final ExchangeOrder exchangeOrder) throws IOException {
+		final ClassPathResource resourceLogo = new ClassPathResource(IMAGE_PATH);
+		Map<String, Object> parameters = new HashMap<>();
+
+		parameters.put("cwtLogo", ImageIO.read(resourceLogo.getInputStream()));
+		parameters.put("date", getDate(exchangeOrder));
+		parameters.put("additionalInfoDate", formatDate(exchangeOrder.getAdditionalInfoDate()));
+		parameters.put("nettCost", formatAmount(exchangeOrder.getNettCost()));
+		parameters.put("tax2", formatAmount(exchangeOrder.getTax2()));
+		parameters.put("total", formatAmount(exchangeOrder.getTotal()));
+		parameters.put("gstAmountTax1", formatGstAmountTax1(exchangeOrder.getGstAmount(), exchangeOrder.getTax1()));
+
+		return parameters;
 	}
 
 	private String getDate(ExchangeOrder exchangeOrder) {
@@ -134,10 +130,6 @@ public class ExchangeOrderReportService {
 
 	private ExchangeOrder getExchangeOrder(String eoNumber) {
 		return exchangeOrderService.getExchangeOrder(eoNumber);
-	}
-
-	private Vendor getVendor(String countryCode, String productCode, String vendorCode) {
-		return productService.getVendor(countryCode, productCode, vendorCode);
 	}
 
 	public EmailResponse emailPdf(String eoNumber) throws ApiServiceException {
