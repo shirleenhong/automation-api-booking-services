@@ -77,6 +77,9 @@ public class LoggingFilterTest {
 		when(request.getHeaderNames()).thenReturn(Iterators.asEnumeration(headerNames.iterator()));
 
 		filter.doFilterInternal(request, response, filterChain);
+
+		verify(filterChain, times(1)).doFilter(Mockito.any(ServletRequest.class),
+				Mockito.any(ServletResponse.class));
 	}
 
 	@Test
@@ -95,5 +98,8 @@ public class LoggingFilterTest {
 		when(response.getContentType()).thenReturn(MediaType.APPLICATION_JSON.toString());
 
 		filter.doFilterInternal(request, response, filterChain);
+
+		verify(filterChain, times(1)).doFilter(Mockito.any(ServletRequest.class),
+				Mockito.any(ServletResponse.class));
 	}
 }
