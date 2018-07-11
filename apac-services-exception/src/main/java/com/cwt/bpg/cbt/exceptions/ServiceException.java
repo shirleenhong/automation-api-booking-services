@@ -18,6 +18,11 @@ public class ServiceException extends Exception {
 		this.statusCode = statusCode;
 	}
 
+	public ServiceException(int statusCode, String message, Throwable cause) {
+		super(message, cause);
+		this.statusCode = statusCode;
+	}
+
 	public ServiceException(int statusCode, Map<String, List<String>> headers) {
 		super();
 		this.statusCode = statusCode;
