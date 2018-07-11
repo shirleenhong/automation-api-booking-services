@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exchange-order" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11876608-3e71-4654-8bad-9498a837d1ff">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="339"/>
+	<property name="ireport.y" value="288"/>
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<subDataset name="dataset1" uuid="445d1af9-e2c1-4cfc-9fac-574f362a3a97">
 		<field name="_THIS" class="java.lang.String"/>
@@ -118,11 +118,11 @@
 				<textFieldExpression><![CDATA[$F{eoNumber}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="165" width="200" height="15" uuid="c0c2092f-692e-40f1-b57c-87528a8fb61b"/>
+				<reportElement x="160" y="165" width="394" height="15" uuid="c0c2092f-692e-40f1-b57c-87528a8fb61b"/>
 				<textFieldExpression><![CDATA[$F{passengerName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="190" width="200" height="15" uuid="ccf7b808-4f32-4fad-a3be-2b6852484a0a"/>
+				<reportElement x="160" y="190" width="394" height="15" uuid="ccf7b808-4f32-4fad-a3be-2b6852484a0a"/>
 				<textFieldExpression><![CDATA[$F{agentName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -205,7 +205,7 @@
 				<text><![CDATA[Remarks]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="160" y="250" width="200" height="15" uuid="f5aa0fb0-f4af-411b-bf50-cd5f5de45b0d"/>
+				<reportElement x="160" y="250" width="394" height="15" uuid="f5aa0fb0-f4af-411b-bf50-cd5f5de45b0d"/>
 				<textFieldExpression><![CDATA[$F{vendor}.getName()]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -241,7 +241,7 @@
 				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="400" width="200" height="15" uuid="ae632efd-d66c-4e7e-a8b8-3d5ea72ff7f7"/>
+				<reportElement x="160" y="400" width="394" height="15" uuid="ae632efd-d66c-4e7e-a8b8-3d5ea72ff7f7"/>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<componentElement>
@@ -267,12 +267,12 @@
 				</textElement>
 				<text><![CDATA[ATTN:]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="45" y="20" width="200" height="15" uuid="49412d51-68ef-4563-ab01-48d46c03eace"/>
 				<textFieldExpression><![CDATA[$F{vendor}.getContactPerson()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="415" width="200" height="15" uuid="84bcfc6a-910d-4cbb-8c82-88e1322cc944"/>
+				<reportElement x="160" y="415" width="394" height="15" uuid="84bcfc6a-910d-4cbb-8c82-88e1322cc944"/>
 				<textFieldExpression><![CDATA[$F{btaDescription}]]></textFieldExpression>
 			</textField>
 			<textField>

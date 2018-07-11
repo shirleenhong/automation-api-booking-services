@@ -6,7 +6,10 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
@@ -16,7 +19,9 @@ import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(tags = "Exchange Order")
@@ -43,7 +48,7 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/exchange-order/{eoNumber}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/exchange-order/{eoNumber:[0-9]+}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction.")
 	public ResponseEntity<ExchangeOrder> getExchangeOrder(
@@ -63,7 +68,7 @@ public class ExchangeOrderController {
 		final String filename = eoNumber + ".pdf";
 		final HttpHeaders headers = new HttpHeaders();
 		byte[] body = eoReportService.generatePdf(eoNumber);
-		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + filename + "\"");
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "filename=\"" + filename + "\"");
 		headers.setContentType(MediaType.parseMediaType(MediaType.APPLICATION_PDF_VALUE));
 		return new ResponseEntity<>(body, headers, HttpStatus.OK);
 	}
