@@ -48,7 +48,7 @@ public class NonAirFeeCalculatorTest {
 
 		NonAirFeesInput input = new NonAirFeesInput();
 
-		input.setFopType("CX");
+		input.setFopType("CX4");
 		input.setCountryCode("SG");
 		input.setSellingPrice(new BigDecimal(1200.50));
 		input.setGstPercent(5D);
@@ -69,7 +69,7 @@ public class NonAirFeeCalculatorTest {
 
 		NonAirFeesInput input = new NonAirFeesInput();
 
-		input.setFopType("CX");
+		input.setFopType("CX4");
 		input.setCountryCode("HK");
 		input.setSellingPrice(new BigDecimal(1500.50));
 		input.setGstPercent(5D);
@@ -89,7 +89,7 @@ public class NonAirFeeCalculatorTest {
 	public void shouldCalculateFeesFlagsTrue() {
 		NonAirFeesInput input = new NonAirFeesInput();
 
-		input.setFopType("CX");
+		input.setFopType("CX4");
 		input.setCountryCode("HK");
 		input.setSellingPrice(new BigDecimal(1200.50));
 		input.setGstPercent(5D);
@@ -137,7 +137,7 @@ public class NonAirFeeCalculatorTest {
 	public void shouldThrowExceptionWhenFopTypeIsCXAndMerchantFeeIsNull() {
 		NonAirFeesInput input = new NonAirFeesInput();
 		input.setCountryCode("SG");
-		input.setFopType("CX");
+		input.setFopType("CX4");
         input.setSellingPrice(new BigDecimal(1200.50));
         input.setGstPercent(5D);
         input.setNettCost(new BigDecimal(1528.27));

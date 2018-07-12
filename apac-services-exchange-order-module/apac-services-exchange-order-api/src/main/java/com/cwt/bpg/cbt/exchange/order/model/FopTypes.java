@@ -4,10 +4,9 @@ package com.cwt.bpg.cbt.exchange.order.model;
 public enum FopTypes
 {
 
-	CWT("CX"), 
+	CWT("CX4"),
 	CREDIT_CARD("CC"), 
-	INVOICE("INV"),
-	CASH("CASH");
+	INVOICE("INV");
 
 	private final String code;
 

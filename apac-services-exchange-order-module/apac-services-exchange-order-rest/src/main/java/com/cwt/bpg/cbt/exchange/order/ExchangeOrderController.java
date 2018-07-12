@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import com.cwt.bpg.cbt.exchange.order.validator.FopTypeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,9 @@ public class ExchangeOrderController {
 	@Autowired
 	private ExchangeOrderReportService eoReportService;
 
+	@Autowired
+	private FopTypeValidator fopTypeValidator;
+
 	@PostMapping(
 			path = "/exchange-order",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
@@ -42,6 +46,8 @@ public class ExchangeOrderController {
 	public ResponseEntity<Map<String, Object>> saveExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) 
 					throws ExchangeOrderNoContentException {
+
+		fopTypeValidator.validate(input);
 		final ExchangeOrder saveExchangeOrder = eoService.saveExchangeOrder(input);
 		Map<String, Object> response = new HashMap<>(1);
 		response.put("eoNumber", saveExchangeOrder.getEoNumber());
