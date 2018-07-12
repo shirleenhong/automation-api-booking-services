@@ -6,8 +6,7 @@ public enum FopTypes
 
 	CWT("CX4"),
 	CREDIT_CARD("CC"), 
-	INVOICE("INV"),
-	CASH("CASH");
+	INVOICE("INV");
 
 	private final String code;
 
