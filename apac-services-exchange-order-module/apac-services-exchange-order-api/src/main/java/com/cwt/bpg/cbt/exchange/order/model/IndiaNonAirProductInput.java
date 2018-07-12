@@ -2,8 +2,6 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotNull;
-
 public class IndiaNonAirProductInput {
 	
 	private Double ot1Percent;
@@ -12,7 +10,6 @@ public class IndiaNonAirProductInput {
 
 	@NotEmpty
 	private String productCode;
-
 	
 	public Double getOt1Percent() {
 		return ot1Percent;

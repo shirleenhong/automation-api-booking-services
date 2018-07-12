@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -26,6 +27,7 @@ public class IndiaNonAirFeesInput extends FeesInput {
 	private boolean discountByPercent;
 	private int fopMode;
 
+	@Valid
 	@ApiModelProperty(required = true)
 	@NotNull
 	private IndiaNonAirProductInput product;
