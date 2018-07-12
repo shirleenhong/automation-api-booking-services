@@ -1,15 +1,21 @@
 package com.cwt.bpg.cbt.exchange.order.report;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.when;
 
-import org.junit.*;
-import org.mockito.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import com.cwt.bpg.cbt.exceptions.ApiServiceException;
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.Header;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
   
 public class ExchangeOrderReportServiceTest {
@@ -19,6 +25,9 @@ public class ExchangeOrderReportServiceTest {
 	
 	@Mock
 	private ExchangeOrderService eoService;
+
+	@Mock
+	private ScaleConfig scaleConfig;
 
 	@InjectMocks
 	private ExchangeOrderReportService eoReportService;
@@ -31,6 +40,9 @@ public class ExchangeOrderReportServiceTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
+
+        when(scaleConfig.getScale(eq("SG"))).thenReturn(2);
+        when(scaleConfig.getScale(eq("HK"))).thenReturn(0);
 		
 		eoNumber = "1806100005";
 		countryCode = "HK";
