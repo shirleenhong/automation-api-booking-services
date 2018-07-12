@@ -25,6 +25,7 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
 import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
 
@@ -195,4 +196,10 @@ public class ExchangeOrderService {
 	public ExchangeOrder getExchangeOrder(String eoNumber) {
 		return exchangeOrderRepo.getExchangeOrder(eoNumber);
 	}
+	
+    public List<ExchangeOrder> search(final ExchangeOrderSearchParam param)
+    {
+        return exchangeOrderRepo.search(param);
+    }
+    
 }

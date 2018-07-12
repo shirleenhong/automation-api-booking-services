@@ -3,7 +3,10 @@ package com.cwt.bpg.cbt.exchange.order;
 import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -13,14 +16,16 @@ import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-
-import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
-import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
+import java.util.Collections;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -28,10 +33,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.util.NestedServletException;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.Header;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -218,4 +230,23 @@ public class ExchangeOrderControllerTest {
 		mockMvc.perform(get(url + "/pdf/" + eoNumber))
 				.andExpect(status().isInternalServerError()).andReturn();
 	}
+	
+	@Test
+    public void shouldInvokeSearch() throws Exception {
+        when(eoService.search(Mockito.any(ExchangeOrderSearchParam.class))).thenReturn(Collections.emptyList());
+
+        final String uri = UriComponentsBuilder.newInstance().path("/exchange-orders")
+        .queryParam("eoNumber", UUID.randomUUID().toString())
+        .queryParam("vendorCode", UUID.randomUUID().toString())
+        .queryParam("status", UUID.randomUUID().toString())
+        .queryParam("recordLocator", UUID.randomUUID().toString())
+        .queryParam("startCreationDate", "2008-05-29T00:00:00.000Z")
+        .queryParam("endCreationDate", "2008-05-29T00:00:00.000Z")
+        .build().toUriString();
+        
+        mockMvc.perform(get(uri)).andExpect(status().isOk());
+
+        verify(eoService, times(1)).search(Mockito.any(ExchangeOrderSearchParam.class));
+    }
+	
 }

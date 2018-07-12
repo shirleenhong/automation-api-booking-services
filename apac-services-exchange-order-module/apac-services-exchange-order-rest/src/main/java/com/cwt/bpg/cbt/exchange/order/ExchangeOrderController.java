@@ -1,22 +1,37 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.time.Instant;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(tags = "Exchange Order")
@@ -79,4 +94,29 @@ public class ExchangeOrderController {
 
 		return new ResponseEntity<>(eoReportService.emailPdf(eoNumber), HttpStatus.OK);
 	}
+	
+	@GetMapping(
+            value = "/exchange-orders",
+            produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+    @ApiOperation(value = "Search for exchange orders.")
+    public List<ExchangeOrder> search(
+            @RequestParam(name = "eoNumber", required = false ) @ApiParam(value = "Exchange order number") String eoNumber,
+            @RequestParam(name = "vendorCode", required = false) @ApiParam(value = "Vendor") String vendorCode,
+            @RequestParam(name = "recordLocator", required = false) @ApiParam(value = "PNR") String recordLocator,
+            @RequestParam(name = "status", required = false) @ApiParam(value = "Status") String status,
+            @RequestParam(name = "startCreationDate", required = false) @ApiParam(value = "Start Creation Date") Instant startCreationDate,
+            @RequestParam(name = "endCreationDate", required = false) @ApiParam(value = "End Creation Date") Instant endCreationDate)
+                    throws ApiServiceException {
+        final ExchangeOrderSearchParam param = new ExchangeOrderSearchParam();
+        param.setEoNumber(eoNumber);
+        final Vendor vendor = new Vendor();
+        vendor.setCode(vendorCode);
+        param.setVendor(vendor);
+        param.setRecordLocator(recordLocator);
+        param.setStatus(status);
+        param.setStartCreationDate(startCreationDate);
+        param.setEndCreationDate(endCreationDate);
+        return eoService.search(param);
+    }
+    
 }

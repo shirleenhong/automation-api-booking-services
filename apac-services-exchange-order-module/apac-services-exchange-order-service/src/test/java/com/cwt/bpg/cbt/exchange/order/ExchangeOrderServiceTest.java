@@ -3,21 +3,35 @@ package com.cwt.bpg.cbt.exchange.order;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import static org.mockito.Mockito.*;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.ConcurrentModificationException;
+import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 public class ExchangeOrderServiceTest {
@@ -189,7 +203,17 @@ public class ExchangeOrderServiceTest {
 	    assertEquals(9, result.get(Calendar.HOUR_OF_DAY));
 
 	}
-
+	
+	@Test
+    public void shouldInvokeSearch(){
+	    final ExchangeOrderSearchParam param = new ExchangeOrderSearchParam();
+	    
+	    when(repo.search(param)).thenReturn(Arrays.asList(new ExchangeOrder[] { new ExchangeOrder() })); 
+	    final List<ExchangeOrder> result = service.search(param);
+	    assertEquals(1, result.size());
+	    verify(repo).search(param);
+    }
+	
 	private Date getNextExecutionTime(
 			Calendar today, String schedule) {
 		
