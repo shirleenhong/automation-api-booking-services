@@ -29,6 +29,8 @@ public class IndiaNonAirFeesInput extends FeesInput {
 	@NotNull
 	private IndiaNonAirProductInput product;
 	private String ccType;
+
+	@NotNull
 	private String fopNumber;
 	
 	public String getCcType() {

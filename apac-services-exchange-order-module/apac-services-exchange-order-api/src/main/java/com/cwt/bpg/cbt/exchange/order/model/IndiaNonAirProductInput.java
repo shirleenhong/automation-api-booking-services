@@ -1,10 +1,14 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import javax.validation.constraints.NotNull;
+
 public class IndiaNonAirProductInput {
 	
 	private Double ot1Percent;
 	private Double ot2Percent;
 	private Double gstPercent;
+
+	@NotNull
 	private String productCode;
 
 	
