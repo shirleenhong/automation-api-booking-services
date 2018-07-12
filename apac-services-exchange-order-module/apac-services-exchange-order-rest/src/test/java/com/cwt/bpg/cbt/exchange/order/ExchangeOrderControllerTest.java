@@ -17,6 +17,7 @@ import java.time.Instant;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 
+import com.cwt.bpg.cbt.exchange.order.validator.FopTypeValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,9 @@ public class ExchangeOrderControllerTest {
 	
 	@Mock
 	private ExchangeOrderReportService eoReportService;
+
+	@Mock
+	private FopTypeValidator fopTypeValidator;
 	
 	@InjectMocks
 	private ExchangeOrderController controller;
