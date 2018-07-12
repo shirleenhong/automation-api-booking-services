@@ -318,7 +318,7 @@ public class SgAirCalculatorTest {
 		AirFeesInput input = new AirFeesInput();
 		input.setApplyFormula(true);
 		input.setCwtAbsorb(false);
-		input.setFopType("CX");
+		input.setFopType("CX4");
 		input.setMerchantFeeWaive(false);
 		input.setNettFare(bigDecimal("300"));
 		input.setSellingPrice(bigDecimal("200"));

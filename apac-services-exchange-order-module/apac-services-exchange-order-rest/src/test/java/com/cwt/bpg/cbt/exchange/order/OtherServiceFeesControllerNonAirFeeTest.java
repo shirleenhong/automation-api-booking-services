@@ -49,7 +49,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
 
         NonAirFeesInput input = new NonAirFeesInput();
 
-        input.setFopType("CX");
+        input.setFopType("CX4");
         input.setGstPercent(2D);
         input.setClientAccountNumber("1234");
 
@@ -90,7 +90,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
 
         NonAirFeesInput input = new NonAirFeesInput();
 
-        input.setFopType("CX");
+        input.setFopType("CX4");
         input.setClientAccountNumber("1234");
         input.setCountryCode("HK");
 
@@ -107,7 +107,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
 
         NonAirFeesInput input = new NonAirFeesInput();
 
-        input.setFopType("CX");
+        input.setFopType("CX4");
         input.setGstPercent(2D);
 
         mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
