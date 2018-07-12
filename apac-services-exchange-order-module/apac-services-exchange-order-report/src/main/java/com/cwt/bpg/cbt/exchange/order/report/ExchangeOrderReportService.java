@@ -3,10 +3,16 @@ package com.cwt.bpg.cbt.exchange.order.report;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
-import java.time.*;
+import java.text.DecimalFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
@@ -23,13 +29,19 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 
 @Service
@@ -49,6 +61,9 @@ public class ExchangeOrderReportService {
 
 	@Autowired
 	private JavaMailSender mailSender;
+
+	@Autowired
+	private ScaleConfig scaleConfig;
 
 	@Autowired
     private EmailContentProcessor emailContentProcessor;
@@ -92,10 +107,11 @@ public class ExchangeOrderReportService {
 			parameters.put("cwtLogo", image);
 			parameters.put("date", getDate(exchangeOrder));
 			parameters.put("additionalInfoDate", formatDate(exchangeOrder.getAdditionalInfoDate()));
-			parameters.put("nettCost", formatAmount(exchangeOrder.getNettCost()));
-			parameters.put("tax2", formatAmount(exchangeOrder.getTax2()));
-			parameters.put("total", formatAmount(exchangeOrder.getTotal()));
-			parameters.put("gstAmountTax1", formatGstAmountTax1(exchangeOrder.getGstAmount(), exchangeOrder.getTax1()));
+			parameters.put("nettCost", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getNettCost()));
+			parameters.put("tax2", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTax2()));
+			parameters.put("total", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTotal()));
+			Optional<BigDecimal> tax1 = Optional.ofNullable(exchangeOrder.getGstAmount());
+			parameters.put("gstAmountTax1", formatAmount(exchangeOrder.getCountryCode(), tax1.orElse(exchangeOrder.getTax1())));
 			
 			JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
 					parameters,
@@ -117,19 +133,16 @@ public class ExchangeOrderReportService {
 				.format(LocalDateTime.ofInstant(instant, ZoneOffset.UTC));
 	}
 	
-	private String formatAmount(BigDecimal amount) {
+	private String formatAmount(String countryCode, BigDecimal amount) {
 
-		if (amount != null) {
-			if (amount.toString().contains(".00")) {
-				return "$#,##0.00";
-			}
-			return amount.doubleValue() % 1 == 0 ? "$#,##0" : "$#,##0.00";
-		}
-		return "";
-	}
+	    int scale = scaleConfig.getScale(countryCode);
+        DecimalFormat formatter = new DecimalFormat("$#,##0.00");
+        formatter.setMinimumFractionDigits(scale);
+        formatter.setMaximumFractionDigits(scale);
+        formatter.setRoundingMode(RoundingMode.DOWN);
 
-	private String formatGstAmountTax1(BigDecimal gstAmount, BigDecimal tax1) {
-		return gstAmount != null ? formatAmount(gstAmount) : formatAmount(tax1);
+        return formatter.format(amount);
+
 	}
 
 	private ExchangeOrder getExchangeOrder(String eoNumber) {
