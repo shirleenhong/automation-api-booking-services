@@ -130,7 +130,7 @@ public class ExchangeOrderControllerTest {
 	private ExchangeOrder createExchangeOrder() {
 
 		ExchangeOrder order = new ExchangeOrder();
-		order.setFopType("CASH");
+		order.setFopType("CX");
 		order.setDescription("test_description");
 		order.setAdditionalInfoDate(Instant.now());
 		order.setProductCode("PR01");
