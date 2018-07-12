@@ -87,7 +87,7 @@ public class SgAirCalculatorTest {
 	public void shouldCalculateNotDiscountByPercent() {
 
 		AirFeesInput input = new AirFeesInput();
-		input.setProductType("CX");
+		input.setProductType("CX4");
 		input.setApplyFormula(true);
 		input.setDiscountByPercent(false);
 		input.setNettFare(bigDecimal("300"));
@@ -148,7 +148,7 @@ public class SgAirCalculatorTest {
 		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setProductType("CT");
 		input.setClientType("TF");
-		input.setFopType("CX");
+		input.setFopType("CX4");
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(true);
@@ -182,7 +182,7 @@ public class SgAirCalculatorTest {
 		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setProductType("CT");
 		input.setClientType("DU");
-		input.setFopType("CX");
+		input.setFopType("CX4");
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(false);
@@ -217,7 +217,7 @@ public class SgAirCalculatorTest {
 		input.setDiscount(bigDecimal("45.00"));
 		input.setProductType("CT");
 		input.setClientType("TF");
-		input.setFopType("CX");
+		input.setFopType("CX4");
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(false);
