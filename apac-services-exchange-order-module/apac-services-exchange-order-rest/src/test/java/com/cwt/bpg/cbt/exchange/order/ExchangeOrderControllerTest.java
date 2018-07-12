@@ -80,6 +80,18 @@ public class ExchangeOrderControllerTest {
 	}
 
 	@Test(expected = NestedServletException.class)
+	public void shouldReturnBadRequestWhenFopTypeCXAndCreditCardNull() throws Exception {
+
+		ExchangeOrder order = createExchangeOrder();
+		order.setFopType("CX");
+		order.setEoNumber("1122334455");
+		order.setCreditCard(null);
+
+		mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+				.andExpect(status().isBadRequest()).andReturn().getResponse();
+	}
+
+	@Test(expected = NestedServletException.class)
 	public void shouldHandleExchangeOrderNotFoundException() throws Exception {
 
 		ExchangeOrder order = createExchangeOrder();
@@ -118,7 +130,7 @@ public class ExchangeOrderControllerTest {
 	private ExchangeOrder createExchangeOrder() {
 
 		ExchangeOrder order = new ExchangeOrder();
-		order.setFopType("CX");
+		order.setFopType("CASH");
 		order.setDescription("test_description");
 		order.setAdditionalInfoDate(Instant.now());
 		order.setProductCode("PR01");

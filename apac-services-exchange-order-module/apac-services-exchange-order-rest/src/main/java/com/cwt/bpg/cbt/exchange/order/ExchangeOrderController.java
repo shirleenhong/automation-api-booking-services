@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,13 @@ public class ExchangeOrderController {
 	public ResponseEntity<Map<String, Object>> saveExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) 
 					throws ExchangeOrderNoContentException {
+
+		if(input.getFopType().equalsIgnoreCase(FopTypes.CWT.getCode()) || input.getFopType().equalsIgnoreCase(FopTypes.CREDIT_CARD.getCode())){
+			if(input.getCreditCard()==null){
+				throw new IllegalArgumentException("Credit Card required for FopType "+input.getFopType());
+			}
+		}
+
 		final ExchangeOrder saveExchangeOrder = eoService.saveExchangeOrder(input);
 		Map<String, Object> response = new HashMap<>(1);
 		response.put("eoNumber", saveExchangeOrder.getEoNumber());
