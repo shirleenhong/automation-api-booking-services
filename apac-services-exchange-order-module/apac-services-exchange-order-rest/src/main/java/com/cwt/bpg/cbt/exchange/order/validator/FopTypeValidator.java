@@ -14,7 +14,7 @@ public class FopTypeValidator {
 
     public void validate(ExchangeOrder input) {
 
-        if (creditCardTypes.contains(input.getFopType()) && input.getCreditCard() == null ) {
+        if (creditCardTypes.contains(input.getFopType()) && input.getCreditCard() == null) {
 
             throw new IllegalArgumentException("Credit Card required for FopType " + input.getFopType());
         }

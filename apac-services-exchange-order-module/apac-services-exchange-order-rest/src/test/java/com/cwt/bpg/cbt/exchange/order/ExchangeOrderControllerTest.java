@@ -66,7 +66,7 @@ public class ExchangeOrderControllerTest {
 		eoNumber = "1806100005";
 	}
 
-	public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
+	private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
 			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
 	@Test
@@ -93,6 +93,8 @@ public class ExchangeOrderControllerTest {
 
 		mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
 				.andExpect(status().isBadRequest()).andReturn().getResponse();
+
+		verifyZeroInteractions(eoService);
 	}
 
 	@Test(expected = NestedServletException.class)
@@ -105,6 +107,8 @@ public class ExchangeOrderControllerTest {
 
 		mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
 				.andExpect(status().isNoContent()).andReturn().getResponse();
+
+		verifyZeroInteractions(eoService);
 	}
 
 	@Test
@@ -175,7 +179,7 @@ public class ExchangeOrderControllerTest {
 		return order;
 	}
 
-	public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
+	private static byte[] convertObjectToJsonBytes(Object object) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		return mapper.writeValueAsBytes(object);
@@ -222,6 +226,8 @@ public class ExchangeOrderControllerTest {
 
 		mockMvc.perform(get(url + "/pdf/" + eoNumber))
 				.andExpect(status().isNoContent()).andReturn();
+
+        verifyZeroInteractions(eoService);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -233,5 +239,7 @@ public class ExchangeOrderControllerTest {
 
 		mockMvc.perform(get(url + "/pdf/" + eoNumber))
 				.andExpect(status().isInternalServerError()).andReturn();
+
+        verifyZeroInteractions(eoService);
 	}
 }
