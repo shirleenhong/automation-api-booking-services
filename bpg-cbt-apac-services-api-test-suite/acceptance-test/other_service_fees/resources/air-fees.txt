@@ -365,11 +365,11 @@ Generate Test Variables For Air Fees-IN
     Set Test Variable    ${decimal_place}
     ${total_gst_amount}    Set Variable If    "${gst_enabled_value}" == "true"    0
     Run Keyword If    "${include_yq_comm_value}" == "false"    Set Test Variable    ${yq_tax_value}    0
-    Run Keyword If    "${exempt_tax_value}" == "false"    Calculate Air Fees-IN Total GST    ELSE    Set Test Variable    ${total_gst_amount}    0
-    Calculate Air Fees-IN Total Airline Commission
-    Run Keyword If    "${trip_type_value}" == "I"    Calculate Air Fees-IN Total Overhead Commission    ELSE    Set Test Variable    ${total_overhead_commission_amount}    0
+    Run Keyword If    "${exempt_tax_value}" == "false" and "${gst_enabled_value}" == "true"    Calculate Air Fees-IN Total GST    ELSE    Set Test Variable    ${total_gst_amount}    0
+    Run Keyword If    "${commission_enabled_value}" == "true"   Calculate Air Fees-IN Total Airline Commission    ELSE    Set Test Variable    ${total_airline_commission_amount}    0
+    Run Keyword If    "${trip_type_value}" == "I" and "${overhead_commission_enabled_value}" == "true"    Calculate Air Fees-IN Total Overhead Commission    ELSE    Set Test Variable    ${total_overhead_commission_amount}    0
     Comment    Calculate Air Fees-IN Total Markup
-    Calculate Air Fees-IN Total Discount
+    Run Keyword If    "${discount_enabled_value}" == "true"    Calculate Air Fees-IN Total Discount    ELSE    Set Test Variable    ${total_discount_amount}    0
     Calculate Air Fees-IN Total Taxes
     Calculate Air Fees-IN Total Sell Fare
     Calculate Air Fees-IN Total Fee
@@ -529,6 +529,15 @@ Verify Calculated Air Fees Are Not Returned Correctly
     Verify String Does Not Contain Substring    ${response.content}    "merchantFee"
     Verify String Does Not Contain Substring    ${response.content}    "discount"
     Verify String Does Not Contain Substring    ${response.content}    "nettFare"
+    
+Verify Calculated Air Fees India Are Not Returned Correctly
+    Verify String Does Not Contain Substring    ${response.text}    "totalAirlineCommission"
+    Verify String Does Not Contain Substring    ${response.text}    "totalCharge"
+    Verify String Does Not Contain Substring    ${response.text}    "totalGst"
+    Verify String Does Not Contain Substring    ${response.text}    "totalSellFare"
+    Verify String Does Not Contain Substring    ${response.text}    "totalSellingFare"
+    Verify String Does Not Contain Substring    ${response.text}    "totalTaxes"
+    Verify String Does Not Contain Substring    ${response.text}    "totalMerchantFee"
 
 Verify Calculated Air Fees Are Returned Correctly
     ${data}    Remove String    ${response.text}    {
@@ -539,6 +548,10 @@ Verify Calculated Air Fees Are Returned Correctly
     \    ${items}    Split String    ${item}    :
     \    Verify Actual Numerical Value Matches Expected Numerical Value    ${items[1]}    ${${items[0]}_amount}
 
+Verify Response Contains Calculated Fee
+    [Arguments]    ${element}
+    Verify String Contains Substring    ${response.text}    "${element}"
+    
 Verify Response Does Not Contain Calculated Fee
     [Arguments]    ${element}
-    Verify String Does Not Contain Substring    ${response.content}    "${element}"
+    Verify String Does Not Contain Substring    ${response.text}    "${element}"
