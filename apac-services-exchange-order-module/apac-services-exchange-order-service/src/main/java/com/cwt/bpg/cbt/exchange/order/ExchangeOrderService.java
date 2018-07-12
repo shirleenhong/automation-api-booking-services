@@ -195,4 +195,9 @@ public class ExchangeOrderService {
 	public ExchangeOrder getExchangeOrder(String eoNumber) {
 		return exchangeOrderRepo.getExchangeOrder(eoNumber);
 	}
+
+	public ExchangeOrder getExchangeOrderByPnr(String pnrNumber) {
+		//TODO: Implement this
+		return null;
+	}
 }
