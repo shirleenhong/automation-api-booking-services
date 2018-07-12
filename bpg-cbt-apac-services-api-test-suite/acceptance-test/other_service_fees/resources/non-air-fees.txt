@@ -49,7 +49,7 @@ Calculate Non-Air Fees For HK/SG
     Run Keyword If    "${gst_absorb_value}" == "false"    Run Keywords    Calculate Non-Air Fees GST
     ...    AND    Calculate Non-Air Fees Nett Cost GST
     ...    ELSE    Set GST And Nett Cost GST
-    Run Keyword If    "${merchant_fee_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Non-Air Fees Merchant Fee
+    Run Keyword If    "${merchant_fee_absorb_value}" == "false" and "${cc_value.upper()}" == "CX4" and "${merchant_fee_waive_value}" == "false"    Calculate Non-Air Fees Merchant Fee
     ...    ELSE    Set Merchant Fee
     Calculate Non-Air Fees Selling Price In DI
     Run Keyword If    ${total_selling_price_value}>${nett_cost_value}    Calculate Non-Air Fees Commission
@@ -217,11 +217,11 @@ Set Merchant Fee
     ...    ELSE    Set Test Variable    ${merchant_fee_value}    0
 
 Verify Calculated Non-Air Fees Are Not Returned
-    Verify String Does Not Contain Substring    ${response.content}    "totalSellingPrice"
-    Verify String Does Not Contain Substring    ${response.content}    "merchantFee"
-    Verify String Does Not Contain Substring    ${response.content}    "gstAmount"
-    Verify String Does Not Contain Substring    ${response.content}    "grossSellingPrice"
-    Run Keyword If    "${country}"!="in"    Verify String Does Not Contain Substring    ${response.content}    "commission"
+    Verify String Does Not Contain Substring    ${response.text}    "totalSellingPrice"
+    Verify String Does Not Contain Substring    ${response.text}    "merchantFee"
+    Verify String Does Not Contain Substring    ${response.text}    "gstAmount"
+    Verify String Does Not Contain Substring    ${response.text}    "grossSellingPrice"
+    Run Keyword If    "${country}"!="in"    Verify String Does Not Contain Substring    ${response.text}    "commission"
     
    
 Verify Calculated Non-Air Fees Are Returned Correctly
@@ -235,4 +235,4 @@ Verify Calculated Non-Air Fees Are Returned Correctly
 
 Verify Response Does Not Contain Calculated Fee
     [Arguments]    ${element}
-    Verify String Does Not Contain Substring    ${response.content}    "${element}"
+    Verify String Does Not Contain Substring    ${response.text}    "${element}"
