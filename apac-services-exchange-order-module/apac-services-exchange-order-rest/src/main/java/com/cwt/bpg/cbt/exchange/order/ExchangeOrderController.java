@@ -28,6 +28,7 @@ import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
+import com.cwt.bpg.cbt.exchange.order.validator.FopTypeValidator;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,6 +44,9 @@ public class ExchangeOrderController {
 	@Autowired
 	private ExchangeOrderReportService eoReportService;
 
+	@Autowired
+	private FopTypeValidator fopTypeValidator;
+
 	@PostMapping(
 			path = "/exchange-order",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
@@ -52,6 +56,8 @@ public class ExchangeOrderController {
 	public ResponseEntity<Map<String, Object>> saveExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) 
 					throws ExchangeOrderNoContentException {
+
+		fopTypeValidator.validate(input);
 		final ExchangeOrder saveExchangeOrder = eoService.saveExchangeOrder(input);
 		Map<String, Object> response = new HashMap<>(1);
 		response.put("eoNumber", saveExchangeOrder.getEoNumber());
@@ -78,7 +84,7 @@ public class ExchangeOrderController {
 		final String filename = eoNumber + ".pdf";
 		final HttpHeaders headers = new HttpHeaders();
 		byte[] body = eoReportService.generatePdf(eoNumber);
-		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + filename + "\"");
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "filename=\"" + filename + "\"");
 		headers.setContentType(MediaType.parseMediaType(MediaType.APPLICATION_PDF_VALUE));
 		return new ResponseEntity<>(body, headers, HttpStatus.OK);
 	}

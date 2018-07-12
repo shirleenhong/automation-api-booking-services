@@ -36,9 +36,7 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(allowableValues = "CX,CC,INV", required = true)
 	private String fopType;
 
-	@NotNull
 	@Valid
-	@ApiModelProperty(required = true)
 	private CreditCard creditCard;
 
 	@NotEmpty
