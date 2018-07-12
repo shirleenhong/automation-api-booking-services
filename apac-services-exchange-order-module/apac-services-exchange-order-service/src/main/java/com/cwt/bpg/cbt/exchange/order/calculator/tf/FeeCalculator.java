@@ -321,7 +321,7 @@ public class FeeCalculator {
 	public BigDecimal getTotalOverheadCommission(IndiaAirFeesInput input, BigDecimal totalAirlineCommission) {
 		if (TripTypes.isInternational(input.getTripType())) {
 			return calculatePercentage(calculatePercentage(safeValue(input.getBaseFare())
-						.subtract(totalAirlineCommission), input.getAirlineOverheadCommissionPercent()),
+						.subtract(safeValue(totalAirlineCommission)), input.getAirlineOverheadCommissionPercent()),
 					input.getClientOverheadCommissionPercent());
 		}
 		return BigDecimal.ZERO;
