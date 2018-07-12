@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class IndiaNonAirFeesInput extends FeesInput {
 	private static final long serialVersionUID = 7271039286429340584L;
@@ -30,7 +31,7 @@ public class IndiaNonAirFeesInput extends FeesInput {
 	private IndiaNonAirProductInput product;
 	private String ccType;
 
-	@NotNull
+	@NotEmpty
 	private String fopNumber;
 	
 	public String getCcType() {

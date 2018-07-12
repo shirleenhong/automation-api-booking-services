@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.validation.constraints.NotNull;
 
 public class IndiaNonAirProductInput {
@@ -8,7 +10,7 @@ public class IndiaNonAirProductInput {
 	private Double ot2Percent;
 	private Double gstPercent;
 
-	@NotNull
+	@NotEmpty
 	private String productCode;
 
 	
