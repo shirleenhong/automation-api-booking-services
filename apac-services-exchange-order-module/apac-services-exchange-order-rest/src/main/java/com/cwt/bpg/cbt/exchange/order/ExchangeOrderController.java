@@ -56,7 +56,7 @@ public class ExchangeOrderController {
 
 	@GetMapping(path = "/exchange-order/{eoNumber:^[0-9]{10}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls exchange order transaction.")
+	@ApiOperation(value = "Pulls exchange order transaction based on exchange order number (10 digit numeric string).")
 	public ResponseEntity<ExchangeOrder> getExchangeOrder(
 			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
 
@@ -65,7 +65,7 @@ public class ExchangeOrderController {
 
 	@GetMapping(path = "/exchange-order/{pnr:^[a-zA-Z0-9]{6}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls exchange order transaction based on PNR.")
+	@ApiOperation(value = "Pulls exchange order transaction based on PNR (6 digit alphanumeric string).")
 	public ResponseEntity<ExchangeOrder> getExchangeOrderByPnr(
 			@PathVariable @ApiParam(value = "PNR number") String pnr) {
 
