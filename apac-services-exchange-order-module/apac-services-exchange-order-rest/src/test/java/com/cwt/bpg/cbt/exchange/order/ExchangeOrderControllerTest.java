@@ -56,6 +56,7 @@ public class ExchangeOrderControllerTest {
 
 	private String url;
 	private String eoNumber;
+	private String pnr;
 
 	@Before
 	public void setUp() {
@@ -64,6 +65,7 @@ public class ExchangeOrderControllerTest {
 
 		url = "/exchange-order";
 		eoNumber = "1806100005";
+		pnr = "U9L8VY";
 	}
 
 	private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -112,7 +114,7 @@ public class ExchangeOrderControllerTest {
 	}
 
 	@Test
-	public void shouldGetExchangeOrderNumber() throws Exception {
+	public void shouldGetExchangeOrderByExchangeOrderNumber() throws Exception {
 
 		ExchangeOrder order = new ExchangeOrder();
 		when(eoService.getExchangeOrder(eoNumber)).thenReturn(order);
@@ -121,6 +123,17 @@ public class ExchangeOrderControllerTest {
 
 		verify(eoService, times(1)).getExchangeOrder(eoNumber);
 	}
+
+    @Test
+    public void shouldGetExchangeOrderByPNR() throws Exception {
+
+        ExchangeOrder order = new ExchangeOrder();
+        when(eoService.getExchangeOrderByPnr(pnr)).thenReturn(order);
+
+        mockMvc.perform(get(url + "/" + pnr)).andExpect(status().isOk());
+
+        verify(eoService, times(1)).getExchangeOrderByPnr(pnr);
+    }
 
 	@Test
 	public void shouldNotReturnExchangeOrder() throws Exception {

@@ -54,13 +54,22 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/exchange-order/{eoNumber:[0-9]+}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/exchange-order/{eoNumber:^[0-9]{10}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction.")
 	public ResponseEntity<ExchangeOrder> getExchangeOrder(
 			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
 
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
+	}
+
+	@GetMapping(path = "/exchange-order/{pnr:^[a-zA-Z0-9]{6}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Pulls exchange order transaction based on PNR.")
+	public ResponseEntity<ExchangeOrder> getExchangeOrderByPnr(
+			@PathVariable @ApiParam(value = "PNR number") String pnr) {
+
+		return new ResponseEntity<>(eoService.getExchangeOrderByPnr(pnr), HttpStatus.OK);
 	}
 
 	@GetMapping(
