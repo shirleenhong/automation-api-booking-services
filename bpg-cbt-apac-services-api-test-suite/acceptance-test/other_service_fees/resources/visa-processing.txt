@@ -47,9 +47,9 @@ Generate Test Variables For Visa Processing
     Create Test Variables For Visa Processing    ${fees_list}    ${country}
     ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
     Set Test Variable    ${decimal_place}
-    Run Keyword If    "${mf_nett_check_value.lower()}"=="true" and "${cc_value.upper()}" == "CX"    Calculate Visa Processing Merchant Fee Nett Cost
+    Run Keyword If    "${mf_nett_check_value.lower()}"=="true" and "${cc_value.upper()}" == "CX4"    Calculate Visa Processing Merchant Fee Nett Cost
     ...    ELSE    Set Test Variable    ${nett_cost_merchant_fee_amount}    0
-    Run Keyword If    "${mf_cwt_check_value.lower()}"=="true" and "${cc_value.upper()}" == "CX"    Calculate Visa Processing Merchant Fee CWT Handling
+    Run Keyword If    "${mf_cwt_check_value.lower()}"=="true" and "${cc_value.upper()}" == "CX4"    Calculate Visa Processing Merchant Fee CWT Handling
     ...    ELSE    Set Test Variable    ${cwt_handling_merchant_fee_amount}    0
     Calculate Visa Processing Selling Price For Visa Processing
     Calculate Visa Processing Commission
@@ -98,11 +98,11 @@ Send Other Service Fees For Visa Processing Post Request
     Set Test Variable    ${api_flag}    fees
 
 Verify Visa Processing Fees Are Not Returned
-    Verify String Does Not Contain Substring    ${response.content}    "sellingPriceInDi"
-    Verify String Does Not Contain Substring    ${response.content}    "sellingPrice"
-    Verify String Does Not Contain Substring    ${response.content}    "commission"
-    Verify String Does Not Contain Substring    ${response.content}    "cwtHandlingMerchantFee"
-    Verify String Does Not Contain Substring    ${response.content}    "nettCostMerchantFee"
+    Verify String Does Not Contain Substring    ${response.text}    "sellingPriceInDi"
+    Verify String Does Not Contain Substring    ${response.text}    "sellingPrice"
+    Verify String Does Not Contain Substring    ${response.text}    "commission"
+    Verify String Does Not Contain Substring    ${response.text}    "cwtHandlingMerchantFee"
+    Verify String Does Not Contain Substring    ${response.text}    "nettCostMerchantFee"
 
 Verify Visa Processing Fees Are Returned Correctly
     ${data}    Remove String    ${response.text}    {

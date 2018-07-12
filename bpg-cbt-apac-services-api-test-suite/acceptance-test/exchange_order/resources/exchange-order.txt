@@ -128,7 +128,8 @@ Create Exchange Order Request
     \    ${vendor_list}    Set Variable If    ${i}==0    ${EMPTY}    ${vendor_list},
     \    ${vendor_list}    Set Variable    ${vendor_list}${exchange_order_vendor_request_list[${i}]}      
     ${data}    Set Variable    {${eo_list},"creditCard":{${cc_list}},"itineraryRemarks":[${itin_rmk_list}],"eoRemarks":[${eo_rmk_list}],"header":{${header_list}},"vendor":{${vendor_list}}}
-        ${data}    Replace String    ${data}    "NULL"    null
+    ${data}    Replace String    ${data}    "creditCard":{},    ${EMPTY}
+    ${data}    Replace String    ${data}    "NULL"    null
     ${data}    Replace String    ${data}    "None"    None
     Set Test Variable    ${data}
     Log    ${data}
@@ -192,7 +193,7 @@ Send Exchange Order Post Request
     ${exchange_order_vendor_request_list}    Create List
     Append Exchange Order Request Fields    ${exchange_order_request_list}
     Append Exchange Order Header Request Fields    ${exchange_order_header_request_list}
-    Append Exchange Order Credit Card Request Fields    ${exchange_order_cc_request_list}
+    Run Keyword If    "${fop_type_value}"=="CC" or "${fop_type_value}"=="CX4"    Append Exchange Order Credit Card Request Fields    ${exchange_order_cc_request_list}    ELSE    Run Keywords    Set Test Variable    ${exchange_order_cc_request_list}    ${EMPTY}    AND    Set Test Variable    ${cc_list}    ${EMPTY}
     Append Exchange Order Remarks Request Fields    ${exchange_order_eo_rmk_request_list}    ${exchange_order_itin_rmk_request_list}
     Append Exchange Order Vendor Request Fields    ${exchange_order_vendor_request_list}
     Create Exchange Order Request
@@ -262,9 +263,9 @@ Verify Exchange Order Is Saved Correctly
     ${actual_date_time}    Get Substring    ${actual_date_time}    0    18
     Verify Actual Value Matches Expected Value    ${actual_date_time}    ${expected_date_time}
     Verify Json Value Matches Pattern    $.createDateTime    ^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z+$
-    Verify Json Value Is Correct    $.creditCard.ccType    ${cc_type_value} 
-    Verify Json Value Is Correct    $.creditCard.ccNumber    ${cc_number_value} 
-    Verify Json Value Is Correct    $.creditCard.expiryDate    ${expiry_date_value}
+    Run Keyword If    "${cc_type_value}"!="null"    Verify Json Value Is Correct    $.creditCard.ccType    ${cc_type_value} 
+    Run Keyword If    "${cc_number_value}"!="null"    Verify Json Value Is Correct    $.creditCard.ccNumber    ${cc_number_value} 
+    Run Keyword If    "${expiry_date_value}"!="null"    Verify Json Value Is Correct    $.creditCard.expiryDate    ${expiry_date_value}
     Verify Json Value Is Correct    $.description    ${description_value}
     Verify Json Value Is Correct    $.eoAction    ${eo_action_value}
     Verify Json Value Is Correct    $.eoNumber    ${exchange_order_number}

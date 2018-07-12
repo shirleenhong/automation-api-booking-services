@@ -344,7 +344,7 @@ Generate Test Variables For Air Fees-HK With Formula
     Run Keyword If    "${discount_value}" == "${EMPTY}" or"${client_type_value}" == "TF" or"${client_type_value}" == "MN"    Set Test Variable    ${discount_amount}    0
     Set Test Variable    ${nett_cost_amount}    ${nett_fare_value}
     Calculate Air Fees-HK Nett Fare
-    Run Keyword If    "${cwt_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Air Fees-HK Merchant Fee
+    Run Keyword If    "${cwt_absorb_value}" == "false" and "${cc_value.upper()}" == "CX4" and "${merchant_fee_waive_value}" == "false"    Calculate Air Fees-HK Merchant Fee
     ...    ELSE    Set Test Variable    ${merchant_fee_amount}    0
     Calculate Air Fees-HK Total Selling Fare With Formula
 
@@ -395,7 +395,7 @@ Generate Test Variables For Air Fees-SG With Formula
     Calculate Air Fees-SG Nett Cost In EO With Formula
     ${tfincmf_not_exists}    Run Keyword And Return Status    Variable Should Not Exist    ${tfincmf_flag_value}
     Run Keyword If    "${tfincmf_not_exists}" == "True"    Set Test Variable    ${tfincmf_flag_value}    false
-    Run Keyword If    "${cwt_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Air Fees-SG Merchant Fee
+    Run Keyword If    "${cwt_absorb_value}" == "false" and "${cc_value.upper()}" == "CX4" and "${merchant_fee_waive_value}" == "false"    Calculate Air Fees-SG Merchant Fee
     ...    ELSE    Set Test Variable    ${merchant_fee_amount}    0
     Calculate Air Fees-SG Total Selling Fare With Formula
 
@@ -522,13 +522,13 @@ Send Other Service Fees For Air Fees Post Request
     Set Test Variable    ${api_flag}    fees
 
 Verify Calculated Air Fees Are Not Returned Correctly
-    Verify String Does Not Contain Substring    ${response.content}    "commission"
-    Verify String Does Not Contain Substring    ${response.content}    "totalSellingFare"
-    Verify String Does Not Contain Substring    ${response.content}    "nettCost"
-    Verify String Does Not Contain Substring    ${response.content}    "sellingPrice"
-    Verify String Does Not Contain Substring    ${response.content}    "merchantFee"
-    Verify String Does Not Contain Substring    ${response.content}    "discount"
-    Verify String Does Not Contain Substring    ${response.content}    "nettFare"
+    Verify String Does Not Contain Substring    ${response.text}    "commission"
+    Verify String Does Not Contain Substring    ${response.text}    "totalSellingFare"
+    Verify String Does Not Contain Substring    ${response.text}    "nettCost"
+    Verify String Does Not Contain Substring    ${response.text}    "sellingPrice"
+    Verify String Does Not Contain Substring    ${response.text}    "merchantFee"
+    Verify String Does Not Contain Substring    ${response.text}    "discount"
+    Verify String Does Not Contain Substring    ${response.text}    "nettFare"
     
 Verify Calculated Air Fees India Are Not Returned Correctly
     Verify String Does Not Contain Substring    ${response.text}    "totalAirlineCommission"
