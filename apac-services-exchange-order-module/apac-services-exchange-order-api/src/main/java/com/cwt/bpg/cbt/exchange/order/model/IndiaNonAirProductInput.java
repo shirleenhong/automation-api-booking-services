@@ -1,12 +1,17 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class IndiaNonAirProductInput {
 	
 	private Double ot1Percent;
 	private Double ot2Percent;
 	private Double gstPercent;
-	private String productCode;
 
+	@ApiModelProperty(required = true)
+	@NotEmpty
+	private String productCode;
 	
 	public Double getOt1Percent() {
 		return ot1Percent;
