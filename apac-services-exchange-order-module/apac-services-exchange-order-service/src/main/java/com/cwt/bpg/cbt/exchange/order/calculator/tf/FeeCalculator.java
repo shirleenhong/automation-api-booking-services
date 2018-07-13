@@ -58,8 +58,14 @@ public class FeeCalculator {
 		}
 
 		if (input.isOverheadCommissionEnabled()) {
-			breakdown.setTotalOverheadCommission(round(getTotalOverheadCommission(input,
-					breakdown.getTotalAirlineCommission()), scale));
+			if(input.isAirlineOverheadCommissionByPercent()){
+				//Airline OR Commission %
+				breakdown.setTotalOverheadCommission(
+						round(getTotalOverheadCommission(input,breakdown.getTotalAirlineCommission()), scale));
+			}else{
+				//Airline OR Commission $
+				breakdown.setTotalOverheadCommission(getTotalOverheadCommission2(input));
+			}
 		}
 
 		if (input.isMarkupEnabled()) {
@@ -318,6 +324,7 @@ public class FeeCalculator {
 		return discountAmount;
 	}
 
+	//Airline OR Commission %
 	public BigDecimal getTotalOverheadCommission(IndiaAirFeesInput input, BigDecimal totalAirlineCommission) {
 		if (TripTypes.isInternational(input.getTripType())) {
 			return calculatePercentage(calculatePercentage(safeValue(input.getBaseFare())
@@ -327,12 +334,13 @@ public class FeeCalculator {
 		return BigDecimal.ZERO;
 	}
 
+	//Airline OR Commission $
 	public BigDecimal getTotalOverheadCommission2(IndiaAirFeesInput input) {
 		if (TripTypes.isInternational(input.getTripType())) {
 			return calculatePercentage(input.getAirlineOverheadCommission(),
 					input.getClientOverheadCommissionPercent());
 		}
-		return null;
+		return BigDecimal.ZERO;
 	}
 
 	public BigDecimal getMerchantFee(IndiaAirFeesInput input,

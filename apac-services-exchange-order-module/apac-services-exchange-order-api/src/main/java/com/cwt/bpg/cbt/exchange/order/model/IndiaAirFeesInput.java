@@ -9,10 +9,11 @@ public class IndiaAirFeesInput extends FeesInput {
 	private BigDecimal baseFare;
 	private BigDecimal yqTax;
 	private BigDecimal airlineCommission;
-	private BigDecimal airlineOverheadCommission;
 	private BigDecimal fee;
 	private Double clientOverheadCommissionPercent;
+	private BigDecimal airlineOverheadCommission;
 	private Double airlineOverheadCommissionPercent;
+	private boolean airlineOverheadCommissionByPercent;
 	private Double merchantFeePercent;
 	private BigDecimal tax1;
 	private BigDecimal tax2;
@@ -206,5 +207,13 @@ public class IndiaAirFeesInput extends FeesInput {
 
 	public void setFee(BigDecimal fee) {
 		this.fee = fee;
+	}
+
+	public boolean isAirlineOverheadCommissionByPercent() {
+		return airlineOverheadCommissionByPercent;
+	}
+
+	public void setAirlineOverheadCommissionByPercent(boolean airlineOverheadCommissionByPercent) {
+		this.airlineOverheadCommissionByPercent = airlineOverheadCommissionByPercent;
 	}
 }
