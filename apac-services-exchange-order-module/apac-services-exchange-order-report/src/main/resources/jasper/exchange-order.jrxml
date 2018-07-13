@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exchange-order" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11876608-3e71-4654-8bad-9498a837d1ff">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="186"/>
+	<property name="ireport.y" value="0"/>
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<subDataset name="dataset1" uuid="445d1af9-e2c1-4cfc-9fac-574f362a3a97">
 		<field name="_THIS" class="java.lang.String"/>
@@ -67,7 +67,7 @@
 				<textElement>
 					<font fontName="ArnoiaCaption" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Carlson Wagonlit Singapore Pte Ltd (Reg. No. 199600179G)]]></text>
+				<text><![CDATA[Carlson Wagonlit Travel]]></text>
 			</staticText>
 			<image isUsingCache="false">
 				<reportElement x="483" y="0" width="71" height="57" uuid="4af1ceb3-b9f4-46f2-83f8-34f5d4b875f0"/>
