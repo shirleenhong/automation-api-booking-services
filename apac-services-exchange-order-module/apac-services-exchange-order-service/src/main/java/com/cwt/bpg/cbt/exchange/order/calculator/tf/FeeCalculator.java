@@ -58,14 +58,16 @@ public class FeeCalculator {
 		}
 
 		if (input.isOverheadCommissionEnabled()) {
-			if(input.isAirlineOverheadCommissionByPercent()){
-				//Airline OR Commission %
-				breakdown.setTotalOverheadCommission(
-						round(getTotalOverheadCommission(input,breakdown.getTotalAirlineCommission()), scale));
-			}else{
-				//Airline OR Commission $
-				breakdown.setTotalOverheadCommission(getTotalOverheadCommission2(input));
-			}
+            if (input.isAirlineOverheadCommissionByPercent()) {
+                //Airline OR Commission %
+                breakdown.setTotalOverheadCommission(
+                        round(getTotalOverheadCommission(input, breakdown.getTotalAirlineCommission()), scale));
+            }
+            else
+            {
+                //Airline OR Commission $
+                breakdown.setTotalOverheadCommission(getTotalOverheadCommission2(input));
+            }
 		}
 
 		if (input.isMarkupEnabled()) {
