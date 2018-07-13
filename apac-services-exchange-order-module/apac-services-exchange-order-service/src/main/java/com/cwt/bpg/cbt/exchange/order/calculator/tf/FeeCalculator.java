@@ -63,8 +63,7 @@ public class FeeCalculator {
                 breakdown.setTotalOverheadCommission(
                         round(getTotalOverheadCommission(input, breakdown.getTotalAirlineCommission()), scale));
             }
-            else
-            {
+            else{
                 //Airline OR Commission $
                 breakdown.setTotalOverheadCommission(getTotalOverheadCommission2(input));
             }
