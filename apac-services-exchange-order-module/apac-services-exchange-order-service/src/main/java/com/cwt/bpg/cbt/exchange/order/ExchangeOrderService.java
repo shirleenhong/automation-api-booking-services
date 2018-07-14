@@ -208,4 +208,9 @@ public class ExchangeOrderService {
         return exchangeOrderRepo.search(param);
     }
 	
+	public boolean update(ExchangeOrder param)
+    {
+        return exchangeOrderRepo.update(param);
+    }
+	
 }
