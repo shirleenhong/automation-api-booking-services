@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.nio.charset.Charset;
 
+import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirProductInput;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,10 +59,11 @@ public class OtherServiceFeesControllerIndiaNonAirFeeTest {
     public void shouldReturnFeesBreakdown() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
-    	IndiaProduct product = new IndiaProduct();
+        IndiaNonAirProductInput product = new IndiaNonAirProductInput();
     	product.setGstPercent(2D);
     	product.setOt1Percent(5D);
     	product.setOt2Percent(10D);
+    	product.setProductCode("1");
         
         jsonObj.put("commissionByPercent", true);
         jsonObj.put("costAmount", 100);
@@ -70,6 +72,7 @@ public class OtherServiceFeesControllerIndiaNonAirFeeTest {
         jsonObj.put("acctType", "001");
         jsonObj.put("fopType", 2);
         jsonObj.put("fopMode", 3);
+        jsonObj.put("fopNumber", "1");
         jsonObj.put("product", product);
         jsonObj.put("clientAccountNumber", "caNumber");
         jsonObj.put("countryCode", Country.INDIA.getCode());

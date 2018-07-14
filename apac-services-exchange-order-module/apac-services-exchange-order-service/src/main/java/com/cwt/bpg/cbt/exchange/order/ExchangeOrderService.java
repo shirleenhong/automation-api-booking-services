@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static com.cwt.bpg.cbt.calculator.CalculatorUtils.scale;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -8,9 +10,6 @@ import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Optional;
 
-import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
-import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 import org.mongodb.morphia.Key;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +23,12 @@ import org.springframework.stereotype.Service;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
-import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 @Service
 @EnableScheduling
@@ -197,9 +198,14 @@ public class ExchangeOrderService {
 		return exchangeOrderRepo.getExchangeOrder(eoNumber);
 	}
 	
-    public List<ExchangeOrder> search(final ExchangeOrderSearchParam param)
+	public ExchangeOrder getExchangeOrderByPnr(String pnrNumber) {
+        //TODO: Implement this
+        return null;
+    }
+	
+	public List<ExchangeOrder> search(final ExchangeOrderSearchParam param)
     {
         return exchangeOrderRepo.search(param);
     }
-    
+	
 }

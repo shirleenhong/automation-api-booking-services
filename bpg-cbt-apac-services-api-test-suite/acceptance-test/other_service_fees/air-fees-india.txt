@@ -786,3 +786,64 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket Wi
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+    
+Verify That Air Fees Are Calculated Correctly When GST Is Not Enabled
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,100|overhead_commission_enabled,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,5|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,false|products_override_pc,false|products_gst_percentage,5|products_ot1_percentage,1|products_ot2_percentage,5    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    
+Verify That Air Fees Are Calculated Correctly When Discount Is Not Enabled
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,100|overhead_commission_enabled,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,false|discount_percentage,1|yq_tax,5|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,5|products_ot1_percentage,1|products_ot2_percentage,5    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Verify Response Does Not Contain Calculated Fee    element=baseAmount
+    Verify Response Does Not Contain Calculated Fee    element=totalDiscount
+    Verify Response Contains Calculated Fee    element=merchantFeeOnTf
+    Verify Response Contains Calculated Fee    element=totalAirlineCommission
+    Verify Response Contains Calculated Fee    element=totalCharge
+    Verify Response Contains Calculated Fee    element=totalGst
+    Verify Response Contains Calculated Fee    element=totalMerchantFee
+    Verify Response Contains Calculated Fee    element=totalOverheadCommission
+    Verify Response Contains Calculated Fee    element=totalSellFare
+    Verify Response Contains Calculated Fee    element=totalSellingFare
+    Verify Response Contains Calculated Fee    element=totalTaxes
+    
+Verify That Air Fees Are Calculated Correctly When Commission Is Not Enabled
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,false|airline_commission,100|overhead_commission_enabled,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,5|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,5|products_ot1_percentage,1|products_ot2_percentage,5    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Verify Response Does Not Contain Calculated Fee    element=baseAmount
+    Verify Response Does Not Contain Calculated Fee    element=totalAirlineCommission
+    Verify Response Contains Calculated Fee    element=merchantFeeOnTf
+    Verify Response Contains Calculated Fee    element=totalDiscount
+    Verify Response Contains Calculated Fee    element=totalCharge
+    Verify Response Contains Calculated Fee    element=totalGst
+    Verify Response Contains Calculated Fee    element=totalMerchantFee
+    Verify Response Contains Calculated Fee    element=totalOverheadCommission
+    Verify Response Contains Calculated Fee    element=totalSellFare
+    Verify Response Contains Calculated Fee    element=totalSellingFare
+    Verify Response Contains Calculated Fee    element=totalTaxes
+    
+Verify That Air Fees Are Calculated Correctly When Overhead Commission Is Not Enabled
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,100|overhead_commission_enabled,false|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,5|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,5|products_ot1_percentage,1|products_ot2_percentage,5    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Verify Response Does Not Contain Calculated Fee    element=baseAmount
+    Verify Response Does Not Contain Calculated Fee    element=totalOverheadCommission
+    Verify Response Contains Calculated Fee    element=merchantFeeOnTf
+    Verify Response Contains Calculated Fee    element=totalAirlineCommission
+    Verify Response Contains Calculated Fee    element=totalDiscount
+    Verify Response Contains Calculated Fee    element=totalCharge
+    Verify Response Contains Calculated Fee    element=totalGst
+    Verify Response Contains Calculated Fee    element=totalMerchantFee
+    Verify Response Contains Calculated Fee    element=totalSellFare
+    Verify Response Contains Calculated Fee    element=totalSellingFare
+    Verify Response Contains Calculated Fee    element=totalTaxes
