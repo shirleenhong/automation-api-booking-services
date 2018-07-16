@@ -1,6 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -22,15 +24,9 @@ public class Vendor implements Serializable {
 
 	private String city;
 
-	private String contactNo;
-
 	private String country;
 
 	private Integer creditTerms;
-
-	private String email;
-
-	private String faxNumber;
 
 	private Boolean misc;
 
@@ -44,6 +40,8 @@ public class Vendor implements Serializable {
 	private String contactPerson;
 
 	private String supportEmail;
+	
+	private List<ContactInfo> contactInfo = new ArrayList<>();
 	
 	public String getCode() {
 		return code;
@@ -101,14 +99,6 @@ public class Vendor implements Serializable {
 		this.city = city;
 	}
 
-	public String getContactNo() {
-		return contactNo;
-	}
-
-	public void setContactNo(String contactNo) {
-		this.contactNo = contactNo;
-	}
-
 	public String getCountry() {
 		return country;
 	}
@@ -123,22 +113,6 @@ public class Vendor implements Serializable {
 
 	public void setCreditTerms(Integer creditTerms) {
 		this.creditTerms = creditTerms;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getFaxNumber() {
-		return faxNumber;
-	}
-
-	public void setFaxNumber(String faxNumber) {
-		this.faxNumber = faxNumber;
 	}
 
 	public Boolean getMisc() {
@@ -172,4 +146,12 @@ public class Vendor implements Serializable {
     public void setSupportEmail(String supportEmail) {
         this.supportEmail = supportEmail;
     }
+
+	public List<ContactInfo> getContactInfo() {
+		return contactInfo;
+	}
+
+	public void setContactInfo(List<ContactInfo> contactInfo) {
+		this.contactInfo = contactInfo;
+	}
 }

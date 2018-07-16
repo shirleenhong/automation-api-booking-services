@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
 
 
@@ -84,5 +85,10 @@ public class VendorDAOImpl implements VendorDAO {
         logger.info("size of vendors from mssqldb: {}", vendorList.size());
         return vendorList;
     }
+
+	@Override
+	public List<ContactInfo> listVendorContactInfo() {
+		return null;
+	}
 
 }

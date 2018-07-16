@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
@@ -70,6 +71,7 @@ public class MigrationService {
 
 		LOGGER.info("start migration...");
 
+		List<ContactInfo> contactInfoList = vendorDAOFactory.getVendorDAO(countryCode).listVendorContactInfo();
 		List<Vendor> vendorList = vendorDAOFactory.getVendorDAO(countryCode).listVendors();
 		List<BaseProduct> products = productDAOFactory.getProductCodeDAO(countryCode).listProductCodes();
 		
@@ -82,11 +84,67 @@ public class MigrationService {
 			LOGGER.info("vendor:{}", vendor);
 			LOGGER.info("vendor.getProductCodes():" + productCodes);
 
+			if (!ObjectUtils.isEmpty(contactInfoList)) {
+			
+				List<ContactInfo> contactList = new ArrayList<>();
+				
+				contactInfoList.forEach(ci -> {
+					if (vendor.getCode().equals(ci.getVendorNumber())) {	
+						
+						ContactInfo contactInfo = new ContactInfo();
+						contactInfo.setContactType(ci.getContactType());
+						contactInfo.setContactDetails(ci.getContactDetails());
+						contactInfo.setPreferred(ci.getPreferred());
+						contactList.add(contactInfo);
+					}
+
+				});
+				LOGGER.info("size of contact info saved in vendor " + contactList.size());
+				vendor.setContactInfo(contactList);
+			}
+			else {
+				List<ContactInfo> contactList = new ArrayList<>();
+				
+				if(!ObjectUtils.isEmpty(vendor.getEmail())) {
+
+					ContactInfo contactInfo = new ContactInfo();
+					contactInfo.setContactType("EMAIL");
+					contactInfo.setContactDetails(vendor.getEmail());
+					contactInfo.setPreferred(true);
+					contactList.add(contactInfo);
+					
+				}
+				if(!ObjectUtils.isEmpty(vendor.getFaxNumber())) {
+					
+					ContactInfo contactInfo = new ContactInfo();
+					contactInfo.setContactType("FAX");
+					contactInfo.setContactDetails(vendor.getFaxNumber());
+					contactInfo.setPreferred(true);
+					contactList.add(contactInfo);
+		
+				}
+				if(!ObjectUtils.isEmpty(vendor.getContactNo())) {
+					
+					ContactInfo contactInfo = new ContactInfo();
+					contactInfo.setContactType("PHONE");
+					contactInfo.setContactDetails(vendor.getContactNo());
+					contactInfo.setPreferred(true);
+					contactList.add(contactInfo);
+
+				}
+				LOGGER.info("size of contact info saved in vendor " + contactList.size());
+				vendor.setContactInfo(contactList);
+			}
+			
+			vendor.setEmail(null);
+			vendor.setFaxNumber(null);
+			vendor.setContactNo(null);
+			
 			productCodes.forEach(productCode -> {
 				if (productsMap.get(productCode) != null)
 					productsMap.get(productCode).getVendors().add(vendor);
 			});
-
+			
 			vendor.setProductCodes(null);
 		});
 

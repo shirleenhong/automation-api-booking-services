@@ -23,6 +23,12 @@ public class Vendor extends com.cwt.bpg.cbt.exchange.order.model.Vendor {
 	private String hotelFee;
 	
 	private Boolean requireAdvanced;
+	
+	private String email;
+	
+	private String contactNo;
+	
+	private String faxNumber;
 
 	public List<String> getProductCodes() {
 		return productCodes;
@@ -94,6 +100,30 @@ public class Vendor extends com.cwt.bpg.cbt.exchange.order.model.Vendor {
 
 	public void setRequireAdvanced(Boolean requireAdvanced) {
 		this.requireAdvanced = requireAdvanced;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getContactNo() {
+		return contactNo;
+	}
+
+	public void setContactNo(String contactNo) {
+		this.contactNo = contactNo;
+	}
+
+	public String getFaxNumber() {
+		return faxNumber;
+	}
+
+	public void setFaxNumber(String faxNumber) {
+		this.faxNumber = faxNumber;
 	}
 
 }

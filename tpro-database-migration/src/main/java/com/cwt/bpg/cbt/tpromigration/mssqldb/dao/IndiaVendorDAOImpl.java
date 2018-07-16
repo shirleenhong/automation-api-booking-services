@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
 
 @Repository
@@ -92,5 +93,47 @@ public class IndiaVendorDAOImpl implements VendorDAO {
 		}
 		logger.info("size of vendors from mssqldb: {}", vendorList.size());
 		return vendorList;
+	}
+	
+	
+	@Override
+    public List<ContactInfo> listVendorContactInfo(){
+		List<ContactInfo> contactInfoList = new ArrayList<>();
+        String sql = "SELECT * from tblVendorContact";
+        
+        Connection conn = null;
+
+		try {
+			logger.info("getting vendor contacts from mssqldb india");
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ContactInfo contactInfo = new ContactInfo();
+				contactInfo.setVendorNumber(rs.getString("VendorNumber"));
+				contactInfo.setContactType(rs.getString("ContactType"));
+				contactInfo.setContactDetails(rs.getString("ContactDetail"));
+				contactInfo.setPreferred(rs.getBoolean("PreferEOSend"));
+				
+                contactInfoList.add(contactInfo);
+			}
+			rs.close();
+			ps.close();
+		}
+		catch (SQLException e) {
+
+			throw new RuntimeException(e);
+		}
+		finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				}
+				catch (SQLException e) {
+				}
+			}
+		}
+		logger.info("size of vendor contact from mssqldb: {}", contactInfoList.size());
+		return contactInfoList;       
 	}
 }
