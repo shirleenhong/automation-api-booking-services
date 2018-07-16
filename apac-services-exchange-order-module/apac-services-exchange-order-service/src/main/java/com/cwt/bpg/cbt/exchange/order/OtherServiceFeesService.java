@@ -14,6 +14,8 @@ import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculato
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
+import java.util.Optional;
+
 @Service
 public class OtherServiceFeesService {
 
@@ -76,10 +78,22 @@ public class OtherServiceFeesService {
 
     IndiaAirFeesBreakdown calculateIndiaAirFees(IndiaAirFeesInput input)
     {
-        final Client client = clientService.getClient(input.getClientAccountNumber());
-        final int pricingId = getPricingId(input.getClientAccountNumber());
+
+		Optional<Client> isClientExist = Optional.ofNullable(clientService.getClient(input.getClientAccountNumber()));
+
+		Client client = isClientExist
+				.orElseThrow(() -> new IllegalArgumentException(
+						"Client [ " + input.getClientAccountNumber() + " ] not found."));
+
+        final int pricingId = client.getPricingId();
         final AirlineRule airlineRule = airlineRuleService.getAirlineRule(input.getPlatCarrier());
-        final Airport airport = getAirport(input.getCityCode());
+
+		Optional<Airport> isAirportExist = Optional.ofNullable(getAirport(input.getCityCode()));
+
+		Airport airport = isAirportExist
+				.orElseThrow(() -> new IllegalArgumentException(
+						"Airport City Code [ " + input.getClientAccountNumber() + " ] not found."));
+
         final IndiaProduct airProduct = (IndiaProduct) getProduct(Country.INDIA.getCode(), AIR_PRODUCT_CODE);
 
         return this.tfFactory.getCalculator(pricingId)
@@ -92,11 +106,6 @@ public class OtherServiceFeesService {
 
 	private Airport getAirport(String cityCode) {
 		return airportService.getAirport(cityCode);
-	}
-
-	private int getPricingId(String clientAccountNumber) {
-		Client client = clientService.getClient(clientAccountNumber);
-		return client != null ? client.getPricingId() : 0;
 	}
 
 	VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {

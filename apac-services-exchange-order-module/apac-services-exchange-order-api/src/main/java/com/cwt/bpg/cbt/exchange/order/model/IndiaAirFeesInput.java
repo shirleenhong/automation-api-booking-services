@@ -2,11 +2,18 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class IndiaAirFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = 8399565390820971940L;
 
+	@NotNull
 	private BigDecimal baseFare;
+
+	@NotNull
 	private BigDecimal yqTax;
 	private BigDecimal airlineCommission;
 	private BigDecimal fee;
@@ -17,6 +24,8 @@ public class IndiaAirFeesInput extends FeesInput {
 	private Double merchantFeePercent;
 	private BigDecimal tax1;
 	private BigDecimal tax2;
+
+	@NotEmpty
 	private String tripType;
 	private String platCarrier;
 	private boolean gstEnabled;
