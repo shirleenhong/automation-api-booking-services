@@ -196,7 +196,7 @@ public class ExchangeOrderService {
 		return exchangeOrderRepo.getExchangeOrder(eoNumber);
 	}
 
-	public List<ExchangeOrder> getExchangeOrderByPnr(String pnrNumber) {
+	public List<ExchangeOrder> getExchangeOrderByRecordLocator(String pnrNumber) {
 		return exchangeOrderRepo.getByRecordLocator(pnrNumber);
 	}
 }

@@ -129,11 +129,11 @@ public class ExchangeOrderControllerTest {
     public void shouldGetExchangeOrderByPNR() throws Exception {
 
         ExchangeOrder order = new ExchangeOrder();
-        when(eoService.getExchangeOrderByPnr(pnr)).thenReturn(Arrays.asList(order));
+        when(eoService.getExchangeOrderByRecordLocator(pnr)).thenReturn(Arrays.asList(order));
 
         mockMvc.perform(get(url + "/" + pnr)).andExpect(status().isOk());
 
-        verify(eoService, times(1)).getExchangeOrderByPnr(pnr);
+        verify(eoService, times(1)).getExchangeOrderByRecordLocator(pnr);
     }
 
 	@Test
