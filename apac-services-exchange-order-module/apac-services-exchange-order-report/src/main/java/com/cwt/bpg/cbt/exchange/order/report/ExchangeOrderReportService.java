@@ -148,7 +148,8 @@ public class ExchangeOrderReportService {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
 
-			String emailRecipient = getEmail(exchangeOrder.getVendor().getEmail());
+			//TODO: For TA5768: replace this with the email via contactInfo
+			String emailRecipient = getEmail(exchangeOrder.getVendor().getSupportEmail());
 			if(StringUtils.isEmpty(emailRecipient)) {
 				LOGGER.error(EMAIL_ERROR_MESSAGE);
 				response.setMessage(EMAIL_ERROR_MESSAGE);

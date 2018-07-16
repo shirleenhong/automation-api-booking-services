@@ -60,10 +60,7 @@ public class ProductRepositoryTest
 		vendorA.setAddress1("");
 		vendorA.setAddress2("");
 		vendorA.setCity("SINGAPORE");
-		vendorA.setContactNo("");
 		vendorA.setCountry("SINGAPORE");
-		vendorA.setEmail("");
-		vendorA.setFaxNumber("");
 		vendorA.setMisc(false);
 		vendorA.setSortKey("BSP");
 		vendorA.setName("BANK SETTLEMENT PLAN");
@@ -86,10 +83,7 @@ public class ProductRepositoryTest
 		vendorB.setAddress1("");
 		vendorB.setAddress2("");
 		vendorB.setCity("SINGAPORE");
-		vendorB.setContactNo("");
 		vendorB.setCountry("SINGAPORE");
-		vendorB.setEmail("");
-		vendorB.setFaxNumber("");
 		vendorB.setMisc(false);
 		vendorB.setSortKey("BSP");
 		vendorB.setName("BANK SETTLEMENT PLAN");

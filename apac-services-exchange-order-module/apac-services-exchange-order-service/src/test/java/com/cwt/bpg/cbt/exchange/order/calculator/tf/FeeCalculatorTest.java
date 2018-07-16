@@ -61,6 +61,7 @@ public class FeeCalculatorTest {
         input.setCityCode("BLR");
         input.setTripType(TripTypes.INTERNATIONAL.getCode());
 		input.setProduct(createProduct());
+		input.setAirlineOverheadCommissionByPercent(true);
 
         airlineRule = createAirlineRule();
         airport = createAirport();
@@ -407,6 +408,9 @@ public class FeeCalculatorTest {
     public void shouldGetTotalOverheadCommission2International() {
         input.setTripType(TripTypes.INTERNATIONAL.getCode());
         input.setBaseFare(new BigDecimal(100));
+        input.setAirlineOverheadCommissionByPercent(false);
+
+
         input.setAirlineOverheadCommission(new BigDecimal(15));
         input.setClientOverheadCommissionPercent(50d);
 
@@ -421,7 +425,7 @@ public class FeeCalculatorTest {
 
         BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission2(input);
 
-        assertThat(totalOverheadCommission, is(nullValue(BigDecimal.class)));
+        assertThat(totalOverheadCommission, is(BigDecimal.ZERO));
     }
 
 
