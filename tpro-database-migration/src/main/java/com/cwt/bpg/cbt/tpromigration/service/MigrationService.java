@@ -153,7 +153,7 @@ public class MigrationService {
 		productList.setCountryCode(countryCode);
 		productList.setProducts(new ArrayList<>(productsMap.values()));
 
-		mongoDbConnection.getCollection("productList_")
+		mongoDbConnection.getCollection("productList")
 				.insertOne(dBObjectMapper.mapAsDbDocument(productList.getCountryCode(), productList));
 	}
 
