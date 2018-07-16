@@ -192,7 +192,18 @@ Calculate Air Fees-IN Total Merchant Fee
     Set Test Variable    ${total_merchant_fee_amount}    ${calculated_value}
     
 Calculate Air Fees-IN Total Overhead Commission
+    Run Keyword If    "${airline_overhead_commission_by_percent_value}" == "true"  Calculate Air Fees-IN Total Overhead Commission Percent    ELSE    Calculate Air Fees-IN Total Overhead Commission Amount  
+    
+Calculate Air Fees-IN Total Overhead Commission Percent
     ${total_overhead_commission_formula}    Set Variable If    "${air_pricing_id}" != "26" and "${trip_type_value}" == "I"    ((${base_fare_value}-${total_airline_commission_amount})*(${airline_overhead_commission_percentage_value}*0.01))*(${client_overhead_commission_percentage_value}*0.01)    ${EMPTY}          
+    ${calculated_value}    Run Keyword If    "${total_overhead_commission_formula}" != "${EMPTY}"    Evaluate   ${total_overhead_commission_formula}    
+    ${calculated_value}    Run Keyword If    "${total_overhead_commission_formula}" != "${EMPTY}"    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}   
+    Run Keyword If    "${calculated_value}" != "None"    Set Test Variable    ${total_overhead_commission_amount}    ${calculated_value} 
+    
+Calculate Air Fees-IN Total Overhead Commission Amount
+    ${total_overhead_commission_formula}    Set Variable If    "${air_pricing_id}" != "26" and "${trip_type_value}" == "I"    ${airline_overhead_commission_value}*(${client_overhead_commission_percentage_value}*0.01)    ${EMPTY}          
     ${calculated_value}    Run Keyword If    "${total_overhead_commission_formula}" != "${EMPTY}"    Evaluate   ${total_overhead_commission_formula}    
     ${calculated_value}    Run Keyword If    "${total_overhead_commission_formula}" != "${EMPTY}"    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
@@ -429,7 +440,8 @@ Send Other Service Fees For Air Fees IN Post Request
     ${other_service_fees_request_list_2}    Create List
     ${other_service_fees_products_list}    Create List
     Run Keyword If    "${air_segment_count_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airSegmentCount":${air_segment_count_value}
-    Run Keyword If    "${airline_commission_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineCommission":${airline_commission_value} 
+    Run Keyword If    "${airline_commission_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineCommission":${airline_commission_value}
+    Run Keyword If    "${airline_overhead_commission_by_percent_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineOverheadCommissionByPercent":${airline_overhead_commission_by_percent_value} 
     Run Keyword If    "${airline_overhead_commission_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineOverheadCommissionPercent":${airline_overhead_commission_percentage_value}
     Run Keyword If    "${airline_overhead_commission_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineOverheadCommission":${airline_overhead_commission_value}
     Run Keyword If    "${base_fare_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "baseFare":${base_fare_value}
@@ -440,7 +452,7 @@ Send Other Service Fees For Air Fees IN Post Request
     Run Keyword If    "${discount_enabled_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "discountEnabled":${discount_enabled_value}
     Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "discountPercent":${discount_percentage_value}
     Run Keyword If    "${fee_override_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "feeOverride":${fee_override_value}
-    Run Keyword If    "${fee_override_value}"=="true"    Append To List    ${other_service_fees_request_list_1}    "fee":${transaction_fee_value}
+    Run Keyword If    "${fee_override_value}"=="true"    Run Keyword If    "${transaction_fee_value}" !="null"    Append To List    ${other_service_fees_request_list_1}    "fee":${transaction_fee_value}
     Run Keyword If    "${gst_enabled_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "gstEnabled":${gst_enabled_value}
     Run Keyword If    "${markup_enabled_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "markupEnabled":${markup_enabled_value}
     Run Keyword If    "${merchant_fee_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "merchantFeePercent":${merchant_fee_percentage_value}
