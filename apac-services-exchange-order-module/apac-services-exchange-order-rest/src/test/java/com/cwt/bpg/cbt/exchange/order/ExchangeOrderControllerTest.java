@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.Arrays;
 
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
@@ -128,11 +129,11 @@ public class ExchangeOrderControllerTest {
     public void shouldGetExchangeOrderByPNR() throws Exception {
 
         ExchangeOrder order = new ExchangeOrder();
-        when(eoService.getExchangeOrderByPnr(pnr)).thenReturn(order);
+        when(eoService.getExchangeOrderByRecordLocator(pnr)).thenReturn(Arrays.asList(order));
 
         mockMvc.perform(get(url + "/" + pnr)).andExpect(status().isOk());
 
-        verify(eoService, times(1)).getExchangeOrderByPnr(pnr);
+        verify(eoService, times(1)).getExchangeOrderByRecordLocator(pnr);
     }
 
 	@Test
