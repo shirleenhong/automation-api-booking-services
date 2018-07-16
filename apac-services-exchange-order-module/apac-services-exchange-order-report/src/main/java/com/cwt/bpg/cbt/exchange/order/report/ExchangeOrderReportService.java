@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -32,6 +33,7 @@ import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 
@@ -148,8 +150,19 @@ public class ExchangeOrderReportService {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
 
-			//TODO: For TA5768: replace this with the email via contactInfo
-			String emailRecipient = getEmail(exchangeOrder.getVendor().getSupportEmail());
+			List<ContactInfo> contactInfoList  = exchangeOrder.getVendor().getContactInfo();
+			
+			StringBuilder sbEmail = new StringBuilder();
+			contactInfoList.forEach(ci -> {
+				if(ci.getContactType().equalsIgnoreCase("Email")) {
+					sbEmail.append(ci.getContactDetails());
+					sbEmail.append(",");
+				}
+			});
+			
+			String email = sbEmail.toString();
+			
+			String emailRecipient = getEmail(email);
 			if(StringUtils.isEmpty(emailRecipient)) {
 				LOGGER.error(EMAIL_ERROR_MESSAGE);
 				response.setMessage(EMAIL_ERROR_MESSAGE);
