@@ -154,7 +154,7 @@ public class ExchangeOrderReportService {
 			
 			StringBuilder sbEmail = new StringBuilder();
 			contactInfoList.forEach(ci -> {
-				if(ci.getContactType().equalsIgnoreCase("Email")) {
+				if (ci.getContactType().equalsIgnoreCase("Email") && ci.getPreferred()) {
 					sbEmail.append(ci.getContactDetails());
 					sbEmail.append(",");
 				}
