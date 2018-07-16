@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
+import java.util.List;
+
 @Repository
 public class ExchangeOrderRepository {
 	
@@ -28,4 +30,9 @@ public class ExchangeOrderRepository {
 			.equal(eoNumber).get();
 	}
 
+	public List<ExchangeOrder> getByRecordLocator(String eoNumber) {
+		return morphia.getDatastore().createQuery(ExchangeOrder.class)
+				.field("recordLocator")
+				.equal(eoNumber).asList();
+	}
 }
