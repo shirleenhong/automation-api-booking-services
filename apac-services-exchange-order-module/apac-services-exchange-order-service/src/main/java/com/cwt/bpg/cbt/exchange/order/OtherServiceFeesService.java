@@ -76,8 +76,7 @@ public class OtherServiceFeesService {
 	    return this.osFactory.getCalculator(input.getCountryCode()).calculate(input, merchantFee);
 	}
 
-    IndiaAirFeesBreakdown calculateIndiaAirFees(IndiaAirFeesInput input)
-    {
+    IndiaAirFeesBreakdown calculateIndiaAirFees(IndiaAirFeesInput input){
 
 		Optional<Client> isClientExist = Optional.ofNullable(clientService.getClient(input.getClientAccountNumber()));
 
