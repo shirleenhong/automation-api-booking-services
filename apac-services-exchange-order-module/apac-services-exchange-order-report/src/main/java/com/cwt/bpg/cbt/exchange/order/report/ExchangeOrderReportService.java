@@ -48,11 +48,17 @@ public class ExchangeOrderReportService {
 
 	private static final String EMAIL_ERROR_MESSAGE = "Email cannot be empty.";
 
-    private static final String ERROR_MESSAGE = "Error encountered while sending email.";
+	private static final String ERROR_MESSAGE = "Error encountered while sending email.";
 
-    private static final String DATE_PATTERN = "dd-MMM-yyyy";
+	private static final String DATE_PATTERN = "dd-MMM-yyyy";
 
-    @Autowired
+	private static final String PHONE = "phone";
+
+	private static final String FAX = "fax";
+
+	private static final String EMAIL = "email";
+
+	@Autowired
 	private ExchangeOrderService exchangeOrderService;
 
 	@Autowired
@@ -62,36 +68,33 @@ public class ExchangeOrderReportService {
 	private ScaleConfig scaleConfig;
 
 	@Autowired
-    private EmailContentProcessor emailContentProcessor;
+	private EmailContentProcessor emailContentProcessor;
 
 	@Value("${exchange.order.mail.sender}")
 	private String eoMailSender;
 
-    @Value("${exchange.order.email.test.recipient}")
+	@Value("${exchange.order.email.test.recipient}")
 	private String eoMailRecipient;
 
 	private static final String TEMPLATE = "jasper/exchange-order.jasper";
 	private static final String IMAGE_PATH = "jasper/cwt-logo.png";
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderReportService.class);
-	
-	public byte[] generatePdf(String eoNumber)
-			throws ExchangeOrderNoContentException, ApiServiceException {
-    
+
+	public byte[] generatePdf(String eoNumber) throws ExchangeOrderNoContentException, ApiServiceException {
+
 		Optional<ExchangeOrder> eoExists = Optional.ofNullable(getExchangeOrder(eoNumber));
 
-		ExchangeOrder exchangeOrder = eoExists.orElseThrow(() -> new ExchangeOrderNoContentException(
-				"Exchange order number not found: [ " + eoNumber + " ]"));
+		ExchangeOrder exchangeOrder = eoExists.orElseThrow(
+				() -> new ExchangeOrderNoContentException("Exchange order number not found: [ " + eoNumber + " ]"));
 
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
 
 		try {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
-					prepareParameters(exchangeOrder),
-					new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
+					prepareParameters(exchangeOrder), new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
 			return JasperExportManager.exportReportToPdf(jasperPrint);
-		}
-		catch (JRException | IOException e) {
+		} catch (JRException | IOException e) {
 			throw new ApiServiceException(e.getMessage());
 		}
 	}
@@ -106,10 +109,36 @@ public class ExchangeOrderReportService {
 		parameters.put("nettCost", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getNettCost()));
 		parameters.put("tax2", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTax2()));
 		parameters.put("total", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTotal()));
-        Optional<BigDecimal> tax1 = Optional.ofNullable(exchangeOrder.getGstAmount());
-        parameters.put("gstAmountTax1", formatAmount(exchangeOrder.getCountryCode(), tax1.orElse(exchangeOrder.getTax1())));
+		Optional<BigDecimal> tax1 = Optional.ofNullable(exchangeOrder.getGstAmount());
+		parameters.put("gstAmountTax1",
+				formatAmount(exchangeOrder.getCountryCode(), tax1.orElse(exchangeOrder.getTax1())));
+		setContactInfo(exchangeOrder.getVendor().getContactInfo(), parameters);
 
 		return parameters;
+	}
+
+	private void setContactInfo(List<ContactInfo> contactInfoList, Map<String, Object> parameters) {
+
+		boolean isCurrPhonePref = false;
+		boolean isCurrFaxPref = false;
+		boolean isCurrEmailPref = false;
+
+		for (ContactInfo contactInfo : contactInfoList) {
+
+			if (contactInfo.getType().equalsIgnoreCase(PHONE)
+					&& (!parameters.containsKey(PHONE) || (contactInfo.isPreferred() && !isCurrPhonePref))) {
+				parameters.put(PHONE, contactInfo.getDetail());
+				isCurrPhonePref = (contactInfo.isPreferred() && !isCurrPhonePref) ? true : false;
+			} else if (contactInfo.getType().equalsIgnoreCase(FAX)
+					&& (!parameters.containsKey(FAX) || (contactInfo.isPreferred() && !isCurrFaxPref))) {
+				parameters.put(FAX, contactInfo.getDetail());
+				isCurrFaxPref = (contactInfo.isPreferred() && !isCurrFaxPref) ? true : false;
+			} else if (contactInfo.getType().equalsIgnoreCase(EMAIL)
+					&& (!parameters.containsKey(EMAIL) || (contactInfo.isPreferred() && !isCurrEmailPref))) {
+				parameters.put(EMAIL, contactInfo.getDetail());
+				isCurrEmailPref = (contactInfo.isPreferred() && !isCurrEmailPref) ? true : false;
+			}
+		}
 	}
 
 	private String getDate(ExchangeOrder exchangeOrder) {
@@ -118,23 +147,22 @@ public class ExchangeOrderReportService {
 	}
 
 	private String formatDate(Instant instant) {
-		return instant == null ? "" : DateTimeFormatter.ofPattern(DATE_PATTERN)
-				.format(LocalDateTime.ofInstant(instant, ZoneOffset.UTC));
+		return instant == null ? ""
+				: DateTimeFormatter.ofPattern(DATE_PATTERN).format(LocalDateTime.ofInstant(instant, ZoneOffset.UTC));
 	}
-	
-	private String formatAmount(String countryCode, BigDecimal amount) {
-	    if (amount != null) {
-            int scale = scaleConfig.getScale(countryCode);
-            DecimalFormat formatter = new DecimalFormat("$#,##0.00");
-            formatter.setMinimumFractionDigits(scale);
-            formatter.setMaximumFractionDigits(scale);
-            formatter.setRoundingMode(RoundingMode.DOWN);
 
-            return formatter.format(amount);
-        }
-        else {
-	        return "";
-        }
+	private String formatAmount(String countryCode, BigDecimal amount) {
+		if (amount != null) {
+			int scale = scaleConfig.getScale(countryCode);
+			DecimalFormat formatter = new DecimalFormat("$#,##0.00");
+			formatter.setMinimumFractionDigits(scale);
+			formatter.setMaximumFractionDigits(scale);
+			formatter.setRoundingMode(RoundingMode.DOWN);
+
+			return formatter.format(amount);
+		} else {
+			return "";
+		}
 
 	}
 
@@ -150,8 +178,8 @@ public class ExchangeOrderReportService {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
 
-			List<ContactInfo> contactInfoList  = exchangeOrder.getVendor().getContactInfo();
-			
+			List<ContactInfo> contactInfoList = exchangeOrder.getVendor().getContactInfo();
+
 			StringBuilder sbEmail = new StringBuilder();
 			contactInfoList.forEach(ci -> {
 				if (ci.getType().equalsIgnoreCase("Email") && ci.isPreferred()) {
@@ -161,9 +189,9 @@ public class ExchangeOrderReportService {
 			});
 
 			String email = sbEmail.toString();
-			
+
 			String emailRecipient = getEmail(email);
-			if(StringUtils.isEmpty(emailRecipient)) {
+			if (StringUtils.isEmpty(emailRecipient)) {
 				LOGGER.error(EMAIL_ERROR_MESSAGE);
 				response.setMessage(EMAIL_ERROR_MESSAGE);
 				response.setSuccess(false);
@@ -174,8 +202,7 @@ public class ExchangeOrderReportService {
 			byte[] pdf = generatePdf(eoNumber);
 
 			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message, (pdf != null),
-					StandardCharsets.UTF_8.name());
+			MimeMessageHelper helper = new MimeMessageHelper(message, (pdf != null), StandardCharsets.UTF_8.name());
 
 			helper.setTo(InternetAddress.parse(emailRecipient));
 			helper.setFrom(eoMailSender);
@@ -185,19 +212,16 @@ public class ExchangeOrderReportService {
 			mailSender.send(message);
 
 			response.setSuccess(true);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			LOGGER.error(ERROR_MESSAGE, e);
 			throw new ApiServiceException(ERROR_MESSAGE);
 		}
 
-        return response;
+		return response;
 	}
 
 	private String getEmail(String email) {
-		return !StringUtils.isEmpty(eoMailRecipient)
-				? eoMailRecipient
-				: email;
+		return !StringUtils.isEmpty(eoMailRecipient) ? eoMailRecipient : email;
 	}
 
 }
