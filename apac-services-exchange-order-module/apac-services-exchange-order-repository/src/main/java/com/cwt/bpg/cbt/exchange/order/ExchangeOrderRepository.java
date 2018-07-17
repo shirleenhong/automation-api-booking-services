@@ -16,8 +16,6 @@ import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
-import java.util.List;
-
 @Repository
 public class ExchangeOrderRepository
 {
