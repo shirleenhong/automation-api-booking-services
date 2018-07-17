@@ -9,10 +9,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
@@ -78,6 +75,8 @@ public class ExchangeOrderReportService {
 
 	private static final String TEMPLATE = "jasper/exchange-order.jasper";
 	private static final String IMAGE_PATH = "jasper/cwt-logo.png";
+
+	private int count;
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ExchangeOrderReportService.class);
@@ -195,23 +194,38 @@ public class ExchangeOrderReportService {
 	public EmailResponse emailPdf(String eoNumber) throws ApiServiceException {
 
 		EmailResponse response = new EmailResponse();
-
+		
+		StringBuilder sbEmail = new StringBuilder();
+		StringBuilder sbEmailNotPreferred = new StringBuilder();
+		List<String> emailListNotPreferred = new ArrayList<>();
+		
+		count = 0;
+		
 		try {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
-
-			List<ContactInfo> contactInfoList = exchangeOrder.getVendor()
-					.getContactInfo();
-
-			StringBuilder sbEmail = new StringBuilder();
+			List<ContactInfo> contactInfoList  = exchangeOrder.getVendor().getContactInfo();
+			
 			contactInfoList.forEach(ci -> {
-				if (ci.getType().equalsIgnoreCase("Email") && ci.isPreferred()) {
-					sbEmail.append(ci.getDetail());
-					sbEmail.append(",");
+				if (ci.getType().equalsIgnoreCase("Email")) {
+					if (ci.isPreferred()) {
+						sbEmail.append(ci.getDetail());
+						sbEmail.append(",");
+					}
+					else {
+						emailListNotPreferred.add(ci.getDetail());
+
+						sbEmailNotPreferred.append(ci.getDetail());
+						sbEmailNotPreferred.append(",");
+					}
+					count++;
 				}
 			});
 
 			String email = sbEmail.toString();
+			if (count == emailListNotPreferred.size()) {
+				email = sbEmailNotPreferred.toString();
+			}
 
 			String emailRecipient = getEmail(email);
 			if (StringUtils.isEmpty(emailRecipient)) {
@@ -242,11 +256,13 @@ public class ExchangeOrderReportService {
 			throw new ApiServiceException(ERROR_MESSAGE);
 		}
 
-		return response;
+        return response;
 	}
 
 	private String getEmail(String email) {
-		return !StringUtils.isEmpty(eoMailRecipient) ? eoMailRecipient : email;
+		return !StringUtils.isEmpty(eoMailRecipient)
+				? eoMailRecipient
+				: email;
 	}
 
 }
