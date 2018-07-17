@@ -168,7 +168,7 @@ public class ExchangeOrderControllerTest {
 		order.setRecordLocator("PNR1234");
 		order.setNettCost(new BigDecimal(0));
 		order.setTotal(new BigDecimal(0));
-		order.setEoAction("EO Action");
+		order.setEoAction(EoAction.EMAIL);
 		order.setStatus("A");
 		order.setRaiseCheque("Raise Cheque");
 
