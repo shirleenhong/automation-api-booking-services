@@ -92,9 +92,9 @@ public class MigrationService {
 					if (vendor.getCode().equals(ci.getVendorNumber())) {	
 						
 						ContactInfo contactInfo = new ContactInfo();
-						contactInfo.setContactType(ci.getContactType());
-						contactInfo.setContactDetails(ci.getContactDetails());
-						contactInfo.setPreferred(ci.getPreferred());
+						contactInfo.setType(ci.getType());
+						contactInfo.setDetail(ci.getDetail());
+						contactInfo.setPreferred(ci.isPreferred());
 						contactList.add(contactInfo);
 					}
 
@@ -108,8 +108,8 @@ public class MigrationService {
 				if(!ObjectUtils.isEmpty(vendor.getEmail())) {
 
 					ContactInfo contactInfo = new ContactInfo();
-					contactInfo.setContactType("EMAIL");
-					contactInfo.setContactDetails(vendor.getEmail());
+					contactInfo.setType("EMAIL");
+					contactInfo.setDetail(vendor.getEmail());
 					contactInfo.setPreferred(true);
 					contactList.add(contactInfo);
 					
@@ -117,8 +117,8 @@ public class MigrationService {
 				if(!ObjectUtils.isEmpty(vendor.getFaxNumber())) {
 					
 					ContactInfo contactInfo = new ContactInfo();
-					contactInfo.setContactType("FAX");
-					contactInfo.setContactDetails(vendor.getFaxNumber());
+					contactInfo.setType("FAX");
+					contactInfo.setDetail(vendor.getFaxNumber());
 					contactInfo.setPreferred(true);
 					contactList.add(contactInfo);
 		
@@ -126,8 +126,8 @@ public class MigrationService {
 				if(!ObjectUtils.isEmpty(vendor.getContactNo())) {
 					
 					ContactInfo contactInfo = new ContactInfo();
-					contactInfo.setContactType("PHONE");
-					contactInfo.setContactDetails(vendor.getContactNo());
+					contactInfo.setType("PHONE");
+					contactInfo.setDetail(vendor.getContactNo());
 					contactInfo.setPreferred(true);
 					contactList.add(contactInfo);
 
