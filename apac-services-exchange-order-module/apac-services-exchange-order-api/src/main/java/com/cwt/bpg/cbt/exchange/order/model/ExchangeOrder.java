@@ -27,8 +27,17 @@ public class ExchangeOrder implements Serializable {
 
 	@Id
 	private String eoNumber;
+
+	@NotNull
+	@DecimalMin(value = "0")
 	private BigDecimal commission;
+
+	@NotNull
+	@DecimalMin(value = "0")
 	private BigDecimal gstAmount;
+
+	@NotNull
+	@DecimalMin(value = "0")
 	private BigDecimal merchantFee;
 	private String countryCode;
 

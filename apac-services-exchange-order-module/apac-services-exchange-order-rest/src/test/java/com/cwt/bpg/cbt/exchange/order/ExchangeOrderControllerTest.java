@@ -76,6 +76,9 @@ public class ExchangeOrderControllerTest {
 	public void shouldReturnExchangeOrderNumber() throws Exception {
 
 		ExchangeOrder order = createExchangeOrder();
+		order.setCommission(BigDecimal.ZERO);
+		order.setGstAmount(BigDecimal.ZERO);
+		order.setMerchantFee(BigDecimal.ZERO);
 		order.setEoNumber("1122334455");
 
 		when(eoService.saveExchangeOrder(any(ExchangeOrder.class))).thenReturn(order);
@@ -90,6 +93,9 @@ public class ExchangeOrderControllerTest {
 	public void shouldReturnBadRequestWhenFopTypeCXAndCreditCardNull() throws Exception {
 
 		ExchangeOrder order = createExchangeOrder();
+		order.setCommission(BigDecimal.ZERO);
+		order.setGstAmount(BigDecimal.ZERO);
+		order.setMerchantFee(BigDecimal.ZERO);
 		order.setFopType("CX");
 		order.setEoNumber("1122334455");
 		order.setCreditCard(null);
@@ -104,7 +110,9 @@ public class ExchangeOrderControllerTest {
 	public void shouldHandleExchangeOrderNotFoundException() throws Exception {
 
 		ExchangeOrder order = createExchangeOrder();
-
+		order.setCommission(BigDecimal.ZERO);
+		order.setGstAmount(BigDecimal.ZERO);
+		order.setMerchantFee(BigDecimal.ZERO);
 		when(eoService.saveExchangeOrder(anyObject()))
 				.thenThrow(new ExchangeOrderNoContentException("eo number not found"));
 
