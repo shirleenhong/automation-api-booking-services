@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
-@Indexes(@Index(fields = @Field("eoNumber")))
+@Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder implements Serializable {
 
 	private static final long serialVersionUID = 79442657760597469L;
