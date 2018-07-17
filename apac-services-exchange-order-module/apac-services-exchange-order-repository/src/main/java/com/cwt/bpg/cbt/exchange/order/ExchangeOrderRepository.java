@@ -16,6 +16,8 @@ import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
+import java.util.List;
+
 @Repository
 public class ExchangeOrderRepository
 {
@@ -95,4 +97,9 @@ public class ExchangeOrderRepository
         return result.getUpdatedExisting();
     }
 
+	public List<ExchangeOrder> getByRecordLocator(String eoNumber) {
+		return morphia.getDatastore().createQuery(ExchangeOrder.class)
+				.field("recordLocator")
+				.equal(eoNumber).asList();
+	}
 }

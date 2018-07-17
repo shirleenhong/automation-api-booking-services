@@ -77,10 +77,10 @@ public class ExchangeOrderController {
 	@GetMapping(path = "/exchange-order/{pnr:^[a-zA-Z0-9]{6}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction based on PNR (6 digit alphanumeric string).")
-	public ResponseEntity<ExchangeOrder> getExchangeOrderByPnr(
+	public ResponseEntity<List<ExchangeOrder>> getExchangeOrderByRecordLocator(
 			@PathVariable @ApiParam(value = "PNR number") String pnr) {
 
-		return new ResponseEntity<>(eoService.getExchangeOrderByPnr(pnr), HttpStatus.OK);
+		return new ResponseEntity<>(eoService.getExchangeOrderByRecordLocator(pnr), HttpStatus.OK);
 	}
 
 	@GetMapping(
