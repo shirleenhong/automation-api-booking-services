@@ -111,8 +111,8 @@ public class IndiaVendorDAOImpl implements VendorDAO {
 			while (rs.next()) {
 				ContactInfo contactInfo = new ContactInfo();
 				contactInfo.setVendorNumber(rs.getString("VendorNumber"));
-				contactInfo.setContactType(rs.getString("ContactType"));
-				contactInfo.setContactDetails(rs.getString("ContactDetail"));
+				contactInfo.setType(rs.getString("ContactType"));
+				contactInfo.setDetail(rs.getString("ContactDetail"));
 				contactInfo.setPreferred(rs.getBoolean("PreferEOSend"));
 				
                 contactInfoList.add(contactInfo);
