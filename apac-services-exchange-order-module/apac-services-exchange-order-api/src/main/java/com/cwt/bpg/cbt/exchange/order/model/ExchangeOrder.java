@@ -10,7 +10,11 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.mongodb.morphia.annotations.*;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
@@ -147,6 +151,8 @@ public class ExchangeOrder implements Serializable {
 
 	private List<String> itineraryRemarks;
 
+	private String lastUpdatedByUser;
+	
 	@NotNull
 	@Valid
 	private Vendor vendor;
@@ -430,4 +436,13 @@ public class ExchangeOrder implements Serializable {
 	public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
 		this.merchantFeeAbsorb = merchantFeeAbsorb;
 	}
+
+    public String getLastUpdatedByUser() {
+        return lastUpdatedByUser;
+    }
+
+    public void setLastUpdatedByUser(String lastUpdatedByUser) {
+        this.lastUpdatedByUser = lastUpdatedByUser;
+    }
+    
 }

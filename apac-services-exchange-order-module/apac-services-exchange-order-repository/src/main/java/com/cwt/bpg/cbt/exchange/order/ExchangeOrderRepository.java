@@ -52,6 +52,10 @@ public class ExchangeOrderRepository
         {
             query.field("vendor.code").equal(param.getVendor().getCode());
         }
+        if (StringUtils.isNotBlank(param.getVendor().getRaiseType()))
+        {
+            query.field("vendor.raiseType").equal(param.getVendor().getRaiseType());
+        }
         if (StringUtils.isNotBlank(param.getStatus()))
         {
             query.field("status").equal(param.getStatus());
@@ -88,6 +92,7 @@ public class ExchangeOrderRepository
 
         final UpdateOperations<ExchangeOrder> ops = morphia.getDatastore().createUpdateOperations(ExchangeOrder.class);
         ops.set("status", param.getStatus());
+        ops.set("lastUpdatedByUser", param.getLastUpdatedByUser());
         ops.set("updateDateTime", param.getUpdateDateTime());
         ops.set("raiseCheque", param.getRaiseCheque());
         

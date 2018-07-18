@@ -118,6 +118,7 @@ public class ExchangeOrderController {
     public List<ExchangeOrder> search(
             @RequestParam(name = "eoNumber", required = false ) @ApiParam(value = "Exchange order number") String eoNumber,
             @RequestParam(name = "vendorCode", required = false) @ApiParam(value = "Vendor") String vendorCode,
+            @RequestParam(name = "raiseType", required = false) @ApiParam(value = "Payment Type") String raiseType,
             @RequestParam(name = "recordLocator", required = false) @ApiParam(value = "PNR") String recordLocator,
             @RequestParam(name = "status", required = false) @ApiParam(value = "Status") String status,
             @RequestParam(name = "startCreationDate", required = false) @ApiParam(value = "Start Creation Date") Instant startCreationDate,
@@ -127,6 +128,7 @@ public class ExchangeOrderController {
         param.setEoNumber(eoNumber);
         final Vendor vendor = new Vendor();
         vendor.setCode(vendorCode);
+        vendor.setRaiseType(raiseType);
         param.setVendor(vendor);
         param.setRecordLocator(recordLocator);
         param.setStatus(status);
