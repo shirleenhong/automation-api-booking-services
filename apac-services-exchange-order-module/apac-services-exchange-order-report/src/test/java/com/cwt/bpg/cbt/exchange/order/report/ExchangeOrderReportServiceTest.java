@@ -19,8 +19,6 @@ import com.cwt.bpg.cbt.exchange.order.model.Header;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
-//TODO: For TA5768 - remove @ignore once jrxml is fixed 
-@Ignore
 public class ExchangeOrderReportServiceTest {
 
 	@Mock

@@ -9,10 +9,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
@@ -48,11 +45,17 @@ public class ExchangeOrderReportService {
 
 	private static final String EMAIL_ERROR_MESSAGE = "Email cannot be empty.";
 
-    private static final String ERROR_MESSAGE = "Error encountered while sending email.";
+	private static final String ERROR_MESSAGE = "Error encountered while sending email.";
 
-    private static final String DATE_PATTERN = "dd-MMM-yyyy";
+	private static final String DATE_PATTERN = "dd-MMM-yyyy";
 
-    @Autowired
+	private static final String PHONE = "PHONE";
+
+	private static final String FAX = "FAX";
+
+	private static final String EMAIL = "EMAIL";
+
+	@Autowired
 	private ExchangeOrderService exchangeOrderService;
 
 	@Autowired
@@ -62,32 +65,37 @@ public class ExchangeOrderReportService {
 	private ScaleConfig scaleConfig;
 
 	@Autowired
-    private EmailContentProcessor emailContentProcessor;
+	private EmailContentProcessor emailContentProcessor;
 
 	@Value("${exchange.order.mail.sender}")
 	private String eoMailSender;
 
-    @Value("${exchange.order.email.test.recipient}")
+	@Value("${exchange.order.email.test.recipient}")
 	private String eoMailRecipient;
 
 	private static final String TEMPLATE = "jasper/exchange-order.jasper";
 	private static final String IMAGE_PATH = "jasper/cwt-logo.png";
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderReportService.class);
-	
+	private int count;
+
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(ExchangeOrderReportService.class);
+
 	public byte[] generatePdf(String eoNumber)
 			throws ExchangeOrderNoContentException, ApiServiceException {
-    
-		Optional<ExchangeOrder> eoExists = Optional.ofNullable(getExchangeOrder(eoNumber));
 
-		ExchangeOrder exchangeOrder = eoExists.orElseThrow(() -> new ExchangeOrderNoContentException(
-				"Exchange order number not found: [ " + eoNumber + " ]"));
+		Optional<ExchangeOrder> eoExists = Optional
+				.ofNullable(getExchangeOrder(eoNumber));
+
+		ExchangeOrder exchangeOrder = eoExists
+				.orElseThrow(() -> new ExchangeOrderNoContentException(
+						"Exchange order number not found: [ " + eoNumber + " ]"));
 
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
 
 		try {
-			JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
-					prepareParameters(exchangeOrder),
+			JasperPrint jasperPrint = JasperFillManager.fillReport(
+					resource.getInputStream(), prepareParameters(exchangeOrder),
 					new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
 			return JasperExportManager.exportReportToPdf(jasperPrint);
 		}
@@ -100,41 +108,76 @@ public class ExchangeOrderReportService {
 		final ClassPathResource resourceLogo = new ClassPathResource(IMAGE_PATH);
 		Map<String, Object> parameters = new HashMap<>();
 
-		parameters.put("cwtLogo", ImageIO.read(resourceLogo.getInputStream()));
-		parameters.put("date", getDate(exchangeOrder));
-		parameters.put("additionalInfoDate", formatDate(exchangeOrder.getAdditionalInfoDate()));
-		parameters.put("nettCost", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getNettCost()));
-		parameters.put("tax2", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTax2()));
-		parameters.put("total", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTotal()));
-        Optional<BigDecimal> tax1 = Optional.ofNullable(exchangeOrder.getGstAmount());
-        parameters.put("gstAmountTax1", formatAmount(exchangeOrder.getCountryCode(), tax1.orElse(exchangeOrder.getTax1())));
+		parameters.put("CWT_LOGO", ImageIO.read(resourceLogo.getInputStream()));
+		parameters.put("DATE", getDate(exchangeOrder));
+		parameters.put("ADDITIONAL_INFO_DATE", formatDate(exchangeOrder.getAdditionalInfoDate()));
+		parameters.put("NETT_COST", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getNettCost()));
+		parameters.put("TAX2", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTax2()));
+		parameters.put("TOTAL", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTotal()));
+
+		BigDecimal gstAmount = exchangeOrder.getGstAmount();
+        boolean displayGst = gstAmount != null && gstAmount.doubleValue() > 0d;
+        parameters.put("GST_AMOUNT_TAX1_LABEL", displayGst ? "GST" : "Tax");
+        parameters.put("GST_AMOUNT_TAX1", formatAmount(exchangeOrder.getCountryCode(),
+                displayGst ? gstAmount : exchangeOrder.getTax1()));
+        putContactInfoParameters(exchangeOrder.getVendor().getContactInfo(), parameters);
 
 		return parameters;
 	}
 
+	private void putContactInfoParameters(List<ContactInfo> contactInfoList, Map<String, Object> parameters) {
+
+		boolean isCurrPhonePref = false;
+		boolean isCurrFaxPref = false;
+		boolean isCurrEmailPref = false;
+
+		for (ContactInfo contactInfo : contactInfoList) {
+
+			if (contactInfo.getType().equalsIgnoreCase(PHONE)
+					&& (!parameters.containsKey(PHONE)
+							|| (contactInfo.isPreferred() && !isCurrPhonePref))) {
+				parameters.put(PHONE, contactInfo.getDetail());
+				isCurrPhonePref = contactInfo.isPreferred() && !isCurrPhonePref;
+			}
+			else if (contactInfo.getType().equalsIgnoreCase(FAX)
+					&& (!parameters.containsKey(FAX)
+							|| (contactInfo.isPreferred() && !isCurrFaxPref))) {
+				parameters.put(FAX, contactInfo.getDetail());
+				isCurrFaxPref = contactInfo.isPreferred() && !isCurrFaxPref;
+			}
+			else if (contactInfo.getType().equalsIgnoreCase(EMAIL)
+					&& (!parameters.containsKey(EMAIL)
+							|| (contactInfo.isPreferred() && !isCurrEmailPref))) {
+				parameters.put(EMAIL, contactInfo.getDetail());
+				isCurrEmailPref = contactInfo.isPreferred() && !isCurrEmailPref;
+			}
+		}
+	}
+
 	private String getDate(ExchangeOrder exchangeOrder) {
 		Instant updateDateTime = exchangeOrder.getUpdateDateTime();
-		return formatDate(updateDateTime != null ? updateDateTime : exchangeOrder.getCreateDateTime());
+		return formatDate(updateDateTime != null ? updateDateTime
+				: exchangeOrder.getCreateDateTime());
 	}
 
 	private String formatDate(Instant instant) {
 		return instant == null ? "" : DateTimeFormatter.ofPattern(DATE_PATTERN)
 				.format(LocalDateTime.ofInstant(instant, ZoneOffset.UTC));
 	}
-	
-	private String formatAmount(String countryCode, BigDecimal amount) {
-	    if (amount != null) {
-            int scale = scaleConfig.getScale(countryCode);
-            DecimalFormat formatter = new DecimalFormat("$#,##0.00");
-            formatter.setMinimumFractionDigits(scale);
-            formatter.setMaximumFractionDigits(scale);
-            formatter.setRoundingMode(RoundingMode.DOWN);
 
-            return formatter.format(amount);
-        }
-        else {
-	        return "";
-        }
+	private String formatAmount(String countryCode, BigDecimal amount) {
+		if (amount != null) {
+			int scale = scaleConfig.getScale(countryCode);
+			DecimalFormat formatter = new DecimalFormat("$#,##0.00");
+			formatter.setMinimumFractionDigits(scale);
+			formatter.setMaximumFractionDigits(scale);
+			formatter.setRoundingMode(RoundingMode.DOWN);
+
+			return formatter.format(amount);
+		}
+		else {
+			return "";
+		}
 
 	}
 
@@ -146,24 +189,40 @@ public class ExchangeOrderReportService {
 
 		EmailResponse response = new EmailResponse();
 
+		StringBuilder sbEmail = new StringBuilder();
+		StringBuilder sbEmailNotPreferred = new StringBuilder();
+		List<String> emailListNotPreferred = new ArrayList<>();
+
+		count = 0;
+
 		try {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
-
 			List<ContactInfo> contactInfoList  = exchangeOrder.getVendor().getContactInfo();
-			
-			StringBuilder sbEmail = new StringBuilder();
+
 			contactInfoList.forEach(ci -> {
-				if(ci.getContactType().equalsIgnoreCase("Email")) {
-					sbEmail.append(ci.getContactDetails());
-					sbEmail.append(",");
+				if (ci.getType().equalsIgnoreCase("Email")) {
+					if (ci.isPreferred()) {
+						sbEmail.append(ci.getDetail());
+						sbEmail.append(",");
+					}
+					else {
+						emailListNotPreferred.add(ci.getDetail());
+
+						sbEmailNotPreferred.append(ci.getDetail());
+						sbEmailNotPreferred.append(",");
+					}
+					count++;
 				}
 			});
-			
+
 			String email = sbEmail.toString();
-			
+			if (count == emailListNotPreferred.size()) {
+				email = sbEmailNotPreferred.toString();
+			}
+
 			String emailRecipient = getEmail(email);
-			if(StringUtils.isEmpty(emailRecipient)) {
+			if (StringUtils.isEmpty(emailRecipient)) {
 				LOGGER.error(EMAIL_ERROR_MESSAGE);
 				response.setMessage(EMAIL_ERROR_MESSAGE);
 				response.setSuccess(false);

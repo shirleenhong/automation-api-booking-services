@@ -196,7 +196,8 @@ public class ExchangeOrderService {
 		return exchangeOrderRepo.getExchangeOrder(eoNumber);
 	}
 
-	public List<ExchangeOrder> getExchangeOrderByRecordLocator(String pnrNumber) {
-		return exchangeOrderRepo.getByRecordLocator(pnrNumber);
+	@Cacheable(cacheNames = "exchange-orders", key = "#recordLocator")
+	public List<ExchangeOrder> getExchangeOrderByRecordLocator(String recordLocator) {
+		return exchangeOrderRepo.getByRecordLocator(recordLocator);
 	}
 }
