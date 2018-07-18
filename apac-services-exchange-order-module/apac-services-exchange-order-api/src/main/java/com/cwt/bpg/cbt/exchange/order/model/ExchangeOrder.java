@@ -9,6 +9,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
+import com.cwt.bpg.cbt.exchange.order.model.converter.EoActionCoverter;
+import com.cwt.bpg.cbt.exchange.order.model.deserializer.EoActionDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.serializer.EoActionSerializer;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.*;
 
@@ -20,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
+@Converters(EoActionCoverter.class)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder implements Serializable {
 
@@ -113,9 +117,11 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private Header header;
 
-	@NotEmpty
+	@NotNull
+	@JsonSerialize(using = EoActionSerializer.class)
+	@JsonDeserialize(using = EoActionDeserializer.class)
 	@ApiModelProperty(required = true)
-	private String eoAction;
+	private EoAction eoAction;
 
 	@NotEmpty
 	@ApiModelProperty(required = true)
@@ -335,11 +341,11 @@ public class ExchangeOrder implements Serializable {
 		this.header = header;
 	}
 
-	public String getEoAction() {
+	public EoAction getEoAction() {
 		return eoAction;
 	}
 
-	public void setEoAction(String eoAction) {
+	public void setEoAction(EoAction eoAction) {
 		this.eoAction = eoAction;
 	}
 
