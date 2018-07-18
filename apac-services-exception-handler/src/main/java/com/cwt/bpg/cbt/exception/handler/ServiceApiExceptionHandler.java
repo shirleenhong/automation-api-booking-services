@@ -86,6 +86,12 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 			ApiError apiError = new ApiError(HttpStatus.valueOf(internalException.getStatusCode()), "There were exception found during the process.");
 			return new ResponseEntity<>(apiError, headers, apiError.getStatus());
 		}
+
+		if(ex.getCause() instanceof IllegalArgumentException){
+			String error = ex.getCause().getMessage();
+			ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, error,error);
+			return new ResponseEntity<>(apiError, new HttpHeaders(),apiError.getStatus());
+		}
 		
 		ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
 		

@@ -89,7 +89,7 @@ public class ExchangeOrderControllerTest {
 		verify(eoService, times(1)).saveExchangeOrder(any(ExchangeOrder.class));
 	}
 
-	@Test(expected = NestedServletException.class)
+    @Test(expected = NestedServletException.class)
 	public void shouldReturnBadRequestWhenFopTypeCXAndCreditCardNull() throws Exception {
 
 		ExchangeOrder order = createExchangeOrder();
@@ -144,7 +144,7 @@ public class ExchangeOrderControllerTest {
         verify(eoService, times(1)).getExchangeOrderByRecordLocator(pnr);
     }
 
-	@Test
+	@Test(expected = NestedServletException.class)
 	public void shouldNotReturnExchangeOrder() throws Exception {
 
 		ExchangeOrder order = new ExchangeOrder();
