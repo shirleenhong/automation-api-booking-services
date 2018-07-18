@@ -8,9 +8,16 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 
+
 import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyIfAnotherFieldNull;
 import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullIfAnotherFieldHasValue;
 import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullIfAnotherFieldNull;
+
+import com.cwt.bpg.cbt.exchange.order.model.converter.EoActionCoverter;
+import com.cwt.bpg.cbt.exchange.order.model.deserializer.EoActionDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.serializer.EoActionSerializer;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import org.mongodb.morphia.annotations.*;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
@@ -51,6 +58,7 @@ import io.swagger.annotations.ApiModelProperty;
 		@NotNullIfAnotherFieldHasValue(fieldName = "fopType",fieldValue="CX",dependFieldName = "creditCard"),
 })
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
+@Converters(EoActionCoverter.class)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder implements Serializable {
 
@@ -130,8 +138,10 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private Header header;
 
+	@JsonSerialize(using = EoActionSerializer.class)
+	@JsonDeserialize(using = EoActionDeserializer.class)
 	@ApiModelProperty(required = true)
-	private String eoAction;
+	private EoAction eoAction;
 
 	@ApiModelProperty(required = true)
 	private String status;
@@ -347,11 +357,11 @@ public class ExchangeOrder implements Serializable {
 		this.header = header;
 	}
 
-	public String getEoAction() {
+	public EoAction getEoAction() {
 		return eoAction;
 	}
 
-	public void setEoAction(String eoAction) {
+	public void setEoAction(EoAction eoAction) {
 		this.eoAction = eoAction;
 	}
 
