@@ -39,7 +39,6 @@
 		<jackson.version>2.9.5</jackson.version>
 		<groovy.version>2.4.15</groovy.version>
 		<jasper.report.version>6.6.0</jasper.report.version>
-		<javax.persistence.version>2.2.0</javax.persistence.version>
 	</properties>
 
 	<scm>
@@ -149,11 +148,6 @@
 				<groupId>net.sf.jasperreports</groupId>
 				<artifactId>jasperreports</artifactId>
 				<version>${jasper.report.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.persistence</groupId>
-				<artifactId>javax.persistence</artifactId>
-				<version>${javax.persistence.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
