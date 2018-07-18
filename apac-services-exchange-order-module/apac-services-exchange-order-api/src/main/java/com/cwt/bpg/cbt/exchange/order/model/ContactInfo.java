@@ -12,15 +12,15 @@ public class ContactInfo implements Serializable {
     
     @NotEmpty
     @ApiModelProperty(allowableValues = "Fax, Email, Phone", required = true)
-    private String contactType;
+    private String type;
     
     @NotEmpty
     @ApiModelProperty(required = true)
-    private String contactDetails;
+    private String detail;
     
     @NotEmpty
     @ApiModelProperty(required = true)
-    private Boolean preferred;
+    private boolean preferred;
     
     @ApiModelProperty(hidden = true)
     private String vendorNumber;
@@ -33,30 +33,27 @@ public class ContactInfo implements Serializable {
 		this.vendorNumber = vendorNumber;
 	}
 
-	public String getContactType() {
-		return contactType;
+	public String getType() {
+		return type;
 	}
 
-	public void setContactType(String contactType) {
-		this.contactType = contactType;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getContactDetails() {
-		return contactDetails;
+	public String getDetail() {
+		return detail;
 	}
 
-	public void setContactDetails(String contactDetails) {
-		this.contactDetails = contactDetails;
+	public void setDetail(String detail) {
+		this.detail = detail;
 	}
 
-	public Boolean getPreferred() {
+	public boolean isPreferred() {
 		return preferred;
 	}
 
-	public void setPreferred(Boolean preferred) {
+	public void setPreferred(boolean preferred) {
 		this.preferred = preferred;
 	}
-    
-
-    
 }

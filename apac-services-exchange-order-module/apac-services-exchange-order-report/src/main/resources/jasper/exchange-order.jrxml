@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exchange-order" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11876608-3e71-4654-8bad-9498a837d1ff">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="287"/>
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<subDataset name="dataset1" uuid="445d1af9-e2c1-4cfc-9fac-574f362a3a97">
 		<field name="_THIS" class="java.lang.String"/>
@@ -19,6 +19,9 @@
 	<parameter name="tax2" class="java.lang.String"/>
 	<parameter name="total" class="java.lang.String"/>
 	<parameter name="gstAmountTax1" class="java.lang.String"/>
+	<parameter name="phone" class="java.lang.String"/>
+	<parameter name="fax" class="java.lang.String"/>
+	<parameter name="email" class="java.lang.String"/>
 	<field name="header" class="com.cwt.bpg.cbt.exchange.order.model.Header"/>
 	<field name="vendor" class="com.cwt.bpg.cbt.exchange.order.model.Vendor"/>
 	<field name="eoNumber" class="java.lang.String"/>
@@ -134,8 +137,8 @@
 				<textFieldExpression><![CDATA[$F{recordLocator}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="160" y="235" width="200" height="15" uuid="57d97753-741b-459b-9fe1-e97ba43d315d"/>
-				<textFieldExpression><![CDATA[$F{vendor}.getContactNo()]]></textFieldExpression>
+				<reportElement x="160" y="235" width="200" height="15" isPrintWhenDetailOverflows="true" uuid="57d97753-741b-459b-9fe1-e97ba43d315d"/>
+				<textFieldExpression><![CDATA[$P{phone}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="150" width="100" height="15" uuid="dc693b8d-5190-49d1-ba34-4d2f2af4e8e0"/>
@@ -205,19 +208,19 @@
 				<text><![CDATA[Remarks]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="160" y="250" width="200" height="15" uuid="f5aa0fb0-f4af-411b-bf50-cd5f5de45b0d"/>
+				<reportElement x="160" y="250" width="200" height="15" isPrintWhenDetailOverflows="true" uuid="f5aa0fb0-f4af-411b-bf50-cd5f5de45b0d"/>
 				<textFieldExpression><![CDATA[$F{vendor}.getName()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="160" y="265" width="200" height="15" uuid="4f781742-7881-4d47-b6ef-0d8052fec06b"/>
-				<textFieldExpression><![CDATA[$F{vendor}.getFaxNumber()]]></textFieldExpression>
+				<reportElement x="160" y="265" width="200" height="15" isPrintWhenDetailOverflows="true" uuid="4f781742-7881-4d47-b6ef-0d8052fec06b"/>
+				<textFieldExpression><![CDATA[$P{fax}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="160" y="280" width="200" height="15" isPrintWhenDetailOverflows="true" uuid="12af925a-c461-4615-bf74-ea3a8d585424"/>
+				<textFieldExpression><![CDATA[$P{email}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="160" y="280" width="200" height="15" uuid="12af925a-c461-4615-bf74-ea3a8d585424"/>
-				<textFieldExpression><![CDATA[$F{vendor}.getEmail()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="160" y="295" width="200" height="15" uuid="3df54278-a470-4528-bb7c-cced3fcf517f"/>
+				<reportElement x="160" y="295" width="200" height="15" isPrintWhenDetailOverflows="true" uuid="3df54278-a470-4528-bb7c-cced3fcf517f"/>
 				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">

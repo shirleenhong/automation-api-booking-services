@@ -2,6 +2,9 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import javax.validation.Valid;
 
+import com.cwt.bpg.cbt.exchange.order.validator.AirlineOverheadCommissionValidator;
+import com.cwt.bpg.cbt.exchange.order.validator.FeeValidator;
+import com.cwt.bpg.cbt.exchange.order.validator.OthTaxValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +25,15 @@ public class OtherServiceFeesController {
 
 	@Autowired
 	private OtherServiceFeesService service;
+
+	@Autowired
+	private AirlineOverheadCommissionValidator airlineOverheadCommissionValidator;
+
+	@Autowired
+	private OthTaxValidator othTaxValidator;
+
+	@Autowired
+	private FeeValidator feeValidator;
 
 	@PostMapping(
 			path = "/non-air-fees/in",
@@ -57,6 +69,9 @@ public class OtherServiceFeesController {
 	public ResponseEntity<IndiaAirFeesBreakdown> computeIndiaAirFees(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") IndiaAirFeesInput input) {
 
+		feeValidator.validate(input);
+		airlineOverheadCommissionValidator.validate(input);
+		othTaxValidator.validate(input);
 		return new ResponseEntity<>(service.calculateIndiaAirFees(input), HttpStatus.OK);
 	}
 
