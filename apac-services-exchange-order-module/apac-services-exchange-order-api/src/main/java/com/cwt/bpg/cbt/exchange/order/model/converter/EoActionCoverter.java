@@ -1,14 +1,11 @@
 package com.cwt.bpg.cbt.exchange.order.model.converter;
 
 import com.cwt.bpg.cbt.exchange.order.model.EoAction;
+import org.mongodb.morphia.annotations.Converters;
 import org.mongodb.morphia.converters.SimpleValueConverter;
 import org.mongodb.morphia.converters.TypeConverter;
 import org.mongodb.morphia.mapping.MappedField;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
-
-@Converter
 public class EoActionCoverter extends TypeConverter implements SimpleValueConverter {
 
 	public EoActionCoverter() {

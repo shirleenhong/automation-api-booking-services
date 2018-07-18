@@ -5,11 +5,9 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import javax.persistence.EnumType;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
-import javax.persistence.Enumerated;
 
 import com.cwt.bpg.cbt.exchange.order.model.converter.EoActionCoverter;
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.EoActionDeserializer;
