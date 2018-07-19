@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -57,8 +58,8 @@ public class ExchangeOrderService {
 	@Autowired
 	private ServiceUtils serviceUtils;
 	
-	//TODO: Add CachePut
-	ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder)
+	@CachePut(cacheNames = "exchange-orders", key = "#exchangeOrder.eoNumber")
+	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
 
 		ExchangeOrder result = new ExchangeOrder();
