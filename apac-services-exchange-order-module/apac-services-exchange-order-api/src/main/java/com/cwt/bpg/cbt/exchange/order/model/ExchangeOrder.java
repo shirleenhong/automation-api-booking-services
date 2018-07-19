@@ -9,9 +9,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
-import com.cwt.bpg.cbt.exchange.order.model.converter.EoActionCoverter;
-import com.cwt.bpg.cbt.exchange.order.model.deserializer.EoActionDeserializer;
-import com.cwt.bpg.cbt.exchange.order.model.serializer.EoActionSerializer;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.*;
 
@@ -24,7 +21,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("eoNumber")))
-@Converters(EoActionCoverter.class)
 public class ExchangeOrder implements Serializable {
 
 	private static final long serialVersionUID = 79442657760597469L;
@@ -109,8 +105,6 @@ public class ExchangeOrder implements Serializable {
 	private Header header;
 
 	@NotNull
-	@JsonSerialize(using = EoActionSerializer.class)
-	@JsonDeserialize(using = EoActionDeserializer.class)
 	@ApiModelProperty(required = true)
 	private EoAction eoAction;
 
