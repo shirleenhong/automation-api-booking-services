@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import com.cwt.bpg.cbt.exchange.order.validator.FopTypeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +19,7 @@ import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
+import com.cwt.bpg.cbt.exchange.order.validator.FopTypeValidator;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,10 +47,23 @@ public class ExchangeOrderController {
 	public ResponseEntity<Map<String, Object>> saveExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
 					throws ExchangeOrderNoContentException {
+    
+		boolean isSave = false;
+		if(input.getEoNumber() == null) {
+			isSave = true;
+		}
+		
+		fopTypeValidator.validate(input);
 
 		final ExchangeOrder saveExchangeOrder = eoService.saveExchangeOrder(input);
 		Map<String, Object> response = new HashMap<>(1);
-		response.put("eoNumber", saveExchangeOrder.getEoNumber());
+		if (isSave) {
+			response.put("eoNumber", saveExchangeOrder.getEoNumber());
+		}
+		else {
+			response.put("exchangeOrder", saveExchangeOrder);
+		}
+
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

@@ -89,8 +89,8 @@ public class ExchangeOrderControllerTest {
 		verify(eoService, times(1)).saveExchangeOrder(any(ExchangeOrder.class));
 	}
 
-    @Test(expected = NestedServletException.class)
-	public void shouldReturnBadRequestWhenFopTypeCXAndCreditCardNull() throws Exception {
+	@Test
+	public void shouldUpdateExchangeOrder() throws Exception {
 
 		ExchangeOrder order = createExchangeOrder();
 		order.setCommission(BigDecimal.ZERO);
@@ -98,8 +98,24 @@ public class ExchangeOrderControllerTest {
 		order.setMerchantFee(BigDecimal.ZERO);
 		order.setFopType("CX");
 		order.setEoNumber("1122334455");
-		order.setCreditCard(null);
+		
+		mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+				.andExpect(status().isOk()).andReturn().getResponse();
 
+		verify(eoService, times(1)).saveExchangeOrder(any(ExchangeOrder.class));
+	}
+	
+	@Test(expected = NestedServletException.class)
+	public void shouldReturnBadRequestWhenFopTypeCXAndCreditCardNull() throws Exception {
+
+		ExchangeOrder order = createExchangeOrder();
+		order.setCommission(BigDecimal.ZERO);
+		order.setGstAmount(BigDecimal.ZERO);
+		order.setMerchantFee(BigDecimal.ZERO);
+		order.setFopType("CX");
+		order.setEoNumber(null);
+		order.setCreditCard(null);
+		
 		mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
 				.andExpect(status().isBadRequest()).andReturn().getResponse();
 
