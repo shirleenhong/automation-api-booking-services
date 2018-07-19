@@ -9,9 +9,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
-import com.cwt.bpg.cbt.exchange.order.model.converter.EoActionCoverter;
-import com.cwt.bpg.cbt.exchange.order.model.deserializer.EoActionDeserializer;
-import com.cwt.bpg.cbt.exchange.order.model.serializer.EoActionSerializer;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.*;
 
@@ -23,7 +20,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
-@Converters(EoActionCoverter.class)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder implements Serializable {
 
@@ -118,14 +114,12 @@ public class ExchangeOrder implements Serializable {
 	private Header header;
 
 	@NotNull
-	@JsonSerialize(using = EoActionSerializer.class)
-	@JsonDeserialize(using = EoActionDeserializer.class)
 	@ApiModelProperty(required = true)
 	private EoAction eoAction;
 
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(required = true)
-	private String status;
+	private EoStatus status;
 
 	private String raiseCheque;
 
@@ -349,11 +343,11 @@ public class ExchangeOrder implements Serializable {
 		this.eoAction = eoAction;
 	}
 
-	public String getStatus() {
+	public EoStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(EoStatus status) {
 		this.status = status;
 	}
 
