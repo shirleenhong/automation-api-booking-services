@@ -108,9 +108,9 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private EoAction eoAction;
 
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(required = true)
-	private String status;
+	private EoStatus status;
 
 	private String raiseCheque;
 
@@ -334,11 +334,11 @@ public class ExchangeOrder implements Serializable {
 		this.eoAction = eoAction;
 	}
 
-	public String getStatus() {
+	public EoStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(EoStatus status) {
 		this.status = status;
 	}
 
