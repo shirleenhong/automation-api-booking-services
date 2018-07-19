@@ -8,9 +8,9 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 
-import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyIfAnotherFieldNull;
-import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullIfAnotherFieldHasValue;
-import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullIfAnotherFieldNull;
+import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
+import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullOnInsert;
+import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullOnFopType;
 import org.mongodb.morphia.annotations.*;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
@@ -19,36 +19,36 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
-@NotNullIfAnotherFieldNull.List({
-		@NotNullIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "commission"),
-		@NotNullIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "gstAmount"),
-		@NotNullIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "merchantFee"),
-		@NotNullIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "additionalInfoDate"),
-		@NotNullIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "nettCost"),
-		@NotNullIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "total"),
-		@NotNullIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "header"),
-		@NotNullIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "sellingPrice"),
-		@NotNullIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "totalSellingPrice"),
-		@NotNullIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "vendor"),
+@NotNullOnInsert.List({
+		@NotNullOnInsert(dependFieldName = "commission"),
+		@NotNullOnInsert(dependFieldName = "gstAmount"),
+		@NotNullOnInsert(dependFieldName = "merchantFee"),
+		@NotNullOnInsert(dependFieldName = "additionalInfoDate"),
+		@NotNullOnInsert(dependFieldName = "nettCost"),
+		@NotNullOnInsert(dependFieldName = "total"),
+		@NotNullOnInsert(dependFieldName = "header"),
+		@NotNullOnInsert(dependFieldName = "sellingPrice"),
+		@NotNullOnInsert(dependFieldName = "totalSellingPrice"),
+		@NotNullOnInsert(dependFieldName = "vendor"),
 
 })
-@NotEmptyIfAnotherFieldNull.List({
-		@NotEmptyIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "fopType"),
-		@NotEmptyIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "description"),
-		@NotEmptyIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "productCode"),
-		@NotEmptyIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "accountNumber"),
-		@NotEmptyIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "passengerName"),
-		@NotEmptyIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "agentId"),
-		@NotEmptyIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "pcc"),
-		@NotEmptyIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "agentName"),
-		@NotEmptyIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "recordLocator"),
-		@NotEmptyIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "eoAction"),
-		@NotEmptyIfAnotherFieldNull(fieldName = "eoNumber",dependFieldName = "status"),
+@NotEmptyOnInsert.List({
+		@NotEmptyOnInsert(dependFieldName = "fopType"),
+		@NotEmptyOnInsert(dependFieldName = "description"),
+		@NotEmptyOnInsert(dependFieldName = "productCode"),
+		@NotEmptyOnInsert(dependFieldName = "accountNumber"),
+		@NotEmptyOnInsert(dependFieldName = "passengerName"),
+		@NotEmptyOnInsert(dependFieldName = "agentId"),
+		@NotEmptyOnInsert(dependFieldName = "pcc"),
+		@NotEmptyOnInsert(dependFieldName = "agentName"),
+		@NotEmptyOnInsert(dependFieldName = "recordLocator"),
+		@NotEmptyOnInsert(dependFieldName = "eoAction"),
+		@NotEmptyOnInsert(dependFieldName = "status"),
 
 })
-@NotNullIfAnotherFieldHasValue.List({
-		@NotNullIfAnotherFieldHasValue(fieldName = "fopType",fieldValue="CC",dependFieldName = "creditCard"),
-		@NotNullIfAnotherFieldHasValue(fieldName = "fopType",fieldValue="CX",dependFieldName = "creditCard"),
+@NotNullOnFopType.List({
+		@NotNullOnFopType(fieldValue="CC",dependFieldName = "creditCard"),
+		@NotNullOnFopType(fieldValue="CX",dependFieldName = "creditCard"),
 })
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))

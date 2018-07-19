@@ -18,13 +18,12 @@ import javax.validation.Payload;
 
 @Target({TYPE, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = NotEmptyIfAnotherFieldNullValidator.class)
+@Constraint(validatedBy = NotNullOnInsertValidator.class)
 @Documented
-public @interface NotEmptyIfAnotherFieldNull {
-    String fieldName();
+public @interface NotNullOnInsert {
     String dependFieldName();
 
-    String message() default "{NotEmptyIfAnotherFieldNull.message}";
+    String message() default "{NotNullOnInsert.message}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 
@@ -32,7 +31,7 @@ public @interface NotEmptyIfAnotherFieldNull {
     @Retention(RUNTIME)
     @Documented
     @interface List {
-        NotEmptyIfAnotherFieldNull[] value();
+        NotNullOnInsert[] value();
     }
 
 }

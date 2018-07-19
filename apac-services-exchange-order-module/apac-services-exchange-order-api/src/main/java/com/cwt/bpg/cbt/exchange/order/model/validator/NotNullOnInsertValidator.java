@@ -8,17 +8,17 @@ import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.beanutils.BeanUtils;
 
 /**
- * Implementation of {@link NotNullIfAnotherFieldNull} validator.
+ * Implementation of {@link NotNullOnInsert} validator.
  **/
-public class NotNullIfAnotherFieldNullValidator
-		implements ConstraintValidator<NotNullIfAnotherFieldNull, Object> {
+public class NotNullOnInsertValidator
+		implements ConstraintValidator<NotNullOnInsert, Object> {
 
 	private String fieldName;
 	private String dependFieldName;
 
 	@Override
-	public void initialize(NotNullIfAnotherFieldNull annotation) {
-		fieldName = annotation.fieldName();
+	public void initialize(NotNullOnInsert annotation) {
+		fieldName = "eoNumber";
 		dependFieldName = annotation.dependFieldName();
 	}
 

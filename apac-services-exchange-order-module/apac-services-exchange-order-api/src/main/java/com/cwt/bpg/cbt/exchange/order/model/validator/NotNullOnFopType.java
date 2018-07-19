@@ -17,14 +17,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({TYPE, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = NotNullIfAnotherFieldHasValueValidator.class)
+@Constraint(validatedBy = NotNullOnFopTypeValidator.class)
 @Documented
-public @interface NotNullIfAnotherFieldHasValue {
-    String fieldName();
+public @interface NotNullOnFopType {
     String fieldValue();
     String dependFieldName();
 
-    String message() default "{NotNullIfAnotherFieldHasValue.message}";
+    String message() default "{NotNullOnFopType.message}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 
@@ -32,7 +31,7 @@ public @interface NotNullIfAnotherFieldHasValue {
     @Retention(RUNTIME)
     @Documented
     @interface List {
-        NotNullIfAnotherFieldHasValue[] value();
+        NotNullOnFopType[] value();
     }
 
 }

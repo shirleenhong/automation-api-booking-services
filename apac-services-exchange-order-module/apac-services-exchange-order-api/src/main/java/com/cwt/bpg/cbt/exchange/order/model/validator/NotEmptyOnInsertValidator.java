@@ -8,16 +8,16 @@ import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.beanutils.BeanUtils;
 
 /**
- * Implementation of {@link NotEmptyIfAnotherFieldNull} validator.
+ * Implementation of {@link NotEmptyOnInsert} validator.
  **/
-public class NotEmptyIfAnotherFieldNullValidator implements ConstraintValidator<NotEmptyIfAnotherFieldNull, Object> {
+public class NotEmptyOnInsertValidator implements ConstraintValidator<NotEmptyOnInsert, Object> {
 
 	private String fieldName;
 	private String dependFieldName;
 
 	@Override
-	public void initialize(NotEmptyIfAnotherFieldNull annotation) {
-		fieldName = annotation.fieldName();
+	public void initialize(NotEmptyOnInsert annotation) {
+		fieldName = "eoNumber";
 		dependFieldName = annotation.dependFieldName();
 	}
 

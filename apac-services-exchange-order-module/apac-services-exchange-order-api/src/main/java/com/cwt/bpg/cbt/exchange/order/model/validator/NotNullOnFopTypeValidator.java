@@ -7,18 +7,18 @@ import javax.validation.ConstraintValidatorContext;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * Implementation of {@link NotNullIfAnotherFieldHasValue} validator.
+ * Implementation of {@link NotNullOnFopType} validator.
  **/
-public class NotNullIfAnotherFieldHasValueValidator
-        implements ConstraintValidator<NotNullIfAnotherFieldHasValue, Object> {
+public class NotNullOnFopTypeValidator
+        implements ConstraintValidator<NotNullOnFopType, Object> {
 
         private String fieldName;
         private String expectedFieldValue;
         private String dependFieldName;
 
         @Override
-        public void initialize(NotNullIfAnotherFieldHasValue annotation) {
-            fieldName          = annotation.fieldName();
+        public void initialize(NotNullOnFopType annotation) {
+            fieldName          = "fopType";
             expectedFieldValue = annotation.fieldValue();
             dependFieldName    = annotation.dependFieldName();
         }
@@ -31,10 +31,11 @@ public class NotNullIfAnotherFieldHasValueValidator
             }
 
             try {
+                String eoNumberValue    = BeanUtils.getProperty(value, "eoNumber");
                 String fieldValue       = BeanUtils.getProperty(value, fieldName);
                 String dependFieldValue = BeanUtils.getProperty(value, dependFieldName);
 
-                if (expectedFieldValue.equals(fieldValue) && dependFieldValue == null) {
+                if (eoNumberValue == null && expectedFieldValue.equals(fieldValue) && dependFieldValue == null) {
                     ctx.disableDefaultConstraintViolation();
                     ctx.buildConstraintViolationWithTemplate(ctx.getDefaultConstraintMessageTemplate())
                             .addNode(dependFieldName)
