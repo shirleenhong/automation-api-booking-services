@@ -51,6 +51,7 @@ import io.swagger.annotations.ApiModelProperty;
 		@NotNullOnFopType(fieldValue="CX",dependFieldName = "creditCard"),
 })
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
+@Converters(EoActionCoverter.class)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder implements Serializable {
 
@@ -130,8 +131,10 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private Header header;
 
+	@JsonSerialize(using = EoActionSerializer.class)
+	@JsonDeserialize(using = EoActionDeserializer.class)
 	@ApiModelProperty(required = true)
-	private String eoAction;
+	private EoAction eoAction;
 
 	@ApiModelProperty(required = true)
 	private String status;
@@ -347,11 +350,11 @@ public class ExchangeOrder implements Serializable {
 		this.header = header;
 	}
 
-	public String getEoAction() {
+	public EoAction getEoAction() {
 		return eoAction;
 	}
 
-	public void setEoAction(String eoAction) {
+	public void setEoAction(EoAction eoAction) {
 		this.eoAction = eoAction;
 	}
 
