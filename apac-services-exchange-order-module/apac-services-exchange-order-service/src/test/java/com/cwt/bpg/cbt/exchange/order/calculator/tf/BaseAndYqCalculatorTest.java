@@ -37,7 +37,7 @@ public class BaseAndYqCalculatorTest {
 		input.setBaseFare(new BigDecimal(600));
 		input.setYqTax(new BigDecimal(10));
 		
-		input.setAirlineCommission(new BigDecimal(9));
+		input.setAirlineCommissionPercent(new Double(9));
 		input.setOverheadCommissionEnabled(true);
 		input.setCityCode("AAE");
 		input.setCommissionEnabled(true);

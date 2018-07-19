@@ -46,7 +46,7 @@ public class FeeCalculatorTest {
 		input.setAirSegmentCount(2);
 		input.setBaseFare(new BigDecimal(500));
 		input.setYqTax(new BigDecimal(50));
-		input.setAirlineCommission(new BigDecimal(45));
+		input.setAirlineCommissionPercent(new Double(45));
 		input.setAirlineOverheadCommissionPercent(5d);
 		input.setTax1(new BigDecimal(25));
 		input.setTax2(new BigDecimal(35));
