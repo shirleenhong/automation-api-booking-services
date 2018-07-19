@@ -160,7 +160,7 @@ public class ExchangeOrderControllerTest {
         verify(eoService, times(1)).getExchangeOrderByRecordLocator(pnr);
     }
 
-	@Test
+	@Test(expected = NestedServletException.class)
 	public void shouldNotReturnExchangeOrder() throws Exception {
 
 		ExchangeOrder order = new ExchangeOrder();

@@ -45,15 +45,16 @@ public class ExchangeOrderController {
 	@ResponseBody
 	@ApiOperation(value = "Saves new exchange order transaction.")
 	public ResponseEntity<Map<String, Object>> saveExchangeOrder(
-			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input) 
+			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
 					throws ExchangeOrderNoContentException {
-		
+    
 		boolean isSave = false;
 		if(input.getEoNumber() == null) {
 			isSave = true;
 		}
 		
 		fopTypeValidator.validate(input);
+
 		final ExchangeOrder saveExchangeOrder = eoService.saveExchangeOrder(input);
 		Map<String, Object> response = new HashMap<>(1);
 		if (isSave) {
