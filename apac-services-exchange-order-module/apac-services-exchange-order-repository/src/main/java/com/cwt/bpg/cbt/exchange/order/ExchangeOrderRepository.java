@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
+import org.mongodb.morphia.query.Sort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ public class ExchangeOrderRepository {
 	public List<ExchangeOrder> getByRecordLocator(String eoNumber) {
 		return morphia.getDatastore().createQuery(ExchangeOrder.class)
 				.field("recordLocator")
-				.equal(eoNumber).asList();
+				.equal(eoNumber)
+				.order(Sort.descending("createDateTime"))
+				.asList();
 	}
 }

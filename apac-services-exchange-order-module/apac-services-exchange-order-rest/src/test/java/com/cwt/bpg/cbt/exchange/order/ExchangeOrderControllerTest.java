@@ -193,7 +193,7 @@ public class ExchangeOrderControllerTest {
 		order.setNettCost(new BigDecimal(0));
 		order.setTotal(new BigDecimal(0));
 		order.setEoAction(EoAction.EMAIL);
-		order.setStatus("A");
+		order.setStatus(EoStatus.COMPLETED);
 		order.setRaiseCheque("Raise Cheque");
 
 		order.setSellingPrice(new BigDecimal(0));

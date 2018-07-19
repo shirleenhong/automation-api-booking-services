@@ -14,6 +14,8 @@ import com.cwt.bpg.cbt.exchange.order.model.serializer.EoActionSerializer;
 import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
 import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullOnInsert;
 import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullOnFopType;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import org.mongodb.morphia.annotations.*;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
@@ -54,7 +56,6 @@ import io.swagger.annotations.ApiModelProperty;
 		@NotNullOnFopType(fieldValue="CX",dependFieldName = "creditCard"),
 })
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
-@Converters(EoActionCoverter.class)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder implements Serializable {
 
@@ -140,7 +141,7 @@ public class ExchangeOrder implements Serializable {
 	private EoAction eoAction;
 
 	@ApiModelProperty(required = true)
-	private String status;
+	private EoStatus status;
 
 	private String raiseCheque;
 
@@ -361,11 +362,11 @@ public class ExchangeOrder implements Serializable {
 		this.eoAction = eoAction;
 	}
 
-	public String getStatus() {
+	public EoStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(EoStatus status) {
 		this.status = status;
 	}
 
