@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Arrays;
 
+import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 
@@ -31,7 +32,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.util.NestedServletException;
 
-import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -76,6 +76,9 @@ public class ExchangeOrderControllerTest {
 	public void shouldReturnExchangeOrderNumber() throws Exception {
 
 		ExchangeOrder order = createExchangeOrder();
+		order.setCommission(BigDecimal.ZERO);
+		order.setGstAmount(BigDecimal.ZERO);
+		order.setMerchantFee(BigDecimal.ZERO);
 		order.setEoNumber("1122334455");
 
 		when(eoService.saveExchangeOrder(any(ExchangeOrder.class))).thenReturn(order);
@@ -86,14 +89,33 @@ public class ExchangeOrderControllerTest {
 		verify(eoService, times(1)).saveExchangeOrder(any(ExchangeOrder.class));
 	}
 
+	@Test
+	public void shouldUpdateExchangeOrder() throws Exception {
+
+		ExchangeOrder order = createExchangeOrder();
+		order.setCommission(BigDecimal.ZERO);
+		order.setGstAmount(BigDecimal.ZERO);
+		order.setMerchantFee(BigDecimal.ZERO);
+		order.setFopType("CX");
+		order.setEoNumber("1122334455");
+		
+		mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+				.andExpect(status().isOk()).andReturn().getResponse();
+
+		verify(eoService, times(1)).saveExchangeOrder(any(ExchangeOrder.class));
+	}
+	
 	@Test(expected = NestedServletException.class)
 	public void shouldReturnBadRequestWhenFopTypeCXAndCreditCardNull() throws Exception {
 
 		ExchangeOrder order = createExchangeOrder();
+		order.setCommission(BigDecimal.ZERO);
+		order.setGstAmount(BigDecimal.ZERO);
+		order.setMerchantFee(BigDecimal.ZERO);
 		order.setFopType("CX");
-		order.setEoNumber("1122334455");
+		order.setEoNumber(null);
 		order.setCreditCard(null);
-
+		
 		mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
 				.andExpect(status().isBadRequest()).andReturn().getResponse();
 
@@ -104,7 +126,9 @@ public class ExchangeOrderControllerTest {
 	public void shouldHandleExchangeOrderNotFoundException() throws Exception {
 
 		ExchangeOrder order = createExchangeOrder();
-
+		order.setCommission(BigDecimal.ZERO);
+		order.setGstAmount(BigDecimal.ZERO);
+		order.setMerchantFee(BigDecimal.ZERO);
 		when(eoService.saveExchangeOrder(anyObject()))
 				.thenThrow(new ExchangeOrderNoContentException("eo number not found"));
 
@@ -236,7 +260,7 @@ public class ExchangeOrderControllerTest {
 	public void shouldGeneratePdfCheckedException() throws Exception {
 
 		when(eoReportService.generatePdf(Mockito.anyString()))
-				.thenThrow(ExchangeOrderException.class);
+				.thenThrow(ApiServiceException.class);
 
 		mockMvc.perform(get(url + "/pdf/" + eoNumber))
 				.andExpect(status().isNoContent()).andReturn();

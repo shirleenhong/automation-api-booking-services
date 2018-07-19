@@ -51,7 +51,7 @@ public class ExchangeOrderRepositoryTest {
 		
 		when(dataStore.createUpdateOperations(ExchangeOrder.class)).thenReturn(operation);
 				
-		String result = repository.saveOrUpdate(eo);
+		String result = repository.save(eo);
 		
 		verify(dataStore, times(1)).save(eo);
 		assertEquals(eo.getEoNumber(), result);

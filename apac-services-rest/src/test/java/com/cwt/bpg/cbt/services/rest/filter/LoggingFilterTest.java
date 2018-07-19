@@ -65,4 +65,41 @@ public class LoggingFilterTest {
 
 	}
 
+	@Test
+	public void canDoFilterNoContentType() throws ServletException, IOException {
+		FilterChain filterChain = mock(FilterChain.class);
+		HttpServletResponse response = mock(HttpServletResponse.class);
+		RequestWrapper request = mock(RequestWrapper.class);
+
+		ArrayList<String> headerNames = new ArrayList<>();
+		headerNames.add("Authorization");
+
+		when(request.getHeaderNames()).thenReturn(Iterators.asEnumeration(headerNames.iterator()));
+
+		filter.doFilterInternal(request, response, filterChain);
+
+		verify(filterChain, times(1)).doFilter(Mockito.any(ServletRequest.class),
+				Mockito.any(ServletResponse.class));
+	}
+
+	@Test
+	public void canDoFilterInvalidCharset() throws ServletException, IOException {
+		FilterChain filterChain = mock(FilterChain.class);
+		HttpServletResponse response = mock(HttpServletResponse.class);
+		RequestWrapper request = mock(RequestWrapper.class);
+
+		ArrayList<String> headerNames = new ArrayList<>();
+		headerNames.add("Authorization");
+
+		when(request.getHeaderNames()).thenReturn(Iterators.asEnumeration(headerNames.iterator()));
+		when(request.getCharacterEncoding()).thenReturn("INVALID");
+		when(response.getCharacterEncoding()).thenReturn("INVALID");
+		when(request.getContentType()).thenReturn(MediaType.APPLICATION_JSON.toString());
+		when(response.getContentType()).thenReturn(MediaType.APPLICATION_JSON.toString());
+
+		filter.doFilterInternal(request, response, filterChain);
+
+		verify(filterChain, times(1)).doFilter(Mockito.any(ServletRequest.class),
+				Mockito.any(ServletResponse.class));
+	}
 }
