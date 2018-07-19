@@ -90,6 +90,23 @@ public class ExchangeOrderControllerTest {
 	}
 
 	@Test
+	public void shouldCreateExchangeOrder() throws Exception {
+
+		ExchangeOrder order = createExchangeOrder();
+		order.setCommission(BigDecimal.ZERO);
+		order.setGstAmount(BigDecimal.ZERO);
+		order.setMerchantFee(BigDecimal.ZERO);
+		order.setEoNumber(null);
+
+		when(eoService.saveExchangeOrder(any(ExchangeOrder.class))).thenReturn(order);
+
+		mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+				.andExpect(status().isCreated()).andReturn().getResponse();
+
+		verify(eoService, times(1)).saveExchangeOrder(any(ExchangeOrder.class));
+	}
+
+	@Test
 	public void shouldUpdateExchangeOrder() throws Exception {
 
 		ExchangeOrder order = createExchangeOrder();
