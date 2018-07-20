@@ -52,6 +52,10 @@ public class ExchangeOrderRepository
         {
             query.field("vendor.code").equal(param.getVendor().getCode());
         }
+        if (StringUtils.isNotBlank(param.getCountryCode()))
+        {
+            query.field("countryCode").equal(param.getCountryCode());
+        }
         if (StringUtils.isNotBlank(param.getVendor().getRaiseType()))
         {
             query.field("vendor.raiseType").equal(param.getVendor().getRaiseType());
@@ -78,7 +82,7 @@ public class ExchangeOrderRepository
         {
             query.field("createDateTime").lessThanOrEq(param.getEndCreationDate());
         }
-        query.order("createDateTime");
+        query.order("-createDateTime");
         
         final FindOptions options = new FindOptions();
         options.limit(100);

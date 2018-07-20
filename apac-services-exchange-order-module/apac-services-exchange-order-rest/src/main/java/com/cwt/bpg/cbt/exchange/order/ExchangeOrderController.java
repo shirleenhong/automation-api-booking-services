@@ -118,6 +118,7 @@ public class ExchangeOrderController {
     public List<ExchangeOrder> search(
             @RequestParam(name = "eoNumber", required = false ) @ApiParam(value = "Exchange order number") String eoNumber,
             @RequestParam(name = "vendorCode", required = false) @ApiParam(value = "Vendor") String vendorCode,
+            @RequestParam(name = "countryCode", required = false) @ApiParam(value = "Country Code") String countryCode,
             @RequestParam(name = "raiseType", required = false) @ApiParam(value = "Payment Type") String raiseType,
             @RequestParam(name = "recordLocator", required = false) @ApiParam(value = "PNR") String recordLocator,
             @RequestParam(name = "status", required = false) @ApiParam(value = "Status") String status,
@@ -126,6 +127,7 @@ public class ExchangeOrderController {
                     throws ApiServiceException {
         final ExchangeOrderSearchParam param = new ExchangeOrderSearchParam();
         param.setEoNumber(eoNumber);
+        param.setCountryCode(countryCode);
         final Vendor vendor = new Vendor();
         vendor.setCode(vendorCode);
         vendor.setRaiseType(raiseType);
