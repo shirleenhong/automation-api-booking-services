@@ -105,6 +105,7 @@ public class MigrationService {
 			else {
 				List<ContactInfo> contactList = new ArrayList<>();
 				
+				//TODO: extract to method
 				if(!ObjectUtils.isEmpty(vendor.getEmail())) {
 
 					ContactInfo contactInfo = new ContactInfo();

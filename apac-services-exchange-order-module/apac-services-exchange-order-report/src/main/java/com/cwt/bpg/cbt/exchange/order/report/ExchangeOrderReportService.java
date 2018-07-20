@@ -75,9 +75,7 @@ public class ExchangeOrderReportService {
 
 	private static final String TEMPLATE = "jasper/exchange-order.jasper";
 	private static final String IMAGE_PATH = "jasper/cwt-logo.png";
-
-	private int count;
-
+	
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ExchangeOrderReportService.class);
 
@@ -191,19 +189,17 @@ public class ExchangeOrderReportService {
 	public EmailResponse emailPdf(String eoNumber) throws ApiServiceException {
 
 		EmailResponse response = new EmailResponse();
-
 		StringBuilder sbEmail = new StringBuilder();
 		StringBuilder sbEmailNotPreferred = new StringBuilder();
 		List<String> emailListNotPreferred = new ArrayList<>();
-
-		count = 0;
+		int count = 0;
 
 		try {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
 			List<ContactInfo> contactInfoList  = exchangeOrder.getVendor().getContactInfo();
-
-			contactInfoList.forEach(ci -> {
+			//TODO: refactor
+			for (ContactInfo ci : contactInfoList) {
 				if (ci.getType() != null && ci.getType().equalsIgnoreCase("Email")) {
 					if (ci.isPreferred()) {
 						sbEmail.append(ci.getDetail());
@@ -217,7 +213,7 @@ public class ExchangeOrderReportService {
 					}
 					count++;
 				}
-			});
+			}
 
 			String email = sbEmail.toString();
 			if (count == emailListNotPreferred.size()) {

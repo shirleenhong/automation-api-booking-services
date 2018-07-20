@@ -58,6 +58,7 @@ public class ExchangeOrderService {
 	@Autowired
 	private ServiceUtils serviceUtils;
 	
+	//TODO: make separate classes for create/update logic
 	@CachePut(cacheNames = "exchange-orders", key = "#exchangeOrder.eoNumber")
 	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
