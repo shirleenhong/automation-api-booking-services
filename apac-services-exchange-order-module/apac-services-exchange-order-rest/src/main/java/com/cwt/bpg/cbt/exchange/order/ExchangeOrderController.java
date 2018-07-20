@@ -19,7 +19,6 @@ import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
-import com.cwt.bpg.cbt.exchange.order.validator.FopTypeValidator;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,9 +34,6 @@ public class ExchangeOrderController {
 	@Autowired
 	private ExchangeOrderReportService eoReportService;
 
-	@Autowired
-	private FopTypeValidator fopTypeValidator;
-
 	@PostMapping(
 			path = "/exchange-order",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
@@ -48,6 +44,7 @@ public class ExchangeOrderController {
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
 					throws ExchangeOrderNoContentException {
     
+		//TODO: refactor
 		boolean isSave = false;
 		if(input.getEoNumber() == null) {
 			isSave = true;
@@ -55,12 +52,9 @@ public class ExchangeOrderController {
 
 		final ExchangeOrder saveExchangeOrder = eoService.saveExchangeOrder(input);
 		Map<String, Object> response = new HashMap<>(1);
-		if (isSave) {
-			response.put("eoNumber", saveExchangeOrder.getEoNumber());
-		}
-		else {
-			response.put("exchangeOrder", saveExchangeOrder);
-		}
+
+		response.put("exchangeOrder", saveExchangeOrder);
+		
 
 		return new ResponseEntity<>(response, (isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
@@ -74,6 +68,7 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
 	}
 
+	//TODO: change pnr to recordLocator
 	@GetMapping(path = "/exchange-order/{pnr:^[a-zA-Z0-9]{6}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction based on PNR (6 digit alphanumeric string).")

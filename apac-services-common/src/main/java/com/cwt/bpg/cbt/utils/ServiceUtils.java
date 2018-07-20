@@ -9,7 +9,7 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
 public class ServiceUtils {
-
+	//TODO: make static
 	public void modifyTargetObject(Object source, Object target) {
 		BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
 	}
