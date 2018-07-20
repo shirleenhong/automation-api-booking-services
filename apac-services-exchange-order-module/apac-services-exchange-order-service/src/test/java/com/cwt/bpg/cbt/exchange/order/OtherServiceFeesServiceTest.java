@@ -73,9 +73,9 @@ public class OtherServiceFeesServiceTest {
 	@Test
 	public void shouldReturnFeesBreakdown() {
 
-		when(nonAirFeeCalculator.calculate(anyObject(), anyObject()))
+		when(nonAirFeeCalculator.calculate(anyObject(), anyObject(), anyString()))
 			.thenReturn(new NonAirFeesBreakdown());
-		assertNotNull(service.calculateNonAirFees(new NonAirFeesInput()));
+		assertNotNull(service.calculateNonAirFees(new NonAirFeesInput(), null));
 	}
 
 	@Test
@@ -84,10 +84,10 @@ public class OtherServiceFeesServiceTest {
 		when(factory.getCalculator(anyString()))
 			.thenReturn(hkCalculator);
 
-		when(hkCalculator.calculate(anyObject(), anyObject()))
+		when(hkCalculator.calculate(anyObject(), anyObject(), anyString()))
 			.thenReturn(new AirFeesBreakdown());
 
-		assertNotNull(service.calculateAirFees(new AirFeesInput()));
+		assertNotNull(service.calculateAirFees(new AirFeesInput(), "HK"));
 	}
 
 	@Test
@@ -117,14 +117,13 @@ public class OtherServiceFeesServiceTest {
 				.thenReturn(client);
 
 		IndiaAirFeesInput input = new IndiaAirFeesInput();
-		input.setCountryCode(Country.INDIA.getCode());
 
 		assertNotNull(service.calculateIndiaAirFees(input));
 	}
 
 	@Test
 	public void shouldReturnVisaFees() {
-		when(visaFeesCalculator.calculate(anyObject(), anyObject())).thenReturn(new VisaFeesBreakdown());
+		when(visaFeesCalculator.calculate(anyObject(), anyObject(), anyString())).thenReturn(new VisaFeesBreakdown());
 
 		VisaFeesInput input = new VisaFeesInput();
 		input.setCountryCode(Country.HONG_KONG.getCode());
@@ -143,14 +142,13 @@ public class OtherServiceFeesServiceTest {
 		when(clientService.getClient(anyString())).thenReturn(client);
 
 		IndiaNonAirFeesInput input = new IndiaNonAirFeesInput();
-		input.setCountryCode(Country.INDIA.getCode());
 
 		assertNotNull(service.calculateIndiaNonAirFees(input));
 	}
 
 	@Test
 	public void shouldReturnNonAirFeeHkSg() {
-		when(nonAirFeeCalculator.calculate(anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
+		when(nonAirFeeCalculator.calculate(anyObject(), anyObject(), anyString())).thenReturn(new NonAirFeesBreakdown());
 		
 		Client client = new Client();
 		client.setPricingId(20);
@@ -158,8 +156,7 @@ public class OtherServiceFeesServiceTest {
 		when(clientService.getClient(anyString())).thenReturn(client);
 
 		NonAirFeesInput input = new NonAirFeesInput();
-		input.setCountryCode(Country.HONG_KONG.getCode());
 		
-		assertNotNull(service.calculateNonAirFees(input));
+		assertNotNull(service.calculateNonAirFees(input, "HK"));
 	}
 }

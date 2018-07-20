@@ -19,7 +19,7 @@ public class VisaFeesCalculator implements Calculator<VisaFeesBreakdown, VisaFee
     private ScaleConfig scaleConfig;
 
     @Override
-    public VisaFeesBreakdown calculate(VisaFeesInput input, MerchantFee merchantFee) {
+    public VisaFeesBreakdown calculate(VisaFeesInput input, MerchantFee merchantFee, String countryCode) {
 
         VisaFeesBreakdown result = new VisaFeesBreakdown();
 

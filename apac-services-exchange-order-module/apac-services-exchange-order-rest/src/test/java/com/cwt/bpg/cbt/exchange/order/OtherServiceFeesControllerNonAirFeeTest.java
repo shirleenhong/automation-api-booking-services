@@ -58,7 +58,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isOk());
 
-        verify(service, times(1)).calculateNonAirFees(any(NonAirFeesInput.class));
+        verify(service, times(1)).calculateNonAirFees(any(NonAirFeesInput.class), anyString());
     }
 
 
@@ -92,14 +92,13 @@ public class OtherServiceFeesControllerNonAirFeeTest {
 
         input.setFopType("CX4");
         input.setClientAccountNumber("1234");
-        input.setCountryCode("HK");
 
         mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(input)))
                 .andExpect(status().isOk());
 
-        verify(service, times(1)).calculateNonAirFees(any(NonAirFeesInput.class));
+        verify(service, times(1)).calculateNonAirFees(any(NonAirFeesInput.class), anyString());
     }
 
     @Test

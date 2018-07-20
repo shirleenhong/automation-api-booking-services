@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
 
@@ -35,7 +34,7 @@ public class OtherServiceFeesController {
 	@ApiOperation(value = "Computes non air fees. Applicable to India air products.")
 	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(@Valid @RequestBody @ApiParam(
 			value = "Values needed for calculation") IndiaNonAirFeesInput input) {
-		input.setCountryCode(Country.INDIA.getCode());
+
 		return new ResponseEntity<>(service.calculateIndiaNonAirFees(input), HttpStatus.OK);
 	}
 
@@ -48,8 +47,8 @@ public class OtherServiceFeesController {
 	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NonAirFeesInput input) {
-		input.setCountryCode(countryCode.toUpperCase());
-		return new ResponseEntity<>(service.calculateNonAirFees(input), HttpStatus.OK);
+
+		return new ResponseEntity<>(service.calculateNonAirFees(input, countryCode.toUpperCase()), HttpStatus.OK);
 	}
 
 	@PostMapping(
@@ -75,8 +74,7 @@ public class OtherServiceFeesController {
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") AirFeesInput input) {
 
-		input.setCountryCode(countryCode.toUpperCase());
-		return new ResponseEntity<>(service.calculateAirFees(input), HttpStatus.OK);
+		return new ResponseEntity<>(service.calculateAirFees(input, countryCode.toUpperCase()), HttpStatus.OK);
 	}
 
 	@PostMapping(

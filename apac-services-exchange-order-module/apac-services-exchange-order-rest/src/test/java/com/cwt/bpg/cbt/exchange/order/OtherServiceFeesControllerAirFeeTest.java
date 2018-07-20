@@ -2,12 +2,16 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerNonAirFeeTest.convertObjectToJsonBytes;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.Charset;
 
+import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +26,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
-import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
+import com.cwt.bpg.cbt.exchange.order.validator.AirlineOverheadCommissionValidator;
+import com.cwt.bpg.cbt.exchange.order.validator.FeeValidator;
+import com.cwt.bpg.cbt.exchange.order.validator.OthTaxValidator;
 
 import net.minidev.json.JSONObject;
 
@@ -59,7 +65,6 @@ public class OtherServiceFeesControllerAirFeeTest {
     public void shouldReturnFeesBreakdown() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
-        jsonObj.put("countryCode", "SG");
         jsonObj.put("clientType", "Z");
         jsonObj.put("clientAccountNumber", "testName");
         jsonObj.put("fopType", "Z");
@@ -73,7 +78,7 @@ public class OtherServiceFeesControllerAirFeeTest {
                 .andReturn()
                 .getResponse();
 
-        verify(service, times(1)).calculateAirFees(any(AirFeesInput.class));
+        verify(service, times(1)).calculateAirFees(any(AirFeesInput.class), anyString());
     }
 
     @Test
