@@ -52,8 +52,6 @@ public class ExchangeOrderController {
 		if(input.getEoNumber() == null) {
 			isSave = true;
 		}
-		
-		fopTypeValidator.validate(input);
 
 		final ExchangeOrder saveExchangeOrder = eoService.saveExchangeOrder(input);
 		Map<String, Object> response = new HashMap<>(1);
