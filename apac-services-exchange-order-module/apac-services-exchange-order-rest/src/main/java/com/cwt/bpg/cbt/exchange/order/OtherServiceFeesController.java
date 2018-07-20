@@ -2,17 +2,14 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import javax.validation.Valid;
 
-import com.cwt.bpg.cbt.exchange.order.validator.AirlineOverheadCommissionValidator;
-import com.cwt.bpg.cbt.exchange.order.validator.FeeValidator;
-import com.cwt.bpg.cbt.exchange.order.validator.OthTaxValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
