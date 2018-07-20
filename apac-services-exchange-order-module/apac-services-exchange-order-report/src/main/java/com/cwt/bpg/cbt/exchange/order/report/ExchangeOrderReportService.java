@@ -133,19 +133,22 @@ public class ExchangeOrderReportService {
 
 		for (ContactInfo contactInfo : contactInfoList) {
 
-			if (contactInfo.getType().equalsIgnoreCase(PHONE)
+			if (contactInfo.getType() != null
+					&& contactInfo.getType().equalsIgnoreCase(PHONE)
 					&& (!parameters.containsKey(PHONE)
 							|| (contactInfo.isPreferred() && !isCurrPhonePref))) {
 				parameters.put(PHONE, contactInfo.getDetail());
 				isCurrPhonePref = contactInfo.isPreferred() && !isCurrPhonePref;
 			}
-			else if (contactInfo.getType().equalsIgnoreCase(FAX)
+			else if (contactInfo.getType() != null
+					&& contactInfo.getType().equalsIgnoreCase(FAX)
 					&& (!parameters.containsKey(FAX)
 							|| (contactInfo.isPreferred() && !isCurrFaxPref))) {
 				parameters.put(FAX, contactInfo.getDetail());
 				isCurrFaxPref = contactInfo.isPreferred() && !isCurrFaxPref;
 			}
-			else if (contactInfo.getType().equalsIgnoreCase(EMAIL)
+			else if (contactInfo.getType() != null
+					&& contactInfo.getType().equalsIgnoreCase(EMAIL)
 					&& (!parameters.containsKey(EMAIL)
 							|| (contactInfo.isPreferred() && !isCurrEmailPref))) {
 				parameters.put(EMAIL, contactInfo.getDetail());
@@ -201,7 +204,7 @@ public class ExchangeOrderReportService {
 			List<ContactInfo> contactInfoList  = exchangeOrder.getVendor().getContactInfo();
 
 			contactInfoList.forEach(ci -> {
-				if (ci.getType().equalsIgnoreCase("Email")) {
+				if (ci.getType() != null && ci.getType().equalsIgnoreCase("Email")) {
 					if (ci.isPreferred()) {
 						sbEmail.append(ci.getDetail());
 						sbEmail.append(",");

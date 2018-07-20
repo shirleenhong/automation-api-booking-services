@@ -189,7 +189,7 @@ public class FeeCalculator {
 			else if ("D".equals(tf.getOperator())) {
 				result = baseAmount
 						.divide(percentDecimal(BigDecimal.valueOf(100)
-								.subtract(new BigDecimal(safeValue(tf.getPerAmount())))),MathContext.DECIMAL128)
+								.subtract(BigDecimal.valueOf(safeValue(tf.getPerAmount())))),MathContext.DECIMAL128)
 						.add(safeValue(tf.getExtraAmount()))
 						.subtract(safeValue(baseAmount));
 			}
