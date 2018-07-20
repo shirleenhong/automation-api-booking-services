@@ -55,9 +55,6 @@ public class ExchangeOrderService {
 	@Autowired
 	private ProductService productService;
 	
-	@Autowired
-	private ServiceUtils serviceUtils;
-	
 	//TODO: make separate classes for create/update logic
 	@CachePut(cacheNames = "exchange-orders", key = "#exchangeOrder.eoNumber")
 	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder)
@@ -104,7 +101,7 @@ public class ExchangeOrderService {
 			
 			exchangeOrder.setUpdateDateTime(Instant.now());
 			
-			serviceUtils.modifyTargetObject(exchangeOrder, existingExchangeOrder);
+			ServiceUtils.modifyTargetObject(exchangeOrder, existingExchangeOrder);
 			result = exchangeOrderRepo.update(existingExchangeOrder);
 		}
 
