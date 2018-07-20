@@ -89,7 +89,7 @@ public class ExchangeOrderService {
 	                                + " ] not found in Product [ " + exchangeOrder.getProductCode() + " ] ");
 			}
 			
-			result.setEoNumber(exchangeOrderRepo.save(exchangeOrder));
+			result = exchangeOrderRepo.save(exchangeOrder);
 		}
 		else {
 			Optional<ExchangeOrder> isEoExist = Optional.ofNullable(getExchangeOrder(eoNumber));
