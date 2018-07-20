@@ -64,7 +64,7 @@ public class ExchangeOrderController {
 			response.put("exchangeOrder", saveExchangeOrder);
 		}
 
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, (isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
 
 	@GetMapping(path = "/exchange-order/{eoNumber:^[0-9]{10}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
