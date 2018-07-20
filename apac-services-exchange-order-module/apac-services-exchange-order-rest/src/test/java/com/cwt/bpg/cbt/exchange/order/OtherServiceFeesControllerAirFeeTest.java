@@ -2,9 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerNonAirFeeTest.convertObjectToJsonBytes;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,9 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
-import com.cwt.bpg.cbt.exchange.order.validator.AirlineOverheadCommissionValidator;
-import com.cwt.bpg.cbt.exchange.order.validator.FeeValidator;
-import com.cwt.bpg.cbt.exchange.order.validator.OthTaxValidator;
+import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
 
 import net.minidev.json.JSONObject;
 
@@ -38,15 +34,9 @@ public class OtherServiceFeesControllerAirFeeTest {
 
     @Mock
     private OtherServiceFeesService service;
-    
-    @Mock
-	private AirlineOverheadCommissionValidator airlineOverheadCommissionValidator;
 
     @Mock
-	private OthTaxValidator othTaxValidator;
-
-    @Mock
-	private FeeValidator feeValidator;
+    private IndiaAirFeesValidator validator;
 
     @InjectMocks
     private OtherServiceFeesController controller;
