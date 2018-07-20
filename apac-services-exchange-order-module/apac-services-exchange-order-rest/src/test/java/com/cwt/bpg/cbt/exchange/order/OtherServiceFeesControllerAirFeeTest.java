@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerNonAirFeeTest.convertObjectToJsonBytes;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -39,15 +38,9 @@ public class OtherServiceFeesControllerAirFeeTest {
 
     @Mock
     private OtherServiceFeesService service;
-    
-    @Mock
-	private AirlineOverheadCommissionValidator airlineOverheadCommissionValidator;
 
     @Mock
-	private OthTaxValidator othTaxValidator;
-
-    @Mock
-	private FeeValidator feeValidator;
+    private IndiaAirFeesValidator validator;
 
     @InjectMocks
     private OtherServiceFeesController controller;

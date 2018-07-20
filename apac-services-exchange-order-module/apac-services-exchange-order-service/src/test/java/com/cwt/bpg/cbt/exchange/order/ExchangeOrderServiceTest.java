@@ -83,11 +83,11 @@ public class ExchangeOrderServiceTest {
 		when(productService.getProductByCode(anyString(),anyString())).thenReturn(baseProduct);
 
 		when(repo.getExchangeOrder(eo.getEoNumber())).thenReturn(eo);
-		when(repo.save(eo)).thenReturn(eo.getEoNumber());
+		when(repo.save(eo)).thenReturn(eo);
 		
 		ExchangeOrder result = service.saveExchangeOrder(eo);		
 		verify(repo, times(1)).save(eo);
-		assertEquals(null, result.getEoNumber());		
+		assertEquals("1807100001", result.getEoNumber());		
 	}
 	
 	@Test

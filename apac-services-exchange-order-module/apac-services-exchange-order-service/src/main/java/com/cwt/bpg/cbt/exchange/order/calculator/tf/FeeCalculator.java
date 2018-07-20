@@ -305,7 +305,7 @@ public class FeeCalculator {
 	public BigDecimal getTotalAirlineCommission(IndiaAirFeesInput input, BigDecimal yqTax) {
 		return calculatePercentage(safeValue(input.getBaseFare())
 					.add(safeValue(yqTax)),
-					input.getAirlineOverheadCommissionPercent());
+					input.getAirlineCommissionPercent());
 	}
 
 	public BigDecimal getTotalMarkup() {
