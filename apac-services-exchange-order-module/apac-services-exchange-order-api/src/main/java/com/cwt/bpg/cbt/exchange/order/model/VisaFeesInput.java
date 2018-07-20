@@ -12,6 +12,10 @@ public class VisaFeesInput extends FeesInput {
 
 	@ApiModelProperty(required = true)
 	@NotNull
+	private String countryCode;
+
+	@ApiModelProperty(required = true)
+	@NotNull
 	private BigDecimal cwtHandling;
 
 	@ApiModelProperty(required = true)
