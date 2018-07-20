@@ -61,4 +61,12 @@ public class VisaFeesInput extends FeesInput {
 	public void setVendorHandling(BigDecimal vendorHandling) {
 		this.vendorHandling = vendorHandling;
 	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 }

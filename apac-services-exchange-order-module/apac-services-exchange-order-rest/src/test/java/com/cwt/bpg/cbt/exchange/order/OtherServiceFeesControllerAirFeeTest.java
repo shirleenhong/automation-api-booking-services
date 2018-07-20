@@ -69,7 +69,6 @@ public class OtherServiceFeesControllerAirFeeTest {
     public void shouldReturnFeesBreakdown() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
-        jsonObj.put("countryCode", "SG");
         jsonObj.put("clientType", "Z");
         jsonObj.put("clientAccountNumber", "testName");
         jsonObj.put("fopType", "Z");
@@ -83,7 +82,7 @@ public class OtherServiceFeesControllerAirFeeTest {
                 .andReturn()
                 .getResponse();
 
-        verify(service, times(1)).calculateAirFees(any(AirFeesInput.class));
+        verify(service, times(1)).calculateAirFees(any(AirFeesInput.class), anyString());
     }
 
     @Test

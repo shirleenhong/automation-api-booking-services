@@ -33,7 +33,6 @@ public class BaseAndYqCalculatorTest {
 		Mockito.when(scaleConfig.getScale(Mockito.eq("IN"))).thenReturn(2);
 		
 		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
-		input.setCountryCode(Country.INDIA.getCode());
 		input.setBaseFare(new BigDecimal(600));
 		input.setYqTax(new BigDecimal(10));
 		

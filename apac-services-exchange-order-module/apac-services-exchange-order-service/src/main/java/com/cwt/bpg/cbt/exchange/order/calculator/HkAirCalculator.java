@@ -35,7 +35,7 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 			ClientTypes.TF.getCode());
 
 	@Override
-	public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFee) {
+	public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFee, String countryCode) {
 
 		AirFeesBreakdown result = new AirFeesBreakdown();
 		

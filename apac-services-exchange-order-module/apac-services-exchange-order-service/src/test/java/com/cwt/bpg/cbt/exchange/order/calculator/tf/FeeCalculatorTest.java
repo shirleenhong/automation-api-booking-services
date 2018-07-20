@@ -42,7 +42,6 @@ public class FeeCalculatorTest {
 		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
 		
 		input = new IndiaAirFeesInput();
-		input.setCountryCode(Country.INDIA.getCode());
 		input.setAirSegmentCount(2);
 		input.setBaseFare(new BigDecimal(500));
 		input.setYqTax(new BigDecimal(50));

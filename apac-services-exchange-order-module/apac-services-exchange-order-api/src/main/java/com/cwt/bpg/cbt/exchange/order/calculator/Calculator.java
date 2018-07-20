@@ -6,6 +6,6 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 @FunctionalInterface
 public interface Calculator<T, I extends FeesInput> {
 
-	T calculate(I input, MerchantFee merchantFee);
+	T calculate(I input, MerchantFee merchantFee, String countryCode);
 
 }
