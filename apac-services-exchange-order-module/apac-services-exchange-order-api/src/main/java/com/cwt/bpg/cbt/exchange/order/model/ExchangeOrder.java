@@ -49,7 +49,7 @@ import io.swagger.annotations.ApiModelProperty;
 })
 @NotNullOnFopType.List({
 		@NotNullOnFopType(fieldValue="CC",dependFieldName = "creditCard"),
-		@NotNullOnFopType(fieldValue="CX",dependFieldName = "creditCard"),
+		@NotNullOnFopType(fieldValue="CX4",dependFieldName = "creditCard"),
 })
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))

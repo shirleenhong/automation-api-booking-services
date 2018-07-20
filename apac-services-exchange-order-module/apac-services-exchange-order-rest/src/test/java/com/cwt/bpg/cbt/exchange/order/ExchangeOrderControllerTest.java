@@ -96,7 +96,7 @@ public class ExchangeOrderControllerTest {
 		order.setCommission(BigDecimal.ZERO);
 		order.setGstAmount(BigDecimal.ZERO);
 		order.setMerchantFee(BigDecimal.ZERO);
-		order.setFopType("CX");
+		order.setFopType("CX4");
 		order.setEoNumber("1122334455");
 		
 		mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
@@ -112,7 +112,7 @@ public class ExchangeOrderControllerTest {
 		order.setCommission(BigDecimal.ZERO);
 		order.setGstAmount(BigDecimal.ZERO);
 		order.setMerchantFee(BigDecimal.ZERO);
-		order.setFopType("CX");
+		order.setFopType("CX4");
 		order.setEoNumber(null);
 		order.setCreditCard(null);
 		
@@ -176,7 +176,7 @@ public class ExchangeOrderControllerTest {
 	private ExchangeOrder createExchangeOrder() {
 
 		ExchangeOrder order = new ExchangeOrder();
-		order.setFopType("CX");
+		order.setFopType("CX4");
 		order.setDescription("test_description");
 		order.setAdditionalInfoDate(Instant.now());
 		order.setProductCode("PR01");
