@@ -2,7 +2,9 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerNonAirFeeTest.convertObjectToJsonBytes;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,6 +23,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.validator.AirlineOverheadCommissionValidator;
+import com.cwt.bpg.cbt.exchange.order.validator.FeeValidator;
+import com.cwt.bpg.cbt.exchange.order.validator.OthTaxValidator;
 
 import net.minidev.json.JSONObject;
 
@@ -32,6 +38,15 @@ public class OtherServiceFeesControllerAirFeeTest {
 
     @Mock
     private OtherServiceFeesService service;
+    
+    @Mock
+	private AirlineOverheadCommissionValidator airlineOverheadCommissionValidator;
+
+    @Mock
+	private OthTaxValidator othTaxValidator;
+
+    @Mock
+	private FeeValidator feeValidator;
 
     @InjectMocks
     private OtherServiceFeesController controller;
@@ -90,4 +105,30 @@ public class OtherServiceFeesControllerAirFeeTest {
 
         verifyZeroInteractions(service);
     }
+    
+    @Test
+    public void shouldReturnIndiaAirFees() throws Exception {
+    	
+    	JSONObject jsonObj = new JSONObject();
+
+        jsonObj.put("countryCode", "IN");
+        jsonObj.put("clientType", "Z");
+        jsonObj.put("clientAccountNumber", "testName");
+        jsonObj.put("fopType", "Z");
+        jsonObj.put("applyFormula", 111);
+        jsonObj.put("commissionByPercent", 111);
+        jsonObj.put("baseFare", 111);
+        jsonObj.put("tripType", "TR");
+        jsonObj.put("yqTax", 100);
+       
+        mockMvc.perform(post("/other-service-fees/air-fees/in")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(jsonObj)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        verify(service, times(1)).calculateIndiaAirFees(any(IndiaAirFeesInput.class));
+    }
+
 }
