@@ -134,7 +134,7 @@ Calculate Air Fees-IN Reference Fare
     Set Test Variable    ${reference_fare_amount}    ${calculated_value} 
     
 Calculate Air Fees-IN Total Airline Commission
-    ${calculated_value}    Evaluate    (${base_fare_value}+${yq_tax_value})*(${airline_overhead_commission_percentage_value}*0.01)
+    ${calculated_value}    Evaluate    (${base_fare_value}+${yq_tax_value})*(${airline_commission_value}*0.01)
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}  
