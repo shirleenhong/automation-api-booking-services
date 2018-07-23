@@ -19,10 +19,10 @@ public class ExchangeOrderRepository {
 	@Autowired
 	private MorphiaComponent morphia;
 	
-	public String save(ExchangeOrder eo) {		
+	public ExchangeOrder save(ExchangeOrder eo) {		
 		morphia.getDatastore().save(eo);
 		LOGGER.info("Save: Exchange order, [{}]", eo.getEoNumber());
-		return eo.getEoNumber();
+		return eo;
 	}
 	
 	public ExchangeOrder update(ExchangeOrder eo) {

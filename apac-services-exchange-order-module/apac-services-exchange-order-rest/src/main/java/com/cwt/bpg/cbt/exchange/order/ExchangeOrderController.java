@@ -1,8 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -34,29 +32,19 @@ public class ExchangeOrderController {
 	@Autowired
 	private ExchangeOrderReportService eoReportService;
 
-	@PostMapping(
-			path = "/exchange-order",
-			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
-			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@PostMapping(path = "/exchange-order", produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
+					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Saves new exchange order transaction.")
-	public ResponseEntity<Map<String, Object>> saveExchangeOrder(
+	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
-					throws ExchangeOrderNoContentException {
-    
-		//TODO: refactor
-		boolean isSave = false;
-		if(input.getEoNumber() == null) {
-			isSave = true;
-		}
+			throws ExchangeOrderNoContentException {
 
-		final ExchangeOrder saveExchangeOrder = eoService.saveExchangeOrder(input);
-		Map<String, Object> response = new HashMap<>(1);
+		boolean isSave = input.getEoNumber() == null ? true : false;
 
-		response.put("exchangeOrder", saveExchangeOrder);
-		
-
-		return new ResponseEntity<>(response, (isSave ? HttpStatus.CREATED : HttpStatus.OK));
+		return new ResponseEntity<>(eoService.saveExchangeOrder(input),
+				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
 
 	@GetMapping(path = "/exchange-order/{eoNumber:^[0-9]{10}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })

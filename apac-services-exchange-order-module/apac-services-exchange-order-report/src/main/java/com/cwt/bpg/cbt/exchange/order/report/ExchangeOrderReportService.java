@@ -190,36 +190,12 @@ public class ExchangeOrderReportService {
 	public EmailResponse emailPdf(String eoNumber) throws ApiServiceException {
 
 		EmailResponse response = new EmailResponse();
-		StringBuilder sbEmail = new StringBuilder();
-		StringBuilder sbEmailNotPreferred = new StringBuilder();
-		List<String> emailListNotPreferred = new ArrayList<>();
-		int count = 0;
 
 		try {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
 			List<ContactInfo> contactInfoList  = exchangeOrder.getVendor().getContactInfo();
-			//TODO: refactor
-			for (ContactInfo ci : contactInfoList) {
-				if (ci.getType() != null && ci.getType() == ContactInfoType.EMAIL) {
-					if (ci.isPreferred()) {
-						sbEmail.append(ci.getDetail());
-						sbEmail.append(",");
-					}
-					else {
-						emailListNotPreferred.add(ci.getDetail());
-
-						sbEmailNotPreferred.append(ci.getDetail());
-						sbEmailNotPreferred.append(",");
-					}
-					count++;
-				}
-			}
-
-			String email = sbEmail.toString();
-			if (count == emailListNotPreferred.size()) {
-				email = sbEmailNotPreferred.toString();
-			}
+			String email = setEmailRecipient(contactInfoList);
 
 			String emailRecipient = getEmail(email);
 			if (StringUtils.isEmpty(emailRecipient)) {
@@ -251,6 +227,36 @@ public class ExchangeOrderReportService {
 		}
 
         return response;
+	}
+
+	private String setEmailRecipient(List<ContactInfo> contactInfoList) {
+		StringBuilder sbEmail = new StringBuilder();
+		StringBuilder sbEmailNotPreferred = new StringBuilder();
+		List<String> emailListNotPreferred = new ArrayList<>();
+		int count = 0;
+
+		for (ContactInfo ci : contactInfoList) {
+			if (ci.getType() != null && ci.getType().equalsIgnoreCase("Email")) {
+				if (ci.isPreferred()) {
+					sbEmail.append(ci.getDetail());
+					sbEmail.append(",");
+				}
+				else {
+					emailListNotPreferred.add(ci.getDetail());
+
+					sbEmailNotPreferred.append(ci.getDetail());
+					sbEmailNotPreferred.append(",");
+				}
+				count++;
+			}
+		}
+
+		String email = sbEmail.toString();
+		if (count == emailListNotPreferred.size()) {
+			email = sbEmailNotPreferred.toString();
+		}
+		
+		return email;
 	}
 
 	private String getEmail(String email) {

@@ -57,10 +57,10 @@ public class ExchangeOrderRepositoryTest {
 		
 		when(dataStore.createUpdateOperations(ExchangeOrder.class)).thenReturn(operation);
 				
-		String result = repository.save(eo);
+		ExchangeOrder result = repository.save(eo);
 		
 		verify(dataStore, times(1)).save(eo);
-		assertEquals(eo.getEoNumber(), result);
+		assertNotNull(result);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })

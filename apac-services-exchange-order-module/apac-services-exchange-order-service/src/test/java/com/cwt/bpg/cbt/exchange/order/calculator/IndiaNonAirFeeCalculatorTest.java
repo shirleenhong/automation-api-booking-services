@@ -44,7 +44,6 @@ public class IndiaNonAirFeeCalculatorTest {
 		input.setCommissionByPercent(true);
 		input.setCommissionPercent(2D);
 		input.setCostAmount(round(new BigDecimal(1300)));
-		input.setCountryCode(Country.INDIA.getCode());
 		input.setDiscountByPercent(true);
 		input.setDiscountPercent(5D);
 		input.setFopMode(4);

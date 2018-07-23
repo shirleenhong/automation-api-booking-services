@@ -21,7 +21,7 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 	private ScaleConfig scaleConfig;
 
 	@Override
-	public NonAirFeesBreakdown calculate(NonAirFeesInput input, MerchantFee merchantFee) {
+	public NonAirFeesBreakdown calculate(NonAirFeesInput input, MerchantFee merchantFee, String countryCode) {
 		NonAirFeesBreakdown result = new NonAirFeesBreakdown();
 
 		if (input == null) {
@@ -31,7 +31,7 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 		BigDecimal gstAmount = null;
 		BigDecimal nettCostGst = null;
 
-		int scale = scaleConfig.getScale(input.getCountryCode());
+		int scale = scaleConfig.getScale(countryCode);
 
 		if (!input.isGstAbsorb()) {
 			gstAmount = round(calculatePercentage(input.getSellingPrice(), input.getGstPercent()), scale);

@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Optional;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +38,7 @@ public class FeeCalculator {
 
 		IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
 
-		int scale = scaleConfig.getScale(input.getCountryCode().toUpperCase());
+		int scale = scaleConfig.getScale(Country.INDIA.getCode());
 
 		if (input.isGstEnabled()) {
 			gstAmount = BigDecimal.ZERO;
@@ -304,7 +305,7 @@ public class FeeCalculator {
 	public BigDecimal getTotalAirlineCommission(IndiaAirFeesInput input, BigDecimal yqTax) {
 		return calculatePercentage(safeValue(input.getBaseFare())
 					.add(safeValue(yqTax)),
-					input.getAirlineOverheadCommissionPercent());
+					input.getAirlineCommissionPercent());
 	}
 
 	public BigDecimal getTotalMarkup() {
