@@ -10,18 +10,19 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cwtLogo" class="java.awt.Image" isForPrompting="false">
+	<parameter name="CWT_LOGO" class="java.awt.Image" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="date" class="java.lang.String"/>
-	<parameter name="additionalInfoDate" class="java.lang.String"/>
-	<parameter name="nettCost" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="tax2" class="java.lang.String"/>
-	<parameter name="total" class="java.lang.String"/>
-	<parameter name="gstAmountTax1" class="java.lang.String"/>
-	<parameter name="phone" class="java.lang.String"/>
-	<parameter name="fax" class="java.lang.String"/>
-	<parameter name="email" class="java.lang.String"/>
+	<parameter name="DATE" class="java.lang.String"/>
+	<parameter name="ADDITIONAL_INFO_DATE" class="java.lang.String"/>
+	<parameter name="NETT_COST" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="TAX2" class="java.lang.String"/>
+	<parameter name="TOTAL" class="java.lang.String"/>
+	<parameter name="GST_AMOUNT_TAX1" class="java.lang.String"/>
+	<parameter name="PHONE" class="java.lang.String"/>
+	<parameter name="FAX" class="java.lang.String"/>
+	<parameter name="EMAIL" class="java.lang.String"/>
+	<parameter name="GST_AMOUNT_TAX1_LABEL" class="java.lang.String"/>
 	<field name="header" class="com.cwt.bpg.cbt.exchange.order.model.Header"/>
 	<field name="vendor" class="com.cwt.bpg.cbt.exchange.order.model.Vendor"/>
 	<field name="eoNumber" class="java.lang.String"/>
@@ -74,7 +75,7 @@
 			</staticText>
 			<image isUsingCache="false">
 				<reportElement x="483" y="0" width="71" height="57" uuid="4af1ceb3-b9f4-46f2-83f8-34f5d4b875f0"/>
-				<imageExpression><![CDATA[$P{cwtLogo}]]></imageExpression>
+				<imageExpression><![CDATA[$P{CWT_LOGO}]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -138,7 +139,7 @@
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="235" width="200" height="15" isPrintWhenDetailOverflows="true" uuid="57d97753-741b-459b-9fe1-e97ba43d315d"/>
-				<textFieldExpression><![CDATA[$P{phone}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{PHONE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="150" width="100" height="15" uuid="dc693b8d-5190-49d1-ba34-4d2f2af4e8e0"/>
@@ -213,35 +214,35 @@
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="265" width="200" height="15" isPrintWhenDetailOverflows="true" uuid="4f781742-7881-4d47-b6ef-0d8052fec06b"/>
-				<textFieldExpression><![CDATA[$P{fax}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{FAX}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="160" y="280" width="200" height="15" isPrintWhenDetailOverflows="true" uuid="12af925a-c461-4615-bf74-ea3a8d585424"/>
-				<textFieldExpression><![CDATA[$P{email}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{EMAIL}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="295" width="200" height="15" isPrintWhenDetailOverflows="true" uuid="3df54278-a470-4528-bb7c-cced3fcf517f"/>
-				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{DATE}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="340" width="200" height="15" uuid="9d80071b-0318-46cf-a234-ef0cb110af47"/>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{nettCost}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{NETT_COST}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="160" y="355" width="200" height="15" uuid="10d0c9d2-0e59-4831-b3c7-a563d04aa657"/>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{gstAmountTax1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{GST_AMOUNT_TAX1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="370" width="200" height="15" uuid="3f064f4c-5dd3-4644-83b1-a311841e8242"/>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{tax2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{TAX2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="385" width="200" height="15" uuid="69a6785f-0752-44c9-9030-a9dbca4971dd"/>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{TOTAL}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="400" width="373" height="15" uuid="ae632efd-d66c-4e7e-a8b8-3d5ea72ff7f7"/>
@@ -280,11 +281,11 @@
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="430" width="200" height="15" uuid="d5dcbcdc-92aa-4a1c-9366-35d7be272427"/>
-				<textFieldExpression><![CDATA[$P{additionalInfoDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{ADDITIONAL_INFO_DATE}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="355" width="100" height="15" uuid="fe5f4374-8b78-4edf-91ac-f96573f64aa2"/>
-				<textFieldExpression><![CDATA[$F{gstAmount} != null ? "GST" : "Tax"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{GST_AMOUNT_TAX1_LABEL}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

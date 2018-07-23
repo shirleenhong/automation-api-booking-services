@@ -49,11 +49,11 @@ public class ExchangeOrderReportService {
 
 	private static final String DATE_PATTERN = "dd-MMM-yyyy";
 
-	private static final String PHONE = "phone";
+	private static final String PHONE = "PHONE";
 
-	private static final String FAX = "fax";
+	private static final String FAX = "FAX";
 
-	private static final String EMAIL = "email";
+	private static final String EMAIL = "EMAIL";
 
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
@@ -75,9 +75,7 @@ public class ExchangeOrderReportService {
 
 	private static final String TEMPLATE = "jasper/exchange-order.jasper";
 	private static final String IMAGE_PATH = "jasper/cwt-logo.png";
-
-	private int count;
-
+	
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ExchangeOrderReportService.class);
 
@@ -104,31 +102,28 @@ public class ExchangeOrderReportService {
 		}
 	}
 
-	private Map<String, Object> prepareParameters(final ExchangeOrder exchangeOrder)
-			throws IOException {
+	private Map<String, Object> prepareParameters(final ExchangeOrder exchangeOrder) throws IOException {
 		final ClassPathResource resourceLogo = new ClassPathResource(IMAGE_PATH);
 		Map<String, Object> parameters = new HashMap<>();
 
-		parameters.put("cwtLogo", ImageIO.read(resourceLogo.getInputStream()));
-		parameters.put("date", getDate(exchangeOrder));
-		parameters.put("additionalInfoDate",
-				formatDate(exchangeOrder.getAdditionalInfoDate()));
-		parameters.put("nettCost", formatAmount(exchangeOrder.getCountryCode(),
-				exchangeOrder.getNettCost()));
-		parameters.put("tax2",
-				formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTax2()));
-		parameters.put("total",
-				formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTotal()));
-		Optional<BigDecimal> tax1 = Optional.ofNullable(exchangeOrder.getGstAmount());
-		parameters.put("gstAmountTax1", formatAmount(exchangeOrder.getCountryCode(),
-				tax1.orElse(exchangeOrder.getTax1())));
-		setContactInfo(exchangeOrder.getVendor().getContactInfo(), parameters);
+		parameters.put("CWT_LOGO", ImageIO.read(resourceLogo.getInputStream()));
+		parameters.put("DATE", getDate(exchangeOrder));
+		parameters.put("ADDITIONAL_INFO_DATE", formatDate(exchangeOrder.getAdditionalInfoDate()));
+		parameters.put("NETT_COST", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getNettCost()));
+		parameters.put("TAX2", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTax2()));
+		parameters.put("TOTAL", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTotal()));
+
+		BigDecimal gstAmount = exchangeOrder.getGstAmount();
+        boolean displayGst = gstAmount != null && gstAmount.doubleValue() > 0d;
+        parameters.put("GST_AMOUNT_TAX1_LABEL", displayGst ? "GST" : "Tax");
+        parameters.put("GST_AMOUNT_TAX1", formatAmount(exchangeOrder.getCountryCode(),
+                displayGst ? gstAmount : exchangeOrder.getTax1()));
+        putContactInfoParameters(exchangeOrder.getVendor().getContactInfo(), parameters);
 
 		return parameters;
 	}
 
-	private void setContactInfo(List<ContactInfo> contactInfoList,
-			Map<String, Object> parameters) {
+	private void putContactInfoParameters(List<ContactInfo> contactInfoList, Map<String, Object> parameters) {
 
 		boolean isCurrPhonePref = false;
 		boolean isCurrFaxPref = false;
@@ -136,26 +131,26 @@ public class ExchangeOrderReportService {
 
 		for (ContactInfo contactInfo : contactInfoList) {
 
-			if (contactInfo.getType().equalsIgnoreCase(PHONE)
+			if (contactInfo.getType() != null
+					&& contactInfo.getType().equalsIgnoreCase(PHONE)
 					&& (!parameters.containsKey(PHONE)
 							|| (contactInfo.isPreferred() && !isCurrPhonePref))) {
 				parameters.put(PHONE, contactInfo.getDetail());
-				isCurrPhonePref = (contactInfo.isPreferred() && !isCurrPhonePref) ? true
-						: false;
+				isCurrPhonePref = contactInfo.isPreferred() && !isCurrPhonePref;
 			}
-			else if (contactInfo.getType().equalsIgnoreCase(FAX)
+			else if (contactInfo.getType() != null
+					&& contactInfo.getType().equalsIgnoreCase(FAX)
 					&& (!parameters.containsKey(FAX)
 							|| (contactInfo.isPreferred() && !isCurrFaxPref))) {
 				parameters.put(FAX, contactInfo.getDetail());
-				isCurrFaxPref = (contactInfo.isPreferred() && !isCurrFaxPref) ? true
-						: false;
+				isCurrFaxPref = contactInfo.isPreferred() && !isCurrFaxPref;
 			}
-			else if (contactInfo.getType().equalsIgnoreCase(EMAIL)
+			else if (contactInfo.getType() != null
+					&& contactInfo.getType().equalsIgnoreCase(EMAIL)
 					&& (!parameters.containsKey(EMAIL)
 							|| (contactInfo.isPreferred() && !isCurrEmailPref))) {
 				parameters.put(EMAIL, contactInfo.getDetail());
-				isCurrEmailPref = (contactInfo.isPreferred() && !isCurrEmailPref) ? true
-						: false;
+				isCurrEmailPref = contactInfo.isPreferred() && !isCurrEmailPref;
 			}
 		}
 	}
@@ -194,20 +189,18 @@ public class ExchangeOrderReportService {
 	public EmailResponse emailPdf(String eoNumber) throws ApiServiceException {
 
 		EmailResponse response = new EmailResponse();
-		
 		StringBuilder sbEmail = new StringBuilder();
 		StringBuilder sbEmailNotPreferred = new StringBuilder();
 		List<String> emailListNotPreferred = new ArrayList<>();
-		
-		count = 0;
-		
+		int count = 0;
+
 		try {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
 			List<ContactInfo> contactInfoList  = exchangeOrder.getVendor().getContactInfo();
-			
-			contactInfoList.forEach(ci -> {
-				if (ci.getType().equalsIgnoreCase("Email")) {
+			//TODO: refactor
+			for (ContactInfo ci : contactInfoList) {
+				if (ci.getType() != null && ci.getType().equalsIgnoreCase("Email")) {
 					if (ci.isPreferred()) {
 						sbEmail.append(ci.getDetail());
 						sbEmail.append(",");
@@ -220,7 +213,7 @@ public class ExchangeOrderReportService {
 					}
 					count++;
 				}
-			});
+			}
 
 			String email = sbEmail.toString();
 			if (count == emailListNotPreferred.size()) {

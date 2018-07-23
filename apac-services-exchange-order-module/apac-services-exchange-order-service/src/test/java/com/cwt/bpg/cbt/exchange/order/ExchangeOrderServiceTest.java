@@ -1,12 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +29,7 @@ import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
+import com.cwt.bpg.cbt.utils.ServiceUtils;
 
 public class ExchangeOrderServiceTest {
 
@@ -50,6 +47,9 @@ public class ExchangeOrderServiceTest {
 	
 	@Mock
 	private ScaleConfig scaleConfig;
+	
+	@Mock
+	private ServiceUtils serviceUtils;
 
 	@Before
 	public void setUp() {
@@ -58,6 +58,9 @@ public class ExchangeOrderServiceTest {
 		
 		Mockito.when(scaleConfig.getScale(Mockito.eq("SG"))).thenReturn(2);
 		Mockito.when(scaleConfig.getScale(Mockito.eq("HK"))).thenReturn(0);
+		
+		doNothing().when(serviceUtils).modifyTargetObject(anyObject(), anyObject());
+	
 	}
   
 	@Test
@@ -73,11 +76,32 @@ public class ExchangeOrderServiceTest {
 		when(productService.getProductByCode(anyString(),anyString())).thenReturn(baseProduct);
 
 		service.saveExchangeOrder(eo);
-		verify(repo, times(1)).saveOrUpdate(eo);
+		verify(repo, times(1)).save(eo);
 	}
 	
 	@Test
-	public void shouldCallSaveOrUpdateExisting() throws ExchangeOrderNoContentException {
+	public void shouldCallSaveExchangeOrder() throws ExchangeOrderNoContentException {
+		ExchangeOrder eo = new ExchangeOrder();
+		eo.setEoNumber(null);
+		eo.setCountryCode("HK");
+
+		BaseProduct baseProduct = new BaseProduct();
+		Vendor vendor = new Vendor();
+		vendor.setCode("022000");
+		eo.setVendor(vendor);
+		baseProduct.setVendors(Arrays.asList(vendor));
+		when(productService.getProductByCode(anyString(),anyString())).thenReturn(baseProduct);
+
+		when(repo.getExchangeOrder(eo.getEoNumber())).thenReturn(eo);
+		when(repo.save(eo)).thenReturn(eo.getEoNumber());
+		
+		ExchangeOrder result = service.saveExchangeOrder(eo);		
+		verify(repo, times(1)).save(eo);
+		assertEquals(null, result.getEoNumber());		
+	}
+	
+	@Test
+	public void shouldCallUpdateExistingExchangeOrder() throws ExchangeOrderNoContentException {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setEoNumber("eoNumber");
 		eo.setCountryCode("HK");
@@ -90,10 +114,10 @@ public class ExchangeOrderServiceTest {
 		when(productService.getProductByCode(anyString(),anyString())).thenReturn(baseProduct);
 
 		when(repo.getExchangeOrder(eo.getEoNumber())).thenReturn(eo);
-		when(repo.saveOrUpdate(eo)).thenReturn(eo.getEoNumber());
+		when(repo.update(eo)).thenReturn(eo);
 		
 		ExchangeOrder result = service.saveExchangeOrder(eo);		
-		verify(repo, times(1)).saveOrUpdate(eo);
+		verify(repo, times(1)).update(eo);
 		assertEquals(eo.getEoNumber(), result.getEoNumber());		
 	}
 	

@@ -10,6 +10,7 @@ public class ContactInfo implements Serializable {
 
     private static final long serialVersionUID = 4581832344361573326L;
     
+    //TODO: make enum
     @NotEmpty
     @ApiModelProperty(allowableValues = "Fax, Email, Phone", required = true)
     private String type;

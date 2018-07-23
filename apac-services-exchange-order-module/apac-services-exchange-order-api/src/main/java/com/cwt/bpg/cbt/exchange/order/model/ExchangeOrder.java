@@ -7,9 +7,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Id;
@@ -18,11 +16,44 @@ import org.mongodb.morphia.annotations.Indexes;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
+import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullOnFopType;
+import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullOnInsert;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
+@NotNullOnInsert.List({
+		@NotNullOnInsert(dependFieldName = "commission"),
+		@NotNullOnInsert(dependFieldName = "gstAmount"),
+		@NotNullOnInsert(dependFieldName = "merchantFee"),
+		@NotNullOnInsert(dependFieldName = "additionalInfoDate"),
+		@NotNullOnInsert(dependFieldName = "nettCost"),
+		@NotNullOnInsert(dependFieldName = "total"),
+		@NotNullOnInsert(dependFieldName = "header"),
+		@NotNullOnInsert(dependFieldName = "sellingPrice"),
+		@NotNullOnInsert(dependFieldName = "totalSellingPrice"),
+		@NotNullOnInsert(dependFieldName = "vendor"),
 
+})
+@NotEmptyOnInsert.List({
+		@NotEmptyOnInsert(dependFieldName = "fopType"),
+		@NotEmptyOnInsert(dependFieldName = "description"),
+		@NotEmptyOnInsert(dependFieldName = "productCode"),
+		@NotEmptyOnInsert(dependFieldName = "accountNumber"),
+		@NotEmptyOnInsert(dependFieldName = "passengerName"),
+		@NotEmptyOnInsert(dependFieldName = "agentId"),
+		@NotEmptyOnInsert(dependFieldName = "pcc"),
+		@NotEmptyOnInsert(dependFieldName = "agentName"),
+		@NotEmptyOnInsert(dependFieldName = "recordLocator"),
+		@NotEmptyOnInsert(dependFieldName = "eoAction"),
+		@NotEmptyOnInsert(dependFieldName = "status"),
+
+})
+@NotNullOnFopType.List({
+		@NotNullOnFopType(fieldValue="CC",dependFieldName = "creditCard"),
+		@NotNullOnFopType(fieldValue="CX4",dependFieldName = "creditCard"),
+})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder implements Serializable {
@@ -32,45 +63,38 @@ public class ExchangeOrder implements Serializable {
 	@Id
 	private String eoNumber;
 
-	@NotNull
 	@DecimalMin(value = "0")
 	private BigDecimal commission;
 
-	@NotNull
 	@DecimalMin(value = "0")
 	private BigDecimal gstAmount;
 
-	@NotNull
 	@DecimalMin(value = "0")
 	private BigDecimal merchantFee;
 	private String countryCode;
 
-	@NotEmpty
 	@ApiModelProperty(allowableValues = "CX,CC,INV", required = true)
 	private String fopType;
 
 	@Valid
 	private CreditCard creditCard;
 
-	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String description;
+
 	private String btaDescription;
 
-	@NotNull
 	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T00:00:00.000Z", required = true)
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant additionalInfoDate;
 
-	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String productCode;
 
-	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String accountNumber;
-	@NotEmpty
+
 	@ApiModelProperty(required = true)
 	private String passengerName;
 
@@ -84,46 +108,37 @@ public class ExchangeOrder implements Serializable {
     @JsonDeserialize(using = DateDeserializer.class)
 	private Instant updateDateTime;
 
-	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String agentId;
 
-	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String pcc;
 
 	private String faxNumber;
 
-	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String agentName;
 
-	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String recordLocator;
 
-	@NotNull
 	@DecimalMin(value = "0")
 	@ApiModelProperty(required = true)
 	private BigDecimal nettCost;
 
-	@NotNull
 	@DecimalMin(value = "0")
 	@ApiModelProperty(required = true)
 	private BigDecimal total;
 
-	@NotNull
 	@Valid
 	@ApiModelProperty(required = true)
 	private Header header;
 
-	@NotEmpty
 	@ApiModelProperty(required = true)
-	private String eoAction;
+	private EoAction eoAction;
 
-	@NotEmpty
 	@ApiModelProperty(required = true)
-	private String status;
+	private EoStatus status;
 
 	private String raiseCheque;
 
@@ -131,12 +146,10 @@ public class ExchangeOrder implements Serializable {
 
 	private BigDecimal tax2;
 
-	@NotNull
 	@DecimalMin(value = "0")
 	@ApiModelProperty(required = true)
 	private BigDecimal sellingPrice;
 
-	@NotNull
 	@DecimalMin(value = "0")
 	@ApiModelProperty(required = true)
 	private BigDecimal totalSellingPrice;
@@ -150,13 +163,12 @@ public class ExchangeOrder implements Serializable {
 	private List<String> eoRemarks;
 
 	private List<String> itineraryRemarks;
-
-	private String lastUpdatedByUser;
 	
-	@NotNull
 	@Valid
 	private Vendor vendor;
-
+	
+	private String lastUpdatedByUser;
+	
 	public String getEoNumber() {
 		return eoNumber;
 	}
@@ -341,19 +353,19 @@ public class ExchangeOrder implements Serializable {
 		this.header = header;
 	}
 
-	public String getEoAction() {
+	public EoAction getEoAction() {
 		return eoAction;
 	}
 
-	public void setEoAction(String eoAction) {
+	public void setEoAction(EoAction eoAction) {
 		this.eoAction = eoAction;
 	}
 
-	public String getStatus() {
+	public EoStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(EoStatus status) {
 		this.status = status;
 	}
 

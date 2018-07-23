@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.mongodb.morphia.query.FindOptions;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.Sort;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
 import org.slf4j.Logger;
@@ -25,20 +26,33 @@ public class ExchangeOrderRepository
     @Autowired
     private MorphiaComponent morphia;
 
-    public String saveOrUpdate(ExchangeOrder eo)
-    {
+    public String save(ExchangeOrder eo) {
         morphia.getDatastore().save(eo);
-        LOGGER.info("Save or update: Exchange order, [{}]", eo.getEoNumber());
+        LOGGER.info("Save: Exchange order, [{}]", eo.getEoNumber());
         return eo.getEoNumber();
     }
 
-    public ExchangeOrder getExchangeOrder(String eoNumber)
-    {
+    public ExchangeOrder update(ExchangeOrder eo) {
+        morphia.getDatastore().merge(eo);
+        LOGGER.info("Update: Exchange order, [{}]", eo.getEoNumber());
+        return eo;
+    }
+
+    public ExchangeOrder getExchangeOrder(String eoNumber) {
         return morphia.getDatastore()
                 .createQuery(ExchangeOrder.class)
                 .field("eoNumber")
                 .equal(eoNumber)
                 .get();
+    }
+
+    public List<ExchangeOrder> getByRecordLocator(String eoNumber) {
+        return morphia.getDatastore()
+                .createQuery(ExchangeOrder.class)
+                .field("recordLocator")
+                .equal(eoNumber)
+                .order(Sort.descending("createDateTime"))
+                .asList();
     }
 
     public List<ExchangeOrder> search(final ExchangeOrderSearchParam param)
@@ -60,7 +74,7 @@ public class ExchangeOrderRepository
         {
             query.field("vendor.raiseType").equal(param.getVendor().getRaiseType());
         }
-        if (StringUtils.isNotBlank(param.getStatus()))
+        if (param.getStatus() != null)
         {
             query.field("status").equal(param.getStatus());
         }
@@ -83,13 +97,13 @@ public class ExchangeOrderRepository
             query.field("createDateTime").lessThanOrEq(param.getEndCreationDate());
         }
         query.order("-createDateTime");
-        
+
         final FindOptions options = new FindOptions();
         options.limit(100);
         return query.asList(options);
     }
 
-    public boolean update(ExchangeOrder param)
+    public boolean updateFinace(ExchangeOrder param)
     {
         final Query<ExchangeOrder> query = morphia.getDatastore().createQuery(ExchangeOrder.class);
         query.field("eoNumber").equal(param.getEoNumber());
@@ -99,14 +113,8 @@ public class ExchangeOrderRepository
         ops.set("lastUpdatedByUser", param.getLastUpdatedByUser());
         ops.set("updateDateTime", param.getUpdateDateTime());
         ops.set("raiseCheque", param.getRaiseCheque());
-        
+
         final UpdateResults result = morphia.getDatastore().update(query, ops);
         return result.getUpdatedExisting();
     }
-
-	public List<ExchangeOrder> getByRecordLocator(String eoNumber) {
-		return morphia.getDatastore().createQuery(ExchangeOrder.class)
-				.field("recordLocator")
-				.equal(eoNumber).asList();
-	}
 }

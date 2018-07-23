@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,6 +30,7 @@ import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
+import com.cwt.bpg.cbt.utils.ServiceUtils;
 
 @Service
 @EnableScheduling
@@ -54,16 +56,41 @@ public class ExchangeOrderService {
 	@Autowired
 	private ProductService productService;
 	
-	//TODO: Add CachePut
-	ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder)
+	@Autowired
+	private ServiceUtils serviceUtils;
+	
+	//TODO: make separate classes for create/update logic
+	@CachePut(cacheNames = "exchange-orders", key = "#exchangeOrder.eoNumber")
+	public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
 
+		ExchangeOrder result = new ExchangeOrder();
 		setScale(exchangeOrder);
 		
 		final String eoNumber = exchangeOrder.getEoNumber();
 		if (eoNumber == null) {
 			exchangeOrder.setCreateDateTime(Instant.now());
 			exchangeOrder.setEoNumber(getEoNumber(exchangeOrder.getCountryCode()));
+			
+
+			Optional<BaseProduct> isProductExist = Optional.ofNullable(
+			        productService.getProductByCode(exchangeOrder.getCountryCode(),exchangeOrder.getProductCode()));
+
+			BaseProduct product = isProductExist
+					.orElseThrow(() -> new IllegalArgumentException(
+							"Product [ " + exchangeOrder.getProductCode() + " ] not found."));
+
+			Optional<Vendor> isVendorExist = product.getVendors().stream()
+					.filter(i -> i.getCode().equals(exchangeOrder.getVendor().getCode()))
+					.findFirst();
+
+			if(!isVendorExist.isPresent()) {
+					throw new IllegalArgumentException(
+							"Vendor [ " + exchangeOrder.getVendor().getCode()
+	                                + " ] not found in Product [ " + exchangeOrder.getProductCode() + " ] ");
+			}
+			
+			result.setEoNumber(exchangeOrderRepo.save(exchangeOrder));
 		}
 		else {
 			Optional<ExchangeOrder> isEoExist = Optional.ofNullable(getExchangeOrder(eoNumber));
@@ -72,32 +99,15 @@ public class ExchangeOrderService {
 					.orElseThrow(() -> new ExchangeOrderNoContentException(
 							"Exchange order number not found: [ " + eoNumber + " ]"));
 
-			existingExchangeOrder.setUpdateDateTime(Instant.now());
-
 			LOGGER.info("Existing Exchange order number: {} with country code {}",
 					existingExchangeOrder.getEoNumber(),
 					existingExchangeOrder.getCountryCode());
+			
+			exchangeOrder.setUpdateDateTime(Instant.now());
+			
+			serviceUtils.modifyTargetObject(exchangeOrder, existingExchangeOrder);
+			result = exchangeOrderRepo.update(existingExchangeOrder);
 		}
-
-		Optional<BaseProduct> isProductExist = Optional.ofNullable(
-		        productService.getProductByCode(exchangeOrder.getCountryCode(),exchangeOrder.getProductCode()));
-
-		BaseProduct product = isProductExist
-				.orElseThrow(() -> new IllegalArgumentException(
-						"Product [ " + exchangeOrder.getProductCode() + " ] not found."));
-
-		Optional<Vendor> isVendorExist = product.getVendors().stream()
-				.filter(i -> i.getCode().equals(exchangeOrder.getVendor().getCode()))
-				.findFirst();
-
-		if(!isVendorExist.isPresent()) {
-				throw new IllegalArgumentException(
-						"Vendor [ " + exchangeOrder.getVendor().getCode()
-                                + " ] not found in Product [ " + exchangeOrder.getProductCode() + " ] ");
-		}
-
-		ExchangeOrder result = new ExchangeOrder();
-		result.setEoNumber(exchangeOrderRepo.saveOrUpdate(exchangeOrder));
 
 		return result;
 	}
@@ -208,7 +218,7 @@ public class ExchangeOrderService {
     }
 	
 	public boolean update(ExchangeOrder param) {
-        return exchangeOrderRepo.update(param);
+        return exchangeOrderRepo.updateFinace(param);
     }
 	
 }
