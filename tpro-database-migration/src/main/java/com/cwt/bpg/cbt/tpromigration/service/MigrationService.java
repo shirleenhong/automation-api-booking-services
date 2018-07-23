@@ -102,15 +102,15 @@ public class MigrationService {
 				List<ContactInfo> contactList = new ArrayList<>();
 				
 				if (!ObjectUtils.isEmpty(vendor.getEmail())) {
-					setMigratedContactInfo(contactList, "EMAIL",
+					setMigratedContactInfo(contactList, ContactInfoType.EMAIL,
 							vendor.getEmail(), true);
 				}
 				if (!ObjectUtils.isEmpty(vendor.getFaxNumber())) {
-					setMigratedContactInfo(contactList, "FAX",
+					setMigratedContactInfo(contactList, ContactInfoType.FAX,
 							vendor.getFaxNumber(), true);
 				}
 				if(!ObjectUtils.isEmpty(vendor.getContactNo())) {
-					setMigratedContactInfo(contactList, "PHONE",
+					setMigratedContactInfo(contactList, ContactInfoType.PHONE,
 							vendor.getContactNo(), true);
 				}
 				LOGGER.info("size of contact info saved in vendor " + contactList.size());
@@ -139,7 +139,7 @@ public class MigrationService {
 	}
 
 	private void setMigratedContactInfo(List<ContactInfo> contactList,
-			String type, String detail, boolean preferred) {
+			ContactInfoType type, String detail, boolean preferred) {
 		
 		ContactInfo contactInfo = new ContactInfo();
 		contactInfo.setType(type);
