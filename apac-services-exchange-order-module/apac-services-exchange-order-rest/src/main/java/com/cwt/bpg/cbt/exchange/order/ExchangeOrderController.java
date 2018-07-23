@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -128,10 +127,7 @@ public class ExchangeOrderController {
         vendor.setRaiseType(raiseType);
         param.setVendor(vendor);
         param.setRecordLocator(recordLocator);
-        if (StringUtils.isNotBlank(status))
-        {
-            param.setStatus(EoStatus.valueOf(status));
-        }
+        param.setStatus(EoStatus.find(status));
         param.setStartCreationDate(startCreationDate);
         param.setEndCreationDate(endCreationDate);
         return eoService.search(param);

@@ -352,7 +352,7 @@ public class ExchangeOrderControllerTest
         final String uri = UriComponentsBuilder.newInstance().path("/exchange-orders")
         .queryParam("eoNumber", UUID.randomUUID().toString())
         .queryParam("vendorCode", UUID.randomUUID().toString())
-        .queryParam("status", EoStatus.NEW.name())
+        .queryParam("status", EoStatus.NEW)
         .queryParam("recordLocator", UUID.randomUUID().toString())
         .queryParam("startCreationDate", "2008-05-29T00:00:00.000Z")
         .queryParam("endCreationDate", "2008-05-29T00:00:00.000Z")
