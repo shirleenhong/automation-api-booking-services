@@ -7,10 +7,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 
 public class ExchangeOrderServiceTest {
 
@@ -58,10 +60,15 @@ public class ExchangeOrderServiceTest {
     }
 
     @Test
-    public void shouldCallGetByRecordLocator() {
-        String reloc = "ABC123";
-        service.getExchangeOrderByRecordLocator(reloc);
-        verify(repository, times(1)).getByRecordLocator(reloc);
+    public void shouldCallSearch() {
+        service.search(new ExchangeOrderSearchParam());
+        verify(repository, times(1)).search(Mockito.any(ExchangeOrderSearchParam.class));
+    }
+    
+    @Test
+    public void shouldCallUpdate() {
+        service.update(new ExchangeOrder());
+        verify(repository, times(1)).updateFinace(Mockito.any(ExchangeOrder.class));
     }
     
 }
