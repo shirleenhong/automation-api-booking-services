@@ -6,14 +6,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotNull;
+
 public class ContactInfo implements Serializable {
 
     private static final long serialVersionUID = 4581832344361573326L;
     
-    //TODO: make enum
-    @NotEmpty
+    @NotNull
     @ApiModelProperty(allowableValues = "Fax, Email, Phone", required = true)
-    private String type;
+    private ContactInfoType type;
     
     @NotEmpty
     @ApiModelProperty(required = true)
@@ -34,11 +35,11 @@ public class ContactInfo implements Serializable {
 		this.vendorNumber = vendorNumber;
 	}
 
-	public String getType() {
+	public ContactInfoType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(ContactInfoType type) {
 		this.type = type;
 	}
 

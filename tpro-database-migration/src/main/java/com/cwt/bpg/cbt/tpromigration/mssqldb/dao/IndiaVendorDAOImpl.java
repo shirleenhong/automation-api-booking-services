@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,10 +112,18 @@ public class IndiaVendorDAOImpl implements VendorDAO {
 			while (rs.next()) {
 				ContactInfo contactInfo = new ContactInfo();
 				contactInfo.setVendorNumber(rs.getString("VendorNumber"));
-				contactInfo.setType(rs.getString("ContactType"));
 				contactInfo.setDetail(rs.getString("ContactDetail"));
 				contactInfo.setPreferred(rs.getBoolean("PreferEOSend"));
-				
+
+				switch (rs.getString("ContactType")) {
+					case "Email": contactInfo.setType(ContactInfoType.EMAIL);
+						break;
+					case "Fax": contactInfo.setType(ContactInfoType.FAX);
+						break;
+					case "Phone": contactInfo.setType(ContactInfoType.PHONE);
+						break;
+				}
+
                 contactInfoList.add(contactInfo);
 			}
 			rs.close();

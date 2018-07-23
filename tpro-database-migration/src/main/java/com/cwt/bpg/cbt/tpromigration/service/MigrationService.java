@@ -89,13 +89,9 @@ public class MigrationService {
 				List<ContactInfo> contactList = new ArrayList<>();
 				
 				contactInfoList.forEach(ci -> {
-					if (vendor.getCode().equals(ci.getVendorNumber())) {	
-						
-						ContactInfo contactInfo = new ContactInfo();
-						contactInfo.setType(ci.getType());
-						contactInfo.setDetail(ci.getDetail());
-						contactInfo.setPreferred(ci.isPreferred());
-						contactList.add(contactInfo);
+					if (vendor.getCode().equals(ci.getVendorNumber())) {
+						setMigratedContactInfo(contactList, ci.getType(), ci.getDetail(),
+								ci.isPreferred());
 					}
 
 				});
@@ -105,33 +101,17 @@ public class MigrationService {
 			else {
 				List<ContactInfo> contactList = new ArrayList<>();
 				
-				//TODO: extract to method
-				if(!ObjectUtils.isEmpty(vendor.getEmail())) {
-
-					ContactInfo contactInfo = new ContactInfo();
-					contactInfo.setType("EMAIL");
-					contactInfo.setDetail(vendor.getEmail());
-					contactInfo.setPreferred(true);
-					contactList.add(contactInfo);
-					
+				if (!ObjectUtils.isEmpty(vendor.getEmail())) {
+					setMigratedContactInfo(contactList, ContactInfoType.EMAIL,
+							vendor.getEmail(), true);
 				}
-				if(!ObjectUtils.isEmpty(vendor.getFaxNumber())) {
-					
-					ContactInfo contactInfo = new ContactInfo();
-					contactInfo.setType("FAX");
-					contactInfo.setDetail(vendor.getFaxNumber());
-					contactInfo.setPreferred(true);
-					contactList.add(contactInfo);
-		
+				if (!ObjectUtils.isEmpty(vendor.getFaxNumber())) {
+					setMigratedContactInfo(contactList, ContactInfoType.FAX,
+							vendor.getFaxNumber(), true);
 				}
 				if(!ObjectUtils.isEmpty(vendor.getContactNo())) {
-					
-					ContactInfo contactInfo = new ContactInfo();
-					contactInfo.setType("PHONE");
-					contactInfo.setDetail(vendor.getContactNo());
-					contactInfo.setPreferred(true);
-					contactList.add(contactInfo);
-
+					setMigratedContactInfo(contactList, ContactInfoType.PHONE,
+							vendor.getContactNo(), true);
 				}
 				LOGGER.info("size of contact info saved in vendor " + contactList.size());
 				vendor.setContactInfo(contactList);
@@ -156,6 +136,16 @@ public class MigrationService {
 
 		mongoDbConnection.getCollection("productList")
 				.insertOne(dBObjectMapper.mapAsDbDocument(productList.getCountryCode(), productList));
+	}
+
+	private void setMigratedContactInfo(List<ContactInfo> contactList,
+			ContactInfoType type, String detail, boolean preferred) {
+		
+		ContactInfo contactInfo = new ContactInfo();
+		contactInfo.setType(type);
+		contactInfo.setDetail(detail);
+		contactInfo.setPreferred(preferred);
+		contactList.add(contactInfo);
 	}
 
 	@SuppressWarnings("unchecked")

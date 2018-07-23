@@ -42,12 +42,11 @@ public class ExchangeOrderRepository {
 			.field("eoNumber")
 			.equal(eoNumber).get();
 	}
-	
-	//TODO: change eoNumber to recordLocator
-	public List<ExchangeOrder> getByRecordLocator(String eoNumber) {
+
+	public List<ExchangeOrder> getByRecordLocator(String recordLocator) {
 		return morphia.getDatastore().createQuery(ExchangeOrder.class)
 				.field("recordLocator")
-				.equal(eoNumber)
+				.equal(recordLocator)
 				.order(Sort.descending("createDateTime"))
 				.asList();
 	}
