@@ -71,13 +71,13 @@ public class ExchangeOrderService {
 			exchangeOrder.setEoNumber(getEoNumber(exchangeOrder.getCountryCode()));
 
 			Set<ConstraintViolation<CreditCard>> ccErrors = Validation.buildDefaultValidatorFactory().getValidator().validate((exchangeOrder.getCreditCard()));
-			if (!ccErrors.isEmpty()) throw new IllegalArgumentException(ccErrors.toString());
+			if (!ccErrors.isEmpty()) throw new IllegalArgumentException("Credit Card incomplete or invalid");
 
 			Set<ConstraintViolation<Vendor>> vendorErrors = Validation.buildDefaultValidatorFactory().getValidator().validate((exchangeOrder.getVendor()));
-			if (!vendorErrors.isEmpty()) throw new IllegalArgumentException(ccErrors.toString());
+			if (!vendorErrors.isEmpty()) throw new IllegalArgumentException("Vendor incomplete or invalid");
 
 			Set<ConstraintViolation<Header>> headerErrors = Validation.buildDefaultValidatorFactory().getValidator().validate((exchangeOrder.getHeader()));
-			if (!headerErrors.isEmpty()) throw new IllegalArgumentException(headerErrors.toString());
+			if (!headerErrors.isEmpty()) throw new IllegalArgumentException("Header incomplete or invalid");
 
 			Optional<BaseProduct> isProductExist = Optional.ofNullable(
 			        productService.getProductByCode(exchangeOrder.getCountryCode(),exchangeOrder.getProductCode()));
