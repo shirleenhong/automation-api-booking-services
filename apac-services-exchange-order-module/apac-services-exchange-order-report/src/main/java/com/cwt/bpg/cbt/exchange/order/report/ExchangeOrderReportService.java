@@ -140,7 +140,7 @@ public class ExchangeOrderReportService {
 				isCurrPhonePref = contactInfo.isPreferred() && !isCurrPhonePref;
 			}
 			else if (contactInfo.getType() != null
-					&& contactInfo.getType() == ContactInfoType.Fax
+					&& contactInfo.getType() == ContactInfoType.FAX
 					&& (!parameters.containsKey(FAX)
 							|| (contactInfo.isPreferred() && !isCurrFaxPref))) {
 				parameters.put(FAX, contactInfo.getDetail());
@@ -236,7 +236,7 @@ public class ExchangeOrderReportService {
 		int count = 0;
 
 		for (ContactInfo ci : contactInfoList) {
-			if (ci.getType() != null && ci.getType().equalsIgnoreCase("Email")) {
+			if (ci.getType() == ContactInfoType.EMAIL) {
 				if (ci.isPreferred()) {
 					sbEmail.append(ci.getDetail());
 					sbEmail.append(",");

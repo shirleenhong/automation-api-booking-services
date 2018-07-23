@@ -232,7 +232,7 @@ public class ExchangeOrderReportServiceTest {
 		}
 		if (hasFax) {
 			ContactInfo contactInfo = new ContactInfo();
-			contactInfo.setType(ContactInfoType.Fax);
+			contactInfo.setType(ContactInfoType.FAX);
 			contactInfo.setDetail("6789");
 			contactInfo.setPreferred(isPreferred);
 			contactInfoList.add(contactInfo);

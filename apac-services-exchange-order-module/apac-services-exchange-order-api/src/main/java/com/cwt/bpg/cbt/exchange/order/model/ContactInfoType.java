@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ContactInfoType {
 	EMAIL("Email"),
-	Fax("Fax"),
+	FAX("Fax"),
 	PHONE("Phone");
 
 	@JsonValue
