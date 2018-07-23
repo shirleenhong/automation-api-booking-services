@@ -125,7 +125,7 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private BigDecimal total;
 
-    @ApiModelProperty(required = true)
+	@ApiModelProperty(required = true)
 	private Header header;
 
 	@ApiModelProperty(required = true)
