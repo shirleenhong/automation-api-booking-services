@@ -116,11 +116,11 @@ public class IndiaVendorDAOImpl implements VendorDAO {
 				contactInfo.setPreferred(rs.getBoolean("PreferEOSend"));
 
 				switch (rs.getString("ContactType")) {
-					case "Email": contactInfo.setType(ContactInfoType.EMAIL);
+					case "EMAIL": contactInfo.setType(ContactInfoType.EMAIL);
 						break;
-					case "Fax": contactInfo.setType(ContactInfoType.FAX);
+					case "FAX": contactInfo.setType(ContactInfoType.FAX);
 						break;
-					case "Phone": contactInfo.setType(ContactInfoType.PHONE);
+					case "PHONE": contactInfo.setType(ContactInfoType.PHONE);
 						break;
 				}
 

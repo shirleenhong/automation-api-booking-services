@@ -48,11 +48,14 @@ public class ExchangeOrderUpdateService
             exchangeOrder.setCreditCard(null);
         }
 
-        if (exchangeOrder.getVendor() != null) {
-            ServiceUtils.modifyTargetObject(exchangeOrder.getVendor(),
-                    existingExchangeOrder.getVendor());
-            exchangeOrder.setVendor(null);
-        }
+		if (exchangeOrder.getVendor() != null) {
+			if (exchangeOrder.getVendor().getContactInfo().size() == 0) {
+				exchangeOrder.getVendor().setContactInfo(null);
+			}
+			ServiceUtils.modifyTargetObject(exchangeOrder.getVendor(),
+					existingExchangeOrder.getVendor());
+			exchangeOrder.setVendor(null);
+		}
 
         exchangeOrder.setUpdateDateTime(Instant.now());
         ServiceUtils.modifyTargetObject(exchangeOrder, existingExchangeOrder);
