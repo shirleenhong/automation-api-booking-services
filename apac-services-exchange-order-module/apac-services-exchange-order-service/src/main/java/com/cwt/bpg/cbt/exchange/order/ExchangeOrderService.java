@@ -9,7 +9,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import org.mongodb.morphia.Key;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +26,11 @@ import org.springframework.stereotype.Service;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.SequenceNumber;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 import com.cwt.bpg.cbt.utils.ServiceUtils;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
 
 @Service
 @EnableScheduling
@@ -65,10 +66,19 @@ public class ExchangeOrderService {
 		final String eoNumber = exchangeOrder.getEoNumber();
 		if (eoNumber == null) {
 			setScale(exchangeOrder);
-			
+
 			exchangeOrder.setCreateDateTime(Instant.now());
 			exchangeOrder.setEoNumber(getEoNumber(exchangeOrder.getCountryCode()));
-			
+
+			Set<ConstraintViolation<CreditCard>> ccErrors = Validation.buildDefaultValidatorFactory().getValidator().validate((exchangeOrder.getCreditCard()));
+			if (!ccErrors.isEmpty()) throw new IllegalArgumentException(ccErrors.toString());
+
+			Set<ConstraintViolation<Vendor>> vendorErrors = Validation.buildDefaultValidatorFactory().getValidator().validate((exchangeOrder.getVendor()));
+			if (!vendorErrors.isEmpty()) throw new IllegalArgumentException(ccErrors.toString());
+
+			Set<ConstraintViolation<Header>> headerErrors = Validation.buildDefaultValidatorFactory().getValidator().validate((exchangeOrder.getHeader()));
+			if (!headerErrors.isEmpty()) throw new IllegalArgumentException(headerErrors.toString());
+
 			Optional<BaseProduct> isProductExist = Optional.ofNullable(
 			        productService.getProductByCode(exchangeOrder.getCountryCode(),exchangeOrder.getProductCode()));
 
@@ -118,7 +128,7 @@ public class ExchangeOrderService {
 						existingExchangeOrder.getVendor());
 				exchangeOrder.setVendor(null);
 			}
-			
+
 			ServiceUtils.modifyTargetObject(exchangeOrder, existingExchangeOrder);
 			setScale(existingExchangeOrder);
 			result = exchangeOrderRepo.update(existingExchangeOrder);

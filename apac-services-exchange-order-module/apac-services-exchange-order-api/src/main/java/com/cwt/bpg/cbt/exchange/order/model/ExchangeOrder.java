@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 
 import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
@@ -73,7 +72,6 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(allowableValues = "CX,CC,INV", required = true)
 	private String fopType;
 
-	@Valid
 	private CreditCard creditCard;
 
 	@ApiModelProperty(required = true)
@@ -127,8 +125,7 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private BigDecimal total;
 
-	@Valid
-	@ApiModelProperty(required = true)
+    @ApiModelProperty(required = true)
 	private Header header;
 
 	@ApiModelProperty(required = true)
@@ -161,7 +158,6 @@ public class ExchangeOrder implements Serializable {
 
 	private List<String> itineraryRemarks;
 
-	@Valid
 	private Vendor vendor;
 
 	public String getEoNumber() {
