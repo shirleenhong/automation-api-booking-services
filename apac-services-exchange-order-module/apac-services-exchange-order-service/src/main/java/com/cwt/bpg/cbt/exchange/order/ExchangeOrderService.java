@@ -61,14 +61,14 @@ public class ExchangeOrderService {
 			throws ExchangeOrderNoContentException {
 
 		ExchangeOrder result = new ExchangeOrder();
-		setScale(exchangeOrder);
 		
 		final String eoNumber = exchangeOrder.getEoNumber();
 		if (eoNumber == null) {
+			setScale(exchangeOrder);
+			
 			exchangeOrder.setCreateDateTime(Instant.now());
 			exchangeOrder.setEoNumber(getEoNumber(exchangeOrder.getCountryCode()));
 			
-
 			Optional<BaseProduct> isProductExist = Optional.ofNullable(
 			        productService.getProductByCode(exchangeOrder.getCountryCode(),exchangeOrder.getProductCode()));
 
@@ -101,7 +101,26 @@ public class ExchangeOrderService {
 			
 			exchangeOrder.setUpdateDateTime(Instant.now());
 			
+			if (exchangeOrder.getHeader() != null) {
+				ServiceUtils.modifyTargetObject(exchangeOrder.getHeader(),
+						existingExchangeOrder.getHeader());
+				exchangeOrder.setHeader(null);
+			}
+
+			if (exchangeOrder.getCreditCard() != null) {
+				ServiceUtils.modifyTargetObject(exchangeOrder.getCreditCard(),
+						existingExchangeOrder.getCreditCard());
+				exchangeOrder.setCreditCard(null);
+			}
+
+			if (exchangeOrder.getVendor() != null) {
+				ServiceUtils.modifyTargetObject(exchangeOrder.getVendor(),
+						existingExchangeOrder.getVendor());
+				exchangeOrder.setVendor(null);
+			}
+			
 			ServiceUtils.modifyTargetObject(exchangeOrder, existingExchangeOrder);
+			setScale(existingExchangeOrder);
 			result = exchangeOrderRepo.update(existingExchangeOrder);
 		}
 
