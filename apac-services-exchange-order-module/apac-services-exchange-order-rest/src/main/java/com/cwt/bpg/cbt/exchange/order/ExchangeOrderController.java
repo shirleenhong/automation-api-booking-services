@@ -56,14 +56,13 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
 	}
 
-	//TODO: change pnr to recordLocator
-	@GetMapping(path = "/exchange-order/{pnr:^[a-zA-Z0-9]{6}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/exchange-order/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls exchange order transaction based on PNR (6 digit alphanumeric string).")
+	@ApiOperation(value = "Pulls exchange order transaction based on Record Locator (6 digit alphanumeric string).")
 	public ResponseEntity<List<ExchangeOrder>> getExchangeOrderByRecordLocator(
-			@PathVariable @ApiParam(value = "PNR number") String pnr) {
+			@PathVariable @ApiParam(value = "Record Locator") String recordLocator) {
 
-		return new ResponseEntity<>(eoService.getExchangeOrderByRecordLocator(pnr), HttpStatus.OK);
+		return new ResponseEntity<>(eoService.getExchangeOrderByRecordLocator(recordLocator), HttpStatus.OK);
 	}
 
 	@GetMapping(
