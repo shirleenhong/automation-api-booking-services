@@ -218,21 +218,21 @@ public class ExchangeOrderReportServiceTest {
 		List<ContactInfo> contactInfoList = new ArrayList<>();
 		if (hasEmail) {
 			ContactInfo contactInfo = new ContactInfo();
-			contactInfo.setType("EMAIL");
+			contactInfo.setType(ContactInfoType.EMAIL);
 			contactInfo.setDetail("sampleEmail@email.com");
 			contactInfo.setPreferred(isPreferred);
 			contactInfoList.add(contactInfo);
 		}
 		if (hasPhone) {
 			ContactInfo contactInfo = new ContactInfo();
-			contactInfo.setType("PHONE");
+			contactInfo.setType(ContactInfoType.PHONE);
 			contactInfo.setDetail("12345");
 			contactInfo.setPreferred(isPreferred);
 			contactInfoList.add(contactInfo);
 		}
 		if (hasFax) {
 			ContactInfo contactInfo = new ContactInfo();
-			contactInfo.setType("FAX");
+			contactInfo.setType(ContactInfoType.Fax);
 			contactInfo.setDetail("6789");
 			contactInfo.setPreferred(isPreferred);
 			contactInfoList.add(contactInfo);

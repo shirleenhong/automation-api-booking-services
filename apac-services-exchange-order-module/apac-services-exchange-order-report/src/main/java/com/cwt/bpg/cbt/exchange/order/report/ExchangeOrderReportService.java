@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,21 +133,21 @@ public class ExchangeOrderReportService {
 		for (ContactInfo contactInfo : contactInfoList) {
 
 			if (contactInfo.getType() != null
-					&& contactInfo.getType().equalsIgnoreCase(PHONE)
+					&& contactInfo.getType() == ContactInfoType.PHONE
 					&& (!parameters.containsKey(PHONE)
 							|| (contactInfo.isPreferred() && !isCurrPhonePref))) {
 				parameters.put(PHONE, contactInfo.getDetail());
 				isCurrPhonePref = contactInfo.isPreferred() && !isCurrPhonePref;
 			}
 			else if (contactInfo.getType() != null
-					&& contactInfo.getType().equalsIgnoreCase(FAX)
+					&& contactInfo.getType() == ContactInfoType.Fax
 					&& (!parameters.containsKey(FAX)
 							|| (contactInfo.isPreferred() && !isCurrFaxPref))) {
 				parameters.put(FAX, contactInfo.getDetail());
 				isCurrFaxPref = contactInfo.isPreferred() && !isCurrFaxPref;
 			}
 			else if (contactInfo.getType() != null
-					&& contactInfo.getType().equalsIgnoreCase(EMAIL)
+					&& contactInfo.getType() == ContactInfoType.EMAIL
 					&& (!parameters.containsKey(EMAIL)
 							|| (contactInfo.isPreferred() && !isCurrEmailPref))) {
 				parameters.put(EMAIL, contactInfo.getDetail());
@@ -200,7 +201,7 @@ public class ExchangeOrderReportService {
 			List<ContactInfo> contactInfoList  = exchangeOrder.getVendor().getContactInfo();
 			//TODO: refactor
 			for (ContactInfo ci : contactInfoList) {
-				if (ci.getType() != null && ci.getType().equalsIgnoreCase("Email")) {
+				if (ci.getType() != null && ci.getType() == ContactInfoType.EMAIL) {
 					if (ci.isPreferred()) {
 						sbEmail.append(ci.getDetail());
 						sbEmail.append(",");
