@@ -97,7 +97,7 @@ Verify Json Value Is Correct
     ${expected_value}    Run Keyword If    "${handle_null}" == "true"    Replace String    ${expected_value}    [null]    null
     ...    ELSE    Set Variable    ${expected_value}
     ${actual_value}    Get Json Value As String    ${response.content}    ${json_path}
-    Run Keyword And Continue On Failure    Should Be Equal As Strings    ${actual_value}    ${expected_value}
+    Run Keyword And Continue On Failure    Should Be Equal As Strings    ${actual_value.rstrip()}    ${expected_value.rstrip()}
 
 Verify Json Value Matches Pattern
     [Arguments]    ${json_path}    ${expected_pattern}
