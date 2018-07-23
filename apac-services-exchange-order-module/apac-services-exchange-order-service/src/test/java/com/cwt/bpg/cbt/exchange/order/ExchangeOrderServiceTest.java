@@ -37,9 +37,6 @@ public class ExchangeOrderServiceTest {
 	
 	@Mock
 	private ScaleConfig scaleConfig;
-	
-	@Mock
-	private ServiceUtils serviceUtils;
 
 	@Before
 	public void setUp() {
@@ -48,9 +45,6 @@ public class ExchangeOrderServiceTest {
 		
 		Mockito.when(scaleConfig.getScale(Mockito.eq("SG"))).thenReturn(2);
 		Mockito.when(scaleConfig.getScale(Mockito.eq("HK"))).thenReturn(0);
-		
-		doNothing().when(serviceUtils).modifyTargetObject(anyObject(), anyObject());
-	
 	}
   
 	@Test

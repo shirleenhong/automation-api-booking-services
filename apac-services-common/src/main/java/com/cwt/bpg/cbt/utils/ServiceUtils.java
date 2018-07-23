@@ -9,12 +9,12 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
 public class ServiceUtils {
-	//TODO: make static
-	public void modifyTargetObject(Object source, Object target) {
+
+	public static void modifyTargetObject(Object source, Object target) {
 		BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
 	}
 
-	private String[] getNullPropertyNames(Object source) {
+	private static String[] getNullPropertyNames(Object source) {
 		final BeanWrapper src = new BeanWrapperImpl(source);
 		PropertyDescriptor[] keys = src.getPropertyDescriptors();
 
