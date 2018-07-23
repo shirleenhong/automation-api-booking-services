@@ -37,7 +37,7 @@ public class SgAirCalculatorTest {
 	@Test
 	public void shouldCalculate() {
 		AirFeesBreakdown AirFeesBreakdown = calculator
-				.calculate(null, null);
+				.calculate(null, null, "SG");
 		assertNotNull(AirFeesBreakdown);
 	}
 
@@ -51,8 +51,7 @@ public class SgAirCalculatorTest {
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommission(bigDecimal("15"));
 		input.setNettFare(bigDecimal("300"));
-		input.setCountryCode("HK");
-		AirFeesBreakdown afb = calculator.calculate(input, null);
+		AirFeesBreakdown afb = calculator.calculate(input, null, "HK");
 
 		assertThat(afb.getCommission(), nullValue());
 		assertThat(afb.getDiscount(), nullValue());
@@ -74,7 +73,7 @@ public class SgAirCalculatorTest {
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommission(bigDecimal("15"));
 
-		AirFeesBreakdown afb = calculator.calculate(input, null);
+		AirFeesBreakdown afb = calculator.calculate(input, null, null);
 
 		assertThat(afb.getCommission(), nullValue());
 		assertThat(afb.getDiscount(), nullValue());
@@ -97,7 +96,7 @@ public class SgAirCalculatorTest {
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommission(bigDecimal("15"));
 
-		AirFeesBreakdown afb = calculator.calculate(input, null);
+		AirFeesBreakdown afb = calculator.calculate(input, null, null);
 
 		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(150D)));
@@ -120,9 +119,8 @@ public class SgAirCalculatorTest {
 		input.setCommissionPercent(Double.parseDouble("20"));
 		input.setDiscountByPercent(true);
 		input.setDiscountPercent(Double.parseDouble("15"));
-		input.setCountryCode("SG");
 
-		AirFeesBreakdown afb = calculator.calculate(input, null);
+		AirFeesBreakdown afb = calculator.calculate(input, null, "SG");
 
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(0D)));
 		assertThat(afb.getCommission().doubleValue(), is(equalTo(60D)));
@@ -154,9 +152,8 @@ public class SgAirCalculatorTest {
 		merchantFee.setIncludeTransactionFee(true);
 		merchantFee.setMerchantFeePercent(Double.parseDouble("25"));
 		input.setTransactionFee(bigDecimal("75"));
-		input.setCountryCode("SG");
 		AirFeesBreakdown afb = calculator.calculate(input,
-				merchantFee);
+				merchantFee, "SG");
 
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
 		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
@@ -188,10 +185,9 @@ public class SgAirCalculatorTest {
 		merchantFee.setIncludeTransactionFee(false);
 		merchantFee.setMerchantFeePercent(Double.parseDouble("25"));
 		input.setTransactionFee(bigDecimal("75"));
-		input.setCountryCode("SG");
 
 		AirFeesBreakdown afb = calculator.calculate(input,
-				merchantFee);
+				merchantFee, "SG");
 
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
 		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
@@ -223,10 +219,9 @@ public class SgAirCalculatorTest {
 		merchantFee.setIncludeTransactionFee(false);
 		merchantFee.setMerchantFeePercent(Double.parseDouble("25"));
 		input.setTransactionFee(bigDecimal("75"));
-		input.setCountryCode("SG");
 
 		AirFeesBreakdown afb = calculator.calculate(input,
-				merchantFee);
+				merchantFee, "SG");
 
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
 		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
@@ -258,10 +253,9 @@ public class SgAirCalculatorTest {
 		merchantFee.setIncludeTransactionFee(false);
 		merchantFee.setMerchantFeePercent(Double.parseDouble("25"));
 		input.setTransactionFee(bigDecimal("75"));
-		input.setCountryCode("SG");
 
 		AirFeesBreakdown afb = calculator.calculate(input,
-				merchantFee);
+				merchantFee, "SG");
 
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
 		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
@@ -293,10 +287,9 @@ public class SgAirCalculatorTest {
 		merchantFee.setIncludeTransactionFee(false);
 		merchantFee.setMerchantFeePercent(Double.parseDouble("25"));
 		input.setTransactionFee(bigDecimal("75"));
-		input.setCountryCode("SG");
 
 		AirFeesBreakdown afb = calculator.calculate(input,
-				merchantFee);
+				merchantFee, "SG");
 
 		assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
 		assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
@@ -329,9 +322,8 @@ public class SgAirCalculatorTest {
 		input.setCommissionPercent(Double.parseDouble("20"));
 		input.setDiscountByPercent(true);
 		input.setDiscountPercent(Double.parseDouble("15"));
-		input.setCountryCode("SG");
 
-		calculator.calculate(input, null);
+		calculator.calculate(input, null, "SG");
 
 	}
 }

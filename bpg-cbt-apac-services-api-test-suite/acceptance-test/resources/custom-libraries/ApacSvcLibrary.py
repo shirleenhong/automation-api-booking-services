@@ -1,6 +1,7 @@
 import math
 import decimal
 import PyPDF2
+import imaplib
 
 class ApacSvcLibrary:
     ROBOT_LIBRARY_SCOPE = 'TEST CASE'
@@ -40,3 +41,19 @@ class ApacSvcLibrary:
     
     def format_number(self, num):
         return "{:,}".format(num)
+    
+    def connect_to_outlook(self):
+        url = 'swnv02ix00232.int.carlsonwagonlit.com'
+        print (url)
+        conn = imaplib.IMAP4_SSL(url,993)
+        print (url)
+        conn.starttls()
+        user = 'CWT\\U001SIP'
+        password = 'wefight09$'
+        conn.login(user,password)
+        conn.select('INBOX')
+        results,data = conn.search(None,'ALL')
+        msg_ids = data[0]
+        msg_id_list = msg_ids.split()
+        return msg_id_list
+        

@@ -12,6 +12,10 @@ public class VisaFeesInput extends FeesInput {
 
 	@ApiModelProperty(required = true)
 	@NotNull
+	private String countryCode;
+
+	@ApiModelProperty(required = true)
+	@NotNull
 	private BigDecimal cwtHandling;
 
 	@ApiModelProperty(required = true)
@@ -60,5 +64,13 @@ public class VisaFeesInput extends FeesInput {
 
 	public void setVendorHandling(BigDecimal vendorHandling) {
 		this.vendorHandling = vendorHandling;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 }

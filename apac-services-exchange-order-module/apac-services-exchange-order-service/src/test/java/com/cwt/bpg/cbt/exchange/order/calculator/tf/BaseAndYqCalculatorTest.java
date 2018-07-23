@@ -33,7 +33,6 @@ public class BaseAndYqCalculatorTest {
 		Mockito.when(scaleConfig.getScale(Mockito.eq("IN"))).thenReturn(2);
 		
 		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
-		input.setCountryCode(Country.INDIA.getCode());
 		input.setBaseFare(new BigDecimal(600));
 		input.setYqTax(new BigDecimal(10));
 		
@@ -82,13 +81,13 @@ public class BaseAndYqCalculatorTest {
 		assertThat(result.getOt2Percent(), is(nullValue()));
 		assertThat(result.getOverheadPercent(), is(nullValue()));
 		assertThat(result.getSubMerchantFeePercent(), is(nullValue()));
-		assertThat(result.getTotalCharge().doubleValue(), is(equalTo(642.60d)));
-		assertThat(result.getTotalDiscount().doubleValue(), is(equalTo(0d)));
+		assertThat(result.getTotalCharge().doubleValue(), is(equalTo(641.5d)));
+		assertThat(result.getTotalDiscount().doubleValue(), is(equalTo(1.08d)));
 		assertThat(result.getTotalGst().doubleValue(), is(equalTo(30d)));
 		assertThat(result.getTotalMarkup(), is(nullValue()));
 		assertThat(result.getTotalOverheadCommission().doubleValue(), is(equalTo(0d)));
 		assertThat(result.getTotalSellFare().doubleValue(), is(equalTo(600d)));
-		assertThat(result.getTotalSellingFare().doubleValue(), is(equalTo(642.60d)));
+		assertThat(result.getTotalSellingFare().doubleValue(), is(equalTo(641.50d)));
 		assertThat(result.getTotalTaxes().doubleValue(), is(equalTo(0d)));
 	}
 }

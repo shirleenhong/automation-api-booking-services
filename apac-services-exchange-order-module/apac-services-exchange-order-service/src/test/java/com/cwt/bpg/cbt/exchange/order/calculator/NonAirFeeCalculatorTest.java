@@ -49,12 +49,11 @@ public class NonAirFeeCalculatorTest {
 		NonAirFeesInput input = new NonAirFeesInput();
 
 		input.setFopType("CX4");
-		input.setCountryCode("SG");
 		input.setSellingPrice(new BigDecimal(1200.50));
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1528.27));
 
-		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee);
+		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "SG");
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(new BigDecimal(60.03), 2), result.getGstAmount());
@@ -70,12 +69,11 @@ public class NonAirFeeCalculatorTest {
 		NonAirFeesInput input = new NonAirFeesInput();
 
 		input.setFopType("CX4");
-		input.setCountryCode("HK");
 		input.setSellingPrice(new BigDecimal(1500.50));
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1228.27));
-		
-		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee);
+
+		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "HK");
 
 		assertEquals(round(new BigDecimal(362.68)), result.getCommission());
 		assertEquals(round(new BigDecimal(75.025)), result.getGstAmount());
@@ -90,14 +88,13 @@ public class NonAirFeeCalculatorTest {
 		NonAirFeesInput input = new NonAirFeesInput();
 
 		input.setFopType("CX4");
-		input.setCountryCode("HK");
 		input.setSellingPrice(new BigDecimal(1200.50));
 		input.setGstPercent(5D);
 		input.setGstAbsorb(true);
 		input.setMerchantFeeAbsorb(true);
 		input.setNettCost(new BigDecimal(1528.27));
 		
-		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee);
+		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "HK");
 
 		assertEquals(round(BigDecimal.ZERO), result.getCommission());
 		assertNull(result.getGstAmount());
@@ -109,7 +106,7 @@ public class NonAirFeeCalculatorTest {
 
 	@Test
 	public void shouldNotFailOnNullInput() {
-		NonAirFeesBreakdown result = calculator.calculate(null, null);
+		NonAirFeesBreakdown result = calculator.calculate(null, null, null);
 
 		assertThat(result.getCommission(), is(nullValue(BigDecimal.class)));
 		assertThat(result.getGstAmount(), is(nullValue(BigDecimal.class)));
@@ -122,8 +119,7 @@ public class NonAirFeeCalculatorTest {
 	@Test
 	public void shouldNotFailOnEmptyInput() {
 		NonAirFeesInput input = new NonAirFeesInput();
-		input.setCountryCode("SG");
-		NonAirFeesBreakdown result = calculator.calculate(input, null);
+		NonAirFeesBreakdown result = calculator.calculate(input, null, "SG");
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(BigDecimal.ZERO, 2), result.getGstAmount());
@@ -136,13 +132,12 @@ public class NonAirFeeCalculatorTest {
 	@Test(expected = NullPointerException.class)
 	public void shouldThrowExceptionWhenFopTypeIsCXAndMerchantFeeIsNull() {
 		NonAirFeesInput input = new NonAirFeesInput();
-		input.setCountryCode("SG");
 		input.setFopType("CX4");
         input.setSellingPrice(new BigDecimal(1200.50));
         input.setGstPercent(5D);
         input.setNettCost(new BigDecimal(1528.27));
 
-		calculator.calculate(input, null);
+		calculator.calculate(input, null, "SG");
 
 	}
 

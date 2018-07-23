@@ -58,9 +58,9 @@ public class OtherServiceFeesService {
 	@Autowired
 	private ProductService productService;
 
-	NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input) {
-        MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getClientAccountNumber());
-		return this.nonAirFeeCalculator.calculate(input, merchantFee);
+	NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input, String countryCode) {
+        MerchantFee merchantFee = merchantFeeService.getMerchantFee(countryCode, input.getClientAccountNumber());
+		return this.nonAirFeeCalculator.calculate(input, merchantFee, countryCode);
 	}
 
 	NonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
@@ -71,9 +71,9 @@ public class OtherServiceFeesService {
 		return this.indiaNonAirFeeCalculator.calculate(input, client, defaultClient);
 	}
 
-	AirFeesBreakdown calculateAirFees(AirFeesInput input) {
-        MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getClientAccountNumber());
-	    return this.osFactory.getCalculator(input.getCountryCode()).calculate(input, merchantFee);
+	AirFeesBreakdown calculateAirFees(AirFeesInput input, String countryCode) {
+        MerchantFee merchantFee = merchantFeeService.getMerchantFee(countryCode, input.getClientAccountNumber());
+	    return this.osFactory.getCalculator(countryCode).calculate(input, merchantFee, countryCode);
 	}
 
     IndiaAirFeesBreakdown calculateIndiaAirFees(IndiaAirFeesInput input){
@@ -95,6 +95,7 @@ public class OtherServiceFeesService {
 
         final IndiaProduct airProduct = (IndiaProduct) getProduct(Country.INDIA.getCode(), AIR_PRODUCT_CODE);
 
+
         return this.tfFactory.getCalculator(pricingId)
                 .calculate(input, airlineRule, client, airport, airProduct);
     }
@@ -109,7 +110,7 @@ public class OtherServiceFeesService {
 
 	VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {
         MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getClientAccountNumber());
-        return this.visaFeesCalculator.calculate(input, merchantFee);
+        return this.visaFeesCalculator.calculate(input, merchantFee, input.getCountryCode());
 	}
 
 	AirFeesBreakdown calculateNettCost(NettCostInput input) {

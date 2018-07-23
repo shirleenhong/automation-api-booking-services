@@ -9,20 +9,9 @@ public class FeesInput implements Serializable {
 
 	private static final long serialVersionUID = -5237125856544162255L;
 
-	@ApiModelProperty(hidden = true, notes = "Passed as path param.")
-	private String countryCode;
-
     @ApiModelProperty(required = true)
 	@NotEmpty
 	private String clientAccountNumber;
-
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
 
 	public String getClientAccountNumber() {
 		return clientAccountNumber;

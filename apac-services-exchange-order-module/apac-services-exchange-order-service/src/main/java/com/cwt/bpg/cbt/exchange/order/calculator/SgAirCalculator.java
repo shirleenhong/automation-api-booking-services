@@ -18,7 +18,7 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 	private ScaleConfig scaleConfig;
 
 	@Override
-	public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFeeObj) {
+	public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFeeObj, String countryCode) {
 
         AirFeesBreakdown result = new AirFeesBreakdown();
 

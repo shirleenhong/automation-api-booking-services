@@ -2,17 +2,14 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import javax.validation.Valid;
 
-import com.cwt.bpg.cbt.exchange.order.validator.AirlineOverheadCommissionValidator;
-import com.cwt.bpg.cbt.exchange.order.validator.FeeValidator;
-import com.cwt.bpg.cbt.exchange.order.validator.OthTaxValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,13 +24,7 @@ public class OtherServiceFeesController {
 	private OtherServiceFeesService service;
 
 	@Autowired
-	private AirlineOverheadCommissionValidator airlineOverheadCommissionValidator;
-
-	@Autowired
-	private OthTaxValidator othTaxValidator;
-
-	@Autowired
-	private FeeValidator feeValidator;
+	private IndiaAirFeesValidator indiaAirFeesValidator;
 
 	@PostMapping(
 			path = "/non-air-fees/in",
@@ -43,7 +34,7 @@ public class OtherServiceFeesController {
 	@ApiOperation(value = "Computes non air fees. Applicable to India air products.")
 	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(@Valid @RequestBody @ApiParam(
 			value = "Values needed for calculation") IndiaNonAirFeesInput input) {
-		input.setCountryCode(Country.INDIA.getCode());
+
 		return new ResponseEntity<>(service.calculateIndiaNonAirFees(input), HttpStatus.OK);
 	}
 
@@ -56,8 +47,8 @@ public class OtherServiceFeesController {
 	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NonAirFeesInput input) {
-		input.setCountryCode(countryCode.toUpperCase());
-		return new ResponseEntity<>(service.calculateNonAirFees(input), HttpStatus.OK);
+
+		return new ResponseEntity<>(service.calculateNonAirFees(input, countryCode.toUpperCase()), HttpStatus.OK);
 	}
 
 	@PostMapping(
@@ -69,9 +60,7 @@ public class OtherServiceFeesController {
 	public ResponseEntity<IndiaAirFeesBreakdown> computeIndiaAirFees(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") IndiaAirFeesInput input) {
 
-		feeValidator.validate(input);
-		airlineOverheadCommissionValidator.validate(input);
-		othTaxValidator.validate(input);
+		indiaAirFeesValidator.validate(input);
 		return new ResponseEntity<>(service.calculateIndiaAirFees(input), HttpStatus.OK);
 	}
 
@@ -85,8 +74,7 @@ public class OtherServiceFeesController {
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") AirFeesInput input) {
 
-		input.setCountryCode(countryCode.toUpperCase());
-		return new ResponseEntity<>(service.calculateAirFees(input), HttpStatus.OK);
+		return new ResponseEntity<>(service.calculateAirFees(input, countryCode.toUpperCase()), HttpStatus.OK);
 	}
 
 	@PostMapping(

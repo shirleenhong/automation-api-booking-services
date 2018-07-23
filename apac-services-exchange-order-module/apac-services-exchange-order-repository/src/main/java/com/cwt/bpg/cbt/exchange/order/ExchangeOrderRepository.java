@@ -18,44 +18,41 @@ import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
-public class ExchangeOrderRepository
-{
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderRepository.class);
-
-    @Autowired
-    private MorphiaComponent morphia;
-
-    public String save(ExchangeOrder eo) {
-        morphia.getDatastore().save(eo);
-        LOGGER.info("Save: Exchange order, [{}]", eo.getEoNumber());
-        return eo.getEoNumber();
-    }
-
-    public ExchangeOrder update(ExchangeOrder eo) {
-        morphia.getDatastore().merge(eo);
-        LOGGER.info("Update: Exchange order, [{}]", eo.getEoNumber());
-        return eo;
-    }
-
-    public ExchangeOrder getExchangeOrder(String eoNumber) {
-        return morphia.getDatastore()
-                .createQuery(ExchangeOrder.class)
-                .field("eoNumber")
-                .equal(eoNumber)
-                .get();
-    }
-
-    public List<ExchangeOrder> getByRecordLocator(String eoNumber) {
-        return morphia.getDatastore()
-                .createQuery(ExchangeOrder.class)
-                .field("recordLocator")
-                .equal(eoNumber)
-                .order(Sort.descending("createDateTime"))
-                .asList();
-    }
-
-    public List<ExchangeOrder> search(final ExchangeOrderSearchParam param)
+public class ExchangeOrderRepository {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderRepository.class);
+	
+	@Autowired
+	private MorphiaComponent morphia;
+	
+	public ExchangeOrder save(ExchangeOrder eo) {		
+		morphia.getDatastore().save(eo);
+		LOGGER.info("Save: Exchange order, [{}]", eo.getEoNumber());
+		return eo;
+	}
+	
+	public ExchangeOrder update(ExchangeOrder eo) {
+		morphia.getDatastore().merge(eo);
+		LOGGER.info("Update: Exchange order, [{}]", eo.getEoNumber());
+		return eo;
+	}
+	
+	public ExchangeOrder getExchangeOrder(String eoNumber) {
+		return morphia.getDatastore().createQuery(ExchangeOrder.class)
+			.field("eoNumber")
+			.equal(eoNumber).get();
+	}
+	
+	//TODO: change eoNumber to recordLocator
+	public List<ExchangeOrder> getByRecordLocator(String eoNumber) {
+		return morphia.getDatastore().createQuery(ExchangeOrder.class)
+				.field("recordLocator")
+				.equal(eoNumber)
+				.order(Sort.descending("createDateTime"))
+				.asList();
+	}
+	
+	public List<ExchangeOrder> search(final ExchangeOrderSearchParam param)
     {
         final Query<ExchangeOrder> query = morphia.getDatastore().createQuery(ExchangeOrder.class);
         if (StringUtils.isNotBlank(param.getEoNumber()))
