@@ -45,7 +45,7 @@ public class ExchangeOrderUpdateServiceTest
         ExchangeOrder exchangeOrder = createExchangeOrder(eoNumber, newGstAmount);
 
         when(repository.getExchangeOrder(eoNumber)).thenReturn(existingExchangeOrder);
-        when(repository.save(existingExchangeOrder)).thenReturn(exchangeOrder);
+        when(repository.save(existingExchangeOrder)).thenReturn(eoNumber);
 
         ExchangeOrder updatedExchangeOrder = service.update(exchangeOrder);
 

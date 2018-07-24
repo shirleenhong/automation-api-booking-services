@@ -3,11 +3,8 @@ package com.cwt.bpg.cbt.exchange.order;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.mongodb.morphia.query.FindOptions;
-import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.Sort;
-import org.mongodb.morphia.query.UpdateOperations;
-import org.mongodb.morphia.query.UpdateResults;
+import org.mongodb.morphia.Key;
+import org.mongodb.morphia.query.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +22,13 @@ public class ExchangeOrderRepository {
 	@Autowired
 	private MorphiaComponent morphia;
 	
-	public ExchangeOrder save(ExchangeOrder eo) {		
-		morphia.getDatastore().save(eo);
+	public String save(ExchangeOrder eo) {
+		Key<ExchangeOrder> savedEoKey = morphia.getDatastore().save(eo);
 		LOGGER.info("Save: Exchange order, [{}]", eo.getEoNumber());
-		return eo;
+		
+		return savedEoKey.getId().toString();
 	}
-	
+
 	public ExchangeOrder getExchangeOrder(String eoNumber) {
 		return morphia.getDatastore().createQuery(ExchangeOrder.class)
 			.field("eoNumber")

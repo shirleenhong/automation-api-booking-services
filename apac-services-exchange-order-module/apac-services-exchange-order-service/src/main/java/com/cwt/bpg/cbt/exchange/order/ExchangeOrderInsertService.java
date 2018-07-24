@@ -75,8 +75,9 @@ public class ExchangeOrderInsertService {
 		}
 
 		exchangeOrderAmountScaler.scale(exchangeOrder);
-
-		return exchangeOrderRepo.save(exchangeOrder);
+		String savedEoNumber = exchangeOrderRepo.save(exchangeOrder);
+		
+		return exchangeOrderRepo.getExchangeOrder(savedEoNumber);
 	}
 
 	private String constructEoNumber(String countryCode) {

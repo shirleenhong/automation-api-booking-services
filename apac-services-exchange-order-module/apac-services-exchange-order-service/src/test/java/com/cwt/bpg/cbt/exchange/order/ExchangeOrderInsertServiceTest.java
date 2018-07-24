@@ -10,10 +10,7 @@ import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InOrder;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 
 import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
@@ -54,17 +51,18 @@ public class ExchangeOrderInsertServiceTest {
 
 		when(productService.getProductByCode(anyString(), anyString())).thenReturn(product);
 		eo.setEoNumber(newEoNumber);
-		when(repo.save(eo)).thenReturn(savedEo);
-
-		ExchangeOrder result = service.insert(eo);
+		when(repo.getExchangeOrder(anyString())).thenReturn(eo);
+		when(repo.save(savedEo)).thenReturn(newEoNumber);
+		
+		ExchangeOrder result = service.insert(savedEo);
 
 		assertThat(result.getEoNumber(), is(equalTo(newEoNumber)));
 
-		InOrder inOrder = inOrder(sequenceNumberService, productService, repo, scaler);
+		InOrder inOrder = inOrder(sequenceNumberService, productService, scaler, repo);
 		inOrder.verify(sequenceNumberService, times(1)).getSequenceNumber(eo.getCountryCode());
 		inOrder.verify(productService, times(1)).getProductByCode(eo.getCountryCode(), eo.getProductCode());
-		inOrder.verify(scaler, times(1)).scale(eo);
-		inOrder.verify(repo, times(1)).save(eo);
+		inOrder.verify(scaler, times(1)).scale(savedEo);
+		inOrder.verify(repo, times(1)).save(savedEo);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
