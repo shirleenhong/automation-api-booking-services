@@ -88,7 +88,7 @@ public class ExchangeOrderRepositoryTest {
 		
 		when(dataStore.merge(ExchangeOrder.class)).thenReturn(null);
 				
-		ExchangeOrder result = repository.update(eo);
+		ExchangeOrder result = repository.save(eo);
 		
 		verify(dataStore, times(1)).merge(eo);
 		assertEquals(eo, result);

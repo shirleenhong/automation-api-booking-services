@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order;
 import java.time.Instant;
 import java.util.Optional;
 
+import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +57,14 @@ public class ExchangeOrderUpdateService
 
         exchangeOrder.setUpdateDateTime(Instant.now());
         ServiceUtils.modifyTargetObject(exchangeOrder, existingExchangeOrder);
+
+        if(existingExchangeOrder.getFopType() != null &&
+                existingExchangeOrder.getFopType().equalsIgnoreCase(FopTypes.INVOICE.getCode())){
+            existingExchangeOrder.setCreditCard(null);
+        }
+
         exchangeOrderAmountScaler.scale(existingExchangeOrder);
 
-        return exchangeOrderRepo.update(existingExchangeOrder);
+        return exchangeOrderRepo.save(existingExchangeOrder);
     }
 }
