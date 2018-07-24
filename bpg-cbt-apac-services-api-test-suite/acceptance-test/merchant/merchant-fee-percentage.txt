@@ -6,21 +6,21 @@ Resource          resources/merchant.txt
 
 *** Test Cases ***
 Verify That Merchant Fee Percentages Are Correctly Retrieved For Singapore
-    [Tags]    functional
+    [Tags]    migration
     Create Test Variables For Merchant Fee Percentage    country=sg
     Send Get Request For Merchant Fee Percentage
     Verify Response Status Code Is Correct For Merchant Fee Percentage    200
     Verify Merchant Fee Percentage Is Correctly Retrieved
 
 Verify That Merchant Fee Percentages Are Correctly Retrieved For Hong Kong
-    [Tags]    functional
+    [Tags]    migration
     Create Test Variables For Merchant Fee Percentage    country=hk
     Send Get Request For Merchant Fee Percentage    country=hk
     Verify Response Status Code Is Correct For Merchant Fee Percentage    200
     Verify Merchant Fee Percentage Is Correctly Retrieved
 
 Verify That Merchant Fee Percentage Are Correctly Retrieved After Client Account Number Matching
-    [Tags]    functional
+    [Tags]    migration
     Create Test Variables For Merchant Fee Percentage    country=hk    mfee_list=TESTING COMPANY ONE,000001,TF,2,0
     Send Get Request For Merchant Fee Percentage    
     Verify Response Status Code Is Correct For Merchant Fee Percentage    200

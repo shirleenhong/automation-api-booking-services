@@ -6,35 +6,35 @@ Resource          resources/insurance.txt
 
 *** Test Cases ***
 Verify That Error Is Encountered When Invalid Token Is Used
-    [Tags]    functional
+    [Tags]    migration
     Send Get Request For Insurance Plans    token=12345.12345.12345
     Verify Response Status Code Is Correct    401
     Verify That Insurance Plans Are Not Retrieved
     [Teardown]    Evict Insurance Type Cache
 
 Verify That Error Is Encountered When Null Token Is Used
-    [Tags]    functional
+    [Tags]    migration
     Send Get Request For Insurance Plans    token=null
     Verify Response Status Code Is Correct    401
     Verify That Insurance Plans Are Not Retrieved
     [Teardown]    Evict Insurance Type Cache
 
 Verify That Error Is Encountered When Empty Token Is Used
-    [Tags]    functional
+    [Tags]    migration
     Send Get Request For Insurance Plans    token=${EMPTY}
     Verify Response Status Code Is Correct    400
     Verify That Insurance Plans Are Not Retrieved
     [Teardown]    Evict Insurance Type Cache
 
 Verify That Error Is Encountered When No Token Is Used
-    [Tags]    functional
+    [Tags]    migration
     Send Get Request For Insurance Plans    token=None
     Verify Response Status Code Is Correct    400
     Verify That Insurance Plans Are Not Retrieved
     [Teardown]    Evict Insurance Type Cache
 
 Verify That Error Is Encountered When Null Type Is Used During Put Request
-    [Tags]    functional
+    [Tags]    migration
     Send Put Request For Insurance Plans    type=null    commission=50
     Verify Response Status Code Is Correct    400
     Create Test Variables For Insurance Plans
@@ -44,7 +44,7 @@ Verify That Error Is Encountered When Null Type Is Used During Put Request
     [Teardown]    Evict Insurance Type Cache
 
 Verify That Error Is Encountered When Empty Type Is Used During Put Request
-    [Tags]    functional
+    [Tags]    migration
     Send Put Request For Insurance Plans    type=${EMPTY}    commission=50
     Verify Response Status Code Is Correct    400
     Create Test Variables For Insurance Plans
@@ -54,7 +54,7 @@ Verify That Error Is Encountered When Empty Type Is Used During Put Request
     [Teardown]    Evict Insurance Type Cache
 
 Verify That Error Is Encountered When Invalid Commission Is Used During Put Request
-    [Tags]    functional
+    [Tags]    migration
     Send Put Request For Insurance Plans    type=Single Trip Plan    commission=!@#$%^&*()
     Verify Response Status Code Is Correct    400
     Create Test Variables For Insurance Plans
@@ -64,7 +64,7 @@ Verify That Error Is Encountered When Invalid Commission Is Used During Put Requ
     [Teardown]    Evict Insurance Type Cache
 
 Verify That Error Is Encountered When Null Commission Is Used During Put Request
-    [Tags]    functional
+    [Tags]    migration
     Send Put Request For Insurance Plans    type=Single Trip Plan    commission=null
     Verify Response Status Code Is Correct    400
     Create Test Variables For Insurance Plans
@@ -74,7 +74,7 @@ Verify That Error Is Encountered When Null Commission Is Used During Put Request
     [Teardown]    Evict Insurance Type Cache
 
 Verify That Error Is Encountered When Empty Commission Is Used During Put Request
-    [Tags]    functional
+    [Tags]    migration
     Send Put Request For Insurance Plans    type=Single Trip Plan    commission=${EMPTY}
     Verify Response Status Code Is Correct    400
     Create Test Variables For Insurance Plans
@@ -84,7 +84,7 @@ Verify That Error Is Encountered When Empty Commission Is Used During Put Reques
     [Teardown]    Evict Insurance Type Cache
 
 Verify That Error Is Encountered When No Commission Is Used During Put Request
-    [Tags]    functional
+    [Tags]    migration
     Send Put Request For Insurance Plans    type=Single Trip Plan    commission=None
     Verify Response Status Code Is Correct    400
     Create Test Variables For Insurance Plans
@@ -94,7 +94,7 @@ Verify That Error Is Encountered When No Commission Is Used During Put Request
     [Teardown]    Evict Insurance Type Cache
 
 Verify That No Error Is Encountered When Invalid Type Is Used During Delete Request
-    [Tags]    functional
+    [Tags]    migration
     [Setup]    Evict Insurance Type Cache
     Send Delete Request For Insurance Plans    type=!@#$%^&*()
     Verify Response Status Code Is Correct    200
@@ -104,7 +104,7 @@ Verify That No Error Is Encountered When Invalid Type Is Used During Delete Requ
     Verify Insurance Plans Are Correctly Retrieved
 
 Verify That No Error Is Encountered When Null Type Is Used During Delete Request
-    [Tags]    functional
+    [Tags]    migration
     Send Delete Request For Insurance Plans    type=null
     Verify Response Status Code Is Correct    200
     Create Test Variables For Insurance Plans
@@ -114,7 +114,7 @@ Verify That No Error Is Encountered When Null Type Is Used During Delete Request
     [Teardown]    Evict Insurance Type Cache
 
 Verify That Error Is Encountered When Empty Type Is Used During Delete Request
-    [Tags]    functional
+    [Tags]    migration
     Send Delete Request For Insurance Plans    type=${EMPTY}
     Verify Response Status Code Is Correct    405
     Create Test Variables For Insurance Plans
@@ -124,7 +124,7 @@ Verify That Error Is Encountered When Empty Type Is Used During Delete Request
     [Teardown]    Evict Insurance Type Cache
 
 Verify That No Error Is Encountered When No Type Is Used During Delete Request
-    [Tags]    functional
+    [Tags]    migration
     Send Delete Request For Insurance Plans    type=None
     Verify Response Status Code Is Correct    200
     Create Test Variables For Insurance Plans

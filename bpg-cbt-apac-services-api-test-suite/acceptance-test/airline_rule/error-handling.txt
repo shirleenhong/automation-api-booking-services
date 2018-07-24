@@ -6,7 +6,7 @@ Resource    resources/airline-rules.txt
 
 *** Test Cases ***
 Verify That Error Is Encountered When Invalid Token Is Used
-    [Tags]    functional
+    [Tags]    migration
     Send Get Request For Airline Rules    token=12345.12345.12345
     Verify Response Status Code Is Correct    401
     Verify Airline Rules Are Not Retrieved
@@ -19,7 +19,7 @@ Verify That Error Is Encountered When Invalid Token Is Used
     [Teardown]    Evict Airline Rules Cache    
 
 Verify That Error Is Encountered When Null Token Is Used
-    [Tags]    functional
+    [Tags]    migration
     Send Get Request For Airline Rules    token=null
     Verify Response Status Code Is Correct    401
     Verify Airline Rules Are Not Retrieved
@@ -32,7 +32,7 @@ Verify That Error Is Encountered When Null Token Is Used
     [Teardown]    Evict Airline Rules Cache    
 
 Verify That Error Is Encountered When Empty Token Is Used
-    [Tags]    functional
+    [Tags]    migration
     Send Get Request For Airline Rules    token=${EMPTY}
     Verify Response Status Code Is Correct    400
     Verify Airline Rules Are Not Retrieved
@@ -45,7 +45,7 @@ Verify That Error Is Encountered When Empty Token Is Used
     [Teardown]    Evict Airline Rules Cache    
 
 Verify That Error Is Encountered When No Token Is Used
-    [Tags]    functional
+    [Tags]    migration
     Send Get Request For Airline Rules    token=None
     Verify Response Status Code Is Correct    400
     Verify Airline Rules Are Not Retrieved
@@ -58,7 +58,7 @@ Verify That Error Is Encountered When No Token Is Used
     [Teardown]    Evict Airline Rules Cache
     
 Verify That Error Is Encountered When Null Airline Code Is Used During Put Request
-    [Tags]    functional
+    [Tags]    migration
     Send Put Request For Airline Rules   airline_code=null    include_yq_comm=false
     Verify Response Status Code Is Correct    400
     Create Test Variables For Airline Rules    
@@ -78,7 +78,7 @@ Verify That Error Is Encountered When Empty Airline Code Is Used During Put Requ
     [Teardown]    Evict Airline Rules Cache    
 
 Verify That Error Is Encountered When Invalid YQ Comm Is Used During Put Request
-    [Tags]    functional
+    [Tags]    migration
     Send Put Request For Airline Rules    airline_code=9W    include_yq_comm=!@#$%^&*()
     Verify Response Status Code Is Correct    400
     Create Test Variables For Airline Rules    
@@ -88,7 +88,7 @@ Verify That Error Is Encountered When Invalid YQ Comm Is Used During Put Request
     [Teardown]    Evict Airline Rules Cache    
 
 Verify That No Error Is Encountered When Invalid Airline Code Is Used During Delete Request
-    [Tags]    functional
+    [Tags]    migration
     [Setup]    Evict Airline Rules Cache    
     Send Delete Request For Airline Rules    airline_code=!@#$%^&*()
     Verify Response Status Code Is Correct    200
@@ -98,7 +98,7 @@ Verify That No Error Is Encountered When Invalid Airline Code Is Used During Del
     Verify Airline Rules Are Correctly Retrieved
 
 Verify That No Error Is Encountered When Null Airline Code Is Used During Delete Request
-    [Tags]    functional
+    [Tags]    migration
     Send Delete Request For Airline Rules   airline_code=null
     Verify Response Status Code Is Correct    200
     Create Test Variables For Airline Rules    
@@ -108,7 +108,7 @@ Verify That No Error Is Encountered When Null Airline Code Is Used During Delete
     [Teardown]    Evict Airline Rules Cache    
 
 Verify That Error Is Encountered When Empty Airline Code Is Used During Delete Request
-    [Tags]    functional
+    [Tags]    migration
     Send Delete Request For Airline Rules    airline_code=${EMPTY}
     Verify Response Status Code Is Correct    405
     Create Test Variables For Airline Rules    
@@ -118,7 +118,7 @@ Verify That Error Is Encountered When Empty Airline Code Is Used During Delete R
     [Teardown]    Evict Airline Rules Cache    
 
 Verify That No Error Is Encountered When No Airline Code Is Used During Delete Request
-    [Tags]    functional
+    [Tags]    migration
     Send Delete Request For Airline Rules    airline_code=None
     Verify Response Status Code Is Correct    200
     Create Test Variables For Airline Rules    

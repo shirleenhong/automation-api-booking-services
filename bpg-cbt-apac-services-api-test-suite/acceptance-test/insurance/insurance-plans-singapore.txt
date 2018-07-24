@@ -7,7 +7,7 @@ Resource          resources/insurance.txt
 
 *** Test Cases ***
 Verify That Insurance Plans Are Correctly Retrieved
-    [Tags]    functional
+    [Tags]    migration
     Create Test Variables For Insurance Plans
     Send Get Request For Insurance Plans
     Verify Response Status Code Is Correct    200
@@ -15,7 +15,7 @@ Verify That Insurance Plans Are Correctly Retrieved
     [Teardown]    Evict Insurance Type Cache
 
 Verify That Insurance Plans Are Updated Correctly After Put Request
-    [Tags]    functional
+    [Tags]    migration
     Create Test Variables For Insurance Plans
     Send Get Request For Insurance Plans
     Verify Response Status Code Is Correct    200
@@ -30,7 +30,7 @@ Verify That Insurance Plans Are Updated Correctly After Put Request
     [Teardown]    Update Insurance Plans To Original Value And Evict Insurance Type Cache
 
 Verify That Insurance Plans Are Added Correctly After Put Request
-    [Tags]    functional
+    [Tags]    migration
     Create Test Variables For Insurance Plans
     Send Get Request For Insurance Plans
     Verify Response Status Code Is Correct    200
@@ -45,7 +45,7 @@ Verify That Insurance Plans Are Added Correctly After Put Request
     [Teardown]    Delete Insurance Plans And Evict Insurance Type Cache
 
 Verify That Insurance Plans Are Deleted Correctly After Delete Request
-    [Tags]    functional
+    [Tags]    migration
     Create Test Variables For Insurance Plans
     Send Get Request For Insurance Plans
     Verify Response Status Code Is Correct    200
