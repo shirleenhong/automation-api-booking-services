@@ -92,14 +92,14 @@ public class ExchangeOrderRepository {
         {
             query.field("createDateTime").lessThanOrEq(param.getEndCreationDate());
         }
-        query.order("-createDateTime");
+        query.order(Sort.descending("createDateTime"));
 
         final FindOptions options = new FindOptions();
         options.limit(100);
         return query.asList(options);
     }
 
-    public boolean updateFinace(ExchangeOrder param)
+    public boolean updateFinance(ExchangeOrder param)
     {
         final Query<ExchangeOrder> query = morphia.getDatastore().createQuery(ExchangeOrder.class);
         query.field("eoNumber").equal(param.getEoNumber());

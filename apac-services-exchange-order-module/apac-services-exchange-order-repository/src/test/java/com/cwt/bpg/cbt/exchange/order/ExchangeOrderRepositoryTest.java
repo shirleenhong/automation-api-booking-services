@@ -137,7 +137,7 @@ public class ExchangeOrderRepositoryTest {
         when(dataStore.update(query, operation)).thenReturn(results);
         
         final ExchangeOrder param = new ExchangeOrder();
-        boolean result = repository.updateFinace(param);
+        boolean result = repository.updateFinance(param);
         
         verify(dataStore, times(1)).createQuery(ExchangeOrder.class);
         verify(dataStore, times(1)).update(query, operation);

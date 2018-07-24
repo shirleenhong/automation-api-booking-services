@@ -51,7 +51,7 @@ public class ExchangeOrderService {
     }
     
     public boolean update(ExchangeOrder param) {
-        return exchangeOrderRepo.updateFinace(param);
+        return exchangeOrderRepo.updateFinance(param);
     }
     
 }

@@ -68,7 +68,7 @@ public class ExchangeOrderServiceTest {
     @Test
     public void shouldCallUpdate() {
         service.update(new ExchangeOrder());
-        verify(repository, times(1)).updateFinace(Mockito.any(ExchangeOrder.class));
+        verify(repository, times(1)).updateFinance(Mockito.any(ExchangeOrder.class));
     }
     
 }

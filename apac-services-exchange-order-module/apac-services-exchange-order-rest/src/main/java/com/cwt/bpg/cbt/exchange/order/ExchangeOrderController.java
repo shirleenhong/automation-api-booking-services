@@ -1,6 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.time.Instant;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -106,27 +104,19 @@ public class ExchangeOrderController {
             value = "/exchange-orders",
             produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ApiOperation(value = "Search for exchange orders.")
-    public List<ExchangeOrder> search(
-            @RequestParam(name = "eoNumber", required = false ) @ApiParam(value = "Exchange order number") String eoNumber,
-            @RequestParam(name = "vendorCode", required = false) @ApiParam(value = "Vendor") String vendorCode,
-            @RequestParam(name = "countryCode", required = false) @ApiParam(value = "Country Code") String countryCode,
-            @RequestParam(name = "raiseType", required = false) @ApiParam(value = "Payment Type") String raiseType,
-            @RequestParam(name = "recordLocator", required = false) @ApiParam(value = "PNR") String recordLocator,
-            @RequestParam(name = "status", required = false) @ApiParam(value = "Status") String status,
-            @RequestParam(name = "startCreationDate", required = false) @ApiParam(value = "Start Creation Date") Instant startCreationDate,
-            @RequestParam(name = "endCreationDate", required = false) @ApiParam(value = "End Creation Date") Instant endCreationDate)
+    public List<ExchangeOrder> search(final ExchangeOrderSearchDTO p)
                     throws ApiServiceException {
         final ExchangeOrderSearchParam param = new ExchangeOrderSearchParam();
-        param.setEoNumber(eoNumber);
-        param.setCountryCode(countryCode);
+        param.setEoNumber(p.getEoNumber());
+        param.setCountryCode(p.getCountryCode());
         final Vendor vendor = new Vendor();
-        vendor.setCode(vendorCode);
-        vendor.setRaiseType(raiseType);
+        vendor.setCode(p.getVendorCode());
+        vendor.setRaiseType(p.getRaiseType());
         param.setVendor(vendor);
-        param.setRecordLocator(recordLocator);
-        param.setStatus(EoStatus.find(status));
-        param.setStartCreationDate(startCreationDate);
-        param.setEndCreationDate(endCreationDate);
+        param.setRecordLocator(p.getRecordLocator());
+        param.setStatus(EoStatus.find(p.getStatus()));
+        param.setStartCreationDate(p.getStartCreationDate());
+        param.setEndCreationDate(p.getEndCreationDate());
         return eoService.search(param);
     }
     
