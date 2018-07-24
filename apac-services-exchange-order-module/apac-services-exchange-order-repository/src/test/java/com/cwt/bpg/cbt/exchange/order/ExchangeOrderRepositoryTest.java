@@ -1,7 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -20,11 +22,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.FieldEnd;
-import org.mongodb.morphia.query.FindOptions;
-import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.UpdateOperations;
-import org.mongodb.morphia.query.UpdateResults;
+import org.mongodb.morphia.Key;
+import org.mongodb.morphia.query.*;
 
 import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
@@ -48,6 +47,9 @@ public class ExchangeOrderRepositoryTest {
     
     @Mock
     private Query<ExchangeOrder> queryOrder;
+    
+    @Mock
+    private Key<ExchangeOrder> eoKey;
 	
 	@InjectMocks
 	private ExchangeOrderRepository repository;
@@ -63,12 +65,14 @@ public class ExchangeOrderRepositoryTest {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setEoNumber("123098");
 		
-		when(dataStore.createUpdateOperations(ExchangeOrder.class)).thenReturn(operation);
+		eoKey.setCollection("exchangeOrderTransactions");
+		when(eoKey.getId()).thenReturn(eo.getEoNumber());
+		when(dataStore.save(eo)).thenReturn(eoKey);
 				
-		ExchangeOrder result = repository.save(eo);
+		String result = repository.save(eo);
 		
 		verify(dataStore, times(1)).save(eo);
-		assertNotNull(result);
+		assertThat(result, is(equalTo(eo.getEoNumber())));
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -87,19 +91,6 @@ public class ExchangeOrderRepositoryTest {
 		verify(dataStore, times(1)).createQuery(ExchangeOrder.class);
 		
 		assertNotNull(result);
-	}
-	
-	@Test
-	public void canUpdate() {
-		ExchangeOrder eo = new ExchangeOrder();
-		eo.setEoNumber("123098");
-		
-		when(dataStore.merge(ExchangeOrder.class)).thenReturn(null);
-				
-		ExchangeOrder result = repository.save(eo);
-		
-		verify(dataStore, times(1)).save(eo);
-		assertEquals(eo, result);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })

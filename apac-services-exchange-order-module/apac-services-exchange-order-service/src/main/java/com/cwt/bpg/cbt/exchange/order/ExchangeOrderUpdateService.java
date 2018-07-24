@@ -64,7 +64,8 @@ public class ExchangeOrderUpdateService
         }
 
         exchangeOrderAmountScaler.scale(existingExchangeOrder);
-
-        return exchangeOrderRepo.save(existingExchangeOrder);
+        String updatedEoNumber = exchangeOrderRepo.save(existingExchangeOrder);
+        
+        return exchangeOrderRepo.getExchangeOrder(updatedEoNumber);
     }
 }
