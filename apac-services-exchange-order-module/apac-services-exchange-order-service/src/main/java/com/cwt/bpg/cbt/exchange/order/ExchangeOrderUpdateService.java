@@ -47,8 +47,6 @@ public class ExchangeOrderUpdateService
             ServiceUtils.modifyTargetObject(exchangeOrder.getCreditCard(),
                     existingExchangeOrder.getCreditCard());
             exchangeOrder.setCreditCard(null);
-        }else{
-
         }
 
 		if (exchangeOrder.getVendor() != null) {
