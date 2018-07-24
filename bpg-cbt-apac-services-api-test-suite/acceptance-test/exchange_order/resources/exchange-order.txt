@@ -89,7 +89,7 @@ Append Exchange Order Vendor Contact Information Request Fields
     Set Test Variable    ${exchange_order_vendor_contact_list}    
 
 Create Exchange Order Request
-    [Arguments]    ${amend_exchange_order}=false
+    [Arguments]    ${amend_exchange_order}=false    ${remove_cc}=false    ${remove_contact_info}=false    ${remove_eo_rmk}=false    ${remove_itin_rmk}=false
     ${eo_rmk_count}    Get Length    ${exchange_order_eo_rmk_request_list}
     : FOR    ${i}    IN RANGE    0    ${eo_rmk_count}
     \    ${eo_rmk_list}    Set Variable If    ${i}==0    ${EMPTY}    ${eo_rmk_list},
@@ -122,7 +122,7 @@ Create Exchange Order Request
     \    ${vendor_contact_list}    Set Variable    ${vendor_contact_list}${exchange_order_vendor_contact_list[${i}]}
     ${vendor_contact_list}    Set Variable If    "${vendor_contact_count}"=="0"    ${EMPTY}    ${vendor_contact_list}
     ${data}    Set Variable If    "${amend_exchange_order}"=="false"    {${eo_list},"creditCard":{${cc_list}},"itineraryRemarks":[${itin_rmk_list}],"eoRemarks":[${eo_rmk_list}],"header":{${header_list}},"vendor":{${vendor_list},"contactInfo":[${vendor_contact_list}]}}    {"eoNumber":"${exchange_order_number}",${eo_list},"creditCard":{${cc_list}},"itineraryRemarks":[${itin_rmk_list}],"eoRemarks":[${eo_rmk_list}],"header":{${header_list}},"vendor":{${vendor_list},"contactInfo":[${vendor_contact_list}]}}
-    ${data}    Sanitize Exchange Order Request    ${data}
+    ${data}    Sanitize Exchange Order Request    ${data}    ${remove_cc}    ${remove_contact_info}    ${remove_eo_rmk}    ${remove_itin_rmk}
     Set Test Variable    ${data}
     Log    ${data}
 
@@ -240,13 +240,13 @@ Identify Exchange Order Market
     Set Test Variable    ${market_${eo_index}}    ${market}
 
 Sanitize Exchange Order Request
-    [Arguments]    ${data}
-    ${data}    Replace String    ${data}    "creditCard":{},    ${EMPTY}
-    ${data}    Replace String    ${data}    "contactInfo":[]    ${EMPTY}
+    [Arguments]    ${data}    ${remove_cc}=false    ${remove_contact_info}=false    ${remove_eo_rmk}=false    ${remove_itin_rmk}=false
+    ${data}    Run Keyword If    "${remove_cc}"=="false"    Replace String    ${data}    "creditCard":{},    ${EMPTY}    ELSE    Replace String    ${data}    "creditCard":{},    "creditCard":null,
+    ${data}    Run Keyword If    "${remove_contact_info}"=="false"    Replace String    ${data}    "contactInfo":[]    ${EMPTY}    ELSE    Set Variable    ${data}
     ${data}    Replace String    ${data}    "vendor":{,}    ${EMPTY}
     ${data}    Replace String    ${data}    "header":{},    ${EMPTY}
-    ${data}    Replace String    ${data}    "eoRemarks":[],    ${EMPTY}
-    ${data}    Replace String    ${data}    "itineraryRemarks":[],    ${EMPTY}
+    ${data}    Run Keyword If    "${remove_eo_rmk}"=="false"    Replace String    ${data}    "eoRemarks":[],    ${EMPTY}    ELSE    Replace String    ${data}    "creditCard":{},    "eoRemarks":null,
+    ${data}    Run Keyword If    "${remove_itin_rmk}"=="false"    Replace String    ${data}    "itineraryRemarks":[],    ${EMPTY}    ELSE    Replace String    ${data}    "creditCard":{},    "itineraryRemarks":null,
     ${data}    Replace String    ${data}    ,,    ,
     ${data}    Replace String    ${data}    {,    {
     ${data}    Replace String    ${data}    ,}    }
@@ -335,7 +335,7 @@ Send Exchange Order Post Request
     Set Test Variable    ${api_flag}    exchange-order
 
 Send Exchange Order Post Request For Amend
-    [Arguments]    ${token}=${default_token}    ${amend_eo_data}=false    ${amend_header}=false    ${amend_fop}=false    ${amend_remarks}=false    ${amend_vendor}=false    ${amend_vendor_contact}=false
+    [Arguments]    ${token}=${default_token}    ${amend_eo_data}=false    ${amend_header}=false    ${amend_fop}=false    ${amend_remarks}=false    ${amend_vendor}=false    ${amend_vendor_contact}=false    ${remove_cc}=false    ${remove_contact_info}=false    ${remove_eo_rmk}=false    ${remove_itin_rmk}=false
     Create Session    exchange-order    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
@@ -345,14 +345,15 @@ Send Exchange Order Post Request For Amend
     Run Keyword If    "${amend_fop}"=="true"    Append Exchange Order Credit Card Request Fields    	${eo_index}    ELSE    Run Keywords    Set Test Variable    ${exchange_order_cc_request_list}    ${EMPTY}    AND    Set Test Variable    ${cc_list}    ${EMPTY}
     Run Keyword If    "${amend_remarks}"=="true"    Append Exchange Order Remarks Request Fields    ${eo_index}    ELSE    Run Keywords    Set Test Variable    ${exchange_order_eo_rmk_request_list}    ${EMPTY}    AND    Set Test Variable    ${exchange_order_itin_rmk_request_list}    ${EMPTY}    AND    Set Test Variable    ${eo_rmk_list}    ${EMPTY}    AND    Set Test Variable    ${itin_rmk_list}    ${EMPTY}
     Run Keyword If    "${amend_vendor}"=="true"    Append Exchange Order Vendor Request Fields    ${eo_index}    ELSE    Run Keywords    Set Test Variable    ${exchange_order_vendor_request_list}    ${EMPTY}    AND    Set Test Variable    ${vendor_list}    ${EMPTY}
-    Run Keyword If    "${amend_vendor_contact}"=="true"    Append Exchange Order Vendor Contact Information Request Fields    ${eo_index}    ELSE    Run Keywords    Set Test Variable    ${exchange_order_vendor_contact_list}    ${EMPTY}    AND    Set Test Variable    ${vendor_contact_list}    ${EMPTY}
+    Run Keyword If    "${amend_vendor_contact}"=="true"    Append Exchange Order Vendor Contact Information Request Fields    ${eo_index}    ELSE    Run Keywords    Set Test Variable    ${exchange_order_vendor_contact_list}    ${EMPTY}    AND    Set Test Variable    ${vendor_contact_list}    ${EMPTY}   
     Save Current Date And Time    ${eo_index}
-    Create Exchange Order Request    amend_exchange_order=true
+    Create Exchange Order Request    amend_exchange_order=true    remove_cc=${remove_cc}    remove_contact_info=${remove_contact_info}    remove_eo_rmk=${remove_eo_rmk}    remove_itin_rmk=${remove_itin_rmk}
     ${response}    Post Request    exchange-order    /apac-services-rest/api/exchange-order    data=${data}    headers=${headers}
     Set Test Variable    ${response_${eo_index}}    ${response}
     Set Test Variable    ${display_date_${eo_index}}    ${day}-${month}-${year}
     Log    ${response_${eo_index}.headers}
-    Log    ${response_${eo_index}.content}    
+    Log    ${response_${eo_index}.content}
+    Set Test Variable    ${amend_exchange_order_${eo_index}}    true    
     Set Test Variable    ${api_flag}    exchange-order
 
 Verify Exchange Order Email Is Generated Successfully
@@ -415,9 +416,9 @@ Verify Exchange Order For PNR Is Retrieved Correctly
     \    ${actual_date_time}    Get Substring    ${actual_date_time}    0    18
     \    Verify Actual Value Matches Expected Value    ${actual_date_time}    ${expected_date_time}
     \    Verify Json Value Matches Pattern    $.[${index}].createDateTime    ^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z+$
-    \    Run Keyword If    "${cc_type_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.[${index}].creditCard.ccType    ${cc_type_${eo_index}_value} 
-    \    Run Keyword If    "${cc_number_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.[${index}].creditCard.ccNumber    ${cc_number_${eo_index}_value} 
-    \    Run Keyword If    "${expiry_date_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.[${index}].creditCard.expiryDate    ${expiry_date_${eo_index}_value}
+    \    Run Keyword If    "${cc_type_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.[${index}].creditCard.ccType    ${cc_type_${eo_index}_value}    ELSE     Verify Json Element Does Not Exist    $.[${index}].creditCard.ccType 
+    \    Run Keyword If    "${cc_number_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.[${index}].creditCard.ccNumber    ${cc_number_${eo_index}_value}    ELSE     Verify Json Element Does Not Exist    $.[${index}].creditCard.ccNumber 
+    \    Run Keyword If    "${expiry_date_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.[${index}].creditCard.expiryDate    ${expiry_date_${eo_index}_value}    ELSE     Verify Json Element Does Not Exist    $.[${index}].creditCard.expiryDate
     \    Verify Json Value Is Correct    $.[${index}].description    ${description_${eo_index}_value}
     \    Verify Json Value Is Correct    $.[${index}].eoAction    ${eo_action_${eo_index}_value}
     \    Verify Json Value Is Correct    $.[${index}].eoNumber    ${exchange_order_number_${eo_index}}
@@ -485,10 +486,30 @@ Verify Exchange Order Number Is Returned Correctly
     \    Set Test Variable    ${exchange_order_number_${eo_index}}    ${exchange_order_number}
     \    Set Test Variable    ${exchange_order_number}
 
+Verify Amend Date Time Is Returned Correctly
+    [Arguments]    ${eo_index}=0
+    ${expected_date_time}    Get Substring    ${current_date_time_${eo_index}}    0    16
+    ${expected_date_time}    Replace String    ${expected_date_time}    ${SPACE}    T
+    ${actual_date_time}    Get Json Value As String    ${response_${eo_index}.content}    $.updateDateTime
+    ${actual_date_time}    Get Substring    ${actual_date_time}    0    16
+    Verify Actual Value Matches Expected Value    ${actual_date_time}    ${expected_date_time}
+    Verify Json Value Matches Pattern    $.updateDateTime    ^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z+$
+
+Verify Create Date Time Is Returned Correctly
+    [Arguments]    ${eo_index}=0
+    ${expected_date_time}    Get Substring    ${current_date_time_${eo_index}}    0    16
+    ${expected_date_time}    Replace String    ${expected_date_time}    ${SPACE}    T
+    ${actual_date_time}    Get Json Value As String    ${response_${eo_index}.content}    $.createDateTime
+    ${actual_date_time}    Get Substring    ${actual_date_time}    0    16
+    Verify Actual Value Matches Expected Value    ${actual_date_time}    ${expected_date_time}
+    Verify Json Value Matches Pattern    $.createDateTime    ^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z+$
+
 Verify Exchange Order Is Saved Correctly
     [Arguments]    ${eo_index}=0
     Log    ${response.content}
     Verify Exchange Order Number Is Returned Correctly
+    ${is_eo_amended}    Run Keyword And Return Status    Variable Should Exist    ${amend_exchange_order_${eo_index}}
+    Run Keyword If    "${is_eo_amended}"=="True"    Verify Amend Date Time Is Returned Correctly    ${eo_index}    
     Verify Json Value Is Correct    $.accountNumber    ${account_number_${eo_index}_value}
     Verify Json Value Is Correct    $.additionalInfoDate    ${date_${eo_index}_value}
     Verify Json Value Is Correct    $.agentId    ${agent_id_${eo_index}_value}
@@ -496,15 +517,10 @@ Verify Exchange Order Is Saved Correctly
     Run Keyword If    "${bta_description_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.btaDescription    ${bta_description_${eo_index}_value}    ELSE    Verify Json Element Does Not Exist    $.btaDescription
     Verify Json Value Is Correct    $.commission    ${commission_${eo_index}_value}
     Verify Json Value Is Correct    $.countryCode    ${country_${eo_index}_value} 
-    ${expected_date_time}    Get Substring    ${current_date_time_${eo_index}}    0    16
-    ${expected_date_time}    Replace String    ${expected_date_time}    ${SPACE}    T
-    ${actual_date_time}    Get Json Value As String    ${response_${eo_index}.content}    $.createDateTime
-    ${actual_date_time}    Get Substring    ${actual_date_time}    0    16
-    Verify Actual Value Matches Expected Value    ${actual_date_time}    ${expected_date_time}
-    Verify Json Value Matches Pattern    $.createDateTime    ^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z+$
-    Run Keyword If    "${cc_type_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.creditCard.ccType    ${cc_type_${eo_index}_value} 
-    Run Keyword If    "${cc_number_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.creditCard.ccNumber    ${cc_number_${eo_index}_value} 
-    Run Keyword If    "${expiry_date_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.creditCard.expiryDate    ${expiry_date_${eo_index}_value}
+    Run Keyword If    "${cc_type_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.creditCard.ccType    ${cc_type_${eo_index}_value}    ELSE     Verify Json Element Does Not Exist    $.creditCard.ccType
+    Run Keyword If    "${cc_number_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.creditCard.ccNumber    ${cc_number_${eo_index}_value}    ELSE     Verify Json Element Does Not Exist    $.creditCard.ccNumber 
+    Run Keyword If    "${expiry_date_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.creditCard.expiryDate    ${expiry_date_${eo_index}_value}    ELSE     Verify Json Element Does Not Exist    $.creditCard.expiryDate
+    Verify Create Date Time Is Returned Correctly    ${eo_index}
     Verify Json Value Is Correct    $.description    ${description_${eo_index}_value}
     Verify Json Value Is Correct    $.eoAction    ${eo_action_${eo_index}_value}
     Verify Json Value Is Correct    $.eoNumber    ${exchange_order_number_${eo_index}}
@@ -538,13 +554,15 @@ Verify Exchange Order Is Saved Correctly
     Run Keyword If    "${vendor_name_${eo_index}_value}"!="null"    Verify Json Value Is Correct    $.vendor.name    ${vendor_name_${eo_index}_value}    ELSE    Verify Json Element Does Not Exist    $.vendor.name
     : FOR    ${index}    IN RANGE    0    ${eo_remarks_data_length_${eo_index}}
     \    Verify Json Value Is Correct    $.eoRemarks.[${index}]    ${eo_remark_text_${eo_index}_${index}}
+    Run Keyword If    "${eo_remarks_data_length_${eo_index}}"=="0"    Verify Json Element Does Not Exist    $.eoRemarks
     : FOR    ${index}    IN RANGE    0    ${itin_remarks_data_length_${eo_index}}
     \    Verify Json Value Is Correct    $.itineraryRemarks.[${index}]    ${itin_remark_text_${eo_index}_${index}}
+    Run Keyword If    "${itin_remarks_data_length_${eo_index}}"=="0"    Verify Json Element Does Not Exist    $.itineraryRemarks
     : FOR    ${index}    IN RANGE    0    ${contact_data_length_${eo_index}}
     \    Verify Json Value Is Correct    $.vendor.contactInfo.[${index}].type    ${contact_type_${eo_index}_${index}}
     \    Verify Json Value Is Correct    $.vendor.contactInfo.[${index}].detail    ${contact_details_${eo_index}_${index}}
     \    Verify Json Value Is Correct    $.vendor.contactInfo.[${index}].preferred    ${contact_preferred_${eo_index}_${index}}
-    
+    Run Keyword If    "${contact_data_length_${eo_index}}"=="0"    Verify Json Element Does Not Exist    $.vendor.contactInfo
 
 Verify Exchange Order Is Not Returned
     Verify String Does Not Contain Substring    ${response.text}    "accountNumber"    
