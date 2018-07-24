@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -41,7 +40,7 @@ public class Vendor implements Serializable {
 
 	private String supportEmail;
 	
-	private List<ContactInfo> contactInfo = new ArrayList<>();
+	private List<ContactInfo> contactInfo;
 	
 	public String getCode() {
 		return code;
