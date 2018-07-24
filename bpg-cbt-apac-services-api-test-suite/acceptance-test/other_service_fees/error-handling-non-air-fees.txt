@@ -374,7 +374,7 @@ Verify That Error Is Encountered When Invalid Product Code Value Is Used
     Send Other Service Fees For Non-Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Non-Air Fees Are Not Returned
-    Create Test Variables For Non-Air Fees    fees_list=cc,CX4|client_account_number,9000000065|acct_type,AX|comm_by_percent,true|comm_percentage,3.00|commission,null|cost_amount,400|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,3|fop_number,1234|ot1,0.5|ot2,0.5|product_code,null|cc_number,1234|subject_to_mf,null|apply_mf_bank,null|merchant_fee_percentage,null|gst_percentage,14|apply_mf_cc,null    country=in
+    Create Test Variables For Non-Air Fees    fees_list=cc,CX4|client_account_number,9000000065|acct_type,AX|comm_by_percent,true|comm_percentage,3.00|commission,null|cost_amount,400|discount_by_percent,true|discount_percentage,2.50|discount,null|fop_mode,3|fop_number,1234|ot1,0.5|ot2,0.5|product_code,NULL|cc_number,1234|subject_to_mf,null|apply_mf_bank,null|merchant_fee_percentage,null|gst_percentage,14|apply_mf_cc,null    country=in
     Send Other Service Fees For Non-Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Non-Air Fees Are Not Returned
