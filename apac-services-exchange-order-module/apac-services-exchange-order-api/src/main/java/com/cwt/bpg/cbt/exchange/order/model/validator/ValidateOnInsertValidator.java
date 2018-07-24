@@ -38,12 +38,7 @@ public class ValidateOnInsertValidator implements ConstraintValidator<ValidateOn
 
 			for(String dependFieldName : dependentFields){
 
-
 				Object dependFieldValue = PropertyUtils.getProperty(value, dependFieldName);
-//
-//                Field field = value.getClass().getDeclaredField(dependFieldName);
-//                field.setAccessible(true);
-//                Object dependentObject = field.get(value);
 
                 if (fieldValue == null && dependFieldValue != null) {
 
