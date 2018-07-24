@@ -25,12 +25,6 @@ public class ExchangeOrderRepository {
 		return eo;
 	}
 	
-	public ExchangeOrder update(ExchangeOrder eo) {
-		morphia.getDatastore().merge(eo);
-		LOGGER.info("Update: Exchange order, [{}]", eo.getEoNumber());
-		return eo;
-	}
-	
 	public ExchangeOrder getExchangeOrder(String eoNumber) {
 		return morphia.getDatastore().createQuery(ExchangeOrder.class)
 			.field("eoNumber")

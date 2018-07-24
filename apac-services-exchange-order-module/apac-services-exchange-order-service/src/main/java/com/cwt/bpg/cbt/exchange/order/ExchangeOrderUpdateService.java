@@ -68,6 +68,6 @@ public class ExchangeOrderUpdateService
 
         exchangeOrderAmountScaler.scale(existingExchangeOrder);
 
-        return exchangeOrderRepo.update(existingExchangeOrder);
+        return exchangeOrderRepo.save(existingExchangeOrder);
     }
 }
