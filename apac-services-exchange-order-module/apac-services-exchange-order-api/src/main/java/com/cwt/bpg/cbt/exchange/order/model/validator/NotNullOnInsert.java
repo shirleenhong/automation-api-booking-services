@@ -35,25 +35,3 @@ public @interface NotNullOnInsert {
     }
 
 }
-
-
-//    final String fieldValue       = BeanUtils.getProperty(value, fieldName);
-//    final Object dependFieldValue = PropertyUtils.getProperty(value, dependFieldName);
-//
-//        if (expectedFieldValue.equals(fieldValue)) {
-//
-//                ctx.disableDefaultConstraintViolation();
-//                ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-//                Validator validator = factory.getValidator();
-//
-//                Set<ConstraintViolation<Object>> errorList = validator.validate(dependFieldValue);
-//
-//        for(ConstraintViolation<Object> error : errorList) {
-//
-//        ctx.buildConstraintViolationWithTemplate(error.getMessageTemplate())
-//        .addNode(dependFieldName+"."+error.getPropertyPath())
-//        .addConstraintViolation();
-//        }
-//
-//        return errorList.isEmpty();
-//        }
