@@ -49,9 +49,6 @@ public class ExchangeOrderUpdateService
         }
 
 		if (exchangeOrder.getVendor() != null) {
-			if (exchangeOrder.getVendor().getContactInfo().size() == 0) {
-				exchangeOrder.getVendor().setContactInfo(null);
-			}
 			ServiceUtils.modifyTargetObject(exchangeOrder.getVendor(),
 					existingExchangeOrder.getVendor());
 			exchangeOrder.setVendor(null);

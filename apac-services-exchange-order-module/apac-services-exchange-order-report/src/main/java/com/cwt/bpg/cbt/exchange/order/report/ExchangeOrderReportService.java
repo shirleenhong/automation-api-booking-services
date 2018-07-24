@@ -119,9 +119,24 @@ public class ExchangeOrderReportService {
         parameters.put("GST_AMOUNT_TAX1_LABEL", displayGst ? "GST" : "Tax");
         parameters.put("GST_AMOUNT_TAX1", formatAmount(exchangeOrder.getCountryCode(),
                 displayGst ? gstAmount : exchangeOrder.getTax1()));
-        putContactInfoParameters(exchangeOrder.getVendor().getContactInfo(), parameters);
+        
+        List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
+        List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
+        putContactInfoParameters(contactInfoList, parameters);
 
 		return parameters;
+	}
+
+	private List<ContactInfo> checkNullContactInfoList(
+			List<ContactInfo> contactInfoList) {
+		
+		Optional<List<ContactInfo>> contactExists = Optional
+				.ofNullable(contactInfoList);
+
+        List<ContactInfo> contactInfo = contactExists
+				.orElse(new ArrayList<>());
+        
+		return contactInfo;
 	}
 
 	private void putContactInfoParameters(List<ContactInfo> contactInfoList, Map<String, Object> parameters) {
@@ -194,7 +209,8 @@ public class ExchangeOrderReportService {
 		try {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
-			List<ContactInfo> contactInfoList  = exchangeOrder.getVendor().getContactInfo();
+			List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
+			List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
 			String email = setEmailRecipient(contactInfoList);
 
 			String emailRecipient = getEmail(email);
