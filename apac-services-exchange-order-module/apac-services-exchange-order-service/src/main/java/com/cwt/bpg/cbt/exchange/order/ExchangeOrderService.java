@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 
 @Service
 public class ExchangeOrderService {
@@ -39,10 +40,18 @@ public class ExchangeOrderService {
 	public ExchangeOrder getExchangeOrder(String eoNumber) {
 		return exchangeOrderRepo.getExchangeOrder(eoNumber);
 	}
-
+	
 	@Cacheable(cacheNames = "exchange-orders", key = "#recordLocator")
-	public List<ExchangeOrder> getExchangeOrderByRecordLocator(String recordLocator) {
-		return exchangeOrderRepo.getByRecordLocator(recordLocator);
+	public List<ExchangeOrder> getExchangeOrderByRecordLocator(String pnrNumber) {
+	    return exchangeOrderRepo.getByRecordLocator(pnrNumber);
 	}
-
+	
+	public List<ExchangeOrder> search(final ExchangeOrderSearchParam param) {
+        return exchangeOrderRepo.search(param);
+    }
+    
+    public boolean update(ExchangeOrder param) {
+        return exchangeOrderRepo.updateFinance(param);
+    }
+    
 }

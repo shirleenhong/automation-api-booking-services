@@ -9,13 +9,22 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
+import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 
 import io.swagger.annotations.Api;
@@ -40,9 +49,7 @@ public class ExchangeOrderController {
 	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
 			throws ExchangeOrderNoContentException {
-
 		boolean isSave = input.getEoNumber() == null ? true : false;
-
 		return new ResponseEntity<>(eoService.saveExchangeOrder(input),
 				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
@@ -92,4 +99,36 @@ public class ExchangeOrderController {
 
 		return new ResponseEntity<>(eoReportService.emailPdf(eoNumber), HttpStatus.OK);
 	}
+	
+	@GetMapping(
+            value = "/exchange-orders",
+            produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+    @ApiOperation(value = "Search for exchange orders.")
+    public List<ExchangeOrder> search(final ExchangeOrderSearchDTO p)
+                    throws ApiServiceException {
+        final ExchangeOrderSearchParam param = new ExchangeOrderSearchParam();
+        param.setEoNumber(p.getEoNumber());
+        param.setCountryCode(p.getCountryCode());
+        final Vendor vendor = new Vendor();
+        vendor.setCode(p.getVendorCode());
+        vendor.setRaiseType(p.getRaiseType());
+        param.setVendor(vendor);
+        param.setRecordLocator(p.getRecordLocator());
+        param.setStatus(EoStatus.find(p.getStatus()));
+        param.setStartCreationDate(p.getStartCreationDate());
+        param.setEndCreationDate(p.getEndCreationDate());
+        return eoService.search(param);
+    }
+    
+	@PutMapping(
+            path = "/exchange-order",
+            produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+            consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+    @ResponseBody
+    @ApiOperation(value = "Update exchange order transaction.")
+    public ResponseEntity<Boolean> update(@RequestBody @ApiParam(value = "Exchange order to update") ExchangeOrder param) {
+        final boolean result = eoService.update(param);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+	
 }

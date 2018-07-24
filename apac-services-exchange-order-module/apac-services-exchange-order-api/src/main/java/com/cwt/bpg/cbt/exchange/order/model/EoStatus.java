@@ -13,4 +13,16 @@ public enum EoStatus {
 	private EoStatus(String value) {
 		this.value = value;
 	}
+	
+	public static EoStatus find(final String value)
+	{
+	    for (final EoStatus status : EoStatus.values())
+	    {
+	        if (status.value.equals(value))
+	        {
+	            return status;
+	        }
+	    }
+	    return null;
+	}
 }

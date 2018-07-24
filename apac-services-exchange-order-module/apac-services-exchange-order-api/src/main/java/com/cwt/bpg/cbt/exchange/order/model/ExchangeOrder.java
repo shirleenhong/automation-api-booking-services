@@ -7,14 +7,17 @@ import java.util.List;
 
 import javax.validation.constraints.DecimalMin;
 
-import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
-import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullOnInsert;
-import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullOnFopType;
-
-import org.mongodb.morphia.annotations.*;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
+import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullOnFopType;
+import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullOnInsert;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -157,9 +160,11 @@ public class ExchangeOrder implements Serializable {
 	private List<String> eoRemarks;
 
 	private List<String> itineraryRemarks;
-
+	
 	private Vendor vendor;
-
+	
+	private String lastUpdatedByUser;
+	
 	public String getEoNumber() {
 		return eoNumber;
 	}
@@ -439,4 +444,13 @@ public class ExchangeOrder implements Serializable {
 	public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
 		this.merchantFeeAbsorb = merchantFeeAbsorb;
 	}
+
+    public String getLastUpdatedByUser() {
+        return lastUpdatedByUser;
+    }
+
+    public void setLastUpdatedByUser(String lastUpdatedByUser) {
+        this.lastUpdatedByUser = lastUpdatedByUser;
+    }
+    
 }
