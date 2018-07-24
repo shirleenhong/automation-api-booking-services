@@ -90,7 +90,7 @@ public class ExchangeOrderRepositoryTest {
 				
 		ExchangeOrder result = repository.save(eo);
 		
-		verify(dataStore, times(1)).merge(eo);
+		verify(dataStore, times(1)).save(eo);
 		assertEquals(eo, result);
 	}
 	
