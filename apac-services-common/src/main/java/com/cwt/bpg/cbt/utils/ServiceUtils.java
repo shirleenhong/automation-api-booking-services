@@ -11,7 +11,9 @@ import org.springframework.beans.BeanWrapperImpl;
 public class ServiceUtils {
 
 	public static void modifyTargetObject(Object source, Object target) {
-		if(target == null) target = new Object();
+		if (target == null) {
+			target = new Object();
+		}
 		BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
 	}
 
