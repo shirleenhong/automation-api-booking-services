@@ -14,8 +14,8 @@ public class CommonConfigTest {
 	}
 	
 	@Test
-	public void testServiceUtils() {
-		assertNotNull(config.serviceUtils());
+	public void testObjectModifier() {
+		assertNotNull(config.objectModifier());
 	}
 
 }

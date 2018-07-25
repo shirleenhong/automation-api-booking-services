@@ -8,9 +8,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
-public class ServiceUtils {
+public class ObjectModifier {
 
 	public static void modifyTargetObject(Object source, Object target) {
+		if (target == null) {
+			target = new Object();
+		}
 		BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
 	}
 

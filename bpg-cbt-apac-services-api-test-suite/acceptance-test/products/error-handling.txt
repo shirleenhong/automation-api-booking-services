@@ -6,7 +6,7 @@ Resource          resources/products.txt
 
 *** Test Cases ***
 Verify That Error Is Encountered When Invalid Token Is Used
-    [Tags]    functional
+    [Tags]    migration
     Create Test Variables For Products And Vendors    country=sg
     Send Product Get Request    token=12345.12345.12345
     Verify Response Status Code Is Correct    401
@@ -17,7 +17,7 @@ Verify That Error Is Encountered When Invalid Token Is Used
     Verify Products And Vendors Are Not Retrieved
 
 Verify That Error Is Encountered When Null Token Is Used
-    [Tags]    functional
+    [Tags]    migration
     Create Test Variables For Products And Vendors    country=sg
     Send Product Get Request    token=null
     Verify Response Status Code Is Correct    401
@@ -28,7 +28,7 @@ Verify That Error Is Encountered When Null Token Is Used
     Verify Products And Vendors Are Not Retrieved
 
 Verify That Error Is Encountered When Empty Token Is Used
-    [Tags]    functional
+    [Tags]    migration
     Create Test Variables For Products And Vendors    country=sg
     Send Product Get Request    token=${EMPTY}
     Verify Response Status Code Is Correct    400
@@ -39,7 +39,7 @@ Verify That Error Is Encountered When Empty Token Is Used
     Verify Products And Vendors Are Not Retrieved
 
 Verify That Error Is Encountered When No Token Is Used
-    [Tags]    functional
+    [Tags]    migration
     Create Test Variables For Products And Vendors    country=sg
     Send Product Get Request    token=None
     Verify Response Status Code Is Correct    400
@@ -50,7 +50,7 @@ Verify That Error Is Encountered When No Token Is Used
     Verify Products And Vendors Are Not Retrieved
 
 Verify That No Error Is Encountered When Invalid Country Is Used
-    [Tags]    functional
+    [Tags]    migration
     Send Product Get Request    country=xyz
     Verify Response Status Code Is Correct    200
     Verify Products And Vendors Are Not Retrieved
