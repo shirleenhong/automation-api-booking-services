@@ -42,8 +42,8 @@ public class ExchangeOrderService {
 	}
 	
 	@Cacheable(cacheNames = "exchange-orders", key = "#recordLocator")
-	public List<ExchangeOrder> getExchangeOrderByRecordLocator(String pnrNumber) {
-	    return exchangeOrderRepo.getByRecordLocator(pnrNumber);
+	public List<ExchangeOrder> getExchangeOrderByRecordLocator(String recordLocator) {
+	    return exchangeOrderRepo.getByRecordLocator(recordLocator);
 	}
 	
 	public List<ExchangeOrder> search(final ExchangeOrderSearchParam param) {
