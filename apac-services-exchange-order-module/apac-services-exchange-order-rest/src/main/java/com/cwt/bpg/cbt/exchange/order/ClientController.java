@@ -4,13 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
@@ -25,12 +19,12 @@ public class ClientController {
 	@Autowired
 	private ClientService clientService;
 	
-	@GetMapping(path = "/clients/{id}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/clients/{clientAccountNumber}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls all clients")
-	public ResponseEntity<Client> getClient(@PathVariable int id) {
+	public ResponseEntity<Client> getClient(@PathVariable String clientAccountNumber) {
 
-		return new ResponseEntity<>(clientService.getClient(id), HttpStatus.OK);
+		return new ResponseEntity<>(clientService.getClient(clientAccountNumber), HttpStatus.OK);
 	}
 
 	@PutMapping(path = "/clients", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })

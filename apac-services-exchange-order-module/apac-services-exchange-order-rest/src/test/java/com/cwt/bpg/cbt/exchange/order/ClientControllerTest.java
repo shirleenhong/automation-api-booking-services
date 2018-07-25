@@ -29,9 +29,9 @@ public class ClientControllerTest {
 	
 	@Test
 	public void canGetClientById() {
-			final int id = 8;
-			ResponseEntity<?> client = clientController.getClient(id);
-			verify(clientPricingService, times(1)).getClient(id);
+			final String clientAccountNumber = "123456";
+			ResponseEntity<?> client = clientController.getClient(clientAccountNumber);
+			verify(clientPricingService, times(1)).getClient(clientAccountNumber);
 			assertEquals(HttpStatus.OK,  client.getStatusCode());
 	}
 
