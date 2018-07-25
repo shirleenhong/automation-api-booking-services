@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.utils.ServiceUtils;
+import com.cwt.bpg.cbt.utils.ObjectModifier;
 
 @Service
 public class ExchangeOrderUpdateService
@@ -38,25 +38,25 @@ public class ExchangeOrderUpdateService
                 existingExchangeOrder.getCountryCode());
 
         if (exchangeOrder.getHeader() != null) {
-            ServiceUtils.modifyTargetObject(exchangeOrder.getHeader(),
+            ObjectModifier.modifyTargetObject(exchangeOrder.getHeader(),
                     existingExchangeOrder.getHeader());
             exchangeOrder.setHeader(null);
         }
 
         if (exchangeOrder.getCreditCard() != null) {
-            ServiceUtils.modifyTargetObject(exchangeOrder.getCreditCard(),
+            ObjectModifier.modifyTargetObject(exchangeOrder.getCreditCard(),
                     existingExchangeOrder.getCreditCard());
             exchangeOrder.setCreditCard(null);
         }
 
 		if (exchangeOrder.getVendor() != null) {
-			ServiceUtils.modifyTargetObject(exchangeOrder.getVendor(),
+			ObjectModifier.modifyTargetObject(exchangeOrder.getVendor(),
 					existingExchangeOrder.getVendor());
 			exchangeOrder.setVendor(null);
 		}
 
         exchangeOrder.setUpdateDateTime(Instant.now());
-        ServiceUtils.modifyTargetObject(exchangeOrder, existingExchangeOrder);
+        ObjectModifier.modifyTargetObject(exchangeOrder, existingExchangeOrder);
 
         if(existingExchangeOrder.getFopType() != null &&
                 existingExchangeOrder.getFopType().equalsIgnoreCase(FopTypes.INVOICE.getCode())){

@@ -4,16 +4,16 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-public class ServiceUtilsTest {
+public class ObjectModifierTest {
 
-	private ServiceUtils serviceUtils = new ServiceUtils();
+	private ObjectModifier objectModifier = new ObjectModifier();
 
 	@Test
 	public void shouldModifyTargetObject() {
 		
 		Object a = new Object();
 		Object b = new Object();
-		serviceUtils.modifyTargetObject(a, b);
-		assertNotNull(serviceUtils);
+		objectModifier.modifyTargetObject(a, b);
+		assertNotNull(objectModifier);
 	}
 }
