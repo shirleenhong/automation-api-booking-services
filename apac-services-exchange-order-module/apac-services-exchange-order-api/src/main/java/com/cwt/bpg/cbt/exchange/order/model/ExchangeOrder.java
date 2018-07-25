@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.validation.constraints.DecimalMin;
 
+import com.cwt.bpg.cbt.exchange.order.model.validator.ValidateOnInsert;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Id;
@@ -53,6 +54,7 @@ import io.swagger.annotations.ApiModelProperty;
 		@NotNullOnFopType(fieldValue="CC",dependFieldName = "creditCard"),
 		@NotNullOnFopType(fieldValue="CX4",dependFieldName = "creditCard"),
 })
+@ValidateOnInsert.List({@ValidateOnInsert(dependentFields={"creditCard","header","vendor"})})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder implements Serializable {

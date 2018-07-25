@@ -5,16 +5,14 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 @Service
@@ -51,27 +49,6 @@ public class ExchangeOrderInsertService {
 		if (!isVendorExist.isPresent()) {
 			throw new IllegalArgumentException("Vendor [ " + exchangeOrder.getVendor().getCode()
 					+ " ] not found in Product [ " + exchangeOrder.getProductCode() + " ] ");
-		}
-
-		if (exchangeOrder.getCreditCard() != null) {
-			Set<ConstraintViolation<CreditCard>> ccErrors = Validation.buildDefaultValidatorFactory()
-					.getValidator().validate((exchangeOrder.getCreditCard()));
-			if (!ccErrors.isEmpty())
-				throw new IllegalArgumentException("Credit Card incomplete or invalid");
-		}
-
-		if (exchangeOrder.getVendor() != null) {
-			Set<ConstraintViolation<Vendor>> vendorErrors = Validation.buildDefaultValidatorFactory()
-					.getValidator().validate((exchangeOrder.getVendor()));
-			if (!vendorErrors.isEmpty())
-				throw new IllegalArgumentException("Vendor incomplete or invalid");
-		}
-
-		if (exchangeOrder.getHeader() != null) {
-			Set<ConstraintViolation<Header>> headerErrors = Validation.buildDefaultValidatorFactory()
-					.getValidator().validate((exchangeOrder.getHeader()));
-			if (!headerErrors.isEmpty())
-				throw new IllegalArgumentException("Header incomplete or invalid");
 		}
 
 		exchangeOrderAmountScaler.scale(exchangeOrder);
