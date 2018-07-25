@@ -2,6 +2,8 @@
 Resource    ../../resources/api-imports.txt
 Resource    ../../resources/api-utilities.txt
 Resource    ../../resources/api-variables.txt
+Resource    ../../resources/api-migration-variables.txt
+
 *** Keywords ***
 Create Test Variables For Airline Rules
     [Arguments]    ${airline_rules_list}=${in_airline_rules_list}
