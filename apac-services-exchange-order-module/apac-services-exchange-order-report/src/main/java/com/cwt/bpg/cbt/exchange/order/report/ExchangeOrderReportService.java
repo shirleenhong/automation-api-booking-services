@@ -95,13 +95,7 @@ public class ExchangeOrderReportService {
 				.orElseThrow(() -> new ExchangeOrderNoContentException(
 						"Exchange order number not found: [ " + eoNumber + " ]"));
 		
-		Optional<ReportHeader> reportHeaderExists = Optional
-				.ofNullable(getReportHeader(exchangeOrder.getCountryCode()));
-		
-		ReportHeader reportHeader = reportHeaderExists
-				.orElseThrow(() -> new ExchangeOrderNoContentException(
-						"Report header not found for country: [ "
-								+ exchangeOrder.getCountryCode() + " ]"));
+		ReportHeader reportHeader = getReportHeaderInfo(exchangeOrder);
 
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
 
@@ -145,17 +139,28 @@ public class ExchangeOrderReportService {
 
 		return parameters;
 	}
+	
+	
+	private ReportHeader getReportHeaderInfo(ExchangeOrder eo)
+			throws ExchangeOrderNoContentException {
+		Optional<ReportHeader> reportHeaderExists = Optional
+				.ofNullable(getReportHeader(eo.getCountryCode()));
+
+		ReportHeader reportHeader = reportHeaderExists
+				.orElseThrow(() -> new ExchangeOrderNoContentException(
+						"Report header not found for country: [ " + eo.getCountryCode()
+								+ " ]"));
+		return reportHeader;
+	}
 
 	private List<ContactInfo> checkNullContactInfoList(
 			List<ContactInfo> contactInfoList) {
 		
 		Optional<List<ContactInfo>> contactExists = Optional
 				.ofNullable(contactInfoList);
-
-        List<ContactInfo> contactInfo = contactExists
-				.orElse(new ArrayList<>());
         
-		return contactInfo;
+		return contactExists
+				.orElse(new ArrayList<>());
 	}
 
 	private void putContactInfoParameters(List<ContactInfo> contactInfoList, Map<String, Object> parameters) {

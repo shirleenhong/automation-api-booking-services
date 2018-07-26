@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.cwt.bpg.cbt.exchange.order.ReportHeaderService;
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
 
 import freemarker.template.*;
 
@@ -26,23 +30,44 @@ public class EmailContentProcessor {
 	@Autowired
 	private Configuration templateConfig;
 	
-	public String getEmailBody(ExchangeOrder eo) throws IOException, TemplateException
-    {
-        StringWriter writer = new StringWriter();
-        Template template = templateConfig.getTemplate(EO_EMAIL_BODY_FTL);
-        Map<String, Object> input = new HashMap<>();
-        
-        input.put("vendorSupportEmail", getValue(eo.getVendor().getSupportEmail()));
-        input.put("agentName", eo.getAgentName());
-        input.put("headerPhoneNumber", 
-        		getValue(eo.getHeader().getPhoneNumber()));
-        input.put("headerFaxNumber", 
-        		getValue(eo.getHeader().getFaxNumber()));        		
+	@Autowired
+	private ReportHeaderService reportHeaderService;
+	
+	
+	public String getEmailBody(ExchangeOrder eo)
+			throws IOException, TemplateException, ExchangeOrderNoContentException {
+		
+		StringWriter writer = new StringWriter();
+		Template template = templateConfig.getTemplate(EO_EMAIL_BODY_FTL);
+		Map<String, Object> input = new HashMap<>();
 
-        template.process(input, writer);
+		ReportHeader reportHeader = getReportHeaderInfo(eo);
 
-        return writer.toString();
-    }
+		input.put("vendorSupportEmail", getValue(eo.getVendor().getSupportEmail()));
+		input.put("agentName", eo.getAgentName());
+		input.put("headerPhoneNumber", getValue(reportHeader.getPhoneNumber()));
+		input.put("headerFaxNumber", getValue(reportHeader.getFaxNumber()));
+
+		template.process(input, writer);
+
+		return writer.toString();
+	}
+	
+	private ReportHeader getReportHeaderInfo(ExchangeOrder eo)
+			throws ExchangeOrderNoContentException {
+		Optional<ReportHeader> reportHeaderExists = Optional
+				.ofNullable(getReportHeader(eo.getCountryCode()));
+
+		ReportHeader reportHeader = reportHeaderExists
+				.orElseThrow(() -> new ExchangeOrderNoContentException(
+						"Report header not found for country: [ " + eo.getCountryCode()
+								+ " ]"));
+		return reportHeader;
+	}
+	
+	private ReportHeader getReportHeader(String countryCode) {
+		return reportHeaderService.getHeaderReport(countryCode);
+	}
 	
 	public String getEmailSubject(ExchangeOrder eo) {
 
