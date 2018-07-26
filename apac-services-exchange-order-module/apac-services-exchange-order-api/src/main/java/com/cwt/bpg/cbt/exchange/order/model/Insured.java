@@ -2,7 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
 
-public class EoInsured {
+public class Insured {
 
 	private String name;
 	private String relationship;

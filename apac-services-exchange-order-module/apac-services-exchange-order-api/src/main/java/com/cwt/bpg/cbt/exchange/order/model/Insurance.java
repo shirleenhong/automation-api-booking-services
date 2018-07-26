@@ -2,13 +2,13 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.util.Date;
 
-public class EoInsurance {
+public class Insurance {
 
 	private String geographicalArea;
 	private int noOfDays;
 	private Date fromDate;
 	private String plan;
-	private EoInsured insured;
+	private Insured insured;
 
 	public String getGeographicalArea() {
 		return geographicalArea;
@@ -42,11 +42,11 @@ public class EoInsurance {
 		this.plan = plan;
 	}
 
-	public EoInsured getInsured() {
+	public Insured getInsured() {
 		return insured;
 	}
 
-	public void setInsured(EoInsured insured) {
+	public void setInsured(Insured insured) {
 		this.insured = insured;
 	}
 
