@@ -2,9 +2,11 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.mongodb.morphia.annotations.Entity;
 
 import java.io.Serializable;
 
+@Entity(value = "reportHeaders", noClassnameStored = true)
 public class ReportHeader implements Serializable {
 
     private static final long serialVersionUID = -1835330460259508098L;
