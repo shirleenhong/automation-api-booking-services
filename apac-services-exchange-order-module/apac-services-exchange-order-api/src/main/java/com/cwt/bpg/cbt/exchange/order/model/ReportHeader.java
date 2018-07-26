@@ -23,7 +23,8 @@ public class ReportHeader implements Serializable {
 
     @ApiModelProperty(value = "Header Fax Number")
     private String faxNumber;
-    
+
+    @NotEmpty
     @ApiModelProperty(value = "Country code")
     private String countryCode;
     
