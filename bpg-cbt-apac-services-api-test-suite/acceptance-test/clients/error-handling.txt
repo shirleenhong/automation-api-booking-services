@@ -2,16 +2,15 @@
 Resource          ../resources/api-variables.txt
 Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-imports.txt
-Resource          ../resources/api-migration-variables.txt
 Resource    resources/clients.txt
 
 *** Test Cases ***
 Verify That Error Is Encountered When Invalid Token Is Used
     [Tags]    migration
-    Send Get Request For Client    client_id=5000    token=12345.12345.12345
+    Send Get Request For Client    client_account_number=9000000100    token=12345.12345.12345
     Verify Response Status Code Is Correct    401
     Verify Client Are Not Retrieved
-    Create Test Variables For Client    client_id=5000  
+    Create Test Variables For Client    client_account_number=9000000100  
     Send Put Request For Client    token=12345.12345.12345
     Verify Response Status Code Is Correct    401
     Verify Client Are Not Retrieved
@@ -22,77 +21,77 @@ Verify That Error Is Encountered When Invalid Token Is Used
 
 Verify That Error Is Encountered When Null Token Is Used
     [Tags]    migration
-    Send Get Request For Client    client_id=5000    token=null
+    Send Get Request For Client    client_account_number=9000000100    token=null
     Verify Response Status Code Is Correct    401
     Verify Client Are Not Retrieved
-    Create Test Variables For Client    client_id=5000  
+    Create Test Variables For Client    client_account_number=9000000100  
     Send Put Request For Client    token=null
     Verify Response Status Code Is Correct    401
     Verify Client Are Not Retrieved
-    Send Delete Request For Client   client_id=5000    token=null
+    Send Delete Request For Client   client_account_number=9000000100    token=null
     Verify Response Status Code Is Correct    401
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache       
 
 Verify That Error Is Encountered When Empty Token Is Used
     [Tags]    migration
-    Send Get Request For Client    client_id=5000    token=${EMPTY}
+    Send Get Request For Client    client_account_number=9000000100    token=${EMPTY}
     Verify Response Status Code Is Correct    400
     Verify Client Are Not Retrieved
-    Create Test Variables For Client    client_id=5000  
+    Create Test Variables For Client    client_account_number=9000000100  
     Send Put Request For Client    token=${EMPTY}
     Verify Response Status Code Is Correct    400
     Verify Client Are Not Retrieved
-    Send Delete Request For Client   client_id=5000    token=${EMPTY}
+    Send Delete Request For Client   client_account_number=9000000100    token=${EMPTY}
     Verify Response Status Code Is Correct    400
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache       
 
 Verify That Error Is Encountered When No Token Is Used
     [Tags]    migration
-    Send Get Request For Client    client_id=5000    token=None
+    Send Get Request For Client    client_account_number=9000000100    token=None
     Verify Response Status Code Is Correct    400
     Verify Client Are Not Retrieved
-    Create Test Variables For Client    client_id=5000  
+    Create Test Variables For Client    client_account_number=9000000100  
     Send Put Request For Client    token=None
     Verify Response Status Code Is Correct    400
     Verify Client Are Not Retrieved
-    Send Delete Request For Client  client_id=74    token=None
+    Send Delete Request For Client  client_account_number=9000000066   token=None
     Verify Response Status Code Is Correct    400
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache
     
 Verify That Error Is Encountered When Null Client Id Is Used During Get Request
     [Tags]    migration
-    Send Get Request For Client    client_id=null
+    Send Get Request For Client    client_account_number=null
     Verify Response Status Code Is Correct    400 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache 
 
 Verify That Error Is Encountered When Invalid Client Id Is Used During Get Request
     [Tags]    migration
-    Send Get Request For Client    client_id=#$$%&
+    Send Get Request For Client    client_account_number=#$$%&
     Verify Response Status Code Is Correct    405 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache  
 
 Verify That Error Is Encountered When Empty Client Id Is Used During Get Request
     [Tags]    migration
-    Send Get Request For Client    client_id=${EMPTY}
+    Send Get Request For Client    client_account_number=${EMPTY}
     Verify Response Status Code Is Correct    405 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache
 
 Verify That Error Is Encountered When No Client Id Is Used During Get Request
     [Tags]    migration
-    Send Get Request For Client    client_id=None
+    Send Get Request For Client    client_account_number=None
     Verify Response Status Code Is Correct    400 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache
 
 Verify That Error Is Encountered When Invalid Client Id Is Used During Put Request
     [Tags]    migration
-    Create Test Variables For Client    client_id=5000
+    Create Test Variables For Client    client_account_number=9000000100
     Send Put Request For Client    client_list=clientId,@#$#@|cmpid,83|name,TEST-PNQ|clientAccountNumber,9000000066|pricingId,10|exemptTax,false|standardMfProduct,false|applyMfCc,false|applyMfBank,false|merchantFee,0.0|lccSameAsInt,false|lccDdlFeeApply,TF|intDdlFeeApply,TF
     Verify Response Status Code Is Correct    400 
     Verify Client Are Not Retrieved
@@ -100,7 +99,7 @@ Verify That Error Is Encountered When Invalid Client Id Is Used During Put Reque
     
 Verify That Error Is Encountered When No Client Id Is Used During Put Request
     [Tags]    migration
-    Create Test Variables For Client    client_id=5000
+    Create Test Variables For Client    client_account_number=9000000100
     Send Put Request For Client    client_list=clientId,None|cmpid,83|name,TEST-PNQ|clientAccountNumber,9000000066|pricingId,10|exemptTax,false|standardMfProduct,false|applyMfCc,false|applyMfBank,false|merchantFee,0.0|lccSameAsInt,false|lccDdlFeeApply,TF|intDdlFeeApply,TF
     Verify Response Status Code Is Correct    400 
     Verify Client Are Not Retrieved
@@ -108,28 +107,28 @@ Verify That Error Is Encountered When No Client Id Is Used During Put Request
     
 Verify That Error Is Encountered When Null Client Id Is Used During Delete Request
     [Tags]    migration
-    Send Delete Request For Client    client_id=null
+    Send Delete Request For Client    client_account_number=null
     Verify Response Status Code Is Correct    400 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache
     
 Verify That Error Is Encountered When Invalid Client Id Is Used During Delete Request
     [Tags]    migration
-    Send Get Request For Client    client_id=*&&^^%
+    Send Get Request For Client    client_account_number=*&&^^%
     Verify Response Status Code Is Correct    400 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache  
     
 Verify That Error Is Encountered When No Client Id Is Used During Delete Request
     [Tags]    migration
-    Send Get Request For Client    client_id=None
+    Send Get Request For Client    client_account_number=None
     Verify Response Status Code Is Correct    400 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache   
     
 Verify That Error Is Encountered When Empty Client Id Is Used During Delete Request
     [Tags]    migration
-    Send Get Request For Client    client_id=${EMPTY}
+    Send Get Request For Client    client_account_number=${EMPTY}
     Verify Response Status Code Is Correct    405 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache             

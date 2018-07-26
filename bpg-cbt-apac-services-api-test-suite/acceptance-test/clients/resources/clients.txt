@@ -2,7 +2,6 @@
 Resource          ../../resources/api-imports.txt
 Resource          ../../resources/api-utilities.txt
 Resource          ../../resources/api-variables.txt
-Resource          ../../resources/api-migration-variables.txt
 
 *** Keywords ***
 Create Test Variables For Client
@@ -59,22 +58,22 @@ Evict Client Cache
     Set Test Variable    ${api_flag}    client
 
 Send Get Request For Client
-    [Arguments]    ${client_id}    ${token}=${default_token}
+    [Arguments]    ${client_account_number}    ${token}=${default_token}
     Create Session    client    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${response}    Get Request    client    apac-services-rest/api/clients/${client_id}    headers=${headers}
+    ${response}    Get Request    client    apac-services-rest/api/clients/${client_account_number}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
     Set Test Variable    ${api_flag}    client
 
 Send Delete Request For Client
-    [Arguments]    ${client_id}    ${token}=${default_token}
+    [Arguments]    ${client_account_number}    ${token}=${default_token}
     Create Session    client    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${response}    Delete Request    client    /apac-services-rest/api/clients/${client_id}    headers=${headers}
+    ${response}    Delete Request    client    /apac-services-rest/api/clients/${client_account_number}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ReportHeaderRepository extends CommonRepository<ReportHeader, String>{
+
     public static final String KEY_COLUMN = "companyName";
 
     public ReportHeaderRepository() {

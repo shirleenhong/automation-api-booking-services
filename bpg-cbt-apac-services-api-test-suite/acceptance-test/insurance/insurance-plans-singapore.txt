@@ -3,7 +3,6 @@ Suite Setup
 Resource          ../resources/api-variables.txt
 Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-imports.txt
-Resource          ../resources/api-migration-variables.txt
 Resource          resources/insurance.txt
 
 *** Test Cases ***
