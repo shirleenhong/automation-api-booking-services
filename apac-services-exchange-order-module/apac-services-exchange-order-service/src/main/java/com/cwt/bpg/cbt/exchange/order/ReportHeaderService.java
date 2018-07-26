@@ -13,18 +13,18 @@ public class ReportHeaderService {
 	@Autowired
 	private ReportHeaderRepository repository;
 
-	@Cacheable(cacheNames = "report-headers", key = "#companyName", condition="#companyName != null")
-	public ReportHeader getHeaderReport(String companyName) {
-		return repository.get(companyName);
+	@Cacheable(cacheNames = "report-headers", key = "#countryCode", condition="#countryCode != null")
+	public ReportHeader getHeaderReport(String countryCode) {
+		return repository.get(countryCode);
 	}
 
-	@CachePut(cacheNames = "report-headers", key = "#reportHeader.companyName")
+	@CachePut(cacheNames = "report-headers", key = "#reportHeader.countryCode")
 	public ReportHeader save(ReportHeader reportHeader) {
 		return repository.put(reportHeader);
 	}
 
 	@CacheEvict(cacheNames = "report-headers", allEntries = true)
-	public String delete(String companyName) {
-		return repository.remove(companyName);
+	public String delete(String countryCode) {
+		return repository.remove(countryCode);
 	}
 }
