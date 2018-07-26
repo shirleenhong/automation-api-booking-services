@@ -21,7 +21,7 @@ public class MiscInfo implements Serializable {
     private String lowFareCarrier;
 
     @Max(value = 2)
-    private String timezone;
+    private Timezone timezone;
 
     private String bookingAction;
 
@@ -77,11 +77,11 @@ public class MiscInfo implements Serializable {
         this.lowFareCarrier = lowFareCarrier;
     }
 
-    public String getTimezone() {
+    public Timezone getTimezone() {
         return timezone;
     }
 
-    public void setTimezone(String timezone) {
+    public void setTimezone(Timezone timezone) {
         this.timezone = timezone;
     }
 

@@ -1,13 +1,13 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-public enum Timezones
+public enum Timezone
 {
     PT("PT"),
     ET("ET");
 
     private final String code;
 
-    Timezones(String code) {
+    Timezone(String code) {
         this.code = code;
     }
 
