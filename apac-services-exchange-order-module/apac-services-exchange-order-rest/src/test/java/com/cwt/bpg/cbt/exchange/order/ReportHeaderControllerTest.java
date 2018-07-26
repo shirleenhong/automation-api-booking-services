@@ -1,0 +1,120 @@
+package com.cwt.bpg.cbt.exchange.order;
+
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
+import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
+import net.minidev.json.JSONObject;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.nio.charset.Charset;
+
+import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerNonAirFeeTest.convertObjectToJsonBytes;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+public class ReportHeaderControllerTest {
+
+    private MockMvc mockMvc;
+
+    @Mock
+    private ReportHeaderService service;
+
+    @InjectMocks
+    private ReportHeaderController controller;
+
+    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
+            MediaType.APPLICATION_JSON.getSubtype(),
+            Charset.forName("utf8")
+    );
+
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(controller)
+                .build();
+    }
+
+    @Test
+    public void getReportHeaderByCodeShouldReturnReportHeaders() throws Exception {
+        mockMvc.perform(get("/report-headers/XXX")
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+        verify(service, times(1)).getHeaderReport("XXX");
+    }
+
+    @Test
+    public void putReportHeaderShouldSaveAndReturnSavedReportHeader() throws Exception {
+        JSONObject jsonObj = new JSONObject();
+
+        jsonObj.put("countryCode", "SG");
+        jsonObj.put("companyName", "Test Carlson Wagonlit Travel Singapore, Inc.");
+        jsonObj.put("address", "Test Address Singapore");
+        jsonObj.put("phoneNumber", "0987654321");
+        jsonObj.put("faxNumber", "123456789");
+
+
+        mockMvc.perform(put("/report-headers")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(jsonObj)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        verify(service, times(1)).save(any(ReportHeader.class));
+    }
+
+//    @Test
+//    public void putReportHeaderShouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
+//        JSONObject jsonObj = new JSONObject();
+//
+//        jsonObj.put("countryCode", "SG");
+//        jsonObj.put("companyName", "Test Carlson Wagonlit Travel Singapore, Inc.");
+//        jsonObj.put("address", "Test Address Singapore");
+//        jsonObj.put("phoneNumber", "0987654321");
+//        jsonObj.put("faxNumber", "123456789");
+//
+//        mockMvc.perform(put("/airports")
+//                .contentType(APPLICATION_JSON_UTF8)
+//                .content(convertObjectToJsonBytes(jsonObj)))
+//                .andExpect(status().isBadRequest());
+//
+//        verifyZeroInteractions(service);
+//    }
+
+    @Test
+    public void removeReportHeaderShouldDeleteReportHeader() throws Exception {
+
+        mockMvc.perform(delete("/report-headers/XXX")
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        verify(service, times(1)).delete(anyString());
+    }
+
+    @Test
+    public void removeAirportShouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
+        mockMvc.perform(delete("/report-headers")
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().is4xxClientError())
+                .andReturn();
+
+        verifyZeroInteractions(service);
+    }
+}
