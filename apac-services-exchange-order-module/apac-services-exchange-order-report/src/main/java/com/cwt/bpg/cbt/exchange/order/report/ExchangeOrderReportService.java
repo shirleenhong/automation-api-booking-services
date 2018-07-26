@@ -30,10 +30,12 @@ import org.springframework.util.StringUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
+import com.cwt.bpg.cbt.exchange.order.ReportHeaderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -67,6 +69,9 @@ public class ExchangeOrderReportService {
 
 	@Autowired
 	private EmailContentProcessor emailContentProcessor;
+	
+	@Autowired
+	private ReportHeaderService reportHeaderService;
 
 	@Value("${exchange.order.mail.sender}")
 	private String eoMailSender;
@@ -89,12 +94,20 @@ public class ExchangeOrderReportService {
 		ExchangeOrder exchangeOrder = eoExists
 				.orElseThrow(() -> new ExchangeOrderNoContentException(
 						"Exchange order number not found: [ " + eoNumber + " ]"));
+		
+		Optional<ReportHeader> reportHeaderExists = Optional
+				.ofNullable(getReportHeader(exchangeOrder.getCountryCode()));
+		
+		ReportHeader reportHeader = reportHeaderExists
+				.orElseThrow(() -> new ExchangeOrderNoContentException(
+						"Report header not found for country: [ "
+								+ exchangeOrder.getCountryCode() + " ]"));
 
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
 
 		try {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(
-					resource.getInputStream(), prepareParameters(exchangeOrder),
+					resource.getInputStream(), prepareParameters(exchangeOrder, reportHeader),
 					new JRBeanArrayDataSource(new Object[] { exchangeOrder }));
 			return JasperExportManager.exportReportToPdf(jasperPrint);
 		}
@@ -103,7 +116,8 @@ public class ExchangeOrderReportService {
 		}
 	}
 
-	private Map<String, Object> prepareParameters(final ExchangeOrder exchangeOrder) throws IOException {
+	private Map<String, Object> prepareParameters(final ExchangeOrder exchangeOrder,
+			final ReportHeader reportHeader) throws IOException {
 		final ClassPathResource resourceLogo = new ClassPathResource(IMAGE_PATH);
 		Map<String, Object> parameters = new HashMap<>();
 
@@ -123,6 +137,11 @@ public class ExchangeOrderReportService {
         List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
         List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
         putContactInfoParameters(contactInfoList, parameters);
+        
+        parameters.put("HEADER_ADDRESS", reportHeader.getAddress());
+        parameters.put("HEADER_FAX", reportHeader.getFaxNumber());
+        parameters.put("HEADER_PHONE", reportHeader.getPhoneNumber());
+        parameters.put("HEADER_COMPANY_NAME", reportHeader.getCompanyName());
 
 		return parameters;
 	}
@@ -200,6 +219,10 @@ public class ExchangeOrderReportService {
 
 	private ExchangeOrder getExchangeOrder(String eoNumber) {
 		return exchangeOrderService.getExchangeOrder(eoNumber);
+	}
+	
+	private ReportHeader getReportHeader(String countryCode) {
+		return reportHeaderService.getHeaderReport(countryCode);
 	}
 
 	public EmailResponse emailPdf(String eoNumber) throws ApiServiceException {

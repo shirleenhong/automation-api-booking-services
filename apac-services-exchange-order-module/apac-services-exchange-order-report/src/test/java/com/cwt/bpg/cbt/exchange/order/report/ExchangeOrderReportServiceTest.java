@@ -27,6 +27,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
+import com.cwt.bpg.cbt.exchange.order.ReportHeaderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
@@ -48,6 +49,9 @@ public class ExchangeOrderReportServiceTest {
 	
 	@Mock
 	private EmailContentProcessor emailContentProcessor;
+	
+	@Mock
+	private ReportHeaderService reportHeaderService;
 
 	@InjectMocks
 	private ExchangeOrderReportService eoReportService;
@@ -79,9 +83,11 @@ public class ExchangeOrderReportServiceTest {
 				vendorCode, true, true, true, true);
 		
 		Vendor vendor = createVendor();
+		ReportHeader reportHeader = createReportHeader();
 		
 		when(eoService.getExchangeOrder(eoNumber)).thenReturn(exchangeOrder);
 		when(productService.getVendor(countryCode, productCode, vendorCode)).thenReturn(vendor);
+		when(reportHeaderService.getHeaderReport(countryCode)).thenReturn(reportHeader);
 		
 		byte[] jasperPrint = eoReportService.generatePdf(eoNumber);
 		assertNotNull(jasperPrint);
@@ -91,9 +97,11 @@ public class ExchangeOrderReportServiceTest {
 	public void shouldGeneratePdfNullEO() throws Exception {
 			
 		Vendor vendor = createVendor();
+		ReportHeader reportHeader = createReportHeader();
 		
 		when(eoService.getExchangeOrder(eoNumber)).thenReturn(null);
 		when(productService.getVendor(countryCode, productCode, vendorCode)).thenReturn(vendor);
+		when(reportHeaderService.getHeaderReport(countryCode)).thenReturn(reportHeader);
 		
 		byte[] jasperPrint = eoReportService.generatePdf(eoNumber);
 		assertNotNull(jasperPrint);
@@ -106,6 +114,7 @@ public class ExchangeOrderReportServiceTest {
 		
 		EmailResponse response = new EmailResponse();
 		Vendor vendor = createVendor();
+		ReportHeader reportHeader = createReportHeader();
 		Session session = Session.getDefaultInstance(new Properties());
 		InputStream stubInputStream = 
 			     IOUtils.toInputStream("some test data for my input stream", "UTF-8");
@@ -119,6 +128,7 @@ public class ExchangeOrderReportServiceTest {
 		when(mailSender.createMimeMessage()).thenReturn(message);
 		when(emailContentProcessor.getEmailSubject(exchangeOrder)).thenReturn(eoNumber);
 		when(emailContentProcessor.getEmailBody(exchangeOrder)).thenReturn(eoNumber);
+		when(reportHeaderService.getHeaderReport(countryCode)).thenReturn(reportHeader);
 		
 		response = eoReportService.emailPdf(eoNumber);
 		assertNotNull(response);
@@ -133,6 +143,7 @@ public class ExchangeOrderReportServiceTest {
 		
 		EmailResponse response = new EmailResponse();
 		Vendor vendor = createVendor();
+		ReportHeader reportHeader = createReportHeader();
 		Session session = Session.getDefaultInstance(new Properties());
 		InputStream stubInputStream = 
 			     IOUtils.toInputStream("some test data for my input stream", "UTF-8");
@@ -146,6 +157,7 @@ public class ExchangeOrderReportServiceTest {
 		when(mailSender.createMimeMessage()).thenReturn(message);
 		when(emailContentProcessor.getEmailSubject(exchangeOrder)).thenReturn(eoNumber);
 		when(emailContentProcessor.getEmailBody(exchangeOrder)).thenReturn(eoNumber);
+		when(reportHeaderService.getHeaderReport(countryCode)).thenReturn(reportHeader);
 		
 		response = eoReportService.emailPdf(eoNumber);
 		assertNotNull(response);
@@ -158,6 +170,7 @@ public class ExchangeOrderReportServiceTest {
 		
 		EmailResponse response = new EmailResponse();
 		Vendor vendor = createVendor();
+		ReportHeader reportHeader = createReportHeader();
 		Session session = Session.getDefaultInstance(new Properties());
 		InputStream stubInputStream = 
 			     IOUtils.toInputStream("some test data for my input stream", "UTF-8");
@@ -172,6 +185,7 @@ public class ExchangeOrderReportServiceTest {
 		when(mailSender.createMimeMessage()).thenReturn(message);
 		when(emailContentProcessor.getEmailSubject(exchangeOrder)).thenReturn(eoNumber);
 		when(emailContentProcessor.getEmailBody(exchangeOrder)).thenReturn(eoNumber);
+		when(reportHeaderService.getHeaderReport(countryCode)).thenReturn(reportHeader);
 		
 		response = eoReportService.emailPdf(eoNumber);
 		assertNotNull(response);
@@ -184,6 +198,7 @@ public class ExchangeOrderReportServiceTest {
 		
 		EmailResponse response = new EmailResponse();
 		Vendor vendor = createVendor();
+		ReportHeader reportHeader = createReportHeader();
 		Session session = Session.getDefaultInstance(new Properties());
 		InputStream stubInputStream = 
 			     IOUtils.toInputStream("some test data for my input stream", "UTF-8");
@@ -198,6 +213,7 @@ public class ExchangeOrderReportServiceTest {
 		when(eoService.getExchangeOrder(eoNumber)).thenReturn(exchangeOrder);
 		when(mailSender.createMimeMessage()).thenReturn(message);
 		when(emailContentProcessor.getEmailSubject(exchangeOrder)).thenReturn(eoNumber);
+		when(reportHeaderService.getHeaderReport(countryCode)).thenReturn(reportHeader);
 		
 		response = eoReportService.emailPdf(eoNumber);
 		assertNotNull(response);
@@ -261,4 +277,19 @@ public class ExchangeOrderReportServiceTest {
 		
 		return vendor;
 	}
+	
+
+	private ReportHeader createReportHeader() {
+		
+		ReportHeader reportHeader = new ReportHeader();
+		
+		reportHeader.setAddress("Test Address");
+		reportHeader.setCompanyName("Test Company Name");
+		reportHeader.setFaxNumber("12345");
+		reportHeader.setPhoneNumber("67890");
+		reportHeader.setCountryCode(countryCode);
+		
+		return reportHeader;
+	}
+
 }

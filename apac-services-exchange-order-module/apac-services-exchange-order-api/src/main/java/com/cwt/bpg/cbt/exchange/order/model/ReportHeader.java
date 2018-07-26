@@ -24,6 +24,11 @@ public class ReportHeader implements Serializable {
     @ApiModelProperty(value = "Header Fax Number")
     private String faxNumber;
 
+    @NotEmpty
+    @ApiModelProperty(value = "Country code")
+    private String countryCode;
+    
+
     public String getCompanyName() {
         return companyName;
     }
@@ -55,4 +60,12 @@ public class ReportHeader implements Serializable {
     public void setFaxNumber(String faxNumber) {
         this.faxNumber = faxNumber;
     }
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 }

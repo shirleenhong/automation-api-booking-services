@@ -23,6 +23,10 @@
 	<parameter name="FAX" class="java.lang.String"/>
 	<parameter name="EMAIL" class="java.lang.String"/>
 	<parameter name="GST_AMOUNT_TAX1_LABEL" class="java.lang.String"/>
+	<parameter name="HEADER_ADDRESS" class="java.lang.String"/>
+	<parameter name="HEADER_FAX" class="java.lang.String"/>
+	<parameter name="HEADER_PHONE" class="java.lang.String"/>
+	<parameter name="HEADER_COMPANY_NAME" class="java.lang.String"/>
 	<field name="header" class="com.cwt.bpg.cbt.exchange.order.model.Header"/>
 	<field name="vendor" class="com.cwt.bpg.cbt.exchange.order.model.Vendor"/>
 	<field name="eoNumber" class="java.lang.String"/>
@@ -46,18 +50,6 @@
 	</background>
 	<title>
 		<band height="57" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="15" width="387" height="15" uuid="9547a8a0-b333-4668-905f-f9698b377ebb"/>
-				<textFieldExpression><![CDATA[$F{header}.getAddress()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="20" y="42" width="69" height="15" uuid="e92af1d0-00b8-4d72-be0d-7af01d7b8497"/>
-				<textFieldExpression><![CDATA[$F{header}.getPhoneNumber()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="122" y="42" width="69" height="15" uuid="779b9858-5033-4d9b-ad51-d1def3745161"/>
-				<textFieldExpression><![CDATA[$F{header}.getFaxNumber()]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="0" y="42" width="19" height="15" uuid="962b53f4-259c-45cb-9bbb-080d14b0af30"/>
 				<text><![CDATA[Tel:]]></text>
@@ -66,17 +58,26 @@
 				<reportElement x="99" y="42" width="22" height="15" uuid="f2e68e60-d51d-4bab-8e7b-77c7e9efd9a4"/>
 				<text><![CDATA[Fax:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="0" y="0" width="387" height="15" uuid="11842af9-7b54-4282-a936-342a3349eced"/>
-				<textElement>
-					<font fontName="ArnoiaCaption" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Carlson Wagonlit Travel]]></text>
-			</staticText>
 			<image isUsingCache="false">
 				<reportElement x="483" y="0" width="71" height="57" uuid="4af1ceb3-b9f4-46f2-83f8-34f5d4b875f0"/>
 				<imageExpression><![CDATA[$P{CWT_LOGO}]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="0" y="0" width="387" height="15" uuid="568b8fb1-bfd0-481c-9279-cbde5f4cdc91"/>
+				<textFieldExpression><![CDATA[$P{HEADER_COMPANY_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="15" width="387" height="15" uuid="a9d633f4-aa65-4af7-a549-cebb0e5a6f24"/>
+				<textFieldExpression><![CDATA[$P{HEADER_ADDRESS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="19" y="42" width="62" height="15" uuid="49f5e6e4-98e8-4b19-b8df-b25d563a7334"/>
+				<textFieldExpression><![CDATA[$P{HEADER_PHONE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="121" y="42" width="62" height="15" uuid="d3f8df42-1d0c-4781-a877-2d8cd5278ee5"/>
+				<textFieldExpression><![CDATA[$P{HEADER_FAX}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<detail>
