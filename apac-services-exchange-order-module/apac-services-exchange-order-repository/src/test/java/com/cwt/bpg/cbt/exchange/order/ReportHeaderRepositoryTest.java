@@ -1,8 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import com.cwt.bpg.cbt.exchange.order.model.Airport;
-import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
-import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +16,8 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
+import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReportHeaderRepositoryTest {
