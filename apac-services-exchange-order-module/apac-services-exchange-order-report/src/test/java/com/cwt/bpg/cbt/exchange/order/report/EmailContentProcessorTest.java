@@ -1,24 +1,35 @@
 package com.cwt.bpg.cbt.exchange.order.report;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
-import static org.mockito.Matchers.anyString;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.times;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.ReportHeaderService;
+import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
 import freemarker.core.ParseException;
-import freemarker.template.*;
+import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 public class EmailContentProcessorTest {
 
@@ -27,6 +38,9 @@ public class EmailContentProcessorTest {
 	
 	@Mock
 	private Template template;
+	
+	@Mock
+	private ReportHeaderService reportHeaderService;
 	
 	@InjectMocks
 	private EmailContentProcessor processor;
@@ -38,13 +52,17 @@ public class EmailContentProcessorTest {
 	}
 
 	@Test
-	public void testGetEmailBody() throws IOException, TemplateException {
+	public void testGetEmailBody()
+			throws IOException, TemplateException, ExchangeOrderNoContentException {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setAgentName("agentName");
 		eo.setVendor(new Vendor());
-		eo.setHeader(new Header());
-		processor.getEmailBody(eo);
+
+		ReportHeader reportHeader = createReportHeader();
+		when(reportHeaderService.getHeaderReport(anyString())).thenReturn(reportHeader);
 		
+		processor.getEmailBody(eo);
+
 		Map<String, Object> input = new HashMap<>();
         
         input.put("vendorSupportEmail", "-");
@@ -65,6 +83,19 @@ public class EmailContentProcessorTest {
 		
 		String result = processor.getEmailSubject(eo);
 		assertEquals("CWT Exchange Order 1807200009: ABC123 - (Passenger Name)", result);
+	}
+	
+	private ReportHeader createReportHeader() {
+
+		ReportHeader reportHeader = new ReportHeader();
+
+		reportHeader.setAddress("Test Address");
+		reportHeader.setCompanyName("Test Company Name");
+		reportHeader.setFaxNumber("-");
+		reportHeader.setPhoneNumber("-");
+		reportHeader.setCountryCode("HK");
+
+		return reportHeader;
 	}
 
 }

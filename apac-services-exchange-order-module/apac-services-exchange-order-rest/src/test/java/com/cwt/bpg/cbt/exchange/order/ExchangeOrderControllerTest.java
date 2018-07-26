@@ -45,7 +45,6 @@ import com.cwt.bpg.cbt.exchange.order.model.EoAction;
 import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
-import com.cwt.bpg.cbt.exchange.order.model.Header;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 import com.cwt.bpg.cbt.exchange.order.validator.FopTypeValidator;
@@ -253,13 +252,6 @@ public class ExchangeOrderControllerTest
 
         order.setSellingPrice(new BigDecimal(0));
         order.setTotalSellingPrice(new BigDecimal(0));
-
-        Header header = new Header();
-        header.setAddress("Header Address");
-        header.setPhoneNumber("02 4595900");
-        header.setFaxNumber("02 4595900");
-
-        order.setHeader(header);
 
         CreditCard creditCard = new CreditCard();
         creditCard.setCcNumber("1234");

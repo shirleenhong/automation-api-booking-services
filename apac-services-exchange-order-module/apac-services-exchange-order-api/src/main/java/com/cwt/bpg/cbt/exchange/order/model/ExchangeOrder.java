@@ -30,7 +30,6 @@ import io.swagger.annotations.ApiModelProperty;
 		@NotNullOnInsert(dependFieldName = "additionalInfoDate"),
 		@NotNullOnInsert(dependFieldName = "nettCost"),
 		@NotNullOnInsert(dependFieldName = "total"),
-		@NotNullOnInsert(dependFieldName = "header"),
 		@NotNullOnInsert(dependFieldName = "sellingPrice"),
 		@NotNullOnInsert(dependFieldName = "totalSellingPrice"),
 		@NotNullOnInsert(dependFieldName = "vendor"),
@@ -54,7 +53,7 @@ import io.swagger.annotations.ApiModelProperty;
 		@NotNullOnFopType(fieldValue="CC",dependFieldName = "creditCard"),
 		@NotNullOnFopType(fieldValue="CX4",dependFieldName = "creditCard"),
 })
-@ValidateOnInsert.List({@ValidateOnInsert(dependentFields={"creditCard","header","vendor"})})
+@ValidateOnInsert.List({@ValidateOnInsert(dependentFields={"creditCard","vendor"})})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder implements Serializable {
@@ -129,9 +128,6 @@ public class ExchangeOrder implements Serializable {
 	@DecimalMin(value = "0")
 	@ApiModelProperty(required = true)
 	private BigDecimal total;
-
-	@ApiModelProperty(required = true)
-	private Header header;
 
 	@ApiModelProperty(required = true)
 	private EoAction eoAction;
@@ -342,15 +338,7 @@ public class ExchangeOrder implements Serializable {
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
-
-	public Header getHeader() {
-		return header;
-	}
-
-	public void setHeader(Header header) {
-		this.header = header;
-	}
-
+	
 	public EoAction getEoAction() {
 		return eoAction;
 	}

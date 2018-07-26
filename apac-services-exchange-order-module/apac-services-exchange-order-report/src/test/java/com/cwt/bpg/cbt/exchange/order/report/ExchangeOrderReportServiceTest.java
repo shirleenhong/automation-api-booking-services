@@ -260,13 +260,6 @@ public class ExchangeOrderReportServiceTest {
 				
 		exchangeOrder.setVendor(vendor);
 		
-		Header header = new Header();
-		header.setAddress("Address1");
-		header.setPhoneNumber("1234");
-		header.setFaxNumber("1234");
-		
-		exchangeOrder.setHeader(header);
-		
 		return exchangeOrder;
 	}
 	

@@ -27,7 +27,6 @@
 	<parameter name="HEADER_FAX" class="java.lang.String"/>
 	<parameter name="HEADER_PHONE" class="java.lang.String"/>
 	<parameter name="HEADER_COMPANY_NAME" class="java.lang.String"/>
-	<field name="header" class="com.cwt.bpg.cbt.exchange.order.model.Header"/>
 	<field name="vendor" class="com.cwt.bpg.cbt.exchange.order.model.Vendor"/>
 	<field name="eoNumber" class="java.lang.String"/>
 	<field name="passengerName" class="java.lang.String"/>
