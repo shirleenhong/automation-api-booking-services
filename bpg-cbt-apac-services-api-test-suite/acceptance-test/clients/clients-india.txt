@@ -2,14 +2,13 @@
 Resource          ../resources/api-variables.txt
 Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-imports.txt
-Resource          ../resources/api-migration-variables.txt
 Resource    resources/clients.txt
 
 *** Test Cases ***
 Verify That Clients Are Correctly Retrieved
     [Tags]    migration
     Create Test Variables For Client    client_id=74     
-    Send Get Request For Client    client_id=74    
+    Send Get Request For Client    client_account_number=9000000066    
     Verify Response Status Code Is Correct    200
     Verify Client Are Correctly Retrieved
     
@@ -41,17 +40,17 @@ Verify That Clients Are Added Correctly After Put Request
     
 Verify That Clients Are Deleted Correctly After Delete Request
     [Tags]    migration
-    Create Test Variables For Client    client_id=5000  
+    Create Test Variables For Client    client_account_number=9000000100  
     Send Put Request For Client
     Verify Response Status Code Is Correct    200
     Evict Client Cache    4
-    Send Get Request For Client    client_id=5000
+    Send Get Request For Client    client_account_number=9000000100
     Verify Response Status Code Is Correct    200   
     Verify Client Are Correctly Retrieved  
-    Send Delete Request For Client    client_id=5000
+    Send Delete Request For Client    client_account_number=9000000100
     Verify Response Status Code Is Correct    200
     Evict Client Cache   4   
-    Send Get Request For Client    client_id=5000    
+    Send Get Request For Client    client_account_number=9000000100    
     Verify Response Status Code Is Correct    200
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache  
