@@ -45,9 +45,9 @@ public class ClientControllerTest {
 	
 	@Test
 	public void canRemoveClientPricing() {
-		final int keyValue = 0;
-		ResponseEntity<?> client = clientController.removeClient(keyValue);
-		verify(clientPricingService, times(1)).delete(keyValue);
+		final String clientAccountNumber = "123456";
+		ResponseEntity<?> client = clientController.removeClient(clientAccountNumber);
+		verify(clientPricingService, times(1)).delete(clientAccountNumber);
 		assertEquals(HttpStatus.OK, client.getStatusCode());
 	}
 }
