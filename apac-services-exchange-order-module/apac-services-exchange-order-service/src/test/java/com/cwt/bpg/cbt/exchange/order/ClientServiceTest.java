@@ -33,9 +33,9 @@ public class ClientServiceTest {
 	
 	@Test
 	public void canDeleteClient() {
-		final int key = 1;
-		service.delete(key);
-		verify(repository, times(1)).remove(key);
+		final String clientAccountNumber = "123456";
+		service.delete(clientAccountNumber);
+		verify(repository, times(1)).remove(clientAccountNumber);
 	}
 	
 	@Test

@@ -27,7 +27,7 @@ public class ClientService {
 	}
 
 	@CacheEvict(cacheNames = "clients", allEntries = true)
-	public String delete(int keyValue) {
+	public String delete(String keyValue) {
 		return clientRepository.remove(keyValue);
 	}
 

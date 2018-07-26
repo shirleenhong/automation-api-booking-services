@@ -36,13 +36,13 @@ public class ClientController {
 		return new ResponseEntity<>(clientService.save(client), HttpStatus.OK);
 	}
 
-	@DeleteMapping(path = "/clients/{id}")
+	@DeleteMapping(path = "/clients/{clientAccountNumber}")
 	@ResponseBody
-	@ApiOperation(value = "Remove client by id")
+	@ApiOperation(value = "Remove client by clientAccountNumber")
 	@Internal
-	public ResponseEntity<String> removeClient(@PathVariable int id) {
+	public ResponseEntity<String> removeClient(@PathVariable String clientAccountNumber) {
 
-		return new ResponseEntity<>(clientService.delete(id), HttpStatus.OK);
+		return new ResponseEntity<>(clientService.delete(clientAccountNumber), HttpStatus.OK);
 	}
 
 }
