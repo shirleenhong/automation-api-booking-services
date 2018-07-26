@@ -14,16 +14,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.cwt.bpg.cbt.exchange.order.model.Insurance;
+import com.cwt.bpg.cbt.exchange.order.model.InsurancePlan;
 
-public class InsuranceServiceTest {
+public class InsurancePlanServiceTest {
 
 	@Mock
-	private InsuranceRepository insuranceRepository;
+	private InsurancePlanRepository insurancePlanRepository;
 	
 	
 	@InjectMocks
-	private InsuranceService service;
+	private InsurancePlanService service;
 	
 	@Before
 	public void init() {
@@ -33,31 +33,31 @@ public class InsuranceServiceTest {
 	@Test
 	public void canGetAllInsuranceType() {
 		
-		when(insuranceRepository.getAll()).thenReturn(new ArrayList<>());
-		List<Insurance> insuranceList = service.getAll();
+		when(insurancePlanRepository.getAll()).thenReturn(new ArrayList<>());
+		List<InsurancePlan> insuranceList = service.getAll();
 		
-		verify(insuranceRepository, times(1)).getAll();
+		verify(insurancePlanRepository, times(1)).getAll();
 		assertNotNull(insuranceList);
 	}
 	
 	@Test
 	public void canPutInsurance() {
-		Insurance insurance = new Insurance();
-		when(insuranceRepository.put(insurance)).thenReturn(insurance);
+		InsurancePlan insurance = new InsurancePlan();
+		when(insurancePlanRepository.put(insurance)).thenReturn(insurance);
 		
-		service.putInsurance(insurance);
+		service.putInsurancePlan(insurance);
 		
-		verify(insuranceRepository, times(1)).put(insurance);
+		verify(insurancePlanRepository, times(1)).put(insurance);
 	}
 	
 	@Test
 	public void canRemoveInsurance() {
 		final String removeObjectId = "Test";
-		when(insuranceRepository.remove(removeObjectId)).thenReturn(removeObjectId);
+		when(insurancePlanRepository.remove(removeObjectId)).thenReturn(removeObjectId);
 		
 		service.remove(removeObjectId);
 		
-		verify(insuranceRepository, times(1)).remove(removeObjectId);
+		verify(insurancePlanRepository, times(1)).remove(removeObjectId);
 	}
 
 }

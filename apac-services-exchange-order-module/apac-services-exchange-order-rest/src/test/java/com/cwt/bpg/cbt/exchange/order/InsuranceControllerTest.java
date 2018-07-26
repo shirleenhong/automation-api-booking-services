@@ -15,15 +15,15 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.cwt.bpg.cbt.exchange.order.model.Insurance;
+import com.cwt.bpg.cbt.exchange.order.model.InsurancePlan;
 
 public class InsuranceControllerTest {
 
 	@Mock
-	private InsuranceService service;
+	private InsurancePlanService service;
 	
 	@InjectMocks
-	private InsuranceController controller = new InsuranceController();
+	private InsurancePlanController controller = new InsurancePlanController();
 
 	@Before
 	public void setUp() {
@@ -32,10 +32,10 @@ public class InsuranceControllerTest {
 
 	@Test
 	public void canPutInsurance() {
-		Insurance Insurance = new Insurance();
-		Mockito.when(service.putInsurance(Insurance)).thenReturn(Insurance);
+		InsurancePlan Insurance = new InsurancePlan();
+		Mockito.when(service.putInsurancePlan(Insurance)).thenReturn(Insurance);
 		
-		ResponseEntity<Insurance> result = controller.updateInsurance(Insurance);
+		ResponseEntity<InsurancePlan> result = controller.updateInsurancePlan(Insurance);
 
 		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());
@@ -43,10 +43,10 @@ public class InsuranceControllerTest {
 	
 	@Test
 	public void canGetInsuranceList() {
-		List<Insurance> insuranceList = new ArrayList<>();
+		List<InsurancePlan> insuranceList = new ArrayList<>();
 		Mockito.when(service.getAll()).thenReturn(insuranceList);
 		
-		ResponseEntity<List<Insurance>>result = controller.getInsuranceList();
+		ResponseEntity<List<InsurancePlan>>result = controller.getInsurancePlanList();
 
 		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());
@@ -58,7 +58,7 @@ public class InsuranceControllerTest {
 		final String type = "INV";
 		Mockito.when(service.remove(type)).thenReturn("Success");
 		
-		ResponseEntity<String> result = controller.removeInsurance(type);
+		ResponseEntity<String> result = controller.removeInsurancePlan(type);
 
 		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());

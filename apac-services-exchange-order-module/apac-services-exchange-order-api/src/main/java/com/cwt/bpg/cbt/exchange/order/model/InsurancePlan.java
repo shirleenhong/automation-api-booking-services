@@ -10,7 +10,7 @@ import org.mongodb.morphia.annotations.Entity;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity(value = "insurance", noClassnameStored = true)
-public class Insurance implements Serializable {
+public class InsurancePlan implements Serializable {
 
 	private static final long serialVersionUID = 5189419687629453470L;
 
