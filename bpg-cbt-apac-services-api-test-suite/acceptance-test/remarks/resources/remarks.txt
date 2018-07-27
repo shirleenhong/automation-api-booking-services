@@ -1,8 +1,8 @@
 *** Settings ***
 Library           OperatingSystem
-Resource    ../../resources/api-imports.txt
-Resource    ../../resources/api-utilities.txt
-Resource    ../../resources/api-variables.txt
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
 
 *** Keywords ***
 Create List For Remark Type
@@ -17,7 +17,8 @@ Create List For Remark Type
     \    ${data_item}    Split String    ${remarks[${i}]}    ^
     \    Set Test Variable    ${remark_item}    ${data_item}
     \    ${data_item[1]}    Replace String    ${remark_item[1]}    _    :
-    \    Run Keyword If    "${data_item[0]}"=="E"    Append To List      ${eo_${product_type_${index}}_list}    ${data_item[1]}    ELSE      Append To List      ${itin_${product_type_${index}}_list}    ${data_item[1]}
+    \    Run Keyword If    "${data_item[0]}"=="E"    Append To List    ${eo_${product_type_${index}}_list}    ${data_item[1]}
+    \    ...    ELSE    Append To List    ${itin_${product_type_${index}}_list}    ${data_item[1]}
     ${eo_list_length}    Get Length    ${eo_${product_type_${index}}_list}
     ${itin_list_length}    Get Length    ${itin_${product_type_${index}}_list}
     Set Test Variable    ${eo_${product_type_${index}}_list_length}    ${eo_list_length}
@@ -30,9 +31,9 @@ Create Test Variables For Remarks
     @{product_type_list}    Create List
     ${data_list}    Split String    ${${country}_remarks_list}    |
     ${data_list_length}    Get Length    ${data_list}
-    :FOR    ${index}    IN RANGE    0    ${data_list_length}
+    : FOR    ${index}    IN RANGE    0    ${data_list_length}
     \    Log    ${data_list[${index}]}
-    \    ${data_item}    Split String    ${data_list[${index}]}    :        
+    \    ${data_item}    Split String    ${data_list[${index}]}    :
     \    Set Test Variable    ${product_type_${index}}    ${data_item[0]}
     \    Append To list    ${product_type_list}    ${product_type_${index}}
     \    ${remarks}    Split String    ${data_item[1]}    ;
@@ -42,12 +43,11 @@ Create Test Variables For Remarks
     Set Test Variable    ${product_type_list}
     Set Test Variable    ${country}    ${country.upper()}
 
-
 Delete Remarks And Evict Remarks Cache
     [Arguments]    ${token}=${default_token}    ${id}=1aa1aa1aa1aa    ${number}=2
     Send Remarks Delete Request    ${token}    ${id}
     Evict Remarks Cache    ${number}    ${token}
-    
+
 Evict Remarks Cache
     [Arguments]    ${number}=2    ${token}=${default_token}
     Create Session    remarks    ${${env}_base_url}    verify=True
@@ -60,7 +60,7 @@ Evict Remarks Cache
     \    Log    ${response.headers}
     \    Log    ${response.content}
     Set Test Variable    ${api_flag}    remarks
-    
+
 Send Remarks Delete Request
     [Arguments]    ${token}=${default_token}    ${id}=fa482f4846c51719d1305dc1
     Create Session    remarks    ${${env}_base_url}    verify=True
@@ -71,20 +71,20 @@ Send Remarks Delete Request
     Log    ${response.headers}
     Log    ${response.content}
     Set Test Variable    ${api_flag}    remarks
-    
+
 Send Remarks Get Request
     [Arguments]    ${token}=${default_token}    ${country}=${country}    ${type}=E
     Create Session    remarks    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    :FOR    ${index}    IN RANGE    0    ${product_type_list_length}
+    : FOR    ${index}    IN RANGE    0    ${product_type_list_length}
     \    ${response}    Get Request    remarks    /apac-services-rest/api/remarks/${country}/${product_type_list[${index}]}/${type}    headers=${headers}
     \    Set Test Variable    ${response_${product_type_list[${index}]}}    ${response}
     \    Log    ${response.headers}
     \    Log    ${response.content}
     Set Test Variable    ${remark_type}    ${type.upper()}
     Set Test Variable    ${api_flag}    remarks
-    
+
 Send Remarks Get Request By ID
     [Arguments]    ${token}=${default_token}    ${country}=${country}    ${type}=E
     Create Session    remarks    ${${env}_base_url}    verify=True
@@ -95,7 +95,7 @@ Send Remarks Get Request By ID
     Log    ${response.headers}
     Log    ${response.content}
     Set Test Variable    ${api_flag}    remarks
-    
+
 Send Remarks Put Request
     [Arguments]    ${token}=${default_token}    ${country}=hk    ${id}=5b2a23c2550cfd2370cd5327    ${type}=E    ${product_type}=HL    ${text}=CHECK IN WITH VOUCHER COPY
     Create Session    remarks    ${${env}_base_url}    verify=True
@@ -107,14 +107,15 @@ Send Remarks Put Request
     Log    ${response.headers}
     Log    ${response.content}
     Set Test Variable    ${country}    ${country.upper()}
-    Set Test Variable    ${id}    
+    Set Test Variable    ${id}
     Set Test Variable    ${remark_type}    ${type.upper()}
     Set Test Variable    ${product_type}    ${product_type.upper()}
     Set Test Variable    ${text}
     Set Test Variable    ${api_flag}    remarks
 
 Update Remarks To Original Value And Evict Remarks Cache
-    [Arguments]    ${token}=${default_token}    ${country}=hk    ${id}=5b2a23c2550cfd2370cd5327    ${type}=E    ${product_type}=HL    ${text}=CHECK IN WITH VOUCHER COPY    ${number}=2
+    [Arguments]    ${token}=${default_token}    ${country}=hk    ${id}=5b2a23c2550cfd2370cd5327    ${type}=E    ${product_type}=HL    ${text}=CHECK IN WITH VOUCHER COPY
+    ...    ${number}=2
     Send Remarks Put Request    ${token}    ${country}    ${id}    ${type}    ${product_type}    ${text}
     Evict Remarks Cache    ${number}
 
@@ -140,21 +141,20 @@ Verify Remarks Are Retrieved Correctly By ID
     Verify Json Value Is Correct    $.text    ${text}
 
 Verify Remarks Details Are Retrieved Correctly
-     [Arguments]    ${remarks_list}    ${product_type}    ${remark}
-     Set Test Variable    ${response}    ${response_${product_type}}
-     Log    ${response.content}
-     :FOR    ${index}    IN RANGE   0    ${${remark}_${product_type}_list_length}
-     \    Verify Json Value Matches Pattern    $[${index}].id    ^[a-zA-Z0-9_]*$
-     \    Verify Json Value Is Correct    $[${index}].productType    ${product_type}
-     \    Verify Json Value Is Correct    $[${index}].remarkType    ${remark_type}
-     \    Verify Json Value Is Correct    $[${index}].countryCode    ${country}    
-     \    ${expected_text}    Remove String    ${${remark}_${product_type}_list[${index}]}    [
-     \    ${expected_text}    Remove String    ${expected_text}    ]    
-     \    Verify Json Value Is Correct    $[${index}].text    ${expected_text}  
+    [Arguments]    ${remarks_list}    ${product_type}    ${remark}
+    Set Test Variable    ${response}    ${response_${product_type}}
+    Log    ${response.content}
+    : FOR    ${index}    IN RANGE    0    ${${remark}_${product_type}_list_length}
+    \    Verify Json Value Matches Pattern    $[${index}].id    ^[a-zA-Z0-9_]*$
+    \    Verify Json Value Is Correct    $[${index}].productType    ${product_type}
+    \    Verify Json Value Is Correct    $[${index}].remarkType    ${remark_type}
+    \    Verify Json Value Is Correct    $[${index}].countryCode    ${country}
+    \    ${expected_text}    Remove String    ${${remark}_${product_type}_list[${index}]}    [
+    \    ${expected_text}    Remove String    ${expected_text}    ]
+    \    Verify Json Value Is Correct    $[${index}].text    ${expected_text}
 
 Verify Response Status Code Is Correct For Remarks Get Request
     [Arguments]    ${status_code}
     : FOR    ${index}    IN RANGE    0    ${product_type_list_length}
-    \    Set Test Variable    ${response}    ${response_${product_type_list[${index}]}} 
+    \    Set Test Variable    ${response}    ${response_${product_type_list[${index}]}}
     \    Verify Response Status Code Is Correct    ${status_code}
-    
