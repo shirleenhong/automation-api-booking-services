@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 
 import java.io.Serializable;
 
@@ -10,6 +11,11 @@ import java.io.Serializable;
 public class ReportHeader implements Serializable {
 
     private static final long serialVersionUID = -1835330460259508098L;
+    
+    @Id
+    @NotEmpty
+    @ApiModelProperty(value = "Country code")
+    private String countryCode;
 
     @ApiModelProperty(required = true, value = "Header Name")
     private String companyName;
@@ -23,10 +29,6 @@ public class ReportHeader implements Serializable {
 
     @ApiModelProperty(value = "Header Fax Number")
     private String faxNumber;
-
-    @NotEmpty
-    @ApiModelProperty(value = "Country code")
-    private String countryCode;
     
 
     public String getCompanyName() {
