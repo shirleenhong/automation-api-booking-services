@@ -1,6 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-@SuppressWarnings("unused")
 public enum FopTypes
 {
 

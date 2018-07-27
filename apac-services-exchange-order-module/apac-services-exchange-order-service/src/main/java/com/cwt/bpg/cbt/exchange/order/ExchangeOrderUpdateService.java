@@ -52,8 +52,8 @@ public class ExchangeOrderUpdateService
         exchangeOrder.setUpdateDateTime(Instant.now());
         ObjectModifier.modifyTargetObject(exchangeOrder, existingExchangeOrder);
 
-        if(existingExchangeOrder.getFopType() != null &&
-                existingExchangeOrder.getFopType().equalsIgnoreCase(FopTypes.INVOICE.getCode())){
+        if(existingExchangeOrder.getServiceInfo().getFormOfPayment().getFopType() != null &&
+                existingExchangeOrder.getServiceInfo().getFormOfPayment().getFopType() == FopTypes.INVOICE){
             existingExchangeOrder.getServiceInfo().getFormOfPayment().setCreditCard(null);
         }
 

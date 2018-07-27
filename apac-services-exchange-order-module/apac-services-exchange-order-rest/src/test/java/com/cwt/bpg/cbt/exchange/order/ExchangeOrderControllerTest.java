@@ -46,6 +46,7 @@ import com.cwt.bpg.cbt.exchange.order.model.EoAction;
 import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 import com.cwt.bpg.cbt.exchange.order.validator.FopTypeValidator;
@@ -138,7 +139,7 @@ public class ExchangeOrderControllerTest
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
         order.getServiceInfo().setGst(BigDecimal.ZERO);
         order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-        order.setFopType("CX4");
+        order.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CWT);
         order.setEoNumber("1122334455");
 
         mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
@@ -157,7 +158,7 @@ public class ExchangeOrderControllerTest
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
         order.getServiceInfo().setGst(BigDecimal.ZERO);
         order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-        order.setFopType("CX4");
+        order.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CWT);
         order.setEoNumber(null);
         order.getServiceInfo().getFormOfPayment().setCreditCard(null);
 
@@ -232,7 +233,7 @@ public class ExchangeOrderControllerTest
     {
 
         ExchangeOrder order = new ExchangeOrder();
-        order.setFopType("CX4");
+        order.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CWT);
         order.getServiceInfo().getAdditionalInfo().setDescription("test_description");
         order.setAdditionalInfoDate(Instant.now());
         order.setProductCode("PR01");
