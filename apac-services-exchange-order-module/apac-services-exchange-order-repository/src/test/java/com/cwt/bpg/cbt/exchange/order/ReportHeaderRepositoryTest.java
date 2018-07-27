@@ -1,8 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,15 +38,20 @@ public class ReportHeaderRepositoryTest {
 
     @Test
     public void getReportHeaderShouldReturnReportHeader() {
-        Query query = Mockito.mock(Query.class);
+        Query<ReportHeader> query = Mockito.mock(Query.class);
         FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-        Mockito.when(dataStore.createQuery(ReportHeader.class)).thenReturn(query);
-        Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
-        Mockito.when(fieldEnd.equal(anyString())).thenReturn(query);
+        String countryCode = "CWT SG";
+        when(dataStore.createQuery(ReportHeader.class)).thenReturn(query);
+        when(query.field(anyString())).thenReturn(fieldEnd);
+        when(fieldEnd.equalIgnoreCase(anyString())).thenReturn(query);
+        when(query.get()).thenReturn(new ReportHeader());
 
-        repository.get("CWT SG");
+        ReportHeader result = repository.get(countryCode);
 
         verify(morphia, times(1)).getDatastore();
         verify(dataStore, times(1)).createQuery(ReportHeader.class);
+
+        assertNotNull(result);
+
     }
 }
