@@ -1,7 +1,7 @@
 *** Settings ***
-Resource    ../../resources/api-imports.txt
-Resource    ../../resources/api-utilities.txt
-Resource    ../../resources/api-variables.txt
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
 
 *** Keywords ***
 Calculate Air Fees-HK Commission
@@ -108,129 +108,134 @@ Calculate Air Fees-HK Total Selling Fare Without Formula
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}  
-    
-Calculate Air Fees-IN Mechant Fee On TF International
-    ${merchant_fee_on_tf_formula}    Set Variable If    "${air_pricing_id}" == "26" or "${air_pricing_id}" == "28" or "${air_pricing_id}" == "29"    0    (${transaction_fee_amount}+${total_gst_on_tf_amount})*(${merchant_fee_percentage_value}*0.01)        
-    ${calculated_value}    Evaluate   ${merchant_fee_on_tf_formula}
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}   
-    Set Test Variable    ${merchant_fee_on_tf_amount}    ${calculated_value}
-    
+    Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}
+
 Calculate Air Fees-IN Mechant Fee On TF Domestic
-    ${merchant_fee_on_tf_formula}    Set Variable If    "${air_pricing_id}" == "26" or "${air_pricing_id}" == "28"    0    ${transaction_fee_amount}*(${merchant_fee_percentage_value}*0.01)        
-    ${calculated_value}    Evaluate   ${merchant_fee_on_tf_formula}
+    ${merchant_fee_on_tf_formula}    Set Variable If    "${air_pricing_id}" == "26" or "${air_pricing_id}" == "28"    0    ${transaction_fee_amount}*(${merchant_fee_percentage_value}*0.01)
+    ${calculated_value}    Evaluate    ${merchant_fee_on_tf_formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}   
-    Set Test Variable    ${merchant_fee_on_tf_amount}    ${calculated_value}  
-    
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${merchant_fee_on_tf_amount}    ${calculated_value}
+
+Calculate Air Fees-IN Mechant Fee On TF International
+    ${merchant_fee_on_tf_formula}    Set Variable If    "${air_pricing_id}" == "26" or "${air_pricing_id}" == "28" or "${air_pricing_id}" == "29"    0    (${transaction_fee_amount}+${total_gst_on_tf_amount})*(${merchant_fee_percentage_value}*0.01)
+    ${calculated_value}    Evaluate    ${merchant_fee_on_tf_formula}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${merchant_fee_on_tf_amount}    ${calculated_value}
+
 Calculate Air Fees-IN Reference Fare
-    ${calculated_value}    Evaluate    ${base_fare_value}+${total_taxes_amount} 
+    ${calculated_value}    Evaluate    ${base_fare_value}+${total_taxes_amount}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}  
-    Set Test Variable    ${reference_fare_amount}    ${calculated_value} 
-    
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${reference_fare_amount}    ${calculated_value}
+
 Calculate Air Fees-IN Total Airline Commission
     ${calculated_value}    Evaluate    (${base_fare_value}+${yq_tax_value})*(${airline_commission_value}*0.01)
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}  
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${total_airline_commission_amount}    ${calculated_value}
-    
+
 Calculate Air Fees-IN Total Charge
     ${total_charge_formula}    Set Variable If    "${air_pricing_id}" == "26"    ${total_sell_fare_amount}+${total_gst_amount}+${total_merchant_fee_amount}+${total_taxes_amount}    "${air_pricing_id}" == "28"    ${total_sell_fare_amount}-${total_discount_amount}+${total_gst_amount}+${total_merchant_fee_amount}+${transaction_fee_amount}+${total_taxes_amount}    ${total_sell_fare_amount}-${total_discount_amount}+${total_gst_amount}+${total_merchant_fee_amount}+${merchant_fee_on_tf_amount}+${transaction_fee_amount}+${total_taxes_amount}
     ${calculated_value}    Evaluate    ${total_charge_formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}  
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${total_charge_amount}    ${calculated_value}
-    
+
 Calculate Air Fees-IN Total Discount
     ${total_discount_formula}    Set Variable If    "${air_pricing_id}" != "26" and "${trip_type_value}" == "I"    (${total_airline_commission_amount}*(${discount_percentage_value}*0.01))+${total_overhead_commission_amount}    "${air_pricing_id}" != "26" and "${trip_type_value}" != "I"    ${total_airline_commission_amount}*(${discount_percentage_value}*0.01)    ${EMPTY}
     ${calculated_value}    Run Keyword If    "${total_discount_formula}" != "${EMPTY}"    Evaluate    ${total_discount_formula}
     ${calculated_value}    Run Keyword If    "${total_discount_formula}" != "${EMPTY}"    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}  
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Run Keyword If    "${calculated_value}" != "None"    Set Test Variable    ${total_discount_amount}    ${calculated_value}
-    
+
 Calculate Air Fees-IN Total Fee
-    ${total_fee_formula}    Set Variable If     "${air_pricing_id}" == "21"    ${base_fare_value}+${total_taxes_amount}    "${air_pricing_id}" == "22"    ${base_fare_value}-${total_airline_commission_amount}-${total_overhead_commission_amount}    "${air_pricing_id}" == "23"    ${base_fare_value}+${total_taxes_amount}+${total_gst_amount}    "${air_pricing_id}" == "24"    ${base_fare_value}-${total_airline_commission_amount}    "${air_pricing_id}" == "25"    ${base_fare_value}    "${air_pricing_id}" == "27"    ${base_fare_value}+${total_taxes_amount}+${total_gst_amount}-${total_airline_commission_amount}-${total_overhead_commission_amount}    "${air_pricing_id}" == "30"    ${base_fare_value}+${yq_tax_value}    ${EMPTY}   
+    ${total_fee_formula}    Set Variable If    "${air_pricing_id}" == "21"    ${base_fare_value}+${total_taxes_amount}    "${air_pricing_id}" == "22"    ${base_fare_value}-${total_airline_commission_amount}-${total_overhead_commission_amount}    "${air_pricing_id}" == "23"
+    ...    ${base_fare_value}+${total_taxes_amount}+${total_gst_amount}    "${air_pricing_id}" == "24"    ${base_fare_value}-${total_airline_commission_amount}    "${air_pricing_id}" == "25"    ${base_fare_value}    "${air_pricing_id}" == "27"
+    ...    ${base_fare_value}+${total_taxes_amount}+${total_gst_amount}-${total_airline_commission_amount}-${total_overhead_commission_amount}    "${air_pricing_id}" == "30"    ${base_fare_value}+${yq_tax_value}    ${EMPTY}
     ${calculated_value}    Run Keyword If    "${total_fee_formula}" != "${EMPTY}"    Evaluate    ${total_fee_formula}
     ${calculated_value}    Run Keyword If    "${total_fee_formula}" != "${EMPTY}"    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}  
-    Run Keyword If    "${calculated_value}" != "None"    Set Test Variable    ${base_amount_amount}    ${calculated_value}    ELSE    Set Test Variable    ${base_amount_amount}    ${base_fare_value}   
-    
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Run Keyword If    "${calculated_value}" != "None"    Set Test Variable    ${base_amount_amount}    ${calculated_value}
+    ...    ELSE    Set Test Variable    ${base_amount_amount}    ${base_fare_value}
+
 Calculate Air Fees-IN Total GST
     ${calculated_value}    Evaluate    ((${base_fare_value}+${yq_tax_value})*(${products_gst_percentage_value}*0.01))+((${base_fare_value}+${yq_tax_value})*(${products_ot1_percentage_value}*0.01))+((${base_fare_value}+${yq_tax_value})*(${products_ot2_percentage_value}*0.01))
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}   
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${total_gst_amount}    ${calculated_value}
-    
+
 Calculate Air Fees-IN Total GST On TF
     ${calculated_value}    Evaluate    ${transaction_fee_amount}*(${in_air_product_gst_percentage}*0.01)
     ${calculated_value}    Evaluate    ${calculated_value}+(${transaction_fee_amount}*(${in_air_product_ot1_percentage}*0.01))
     ${calculated_value}    Evaluate    ${calculated_value}+(${transaction_fee_amount}*(${in_air_product_ot2_percentage}*0.01))
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}   
-    Set Test Variable    ${total_gst_on_tf_amount}    ${calculated_value} 
-    
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${total_gst_on_tf_amount}    ${calculated_value}
+
 Calculate Air Fees-IN Total Markup
     Set Test Variable    ${total_markup_amount}    ${EMPTY}
-    
+
 Calculate Air Fees-IN Total Merchant Fee
-    ${merchant_fee_formula}    Set Variable If    "${air_pricing_id}" != "26"    (${total_sell_fare_amount}-${total_discount_amount}+${total_taxes_amount}+${total_gst_amount})*(${merchant_fee_percentage_value}*0.01)    (${total_sell_fare_amount}+${total_taxes_amount}+${total_gst_amount})*(${merchant_fee_percentage_value}*0.01)          
-    ${calculated_value}    Evaluate   ${merchant_fee_formula}
+    ${merchant_fee_formula}    Set Variable If    "${air_pricing_id}" != "26"    (${total_sell_fare_amount}-${total_discount_amount}+${total_taxes_amount}+${total_gst_amount})*(${merchant_fee_percentage_value}*0.01)    (${total_sell_fare_amount}+${total_taxes_amount}+${total_gst_amount})*(${merchant_fee_percentage_value}*0.01)
+    ${calculated_value}    Evaluate    ${merchant_fee_formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}   
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${total_merchant_fee_amount}    ${calculated_value}
-    
+
 Calculate Air Fees-IN Total Overhead Commission
-    Run Keyword If    "${airline_overhead_commission_by_percent_value}" == "true"  Calculate Air Fees-IN Total Overhead Commission Percent    ELSE    Calculate Air Fees-IN Total Overhead Commission Amount  
-    
-Calculate Air Fees-IN Total Overhead Commission Percent
-    ${total_overhead_commission_formula}    Set Variable If    "${air_pricing_id}" != "26" and "${trip_type_value}" == "I"    ((${base_fare_value}-${total_airline_commission_amount})*(${airline_overhead_commission_percentage_value}*0.01))*(${client_overhead_commission_percentage_value}*0.01)    ${EMPTY}          
-    ${calculated_value}    Run Keyword If    "${total_overhead_commission_formula}" != "${EMPTY}"    Evaluate   ${total_overhead_commission_formula}    
-    ${calculated_value}    Run Keyword If    "${total_overhead_commission_formula}" != "${EMPTY}"    Evaluate    round(${calculated_value},${decimal_place})
-    ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}   
-    Run Keyword If    "${calculated_value}" != "None"    Set Test Variable    ${total_overhead_commission_amount}    ${calculated_value} 
-    
+    Run Keyword If    "${airline_overhead_commission_by_percent_value}" == "true"    Calculate Air Fees-IN Total Overhead Commission Percent
+    ...    ELSE    Calculate Air Fees-IN Total Overhead Commission Amount
+
 Calculate Air Fees-IN Total Overhead Commission Amount
-    ${total_overhead_commission_formula}    Set Variable If    "${air_pricing_id}" != "26" and "${trip_type_value}" == "I"    ${airline_overhead_commission_value}*(${client_overhead_commission_percentage_value}*0.01)    ${EMPTY}          
-    ${calculated_value}    Run Keyword If    "${total_overhead_commission_formula}" != "${EMPTY}"    Evaluate   ${total_overhead_commission_formula}    
+    ${total_overhead_commission_formula}    Set Variable If    "${air_pricing_id}" != "26" and "${trip_type_value}" == "I"    ${airline_overhead_commission_value}*(${client_overhead_commission_percentage_value}*0.01)    ${EMPTY}
+    ${calculated_value}    Run Keyword If    "${total_overhead_commission_formula}" != "${EMPTY}"    Evaluate    ${total_overhead_commission_formula}
     ${calculated_value}    Run Keyword If    "${total_overhead_commission_formula}" != "${EMPTY}"    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}   
-    Run Keyword If    "${calculated_value}" != "None"    Set Test Variable    ${total_overhead_commission_amount}    ${calculated_value} 
-    
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Run Keyword If    "${calculated_value}" != "None"    Set Test Variable    ${total_overhead_commission_amount}    ${calculated_value}
+
+Calculate Air Fees-IN Total Overhead Commission Percent
+    ${total_overhead_commission_formula}    Set Variable If    "${air_pricing_id}" != "26" and "${trip_type_value}" == "I"    ((${base_fare_value}-${total_airline_commission_amount})*(${airline_overhead_commission_percentage_value}*0.01))*(${client_overhead_commission_percentage_value}*0.01)    ${EMPTY}
+    ${calculated_value}    Run Keyword If    "${total_overhead_commission_formula}" != "${EMPTY}"    Evaluate    ${total_overhead_commission_formula}
+    ${calculated_value}    Run Keyword If    "${total_overhead_commission_formula}" != "${EMPTY}"    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Run Keyword If    "${calculated_value}" != "None"    Set Test Variable    ${total_overhead_commission_amount}    ${calculated_value}
+
 Calculate Air Fees-IN Total Sell Fare
     Set Test Variable    ${total_sell_fare_amount}    ${base_fare_value}
-    
+
 Calculate Air Fees-IN Total Selling Fare
-    ${total_selling_fare_formula}    Set Variable If    "${air_pricing_id}" != "26"    ${total_sell_fare_amount}-${total_discount_amount}+${total_gst_amount}+${total_merchant_fee_amount}    ${total_sell_fare_amount}+${total_gst_amount}+${total_merchant_fee_amount}          
-    ${calculated_value}    Evaluate   ${total_selling_fare_formula}
+    ${total_selling_fare_formula}    Set Variable If    "${air_pricing_id}" != "26"    ${total_sell_fare_amount}-${total_discount_amount}+${total_gst_amount}+${total_merchant_fee_amount}    ${total_sell_fare_amount}+${total_gst_amount}+${total_merchant_fee_amount}
+    ${calculated_value}    Evaluate    ${total_selling_fare_formula}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}   
-    Set Test Variable    ${total_selling_fare_amount}    ${calculated_value} 
-           
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}
+
 Calculate Air Fees-IN Total Taxes
     ${calculated_value}    Evaluate    ${yq_tax_value}+${tax_1_value}+${tax_2_value}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${total_taxes_amount}    ${calculated_value} 
-    
+    Set Test Variable    ${total_taxes_amount}    ${calculated_value}
+
 Calculate Air Fees-IN Transaction Fee By Coupon
-    Run Keyword If    ${air_segment_count_value}>0    Calculate Air Fees-IN Transaction Fee By Coupon List    ELSE    Set Test Variable    ${transaction_fee_amount}    0    
-    
+    Run Keyword If    ${air_segment_count_value}>0    Calculate Air Fees-IN Transaction Fee By Coupon List
+    ...    ELSE    Set Test Variable    ${transaction_fee_amount}    0
+
 Calculate Air Fees-IN Transaction Fee By Coupon List
     ${tf_value}    Set Variable    0
     ${coupon_list}    Split String    ${tf_by_coupon_list_value}    ;
@@ -241,19 +246,20 @@ Calculate Air Fees-IN Transaction Fee By Coupon List
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${transaction_fee_amount}    ${calculated_value}
-    
+
 Calculate Air Fees-IN Transaction Fee By PNR
-    Set Test Variable    ${transaction_fee_amount}    ${tf_by_pnr_amount_value} 
-    
+    Set Test Variable    ${transaction_fee_amount}    ${tf_by_pnr_amount_value}
+
 Calculate Air Fees-IN Transaction Fee By Tkt
-    ${tf_by_tkt_formula}    Set Variable If    "${tf_by_tkt_operator_value}" == "F"    ${tf_by_tkt_amount_value}+${extra_amount_value}    "${tf_by_tkt_operator_value}" == "M"    (${base_amount_amount}*(${per_amount_value}*0.01))+${extra_amount_value}    "${tf_by_tkt_operator_value}" == "D"    (${base_amount_amount}/((100-${per_amount_value})*0.01)+${extra_amount_value})-${base_amount_amount}
+    ${tf_by_tkt_formula}    Set Variable If    "${tf_by_tkt_operator_value}" == "F"    ${tf_by_tkt_amount_value}+${extra_amount_value}    "${tf_by_tkt_operator_value}" == "M"    (${base_amount_amount}*(${per_amount_value}*0.01))+${extra_amount_value}    "${tf_by_tkt_operator_value}" == "D"
+    ...    (${base_amount_amount}/((100-${per_amount_value})*0.01)+${extra_amount_value})-${base_amount_amount}
     ${calculated_value}    Evaluate    ${tf_by_tkt_formula}
     ${calculated_value}    Set Variable If    ${max_amount_value} != 0 and ${calculated_value}>${max_amount_value}    ${max_amount_value}    ${calculated_value}
-    ${calculated_value}    Set Variable If    ${calculated_value}<${min_amount_value}    ${min_amount_value}    ${calculated_value}   
+    ${calculated_value}    Set Variable If    ${calculated_value}<${min_amount_value}    ${min_amount_value}    ${calculated_value}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${transaction_fee_amount}    ${calculated_value}      
+    Set Test Variable    ${transaction_fee_amount}    ${calculated_value}
 
 Calculate Air Fees-SG Commission
     ${commission_formula}    Set Variable If    "${commission_percent_flag_value}" == "true"    ${nett_fare_value}*(${commission_percentage_value}*0.01)    ${commission_value}
@@ -321,10 +327,20 @@ Calculate Air Fees-SG Total Selling Fare Without Formula
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}
-    
+
 Create Dictionary For Clients
-    ${clients_dict}    Create Dictionary    3098300014.air_pricing_id=20    9000000009.air_pricing_id=20    90000000014.air_pricing_id=20    9000000008.air_pricing_id=20    9000000010.air_pricing_id=21    9000000007.air_pricing_id=21    9000000011.air_pricing_id=21    9000000012.air_pricing_id=22    9000000013.air_pricing_id=22    9000000014.air_pricing_id=22    9000000015.air_pricing_id=23    9000000016.air_pricing_id=23    9000000017.air_pricing_id=23    9000000018.air_pricing_id=24    9000000019.air_pricing_id=24    9000000020.air_pricing_id=24    9000000021.air_pricing_id=25    9000000022.air_pricing_id=25    9000000023.air_pricing_id=25    9000000024.air_pricing_id=26    9000000025.air_pricing_id=26    9000000026.air_pricing_id=26    9000000027.air_pricing_id=27    9000000028.air_pricing_id=27    9000000029.air_pricing_id=27    9000000030.air_pricing_id=28    9000000031.air_pricing_id=28    9000000032.air_pricing_id=28    9000000033.air_pricing_id=29    9000000034.air_pricing_id=29    9000000035.air_pricing_id=29    9000000036.air_pricing_id=30    9000000037.air_pricing_id=30    9000000038.air_pricing_id=30    9000000039.air_pricing_id=20    9000000040.air_pricing_id=20    9000000041.air_pricing_id=20    9000000042.air_pricing_id=20    9000000043.air_pricing_id=20    9000000044.air_pricing_id=20    9000000045.air_pricing_id=20    9000000046.air_pricing_id=20    9000000047.air_pricing_id=20    9000000048.air_pricing_id=30    9000000049.air_pricing_id=30    9000000050.air_pricing_id=20    9000000051.air_pricing_id=20    9000000052.air_pricing_id=20    9000000053.air_pricing_id=20    9000000054.air_pricing_id=20    9000000055.air_pricing_id=20    9000000056.air_pricing_id=20    9000000057.air_pricing_id=20    9000000058.air_pricing_id=20    9000000059.air_pricing_id=20    9000000060.air_pricing_id=20    9000000061.air_pricing_id=20    9000000062.air_pricing_id=20    9000000063.air_pricing_id=20    9000000064.air_pricing_id=20    9000000065.air_pricing_id=20
-    Set Suite Variable    ${clients_dict}    
+    ${clients_dict}    Create Dictionary    3098300014.air_pricing_id=20    9000000009.air_pricing_id=20    90000000014.air_pricing_id=20    9000000008.air_pricing_id=20    9000000010.air_pricing_id=21
+    ...    9000000007.air_pricing_id=21    9000000011.air_pricing_id=21    9000000012.air_pricing_id=22    9000000013.air_pricing_id=22    9000000014.air_pricing_id=22    9000000015.air_pricing_id=23
+    ...    9000000016.air_pricing_id=23    9000000017.air_pricing_id=23    9000000018.air_pricing_id=24    9000000019.air_pricing_id=24    9000000020.air_pricing_id=24    9000000021.air_pricing_id=25
+    ...    9000000022.air_pricing_id=25    9000000023.air_pricing_id=25    9000000024.air_pricing_id=26    9000000025.air_pricing_id=26    9000000026.air_pricing_id=26    9000000027.air_pricing_id=27
+    ...    9000000028.air_pricing_id=27    9000000029.air_pricing_id=27    9000000030.air_pricing_id=28    9000000031.air_pricing_id=28    9000000032.air_pricing_id=28    9000000033.air_pricing_id=29
+    ...    9000000034.air_pricing_id=29    9000000035.air_pricing_id=29    9000000036.air_pricing_id=30    9000000037.air_pricing_id=30    9000000038.air_pricing_id=30    9000000039.air_pricing_id=20
+    ...    9000000040.air_pricing_id=20    9000000041.air_pricing_id=20    9000000042.air_pricing_id=20    9000000043.air_pricing_id=20    9000000044.air_pricing_id=20    9000000045.air_pricing_id=20
+    ...    9000000046.air_pricing_id=20    9000000047.air_pricing_id=20    9000000048.air_pricing_id=30    9000000049.air_pricing_id=30    9000000050.air_pricing_id=20    9000000051.air_pricing_id=20
+    ...    9000000052.air_pricing_id=20    9000000053.air_pricing_id=20    9000000054.air_pricing_id=20    9000000055.air_pricing_id=20    9000000056.air_pricing_id=20    9000000057.air_pricing_id=20
+    ...    9000000058.air_pricing_id=20    9000000059.air_pricing_id=20    9000000060.air_pricing_id=20    9000000061.air_pricing_id=20    9000000062.air_pricing_id=20    9000000063.air_pricing_id=20
+    ...    9000000064.air_pricing_id=20    9000000065.air_pricing_id=20
+    Set Suite Variable    ${clients_dict}
 
 Create Test Variables For Air Fees-HK
     [Arguments]    ${fees_list}    ${country}
@@ -367,7 +383,7 @@ Generate Test Variables For Air Fees-HK Without Formula
     Set Test Variable    ${selling_price_amount}    0
     Set Test Variable    ${discount_amount}    ${discount_value}
     Set Test Variable    ${nett_fare_amount}    ${nett_fare_value}
-    
+
 Generate Test Variables For Air Fees-IN
     [Arguments]    ${fees_list}    ${country}
     Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
@@ -376,19 +392,27 @@ Generate Test Variables For Air Fees-IN
     Set Test Variable    ${decimal_place}
     ${total_gst_amount}    Set Variable If    "${gst_enabled_value}" == "true"    0
     Run Keyword If    "${include_yq_comm_value}" == "false"    Set Test Variable    ${yq_tax_value}    0
-    Run Keyword If    "${exempt_tax_value}" == "false" and "${gst_enabled_value}" == "true"    Calculate Air Fees-IN Total GST    ELSE    Set Test Variable    ${total_gst_amount}    0
-    Run Keyword If    "${commission_enabled_value}" == "true"   Calculate Air Fees-IN Total Airline Commission    ELSE    Set Test Variable    ${total_airline_commission_amount}    0
-    Run Keyword If    "${trip_type_value}" == "I" and "${overhead_commission_enabled_value}" == "true"    Calculate Air Fees-IN Total Overhead Commission    ELSE    Set Test Variable    ${total_overhead_commission_amount}    0
+    Run Keyword If    "${exempt_tax_value}" == "false" and "${gst_enabled_value}" == "true"    Calculate Air Fees-IN Total GST
+    ...    ELSE    Set Test Variable    ${total_gst_amount}    0
+    Run Keyword If    "${commission_enabled_value}" == "true"    Calculate Air Fees-IN Total Airline Commission
+    ...    ELSE    Set Test Variable    ${total_airline_commission_amount}    0
+    Run Keyword If    "${trip_type_value}" == "I" and "${overhead_commission_enabled_value}" == "true"    Calculate Air Fees-IN Total Overhead Commission
+    ...    ELSE    Set Test Variable    ${total_overhead_commission_amount}    0
     Comment    Calculate Air Fees-IN Total Markup
-    Run Keyword If    "${discount_enabled_value}" == "true"    Calculate Air Fees-IN Total Discount    ELSE    Set Test Variable    ${total_discount_amount}    0
+    Run Keyword If    "${discount_enabled_value}" == "true"    Calculate Air Fees-IN Total Discount
+    ...    ELSE    Set Test Variable    ${total_discount_amount}    0
     Calculate Air Fees-IN Total Taxes
     Calculate Air Fees-IN Total Sell Fare
     Calculate Air Fees-IN Total Fee
     ${calculate_fee_flag}    Set Variable If    "${fee_override_value}" == "false" and "${apply_fee_value}" != "NA"    true    false
-    Run Keyword If    "${calculate_fee_flag}" == "true" and "${fee_option_value}" == "P"    Calculate Air Fees-IN Transaction Fee By PNR    ELSE IF    "${calculate_fee_flag}" == "true" and "${fee_option_value}" == "C"    Calculate Air Fees-IN Transaction Fee By Coupon    ELSE IF    "${calculate_fee_flag}" == "true" and "${fee_option_value}" == "T"    Calculate Air Fees-IN Transaction Fee By Tkt    ELSE    Set Test Variable    ${transaction_fee_amount}    ${transaction_fee_value}    
+    Run Keyword If    "${calculate_fee_flag}" == "true" and "${fee_option_value}" == "P"    Calculate Air Fees-IN Transaction Fee By PNR
+    ...    ELSE IF    "${calculate_fee_flag}" == "true" and "${fee_option_value}" == "C"    Calculate Air Fees-IN Transaction Fee By Coupon
+    ...    ELSE IF    "${calculate_fee_flag}" == "true" and "${fee_option_value}" == "T"    Calculate Air Fees-IN Transaction Fee By Tkt
+    ...    ELSE    Set Test Variable    ${transaction_fee_amount}    ${transaction_fee_value}
     Calculate Air Fees-IN Total Merchant Fee
     Calculate Air Fees-IN Total GST On TF
-    Run Keyword If    "${trip_type_value}" == "I"    Calculate Air Fees-IN Mechant Fee On TF International    ELSE    Calculate Air Fees-IN Mechant Fee On TF Domestic
+    Run Keyword If    "${trip_type_value}" == "I"    Calculate Air Fees-IN Mechant Fee On TF International
+    ...    ELSE    Calculate Air Fees-IN Mechant Fee On TF Domestic
     Calculate Air Fees-IN Total Selling Fare
     Calculate Air Fees-IN Total Charge
 
@@ -430,7 +454,7 @@ Remove Decimal Places For Air Fees-HK
     Set Test Variable    ${selling_price_amount}
     Set Test Variable    ${discount_amount}
     Set Test Variable    ${nett_fare_amount}
-    
+
 Send Other Service Fees For Air Fees IN Post Request
     [Arguments]    ${token}=${default_token}
     Create Session    fees    ${${env}_base_url}    verify=True
@@ -441,7 +465,7 @@ Send Other Service Fees For Air Fees IN Post Request
     ${other_service_fees_products_list}    Create List
     Run Keyword If    "${air_segment_count_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airSegmentCount":${air_segment_count_value}
     Run Keyword If    "${airline_commission_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineCommissionPercent":${airline_commission_value}
-    Run Keyword If    "${airline_overhead_commission_by_percent_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineOverheadCommissionByPercent":${airline_overhead_commission_by_percent_value} 
+    Run Keyword If    "${airline_overhead_commission_by_percent_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineOverheadCommissionByPercent":${airline_overhead_commission_by_percent_value}
     Run Keyword If    "${airline_overhead_commission_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineOverheadCommissionPercent":${airline_overhead_commission_percentage_value}
     Run Keyword If    "${airline_overhead_commission_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineOverheadCommission":${airline_overhead_commission_value}
     Run Keyword If    "${base_fare_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "baseFare":${base_fare_value}
@@ -475,7 +499,7 @@ Send Other Service Fees For Air Fees IN Post Request
     : FOR    ${i}    IN RANGE    0    ${list_count_2}
     \    ${products_list}    Set Variable If    ${i}==0    ${EMPTY}    ${products_list},
     \    ${products_list}    Set Variable    ${products_list}${other_service_fees_products_list[${i}]}
-        ${list_count_3}    Get Length    ${other_service_fees_request_list_2}
+    ${list_count_3}    Get Length    ${other_service_fees_request_list_2}
     : FOR    ${i}    IN RANGE    0    ${list_count_3}
     \    ${fees_list_2}    Set Variable If    ${i}==0    ${EMPTY}    ${fees_list_2},
     \    ${fees_list_2}    Set Variable    ${fees_list_2}${other_service_fees_request_list_2[${i}]}
@@ -541,15 +565,6 @@ Verify Calculated Air Fees Are Not Returned Correctly
     Verify String Does Not Contain Substring    ${response.text}    "merchantFee"
     Verify String Does Not Contain Substring    ${response.text}    "discount"
     Verify String Does Not Contain Substring    ${response.text}    "nettFare"
-    
-Verify Calculated Air Fees India Are Not Returned Correctly
-    Verify String Does Not Contain Substring    ${response.text}    "totalAirlineCommission"
-    Verify String Does Not Contain Substring    ${response.text}    "totalCharge"
-    Verify String Does Not Contain Substring    ${response.text}    "totalGst"
-    Verify String Does Not Contain Substring    ${response.text}    "totalSellFare"
-    Verify String Does Not Contain Substring    ${response.text}    "totalSellingFare"
-    Verify String Does Not Contain Substring    ${response.text}    "totalTaxes"
-    Verify String Does Not Contain Substring    ${response.text}    "totalMerchantFee"
 
 Verify Calculated Air Fees Are Returned Correctly
     ${data}    Remove String    ${response.text}    {
@@ -560,10 +575,19 @@ Verify Calculated Air Fees Are Returned Correctly
     \    ${items}    Split String    ${item}    :
     \    Verify Actual Numerical Value Matches Expected Numerical Value    ${items[1]}    ${${items[0]}_amount}
 
+Verify Calculated Air Fees India Are Not Returned Correctly
+    Verify String Does Not Contain Substring    ${response.text}    "totalAirlineCommission"
+    Verify String Does Not Contain Substring    ${response.text}    "totalCharge"
+    Verify String Does Not Contain Substring    ${response.text}    "totalGst"
+    Verify String Does Not Contain Substring    ${response.text}    "totalSellFare"
+    Verify String Does Not Contain Substring    ${response.text}    "totalSellingFare"
+    Verify String Does Not Contain Substring    ${response.text}    "totalTaxes"
+    Verify String Does Not Contain Substring    ${response.text}    "totalMerchantFee"
+
 Verify Response Contains Calculated Fee
     [Arguments]    ${element}
     Verify String Contains Substring    ${response.text}    "${element}"
-    
+
 Verify Response Does Not Contain Calculated Fee
     [Arguments]    ${element}
     Verify String Does Not Contain Substring    ${response.text}    "${element}"
