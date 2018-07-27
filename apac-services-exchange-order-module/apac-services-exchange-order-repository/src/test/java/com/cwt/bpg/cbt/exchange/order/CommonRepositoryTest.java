@@ -18,7 +18,7 @@ import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
-import com.cwt.bpg.cbt.exchange.order.model.Insurance;
+import com.cwt.bpg.cbt.exchange.order.model.InsurancePlan;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.WriteResult;
 
@@ -32,11 +32,11 @@ public class CommonRepositoryTest {
 	private MorphiaComponent morphia;
 
 	@InjectMocks
-	private CommonRepository<Insurance, String> repo;
+	private CommonRepository<InsurancePlan, String> repo;
 
 	@Before
 	public void setUp() {
-        repo = new CommonRepository<>(Insurance.class, "type");
+        repo = new CommonRepository<>(InsurancePlan.class, "type");
         MockitoAnnotations.initMocks(this);
 
         when(morphia.getDatastore()).thenReturn(datastore);
@@ -44,35 +44,35 @@ public class CommonRepositoryTest {
 
     @Test
 	public void shouldReturnAllRows() {
-		Query<Insurance> query = mock(Query.class);
-		when(datastore.createQuery(Insurance.class)).thenReturn(query);
-        ArrayList<Insurance> rows = new ArrayList<>();
+		Query<InsurancePlan> query = mock(Query.class);
+		when(datastore.createQuery(InsurancePlan.class)).thenReturn(query);
+        ArrayList<InsurancePlan> rows = new ArrayList<>();
         when(query.asList()).thenReturn(rows);
 
-		List<Insurance> result = repo.getAll();
+		List<InsurancePlan> result = repo.getAll();
 
 		assertThat(result, is(equalTo(rows)));
 		verify(morphia, times(1)).getDatastore();
-		verify(datastore, times(1)).createQuery(Insurance.class);
+		verify(datastore, times(1)).createQuery(InsurancePlan.class);
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldInsertOrUpdate() {
-		Insurance insurance = new Insurance();
+		InsurancePlan insurance = new InsurancePlan();
 		insurance.setType("insurance-type");
 
-		Key<Insurance> key = mock(Key.class);
-		Query<Insurance> query = mock(Query.class);
+		Key<InsurancePlan> key = mock(Key.class);
+		Query<InsurancePlan> query = mock(Query.class);
 		FieldEnd fieldEnd = mock(FieldEnd.class);
-		when(datastore.createQuery(Insurance.class)).thenReturn(query);
+		when(datastore.createQuery(InsurancePlan.class)).thenReturn(query);
 		when(query.field("type")).thenReturn(fieldEnd);
 		when(fieldEnd.equal(insurance.getType())).thenReturn(query);
 		when(datastore.save(insurance)).thenReturn(key);
 		WriteResult dkey = new WriteResult(1, true, null);
 		when(datastore.delete(query)).thenReturn(dkey);
 
-        Insurance result = repo.put(insurance);
+        InsurancePlan result = repo.put(insurance);
 
         assertThat(result, is(equalTo(insurance)));
         verify(morphia, times(2)).getDatastore();
@@ -83,12 +83,12 @@ public class CommonRepositoryTest {
     @Test
     public void shouldInsertOrUpdateWhenKeyValueIsEmpty() {
 
-		Insurance insurance = new Insurance();
+		InsurancePlan insurance = new InsurancePlan();
 
-		Key<Insurance> key = mock(Key.class);
-		Query<Insurance> query = mock(Query.class);
+		Key<InsurancePlan> key = mock(Key.class);
+		Query<InsurancePlan> query = mock(Query.class);
 		FieldEnd fieldEnd = mock(FieldEnd.class);
-		when(datastore.createQuery(Insurance.class)).thenReturn(query);
+		when(datastore.createQuery(InsurancePlan.class)).thenReturn(query);
 		when(query.field("type")).thenReturn(fieldEnd);
 		when(fieldEnd.equal(insurance.getType())).thenReturn(query);
 		when(datastore.save(insurance)).thenReturn(key);
@@ -96,7 +96,7 @@ public class CommonRepositoryTest {
 		when(datastore.delete(query)).thenReturn(dkey);
 		
 
-        Insurance result = repo.put(insurance);
+        InsurancePlan result = repo.put(insurance);
 
         assertThat(result, is(equalTo(insurance)));
         verify(morphia, times(1)).getDatastore();
@@ -109,8 +109,8 @@ public class CommonRepositoryTest {
 	public void shouldDelete() {
 		final String key = "test";
 
-		Query<Insurance> query = mock(Query.class);
-		when(datastore.createQuery(Insurance.class)).thenReturn(query);
+		Query<InsurancePlan> query = mock(Query.class);
+		when(datastore.createQuery(InsurancePlan.class)).thenReturn(query);
 		FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(query.field("type")).thenReturn(fieldEnd);
 		when(fieldEnd.equal(key)).thenReturn(query);

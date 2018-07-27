@@ -7,25 +7,25 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.cwt.bpg.cbt.exchange.order.model.Insurance;
+import com.cwt.bpg.cbt.exchange.order.model.InsurancePlan;
 
 @Service
-public class InsuranceService {
+public class InsurancePlanService {
 
 	@Autowired
-	private InsuranceRepository insuranceRepository;
+	private InsurancePlanRepository insurancePlanRepository;
 
 	@Cacheable(cacheNames = "insurance-types", key="#root.methodName")
-	public List<Insurance> getAll() {
-		return insuranceRepository.getAll();
+	public List<InsurancePlan> getAll() {
+		return insurancePlanRepository.getAll();
 	}
 
-	public Insurance putInsurance(Insurance insurance) {
-		return insuranceRepository.put(insurance);
+	public InsurancePlan putInsurancePlan(InsurancePlan insurancePlan) {
+		return insurancePlanRepository.put(insurancePlan);
 	}
 
 	@CacheEvict(cacheNames = "insurance-types", allEntries = true)
 	public String remove(String type) {
-		return insuranceRepository.remove(type);
+		return insurancePlanRepository.remove(type);
 	}
 }
