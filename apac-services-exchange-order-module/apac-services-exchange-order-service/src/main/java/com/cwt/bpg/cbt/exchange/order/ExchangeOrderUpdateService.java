@@ -37,10 +37,10 @@ public class ExchangeOrderUpdateService
                 existingExchangeOrder.getEoNumber(),
                 existingExchangeOrder.getCountryCode());
   
-        if (exchangeOrder.getCreditCard() != null) {
-            ObjectModifier.modifyTargetObject(exchangeOrder.getCreditCard(),
-                    existingExchangeOrder.getCreditCard());
-            exchangeOrder.setCreditCard(null);
+        if (exchangeOrder.getServiceInfo().getFormOfPayment().getCreditCard() != null) {
+            ObjectModifier.modifyTargetObject(exchangeOrder.getServiceInfo().getFormOfPayment().getCreditCard(),
+                    existingExchangeOrder.getServiceInfo().getFormOfPayment().getCreditCard());
+            exchangeOrder.getServiceInfo().getFormOfPayment().setCreditCard(null);
         }
 
 		if (exchangeOrder.getVendor() != null) {
@@ -54,7 +54,7 @@ public class ExchangeOrderUpdateService
 
         if(existingExchangeOrder.getFopType() != null &&
                 existingExchangeOrder.getFopType().equalsIgnoreCase(FopTypes.INVOICE.getCode())){
-            existingExchangeOrder.setCreditCard(null);
+            existingExchangeOrder.getServiceInfo().getFormOfPayment().setCreditCard(null);
         }
 
         exchangeOrderAmountScaler.scale(existingExchangeOrder);
