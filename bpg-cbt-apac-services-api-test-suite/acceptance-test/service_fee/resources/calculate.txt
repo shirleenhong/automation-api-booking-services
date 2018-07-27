@@ -1,7 +1,8 @@
 *** Settings ***
-Resource    ../../resources/api-imports.txt
-Resource    ../../resources/api-utilities.txt
-Resource    ../../resources/api-variables.txt
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
+
 *** Keywords ***
 Calculate Commission Amount
     [Arguments]    ${decimal_place}    ${base_fare_value}    ${commission_percentage_value}=${commission_percentage_value}
@@ -72,7 +73,7 @@ Calculate Total Amount
 
 Calculate Transaction Fee Amount
     [Arguments]    ${decimal_place}    ${base_fare_value}    ${transaction_percentage_value}=${transaction_percentage_value}
-    ${calculated_value}    Evaluate    round((${base_fare_value}*(${transaction_percentage_value}/100)), ${decimal_place})    
+    ${calculated_value}    Evaluate    round((${base_fare_value}*(${transaction_percentage_value}/100)), ${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     [Return]    ${calculated_value}
@@ -178,6 +179,26 @@ Send Service Fees Post Request
     Log    ${response.content}
     Set Test Variable    ${api_flag}    fees
 
+Set Commission Rebate
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${commissionRebateAmount_value}    0.00
+    ...    ELSE    Set Test Variable    ${commissionRebateAmount_value}    0
+
+Set Fuel Surcharge
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${fuel_surcharge_value}    0.00
+    ...    ELSE    Set Test Variable    ${fuel_surcharge_value}    0
+
+Set Markup Amount
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${markupAmount_value}    0.00
+    ...    ELSE    Set Test Variable    ${markupAmount_value}    0
+
+Set Merchant Fee
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${merchantFeeAmount_value}    0.00
+    ...    ELSE    Set Test Variable    ${merchantFeeAmount_value}    0
+
+Set Transaction Fee
+    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${transactionFeeAmount_value}    0.00
+    ...    ELSE    Set Test Variable    ${transactionFeeAmount_value}    0
+
 Verify Calculated Fees Are Not Returned
     Verify String Does Not Contain Substring    ${response.content}    "fopAmount"
     Verify String Does Not Contain Substring    ${response.content}    "merchantFeeAmount"
@@ -195,23 +216,3 @@ Verify Calculated Fees Are Returned Correctly
     : FOR    ${item}    IN    @{data_list}
     \    ${items}    Split String    ${item}    :
     \    Verify Actual Value Matches Expected Value    ${items[1]}    ${${items[0]}_value}
-
-Set Fuel Surcharge
-    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${fuel_surcharge_value}    0.00
-    ...    ELSE    Set Test Variable    ${fuel_surcharge_value}    0
-
-Set Commission Rebate
-    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${commissionRebateAmount_value}    0.00
-    ...    ELSE    Set Test Variable    ${commissionRebateAmount_value}    0
-
-Set Markup Amount
-    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${markupAmount_value}    0.00
-    ...    ELSE    Set Test Variable    ${markupAmount_value}    0
-
-Set Merchant Fee
-    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${merchantFeeAmount_value}    0.00
-    ...    ELSE    Set Test Variable    ${merchantFeeAmount_value}    0
-
-Set Transaction Fee
-    Run Keyword If    "${country}"=="SG"    Set Test Variable    ${transactionFeeAmount_value}    0.00
-    ...    ELSE    Set Test Variable    ${transactionFeeAmount_value}    0

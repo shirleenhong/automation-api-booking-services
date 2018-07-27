@@ -57,23 +57,23 @@ Evict Client Cache
     \    Log    ${response.content}
     Set Test Variable    ${api_flag}    client
 
-Send Get Request For Client
-    [Arguments]    ${client_account_number}    ${token}=${default_token}
-    Create Session    client    ${${env}_base_url}    verify=True
-    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
-    ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${response}    Get Request    client    apac-services-rest/api/clients/${client_account_number}    headers=${headers}
-    Set Test Variable    ${response}
-    Log    ${response.headers}
-    Log    ${response.content}
-    Set Test Variable    ${api_flag}    client
-
 Send Delete Request For Client
     [Arguments]    ${client_account_number}    ${token}=${default_token}
     Create Session    client    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
     ${response}    Delete Request    client    /apac-services-rest/api/clients/${client_account_number}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    client
+
+Send Get Request For Client
+    [Arguments]    ${client_account_number}    ${token}=${default_token}
+    Create Session    client    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    client    apac-services-rest/api/clients/${client_account_number}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
@@ -145,7 +145,7 @@ Verify Client Are Correctly Retrieved
     Verify Client Pricings Transaction Fees Are Correctly Retrieved
 
 Verify Client Are Not Retrieved
-    ${response_str}    Decode Bytes To String    ${response.content}     UTF-8    
+    ${response_str}    Decode Bytes To String    ${response.content}    UTF-8
     Verify String Does Not Contain Substring    ${response_str}    "clientId"
     Verify String Does Not Contain Substring    ${response_str}    "name"
     Verify String Does Not Contain Substring    ${response_str}    "clientAccountNumber"
@@ -154,7 +154,7 @@ Verify Client Pricings Are Correctly Retrieved
     ${client_pricings_list_length}    Get Length    ${client_pricings_list}
     : FOR    ${index}    IN RANGE    ${client_pricings_list_length}
     \    ${item_trip_type}    Get Json Value As String    ${response.content}    $.clientPricings.[${index}].tripType
-    #    ${item_client_id}    Get Json Value As String    ${response.content}    $.clientPricings.[${index}].clientId
+    \    #    ${item_client_id}    Get Json Value As String    ${response.content}    $.clientPricings.[${index}].clientId
     \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].group    ${${client_id}_${item_trip_type}_client_pricings_group__value}
     \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].feeOption    ${${client_id}_${item_trip_type}_client_pricings_fee_option__value}
 

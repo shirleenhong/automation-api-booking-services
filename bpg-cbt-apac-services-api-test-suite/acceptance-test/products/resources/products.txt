@@ -1,22 +1,30 @@
 *** Settings ***
 Library           OperatingSystem
-Resource    ../../resources/api-imports.txt
-Resource    ../../resources/api-utilities.txt
-Resource    ../../resources/api-variables.txt
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
 
 *** Keywords ***
 Create New Product List
     [Arguments]    ${product_number}
     ${all_product_list_length}    Get Length    ${all_product_list}
-    ${index}    Set Variable    ${all_product_list_length}    
+    ${index}    Set Variable    ${all_product_list_length}
     @{product_list}    Create List
     @{vendor_list}    Create List
     Set Test Variable    ${${product_number}_list}    ${product_list}
     Set Test variable    ${product_list_${index}}    ${${product_number}_list}
     Append To List    ${all_product_list}    ${product_number}
-    Set Test Variable    ${index}    
+    Set Test Variable    ${index}
     Set Test Variable    ${all_product_list}
     Set Test Variable    ${${product_number}_vendor_list}    ${vendor_list}
+
+Create Test Data For Vendor Raise Type
+    [Arguments]    ${country}
+    ${data_list}    Split String    ${${country}_raise_type_list}    |
+    : FOR    ${data}    IN    @{data_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    ${item_number}    Get Substring    ${data_item[0]}    3
+    \    Set Test Variable    ${raise_type_${item_number}}    ${data_item[1]}
 
 Create Test Variables For Products And Vendors
     [Arguments]    ${country}
@@ -26,7 +34,8 @@ Create Test Variables For Products And Vendors
     Set Test Variable    ${product_remarks_list}
     ${data_list_1}    Split String    ${${country}_data_list_1}    |
     : FOR    ${data}    IN    @{data_list_1}
-    \    ${character}    Run Keyword If    "${country}"=="in"    Set Variable    _    ELSE    Set Variable    ,        
+    \    ${character}    Run Keyword If    "${country}"=="in"    Set Variable    _
+    \    ...    ELSE    Set Variable    ,
     \    ${data_item}    Split String    ${data}    ${character}
     \    ${data_type}    Get Substring    ${data_item[0]}    0    3
     \    ${item_number}    Get Substring    ${data_item[0]}    3
@@ -39,7 +48,7 @@ Create Test Variables For Products And Vendors
     \    ${product_number}    Get Substring    ${data_item[0]}    3
     \    ${vendor_number}    Get Substring    ${data_item[1]}    3
     \    ${is_list_created}    Run Keyword And Return Status    Variable Should Exist    ${${product_number}_list}
-    \    Run Keyword If    "${is_list_created}"=="False"    Create New Product List    ${product_number}    
+    \    Run Keyword If    "${is_list_created}"=="False"    Create New Product List    ${product_number}
     \    Append To List    ${product_list_${index}}    ${vendor_number}
     \    Append To List    ${${product_number}_vendor_list}    ${vendor_number}
     \    Log    ${${product_number}_vendor_list}
@@ -50,11 +59,11 @@ Create Test Variables For Products And Vendors
     Run Keyword If    "${country}"!="in"    Create Test Data For Vendor Raise Type    ${country}
     Set Test Variable    ${country}    ${country.upper()}
     Set Test Variable    ${all_product_list}
-    
+
 Create Test Variables For Vendor Data
     [Arguments]    ${country}
     ${data_list}    Split String    ${${country}_vendor_data_list}    |
-    :FOR    ${data}    IN    @{data_list}
+    : FOR    ${data}    IN    @{data_list}
     \    ${data_item}    Split String    ${data}    ^
     \    ${vendor_code}    Set Variable    ${data_item[1]}
     \    Set Test Variable    ${${vendor_code}_name}    ${data_item[2]}
@@ -73,7 +82,7 @@ Create Test Variables For Vendor Data
 Create Test Variables For Vendor Data India
     [Arguments]    ${country}
     ${data_list}    Split String    ${${country}_vendor_data_list}    |
-    :FOR    ${data}    IN    @{data_list}
+    : FOR    ${data}    IN    @{data_list}
     \    ${data_item}    Split String    ${data}    ^
     \    ${vendor_code}    Set Variable    ${data_item[0]}
     \    Set Test Variable    ${${vendor_code}_name}    ${data_item[1]}
@@ -89,14 +98,6 @@ Create Test Variables For Vendor Data India
     \    Set Test Variable    ${${vendor_code}_contact_person}    ${data_item[11]}
     \    Set Test Variable    ${${vendor_code}_contact_info_preferred}    ${data_item[12]}
 
-Create Test Data For Vendor Raise Type
-    [Arguments]    ${country}
-    ${data_list}    Split String    ${${country}_raise_type_list}    |
-    : FOR    ${data}    IN    @{data_list}
-    \    ${data_item}    Split String    ${data}    ,
-    \    ${item_number}    Get Substring    ${data_item[0]}    3
-    \    Set Test Variable    ${raise_type_${item_number}}    ${data_item[1]}
-    
 Send Product Get Request
     [Arguments]    ${token}=${default_token}    ${country}=${country}
     Create Session    product    ${${env}_base_url}    verify=True
@@ -107,7 +108,7 @@ Send Product Get Request
     Log    ${response.headers}
     Log    ${response.content}
     Set Test Variable    ${api_flag}    products
-    
+
 Verify Decoded Json Value Is Correct
     [Arguments]    ${json_path}    ${expected_value}    ${data_type}=string    ${handle_null}=true
     Log    Json Object: ${json_path}
@@ -122,7 +123,7 @@ Verify Decoded Json Value Is Correct
     ${actual_value}    Replace String    ${actual_value}    \\u2013    –
     ${actual_value}    Replace String    ${actual_value}    \\u2018    ‘
     ${actual_value}    Replace String    ${actual_value}    \\u2019    ‘
-    ${actual_value}    Replace String    ${actual_value}    ${SPACE}${SPACE}    ${SPACE}     
+    ${actual_value}    Replace String    ${actual_value}    ${SPACE}${SPACE}    ${SPACE}
     Run Keyword And Continue On Failure    Should Be Equal As Strings    ${actual_value.rstrip()}    ${expected_value.rstrip()}
 
 Verify Json Value For India Is Correct
@@ -141,9 +142,9 @@ Verify Json Value For India Is Correct
     ${actual_value}    Replace String    ${actual_value}    "    ${EMPTY}
     ${actual_value}    Replace String    ${actual_value}    \\    ${EMPTY}
     ${actual_value}    Replace String    ${actual_value}    \\u00a0    ${EMPTY}
-    ${actual_value}    Replace String    ${actual_value}    u00a0    ${EMPTY}  
+    ${actual_value}    Replace String    ${actual_value}    u00a0    ${EMPTY}
     ${actual_value}    Replace String    ${actual_value}    Taj-    ${EMPTY}
-    ${expected_value}    Replace String    ${expected_value}    ${SPACE}    ${EMPTY}   
+    ${expected_value}    Replace String    ${expected_value}    ${SPACE}    ${EMPTY}
     Run Keyword And Continue On Failure    Should Be Equal As Strings    ${actual_value}    ${expected_value}
 
 Verify Products And Vendors Are Not Retrieved
@@ -169,27 +170,9 @@ Verify Products And Vendors Are Retrieved Correctly
     ${index}    Evaluate    ${index}+1
     Verify Json Element Does Not Exist    $[${index}].description
 
-Verify Vendors Are Retrieved Correctly
-    [Arguments]    ${index}    ${item_vendor_list}
-    ${item_vendor_list_length}    Get Length    ${item_vendor_list}
-    ${vendor_index}    Set Variable    0
-    :FOR    ${vendor_index}    IN RANGE    ${item_vendor_list_length}
-    \    ${list_item}    Get From List    ${item_vendor_list}    ${vendor_index}
-    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].code    ${list_item}
-    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].name    ${vendor_code_${list_item}}   
-    \    Run Keyword If    "${country}"!="IN"    Verify Vendor Raise Type Is Retrieved Correctly    ${index}    ${list_item}    ${vendor_index}
-    \    ${vendor_index}    Evaluate    ${vendor_index}+1
-    Verify Json Element Does Not Exist    $[${index}].vendors.[${vendor_index}].vendorName
-
-Verify Vendors Details Are Retrieved Correctly
-    ${all_product_list_length}    Get Length    ${all_product_list}
-    : FOR    ${index}    IN RANGE    ${all_product_list_length}
-    \    ${item_product_code}    Get Json Value As String    ${response.content}    $.[${index}].productCode
-    \    Run Keyword If    "${country.upper()}" != "IN"    Verify Vendor Details Are Retrieved Correctly    ${index}    ${${item_product_code}_vendor_list}    ELSE    Verify Vendor Details India Are Retrieved Correctly    ${index}    ${${item_product_code}_vendor_list}
-
 Verify Vendor Details Are Retrieved Correctly
     [Arguments]    ${product_index}    ${product_vendor_list}
-    @{temp_vendor_list}    Create List    
+    @{temp_vendor_list}    Create List
     ${vendor_list_length}    Get Length    ${product_vendor_list}
     ${response_vendor_list}    Get Json Value As String    ${response.content}    $.[${product_index}].vendors.[*].code
     ${response_vendor_list}    Remove String    ${response_vendor_list}    "
@@ -209,7 +192,8 @@ Verify Vendor Details Are Retrieved Correctly
     \    Run Keyword If    "${${item_vendor_code}_country}"!="NULL"    Verify Json Value Is Correct    $[${product_index}].vendors.[${vendor_index}].country    ${${item_vendor_code}_country}
     \    Verify Json Value Is Correct    $[${product_index}].vendors.[${vendor_index}].misc    ${${item_vendor_code}_misc.lower()}
     \    Run Keyword If    ${${item_vendor_code}_contact_info_count}>0    Verify Vendor Details Contact Info Are Retrieved Correctly    ${product_index}    ${vendor_index}    ${item_vendor_code}
-    \    Run Keyword If    "${country.upper()}" == "HK"    Run Keyword If    "${${item_vendor_code}_credit_terms}"!="NULL"    Verify Json Value Is Correct    $[${product_index}].vendors.[${vendor_index}].creditTerms    ${${item_vendor_code}_credit_terms}     
+    \    Run Keyword If    "${country.upper()}" == "HK"    Run Keyword If    "${${item_vendor_code}_credit_terms}"!="NULL"    Verify Json Value Is Correct    $[${product_index}].vendors.[${vendor_index}].creditTerms
+    \    ...    ${${item_vendor_code}_credit_terms}
 
 Verify Vendor Details Contact Info Are Retrieved Correctly
     [Arguments]    ${product_index}    ${vendor_index}    ${item_vendor_code}
@@ -227,7 +211,7 @@ Verify Vendor Details Contact Info India Are Retrieved Correctly
 
 Verify Vendor Details India Are Retrieved Correctly
     [Arguments]    ${product_index}    ${product_vendor_list}
-    @{temp_vendor_list}    Create List    
+    @{temp_vendor_list}    Create List
     ${vendor_list_length}    Get Length    ${product_vendor_list}
     ${response_vendor_list}    Get Json Value As String    ${response.content}    $.[${product_index}].vendors.[*].code
     ${response_vendor_list}    Remove String    ${response_vendor_list}    "
@@ -250,4 +234,24 @@ Verify Vendor Details India Are Retrieved Correctly
 
 Verify Vendor Raise Type Is Retrieved Correctly
     [Arguments]    ${index}    ${list_item}    ${vendor_index}
-    Run Keyword If    "${raise_type_${list_item}}"!="NULL"    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].raiseType    ${raise_type_${list_item}}    ELSE IF    "${country}"!="IN" and "${raise_type_${list_item}}"=="NULL"    Verify Json Element Does Not Exist    $[${index}].vendors.[${vendor_index}].raiseType
+    Run Keyword If    "${raise_type_${list_item}}"!="NULL"    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].raiseType    ${raise_type_${list_item}}
+    ...    ELSE IF    "${country}"!="IN" and "${raise_type_${list_item}}"=="NULL"    Verify Json Element Does Not Exist    $[${index}].vendors.[${vendor_index}].raiseType
+
+Verify Vendors Are Retrieved Correctly
+    [Arguments]    ${index}    ${item_vendor_list}
+    ${item_vendor_list_length}    Get Length    ${item_vendor_list}
+    ${vendor_index}    Set Variable    0
+    : FOR    ${vendor_index}    IN RANGE    ${item_vendor_list_length}
+    \    ${list_item}    Get From List    ${item_vendor_list}    ${vendor_index}
+    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].code    ${list_item}
+    \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].name    ${vendor_code_${list_item}}
+    \    Run Keyword If    "${country}"!="IN"    Verify Vendor Raise Type Is Retrieved Correctly    ${index}    ${list_item}    ${vendor_index}
+    \    ${vendor_index}    Evaluate    ${vendor_index}+1
+    Verify Json Element Does Not Exist    $[${index}].vendors.[${vendor_index}].vendorName
+
+Verify Vendors Details Are Retrieved Correctly
+    ${all_product_list_length}    Get Length    ${all_product_list}
+    : FOR    ${index}    IN RANGE    ${all_product_list_length}
+    \    ${item_product_code}    Get Json Value As String    ${response.content}    $.[${index}].productCode
+    \    Run Keyword If    "${country.upper()}" != "IN"    Verify Vendor Details Are Retrieved Correctly    ${index}    ${${item_product_code}_vendor_list}
+    \    ...    ELSE    Verify Vendor Details India Are Retrieved Correctly    ${index}    ${${item_product_code}_vendor_list}
