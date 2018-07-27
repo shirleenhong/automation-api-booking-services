@@ -65,9 +65,6 @@ public class ExchangeOrder implements Serializable {
 
 	private String countryCode;
 
-	@ApiModelProperty(allowableValues = "CX,CC,INV", required = true)
-	private String fopType;
-
 	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T00:00:00.000Z", required = true)
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
@@ -149,14 +146,6 @@ public class ExchangeOrder implements Serializable {
 
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
-	}
-
-	public String getFopType() {
-		return fopType;
-	}
-
-	public void setFopType(String fopType) {
-		this.fopType = fopType;
 	}
 
 	public Instant getAdditionalInfoDate() {

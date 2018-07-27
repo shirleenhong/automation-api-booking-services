@@ -5,7 +5,9 @@ import java.util.List;
 public class MiscChargeOrder {
 
 	private MiscChargeOrderInfo mcoInfo;
+	
 	private String traveler;
+	
 	private List<String> remarks;
 
 	public MiscChargeOrderInfo getMcoInfo() {

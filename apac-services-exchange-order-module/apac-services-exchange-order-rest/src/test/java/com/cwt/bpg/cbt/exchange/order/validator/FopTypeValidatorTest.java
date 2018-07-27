@@ -23,7 +23,7 @@ public class FopTypeValidatorTest {
     @Test
     public void fopTypeCcWithCreditCardShouldNotThrowException() {
         ExchangeOrder exchangeOrder = new ExchangeOrder();
-        exchangeOrder.setFopType(FopTypes.CREDIT_CARD.getCode());
+        exchangeOrder.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CREDIT_CARD);
         CreditCard creditCard = new CreditCard();
         exchangeOrder.getServiceInfo().getFormOfPayment().setCreditCard(creditCard);
 
@@ -33,7 +33,7 @@ public class FopTypeValidatorTest {
     @Test(expected = IllegalArgumentException.class)
     public void fopTypeCcWithoutCreditCardShouldThrowException() {
         ExchangeOrder exchangeOrder = new ExchangeOrder();
-        exchangeOrder.setFopType(FopTypes.CWT.getCode());
+        exchangeOrder.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CWT);
 
         validator.validate(exchangeOrder);
     }
@@ -41,7 +41,7 @@ public class FopTypeValidatorTest {
     @Test
     public void fopTypeNonCcWithCreditCardShouldNotThrowException() {
         ExchangeOrder exchangeOrder = new ExchangeOrder();
-        exchangeOrder.setFopType(FopTypes.INVOICE.getCode());
+        exchangeOrder.getServiceInfo().getFormOfPayment().setFopType(FopTypes.INVOICE);
         CreditCard creditCard = new CreditCard();
         exchangeOrder.getServiceInfo().getFormOfPayment().setCreditCard(creditCard);
 
@@ -51,7 +51,7 @@ public class FopTypeValidatorTest {
     @Test
     public void fopTypeNonCcWithoutCreditCardShouldNotThrowException() {
         ExchangeOrder exchangeOrder = new ExchangeOrder();
-        exchangeOrder.setFopType(FopTypes.INVOICE.getCode());
+        exchangeOrder.getServiceInfo().getFormOfPayment().setFopType(FopTypes.INVOICE);
 
         validator.validate(exchangeOrder);
     }

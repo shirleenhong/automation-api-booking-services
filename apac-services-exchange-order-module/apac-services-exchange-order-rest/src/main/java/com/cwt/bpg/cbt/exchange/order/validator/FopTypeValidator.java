@@ -17,8 +17,8 @@ public class FopTypeValidator implements Validator<ExchangeOrder> {
 
 	@Override
 	public void validate(ExchangeOrder input) {
-		if (creditCardTypes.contains(input.getFopType()) && input.getServiceInfo().getFormOfPayment().getCreditCard() == null) {
-			throw new IllegalArgumentException("Credit Card required for fopType " + input.getFopType());
+		if (creditCardTypes.contains(input.getServiceInfo().getFormOfPayment().getFopType().getCode()) && input.getServiceInfo().getFormOfPayment().getCreditCard() == null) {
+			throw new IllegalArgumentException("Credit Card required for fopType " + input.getServiceInfo().getFormOfPayment().getFopType());
 		}
 	}
 }

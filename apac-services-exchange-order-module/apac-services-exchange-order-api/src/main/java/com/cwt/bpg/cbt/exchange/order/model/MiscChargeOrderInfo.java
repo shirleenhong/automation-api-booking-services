@@ -5,17 +5,29 @@ import java.math.BigDecimal;
 public class MiscChargeOrderInfo {
 
 	private String recordLocator;
-	private String typeOfService;
+	
+	private String serviceType;
+	
 	private String locationOfIssuance;
+	
 	private String contact;
+	
 	private String FOP;
+	
 	private BigDecimal equivalentAmtPaid;
+	
 	private String headlineCurrency;
+	
 	private BigDecimal Taxes;
+	
 	private double rateofExchange;
+	
 	private String exchangeIssue;
+	
 	private String inConjunctionWith;
+	
 	private String originalFOP;
+	
 	private String originalPlaceOfIssue;
 
 	public String getRecordLocator() {
@@ -26,12 +38,13 @@ public class MiscChargeOrderInfo {
 		this.recordLocator = recordLocator;
 	}
 
-	public String getTypeOfService() {
-		return typeOfService;
+	
+	public String getServiceType() {
+		return serviceType;
 	}
 
-	public void setTypeOfService(String typeOfService) {
-		this.typeOfService = typeOfService;
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
 	}
 
 	public String getLocationOfIssuance() {
