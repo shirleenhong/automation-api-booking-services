@@ -27,7 +27,7 @@ public class ReportHeaderRepository extends CommonRepository<ReportHeader, Strin
                 .field("countryCode")
                 .equalIgnoreCase(countryCode);
 
-        WriteResult deleteResult = datastore.delete(query);
+        datastore.delete(query);
         return countryCode;
     }
 
