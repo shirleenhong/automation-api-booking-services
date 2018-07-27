@@ -95,7 +95,7 @@ public class ExchangeOrderReportService {
 				.orElseThrow(() -> new ExchangeOrderNoContentException(
 						"Exchange order number not found: [ " + eoNumber + " ]"));
 		
-		ReportHeader reportHeader = getReportHeaderInfo(exchangeOrder);
+		ReportHeader reportHeader = getReportHeaderInfo(exchangeOrder.getCountryCode());
 
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
 
@@ -141,14 +141,14 @@ public class ExchangeOrderReportService {
 	}
 	
 	
-	private ReportHeader getReportHeaderInfo(ExchangeOrder eo)
+	private ReportHeader getReportHeaderInfo(String countryCode)
 			throws ExchangeOrderNoContentException {
 		Optional<ReportHeader> reportHeaderExists = Optional
-				.ofNullable(getReportHeader(eo.getCountryCode()));
+				.ofNullable(getReportHeader(countryCode));
 
 		ReportHeader reportHeader = reportHeaderExists
 				.orElseThrow(() -> new ExchangeOrderNoContentException(
-						"Report header not found for country: [ " + eo.getCountryCode()
+						"Report header not found for country: [ " + countryCode
 								+ " ]"));
 		return reportHeader;
 	}

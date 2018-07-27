@@ -41,7 +41,7 @@ public class EmailContentProcessor {
 		Template template = templateConfig.getTemplate(EO_EMAIL_BODY_FTL);
 		Map<String, Object> input = new HashMap<>();
 
-		ReportHeader reportHeader = getReportHeaderInfo(eo);
+		ReportHeader reportHeader = getReportHeaderInfo(eo.getCountryCode());
 
 		input.put("vendorSupportEmail", getValue(eo.getVendor().getSupportEmail()));
 		input.put("agentName", eo.getAgentName());
@@ -53,14 +53,14 @@ public class EmailContentProcessor {
 		return writer.toString();
 	}
 	
-	private ReportHeader getReportHeaderInfo(ExchangeOrder eo)
+	private ReportHeader getReportHeaderInfo(String countryCode)
 			throws ExchangeOrderNoContentException {
 		Optional<ReportHeader> reportHeaderExists = Optional
-				.ofNullable(getReportHeader(eo.getCountryCode()));
+				.ofNullable(getReportHeader(countryCode));
 
 		ReportHeader reportHeader = reportHeaderExists
 				.orElseThrow(() -> new ExchangeOrderNoContentException(
-						"Report header not found for country: [ " + eo.getCountryCode()
+						"Report header not found for country: [ " + countryCode
 								+ " ]"));
 		return reportHeader;
 	}
