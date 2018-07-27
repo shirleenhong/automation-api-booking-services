@@ -118,15 +118,15 @@ public class ExchangeOrderReportService {
 		parameters.put("CWT_LOGO", ImageIO.read(resourceLogo.getInputStream()));
 		parameters.put("DATE", getDate(exchangeOrder));
 		parameters.put("ADDITIONAL_INFO_DATE", formatDate(exchangeOrder.getAdditionalInfoDate()));
-		parameters.put("NETT_COST", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getNettCost()));
-		parameters.put("TAX2", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTax2()));
+		parameters.put("NETT_COST", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getServiceInfo().getNettCost()));
+		parameters.put("TAX2", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getServiceInfo().getTax2()));
 		parameters.put("TOTAL", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTotal()));
 
-		BigDecimal gstAmount = exchangeOrder.getGstAmount();
+		BigDecimal gstAmount = exchangeOrder.getServiceInfo().getGst();
         boolean displayGst = gstAmount != null && gstAmount.doubleValue() > 0d;
         parameters.put("GST_AMOUNT_TAX1_LABEL", displayGst ? "GST" : "Tax");
         parameters.put("GST_AMOUNT_TAX1", formatAmount(exchangeOrder.getCountryCode(),
-                displayGst ? gstAmount : exchangeOrder.getTax1()));
+                displayGst ? gstAmount : exchangeOrder.getServiceInfo().getTax1()));
         
         List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
         List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);

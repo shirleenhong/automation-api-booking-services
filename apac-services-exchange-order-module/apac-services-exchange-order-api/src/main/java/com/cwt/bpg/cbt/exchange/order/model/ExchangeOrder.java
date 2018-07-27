@@ -63,25 +63,10 @@ public class ExchangeOrder implements Serializable {
 	@Id
 	private String eoNumber;
 
-	@DecimalMin(value = "0")
-	private BigDecimal commission;
-
-	@DecimalMin(value = "0")
-	private BigDecimal gstAmount;
-
-	@DecimalMin(value = "0")
-	private BigDecimal merchantFee;
 	private String countryCode;
 
 	@ApiModelProperty(allowableValues = "CX,CC,INV", required = true)
 	private String fopType;
-
-	private CreditCard creditCard;
-
-	@ApiModelProperty(required = true)
-	private String description;
-
-	private String btaDescription;
 
 	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T00:00:00.000Z", required = true)
 	@JsonSerialize(using = DateSerializer.class)
@@ -123,10 +108,6 @@ public class ExchangeOrder implements Serializable {
 
 	@DecimalMin(value = "0")
 	@ApiModelProperty(required = true)
-	private BigDecimal nettCost;
-
-	@DecimalMin(value = "0")
-	@ApiModelProperty(required = true)
 	private BigDecimal total;
 
 	@ApiModelProperty(required = true)
@@ -137,29 +118,20 @@ public class ExchangeOrder implements Serializable {
 
 	private String raiseCheque;
 
-	private BigDecimal tax1;
-
-	private BigDecimal tax2;
-
-	@DecimalMin(value = "0")
-	@ApiModelProperty(required = true)
-	private BigDecimal sellingPrice;
-
-	@DecimalMin(value = "0")
-	@ApiModelProperty(required = true)
-	private BigDecimal totalSellingPrice;
-
-	@ApiModelProperty(value = "CWT Absorb Tag for GST")
-	private boolean gstAbsorb;
-
-	@ApiModelProperty(value = "CWT Absorb Tag for Merchant Fee")
-	private boolean merchantFeeAbsorb;
-
 	private List<String> eoRemarks;
 
 	private List<String> itineraryRemarks;
 	
 	private Vendor vendor;
+	
+	private ServiceInfo serviceInfo;
+	
+	private MiscInfo miscInfo;
+	
+	private Insurance insurance;
+	
+	private MiscChargeOrder miscChargeOrder;
+
 	
 	private String lastUpdatedByUser;
 	
@@ -169,30 +141,6 @@ public class ExchangeOrder implements Serializable {
 
 	public void setEoNumber(String eoNumber) {
 		this.eoNumber = eoNumber;
-	}
-
-	public BigDecimal getCommission() {
-		return commission;
-	}
-
-	public void setCommission(BigDecimal commission) {
-		this.commission = commission;
-	}
-
-	public BigDecimal getGstAmount() {
-		return gstAmount;
-	}
-
-	public void setGstAmount(BigDecimal gstAmount) {
-		this.gstAmount = gstAmount;
-	}
-
-	public BigDecimal getMerchantFee() {
-		return merchantFee;
-	}
-
-	public void setMerchantFee(BigDecimal merchantFee) {
-		this.merchantFee = merchantFee;
 	}
 
 	public String getCountryCode() {
@@ -209,30 +157,6 @@ public class ExchangeOrder implements Serializable {
 
 	public void setFopType(String fopType) {
 		this.fopType = fopType;
-	}
-
-	public CreditCard getCreditCard() {
-		return creditCard;
-	}
-
-	public void setCreditCard(CreditCard creditCard) {
-		this.creditCard = creditCard;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getBtaDescription() {
-		return btaDescription;
-	}
-
-	public void setBtaDescription(String btaDescription) {
-		this.btaDescription = btaDescription;
 	}
 
 	public Instant getAdditionalInfoDate() {
@@ -323,14 +247,6 @@ public class ExchangeOrder implements Serializable {
 		this.recordLocator = recordLocator;
 	}
 
-	public BigDecimal getNettCost() {
-		return nettCost;
-	}
-
-	public void setNettCost(BigDecimal nettCost) {
-		this.nettCost = nettCost;
-	}
-
 	public BigDecimal getTotal() {
 		return total;
 	}
@@ -363,38 +279,6 @@ public class ExchangeOrder implements Serializable {
 		this.raiseCheque = raiseCheque;
 	}
 
-	public BigDecimal getTax1() {
-		return tax1;
-	}
-
-	public void setTax1(BigDecimal tax1) {
-		this.tax1 = tax1;
-	}
-
-	public BigDecimal getTax2() {
-		return tax2;
-	}
-
-	public void setTax2(BigDecimal tax2) {
-		this.tax2 = tax2;
-	}
-
-	public BigDecimal getSellingPrice() {
-		return sellingPrice;
-	}
-
-	public void setSellingPrice(BigDecimal sellingPrice) {
-		this.sellingPrice = sellingPrice;
-	}
-
-	public BigDecimal getTotalSellingPrice() {
-		return totalSellingPrice;
-	}
-
-	public void setTotalSellingPrice(BigDecimal totalSellingPrice) {
-		this.totalSellingPrice = totalSellingPrice;
-	}
-
 	public List<String> getEoRemarks() {
 		return eoRemarks;
 	}
@@ -419,22 +303,6 @@ public class ExchangeOrder implements Serializable {
 		this.vendor = vendor;
 	}
 
-	public boolean isGstAbsorb() {
-		return gstAbsorb;
-	}
-
-	public void setGstAbsorb(boolean gstAbsorb) {
-		this.gstAbsorb = gstAbsorb;
-	}
-
-	public boolean isMerchantFeeAbsorb() {
-		return merchantFeeAbsorb;
-	}
-
-	public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
-		this.merchantFeeAbsorb = merchantFeeAbsorb;
-	}
-
     public String getLastUpdatedByUser() {
         return lastUpdatedByUser;
     }
@@ -442,5 +310,39 @@ public class ExchangeOrder implements Serializable {
     public void setLastUpdatedByUser(String lastUpdatedByUser) {
         this.lastUpdatedByUser = lastUpdatedByUser;
     }
+
+	public ServiceInfo getServiceInfo() {
+		return serviceInfo;
+	}
+
+	public void setServiceInfo(ServiceInfo serviceInfo) {
+		this.serviceInfo = serviceInfo;
+	}
+
+	public MiscInfo getMiscInfo() {
+		return miscInfo;
+	}
+
+	public void setMiscInfo(MiscInfo miscInfo) {
+		this.miscInfo = miscInfo;
+	}
+
+	public Insurance getInsurance() {
+		return insurance;
+	}
+
+	public void setInsurance(Insurance insurance) {
+		this.insurance = insurance;
+	}
+
+	public MiscChargeOrder getMiscChargeOrder() {
+		return miscChargeOrder;
+	}
+
+	public void setMiscChargeOrder(MiscChargeOrder miscChargeOrder) {
+		this.miscChargeOrder = miscChargeOrder;
+	}
+    
+    
     
 }

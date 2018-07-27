@@ -18,14 +18,14 @@ public class ExchangeOrderAmountScaler
 
         int scale = scaleConfig.getScale(exchangeOrder.getCountryCode());
 
-        exchangeOrder.setCommission(CalculatorUtils.scale(exchangeOrder.getCommission(), scale));
-        exchangeOrder.setMerchantFee(CalculatorUtils.scale(exchangeOrder.getMerchantFee(), scale));
-        exchangeOrder.setNettCost(CalculatorUtils.scale(exchangeOrder.getNettCost(), scale));
-        exchangeOrder.setGstAmount(CalculatorUtils.scale(exchangeOrder.getGstAmount(), scale));
-        exchangeOrder.setTax1(CalculatorUtils.scale(exchangeOrder.getTax1(), scale));
-        exchangeOrder.setTax2(CalculatorUtils.scale(exchangeOrder.getTax2(), scale));
+        exchangeOrder.getServiceInfo().setCommission(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getCommission(), scale));
+        exchangeOrder.getServiceInfo().setMerchantFee(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getMerchantFee(), scale));
+        exchangeOrder.getServiceInfo().setNettCost(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getNettCost(), scale));
+        exchangeOrder.getServiceInfo().setGst(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getGst(), scale));
+        exchangeOrder.getServiceInfo().setTax1(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTax1(), scale));
+        exchangeOrder.getServiceInfo().setTax2(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTax2(), scale));
         exchangeOrder.setTotal(CalculatorUtils.scale(exchangeOrder.getTotal(), scale));
-        exchangeOrder.setSellingPrice(CalculatorUtils.scale(exchangeOrder.getSellingPrice(), scale));
-        exchangeOrder.setTotalSellingPrice(CalculatorUtils.scale(exchangeOrder.getTotalSellingPrice(), scale));
+        exchangeOrder.getServiceInfo().setSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getSellingPrice(), scale));
+        exchangeOrder.getServiceInfo().setTotalSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTotalSellingPrice(), scale));
     }
 }
