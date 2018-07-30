@@ -41,12 +41,13 @@ public class ExchangeOrderController {
 	@Autowired
 	private ExchangeOrderReportService eoReportService;
 
-	@PostMapping(path = "/exchange-order", produces = {
+	@PostMapping(path = "/exchange-order/{countryCode:hk|sg}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Saves new exchange order transaction.")
 	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
+			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
 			throws ExchangeOrderNoContentException {
 		boolean isSave = input.getEoNumber() == null ? true : false;
@@ -54,19 +55,52 @@ public class ExchangeOrderController {
 				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
 
-	@GetMapping(path = "/exchange-order/{eoNumber:^[0-9]{10}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{eoNumber:^[0-9]{10}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction based on exchange order number (10 digit numeric string).")
 	public ResponseEntity<ExchangeOrder> getExchangeOrder(
+			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
 
 		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/exchange-order/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction based on Record Locator (6 digit alphanumeric string).")
 	public ResponseEntity<List<ExchangeOrder>> getExchangeOrderByRecordLocator(
+			@PathVariable @ApiParam("2-character country code") String countryCode,
+			@PathVariable @ApiParam(value = "Record Locator") String recordLocator) {
+
+		return new ResponseEntity<>(eoService.getExchangeOrderByRecordLocator(recordLocator), HttpStatus.OK);
+	}
+
+	@PostMapping(path = "/exchange-order/in", produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Saves new exchange order transaction.")
+	public ResponseEntity<ExchangeOrder> saveIndiaExchangeOrder(
+			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
+			throws ExchangeOrderNoContentException {
+		boolean isSave = input.getEoNumber() == null ? true : false;
+		return new ResponseEntity<>(eoService.saveExchangeOrder(input),
+				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
+	}
+
+	@GetMapping(path = "/exchange-order/in/{eoNumber:^[0-9]{10}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Pulls exchange order transaction based on exchange order number (10 digit numeric string).")
+	public ResponseEntity<ExchangeOrder> getIndiaExchangeOrder(
+			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
+
+		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
+	}
+
+	@GetMapping(path = "/exchange-order/in/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Pulls exchange order transaction based on Record Locator (6 digit alphanumeric string).")
+	public ResponseEntity<List<ExchangeOrder>> getIndiaExchangeOrderByRecordLocator(
 			@PathVariable @ApiParam(value = "Record Locator") String recordLocator) {
 
 		return new ResponseEntity<>(eoService.getExchangeOrderByRecordLocator(recordLocator), HttpStatus.OK);
