@@ -33,7 +33,6 @@
 	<field name="agentName" class="java.lang.String"/>
 	<field name="agentId" class="java.lang.String"/>
 	<field name="recordLocator" class="java.lang.String"/>
-	<field name="gstAmount" class="java.math.BigDecimal"/>
 	<field name="nettCost" class="java.math.BigDecimal"/>
 	<field name="tax1" class="java.math.BigDecimal"/>
 	<field name="tax2" class="java.math.BigDecimal"/>
@@ -41,9 +40,6 @@
 	<field name="description" class="java.lang.String"/>
 	<field name="btaDescription" class="java.lang.String"/>
 	<field name="eoRemarks" class="java.util.List"/>
-	<variable name="tax1Label" class="java.lang.String">
-		<variableExpression><![CDATA[$F{gstAmount} != null ? "GST" : "Tax"]]></variableExpression>
-	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

@@ -230,7 +230,7 @@ public class ExchangeOrderReportServiceTest {
 
 		exchangeOrder.setCountryCode(countryCode);
 		exchangeOrder.setProductCode(productCode);
-		exchangeOrder.setAdditionalInfoDate(Instant.now());
+		exchangeOrder.getServiceInfo().getAdditionalInfo().setDate(Instant.now());
 		exchangeOrder.getServiceInfo().setTax1(new BigDecimal(100));
 
 		List<ContactInfo> contactInfoList = new ArrayList<>();
