@@ -24,20 +24,20 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
 @NotNullOnInsert.List({
-		@NotNullOnInsert(dependFieldName = "commission"),
-		@NotNullOnInsert(dependFieldName = "gstAmount"),
-		@NotNullOnInsert(dependFieldName = "merchantFee"),
+		//@NotNullOnInsert(dependFieldName = "commission"),
+		//@NotNullOnInsert(dependFieldName = "gstAmount"),
+		//@NotNullOnInsert(dependFieldName = "merchantFee"),
 		@NotNullOnInsert(dependFieldName = "additionalInfoDate"),
-		@NotNullOnInsert(dependFieldName = "nettCost"),
+		//@NotNullOnInsert(dependFieldName = "nettCost"),
 		@NotNullOnInsert(dependFieldName = "total"),
-		@NotNullOnInsert(dependFieldName = "sellingPrice"),
-		@NotNullOnInsert(dependFieldName = "totalSellingPrice"),
+		//@NotNullOnInsert(dependFieldName = "sellingPrice"),
+		//@NotNullOnInsert(dependFieldName = "totalSellingPrice"),
 		@NotNullOnInsert(dependFieldName = "vendor"),
 
 })
 @NotEmptyOnInsert.List({
-		@NotEmptyOnInsert(dependFieldName = "fopType"),
-		@NotEmptyOnInsert(dependFieldName = "description"),
+		//@NotEmptyOnInsert(dependFieldName = "fopType"),
+		//@NotEmptyOnInsert(dependFieldName = "description"),
 		@NotEmptyOnInsert(dependFieldName = "productCode"),
 		@NotEmptyOnInsert(dependFieldName = "accountNumber"),
 		@NotEmptyOnInsert(dependFieldName = "passengerName"),
@@ -49,11 +49,11 @@ import io.swagger.annotations.ApiModelProperty;
 		@NotEmptyOnInsert(dependFieldName = "status"),
 
 })
-@NotNullOnFopType.List({
-		@NotNullOnFopType(fieldValue="CC",dependFieldName = "creditCard"),
-		@NotNullOnFopType(fieldValue="CX4",dependFieldName = "creditCard"),
-})
-@ValidateOnInsert.List({@ValidateOnInsert(dependentFields={"creditCard","vendor"})})
+//@NotNullOnFopType.List({
+//		@NotNullOnFopType(fieldValue="CC",dependFieldName = "creditCard"),
+//		@NotNullOnFopType(fieldValue="CX4",dependFieldName = "creditCard"),
+//})
+//@ValidateOnInsert.List({@ValidateOnInsert(dependentFields={"creditCard","vendor"})})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder implements Serializable {

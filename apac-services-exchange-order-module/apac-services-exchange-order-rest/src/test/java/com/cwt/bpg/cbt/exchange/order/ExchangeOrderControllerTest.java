@@ -74,6 +74,8 @@ public class ExchangeOrderControllerTest
     private ExchangeOrderController controller;
 
     private String url;
+    private String urlSg;
+    private String urlIn;
     private String eoNumber;
     private String pnr;
 
@@ -84,6 +86,8 @@ public class ExchangeOrderControllerTest
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
         url = "/exchange-order";
+        urlSg = "/exchange-order/sg";
+        urlIn = "/exchange-order/in";
         eoNumber = "1806100005";
         pnr = "U9L8VY";
     }
@@ -103,7 +107,7 @@ public class ExchangeOrderControllerTest
 
         when(eoService.saveExchangeOrder(any(ExchangeOrder.class))).thenReturn(order);
 
-        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
@@ -123,7 +127,7 @@ public class ExchangeOrderControllerTest
 
         when(eoService.saveExchangeOrder(any(ExchangeOrder.class))).thenReturn(order);
 
-        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse();
@@ -142,7 +146,7 @@ public class ExchangeOrderControllerTest
         order.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CWT);
         order.setEoNumber("1122334455");
 
-        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
@@ -162,7 +166,7 @@ public class ExchangeOrderControllerTest
         order.setEoNumber(null);
         order.getServiceInfo().getFormOfPayment().setCreditCard(null);
 
-        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isBadRequest())
                 .andReturn()
                 .getResponse();
@@ -181,7 +185,7 @@ public class ExchangeOrderControllerTest
         when(eoService.saveExchangeOrder(anyObject()))
                 .thenThrow(new ExchangeOrderNoContentException("eo number not found"));
 
-        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isNoContent())
                 .andReturn()
                 .getResponse();
@@ -196,7 +200,7 @@ public class ExchangeOrderControllerTest
         ExchangeOrder order = new ExchangeOrder();
         when(eoService.getExchangeOrder(eoNumber)).thenReturn(order);
 
-        mockMvc.perform(get(url + "/" + eoNumber)).andExpect(status().isOk());
+        mockMvc.perform(get(urlSg + "/" + eoNumber)).andExpect(status().isOk());
 
         verify(eoService, times(1)).getExchangeOrder(eoNumber);
     }
@@ -208,7 +212,7 @@ public class ExchangeOrderControllerTest
         ExchangeOrder order = new ExchangeOrder();
         when(eoService.getExchangeOrderByRecordLocator(pnr)).thenReturn(Arrays.asList(order));
 
-        mockMvc.perform(get(url + "/" + pnr)).andExpect(status().isOk());
+        mockMvc.perform(get(urlSg + "/" + pnr)).andExpect(status().isOk());
 
         verify(eoService, times(1)).getExchangeOrderByRecordLocator(pnr);
     }
@@ -221,7 +225,7 @@ public class ExchangeOrderControllerTest
 
         when(eoService.saveExchangeOrder(order)).thenReturn(order);
 
-        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isBadRequest())
                 .andReturn()
                 .getResponse();
