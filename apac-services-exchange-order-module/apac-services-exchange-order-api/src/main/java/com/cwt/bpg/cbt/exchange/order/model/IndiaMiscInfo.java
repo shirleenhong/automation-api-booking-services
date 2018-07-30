@@ -1,151 +1,119 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import javax.validation.constraints.Max;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class IndiaMiscInfo implements Serializable {
 
-    private static final long serialVersionUID = 4914530217842938604L;
+	private static final long serialVersionUID = 4914530217842938604L;
 
-    private String filedFareNumber;
+	private BigDecimal referenceFare;
 
-    private BigDecimal referenceFare;
+	private BigDecimal lowFare;
 
-    private BigDecimal lowFare;
+	private String classOfServices;
 
-    private String finalDestination;
+	private String lowFareCarrier;
 
-    private String classOfServices;
+	private String bookingAction;
 
-    private String lowFareCarrier;
+	private String realisedSavingsCode;
 
-    @Max(value = 2)
-    private Timezone timezone;
+	private String missedSavingsCode;
 
-    private String bookingAction;
+	private String declinedAirline1;
 
-    private String realisedSavingsCode;
+	private BigDecimal declinedFare1;
 
-    private String missedSavingsCode;
+	private String declinedAirline2;
 
-    private String declinedAirline1;
+	private BigDecimal declinedFare2;
 
-    private BigDecimal declinedFare1;
+	public BigDecimal getReferenceFare() {
+		return referenceFare;
+	}
 
-    private String declinedAirline2;
+	public void setReferenceFare(BigDecimal referenceFare) {
+		this.referenceFare = referenceFare;
+	}
 
-    private BigDecimal declinedFare2;
+	public BigDecimal getLowFare() {
+		return lowFare;
+	}
 
-    public String getFiledFareNumber() {
-        return filedFareNumber;
-    }
+	public void setLowFare(BigDecimal lowFare) {
+		this.lowFare = lowFare;
+	}
 
-    public void setFiledFareNumber(String filedFareNumber) {
-        this.filedFareNumber = filedFareNumber;
-    }
+	public String getClassOfServices() {
+		return classOfServices;
+	}
 
-    public BigDecimal getReferenceFare() {
-        return referenceFare;
-    }
+	public void setClassOfServices(String classOfServices) {
+		this.classOfServices = classOfServices;
+	}
 
-    public void setReferenceFare(BigDecimal referenceFare) {
-        this.referenceFare = referenceFare;
-    }
+	public String getLowFareCarrier() {
+		return lowFareCarrier;
+	}
 
-    public BigDecimal getLowFare() {
-        return lowFare;
-    }
+	public void setLowFareCarrier(String lowFareCarrier) {
+		this.lowFareCarrier = lowFareCarrier;
+	}
 
-    public void setLowFare(BigDecimal lowFare) {
-        this.lowFare = lowFare;
-    }
+	public String getBookingAction() {
+		return bookingAction;
+	}
 
-    public String getFinalDestination() {
-        return finalDestination;
-    }
+	public void setBookingAction(String bookingAction) {
+		this.bookingAction = bookingAction;
+	}
 
-    public void setFinalDestination(String finalDestination) {
-        this.finalDestination = finalDestination;
-    }
+	public String getRealisedSavingsCode() {
+		return realisedSavingsCode;
+	}
 
-    public String getClassOfServices() {
-        return classOfServices;
-    }
+	public void setRealisedSavingsCode(String realisedSavingsCode) {
+		this.realisedSavingsCode = realisedSavingsCode;
+	}
 
-    public void setClassOfServices(String classOfServices) {
-        this.classOfServices = classOfServices;
-    }
+	public String getMissedSavingsCode() {
+		return missedSavingsCode;
+	}
 
-    public String getLowFareCarrier() {
-        return lowFareCarrier;
-    }
+	public void setMissedSavingsCode(String missedSavingsCode) {
+		this.missedSavingsCode = missedSavingsCode;
+	}
 
-    public void setLowFareCarrier(String lowFareCarrier) {
-        this.lowFareCarrier = lowFareCarrier;
-    }
+	public String getDeclinedAirline1() {
+		return declinedAirline1;
+	}
 
-    public Timezone getTimezone() {
-        return timezone;
-    }
+	public void setDeclinedAirline1(String declinedAirline1) {
+		this.declinedAirline1 = declinedAirline1;
+	}
 
-    public void setTimezone(Timezone timezone) {
-        this.timezone = timezone;
-    }
+	public BigDecimal getDeclinedFare1() {
+		return declinedFare1;
+	}
 
-    public String getBookingAction() {
-        return bookingAction;
-    }
+	public void setDeclinedFare1(BigDecimal declinedFare1) {
+		this.declinedFare1 = declinedFare1;
+	}
 
-    public void setBookingAction(String bookingAction) {
-        this.bookingAction = bookingAction;
-    }
+	public String getDeclinedAirline2() {
+		return declinedAirline2;
+	}
 
-    public String getRealisedSavingsCode() {
-        return realisedSavingsCode;
-    }
+	public void setDeclinedAirline2(String declinedAirline2) {
+		this.declinedAirline2 = declinedAirline2;
+	}
 
-    public void setRealisedSavingsCode(String realisedSavingsCode) {
-        this.realisedSavingsCode = realisedSavingsCode;
-    }
+	public BigDecimal getDeclinedFare2() {
+		return declinedFare2;
+	}
 
-    public String getMissedSavingsCode() {
-        return missedSavingsCode;
-    }
-
-    public void setMissedSavingsCode(String missedSavingsCode) {
-        this.missedSavingsCode = missedSavingsCode;
-    }
-
-    public String getDeclinedAirline1() {
-        return declinedAirline1;
-    }
-
-    public void setDeclinedAirline1(String declinedAirline1) {
-        this.declinedAirline1 = declinedAirline1;
-    }
-
-    public BigDecimal getDeclinedFare1() {
-        return declinedFare1;
-    }
-
-    public void setDeclinedFare1(BigDecimal declinedFare1) {
-        this.declinedFare1 = declinedFare1;
-    }
-
-    public String getDeclinedAirline2() {
-        return declinedAirline2;
-    }
-
-    public void setDeclinedAirline2(String declinedAirline2) {
-        this.declinedAirline2 = declinedAirline2;
-    }
-
-    public BigDecimal getDeclinedFare2() {
-        return declinedFare2;
-    }
-
-    public void setDeclinedFare2(BigDecimal declinedFare2) {
-        this.declinedFare2 = declinedFare2;
-    }
+	public void setDeclinedFare2(BigDecimal declinedFare2) {
+		this.declinedFare2 = declinedFare2;
+	}
 }
