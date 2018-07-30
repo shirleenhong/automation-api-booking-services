@@ -4,20 +4,27 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InOrder;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
+import com.cwt.bpg.cbt.exchange.order.model.ServiceInfo;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
-@Ignore
 public class ExchangeOrderUpdateServiceTest
 {
 
@@ -81,7 +88,9 @@ public class ExchangeOrderUpdateServiceTest
         eo.setCountryCode("HK");
         eo.setProductCode("1");
         eo.setVendor(vendor);
+        eo.setServiceInfo(new ServiceInfo());
         eo.getServiceInfo().setGst(gstAmount);
+        eo.getServiceInfo().setFormOfPayment(new FormOfPayment());
         return eo;
     }
 }
