@@ -38,7 +38,7 @@ public class ValidateOnInsertValidator implements ConstraintValidator<ValidateOn
 
 			for(String dependFieldName : dependentFields){
 
-				Object dependFieldValue = PropertyUtils.getProperty(value, dependFieldName);
+				Object dependFieldValue = getProperty(value, dependFieldName);
 
                 if (fieldValue == null && dependFieldValue != null) {
 
@@ -59,6 +59,18 @@ public class ValidateOnInsertValidator implements ConstraintValidator<ValidateOn
 			throw new RuntimeException(ex);
 		}
 		return true;
+	}
+
+	private Object getProperty(Object value, String dependFieldName) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		while(dependFieldName.contains(".")){
+			String fieldValue = dependFieldName.split("\\.")[0];
+			value = PropertyUtils.getProperty(value, fieldValue);
+			dependFieldName = dependFieldName.split(fieldValue+".")[1];
+		}
+
+		value = PropertyUtils.getProperty(value, dependFieldName.split("\\.")[0]);
+
+		return value;
 	}
 
 }

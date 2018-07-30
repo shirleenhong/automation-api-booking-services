@@ -12,8 +12,8 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 /**
- * Validates that field {@code dependFieldName} is not null if
- * field {@code fieldName} has value {@code fieldValue}.
+ * Validates that field {@code dependentFields} is not null if
+ * field {@code fieldName} has value {@code fopTypes}.
  **/
 
 @Target({TYPE, ANNOTATION_TYPE})

@@ -13,12 +13,12 @@ import org.apache.commons.beanutils.BeanUtils;
 public class NotEmptyOnInsertValidator implements ConstraintValidator<NotEmptyOnInsert, Object> {
 
 	private String fieldName;
-	private String dependFieldName;
+	private String[] dependentFields;
 
 	@Override
 	public void initialize(NotEmptyOnInsert annotation) {
 		fieldName = "eoNumber";
-		dependFieldName = annotation.dependFieldName();
+		dependentFields = annotation.dependentFields();
 	}
 
 	@Override
@@ -30,14 +30,17 @@ public class NotEmptyOnInsertValidator implements ConstraintValidator<NotEmptyOn
 
 		try {
 			String fieldValue = BeanUtils.getProperty(value, fieldName);
-			String dependFieldValue = BeanUtils.getProperty(value, dependFieldName);
 
-			if ((fieldValue == null && (dependFieldValue == null || dependFieldValue.isEmpty()))
-					|| dependFieldValue != null && dependFieldValue.isEmpty()) {
-				ctx.disableDefaultConstraintViolation();
-				ctx.buildConstraintViolationWithTemplate(ctx.getDefaultConstraintMessageTemplate())
-						.addNode(dependFieldName).addConstraintViolation();
-				throw new IllegalArgumentException("["+dependFieldName+"] should not be empty");
+			for(String dependFieldName : dependentFields){
+				String dependFieldValue = BeanUtils.getProperty(value, dependFieldName);
+
+				if ((fieldValue == null && (dependFieldValue == null || dependFieldValue.isEmpty()))
+						|| dependFieldValue != null && dependFieldValue.isEmpty()) {
+					ctx.disableDefaultConstraintViolation();
+					ctx.buildConstraintViolationWithTemplate(ctx.getDefaultConstraintMessageTemplate())
+							.addNode(dependFieldName).addConstraintViolation();
+					throw new IllegalArgumentException("["+dependFieldName+"] should not be empty");
+				}
 			}
 
 		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {

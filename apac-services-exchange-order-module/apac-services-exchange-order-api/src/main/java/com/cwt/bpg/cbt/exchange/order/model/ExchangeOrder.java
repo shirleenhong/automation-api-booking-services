@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.validation.constraints.DecimalMin;
 
+import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnInsertOnFopType;
 import com.cwt.bpg.cbt.exchange.order.model.validator.ValidateOnInsert;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
@@ -17,43 +18,15 @@ import org.mongodb.morphia.annotations.Indexes;
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
 import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
-import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullOnFopType;
-import com.cwt.bpg.cbt.exchange.order.model.validator.NotNullOnInsert;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
-@NotNullOnInsert.List({
-		//@NotNullOnInsert(dependFieldName = "commission"),
-		//@NotNullOnInsert(dependFieldName = "gstAmount"),
-		//@NotNullOnInsert(dependFieldName = "merchantFee"),
-		@NotNullOnInsert(dependFieldName = "additionalInfoDate"),
-		//@NotNullOnInsert(dependFieldName = "nettCost"),
-		@NotNullOnInsert(dependFieldName = "total"),
-		//@NotNullOnInsert(dependFieldName = "sellingPrice"),
-		//@NotNullOnInsert(dependFieldName = "totalSellingPrice"),
-		@NotNullOnInsert(dependFieldName = "vendor"),
 
-})
-@NotEmptyOnInsert.List({
-		//@NotEmptyOnInsert(dependFieldName = "fopType"),
-		//@NotEmptyOnInsert(dependFieldName = "description"),
-		@NotEmptyOnInsert(dependFieldName = "productCode"),
-		@NotEmptyOnInsert(dependFieldName = "accountNumber"),
-		@NotEmptyOnInsert(dependFieldName = "passengerName"),
-		@NotEmptyOnInsert(dependFieldName = "agentId"),
-		@NotEmptyOnInsert(dependFieldName = "pcc"),
-		@NotEmptyOnInsert(dependFieldName = "agentName"),
-		@NotEmptyOnInsert(dependFieldName = "recordLocator"),
-		@NotEmptyOnInsert(dependFieldName = "eoAction"),
-		@NotEmptyOnInsert(dependFieldName = "status"),
 
-})
-//@NotNullOnFopType.List({
-//		@NotNullOnFopType(fieldValue="CC",dependFieldName = "creditCard"),
-//		@NotNullOnFopType(fieldValue="CX4",dependFieldName = "creditCard"),
-//})
-//@ValidateOnInsert.List({@ValidateOnInsert(dependentFields={"creditCard","vendor"})})
+@NotEmptyOnInsert.List({@NotEmptyOnInsert(dependentFields = {"productCode","vendor"})})
+@CcNotNullOnInsertOnFopType.List({@CcNotNullOnInsertOnFopType(fopTypes ={"CC","CX4"})})
+@ValidateOnInsert.List({@ValidateOnInsert(dependentFields={"serviceInfo.formOfPayment.creditCard","vendor"})})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder implements Serializable {

@@ -12,8 +12,8 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 /**
- * Validates that field {@code dependFieldName} is not null if
- * field {@code fieldName} has value {@code fieldValue}.
+ * Validates that field {@code dependentFields} is not null if
+ * field {@code fieldName} has value {@code fopTypes}.
  **/
 
 @Target({TYPE, ANNOTATION_TYPE})
@@ -21,7 +21,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = NotEmptyOnInsertValidator.class)
 @Documented
 public @interface NotEmptyOnInsert {
-    String dependFieldName();
+    String[] dependentFields();
 
     String message() default "{NotEmptyOnInsert.message}";
     Class<?>[] groups() default {};
