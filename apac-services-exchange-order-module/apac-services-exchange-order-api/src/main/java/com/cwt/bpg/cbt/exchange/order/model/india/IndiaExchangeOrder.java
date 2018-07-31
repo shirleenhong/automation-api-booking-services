@@ -9,6 +9,8 @@ import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
 public class IndiaExchangeOrder {
 
+	private String eoNumber;
+
 	private Request request;
 
 	private EoAction eoAction;
@@ -32,6 +34,14 @@ public class IndiaExchangeOrder {
 	private Vendor vendor;
 
 	private BigDecimal total;
+
+	public String getEoNumber() {
+		return eoNumber;
+	}
+
+	public void setEoNumber(String eoNumber) {
+		this.eoNumber = eoNumber;
+	}
 
 	public Request getRequest() {
 		return request;
