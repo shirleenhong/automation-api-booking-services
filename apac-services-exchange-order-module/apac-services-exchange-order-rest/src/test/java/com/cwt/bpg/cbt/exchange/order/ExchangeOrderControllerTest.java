@@ -235,7 +235,7 @@ public class ExchangeOrderControllerTest
         ExchangeOrder order = new ExchangeOrder();
         order.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CWT);
         order.getServiceInfo().getAdditionalInfo().setDescription("test_description");
-        order.setAdditionalInfoDate(Instant.now());
+        order.getServiceInfo().getAdditionalInfo().setDate(Instant.now());
         order.setProductCode("PR01");
         Vendor vendor = new Vendor();
         vendor.setCode("VEN090909");

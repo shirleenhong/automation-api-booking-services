@@ -65,11 +65,6 @@ public class ExchangeOrder implements Serializable {
 
 	private String countryCode;
 
-	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T00:00:00.000Z", required = true)
-	@JsonSerialize(using = DateSerializer.class)
-	@JsonDeserialize(using = DateDeserializer.class)
-	private Instant additionalInfoDate;
-
 	@ApiModelProperty(required = true)
 	private String productCode;
 
@@ -129,7 +124,6 @@ public class ExchangeOrder implements Serializable {
 	
 	private MiscChargeOrder miscChargeOrder;
 
-	
 	private String lastUpdatedByUser;
 	
 	public String getEoNumber() {
@@ -146,14 +140,6 @@ public class ExchangeOrder implements Serializable {
 
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
-	}
-
-	public Instant getAdditionalInfoDate() {
-		return additionalInfoDate;
-	}
-
-	public void setAdditionalInfoDate(Instant additionalInfoDate) {
-		this.additionalInfoDate = additionalInfoDate;
 	}
 
 	public String getProductCode() {

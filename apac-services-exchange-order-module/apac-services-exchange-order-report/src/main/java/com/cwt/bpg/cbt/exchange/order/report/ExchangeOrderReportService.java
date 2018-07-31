@@ -117,7 +117,7 @@ public class ExchangeOrderReportService {
 
 		parameters.put("CWT_LOGO", ImageIO.read(resourceLogo.getInputStream()));
 		parameters.put("DATE", getDate(exchangeOrder));
-		parameters.put("ADDITIONAL_INFO_DATE", formatDate(exchangeOrder.getAdditionalInfoDate()));
+		parameters.put("ADDITIONAL_INFO_DATE", formatDate(exchangeOrder.getServiceInfo().getAdditionalInfo().getDate()));
 		parameters.put("NETT_COST", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getServiceInfo().getNettCost()));
 		parameters.put("TAX2", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getServiceInfo().getTax2()));
 		parameters.put("TOTAL", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTotal()));
