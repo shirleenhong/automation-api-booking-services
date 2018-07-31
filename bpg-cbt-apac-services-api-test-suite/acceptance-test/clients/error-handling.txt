@@ -10,7 +10,7 @@ Verify That Error Is Encountered When Invalid Token Is Used
     Send Get Request For Client    client_account_number=9000000100    token=12345.12345.12345
     Verify Response Status Code Is Correct    401
     Verify Client Are Not Retrieved
-    Create Test Variables For Client    client_account_number=9000000100  
+    Create Test Variables For Client    client_id=5000 
     Send Put Request For Client    token=12345.12345.12345
     Verify Response Status Code Is Correct    401
     Verify Client Are Not Retrieved
@@ -24,7 +24,7 @@ Verify That Error Is Encountered When Null Token Is Used
     Send Get Request For Client    client_account_number=9000000100    token=null
     Verify Response Status Code Is Correct    401
     Verify Client Are Not Retrieved
-    Create Test Variables For Client    client_account_number=9000000100  
+    Create Test Variables For Client    client_id=5000 
     Send Put Request For Client    token=null
     Verify Response Status Code Is Correct    401
     Verify Client Are Not Retrieved
@@ -38,7 +38,7 @@ Verify That Error Is Encountered When Empty Token Is Used
     Send Get Request For Client    client_account_number=9000000100    token=${EMPTY}
     Verify Response Status Code Is Correct    400
     Verify Client Are Not Retrieved
-    Create Test Variables For Client    client_account_number=9000000100  
+    Create Test Variables For Client    client_id=5000  
     Send Put Request For Client    token=${EMPTY}
     Verify Response Status Code Is Correct    400
     Verify Client Are Not Retrieved
@@ -52,7 +52,7 @@ Verify That Error Is Encountered When No Token Is Used
     Send Get Request For Client    client_account_number=9000000100    token=None
     Verify Response Status Code Is Correct    400
     Verify Client Are Not Retrieved
-    Create Test Variables For Client    client_account_number=9000000100  
+    Create Test Variables For Client    client_id=5000  
     Send Put Request For Client    token=None
     Verify Response Status Code Is Correct    400
     Verify Client Are Not Retrieved
@@ -61,10 +61,10 @@ Verify That Error Is Encountered When No Token Is Used
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache
     
-Verify That Error Is Encountered When Null Client Id Is Used During Get Request
+Verify That No Error Is Encountered When Null Client Id Is Used During Get Request
     [Tags]    migration
     Send Get Request For Client    client_account_number=null
-    Verify Response Status Code Is Correct    400 
+    Verify Response Status Code Is Correct    200 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache 
 
@@ -82,16 +82,16 @@ Verify That Error Is Encountered When Empty Client Id Is Used During Get Request
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache
 
-Verify That Error Is Encountered When No Client Id Is Used During Get Request
+Verify That No Error Is Encountered When No Client Id Is Used During Get Request
     [Tags]    migration
     Send Get Request For Client    client_account_number=None
-    Verify Response Status Code Is Correct    400 
+    Verify Response Status Code Is Correct    200 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache
 
 Verify That Error Is Encountered When Invalid Client Id Is Used During Put Request
     [Tags]    migration
-    Create Test Variables For Client    client_account_number=9000000100
+    Create Test Variables For Client    client_id=5000
     Send Put Request For Client    client_list=clientId,@#$#@|cmpid,83|name,TEST-PNQ|clientAccountNumber,9000000066|pricingId,10|exemptTax,false|standardMfProduct,false|applyMfCc,false|applyMfBank,false|merchantFee,0.0|lccSameAsInt,false|lccDdlFeeApply,TF|intDdlFeeApply,TF
     Verify Response Status Code Is Correct    400 
     Verify Client Are Not Retrieved
@@ -99,7 +99,7 @@ Verify That Error Is Encountered When Invalid Client Id Is Used During Put Reque
     
 Verify That Error Is Encountered When No Client Id Is Used During Put Request
     [Tags]    migration
-    Create Test Variables For Client    client_account_number=9000000100
+    Create Test Variables For Client    client_id=5000
     Send Put Request For Client    client_list=clientId,None|cmpid,83|name,TEST-PNQ|clientAccountNumber,9000000066|pricingId,10|exemptTax,false|standardMfProduct,false|applyMfCc,false|applyMfBank,false|merchantFee,0.0|lccSameAsInt,false|lccDdlFeeApply,TF|intDdlFeeApply,TF
     Verify Response Status Code Is Correct    400 
     Verify Client Are Not Retrieved
