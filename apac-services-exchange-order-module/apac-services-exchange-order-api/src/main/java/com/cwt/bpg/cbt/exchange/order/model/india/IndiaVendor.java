@@ -1,6 +1,8 @@
-package com.cwt.bpg.cbt.exchange.order.model;
+package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.util.List;
+
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
 
 public class IndiaVendor {
 

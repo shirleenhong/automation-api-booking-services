@@ -29,7 +29,7 @@ public class Car {
 
 	private String type;
 
-	private Guarantor guarantyBy;
+	private Guarantor guarantor;
 
 	public Instant getPickupDateTime() {
 		return pickupDateTime;
@@ -127,12 +127,12 @@ public class Car {
 		this.type = type;
 	}
 
-	public Guarantor getGuarantyBy() {
-		return guarantyBy;
+	public Guarantor getGuarantor() {
+		return guarantor;
 	}
 
-	public void setGuarantyBy(Guarantor guarantyBy) {
-		this.guarantyBy = guarantyBy;
+	public void setGuarantor(Guarantor guarantor) {
+		this.guarantor = guarantor;
 	}
-
+	
 }

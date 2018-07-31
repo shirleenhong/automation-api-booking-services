@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
+import java.math.BigDecimal;
+
 public class Hotel {
 
 	private String address;
@@ -14,11 +16,11 @@ public class Hotel {
 	
 	private String dailyRateCurrency;
 	
-	private String dailyRateAmount;
+	private BigDecimal dailyRateAmount;
 	
 	private String confirmationNumber;
 
-	private Guarantor guarantyBy;
+	private Guarantor guarantor;
 
 	private String hotelRoomType;
 
@@ -71,12 +73,12 @@ public class Hotel {
 	public void setDailyRateCurrency(String dailyRateCurrency) {
 		this.dailyRateCurrency = dailyRateCurrency;
 	}
-
-	public String getDailyRateAmount() {
+	
+	public BigDecimal getDailyRateAmount() {
 		return dailyRateAmount;
 	}
 
-	public void setDailyRateAmount(String dailyRateAmount) {
+	public void setDailyRateAmount(BigDecimal dailyRateAmount) {
 		this.dailyRateAmount = dailyRateAmount;
 	}
 
@@ -88,12 +90,12 @@ public class Hotel {
 		this.confirmationNumber = confirmationNumber;
 	}
 
-	public Guarantor getGuarantyBy() {
-		return guarantyBy;
+	public Guarantor getGuarantor() {
+		return guarantor;
 	}
 
-	public void setGuarantyBy(Guarantor guarantyBy) {
-		this.guarantyBy = guarantyBy;
+	public void setGuarantor(Guarantor guarantor) {
+		this.guarantor = guarantor;
 	}
 
 	public String getHotelRoomType() {

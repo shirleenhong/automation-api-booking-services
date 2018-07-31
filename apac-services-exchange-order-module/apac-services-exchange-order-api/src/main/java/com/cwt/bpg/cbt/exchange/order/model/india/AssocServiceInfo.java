@@ -1,7 +1,9 @@
-package com.cwt.bpg.cbt.exchange.order.model;
+package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
+import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
 
 public class AssocServiceInfo implements Serializable {
 
