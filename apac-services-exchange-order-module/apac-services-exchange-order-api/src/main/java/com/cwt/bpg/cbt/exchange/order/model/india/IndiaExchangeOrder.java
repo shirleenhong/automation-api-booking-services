@@ -5,11 +5,18 @@ import java.time.Instant;
 
 import com.cwt.bpg.cbt.exchange.order.model.EoAction;
 import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
 public class IndiaExchangeOrder {
 
 	private String eoNumber;
+
+	private IndiaServiceInfo serviceInfo;
+
+	private IndiaVendor vendor;
+
+	private IndiaMiscInfo miscInfo;
+
+	private AssocServiceInfo assocServiceInfo;
 
 	private Request request;
 
@@ -31,8 +38,6 @@ public class IndiaExchangeOrder {
 
 	private String productCode;
 
-	private Vendor vendor;
-
 	private BigDecimal total;
 
 	public String getEoNumber() {
@@ -41,6 +46,38 @@ public class IndiaExchangeOrder {
 
 	public void setEoNumber(String eoNumber) {
 		this.eoNumber = eoNumber;
+	}
+
+	public IndiaServiceInfo getServiceInfo() {
+		return serviceInfo;
+	}
+
+	public void setServiceInfo(IndiaServiceInfo serviceInfo) {
+		this.serviceInfo = serviceInfo;
+	}
+
+	public IndiaVendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(IndiaVendor vendor) {
+		this.vendor = vendor;
+	}
+
+	public IndiaMiscInfo getMiscInfo() {
+		return miscInfo;
+	}
+
+	public void setMiscInfo(IndiaMiscInfo miscInfo) {
+		this.miscInfo = miscInfo;
+	}
+
+	public AssocServiceInfo getAssocServiceInfo() {
+		return assocServiceInfo;
+	}
+
+	public void setAssocServiceInfo(AssocServiceInfo assocServiceInfo) {
+		this.assocServiceInfo = assocServiceInfo;
 	}
 
 	public Request getRequest() {
@@ -121,14 +158,6 @@ public class IndiaExchangeOrder {
 
 	public void setProductCode(String productCode) {
 		this.productCode = productCode;
-	}
-
-	public Vendor getVendor() {
-		return vendor;
-	}
-
-	public void setVendor(Vendor vendor) {
-		this.vendor = vendor;
 	}
 
 	public BigDecimal getTotal() {
