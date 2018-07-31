@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum FopTypes
 {
 
@@ -7,6 +9,7 @@ public enum FopTypes
 	CREDIT_CARD("CC"), 
 	INVOICE("INV");
 
+	@JsonValue
 	private final String code;
 
 	FopTypes(String code) {
