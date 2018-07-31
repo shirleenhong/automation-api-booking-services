@@ -2,34 +2,34 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 
 public class CheckList {
 
-	private boolean passportCopies;
+	private boolean passportCopiesReceived;
 
-	private boolean refundCopies;
+	private boolean refundCopiesReceived;
 
-	private boolean vtmCard;
+	private boolean vtmCardReceived;
 
-	public boolean isPassportCopies() {
-		return passportCopies;
+	public boolean isPassportCopiesReceived() {
+		return passportCopiesReceived;
 	}
 
-	public void setPassportCopies(boolean passportCopies) {
-		this.passportCopies = passportCopies;
+	public void setPassportCopiesReceived(boolean passportCopiesReceived) {
+		this.passportCopiesReceived = passportCopiesReceived;
 	}
 
-	public boolean isRefundCopies() {
-		return refundCopies;
+	public boolean isRefundCopiesReceived() {
+		return refundCopiesReceived;
 	}
 
-	public void setRefundCopies(boolean refundCopies) {
-		this.refundCopies = refundCopies;
+	public void setRefundCopiesReceived(boolean refundCopiesReceived) {
+		this.refundCopiesReceived = refundCopiesReceived;
 	}
 
-	public boolean isVtmCard() {
-		return vtmCard;
+	public boolean isVtmCardReceived() {
+		return vtmCardReceived;
 	}
 
-	public void setVtmCard(boolean vtmCard) {
-		this.vtmCard = vtmCard;
+	public void setVtmCardReceived(boolean vtmCardReceived) {
+		this.vtmCardReceived = vtmCardReceived;
 	}
 
 }
