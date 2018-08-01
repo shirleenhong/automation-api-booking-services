@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -80,8 +81,8 @@ public class ExchangeOrderController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Saves new exchange order transaction.")
-	public ResponseEntity<ExchangeOrder> saveIndiaExchangeOrder(
-			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
+	public ResponseEntity<IndiaExchangeOrder> saveIndiaExchangeOrder(
+			@Valid @RequestBody @ApiParam(value = "Exchange order to save") IndiaExchangeOrder input)
 			throws ExchangeOrderNoContentException {
 		boolean isSave = input.getEoNumber() == null ? true : false;
 		return new ResponseEntity<>(eoService.saveExchangeOrder(input),

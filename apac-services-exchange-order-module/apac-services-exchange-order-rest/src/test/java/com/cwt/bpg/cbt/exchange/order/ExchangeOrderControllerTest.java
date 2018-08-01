@@ -182,7 +182,7 @@ public class ExchangeOrderControllerTest
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
         order.getServiceInfo().setGst(BigDecimal.ZERO);
         order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-        when(eoService.saveExchangeOrder(anyObject()))
+        when(eoService.saveExchangeOrder(any(ExchangeOrder.class)))
                 .thenThrow(new ExchangeOrderNoContentException("eo number not found"));
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))

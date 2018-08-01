@@ -1,10 +1,18 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
+import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.swagger.annotations.ApiModelProperty;
 
-public class Request {
+public class Request implements Serializable {
+
+	private static final long serialVersionUID = 3951172881169529734L;
 
 	private String platingCarrier;
 
@@ -38,14 +46,23 @@ public class Request {
 
 	private Hotel hotel;
 
+	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant dateTime;
 
 	private String city;
 
 	private String location;
 
+	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant startDate;
 
+	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant endDate;
 
 	private String name;
@@ -62,6 +79,9 @@ public class Request {
 
 	private Train train;
 
+	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant applicationDate;
 
 	private Car car;

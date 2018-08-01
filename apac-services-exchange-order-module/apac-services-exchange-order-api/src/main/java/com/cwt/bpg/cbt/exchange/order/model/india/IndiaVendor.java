@@ -1,12 +1,15 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
 
-public class IndiaVendor {
+public class IndiaVendor implements Serializable {
 
-	private String name;
+    private static final long serialVersionUID = 8214137480361551399L;
+
+    private String name;
 
 	private String address1;
 

@@ -1,10 +1,22 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
+import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public class Car {
+public class Car implements Serializable {
 
+	private static final long serialVersionUID = -1953882582608518378L;
+
+	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant pickupDateTime;
 
 	private String pickupLocation;
@@ -15,6 +27,9 @@ public class Car {
 
 	private String name;
 
+	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant dropOffDateTime;
 
 	private String dropOffLocation;

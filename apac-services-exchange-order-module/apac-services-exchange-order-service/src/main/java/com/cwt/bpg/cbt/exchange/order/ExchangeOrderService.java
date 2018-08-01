@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -36,6 +37,15 @@ public class ExchangeOrderService {
 		}
 	}
 
+	public IndiaExchangeOrder saveExchangeOrder(IndiaExchangeOrder exchangeOrder)
+			throws ExchangeOrderNoContentException {
+		String eoNumber = exchangeOrder.getEoNumber();
+		if (eoNumber == null) {
+			return eoInsertService.insert(exchangeOrder);
+		}
+		return exchangeOrder;
+	}
+
 	@Cacheable(cacheNames = "exchange-orders", key = "#eoNumber")
 	public ExchangeOrder getExchangeOrder(String eoNumber) {
 		return exchangeOrderRepo.getExchangeOrder(eoNumber);
@@ -53,5 +63,5 @@ public class ExchangeOrderService {
     public boolean update(ExchangeOrder param) {
         return exchangeOrderRepo.updateFinance(param);
     }
-    
+
 }
