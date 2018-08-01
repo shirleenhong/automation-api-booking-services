@@ -9,13 +9,16 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +35,9 @@ import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.ReportHeaderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
+import com.cwt.bpg.cbt.exchange.order.model.AdditionalInfo;
 import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
@@ -114,28 +119,60 @@ public class ExchangeOrderReportService {
 			final ReportHeader reportHeader) throws IOException {
 		final ClassPathResource resourceLogo = new ClassPathResource(IMAGE_PATH);
 		Map<String, Object> parameters = new HashMap<>();
+		
+		boolean displayServiceInfo = false;
+		boolean displayAdditionalInfo = false;
+
+		BigDecimal gstAmount = null;
+		BigDecimal tax1 = null;
+		
+		if (exchangeOrder.getServiceInfo() != null) {
+			gstAmount = exchangeOrder.getServiceInfo().getGst();
+			tax1 = exchangeOrder.getServiceInfo().getTax1();
+			AdditionalInfo additionalInfo = exchangeOrder.getServiceInfo()
+					.getAdditionalInfo();
+			displayAdditionalInfo = additionalInfo != null;
+			displayServiceInfo = true;
+		}
 
 		parameters.put("CWT_LOGO", ImageIO.read(resourceLogo.getInputStream()));
 		parameters.put("DATE", getDate(exchangeOrder));
-		parameters.put("ADDITIONAL_INFO_DATE", formatDate(exchangeOrder.getServiceInfo().getAdditionalInfo().getDate()));
-		parameters.put("NETT_COST", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getServiceInfo().getNettCost()));
-		parameters.put("TAX2", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getServiceInfo().getTax2()));
-		parameters.put("TOTAL", formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTotal()));
+		parameters.put("TOTAL",
+				formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTotal()));
 
-		BigDecimal gstAmount = exchangeOrder.getServiceInfo().getGst();
-        boolean displayGst = gstAmount != null && gstAmount.doubleValue() > 0d;
-        parameters.put("GST_AMOUNT_TAX1_LABEL", displayGst ? "GST" : "Tax");
-        parameters.put("GST_AMOUNT_TAX1", formatAmount(exchangeOrder.getCountryCode(),
-                displayGst ? gstAmount : exchangeOrder.getServiceInfo().getTax1()));
-        
-        List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
-        List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
-        putContactInfoParameters(contactInfoList, parameters);
-        
-        parameters.put("HEADER_ADDRESS", reportHeader.getAddress());
-        parameters.put("HEADER_FAX", reportHeader.getFaxNumber());
-        parameters.put("HEADER_PHONE", reportHeader.getPhoneNumber());
-        parameters.put("HEADER_COMPANY_NAME", reportHeader.getCompanyName());
+		boolean displayGst = gstAmount != null && gstAmount.doubleValue() > 0d;
+		parameters.put("GST_AMOUNT_TAX1_LABEL", displayGst ? "GST" : "Tax");
+		parameters.put("GST_AMOUNT_TAX1", formatAmount(exchangeOrder.getCountryCode(),
+				displayGst ? gstAmount : tax1));
+
+		List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
+		List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
+		putContactInfoParameters(contactInfoList, parameters);
+
+		parameters.put("HEADER_ADDRESS", reportHeader.getAddress());
+		parameters.put("HEADER_FAX", reportHeader.getFaxNumber());
+		parameters.put("HEADER_PHONE", reportHeader.getPhoneNumber());
+		parameters.put("HEADER_COMPANY_NAME", reportHeader.getCompanyName());
+		
+		parameters.put("TAX2",
+				displayServiceInfo ? formatAmount(exchangeOrder.getCountryCode(),
+						exchangeOrder.getServiceInfo().getTax2()) : null);
+		parameters
+				.put("NETT_COST",
+						displayServiceInfo
+								? formatAmount(exchangeOrder.getCountryCode(),
+										exchangeOrder.getServiceInfo().getNettCost())
+								: null);
+		parameters.put("ADDITIONAL_INFO_DATE",
+				displayAdditionalInfo ? formatDate(
+						exchangeOrder.getServiceInfo().getAdditionalInfo().getDate())
+						: null);
+		parameters.put("DESCRIPTION", displayAdditionalInfo
+				? exchangeOrder.getServiceInfo().getAdditionalInfo().getDescription()
+				: null);
+		parameters.put("BTA_DESCRIPTION", displayAdditionalInfo
+				? exchangeOrder.getServiceInfo().getAdditionalInfo().getBtaDescription()
+				: null);
 
 		return parameters;
 	}
