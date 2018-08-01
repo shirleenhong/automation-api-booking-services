@@ -61,11 +61,11 @@ public class ExchangeOrderController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction based on exchange order number (10 digit numeric string).")
-	public ResponseEntity<BaseExchangeOrder> getExchangeOrder(
+	public ResponseEntity<ExchangeOrder> getExchangeOrder(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
 
-		return new ResponseEntity<>(eoService.getExchangeOrder(countryCode, eoNumber),
+		return new ResponseEntity<>((ExchangeOrder) eoService.getExchangeOrder(countryCode, eoNumber),
 				HttpStatus.OK);
 	}
 
@@ -98,10 +98,10 @@ public class ExchangeOrderController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction based on exchange order number (10 digit numeric string).")
-	public ResponseEntity<BaseExchangeOrder> getIndiaExchangeOrder(
+	public ResponseEntity<IndiaExchangeOrder> getIndiaExchangeOrder(
 			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
 
-		return new ResponseEntity<>(eoService.getExchangeOrder("IN", eoNumber),
+		return new ResponseEntity<>((IndiaExchangeOrder) eoService.getExchangeOrder("IN", eoNumber),
 				HttpStatus.OK);
 	}
 
