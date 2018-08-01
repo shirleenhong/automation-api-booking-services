@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import org.apache.commons.lang.StringUtils;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.*;
@@ -29,11 +30,24 @@ public class ExchangeOrderRepository {
 		return savedEoKey.getId().toString();
 	}
 
+    public String save(IndiaExchangeOrder eo) {
+        Key<IndiaExchangeOrder> savedEoKey = morphia.getDatastore().save(eo);
+        LOGGER.info("Save: Exchange order, [{}]", eo.getEoNumber());
+
+        return savedEoKey.getId().toString();
+    }
+
 	public ExchangeOrder getExchangeOrder(String eoNumber) {
 		return morphia.getDatastore().createQuery(ExchangeOrder.class)
 			.field("eoNumber")
 			.equal(eoNumber).get();
 	}
+
+    public IndiaExchangeOrder getIndiaExchangeOrder(String eoNumber) {
+        return morphia.getDatastore().createQuery(IndiaExchangeOrder.class)
+                .field("eoNumber")
+                .equal(eoNumber).get();
+    }
 
 	public List<ExchangeOrder> getByRecordLocator(String recordLocator) {
 		return morphia.getDatastore().createQuery(ExchangeOrder.class)
@@ -42,6 +56,14 @@ public class ExchangeOrderRepository {
 				.order(Sort.descending("createDateTime"))
 				.asList();
 	}
+
+    public List<IndiaExchangeOrder> getIndiaExchangeOrderByRecordLocator(String recordLocator) {
+        return morphia.getDatastore().createQuery(IndiaExchangeOrder.class)
+                .field("recordLocator")
+                .equal(recordLocator)
+                .order(Sort.descending("createDateTime"))
+                .asList();
+    }
 	
 	public List<ExchangeOrder> search(final ExchangeOrderSearchParam param)
     {

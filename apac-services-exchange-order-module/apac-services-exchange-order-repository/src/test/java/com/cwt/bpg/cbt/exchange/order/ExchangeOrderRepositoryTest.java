@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -44,13 +45,19 @@ public class ExchangeOrderRepositoryTest {
 	
     @Mock
     private Query<ExchangeOrder> query;
+
+    @Mock
+    private Query<IndiaExchangeOrder> indiaQuery;
     
     @Mock
     private Query<ExchangeOrder> queryOrder;
     
     @Mock
     private Key<ExchangeOrder> eoKey;
-	
+
+    @Mock
+    private Key<IndiaExchangeOrder> indiaEoKey;
+
 	@InjectMocks
 	private ExchangeOrderRepository repository;
 	
@@ -74,7 +81,22 @@ public class ExchangeOrderRepositoryTest {
 		verify(dataStore, times(1)).save(eo);
 		assertThat(result, is(equalTo(eo.getEoNumber())));
 	}
-	
+
+    @Test
+    public void canSaveOrUpdateIndiaExchangeOrder() {
+        IndiaExchangeOrder eo = new IndiaExchangeOrder();
+        eo.setEoNumber("123098");
+
+        indiaEoKey.setCollection("exchangeOrderTransactions");
+        when(indiaEoKey.getId()).thenReturn(eo.getEoNumber());
+        when(dataStore.save(eo)).thenReturn(indiaEoKey);
+
+        String result = repository.save(eo);
+
+        verify(dataStore, times(1)).save(eo);
+        assertThat(result, is(equalTo(eo.getEoNumber())));
+    }
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void canGetExchangeOrder() {
@@ -92,6 +114,24 @@ public class ExchangeOrderRepositoryTest {
 		
 		assertNotNull(result);
 	}
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
+    public void canGetIndiaExchangeOrder() {
+        FieldEnd fieldEnd = mock(FieldEnd.class);
+        when(dataStore.createQuery(IndiaExchangeOrder.class)).thenReturn(indiaQuery);
+        when(indiaQuery.field(Mockito.anyString())).thenReturn(fieldEnd);
+        when(fieldEnd.equal("eoNumber")).thenReturn(indiaQuery);
+        when(indiaQuery.get()).thenReturn(new IndiaExchangeOrder());
+
+
+        IndiaExchangeOrder result = repository.getIndiaExchangeOrder("eoNumber");
+
+        verify(morphia, times(1)).getDatastore();
+        verify(dataStore, times(1)).createQuery(IndiaExchangeOrder.class);
+
+        assertNotNull(result);
+    }
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test(expected = Exception.class)
@@ -110,6 +150,24 @@ public class ExchangeOrderRepositoryTest {
 		verify(dataStore, times(1)).createQuery(ExchangeOrder.class);		
 		assertNotNull(result);
 	}
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test(expected = Exception.class)
+    public void canGetIndiaExchangeOrderByRecordLocator() {
+        List<IndiaExchangeOrder> list = new ArrayList<>();
+        FieldEnd fieldEnd = mock(FieldEnd.class);
+
+        when(dataStore.createQuery(IndiaExchangeOrder.class)).thenReturn(indiaQuery);
+        when(indiaQuery.field(Mockito.anyString())).thenReturn(fieldEnd);
+        when(fieldEnd.equal("recordLocator")).thenReturn(indiaQuery);
+
+        when(indiaQuery.asList()).thenReturn(list);
+
+        List<IndiaExchangeOrder> result = repository.getIndiaExchangeOrderByRecordLocator("recordLocator");
+
+        verify(dataStore, times(1)).createQuery(IndiaExchangeOrder.class);
+        assertNotNull(result);
+    }
 	
 	@SuppressWarnings("unchecked")
     @Test
