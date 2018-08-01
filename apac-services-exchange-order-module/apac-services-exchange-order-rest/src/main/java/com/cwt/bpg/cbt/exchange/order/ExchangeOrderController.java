@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
+import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
@@ -47,73 +48,80 @@ public class ExchangeOrderController {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Saves new exchange order transaction.")
-	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
+	public ResponseEntity<BaseExchangeOrder> saveExchangeOrder(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
 			throws ExchangeOrderNoContentException {
 		boolean isSave = input.getEoNumber() == null ? true : false;
-		return new ResponseEntity<>(eoService.saveExchangeOrder(input),
+		return new ResponseEntity<>(eoService.saveExchangeOrder2(input),
 				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
 
-	@GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{eoNumber:^[0-9]{10}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{eoNumber:^[0-9]{10}$}", produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction based on exchange order number (10 digit numeric string).")
-	public ResponseEntity<ExchangeOrder> getExchangeOrder(
+	public ResponseEntity<BaseExchangeOrder> getExchangeOrder(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
 
-		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
+		return new ResponseEntity<>(eoService.getExchangeOrder(countryCode, eoNumber),
+				HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction based on Record Locator (6 digit alphanumeric string).")
 	public ResponseEntity<List<ExchangeOrder>> getExchangeOrderByRecordLocator(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@PathVariable @ApiParam(value = "Record Locator") String recordLocator) {
 
-		return new ResponseEntity<>(eoService.getExchangeOrderByRecordLocator(recordLocator), HttpStatus.OK);
+		return new ResponseEntity<>(
+				eoService.getExchangeOrderByRecordLocator(recordLocator), HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/exchange-order/in", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
+					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Saves new exchange order transaction.")
-	public ResponseEntity<IndiaExchangeOrder> saveIndiaExchangeOrder(
-			@Valid @RequestBody @ApiParam(value = "Exchange order to save") IndiaExchangeOrder input)
+	public ResponseEntity<BaseExchangeOrder> saveIndiaExchangeOrder(
+			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
 			throws ExchangeOrderNoContentException {
 		boolean isSave = input.getEoNumber() == null ? true : false;
-		return new ResponseEntity<>(eoService.saveExchangeOrder(input),
+		return new ResponseEntity<>(eoService.saveExchangeOrder2(input),
 				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
 
-	@GetMapping(path = "/exchange-order/in/{eoNumber:^[0-9]{10}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/exchange-order/in/{eoNumber:^[0-9]{10}$}", produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction based on exchange order number (10 digit numeric string).")
-	public ResponseEntity<ExchangeOrder> getIndiaExchangeOrder(
+	public ResponseEntity<BaseExchangeOrder> getIndiaExchangeOrder(
 			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
 
-		return new ResponseEntity<>(eoService.getExchangeOrder(eoNumber), HttpStatus.OK);
+		return new ResponseEntity<>(eoService.getExchangeOrder("IN", eoNumber),
+				HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/exchange-order/in/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/exchange-order/in/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls exchange order transaction based on Record Locator (6 digit alphanumeric string).")
 	public ResponseEntity<List<ExchangeOrder>> getIndiaExchangeOrderByRecordLocator(
 			@PathVariable @ApiParam(value = "Record Locator") String recordLocator) {
 
-		return new ResponseEntity<>(eoService.getExchangeOrderByRecordLocator(recordLocator), HttpStatus.OK);
+		return new ResponseEntity<>(
+				eoService.getExchangeOrderByRecordLocator(recordLocator), HttpStatus.OK);
 	}
 
-	@GetMapping(
-			value = "/exchange-order/pdf/{eoNumber}",
-			produces = { MediaType.APPLICATION_PDF_VALUE })
+	@GetMapping(value = "/exchange-order/pdf/{eoNumber}", produces = {
+			MediaType.APPLICATION_PDF_VALUE })
 	@ApiOperation(value = "Generates exchange order pdf.")
 	public ResponseEntity<byte[]> generatePdf(
-			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) 
-					throws ExchangeOrderNoContentException, ApiServiceException {
+			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber)
+			throws ExchangeOrderNoContentException, ApiServiceException {
 
 		final String filename = eoNumber + ".pdf";
 		final HttpHeaders headers = new HttpHeaders();
@@ -128,42 +136,40 @@ public class ExchangeOrderController {
 	@ResponseBody
 	@ApiOperation(value = "Emails exchange order pdf of the specified eoNumber")
 	public ResponseEntity<EmailResponse> email(
-			@RequestBody @ApiParam(
-					value = "EoNumber of the exchange order to email") @PathVariable String eoNumber) 
-							throws ApiServiceException {
+			@RequestBody @ApiParam(value = "EoNumber of the exchange order to email") @PathVariable String eoNumber)
+			throws ApiServiceException {
 
 		return new ResponseEntity<>(eoReportService.emailPdf(eoNumber), HttpStatus.OK);
 	}
-	
-	@GetMapping(
-            value = "/exchange-orders",
-            produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-    @ApiOperation(value = "Search for exchange orders.")
-    public List<ExchangeOrder> search(final ExchangeOrderSearchDTO p)
-                    throws ApiServiceException {
-        final ExchangeOrderSearchParam param = new ExchangeOrderSearchParam();
-        param.setEoNumber(p.getEoNumber());
-        param.setCountryCode(p.getCountryCode());
-        final Vendor vendor = new Vendor();
-        vendor.setCode(p.getVendorCode());
-        vendor.setRaiseType(p.getRaiseType());
-        param.setVendor(vendor);
-        param.setRecordLocator(p.getRecordLocator());
-        param.setStatus(EoStatus.find(p.getStatus()));
-        param.setStartCreationDate(p.getStartCreationDate());
-        param.setEndCreationDate(p.getEndCreationDate());
-        return eoService.search(param);
-    }
-    
-	@PutMapping(
-            path = "/exchange-order",
-            produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
-            consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-    @ResponseBody
-    @ApiOperation(value = "Update exchange order transaction.")
-    public ResponseEntity<Boolean> update(@RequestBody @ApiParam(value = "Exchange order to update") ExchangeOrder param) {
-        final boolean result = eoService.update(param);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-	
+
+	@GetMapping(value = "/exchange-orders", produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ApiOperation(value = "Search for exchange orders.")
+	public List<ExchangeOrder> search(final ExchangeOrderSearchDTO p)
+			throws ApiServiceException {
+		final ExchangeOrderSearchParam param = new ExchangeOrderSearchParam();
+		param.setEoNumber(p.getEoNumber());
+		param.setCountryCode(p.getCountryCode());
+		final Vendor vendor = new Vendor();
+		vendor.setCode(p.getVendorCode());
+		vendor.setRaiseType(p.getRaiseType());
+		param.setVendor(vendor);
+		param.setRecordLocator(p.getRecordLocator());
+		param.setStatus(EoStatus.find(p.getStatus()));
+		param.setStartCreationDate(p.getStartCreationDate());
+		param.setEndCreationDate(p.getEndCreationDate());
+		return eoService.search(param);
+	}
+
+	@PutMapping(path = "/exchange-order", produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
+					MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Update exchange order transaction.")
+	public ResponseEntity<Boolean> update(
+			@RequestBody @ApiParam(value = "Exchange order to update") ExchangeOrder param) {
+		final boolean result = eoService.update(param);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 }

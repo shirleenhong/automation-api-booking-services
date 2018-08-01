@@ -29,12 +29,9 @@ import io.swagger.annotations.ApiModelProperty;
 @ValidateOnInsert.List({@ValidateOnInsert(dependentFields={"serviceInfo.formOfPayment.creditCard","vendor"})})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
-public class ExchangeOrder implements Serializable {
+public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	private static final long serialVersionUID = 79442657760597469L;
-
-	@Id
-	private String eoNumber;
 
 	private String countryCode;
 
@@ -46,6 +43,8 @@ public class ExchangeOrder implements Serializable {
 
 	@ApiModelProperty(required = true)
 	private String passengerName;
+	
+	private String hkSGTestField;
 
 	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
@@ -87,10 +86,6 @@ public class ExchangeOrder implements Serializable {
 
 	private List<String> itineraryRemarks;
 	
-	private Vendor vendor;
-	
-	private ServiceInfo serviceInfo;
-	
 	private MiscInfo miscInfo;
 	
 	private Insurance insurance;
@@ -99,14 +94,8 @@ public class ExchangeOrder implements Serializable {
 
 	private String lastUpdatedByUser;
 	
-	public String getEoNumber() {
-		return eoNumber;
-	}
-
-	public void setEoNumber(String eoNumber) {
-		this.eoNumber = eoNumber;
-	}
-
+	private Vendor vendor;
+	
 	public String getCountryCode() {
 		return countryCode;
 	}
@@ -259,14 +248,6 @@ public class ExchangeOrder implements Serializable {
         this.lastUpdatedByUser = lastUpdatedByUser;
     }
 
-	public ServiceInfo getServiceInfo() {
-		return serviceInfo;
-	}
-
-	public void setServiceInfo(ServiceInfo serviceInfo) {
-		this.serviceInfo = serviceInfo;
-	}
-
 	public MiscInfo getMiscInfo() {
 		return miscInfo;
 	}
@@ -290,7 +271,18 @@ public class ExchangeOrder implements Serializable {
 	public void setMiscChargeOrder(MiscChargeOrder miscChargeOrder) {
 		this.miscChargeOrder = miscChargeOrder;
 	}
-    
-    
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public String getHkSGTestField() {
+		return hkSGTestField;
+	}
+
+	public void setHkSGTestField(String hkSGTestField) {
+		this.hkSGTestField = hkSGTestField;
+	}
+	
     
 }

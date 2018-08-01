@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
+import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
@@ -35,7 +36,7 @@ public class ExchangeOrderInsertService {
 	@Autowired
 	private ExchangeOrderAmountScaler exchangeOrderAmountScaler;
 
-	ExchangeOrder insert(ExchangeOrder exchangeOrder) {
+	BaseExchangeOrder insert(BaseExchangeOrder exchangeOrder) {
 		exchangeOrder.setCreateDateTime(Instant.now());
 		exchangeOrder.setEoNumber(constructEoNumber(exchangeOrder.getCountryCode()));
 
@@ -54,9 +55,12 @@ public class ExchangeOrderInsertService {
 		}
 
 		exchangeOrderAmountScaler.scale(exchangeOrder);
-		String savedEoNumber = exchangeOrderRepo.save(exchangeOrder);
+//		String savedEoNumber = exchangeOrderRepo.save(exchangeOrder);
 		
-		return exchangeOrderRepo.getExchangeOrder(savedEoNumber);
+		String savedEoNumber = exchangeOrderRepo.saveEO(exchangeOrder);
+		
+//		return exchangeOrderRepo.getExchangeOrder(savedEoNumber);
+		return exchangeOrderRepo.getExchangeOrder(savedEoNumber,exchangeOrder.getCountryCode());
 	}
 
 	IndiaExchangeOrder insert(IndiaExchangeOrder exchangeOrder) {

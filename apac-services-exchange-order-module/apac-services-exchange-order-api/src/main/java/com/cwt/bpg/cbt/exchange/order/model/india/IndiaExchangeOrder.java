@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.EoAction;
 import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
@@ -16,17 +17,12 @@ import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
-@Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
-public class IndiaExchangeOrder implements Serializable {
+@Indexes(@Index(fields = { @Field("eoNumber"), @Field("recordLocator") }))
+public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	private static final long serialVersionUID = -5915661302682405152L;
-
-	@Id
-	private String eoNumber;
-
-	private IndiaServiceInfo serviceInfo;
-
-	private IndiaVendor vendor;
+	
+	private String indiaTestField;
 
 	private IndiaMiscInfo miscInfo;
 
@@ -59,30 +55,6 @@ public class IndiaExchangeOrder implements Serializable {
 	private String productCode;
 
 	private BigDecimal total;
-
-	public String getEoNumber() {
-		return eoNumber;
-	}
-
-	public void setEoNumber(String eoNumber) {
-		this.eoNumber = eoNumber;
-	}
-
-	public IndiaServiceInfo getServiceInfo() {
-		return serviceInfo;
-	}
-
-	public void setServiceInfo(IndiaServiceInfo serviceInfo) {
-		this.serviceInfo = serviceInfo;
-	}
-
-	public IndiaVendor getVendor() {
-		return vendor;
-	}
-
-	public void setVendor(IndiaVendor vendor) {
-		this.vendor = vendor;
-	}
 
 	public IndiaMiscInfo getMiscInfo() {
 		return miscInfo;
@@ -187,5 +159,27 @@ public class IndiaExchangeOrder implements Serializable {
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
+
+	@Override
+	public String getRaiseCheque() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getLastUpdatedByUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getIndiaTestField() {
+		return indiaTestField;
+	}
+
+	public void setIndiaTestField(String indiaTestField) {
+		this.indiaTestField = indiaTestField;
+	}
+	
+	
 
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.calculator.CalculatorUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 
 @Component
@@ -14,7 +15,7 @@ public class ExchangeOrderAmountScaler
     @Autowired
     private ScaleConfig scaleConfig;
 
-    void scale(ExchangeOrder exchangeOrder) {
+    void scale(BaseExchangeOrder exchangeOrder) {
 
         int scale = scaleConfig.getScale(exchangeOrder.getCountryCode());
 
