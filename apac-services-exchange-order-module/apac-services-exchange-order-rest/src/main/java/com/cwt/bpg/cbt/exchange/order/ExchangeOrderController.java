@@ -83,7 +83,7 @@ public class ExchangeOrderController {
 	public ResponseEntity<ExchangeOrder> saveIndiaExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
 			throws ExchangeOrderNoContentException {
-		boolean isSave = input.getEoNumber() == null ? true : false;
+		boolean isSave = input.getEoNumber() == null;
 		return new ResponseEntity<>(eoService.saveExchangeOrder(input),
 				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
