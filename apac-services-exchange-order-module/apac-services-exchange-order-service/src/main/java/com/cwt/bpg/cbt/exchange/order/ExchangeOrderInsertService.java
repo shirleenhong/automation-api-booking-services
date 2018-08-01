@@ -6,6 +6,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +57,16 @@ public class ExchangeOrderInsertService {
 		String savedEoNumber = exchangeOrderRepo.save(exchangeOrder);
 		
 		return exchangeOrderRepo.getExchangeOrder(savedEoNumber);
+	}
+
+	IndiaExchangeOrder insert(IndiaExchangeOrder exchangeOrder) {
+		exchangeOrder.setCreateDateTime(Instant.now());
+		exchangeOrder.setEoNumber(constructEoNumber(exchangeOrder.getCountryCode()));
+
+
+		String savedEoNumber = exchangeOrderRepo.save(exchangeOrder);
+
+		return exchangeOrderRepo.getIndiaExchangeOrder(savedEoNumber);
 	}
 
 	private String constructEoNumber(String countryCode) {

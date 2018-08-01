@@ -1,11 +1,13 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
 
-public class VirtualMiscMultipurposeDoc {
+public class VirtualMiscMultipurposeDoc implements Serializable {
 
+	private static final long serialVersionUID = 4559501238956808793L;
 	private String recordLocator;
 
 	private BigDecimal fare;

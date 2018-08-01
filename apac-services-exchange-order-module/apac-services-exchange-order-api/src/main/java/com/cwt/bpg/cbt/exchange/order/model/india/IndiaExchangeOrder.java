@@ -1,13 +1,27 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
 import com.cwt.bpg.cbt.exchange.order.model.EoAction;
 import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
+import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.swagger.annotations.ApiModelProperty;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 
-public class IndiaExchangeOrder {
+@Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
+public class IndiaExchangeOrder implements Serializable {
 
+	private static final long serialVersionUID = -5915661302682405152L;
+
+	@Id
 	private String eoNumber;
 
 	private IndiaServiceInfo serviceInfo;
@@ -24,8 +38,14 @@ public class IndiaExchangeOrder {
 
 	private EoStatus status;
 
+	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant createDateTime;
 
+	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant updateDateTime;
 
 	private String agentId;
