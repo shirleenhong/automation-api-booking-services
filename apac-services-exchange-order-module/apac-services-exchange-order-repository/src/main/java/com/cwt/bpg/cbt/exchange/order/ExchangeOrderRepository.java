@@ -46,6 +46,16 @@ public class ExchangeOrderRepository {
 		}
 	}
 
+    public List<? extends BaseExchangeOrder> getExchangeOrderByRecordLocator(String countryCode, String recordLocator) {
+
+	    if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
+            return getIndiaExchangeOrderByRecordLocator(recordLocator);
+        }
+        else {
+            return getByRecordLocator(recordLocator);
+        }
+    }
+
 	public ExchangeOrder getExchangeOrder(String eoNumber) {
 		return morphia.getDatastore().createQuery(ExchangeOrder.class)
 			.field("eoNumber")
