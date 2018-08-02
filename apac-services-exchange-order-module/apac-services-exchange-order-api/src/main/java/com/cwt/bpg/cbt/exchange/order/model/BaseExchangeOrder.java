@@ -35,13 +35,20 @@ public abstract class BaseExchangeOrder {
 	private EoStatus status;
 	
 	public BigDecimal total;
+
+	private BigDecimal gstAmount;
+
+	private boolean gstAbsorb;
+
+	private BigDecimal merchantFeeAmount;
+
+	private boolean merchantFeeAbsorb;
 	
 	public void setEoNumber(String eoNumber) {
 		this.eoNumber = eoNumber;
 	}
 	
 	public abstract String getProductCode();
-	
 	
 	public String getEoNumber() {
 		return eoNumber;
@@ -94,5 +101,36 @@ public abstract class BaseExchangeOrder {
 	public void setStatus(EoStatus status) {
 		this.status = status;
 	}
-		
+
+	public BigDecimal getGstAmount() {
+		return gstAmount;
+	}
+
+	public void setGstAmount(BigDecimal gstAmount) {
+		this.gstAmount = gstAmount;
+	}
+
+	public boolean isGstAbsorb() {
+		return gstAbsorb;
+	}
+
+	public void setGstAbsorb(boolean gstAbsorb) {
+		this.gstAbsorb = gstAbsorb;
+	}
+
+	public BigDecimal getMerchantFeeAmount() {
+		return merchantFeeAmount;
+	}
+
+	public void setMerchantFeeAmount(BigDecimal merchantFeeAmount) {
+		this.merchantFeeAmount = merchantFeeAmount;
+	}
+
+	public boolean isMerchantFeeAbsorb() {
+		return merchantFeeAbsorb;
+	}
+
+	public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
+		this.merchantFeeAbsorb = merchantFeeAbsorb;
+	}
 }

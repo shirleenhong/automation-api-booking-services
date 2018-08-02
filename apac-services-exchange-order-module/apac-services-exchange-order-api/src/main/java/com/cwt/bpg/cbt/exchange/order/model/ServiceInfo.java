@@ -58,16 +58,6 @@ public class ServiceInfo implements Serializable {
 
 	private BigDecimal discount;
 
-	private BigDecimal gst;
-
-	@ApiModelProperty(value = "CWT Absorb GST")
-	private boolean cwtGstAbsorb;
-
-	private BigDecimal merchantFee;
-
-	@ApiModelProperty(value = "CWT Absorb Merchant Fee")
-	private boolean cwtAbsorbmerchantFee;
-
 	private boolean uatp;
 
 	private BigDecimal totalSellingPrice;
@@ -291,38 +281,6 @@ public class ServiceInfo implements Serializable {
 
 	public void setDiscount(BigDecimal discount) {
 		this.discount = discount;
-	}
-
-	public BigDecimal getGst() {
-		return gst;
-	}
-
-	public void setGst(BigDecimal gst) {
-		this.gst = gst;
-	}
-
-	public boolean isCwtGstAbsorb() {
-		return cwtGstAbsorb;
-	}
-
-	public void setCwtGstAbsorb(boolean cwtGstAbsorb) {
-		this.cwtGstAbsorb = cwtGstAbsorb;
-	}
-
-	public BigDecimal getMerchantFee() {
-		return merchantFee;
-	}
-
-	public void setMerchantFee(BigDecimal merchantFee) {
-		this.merchantFee = merchantFee;
-	}
-
-	public boolean isCwtAbsorbmerchantFee() {
-		return cwtAbsorbmerchantFee;
-	}
-
-	public void setCwtAbsorbmerchantFee(boolean cwtAbsorbmerchantFee) {
-		this.cwtAbsorbmerchantFee = cwtAbsorbmerchantFee;
 	}
 
 	public boolean isUatp() {
