@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
-import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -12,6 +11,7 @@ import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 
 @Service
 public class ExchangeOrderService {
@@ -26,16 +26,16 @@ public class ExchangeOrderService {
 	private ExchangeOrderUpdateService eoUpdateService;
 
 	@CachePut(cacheNames = "exchange-orders", key = "#exchangeOrder.eoNumber")
-	public BaseExchangeOrder saveExchangeOrder(BaseExchangeOrder exchangeOrder)
+	BaseExchangeOrder saveExchangeOrder(BaseExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
 
 		String eoNumber = exchangeOrder.getEoNumber();
-//		if (eoNumber == null) {
+		if (eoNumber == null) {
 			return eoInsertService.insert(exchangeOrder);
-//		}
-//		else {
-//			return eoUpdateService.update(exchangeOrder);
-//		}
+		}
+		else {
+			return eoUpdateService.update(exchangeOrder);
+		}
 	}
 
 	@Cacheable(cacheNames = "exchange-orders", key = "#eoNumber")
@@ -44,19 +44,19 @@ public class ExchangeOrderService {
 	}
 
 	@Cacheable(cacheNames = "exchange-orders", key = "#recordLocator")
-	public List<ExchangeOrder> getExchangeOrderByRecordLocator(String recordLocator) {
+	List<ExchangeOrder> getExchangeOrderByRecordLocator(String recordLocator) {
 		return exchangeOrderRepo.getByRecordLocator(recordLocator);
 	}
 
-	public List<IndiaExchangeOrder> getIndiaExchangeOrderByRecordLocator(String recordLocator) {
+	List<IndiaExchangeOrder> getIndiaExchangeOrderByRecordLocator(String recordLocator) {
 		return exchangeOrderRepo.getIndiaExchangeOrderByRecordLocator(recordLocator);
 	}
 
-	public List<ExchangeOrder> search(final ExchangeOrderSearchParam param) {
+	List<ExchangeOrder> search(final ExchangeOrderSearchParam param) {
 		return exchangeOrderRepo.search(param);
 	}
 
-	public boolean update(ExchangeOrder param) {
+	boolean update(ExchangeOrder param) {
 		return exchangeOrderRepo.updateFinance(param);
 	}
 

@@ -1,42 +1,30 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.Instant;
+
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
-import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.swagger.annotations.ApiModelProperty;
-import org.mongodb.morphia.annotations.*;
+import com.cwt.bpg.cbt.exchange.order.model.BaseServiceInfo;
 
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	private static final long serialVersionUID = -5915661302682405152L;
-	
+
 	private IndiaServiceInfo serviceInfo;
 	
-	private BaseVendor vendor;
+	private IndiaVendor vendor;
 
 	private IndiaMiscInfo miscInfo;
 
 	private AssocServiceInfo assocServiceInfo;
 
 	private Request request;
-
-	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
-	@JsonSerialize(using = DateSerializer.class)
-	@JsonDeserialize(using = DateDeserializer.class)
-	private Instant createDateTime;
-
-	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
-	@JsonSerialize(using = DateSerializer.class)
-	@JsonDeserialize(using = DateDeserializer.class)
-	private Instant updateDateTime;
 
 	private String agentId;
 
@@ -68,22 +56,6 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 		this.request = request;
 	}
 
-	public Instant getCreateDateTime() {
-		return createDateTime;
-	}
-
-	public void setCreateDateTime(Instant createDateTime) {
-		this.createDateTime = createDateTime;
-	}
-
-	public Instant getUpdateDateTime() {
-		return updateDateTime;
-	}
-
-	public void setUpdateDateTime(Instant updateDateTime) {
-		this.updateDateTime = updateDateTime;
-	}
-
 	public String getAgentId() {
 		return agentId;
 	}
@@ -108,28 +80,23 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 		this.pcc = pcc;
 	}
 
-	public BigDecimal getTotal() {
-		return total;
-	}
-
-	public void setTotal(BigDecimal total) {
-		this.total = total;
-	}
-
 	public IndiaServiceInfo getServiceInfo() {
 		return serviceInfo;
 	}
 
-	public void setServiceInfo(IndiaServiceInfo serviceInfo) {
-		this.serviceInfo = serviceInfo;
-	}
+    @Override
+    public void setServiceInfo(BaseServiceInfo serviceInfo) {
+        this.serviceInfo = (IndiaServiceInfo) serviceInfo;
+    }
 
-	public BaseVendor getVendor() {
+	@Override
+	public IndiaVendor getVendor() {
 		return vendor;
 	}
 
+	@Override
 	public void setVendor(BaseVendor vendor) {
-		this.vendor = vendor;
+		this.vendor = (IndiaVendor) vendor;
 	}
 	
 	

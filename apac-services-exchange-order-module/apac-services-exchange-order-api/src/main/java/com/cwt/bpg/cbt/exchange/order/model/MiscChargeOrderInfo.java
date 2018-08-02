@@ -1,33 +1,36 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class MiscChargeOrderInfo {
+public class MiscChargeOrderInfo implements Serializable {
+
+	private static final long serialVersionUID = -9147782712919219597L;
 
 	private String recordLocator;
-	
+
 	private String serviceType;
-	
+
 	private String locationOfIssuance;
-	
+
 	private String contact;
-	
-	private String FOP;
-	
+
+	private String fop;
+
 	private BigDecimal equivalentAmtPaid;
-	
+
 	private String headlineCurrency;
-	
-	private BigDecimal Taxes;
-	
-	private double rateofExchange;
-	
+
+	private BigDecimal taxes;
+
+	private double rateOfExchange;
+
 	private String exchangeIssue;
-	
+
 	private String inConjunctionWith;
-	
+
 	private String originalFOP;
-	
+
 	private String originalPlaceOfIssue;
 
 	public String getRecordLocator() {
@@ -38,7 +41,6 @@ public class MiscChargeOrderInfo {
 		this.recordLocator = recordLocator;
 	}
 
-	
 	public String getServiceType() {
 		return serviceType;
 	}
@@ -63,12 +65,12 @@ public class MiscChargeOrderInfo {
 		this.contact = contact;
 	}
 
-	public String getFOP() {
-		return FOP;
+	public String getFop() {
+		return fop;
 	}
 
-	public void setFOP(String fOP) {
-		FOP = fOP;
+	public void setFop(String fOP) {
+		fop = fOP;
 	}
 
 	public BigDecimal getEquivalentAmtPaid() {
@@ -88,19 +90,19 @@ public class MiscChargeOrderInfo {
 	}
 
 	public BigDecimal getTaxes() {
-		return Taxes;
+		return taxes;
 	}
 
 	public void setTaxes(BigDecimal taxes) {
-		Taxes = taxes;
+		this.taxes = taxes;
 	}
 
-	public double getRateofExchange() {
-		return rateofExchange;
+	public double getRateOfExchange() {
+		return rateOfExchange;
 	}
 
-	public void setRateofExchange(double rateofExchange) {
-		this.rateofExchange = rateofExchange;
+	public void setRateOfExchange(double rateOfExchange) {
+		this.rateOfExchange = rateOfExchange;
 	}
 
 	public String getExchangeIssue() {

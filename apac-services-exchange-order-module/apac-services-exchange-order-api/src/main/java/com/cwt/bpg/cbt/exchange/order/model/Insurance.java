@@ -1,8 +1,10 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Insurance {
+public class Insurance implements Serializable {
+	private static final long serialVersionUID = -2416249545097859674L;
 
 	private String geographicalArea;
 	private int noOfDays;
