@@ -3,9 +3,10 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.cwt.bpg.cbt.exchange.order.model.BaseServiceInfo;
 import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
 
-public class IndiaServiceInfo implements Serializable {
+public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
 
 	private static final long serialVersionUID = -6797824920381793390L;
 

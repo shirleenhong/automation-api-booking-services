@@ -1,16 +1,17 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
-import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public class ServiceInfo implements Serializable {
+import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import io.swagger.annotations.ApiModelProperty;
+
+public class ServiceInfo extends BaseServiceInfo implements Serializable {
 
 	private static final long serialVersionUID = 3555913363549766564L;
 
@@ -78,8 +79,6 @@ public class ServiceInfo implements Serializable {
 	private boolean tfInNrcc;
 
 	private BigDecimal fuelSurcharge;
-
-	private FormOfPayment formOfPayment;
 
 	private String countryCode;
 
@@ -363,14 +362,6 @@ public class ServiceInfo implements Serializable {
 
 	public void setFuelSurcharge(BigDecimal fuelSurcharge) {
 		this.fuelSurcharge = fuelSurcharge;
-	}
-
-	public FormOfPayment getFormOfPayment() {
-		return formOfPayment;
-	}
-
-	public void setFormOfPayment(FormOfPayment formOfPayment) {
-		this.formOfPayment = formOfPayment;
 	}
 
 	public String getCountryCode() {

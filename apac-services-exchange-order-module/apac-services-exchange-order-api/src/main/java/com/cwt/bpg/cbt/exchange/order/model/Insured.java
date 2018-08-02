@@ -1,8 +1,11 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Insured {
+public class Insured implements Serializable {
+
+	private static final long serialVersionUID = -7786999078858178621L;
 
 	private String name;
 	private String relationship;

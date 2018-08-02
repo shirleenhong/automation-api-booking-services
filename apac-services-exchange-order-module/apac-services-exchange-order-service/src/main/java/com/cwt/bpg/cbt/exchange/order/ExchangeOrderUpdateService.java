@@ -1,11 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
 import java.util.Optional;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +12,7 @@ import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
-import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
-import com.cwt.bpg.cbt.exchange.order.model.india.BaseVendor;
-import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
-import com.cwt.bpg.cbt.utils.ObjectModifier;
+import com.cwt.bpg.cbt.exchange.order.utils.ExchangeOrderObjectModifier;
 
 @Service
 public class ExchangeOrderUpdateService
@@ -32,8 +25,7 @@ public class ExchangeOrderUpdateService
     @Autowired
     private ExchangeOrderAmountScaler exchangeOrderAmountScaler;
     
-
-    ExchangeOrder update(ExchangeOrder exchangeOrder) throws ExchangeOrderNoContentException {
+    ExchangeOrder update(BaseExchangeOrder exchangeOrder) throws ExchangeOrderNoContentException {
         final String eoNumber = exchangeOrder.getEoNumber();
         Optional<ExchangeOrder> isEoExist = Optional.ofNullable(exchangeOrderRepo.getExchangeOrder(eoNumber));
 
@@ -44,21 +36,9 @@ public class ExchangeOrderUpdateService
         LOGGER.info("Existing Exchange order number: {} with country code {}",
                 existingExchangeOrder.getEoNumber(),
                 existingExchangeOrder.getCountryCode());
-  
-        if (exchangeOrder.getServiceInfo().getFormOfPayment().getCreditCard() != null) {
-            ObjectModifier.modifyTargetObject(exchangeOrder.getServiceInfo().getFormOfPayment().getCreditCard(),
-                    existingExchangeOrder.getServiceInfo().getFormOfPayment().getCreditCard());
-            exchangeOrder.getServiceInfo().getFormOfPayment().setCreditCard(null);
-        }
-
-		if (exchangeOrder.getVendor() != null) {
-			ObjectModifier.modifyTargetObject(exchangeOrder.getVendor(),
-					existingExchangeOrder.getVendor());
-			exchangeOrder.setVendor(null);
-		}
 
         exchangeOrder.setUpdateDateTime(Instant.now());
-        ObjectModifier.modifyTargetObject(exchangeOrder, existingExchangeOrder);
+        ExchangeOrderObjectModifier.modifyTargetObject(exchangeOrder, existingExchangeOrder);
 
         if(existingExchangeOrder.getServiceInfo().getFormOfPayment().getFopType() != null &&
                 existingExchangeOrder.getServiceInfo().getFormOfPayment().getFopType() == FopTypes.INVOICE){
@@ -70,5 +50,4 @@ public class ExchangeOrderUpdateService
         
         return exchangeOrderRepo.getExchangeOrder(updatedEoNumber);
     }
-    
 }

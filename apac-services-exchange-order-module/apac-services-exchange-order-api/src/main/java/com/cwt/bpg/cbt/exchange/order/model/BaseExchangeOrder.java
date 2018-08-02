@@ -6,6 +6,7 @@ import java.time.Instant;
 import org.mongodb.morphia.annotations.Id;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.india.BaseVendor;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -37,7 +38,7 @@ public abstract class BaseExchangeOrder {
 	@ApiModelProperty(required = true)
 	private EoStatus status;
 	
-	public BigDecimal total;
+	private BigDecimal total;
 
 	private BigDecimal gstAmount;
 
@@ -49,7 +50,7 @@ public abstract class BaseExchangeOrder {
 
 	@ApiModelProperty(required = true)
 	private String productCode;
-	
+
 	public void setEoNumber(String eoNumber) {
 		this.eoNumber = eoNumber;
 	}
@@ -153,4 +154,13 @@ public abstract class BaseExchangeOrder {
 	public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
 		this.merchantFeeAbsorb = merchantFeeAbsorb;
 	}
+
+	public abstract BaseServiceInfo getServiceInfo();
+
+	public abstract void setServiceInfo(BaseServiceInfo serviceInfo);
+
+	public abstract BaseVendor getVendor();
+
+	public abstract void setVendor(BaseVendor vendor);
+
 }

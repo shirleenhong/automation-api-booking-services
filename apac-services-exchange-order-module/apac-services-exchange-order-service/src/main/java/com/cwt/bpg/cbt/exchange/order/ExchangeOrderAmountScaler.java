@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.calculator.CalculatorUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
@@ -16,7 +17,16 @@ public class ExchangeOrderAmountScaler
     @Autowired
     private ScaleConfig scaleConfig;
 
-    void scale(ExchangeOrder exchangeOrder) {
+    public void scale(BaseExchangeOrder exchangeOrder) {
+        if (Country.INDIA.getCode().equalsIgnoreCase(exchangeOrder.getCountryCode())) {
+            scale((IndiaExchangeOrder) exchangeOrder);
+        }
+        else {
+            scale((ExchangeOrder) exchangeOrder);
+        }
+    }
+
+    private void scale(ExchangeOrder exchangeOrder) {
 
         int scale = scaleConfig.getScale(exchangeOrder.getCountryCode());
 
@@ -30,8 +40,8 @@ public class ExchangeOrderAmountScaler
         exchangeOrder.getServiceInfo().setSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getSellingPrice(), scale));
         exchangeOrder.getServiceInfo().setTotalSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTotalSellingPrice(), scale));
     }
-    
-    void scale(IndiaExchangeOrder exchangeOrder) {
+
+    private void scale(IndiaExchangeOrder exchangeOrder) {
 
         int scale = scaleConfig.getScale(exchangeOrder.getCountryCode());
 

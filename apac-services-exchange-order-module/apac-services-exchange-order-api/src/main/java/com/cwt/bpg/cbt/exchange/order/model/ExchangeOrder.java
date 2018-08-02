@@ -1,8 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.List;
 
 import org.mongodb.morphia.annotations.Entity;
@@ -10,13 +8,10 @@ import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
-import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
-import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.cwt.bpg.cbt.exchange.order.model.india.BaseVendor;
 import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnInsertOnFopType;
 import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
 import com.cwt.bpg.cbt.exchange.order.model.validator.ValidateOnInsert;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -35,20 +30,10 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	@ApiModelProperty(required = true)
 	private String passengerName;
-	
+
 	private ServiceInfo serviceInfo;
 	
 	private Vendor vendor;
-
-	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
-	@JsonSerialize(using = DateSerializer.class)
-	@JsonDeserialize(using = DateDeserializer.class)
-	private Instant createDateTime;
-
-    @ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
-    @JsonSerialize(using = DateSerializer.class)
-    @JsonDeserialize(using = DateDeserializer.class)
-	private Instant updateDateTime;
 
 	@ApiModelProperty(required = true)
 	private String agentId;
@@ -60,9 +45,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	@ApiModelProperty(required = true)
 	private String agentName;
-
-	@ApiModelProperty(required = true)
-	private String recordLocator;
 
 	private String raiseCheque;
 
@@ -93,22 +75,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 	public void setPassengerName(String passengerName) {
 		this.passengerName = passengerName;
 	}
-
-	public Instant getCreateDateTime() {
-		return createDateTime;
-	}
-
-	public void setCreateDateTime(Instant createDateTime) {
-		this.createDateTime = createDateTime;
-	}
-
-    public Instant getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public void setUpdateDateTime(Instant updateDateTime) {
-        this.updateDateTime = updateDateTime;
-    }
 
     public String getAgentId() {
 		return agentId;
@@ -142,22 +108,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 		this.agentName = agentName;
 	}
 
-	public String getRecordLocator() {
-		return recordLocator;
-	}
-
-	public void setRecordLocator(String recordLocator) {
-		this.recordLocator = recordLocator;
-	}
-
-	public BigDecimal getTotal() {
-		return total;
-	}
-
-	public void setTotal(BigDecimal total) {
-		this.total = total;
-	}
-
 	public String getRaiseCheque() {
 		return raiseCheque;
 	}
@@ -180,14 +130,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	public void setItineraryRemarks(List<String> itineraryRemarks) {
 		this.itineraryRemarks = itineraryRemarks;
-	}
-
-	public Vendor getVendor() {
-		return vendor;
-	}
-
-	public void setVendor(Vendor vendor) {
-		this.vendor = vendor;
 	}
 
     public String getLastUpdatedByUser() {
@@ -226,13 +168,23 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 		return serialVersionUID;
 	}
 
+	@Override
 	public ServiceInfo getServiceInfo() {
 		return serviceInfo;
 	}
 
-	public void setServiceInfo(ServiceInfo serviceInfo) {
-		this.serviceInfo = serviceInfo;
+	@Override
+	public void setServiceInfo(BaseServiceInfo serviceInfo) {
+		this.serviceInfo = (ServiceInfo) serviceInfo;
 	}
-	
-    
+
+	@Override
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    @Override
+    public void setVendor(BaseVendor vendor) {
+        this.vendor = (Vendor) vendor;
+    }
 }
