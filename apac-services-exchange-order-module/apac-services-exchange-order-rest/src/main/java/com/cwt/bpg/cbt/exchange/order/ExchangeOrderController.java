@@ -97,7 +97,7 @@ public class ExchangeOrderController {
 	@GetMapping(path = "/exchange-order/in/{eoNumber:^[0-9]{10}$}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls exchange order transaction based on exchange order number (10 digit numeric string).")
+	@ApiOperation(value = "Pulls India exchange order transaction based on exchange order number (10 digit numeric string).")
 	public ResponseEntity<IndiaExchangeOrder> getIndiaExchangeOrder(
 			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
 
@@ -108,12 +108,11 @@ public class ExchangeOrderController {
 	@GetMapping(path = "/exchange-order/in/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls exchange order transaction based on Record Locator (6 digit alphanumeric string).")
-	public ResponseEntity<List<ExchangeOrder>> getIndiaExchangeOrderByRecordLocator(
+	@ApiOperation(value = "Pulls India exchange order transaction based on Record Locator (6 digit alphanumeric string).")
+	public ResponseEntity<List<IndiaExchangeOrder>> getIndiaExchangeOrderByRecordLocator(
 			@PathVariable @ApiParam(value = "Record Locator") String recordLocator) {
-
 		return new ResponseEntity<>(
-				eoService.getExchangeOrderByRecordLocator(recordLocator), HttpStatus.OK);
+				eoService.getIndiaExchangeOrderByRecordLocator(recordLocator), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/exchange-order/pdf/{eoNumber}", produces = {

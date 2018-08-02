@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -45,6 +46,10 @@ public class ExchangeOrderService {
 	@Cacheable(cacheNames = "exchange-orders", key = "#recordLocator")
 	public List<ExchangeOrder> getExchangeOrderByRecordLocator(String recordLocator) {
 		return exchangeOrderRepo.getByRecordLocator(recordLocator);
+	}
+
+	public List<IndiaExchangeOrder> getIndiaExchangeOrderByRecordLocator(String recordLocator) {
+		return exchangeOrderRepo.getIndiaExchangeOrderByRecordLocator(recordLocator);
 	}
 
 	public List<ExchangeOrder> search(final ExchangeOrderSearchParam param) {
