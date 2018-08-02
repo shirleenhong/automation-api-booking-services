@@ -72,12 +72,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private String recordLocator;
 
-	@ApiModelProperty(required = true)
-	private EoAction eoAction;
-
-	@ApiModelProperty(required = true)
-	private EoStatus status;
-
 	private String raiseCheque;
 
 	private List<String> eoRemarks;
@@ -186,22 +180,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	public void setTotal(BigDecimal total) {
 		this.total = total;
-	}
-	
-	public EoAction getEoAction() {
-		return eoAction;
-	}
-
-	public void setEoAction(EoAction eoAction) {
-		this.eoAction = eoAction;
-	}
-
-	public EoStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(EoStatus status) {
-		this.status = status;
 	}
 
 	public String getRaiseCheque() {
