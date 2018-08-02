@@ -44,12 +44,8 @@ public class ExchangeOrderService {
 	}
 
 	@Cacheable(cacheNames = "exchange-orders", key = "#recordLocator")
-	List<ExchangeOrder> getExchangeOrderByRecordLocator(String recordLocator) {
-		return exchangeOrderRepo.getByRecordLocator(recordLocator);
-	}
-
-	List<IndiaExchangeOrder> getIndiaExchangeOrderByRecordLocator(String recordLocator) {
-		return exchangeOrderRepo.getIndiaExchangeOrderByRecordLocator(recordLocator);
+    List<? extends BaseExchangeOrder> getExchangeOrderByRecordLocator(String countryCode, String recordLocator) {
+		return exchangeOrderRepo.getExchangeOrderByRecordLocator(countryCode, recordLocator);
 	}
 
 	List<ExchangeOrder> search(final ExchangeOrderSearchParam param) {
