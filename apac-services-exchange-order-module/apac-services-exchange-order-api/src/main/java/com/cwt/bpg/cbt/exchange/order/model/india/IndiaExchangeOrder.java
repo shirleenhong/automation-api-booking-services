@@ -21,6 +21,10 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 	private static final long serialVersionUID = -5915661302682405152L;
 	
 	private String indiaTestField;
+	
+	private IndiaServiceInfo serviceInfo;
+	
+	private BaseVendor vendor;
 
 	private IndiaMiscInfo miscInfo;
 
@@ -158,24 +162,28 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 		this.total = total;
 	}
 
-	@Override
-	public String getRaiseCheque() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getLastUpdatedByUser() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public String getIndiaTestField() {
 		return indiaTestField;
 	}
 
 	public void setIndiaTestField(String indiaTestField) {
 		this.indiaTestField = indiaTestField;
+	}
+
+	public IndiaServiceInfo getServiceInfo() {
+		return serviceInfo;
+	}
+
+	public void setServiceInfo(IndiaServiceInfo serviceInfo) {
+		this.serviceInfo = serviceInfo;
+	}
+
+	public BaseVendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(BaseVendor vendor) {
+		this.vendor = vendor;
 	}
 	
 	

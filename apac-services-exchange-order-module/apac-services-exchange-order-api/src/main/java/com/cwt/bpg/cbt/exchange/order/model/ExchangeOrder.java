@@ -45,6 +45,10 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 	private String passengerName;
 	
 	private String hkSGTestField;
+	
+	private ServiceInfo serviceInfo;
+	
+	private Vendor vendor;
 
 	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
@@ -93,8 +97,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 	private MiscChargeOrder miscChargeOrder;
 
 	private String lastUpdatedByUser;
-	
-	private Vendor vendor;
 	
 	public String getCountryCode() {
 		return countryCode;
@@ -282,6 +284,14 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	public void setHkSGTestField(String hkSGTestField) {
 		this.hkSGTestField = hkSGTestField;
+	}
+
+	public ServiceInfo getServiceInfo() {
+		return serviceInfo;
+	}
+
+	public void setServiceInfo(ServiceInfo serviceInfo) {
+		this.serviceInfo = serviceInfo;
 	}
 	
     

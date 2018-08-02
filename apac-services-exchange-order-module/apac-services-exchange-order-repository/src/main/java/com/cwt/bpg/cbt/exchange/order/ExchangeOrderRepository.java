@@ -29,27 +29,13 @@ public class ExchangeOrderRepository {
 	@Autowired
 	private MorphiaComponent morphia;
 	
-	public String saveEO(BaseExchangeOrder eo) {
+	public String save(BaseExchangeOrder eo) {
 		Key<BaseExchangeOrder> savedEoKey = morphia.getDatastore().save(eo);
 		LOGGER.info("Save: Exchange order, [{}]", eo.getEoNumber());
 		
 		return savedEoKey.getId().toString();
 	}
 
-    public String save(ExchangeOrder eo) {
-		Key<ExchangeOrder> savedEoKey = morphia.getDatastore().save(eo);
-		LOGGER.info("Save: Exchange order, [{}]", eo.getEoNumber());
-		
-		return savedEoKey.getId().toString();
-	}
-
-    public String save(IndiaExchangeOrder eo) {
-        Key<IndiaExchangeOrder> savedEoKey = morphia.getDatastore().save(eo);
-        LOGGER.info("Save: Exchange order, [{}]", eo.getEoNumber());
-
-        return savedEoKey.getId().toString();
-    }
-    
     public BaseExchangeOrder getExchangeOrder(String countryCode, String eoNumber) {
     	
     	if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {

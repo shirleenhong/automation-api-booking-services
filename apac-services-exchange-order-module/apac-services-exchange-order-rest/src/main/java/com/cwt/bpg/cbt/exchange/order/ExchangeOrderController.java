@@ -48,12 +48,12 @@ public class ExchangeOrderController {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Saves new exchange order transaction.")
-	public ResponseEntity<BaseExchangeOrder> saveExchangeOrder(
+	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
 			throws ExchangeOrderNoContentException {
 		boolean isSave = input.getEoNumber() == null ? true : false;
-		return new ResponseEntity<>(eoService.saveExchangeOrder2(input),
+		return new ResponseEntity<>((ExchangeOrder) eoService.saveExchangeOrder(input),
 				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
 
@@ -86,11 +86,11 @@ public class ExchangeOrderController {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Saves new exchange order transaction.")
-	public ResponseEntity<BaseExchangeOrder> saveIndiaExchangeOrder(
-			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
+	public ResponseEntity<IndiaExchangeOrder> saveIndiaExchangeOrder(
+			@Valid @RequestBody @ApiParam(value = "Exchange order to save") IndiaExchangeOrder input)
 			throws ExchangeOrderNoContentException {
 		boolean isSave = input.getEoNumber() == null ? true : false;
-		return new ResponseEntity<>(eoService.saveExchangeOrder2(input),
+		return new ResponseEntity<>((IndiaExchangeOrder) eoService.saveExchangeOrder(input),
 				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
 

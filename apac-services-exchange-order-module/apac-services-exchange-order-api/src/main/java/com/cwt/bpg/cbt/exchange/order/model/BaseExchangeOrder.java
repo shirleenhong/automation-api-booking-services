@@ -17,10 +17,6 @@ public abstract class BaseExchangeOrder {
 	@Id
 	private String eoNumber;
 	
-	private String test;
-	
-	private ServiceInfo serviceInfo;
-	
 	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
@@ -38,15 +34,14 @@ public abstract class BaseExchangeOrder {
 	@ApiModelProperty(required = true)
 	private EoStatus status;
 	
-	private Vendor vendor;
-
+	public BigDecimal total;
+	
 	public void setEoNumber(String eoNumber) {
 		this.eoNumber = eoNumber;
 	}
 	
 	public abstract String getProductCode();
 	
-	public BigDecimal total;
 	
 	public String getEoNumber() {
 		return eoNumber;
@@ -76,18 +71,6 @@ public abstract class BaseExchangeOrder {
 		this.updateDateTime = updateDateTime;
 	}
 
-	public void setVendor(Vendor vendor) {
-		this.vendor = vendor;
-	}
-
-	public Vendor getVendor() {
-		return vendor;
-	}
-		
-	public abstract String getRaiseCheque();
-	
-	public abstract String getLastUpdatedByUser();
-
 	public String getCountryCode() {
 		return countryCode;
 	}
@@ -111,24 +94,5 @@ public abstract class BaseExchangeOrder {
 	public void setStatus(EoStatus status) {
 		this.status = status;
 	}
-
-	public ServiceInfo getServiceInfo() {
-		return serviceInfo;
-	}
-
-	public void setServiceInfo(ServiceInfo serviceInfo) {
-		this.serviceInfo = serviceInfo;
-	}
-
-	public String getTest() {
-		return test;
-	}
-
-	public void setTest(String test) {
-		this.test = test;
-	}
-	
-	
-	
-	
+		
 }
