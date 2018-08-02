@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.ReportHeaderService;
@@ -99,6 +100,7 @@ public class ExchangeOrderReportService {
 		ExchangeOrder exchangeOrder = eoExists
 				.orElseThrow(() -> new ExchangeOrderNoContentException(
 						"Exchange order number not found: [ " + eoNumber + " ]"));
+		checkCountryCode(eoNumber, exchangeOrder.getCountryCode());
 		
 		ReportHeader reportHeader = getReportHeaderInfo(exchangeOrder.getCountryCode());
 
@@ -112,6 +114,14 @@ public class ExchangeOrderReportService {
 		}
 		catch (JRException | IOException e) {
 			throw new ApiServiceException(e.getMessage());
+		}
+	}
+
+	private void checkCountryCode(String eoNumber, String countryCode)
+			throws ExchangeOrderNoContentException {
+		if(Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
+			throw new ExchangeOrderNoContentException(
+					"Generate pdf for India Exchange order number: [ " + eoNumber + " ] not supported."); 
 		}
 	}
 
@@ -274,6 +284,9 @@ public class ExchangeOrderReportService {
 		try {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
+			
+			checkCountryCode(eoNumber, exchangeOrder.getCountryCode());
+			
 			List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
 			List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
 			String email = setEmailRecipient(contactInfoList);
