@@ -17,6 +17,14 @@ public class IndiaServiceInfo implements Serializable {
 
 	private BigDecimal discount;
 
+	private BigDecimal gstAmount;
+
+	private boolean gstAbsorb;
+
+	private BigDecimal merchantFeeAmount;
+
+	private boolean merchantFeeAbsorb;
+
 	private BigDecimal totalSellingPrice;
 
 	private FormOfPayment formOfPayment;
@@ -65,6 +73,38 @@ public class IndiaServiceInfo implements Serializable {
 
     public void setDiscount(BigDecimal discount) {
         this.discount = discount;
+    }
+
+    public BigDecimal getGstAmount() {
+        return gstAmount;
+    }
+
+    public void setGstAmount(BigDecimal gstAmount) {
+        this.gstAmount = gstAmount;
+    }
+
+    public boolean isGstAbsorb() {
+        return gstAbsorb;
+    }
+
+    public void setGstAbsorb(boolean gstAbsorb) {
+        this.gstAbsorb = gstAbsorb;
+    }
+
+    public BigDecimal getMerchantFeeAmount() {
+        return merchantFeeAmount;
+    }
+
+    public void setMerchantFeeAmount(BigDecimal merchantFeeAmount) {
+        this.merchantFeeAmount = merchantFeeAmount;
+    }
+
+    public boolean isMerchantFeeAbsorb() {
+        return merchantFeeAbsorb;
+    }
+
+    public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
+        this.merchantFeeAbsorb = merchantFeeAbsorb;
     }
 
     public BigDecimal getTotalSellingPrice() {

@@ -58,7 +58,7 @@ public class ExchangeOrderUpdateServiceTest
 
         ExchangeOrder updatedExchangeOrder = service.update(exchangeOrder);
 
-        assertThat(updatedExchangeOrder.getServiceInfo().getGst().doubleValue(), is(equalTo(75d)));
+        assertThat(updatedExchangeOrder.getServiceInfo().getGstAmount().doubleValue(), is(equalTo(75d)));
         assertThat(updatedExchangeOrder.getUpdateDateTime(), is(notNullValue()));
 
         InOrder inOrder = Mockito.inOrder(repository, scaler);
@@ -89,7 +89,7 @@ public class ExchangeOrderUpdateServiceTest
         eo.setProductCode("1");
         eo.setVendor(vendor);
         eo.setServiceInfo(new ServiceInfo());
-        eo.getServiceInfo().setGst(gstAmount);
+        eo.getServiceInfo().setGstAmount(gstAmount);
         eo.getServiceInfo().setFormOfPayment(new FormOfPayment());
         return eo;
     }
