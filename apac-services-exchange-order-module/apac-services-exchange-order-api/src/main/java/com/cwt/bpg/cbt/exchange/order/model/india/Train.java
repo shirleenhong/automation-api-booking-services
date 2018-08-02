@@ -2,17 +2,17 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 
 public class Train {
 
-	private int number;
+	private String number;
 
 	private String name;
 
 	private String cabinClass;
 
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 

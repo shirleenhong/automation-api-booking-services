@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
@@ -76,8 +77,8 @@ public class ExchangeOrderController {
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@PathVariable @ApiParam(value = "Record Locator") String recordLocator) {
 
-		return new ResponseEntity<>(
-				eoService.getExchangeOrderByRecordLocator(recordLocator), HttpStatus.OK);
+		return new ResponseEntity<>((List<ExchangeOrder>)
+				eoService.getExchangeOrderByRecordLocator(countryCode, recordLocator), HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/exchange-order/in", produces = {
@@ -110,8 +111,8 @@ public class ExchangeOrderController {
 	@ApiOperation(value = "Pulls India exchange order transaction based on Record Locator (6 digit alphanumeric string).")
 	public ResponseEntity<List<IndiaExchangeOrder>> getIndiaExchangeOrderByRecordLocator(
 			@PathVariable @ApiParam(value = "Record Locator") String recordLocator) {
-		return new ResponseEntity<>(
-				eoService.getIndiaExchangeOrderByRecordLocator(recordLocator), HttpStatus.OK);
+		return new ResponseEntity<>((List<IndiaExchangeOrder>)
+				eoService.getExchangeOrderByRecordLocator(Country.INDIA.getCode(), recordLocator), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/exchange-order/pdf/{eoNumber}", produces = {
