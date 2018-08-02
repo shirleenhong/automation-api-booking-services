@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 
 import io.swagger.annotations.Api;
@@ -52,7 +51,7 @@ public class ExchangeOrderController {
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
 			throws ExchangeOrderNoContentException {
-		boolean isSave = input.getEoNumber() == null ? true : false;
+		boolean isSave = input.getEoNumber() == null;
 		return new ResponseEntity<>((ExchangeOrder) eoService.saveExchangeOrder(input),
 				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
@@ -89,7 +88,7 @@ public class ExchangeOrderController {
 	public ResponseEntity<IndiaExchangeOrder> saveIndiaExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") IndiaExchangeOrder input)
 			throws ExchangeOrderNoContentException {
-		boolean isSave = input.getEoNumber() == null ? true : false;
+		boolean isSave = input.getEoNumber() == null;
 		return new ResponseEntity<>((IndiaExchangeOrder) eoService.saveExchangeOrder(input),
 				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}

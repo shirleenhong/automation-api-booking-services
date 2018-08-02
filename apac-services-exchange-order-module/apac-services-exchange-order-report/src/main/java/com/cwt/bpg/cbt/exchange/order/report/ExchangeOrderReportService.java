@@ -53,6 +53,8 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 public class ExchangeOrderReportService {
 
 	private static final String EMAIL_ERROR_MESSAGE = "Email cannot be empty.";
+	
+	private static final String EMAIL_ERROR_MESSAGE_INDIA = "Email not supported in India.";
 
 	private static final String ERROR_MESSAGE = "Error encountered while sending email.";
 
@@ -123,6 +125,19 @@ public class ExchangeOrderReportService {
 			throw new ExchangeOrderNoContentException(
 					"Generate pdf for India Exchange order number: [ " + eoNumber + " ] not supported."); 
 		}
+	}
+	
+	private EmailResponse checkEmailCountryCode(String countryCode, EmailResponse response)
+			throws ExchangeOrderNoContentException {
+		
+		response.setSuccess(true);
+		if(Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
+			LOGGER.error(EMAIL_ERROR_MESSAGE_INDIA);
+			response.setMessage(EMAIL_ERROR_MESSAGE_INDIA);
+			response.setSuccess(false);
+		}
+		
+		return response;
 	}
 
 	private Map<String, Object> prepareParameters(final ExchangeOrder exchangeOrder,
@@ -284,9 +299,10 @@ public class ExchangeOrderReportService {
 		try {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
-			
-			checkCountryCode(eoNumber, exchangeOrder.getCountryCode());
-			
+			EmailResponse indiaResponse = checkEmailCountryCode(exchangeOrder.getCountryCode(), response);
+			if(!indiaResponse.isSuccess()) {
+				return indiaResponse;
+			}
 			List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
 			List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
 			String email = setEmailRecipient(contactInfoList);
