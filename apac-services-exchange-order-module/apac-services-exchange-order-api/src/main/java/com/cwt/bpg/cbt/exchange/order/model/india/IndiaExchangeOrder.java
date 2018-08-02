@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.EoAction;
-import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -44,11 +42,7 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 
 	private String agentName;
 
-	private String countryCode;
-
 	private String pcc;
-
-	private String productCode;
 
 	public IndiaMiscInfo getMiscInfo() {
 		return miscInfo;
@@ -106,28 +100,12 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 		this.agentName = agentName;
 	}
 
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
-
 	public String getPcc() {
 		return pcc;
 	}
 
 	public void setPcc(String pcc) {
 		this.pcc = pcc;
-	}
-
-	public String getProductCode() {
-		return productCode;
-	}
-
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
 	}
 
 	public BigDecimal getTotal() {

@@ -46,13 +46,22 @@ public abstract class BaseExchangeOrder {
 	private BigDecimal merchantFeeAmount;
 
 	private boolean merchantFeeAbsorb;
+
+	@ApiModelProperty(required = true)
+	private String productCode;
 	
 	public void setEoNumber(String eoNumber) {
 		this.eoNumber = eoNumber;
 	}
-	
-	public abstract String getProductCode();
-	
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+
 	public String getEoNumber() {
 		return eoNumber;
 	}

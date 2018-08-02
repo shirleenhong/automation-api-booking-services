@@ -5,19 +5,16 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import javax.validation.constraints.DecimalMin;
-
-import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnInsertOnFopType;
-import com.cwt.bpg.cbt.exchange.order.model.validator.ValidateOnInsert;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
-import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnInsertOnFopType;
 import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
+import com.cwt.bpg.cbt.exchange.order.model.validator.ValidateOnInsert;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -32,11 +29,6 @@ import io.swagger.annotations.ApiModelProperty;
 public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	private static final long serialVersionUID = 79442657760597469L;
-
-	private String countryCode;
-
-	@ApiModelProperty(required = true)
-	private String productCode;
 
 	@ApiModelProperty(required = true)
 	private String accountNumber;
@@ -85,22 +77,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 	private MiscChargeOrder miscChargeOrder;
 
 	private String lastUpdatedByUser;
-	
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
-
-	public String getProductCode() {
-		return productCode;
-	}
-
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
-	}
 
 	public String getAccountNumber() {
 		return accountNumber;
