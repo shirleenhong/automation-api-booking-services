@@ -1,8 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,22 +36,18 @@ public class ReportHeaderRepositoryTest {
         Mockito.when(morphia.getDatastore()).thenReturn(dataStore);
     }
 
-    @Test
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
     public void getReportHeaderShouldReturnReportHeader() {
-        Query<ReportHeader> query = Mockito.mock(Query.class);
+        Query query = Mockito.mock(Query.class);
         FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
-        String countryCode = "CWT SG";
-        when(dataStore.createQuery(ReportHeader.class)).thenReturn(query);
-        when(query.field(anyString())).thenReturn(fieldEnd);
-        when(fieldEnd.equalIgnoreCase(anyString())).thenReturn(query);
-        when(query.get()).thenReturn(new ReportHeader());
+        Mockito.when(dataStore.createQuery(ReportHeader.class)).thenReturn(query);
+        Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
+        Mockito.when(fieldEnd.equalIgnoreCase(anyString())).thenReturn(query);
 
-        ReportHeader result = repository.get(countryCode);
+        repository.get("CWT SG");
 
         verify(morphia, times(1)).getDatastore();
         verify(dataStore, times(1)).createQuery(ReportHeader.class);
-
-        assertNotNull(result);
-
     }
 }

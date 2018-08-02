@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exchange-order" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11876608-3e71-4654-8bad-9498a837d1ff">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="322"/>
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<subDataset name="dataset1" uuid="445d1af9-e2c1-4cfc-9fac-574f362a3a97">
 		<field name="_THIS" class="java.lang.String"/>
@@ -27,18 +27,15 @@
 	<parameter name="HEADER_FAX" class="java.lang.String"/>
 	<parameter name="HEADER_PHONE" class="java.lang.String"/>
 	<parameter name="HEADER_COMPANY_NAME" class="java.lang.String"/>
+	<parameter name="DESCRIPTION" class="java.lang.String"/>
+	<parameter name="BTA_DESCRIPTION" class="java.lang.String"/>
 	<field name="vendor" class="com.cwt.bpg.cbt.exchange.order.model.Vendor"/>
 	<field name="eoNumber" class="java.lang.String"/>
 	<field name="passengerName" class="java.lang.String"/>
 	<field name="agentName" class="java.lang.String"/>
 	<field name="agentId" class="java.lang.String"/>
 	<field name="recordLocator" class="java.lang.String"/>
-	<field name="nettCost" class="java.math.BigDecimal"/>
-	<field name="tax1" class="java.math.BigDecimal"/>
-	<field name="tax2" class="java.math.BigDecimal"/>
 	<field name="total" class="java.math.BigDecimal"/>
-	<field name="description" class="java.lang.String"/>
-	<field name="btaDescription" class="java.lang.String"/>
 	<field name="eoRemarks" class="java.util.List"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -240,10 +237,6 @@
 				<textElement textAlignment="Left"/>
 				<textFieldExpression><![CDATA[$P{TOTAL}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="160" y="400" width="373" height="15" uuid="ae632efd-d66c-4e7e-a8b8-3d5ea72ff7f7"/>
-				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
-			</textField>
 			<componentElement>
 				<reportElement x="160" y="460" width="373" height="15" uuid="4673f580-538f-4d0d-b5a8-f2db1137755c">
 					<printWhenExpression><![CDATA[$F{eoRemarks} != null]]></printWhenExpression>
@@ -272,16 +265,20 @@
 				<textFieldExpression><![CDATA[$F{vendor}.getContactPerson()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="160" y="415" width="373" height="15" uuid="84bcfc6a-910d-4cbb-8c82-88e1322cc944"/>
-				<textFieldExpression><![CDATA[$F{btaDescription}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="430" width="373" height="15" uuid="d5dcbcdc-92aa-4a1c-9366-35d7be272427"/>
 				<textFieldExpression><![CDATA[$P{ADDITIONAL_INFO_DATE}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="355" width="100" height="15" uuid="fe5f4374-8b78-4edf-91ac-f96573f64aa2"/>
 				<textFieldExpression><![CDATA[$P{GST_AMOUNT_TAX1_LABEL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="160" y="400" width="373" height="15" uuid="592e9ab2-3629-42eb-ab32-78092de6ef09"/>
+				<textFieldExpression><![CDATA[$P{DESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="160" y="415" width="373" height="15" uuid="9a50ef11-9be3-4f78-bb5d-954600254051"/>
+				<textFieldExpression><![CDATA[$P{BTA_DESCRIPTION}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
