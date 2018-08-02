@@ -30,7 +30,10 @@ public abstract class BaseExchangeOrder {
 	private String countryCode;
 	
 	private String recordLocator;
-	
+
+	@ApiModelProperty(required = true)
+	private EoAction eoAction;
+
 	@ApiModelProperty(required = true)
 	private EoStatus status;
 	
@@ -100,6 +103,14 @@ public abstract class BaseExchangeOrder {
 
 	public void setStatus(EoStatus status) {
 		this.status = status;
+	}
+
+	public EoAction getEoAction() {
+		return eoAction;
+	}
+
+	public void setEoAction(EoAction eoAction) {
+		this.eoAction = eoAction;
 	}
 
 	public BigDecimal getGstAmount() {

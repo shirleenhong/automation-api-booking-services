@@ -31,6 +31,16 @@ public class BaseVendor implements Serializable {
 
 	private List<ContactInfo> contactInfo;
 
+	private String country;
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
 	public String getName() {
 		return name;
 	}

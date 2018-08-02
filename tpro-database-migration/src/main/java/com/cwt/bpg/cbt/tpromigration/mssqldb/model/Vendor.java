@@ -30,6 +30,16 @@ public class Vendor extends com.cwt.bpg.cbt.exchange.order.model.Vendor {
 	
 	private String faxNumber;
 
+	private String country;
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
 	public List<String> getProductCodes() {
 		return productCodes;
 	}

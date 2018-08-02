@@ -30,10 +30,6 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 
 	private Request request;
 
-	private EoAction eoAction;
-
-	private EoStatus status;
-
 	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
@@ -76,22 +72,6 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 
 	public void setRequest(Request request) {
 		this.request = request;
-	}
-
-	public EoAction getEoAction() {
-		return eoAction;
-	}
-
-	public void setEoAction(EoAction eoAction) {
-		this.eoAction = eoAction;
-	}
-
-	public EoStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(EoStatus status) {
-		this.status = status;
 	}
 
 	public Instant getCreateDateTime() {
