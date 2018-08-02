@@ -8,7 +8,6 @@ import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
-import com.cwt.bpg.cbt.exchange.order.model.india.BaseVendor;
 import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnInsertOnFopType;
 import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
 import com.cwt.bpg.cbt.exchange.order.model.validator.ValidateOnInsert;
@@ -164,18 +163,14 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 		this.miscChargeOrder = miscChargeOrder;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	public ServiceInfo getServiceInfo() {
 		return serviceInfo;
 	}
 
-	@Override
-	public void setServiceInfo(BaseServiceInfo serviceInfo) {
-		this.serviceInfo = (ServiceInfo) serviceInfo;
+//	@Override
+	public void setServiceInfo(ServiceInfo serviceInfo) {
+		this.serviceInfo = serviceInfo;
 	}
 
 	@Override
@@ -183,8 +178,8 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
         return vendor;
     }
 
-    @Override
-    public void setVendor(BaseVendor vendor) {
-        this.vendor = (Vendor) vendor;
+//    @Override
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
     }
 }

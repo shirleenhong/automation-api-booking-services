@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
 import com.cwt.bpg.cbt.exchange.order.utils.ExchangeOrderObjectModifier;
 
@@ -25,11 +24,11 @@ public class ExchangeOrderUpdateService
     @Autowired
     private ExchangeOrderAmountScaler exchangeOrderAmountScaler;
     
-    ExchangeOrder update(BaseExchangeOrder exchangeOrder) throws ExchangeOrderNoContentException {
+    BaseExchangeOrder update(BaseExchangeOrder exchangeOrder) throws ExchangeOrderNoContentException {
         final String eoNumber = exchangeOrder.getEoNumber();
-        Optional<ExchangeOrder> isEoExist = Optional.ofNullable(exchangeOrderRepo.getExchangeOrder(eoNumber));
+        Optional<BaseExchangeOrder> isEoExist = Optional.ofNullable(exchangeOrderRepo.getExchangeOrder(exchangeOrder.getCountryCode(), eoNumber));
 
-        ExchangeOrder existingExchangeOrder = isEoExist
+        BaseExchangeOrder existingExchangeOrder = isEoExist
                 .orElseThrow(() -> new ExchangeOrderNoContentException(
                         "Exchange order number not found: [ " + eoNumber + " ]"));
 
@@ -48,6 +47,6 @@ public class ExchangeOrderUpdateService
         exchangeOrderAmountScaler.scale(existingExchangeOrder);
         String updatedEoNumber = exchangeOrderRepo.save(existingExchangeOrder);
         
-        return exchangeOrderRepo.getExchangeOrder(updatedEoNumber);
+        return exchangeOrderRepo.getExchangeOrder(existingExchangeOrder.getCountryCode(), updatedEoNumber);
     }
 }

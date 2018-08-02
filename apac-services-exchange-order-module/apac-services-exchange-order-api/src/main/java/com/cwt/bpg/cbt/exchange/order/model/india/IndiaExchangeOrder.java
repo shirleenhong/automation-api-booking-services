@@ -8,7 +8,6 @@ import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.BaseServiceInfo;
 
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
@@ -80,13 +79,14 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 		this.pcc = pcc;
 	}
 
+	@Override
 	public IndiaServiceInfo getServiceInfo() {
 		return serviceInfo;
 	}
 
-    @Override
-    public void setServiceInfo(BaseServiceInfo serviceInfo) {
-        this.serviceInfo = (IndiaServiceInfo) serviceInfo;
+//    @Override
+    public void setServiceInfo(IndiaServiceInfo serviceInfo) {
+        this.serviceInfo = serviceInfo;
     }
 
 	@Override
@@ -94,9 +94,9 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 		return vendor;
 	}
 
-	@Override
-	public void setVendor(BaseVendor vendor) {
-		this.vendor = (IndiaVendor) vendor;
+//	@Override
+	public void setVendor(IndiaVendor vendor) {
+		this.vendor = vendor;
 	}
 	
 	

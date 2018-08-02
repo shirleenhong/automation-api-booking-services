@@ -1,14 +1,18 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-public abstract class BaseServiceInfo {
+import java.io.Serializable;
 
-    private FormOfPayment formOfPayment;
+public class BaseServiceInfo implements Serializable {
 
-    public FormOfPayment getFormOfPayment() {
-        return formOfPayment;
-    }
+	private static final long serialVersionUID = -6635160737347930743L;
 
-    public void setFormOfPayment(FormOfPayment formOfPayment) {
-        this.formOfPayment = formOfPayment;
-    }
+	private FormOfPayment formOfPayment;
+
+	public FormOfPayment getFormOfPayment() {
+		return formOfPayment;
+	}
+
+	public void setFormOfPayment(FormOfPayment formOfPayment) {
+		this.formOfPayment = formOfPayment;
+	}
 }

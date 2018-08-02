@@ -157,10 +157,10 @@ public abstract class BaseExchangeOrder {
 
 	public abstract BaseServiceInfo getServiceInfo();
 
-	public abstract void setServiceInfo(BaseServiceInfo serviceInfo);
+//	public abstract void setServiceInfo(BaseServiceInfo serviceInfo);
 
 	public abstract BaseVendor getVendor();
 
-	public abstract void setVendor(BaseVendor vendor);
+//	public abstract void setVendor(BaseVendor vendor);
 
 }
