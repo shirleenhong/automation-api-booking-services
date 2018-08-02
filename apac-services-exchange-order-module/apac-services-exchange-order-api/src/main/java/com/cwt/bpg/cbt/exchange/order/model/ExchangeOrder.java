@@ -72,10 +72,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private String recordLocator;
 
-	@DecimalMin(value = "0")
-	@ApiModelProperty(required = true)
-	private BigDecimal total;
-
 	@ApiModelProperty(required = true)
 	private EoAction eoAction;
 
@@ -274,14 +270,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public String getHkSGTestField() {
-		return hkSGTestField;
-	}
-
-	public void setHkSGTestField(String hkSGTestField) {
-		this.hkSGTestField = hkSGTestField;
 	}
 
 	public ServiceInfo getServiceInfo() {

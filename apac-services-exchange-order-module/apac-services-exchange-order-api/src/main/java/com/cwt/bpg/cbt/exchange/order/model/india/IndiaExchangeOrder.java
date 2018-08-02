@@ -54,8 +54,6 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 
 	private String productCode;
 
-	private BigDecimal total;
-
 	public IndiaMiscInfo getMiscInfo() {
 		return miscInfo;
 	}
