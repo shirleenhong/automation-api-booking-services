@@ -55,12 +55,11 @@ public class ProductRepositoryTest
 		prodA.setType("BT");
 
 		Vendor vendorA = new Vendor();
-		vendorA.setCountry("SG");
+		vendorA.setCountryCode("SG");
 		vendorA.setCode("022000");
 		vendorA.setAddress1("");
 		vendorA.setAddress2("");
 		vendorA.setCity("SINGAPORE");
-		vendorA.setCountry("SINGAPORE");
 		vendorA.setMisc(false);
 		vendorA.setSortKey("BSP");
 		vendorA.setName("BANK SETTLEMENT PLAN");
@@ -83,7 +82,6 @@ public class ProductRepositoryTest
 		vendorB.setAddress1("");
 		vendorB.setAddress2("");
 		vendorB.setCity("SINGAPORE");
-		vendorB.setCountry("SINGAPORE");
 		vendorB.setMisc(false);
 		vendorB.setSortKey("BSP");
 		vendorB.setName("BANK SETTLEMENT PLAN");

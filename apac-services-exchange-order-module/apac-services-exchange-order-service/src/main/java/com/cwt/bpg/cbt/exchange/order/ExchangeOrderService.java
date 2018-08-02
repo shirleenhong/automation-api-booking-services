@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
-import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,39 +24,17 @@ public class ExchangeOrderService {
 	@Autowired
 	private ExchangeOrderUpdateService eoUpdateService;
 
-	// @CachePut(cacheNames = "exchange-orders", key = "#exchangeOrder.eoNumber")
-	// public ExchangeOrder saveExchangeOrder(ExchangeOrder exchangeOrder)
-	// throws ExchangeOrderNoContentException {
-	//
-	// String eoNumber = exchangeOrder.getEoNumber();
-	// if (eoNumber == null) {
-	// return eoInsertService.insert(exchangeOrder);
-	// }
-	// else {
-	// return eoUpdateService.update(exchangeOrder);
-	// }
-	// }
-
 	@CachePut(cacheNames = "exchange-orders", key = "#exchangeOrder.eoNumber")
-	public BaseExchangeOrder saveExchangeOrder2(BaseExchangeOrder exchangeOrder)
+	public BaseExchangeOrder saveExchangeOrder(BaseExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
 
-		// String eoNumber = exchangeOrder.getEoNumber();
-		// if (eoNumber == null) {
-		return eoInsertService.insert(exchangeOrder);
-		// }
-		// else {
-		// return eoUpdateService.update(exchangeOrder);
-		// }
-	}
-
-	public IndiaExchangeOrder saveExchangeOrder(IndiaExchangeOrder exchangeOrder)
-			throws ExchangeOrderNoContentException {
 		String eoNumber = exchangeOrder.getEoNumber();
-		if (eoNumber == null) {
+		//if (eoNumber == null) {
 			return eoInsertService.insert(exchangeOrder);
-		}
-		return exchangeOrder;
+		//}
+//		else {
+//			return eoUpdateService.update(exchangeOrder);
+//		}
 	}
 
 	@Cacheable(cacheNames = "exchange-orders", key = "#eoNumber")
