@@ -29,9 +29,9 @@ public class ExchangeOrderService {
 			throws ExchangeOrderNoContentException {
 
 		String eoNumber = exchangeOrder.getEoNumber();
-		//if (eoNumber == null) {
+//		if (eoNumber == null) {
 			return eoInsertService.insert(exchangeOrder);
-		//}
+//		}
 //		else {
 //			return eoUpdateService.update(exchangeOrder);
 //		}

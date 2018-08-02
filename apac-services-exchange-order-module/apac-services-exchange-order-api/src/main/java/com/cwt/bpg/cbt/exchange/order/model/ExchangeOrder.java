@@ -44,8 +44,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private String passengerName;
 	
-	private String hkSGTestField;
-	
 	private ServiceInfo serviceInfo;
 	
 	private Vendor vendor;

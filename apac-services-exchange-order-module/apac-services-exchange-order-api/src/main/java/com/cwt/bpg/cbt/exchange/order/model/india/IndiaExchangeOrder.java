@@ -20,8 +20,6 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 
 	private static final long serialVersionUID = -5915661302682405152L;
 	
-	private String indiaTestField;
-	
 	private IndiaServiceInfo serviceInfo;
 	
 	private BaseVendor vendor;
@@ -160,14 +158,6 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 
 	public void setTotal(BigDecimal total) {
 		this.total = total;
-	}
-
-	public String getIndiaTestField() {
-		return indiaTestField;
-	}
-
-	public void setIndiaTestField(String indiaTestField) {
-		this.indiaTestField = indiaTestField;
 	}
 
 	public IndiaServiceInfo getServiceInfo() {
