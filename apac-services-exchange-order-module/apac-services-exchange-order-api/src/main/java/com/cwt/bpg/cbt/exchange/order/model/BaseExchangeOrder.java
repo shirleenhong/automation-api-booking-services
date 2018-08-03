@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -13,8 +14,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public abstract class BaseExchangeOrder {
-	
+public abstract class BaseExchangeOrder implements Serializable {
+
+	private static final long serialVersionUID = -7547529728116136280L;
+
 	@Id
 	private String eoNumber;
 	
