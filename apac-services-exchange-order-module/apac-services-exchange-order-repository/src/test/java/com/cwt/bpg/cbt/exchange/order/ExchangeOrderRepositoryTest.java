@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,10 +28,6 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.*;
 
-import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 public class ExchangeOrderRepositoryTest {
@@ -289,6 +287,40 @@ public class ExchangeOrderRepositoryTest {
             verify(query, times(1)).field("createDateTime");
             verify(fieldEnd, times(1)).lessThanOrEq(param.getEndCreationDate());
         });
+    }
+
+    @Test
+    public void shouldGetExchangeOrder() {
+        FieldEnd fieldEnd = mock(FieldEnd.class);
+        when(dataStore.createQuery(ExchangeOrder.class)).thenReturn(query);
+        when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
+        when(fieldEnd.equal("eoNumber")).thenReturn(query);
+        when(query.get()).thenReturn(new ExchangeOrder());
+
+
+        BaseExchangeOrder result = repository.getExchangeOrder("HK","eoNumber");
+
+        verify(morphia, times(1)).getDatastore();
+        verify(dataStore, times(1)).createQuery(ExchangeOrder.class);
+        assertTrue(result instanceof ExchangeOrder);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void shouldGetIndiaExchangeOrder() {
+        FieldEnd fieldEnd = mock(FieldEnd.class);
+        when(dataStore.createQuery(IndiaExchangeOrder.class)).thenReturn(indiaQuery);
+        when(indiaQuery.field(Mockito.anyString())).thenReturn(fieldEnd);
+        when(fieldEnd.equal("eoNumber")).thenReturn(indiaQuery);
+        when(indiaQuery.get()).thenReturn(new IndiaExchangeOrder());
+
+
+        BaseExchangeOrder result = repository.getExchangeOrder("IN","eoNumber");
+
+        verify(morphia, times(1)).getDatastore();
+        verify(dataStore, times(1)).createQuery(IndiaExchangeOrder.class);
+        assertTrue(result instanceof IndiaExchangeOrder);
+        assertNotNull(result);
     }
 	
 	@SuppressWarnings("unchecked")
