@@ -2,6 +2,8 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
 
+import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnInsertOnFopType;
+import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
@@ -9,6 +11,8 @@ import org.mongodb.morphia.annotations.Indexes;
 
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 
+@NotEmptyOnInsert(dependentFields = {"productCode","vendor"})
+@CcNotNullOnInsertOnFopType.List({@CcNotNullOnInsertOnFopType(fopTypes ={"CC","CX4"})})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializable {
