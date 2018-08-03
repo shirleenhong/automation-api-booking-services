@@ -1,6 +1,10 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
-public class CheckList {
+import java.io.Serializable;
+
+public class CheckList implements Serializable {
+
+	private static final long serialVersionUID = -3803907240885033917L;
 
 	private boolean passportCopiesReceived;
 

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import com.cwt.bpg.cbt.exchange.order.model.BaseServiceInfo;
-import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
 
 public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
 
@@ -27,8 +26,6 @@ public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
 	private boolean merchantFeeAbsorb;
 
 	private BigDecimal totalSellingPrice;
-
-	private FormOfPayment formOfPayment;
 
 	private String country;
 
@@ -114,14 +111,6 @@ public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
 
     public void setTotalSellingPrice(BigDecimal totalSellingPrice) {
         this.totalSellingPrice = totalSellingPrice;
-    }
-
-    public FormOfPayment getFormOfPayment() {
-        return formOfPayment;
-    }
-
-    public void setFormOfPayment(FormOfPayment formOfPayment) {
-        this.formOfPayment = formOfPayment;
     }
 
     public String getCountry() {
