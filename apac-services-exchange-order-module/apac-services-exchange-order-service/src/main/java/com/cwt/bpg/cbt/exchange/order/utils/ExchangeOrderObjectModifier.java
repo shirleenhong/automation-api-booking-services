@@ -1,23 +1,45 @@
 package com.cwt.bpg.cbt.exchange.order.utils;
 
-import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
+import java.util.Optional;
+
+import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.utils.ObjectModifier;
 
 public class ExchangeOrderObjectModifier {
 
-	public static void modifyTargetObject(BaseExchangeOrder source, BaseExchangeOrder target) {
-//        if (source.getServiceInfo().getFormOfPayment().getCreditCard() != null) {
-//            ObjectModifier.modifyTargetObject(source.getServiceInfo().getFormOfPayment().getCreditCard(),
-//                    target.getServiceInfo().getFormOfPayment().getCreditCard());
-//            source.getServiceInfo().getFormOfPayment().setCreditCard(null);
-//        }
-//
-//        if (source.getVendor() != null) {
-//            ObjectModifier.modifyTargetObject(source.getVendor(),
-//                    target.getVendor());
-//            source.setVendor(null);
-//        }
+    private ExchangeOrderObjectModifier() {}
+
+    public static void modifyTargetObject(BaseExchangeOrder source, BaseExchangeOrder target) {
+        modifyTargetCreditCard(source, target);
+
+        modifyTargetVendor(source, target);
 
         ObjectModifier.modifyTargetObject(source, target);
 	}
+
+    private static void modifyTargetCreditCard(BaseExchangeOrder source, BaseExchangeOrder target) {
+        BaseServiceInfo serviceInfo = source.getServiceInfo();
+        Optional<CreditCard> creditCardOptional = Optional.ofNullable(serviceInfo)
+                .map(BaseServiceInfo::getFormOfPayment)
+                .map(FormOfPayment::getCreditCard);
+
+        creditCardOptional.ifPresent(creditCard -> {
+            ObjectModifier.modifyTargetObject(creditCard,
+                    target.getServiceInfo().getFormOfPayment().getCreditCard());
+            serviceInfo.getFormOfPayment().setCreditCard(null);
+        });
+    }
+
+    private static void modifyTargetVendor(BaseExchangeOrder source, BaseExchangeOrder target) {
+        if (source.getVendor() != null) {
+            ObjectModifier.modifyTargetObject(source.getVendor(), target.getVendor());
+            if (source instanceof IndiaExchangeOrder) {
+                ((IndiaExchangeOrder) source).setVendor(null);
+            }
+            else {
+                ((ExchangeOrder) source).setVendor(null);
+            }
+        }
+    }
 }
