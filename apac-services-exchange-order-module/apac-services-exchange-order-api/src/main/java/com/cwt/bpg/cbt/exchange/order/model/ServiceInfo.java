@@ -1,16 +1,17 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
-import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public class ServiceInfo implements Serializable {
+import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import io.swagger.annotations.ApiModelProperty;
+
+public class ServiceInfo extends BaseServiceInfo implements Serializable {
 
 	private static final long serialVersionUID = 3555913363549766564L;
 
@@ -58,15 +59,15 @@ public class ServiceInfo implements Serializable {
 
 	private BigDecimal discount;
 
-	private BigDecimal gst;
+	private BigDecimal gstAmount;
 
 	@ApiModelProperty(value = "CWT Absorb GST")
-	private boolean cwtGstAbsorb;
+	private boolean gstAbsorb;
 
-	private BigDecimal merchantFee;
+	private BigDecimal merchantFeeAmount;
 
 	@ApiModelProperty(value = "CWT Absorb Merchant Fee")
-	private boolean cwtAbsorbmerchantFee;
+	private boolean merchantFeeAbsorb;
 
 	private boolean uatp;
 
@@ -78,8 +79,6 @@ public class ServiceInfo implements Serializable {
 	private boolean tfInNrcc;
 
 	private BigDecimal fuelSurcharge;
-
-	private FormOfPayment formOfPayment;
 
 	private String countryCode;
 
@@ -293,36 +292,36 @@ public class ServiceInfo implements Serializable {
 		this.discount = discount;
 	}
 
-	public BigDecimal getGst() {
-		return gst;
+	public BigDecimal getGstAmount() {
+		return gstAmount;
 	}
 
-	public void setGst(BigDecimal gst) {
-		this.gst = gst;
+	public void setGstAmount(BigDecimal gstAmount) {
+		this.gstAmount = gstAmount;
 	}
 
-	public boolean isCwtGstAbsorb() {
-		return cwtGstAbsorb;
+	public boolean isGstAbsorb() {
+		return gstAbsorb;
 	}
 
-	public void setCwtGstAbsorb(boolean cwtGstAbsorb) {
-		this.cwtGstAbsorb = cwtGstAbsorb;
+	public void setGstAbsorb(boolean gstAbsorb) {
+		this.gstAbsorb = gstAbsorb;
 	}
 
-	public BigDecimal getMerchantFee() {
-		return merchantFee;
+	public BigDecimal getMerchantFeeAmount() {
+		return merchantFeeAmount;
 	}
 
-	public void setMerchantFee(BigDecimal merchantFee) {
-		this.merchantFee = merchantFee;
+	public void setMerchantFeeAmount(BigDecimal merchantFeeAmount) {
+		this.merchantFeeAmount = merchantFeeAmount;
 	}
 
-	public boolean isCwtAbsorbmerchantFee() {
-		return cwtAbsorbmerchantFee;
+	public boolean isMerchantFeeAbsorb() {
+		return merchantFeeAbsorb;
 	}
 
-	public void setCwtAbsorbmerchantFee(boolean cwtAbsorbmerchantFee) {
-		this.cwtAbsorbmerchantFee = cwtAbsorbmerchantFee;
+	public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
+		this.merchantFeeAbsorb = merchantFeeAbsorb;
 	}
 
 	public boolean isUatp() {
@@ -363,14 +362,6 @@ public class ServiceInfo implements Serializable {
 
 	public void setFuelSurcharge(BigDecimal fuelSurcharge) {
 		this.fuelSurcharge = fuelSurcharge;
-	}
-
-	public FormOfPayment getFormOfPayment() {
-		return formOfPayment;
-	}
-
-	public void setFormOfPayment(FormOfPayment formOfPayment) {
-		this.formOfPayment = formOfPayment;
 	}
 
 	public String getCountryCode() {

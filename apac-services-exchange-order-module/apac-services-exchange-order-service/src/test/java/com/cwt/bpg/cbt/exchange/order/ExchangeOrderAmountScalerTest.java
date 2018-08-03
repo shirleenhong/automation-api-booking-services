@@ -42,9 +42,9 @@ public class ExchangeOrderAmountScalerTest
 
         verify(scaleConfig, times(1)).getScale(anyString());
         verify(exchangeOrder.getServiceInfo(), times(1)).setCommission(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setMerchantFee(any(BigDecimal.class));
+        verify(exchangeOrder.getServiceInfo(), times(1)).setMerchantFeeAmount(any(BigDecimal.class));
         verify(exchangeOrder.getServiceInfo(), times(1)).setNettCost(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setGst(any(BigDecimal.class));
+        verify(exchangeOrder.getServiceInfo(), times(1)).setGstAmount(any(BigDecimal.class));
         verify(exchangeOrder.getServiceInfo(), times(1)).setTax1(any(BigDecimal.class));
         verify(exchangeOrder.getServiceInfo(), times(1)).setTax2(any(BigDecimal.class));
         verify(exchangeOrder, times(1)).setTotal(any(BigDecimal.class));

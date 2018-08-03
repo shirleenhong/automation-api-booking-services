@@ -3,9 +3,10 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.cwt.bpg.cbt.exchange.order.model.BaseServiceInfo;
 import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
 
-public class IndiaServiceInfo implements Serializable {
+public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
 
 	private static final long serialVersionUID = -6797824920381793390L;
 
@@ -17,13 +18,13 @@ public class IndiaServiceInfo implements Serializable {
 
 	private BigDecimal discount;
 
-	private BigDecimal gst;
+	private BigDecimal gstAmount;
 
-	private boolean cwtAbsorb;
+	private boolean gstAbsorb;
 
-	private BigDecimal merchantFee;
+	private BigDecimal merchantFeeAmount;
 
-	private boolean cwtAbsorbMerchantFee;
+	private boolean merchantFeeAbsorb;
 
 	private BigDecimal totalSellingPrice;
 
@@ -75,36 +76,36 @@ public class IndiaServiceInfo implements Serializable {
         this.discount = discount;
     }
 
-    public BigDecimal getGst() {
-        return gst;
+    public BigDecimal getGstAmount() {
+        return gstAmount;
     }
 
-    public void setGst(BigDecimal gst) {
-        this.gst = gst;
+    public void setGstAmount(BigDecimal gstAmount) {
+        this.gstAmount = gstAmount;
     }
 
-    public boolean isCwtAbsorb() {
-        return cwtAbsorb;
+    public boolean isGstAbsorb() {
+        return gstAbsorb;
     }
 
-    public void setCwtAbsorb(boolean cwtAbsorb) {
-        this.cwtAbsorb = cwtAbsorb;
+    public void setGstAbsorb(boolean gstAbsorb) {
+        this.gstAbsorb = gstAbsorb;
     }
 
-    public BigDecimal getMerchantFee() {
-        return merchantFee;
+    public BigDecimal getMerchantFeeAmount() {
+        return merchantFeeAmount;
     }
 
-    public void setMerchantFee(BigDecimal merchantFee) {
-        this.merchantFee = merchantFee;
+    public void setMerchantFeeAmount(BigDecimal merchantFeeAmount) {
+        this.merchantFeeAmount = merchantFeeAmount;
     }
 
-    public boolean isCwtAbsorbMerchantFee() {
-        return cwtAbsorbMerchantFee;
+    public boolean isMerchantFeeAbsorb() {
+        return merchantFeeAbsorb;
     }
 
-    public void setCwtAbsorbMerchantFee(boolean cwtAbsorbMerchantFee) {
-        this.cwtAbsorbMerchantFee = cwtAbsorbMerchantFee;
+    public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
+        this.merchantFeeAbsorb = merchantFeeAbsorb;
     }
 
     public BigDecimal getTotalSellingPrice() {

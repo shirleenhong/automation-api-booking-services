@@ -2,17 +2,23 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
-import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import org.apache.commons.lang.StringUtils;
 import org.mongodb.morphia.Key;
-import org.mongodb.morphia.query.*;
+import org.mongodb.morphia.query.FindOptions;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.Sort;
+import org.mongodb.morphia.query.UpdateOperations;
+import org.mongodb.morphia.query.UpdateResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
+import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
@@ -23,18 +29,31 @@ public class ExchangeOrderRepository {
 	@Autowired
 	private MorphiaComponent morphia;
 	
-	public String save(ExchangeOrder eo) {
-		Key<ExchangeOrder> savedEoKey = morphia.getDatastore().save(eo);
+	public String save(BaseExchangeOrder eo) {
+		Key<BaseExchangeOrder> savedEoKey = morphia.getDatastore().save(eo);
 		LOGGER.info("Save: Exchange order, [{}]", eo.getEoNumber());
 		
 		return savedEoKey.getId().toString();
 	}
 
-    public String save(IndiaExchangeOrder eo) {
-        Key<IndiaExchangeOrder> savedEoKey = morphia.getDatastore().save(eo);
-        LOGGER.info("Save: Exchange order, [{}]", eo.getEoNumber());
+    public BaseExchangeOrder getExchangeOrder(String countryCode, String eoNumber) {
+    	
+    	if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
+			return getIndiaExchangeOrder(eoNumber);
+		}
+		else {
+			return getExchangeOrder(eoNumber);
+		}
+	}
 
-        return savedEoKey.getId().toString();
+    public List<? extends BaseExchangeOrder> getExchangeOrderByRecordLocator(String countryCode, String recordLocator) {
+
+	    if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
+            return getIndiaExchangeOrderByRecordLocator(recordLocator);
+        }
+        else {
+            return getByRecordLocator(recordLocator);
+        }
     }
 
 	public ExchangeOrder getExchangeOrder(String eoNumber) {

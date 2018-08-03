@@ -22,10 +22,10 @@ public class Hotel {
 
 	private Guarantor guarantor;
 
-	private String hotelRoomType;
+	private String roomtype;
 
 	private int noOfPeople;
-	
+
 	public String getAddress() {
 		return address;
 	}
@@ -73,7 +73,7 @@ public class Hotel {
 	public void setDailyRateCurrency(String dailyRateCurrency) {
 		this.dailyRateCurrency = dailyRateCurrency;
 	}
-	
+
 	public BigDecimal getDailyRateAmount() {
 		return dailyRateAmount;
 	}
@@ -98,12 +98,12 @@ public class Hotel {
 		this.guarantor = guarantor;
 	}
 
-	public String getHotelRoomType() {
-		return hotelRoomType;
+	public String getRoomtype() {
+		return roomtype;
 	}
 
-	public void setHotelRoomType(String hotelRoomType) {
-		this.hotelRoomType = hotelRoomType;
+	public void setRoomtype(String roomtype) {
+		this.roomtype = roomtype;
 	}
 
 	public int getNoOfPeople() {
@@ -113,7 +113,4 @@ public class Hotel {
 	public void setNoOfPeople(int noOfPeople) {
 		this.noOfPeople = noOfPeople;
 	}
-	
-	
-
 }

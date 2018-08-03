@@ -1,25 +1,16 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.List;
 
-import javax.validation.constraints.DecimalMin;
-
-import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnInsertOnFopType;
-import com.cwt.bpg.cbt.exchange.order.model.validator.ValidateOnInsert;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
-import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
-import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
-import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnInsertOnFopType;
 import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.cwt.bpg.cbt.exchange.order.model.validator.ValidateOnInsert;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -29,17 +20,9 @@ import io.swagger.annotations.ApiModelProperty;
 @ValidateOnInsert.List({@ValidateOnInsert(dependentFields={"serviceInfo.formOfPayment.creditCard","vendor"})})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
-public class ExchangeOrder implements Serializable {
+public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	private static final long serialVersionUID = 79442657760597469L;
-
-	@Id
-	private String eoNumber;
-
-	private String countryCode;
-
-	@ApiModelProperty(required = true)
-	private String productCode;
 
 	@ApiModelProperty(required = true)
 	private String accountNumber;
@@ -47,15 +30,9 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private String passengerName;
 
-	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
-	@JsonSerialize(using = DateSerializer.class)
-	@JsonDeserialize(using = DateDeserializer.class)
-	private Instant createDateTime;
-
-    @ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
-    @JsonSerialize(using = DateSerializer.class)
-    @JsonDeserialize(using = DateDeserializer.class)
-	private Instant updateDateTime;
+	private ServiceInfo serviceInfo;
+	
+	private Vendor vendor;
 
 	@ApiModelProperty(required = true)
 	private String agentId;
@@ -68,28 +45,11 @@ public class ExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private String agentName;
 
-	@ApiModelProperty(required = true)
-	private String recordLocator;
-
-	@DecimalMin(value = "0")
-	@ApiModelProperty(required = true)
-	private BigDecimal total;
-
-	@ApiModelProperty(required = true)
-	private EoAction eoAction;
-
-	@ApiModelProperty(required = true)
-	private EoStatus status;
-
 	private String raiseCheque;
 
 	private List<String> eoRemarks;
 
 	private List<String> itineraryRemarks;
-	
-	private Vendor vendor;
-	
-	private ServiceInfo serviceInfo;
 	
 	private MiscInfo miscInfo;
 	
@@ -98,30 +58,6 @@ public class ExchangeOrder implements Serializable {
 	private MiscChargeOrder miscChargeOrder;
 
 	private String lastUpdatedByUser;
-	
-	public String getEoNumber() {
-		return eoNumber;
-	}
-
-	public void setEoNumber(String eoNumber) {
-		this.eoNumber = eoNumber;
-	}
-
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
-
-	public String getProductCode() {
-		return productCode;
-	}
-
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
-	}
 
 	public String getAccountNumber() {
 		return accountNumber;
@@ -138,22 +74,6 @@ public class ExchangeOrder implements Serializable {
 	public void setPassengerName(String passengerName) {
 		this.passengerName = passengerName;
 	}
-
-	public Instant getCreateDateTime() {
-		return createDateTime;
-	}
-
-	public void setCreateDateTime(Instant createDateTime) {
-		this.createDateTime = createDateTime;
-	}
-
-    public Instant getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public void setUpdateDateTime(Instant updateDateTime) {
-        this.updateDateTime = updateDateTime;
-    }
 
     public String getAgentId() {
 		return agentId;
@@ -187,38 +107,6 @@ public class ExchangeOrder implements Serializable {
 		this.agentName = agentName;
 	}
 
-	public String getRecordLocator() {
-		return recordLocator;
-	}
-
-	public void setRecordLocator(String recordLocator) {
-		this.recordLocator = recordLocator;
-	}
-
-	public BigDecimal getTotal() {
-		return total;
-	}
-
-	public void setTotal(BigDecimal total) {
-		this.total = total;
-	}
-	
-	public EoAction getEoAction() {
-		return eoAction;
-	}
-
-	public void setEoAction(EoAction eoAction) {
-		this.eoAction = eoAction;
-	}
-
-	public EoStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(EoStatus status) {
-		this.status = status;
-	}
-
 	public String getRaiseCheque() {
 		return raiseCheque;
 	}
@@ -243,14 +131,6 @@ public class ExchangeOrder implements Serializable {
 		this.itineraryRemarks = itineraryRemarks;
 	}
 
-	public Vendor getVendor() {
-		return vendor;
-	}
-
-	public void setVendor(Vendor vendor) {
-		this.vendor = vendor;
-	}
-
     public String getLastUpdatedByUser() {
         return lastUpdatedByUser;
     }
@@ -258,14 +138,6 @@ public class ExchangeOrder implements Serializable {
     public void setLastUpdatedByUser(String lastUpdatedByUser) {
         this.lastUpdatedByUser = lastUpdatedByUser;
     }
-
-	public ServiceInfo getServiceInfo() {
-		return serviceInfo;
-	}
-
-	public void setServiceInfo(ServiceInfo serviceInfo) {
-		this.serviceInfo = serviceInfo;
-	}
 
 	public MiscInfo getMiscInfo() {
 		return miscInfo;
@@ -290,7 +162,24 @@ public class ExchangeOrder implements Serializable {
 	public void setMiscChargeOrder(MiscChargeOrder miscChargeOrder) {
 		this.miscChargeOrder = miscChargeOrder;
 	}
-    
-    
-    
+
+	@Override
+	public ServiceInfo getServiceInfo() {
+		return serviceInfo;
+	}
+
+//	@Override
+	public void setServiceInfo(ServiceInfo serviceInfo) {
+		this.serviceInfo = serviceInfo;
+	}
+
+	@Override
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+//    @Override
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
+    }
 }

@@ -9,11 +9,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
@@ -31,16 +27,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.ReportHeaderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.AdditionalInfo;
-import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
-import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
-import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -52,6 +44,8 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 public class ExchangeOrderReportService {
 
 	private static final String EMAIL_ERROR_MESSAGE = "Email cannot be empty.";
+	
+	private static final String EMAIL_ERROR_MESSAGE_INDIA = "Email not supported in India.";
 
 	private static final String ERROR_MESSAGE = "Error encountered while sending email.";
 
@@ -99,6 +93,7 @@ public class ExchangeOrderReportService {
 		ExchangeOrder exchangeOrder = eoExists
 				.orElseThrow(() -> new ExchangeOrderNoContentException(
 						"Exchange order number not found: [ " + eoNumber + " ]"));
+		checkCountryCode(eoNumber, exchangeOrder.getCountryCode());
 		
 		ReportHeader reportHeader = getReportHeaderInfo(exchangeOrder.getCountryCode());
 
@@ -115,6 +110,27 @@ public class ExchangeOrderReportService {
 		}
 	}
 
+	private void checkCountryCode(String eoNumber, String countryCode)
+			throws ExchangeOrderNoContentException {
+		if(Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
+			throw new ExchangeOrderNoContentException(
+					"Generate pdf for India Exchange order number: [ " + eoNumber + " ] not supported."); 
+		}
+	}
+	
+	private EmailResponse checkEmailCountryCode(String countryCode, EmailResponse response)
+			throws ExchangeOrderNoContentException {
+		
+		response.setSuccess(true);
+		if(Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
+			LOGGER.error(EMAIL_ERROR_MESSAGE_INDIA);
+			response.setMessage(EMAIL_ERROR_MESSAGE_INDIA);
+			response.setSuccess(false);
+		}
+		
+		return response;
+	}
+
 	private Map<String, Object> prepareParameters(final ExchangeOrder exchangeOrder,
 			final ReportHeader reportHeader) throws IOException {
 		final ClassPathResource resourceLogo = new ClassPathResource(IMAGE_PATH);
@@ -127,7 +143,7 @@ public class ExchangeOrderReportService {
 		BigDecimal tax1 = null;
 		
 		if (exchangeOrder.getServiceInfo() != null) {
-			gstAmount = exchangeOrder.getServiceInfo().getGst();
+			gstAmount = exchangeOrder.getServiceInfo().getGstAmount();
 			tax1 = exchangeOrder.getServiceInfo().getTax1();
 			AdditionalInfo additionalInfo = exchangeOrder.getServiceInfo()
 					.getAdditionalInfo();
@@ -274,6 +290,10 @@ public class ExchangeOrderReportService {
 		try {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
+			EmailResponse indiaResponse = checkEmailCountryCode(exchangeOrder.getCountryCode(), response);
+			if(!indiaResponse.isSuccess()) {
+				return indiaResponse;
+			}
 			List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
 			List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
 			String email = setEmailRecipient(contactInfoList);
