@@ -1,19 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import com.cwt.bpg.cbt.exchange.order.model.Airport;
-import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
-import net.minidev.json.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import java.nio.charset.Charset;
-
 import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerNonAirFeeTest.convertObjectToJsonBytes;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
@@ -24,6 +10,21 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.nio.charset.Charset;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
+
+import net.minidev.json.JSONObject;
 
 public class ReportHeaderControllerTest {
 
@@ -79,23 +80,22 @@ public class ReportHeaderControllerTest {
         verify(service, times(1)).save(any(ReportHeader.class));
     }
 
-//    @Test
-//    public void putReportHeaderShouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
-//        JSONObject jsonObj = new JSONObject();
-//
-//        jsonObj.put("countryCode", "SG");
-//        jsonObj.put("companyName", "Test Carlson Wagonlit Travel Singapore, Inc.");
-//        jsonObj.put("address", "Test Address Singapore");
-//        jsonObj.put("phoneNumber", "0987654321");
-//        jsonObj.put("faxNumber", "123456789");
-//
-//        mockMvc.perform(put("/airports")
-//                .contentType(APPLICATION_JSON_UTF8)
-//                .content(convertObjectToJsonBytes(jsonObj)))
-//                .andExpect(status().isBadRequest());
-//
-//        verifyZeroInteractions(service);
-//    }
+    @Test
+    public void putReportHeaderShouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
+        JSONObject jsonObj = new JSONObject();
+
+        jsonObj.put("companyName", "Test Carlson Wagonlit Travel Singapore, Inc.");
+        jsonObj.put("address", "Test Address Singapore");
+        jsonObj.put("phoneNumber", "0987654321");
+        jsonObj.put("faxNumber", "123456789");
+
+        mockMvc.perform(put("/report-headers")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(jsonObj)))
+                .andExpect(status().isBadRequest());
+
+        verifyZeroInteractions(service);
+    }
 
     @Test
     public void removeReportHeaderShouldDeleteReportHeader() throws Exception {

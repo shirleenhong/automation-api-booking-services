@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.report;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
@@ -17,7 +18,6 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -30,11 +30,16 @@ import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.ReportHeaderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.AdditionalInfo;
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
+import com.cwt.bpg.cbt.exchange.order.model.ServiceInfo;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
-import static org.hamcrest.CoreMatchers.*;
 
-@Ignore
 public class ExchangeOrderReportServiceTest {
 
 	@Mock
@@ -228,6 +233,8 @@ public class ExchangeOrderReportServiceTest {
 
 		ExchangeOrder exchangeOrder = new ExchangeOrder();
 
+		exchangeOrder.setServiceInfo(new ServiceInfo());
+		exchangeOrder.getServiceInfo().setAdditionalInfo(new AdditionalInfo());
 		exchangeOrder.setCountryCode(countryCode);
 		exchangeOrder.setProductCode(productCode);
 		exchangeOrder.getServiceInfo().getAdditionalInfo().setDate(Instant.now());
