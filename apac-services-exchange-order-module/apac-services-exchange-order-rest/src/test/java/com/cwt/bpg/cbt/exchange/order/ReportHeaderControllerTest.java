@@ -80,23 +80,22 @@ public class ReportHeaderControllerTest {
         verify(service, times(1)).save(any(ReportHeader.class));
     }
 
-//    @Test
-//    public void putReportHeaderShouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
-//        JSONObject jsonObj = new JSONObject();
-//
-//        jsonObj.put("countryCode", "SG");
-//        jsonObj.put("companyName", "Test Carlson Wagonlit Travel Singapore, Inc.");
-//        jsonObj.put("address", "Test Address Singapore");
-//        jsonObj.put("phoneNumber", "0987654321");
-//        jsonObj.put("faxNumber", "123456789");
-//
-//        mockMvc.perform(put("/airports")
-//                .contentType(APPLICATION_JSON_UTF8)
-//                .content(convertObjectToJsonBytes(jsonObj)))
-//                .andExpect(status().isBadRequest());
-//
-//        verifyZeroInteractions(service);
-//    }
+    @Test
+    public void putReportHeaderShouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
+        JSONObject jsonObj = new JSONObject();
+
+        jsonObj.put("companyName", "Test Carlson Wagonlit Travel Singapore, Inc.");
+        jsonObj.put("address", "Test Address Singapore");
+        jsonObj.put("phoneNumber", "0987654321");
+        jsonObj.put("faxNumber", "123456789");
+
+        mockMvc.perform(put("/report-headers")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(jsonObj)))
+                .andExpect(status().isBadRequest());
+
+        verifyZeroInteractions(service);
+    }
 
     @Test
     public void removeReportHeaderShouldDeleteReportHeader() throws Exception {
