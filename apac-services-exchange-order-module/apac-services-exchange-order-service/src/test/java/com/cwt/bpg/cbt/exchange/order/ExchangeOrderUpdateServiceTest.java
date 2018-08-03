@@ -43,7 +43,7 @@ public class ExchangeOrderUpdateServiceTest
         BigDecimal newGstAmount = new BigDecimal(75);
         ExchangeOrder exchangeOrder = createExchangeOrder(eoNumber, newGstAmount);
 
-        when(repository.getExchangeOrder(eoNumber)).thenReturn(existingExchangeOrder);
+        when(repository.getExchangeOrder(exchangeOrder.getCountryCode(), eoNumber)).thenReturn(existingExchangeOrder);
         when(repository.save(existingExchangeOrder)).thenReturn(eoNumber);
 
         BaseExchangeOrder updatedExchangeOrder = service.update(exchangeOrder);
@@ -52,7 +52,7 @@ public class ExchangeOrderUpdateServiceTest
         assertThat(updatedExchangeOrder.getUpdateDateTime(), is(notNullValue()));
 
         InOrder inOrder = Mockito.inOrder(repository, scaler);
-        inOrder.verify(repository, times(1)).getExchangeOrder(eoNumber);
+        inOrder.verify(repository, times(1)).getExchangeOrder(exchangeOrder.getCountryCode(),eoNumber);
         inOrder.verify(scaler, times(1)).scale(existingExchangeOrder);
         inOrder.verify(repository, times(1)).save(existingExchangeOrder);
     }
