@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 @NotEmptyOnInsert(dependentFields = {"productCode","vendor"})
-@CcNotNullOnInsertOnFopType.List({@CcNotNullOnInsertOnFopType(fopTypes ={"CC","CX4"})})
+@CcNotNullOnInsertOnFopType(fopTypes ={"CC","CX4"})
 @ValidateOnInsert.List({@ValidateOnInsert(dependentFields={"serviceInfo.formOfPayment.creditCard","vendor"})})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))

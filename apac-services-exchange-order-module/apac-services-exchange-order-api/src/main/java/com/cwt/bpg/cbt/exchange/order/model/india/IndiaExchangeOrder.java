@@ -12,7 +12,7 @@ import org.mongodb.morphia.annotations.Indexes;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 
 @NotEmptyOnInsert(dependentFields = {"productCode","vendor"})
-@CcNotNullOnInsertOnFopType.List({@CcNotNullOnInsertOnFopType(fopTypes ={"CC","CX4"})})
+@CcNotNullOnInsertOnFopType(fopTypes ={"CC","CX4"})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializable {
