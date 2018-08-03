@@ -30,27 +30,35 @@ public class ExchangeOrderAmountScaler
 
         int scale = scaleConfig.getScale(exchangeOrder.getCountryCode());
 
-        exchangeOrder.getServiceInfo().setCommission(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getCommission(), scale));
-        exchangeOrder.getServiceInfo().setMerchantFeeAmount(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getMerchantFeeAmount(), scale));
-        exchangeOrder.getServiceInfo().setNettCost(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getNettCost(), scale));
-        exchangeOrder.getServiceInfo().setGstAmount(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getGstAmount(), scale));
-        exchangeOrder.getServiceInfo().setTax1(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTax1(), scale));
-        exchangeOrder.getServiceInfo().setTax2(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTax2(), scale));
-        exchangeOrder.setTotal(CalculatorUtils.scale(exchangeOrder.getTotal(), scale));
-        exchangeOrder.getServiceInfo().setSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getSellingPrice(), scale));
-        exchangeOrder.getServiceInfo().setTotalSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTotalSellingPrice(), scale));
+        if(exchangeOrder.getServiceInfo()!=null) {
+
+            exchangeOrder.getServiceInfo().setCommission(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getCommission(), scale));
+            exchangeOrder.getServiceInfo().setMerchantFeeAmount(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getMerchantFeeAmount(), scale));
+            exchangeOrder.getServiceInfo().setNettCost(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getNettCost(), scale));
+            exchangeOrder.getServiceInfo().setGstAmount(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getGstAmount(), scale));
+            exchangeOrder.getServiceInfo().setTax1(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTax1(), scale));
+            exchangeOrder.getServiceInfo().setTax2(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTax2(), scale));
+            exchangeOrder.setTotal(CalculatorUtils.scale(exchangeOrder.getTotal(), scale));
+            exchangeOrder.getServiceInfo().setSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getSellingPrice(), scale));
+            exchangeOrder.getServiceInfo().setTotalSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTotalSellingPrice(), scale));
+        }
     }
 
     private void scale(IndiaExchangeOrder exchangeOrder) {
 
         int scale = scaleConfig.getScale(exchangeOrder.getCountryCode());
 
-        exchangeOrder.getServiceInfo().setCommission(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getCommission(), scale));
-        exchangeOrder.getServiceInfo().setMerchantFeeAmount(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getMerchantFeeAmount(), scale));
-        exchangeOrder.getServiceInfo().setNettCost(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getNettCost(), scale));
-        exchangeOrder.getServiceInfo().setGstAmount(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getGstAmount(), scale));
-        exchangeOrder.setTotal(CalculatorUtils.scale(exchangeOrder.getTotal(), scale));
-        exchangeOrder.getServiceInfo().setSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getSellingPrice(), scale));
-        exchangeOrder.getServiceInfo().setTotalSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTotalSellingPrice(), scale));
+        if(exchangeOrder.getServiceInfo()!=null){
+
+            exchangeOrder.getServiceInfo().setCommission(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getCommission(), scale));
+            exchangeOrder.getServiceInfo().setMerchantFeeAmount(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getMerchantFeeAmount(), scale));
+            exchangeOrder.getServiceInfo().setNettCost(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getNettCost(), scale));
+            exchangeOrder.getServiceInfo().setGstAmount(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getGstAmount(), scale));
+            exchangeOrder.setTotal(CalculatorUtils.scale(exchangeOrder.getTotal(), scale));
+            exchangeOrder.getServiceInfo().setSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getSellingPrice(), scale));
+            exchangeOrder.getServiceInfo().setTotalSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTotalSellingPrice(), scale));
+        }
+
+
     }
 }
