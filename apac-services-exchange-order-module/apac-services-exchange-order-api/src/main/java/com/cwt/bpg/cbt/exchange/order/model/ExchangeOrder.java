@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 @NotEmptyOnInsert(dependentFields = {"productCode","vendor"})
 @CcNotNullOnInsertOnFopType(fopTypes ={"CC","CX4"})
-@ValidateOnInsert.List({@ValidateOnInsert(dependentFields={"serviceInfo.formOfPayment.creditCard","vendor"})})
+@ValidateOnInsert(dependentFields={"serviceInfo.formOfPayment.creditCard","vendor"})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder extends BaseExchangeOrder implements Serializable {

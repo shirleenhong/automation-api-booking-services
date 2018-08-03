@@ -23,11 +23,4 @@ public @interface ValidateOnInsert {
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
-
-	@Target({TYPE, ANNOTATION_TYPE})
-	@Retention(RUNTIME)
-	@Documented
-	@interface List {
-		ValidateOnInsert[] value();
-	}
 }
