@@ -160,10 +160,6 @@ public abstract class BaseExchangeOrder implements Serializable {
 
 	public abstract BaseServiceInfo getServiceInfo();
 
-//	public abstract void setServiceInfo(BaseServiceInfo serviceInfo);
-
 	public abstract BaseVendor getVendor();
-
-//	public abstract void setVendor(BaseVendor vendor);
 
 }
