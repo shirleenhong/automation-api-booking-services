@@ -66,6 +66,8 @@ public class ValidateOnInsertValidator implements ConstraintValidator<ValidateOn
 			String fieldValue = dependFieldName.split("\\.")[0];
 			value = PropertyUtils.getProperty(value, fieldValue);
 			dependFieldName = dependFieldName.split(fieldValue+".")[1];
+
+			if(value == null) return null;
 		}
 
 		value = PropertyUtils.getProperty(value, dependFieldName.split("\\.")[0]);

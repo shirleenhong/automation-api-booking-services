@@ -27,11 +27,5 @@ public @interface NotEmptyOnInsert {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 
-    @Target({TYPE, ANNOTATION_TYPE})
-    @Retention(RUNTIME)
-    @Documented
-    @interface List {
-        NotEmptyOnInsert[] value();
-    }
 
 }
