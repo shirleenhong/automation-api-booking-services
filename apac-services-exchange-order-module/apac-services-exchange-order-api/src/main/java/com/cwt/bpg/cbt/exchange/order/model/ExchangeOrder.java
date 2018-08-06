@@ -15,9 +15,9 @@ import com.cwt.bpg.cbt.exchange.order.model.validator.ValidateOnInsert;
 import io.swagger.annotations.ApiModelProperty;
 
 
-@NotEmptyOnInsert.List({@NotEmptyOnInsert(dependentFields = {"productCode","vendor"})})
-@CcNotNullOnInsertOnFopType.List({@CcNotNullOnInsertOnFopType(fopTypes ={"CC","CX4"})})
-@ValidateOnInsert.List({@ValidateOnInsert(dependentFields={"serviceInfo.formOfPayment.creditCard","vendor"})})
+@NotEmptyOnInsert(dependentFields = {"productCode","vendor"})
+@CcNotNullOnInsertOnFopType(fopTypes ={"CC","CX4"})
+@ValidateOnInsert(dependentFields={"serviceInfo.formOfPayment.creditCard","vendor"})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
@@ -31,7 +31,8 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 	private String passengerName;
 
 	private ServiceInfo serviceInfo;
-	
+
+	@ApiModelProperty(required = true)
 	private Vendor vendor;
 
 	@ApiModelProperty(required = true)
