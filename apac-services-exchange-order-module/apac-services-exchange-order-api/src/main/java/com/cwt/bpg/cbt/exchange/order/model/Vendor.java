@@ -2,8 +2,6 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
-import com.cwt.bpg.cbt.exchange.order.model.india.BaseVendor;
-
 import io.swagger.annotations.ApiModelProperty;
 
 public class Vendor extends BaseVendor implements Serializable {

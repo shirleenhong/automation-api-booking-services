@@ -7,7 +7,6 @@ import java.time.Instant;
 import org.mongodb.morphia.annotations.Id;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
-import com.cwt.bpg.cbt.exchange.order.model.india.BaseVendor;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
