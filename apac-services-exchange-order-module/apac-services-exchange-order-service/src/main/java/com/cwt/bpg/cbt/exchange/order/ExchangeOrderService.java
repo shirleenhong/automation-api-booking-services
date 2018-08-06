@@ -25,10 +25,11 @@ public class ExchangeOrderService {
 	private ExchangeOrderUpdateService eoUpdateService;
 
 	@CachePut(cacheNames = "exchange-orders", key = "#exchangeOrder.eoNumber")
-	BaseExchangeOrder saveExchangeOrder(BaseExchangeOrder exchangeOrder)
+	BaseExchangeOrder saveExchangeOrder(String countryCode, BaseExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
 
 		String eoNumber = exchangeOrder.getEoNumber();
+		exchangeOrder.setCountryCode(countryCode);
 		if (eoNumber == null) {
 			return eoInsertService.insert(exchangeOrder);
 		}

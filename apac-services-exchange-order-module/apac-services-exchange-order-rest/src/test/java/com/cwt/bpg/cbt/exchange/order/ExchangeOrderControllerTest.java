@@ -1,9 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -23,7 +21,6 @@ import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaVendor;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -97,14 +94,14 @@ public class ExchangeOrderControllerTest
         order.getServiceInfo().setMerchantFeeAmount(BigDecimal.ZERO);
         order.setEoNumber("1122334455");
 
-        when(eoService.saveExchangeOrder(any(ExchangeOrder.class))).thenReturn(order);
+        when(eoService.saveExchangeOrder(anyString(),any(ExchangeOrder.class))).thenReturn(order);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        verify(eoService, times(1)).saveExchangeOrder(any(ExchangeOrder.class));
+        verify(eoService, times(1)).saveExchangeOrder(anyString(), any(ExchangeOrder.class));
     }
 
     @Test
@@ -117,14 +114,14 @@ public class ExchangeOrderControllerTest
         order.getServiceInfo().setMerchantFeeAmount(BigDecimal.ZERO);
         order.setEoNumber(null);
 
-        when(eoService.saveExchangeOrder(any(ExchangeOrder.class))).thenReturn(order);
+        when(eoService.saveExchangeOrder(anyString(), any(ExchangeOrder.class))).thenReturn(order);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse();
 
-        verify(eoService, times(1)).saveExchangeOrder(any(ExchangeOrder.class));
+        verify(eoService, times(1)).saveExchangeOrder(anyString(), any(ExchangeOrder.class));
     }
 
     @Test
@@ -139,14 +136,14 @@ public class ExchangeOrderControllerTest
         vendor.setCode("VEN090909");
         order.setVendor(vendor);
 
-        when(eoService.saveExchangeOrder(any(ExchangeOrder.class))).thenReturn(order);
+        when(eoService.saveExchangeOrder(anyString(),any(ExchangeOrder.class))).thenReturn(order);
 
         mockMvc.perform(post(urlIn).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse();
 
-        verify(eoService, times(1)).saveExchangeOrder(any(IndiaExchangeOrder.class));
+        verify(eoService, times(1)).saveExchangeOrder(anyString(),any(IndiaExchangeOrder.class));
     }
 
     @Test
@@ -165,7 +162,7 @@ public class ExchangeOrderControllerTest
                 .andReturn()
                 .getResponse();
 
-        verify(eoService, times(1)).saveExchangeOrder(any(ExchangeOrder.class));
+        verify(eoService, times(1)).saveExchangeOrder(anyString(),any(ExchangeOrder.class));
     }
 
     @Test(expected = NestedServletException.class)
@@ -196,7 +193,7 @@ public class ExchangeOrderControllerTest
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
         order.getServiceInfo().setGstAmount(BigDecimal.ZERO);
         order.getServiceInfo().setMerchantFeeAmount(BigDecimal.ZERO);
-        when(eoService.saveExchangeOrder(any(ExchangeOrder.class)))
+        when(eoService.saveExchangeOrder(anyString(),any(ExchangeOrder.class)))
                 .thenThrow(new ExchangeOrderNoContentException("eo number not found"));
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
@@ -260,14 +257,14 @@ public class ExchangeOrderControllerTest
 
         ExchangeOrder order = new ExchangeOrder();
 
-        when(eoService.saveExchangeOrder(order)).thenReturn(order);
+        when(eoService.saveExchangeOrder("sg", order)).thenReturn(order);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isBadRequest())
                 .andReturn()
                 .getResponse();
 
-        verify(eoService, times(0)).saveExchangeOrder(any(ExchangeOrder.class));
+        verify(eoService, times(0)).saveExchangeOrder(anyString(), any(ExchangeOrder.class));
     }
 
     private ExchangeOrder createExchangeOrder()
@@ -324,7 +321,7 @@ public class ExchangeOrderControllerTest
 
         String exampleString = "example";
         byte[] pdfByte = exampleString.getBytes(StandardCharsets.UTF_8);
-        when(eoReportService.generatePdf(Mockito.anyString())).thenReturn(pdfByte);
+        when(eoReportService.generatePdf(anyString())).thenReturn(pdfByte);
 
         MvcResult result = mockMvc.perform(get(url + "/pdf/" + eoNumber))
                 .andExpect(status().isOk())
@@ -333,7 +330,7 @@ public class ExchangeOrderControllerTest
         String actualPdfName = result.getResponse().getHeaderValue("Content-Disposition").toString();
 
         assertTrue(actualPdfName.contains(eoNumber + ".pdf"));
-        verify(eoReportService, times(1)).generatePdf(Mockito.anyString());
+        verify(eoReportService, times(1)).generatePdf(anyString());
     }
 
     @Test
@@ -359,7 +356,7 @@ public class ExchangeOrderControllerTest
     public void shouldGeneratePdfCheckedException() throws Exception
     {
 
-        when(eoReportService.generatePdf(Mockito.anyString()))
+        when(eoReportService.generatePdf(anyString()))
                 .thenThrow(ApiServiceException.class);
 
         mockMvc.perform(get(url + "/pdf/" + eoNumber))
@@ -374,7 +371,7 @@ public class ExchangeOrderControllerTest
     public void shouldGeneratePdfUnCheckedException() throws Exception
     {
 
-        when(eoReportService.generatePdf(Mockito.anyString()))
+        when(eoReportService.generatePdf(anyString()))
                 .thenThrow(Exception.class);
 
         mockMvc.perform(get(url + "/pdf/" + eoNumber))

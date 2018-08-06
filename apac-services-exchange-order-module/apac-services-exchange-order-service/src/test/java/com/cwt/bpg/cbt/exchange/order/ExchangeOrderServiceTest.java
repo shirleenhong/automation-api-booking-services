@@ -37,7 +37,7 @@ public class ExchangeOrderServiceTest {
     public void shouldCallInsertWhenEoNumberIsNull() throws ExchangeOrderNoContentException {
         ExchangeOrder eo = new ExchangeOrder();
 
-        service.saveExchangeOrder(eo);
+        service.saveExchangeOrder("sg",eo);
 
         verify(insertService, times(1)).insert(eo);
     }
@@ -47,7 +47,7 @@ public class ExchangeOrderServiceTest {
         ExchangeOrder eo = new ExchangeOrder();
         eo.setEoNumber("1234567890");
 
-        service.saveExchangeOrder(eo);
+        service.saveExchangeOrder("sg",eo);
 
         verify(updateService, times(1)).update(eo);
     }
