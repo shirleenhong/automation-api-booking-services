@@ -104,6 +104,27 @@ public class CommonRepositoryTest {
 		verify(datastore, never()).delete(query);
     }
 
+	@Test
+	public void shouldUpdateWhenNoRepositoryKey() {
+
+		repo = new CommonRepository<>(InsurancePlan.class,  "");
+		MockitoAnnotations.initMocks(this);
+
+		when(morphia.getDatastore()).thenReturn(datastore);
+
+		InsurancePlan insurance = new InsurancePlan();
+		insurance.setType("insurance-type");
+
+		Key<InsurancePlan> key = mock(Key.class);
+		when(datastore.save(insurance)).thenReturn(key);
+
+		InsurancePlan result = repo.put(insurance);
+
+		assertThat(result, is(equalTo(insurance)));
+		verify(morphia, times(1)).getDatastore();
+		verify(datastore, times(1)).save(insurance);
+	}
+
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldDelete() {
