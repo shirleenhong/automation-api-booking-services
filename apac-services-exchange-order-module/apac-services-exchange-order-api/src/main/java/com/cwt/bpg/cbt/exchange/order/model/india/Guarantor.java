@@ -1,8 +1,12 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
+import java.io.Serializable;
+
 import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
 
-public class Guarantor {
+public class Guarantor implements Serializable {
+
+	private static final long serialVersionUID = -4416501653792392878L;
 
 	private String type;
 

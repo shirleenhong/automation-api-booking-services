@@ -1,30 +1,43 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Hotel {
+public class Hotel implements Serializable {
+
+	private static final long serialVersionUID = 4676705321251464166L;
+
+	private String name;
 
 	private String address;
-	
+
 	private String cityName;
-	
+
 	private String stateProvince;
-	
+
 	private String postCode;
-	
+
 	private String phoneNumber;
-	
+
 	private String dailyRateCurrency;
-	
+
 	private BigDecimal dailyRateAmount;
-	
+
 	private String confirmationNumber;
 
 	private Guarantor guarantor;
 
-	private String roomtype;
+	private String roomType;
 
 	private int noOfPeople;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getAddress() {
 		return address;
@@ -98,12 +111,12 @@ public class Hotel {
 		this.guarantor = guarantor;
 	}
 
-	public String getRoomtype() {
-		return roomtype;
+	public String getRoomType() {
+		return roomType;
 	}
 
-	public void setRoomtype(String roomtype) {
-		this.roomtype = roomtype;
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
 	}
 
 	public int getNoOfPeople() {

@@ -1,6 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order.model.validator;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
@@ -22,7 +21,7 @@ public class ValidateOnInsertValidator implements ConstraintValidator<ValidateOn
 	@Override
 	public void initialize(ValidateOnInsert annotation) {
 		fieldName = "eoNumber";
-        dependentFields = annotation.dependentFields();
+		dependentFields = annotation.dependentFields();
 	}
 
 	@Override
@@ -35,34 +34,34 @@ public class ValidateOnInsertValidator implements ConstraintValidator<ValidateOn
 		try {
 			String fieldValue = BeanUtils.getProperty(value, fieldName);
 
-
-			for(String dependFieldName : dependentFields){
+			for (String dependFieldName : dependentFields) {
 
 				Object dependFieldValue = getProperty(value, dependFieldName);
 
-                if (fieldValue == null && dependFieldValue != null) {
+				if (fieldValue == null && dependFieldValue != null) {
 
 					ctx.disableDefaultConstraintViolation();
 					ctx.buildConstraintViolationWithTemplate(ctx.getDefaultConstraintMessageTemplate())
-							.addNode(dependFieldName)
-							.addConstraintViolation();
+							.addNode(dependFieldName).addConstraintViolation();
 
-					Set<ConstraintViolation<Object>> errors = Validation.buildDefaultValidatorFactory().getValidator()
-							.validate((dependFieldValue));
+					Set<ConstraintViolation<Object>> errors = Validation.buildDefaultValidatorFactory()
+							.getValidator().validate((dependFieldValue));
 
-                    if (!errors.isEmpty())
-                    	throw new IllegalArgumentException(dependFieldName + " incomplete or invalid");
-                }
+					if (!errors.isEmpty())
+						throw new IllegalArgumentException(dependFieldName + " incomplete or invalid");
+				}
 
-            }
-		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
+			}
+		}
+		catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
 			throw new RuntimeException(ex);
 		}
 		return true;
 	}
 
-	private Object getProperty(Object value, String dependFieldName) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-		while(dependFieldName.contains(".")){
+	private Object getProperty(Object value, String dependFieldName)
+			throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		while (dependFieldName.contains(".")) {
 			String fieldValue = dependFieldName.split("\\.")[0];
 			value = PropertyUtils.getProperty(value, fieldValue);
 			dependFieldName = dependFieldName.split(fieldValue+".")[1];

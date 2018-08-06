@@ -1,18 +1,16 @@
-package com.cwt.bpg.cbt.exchange.order.model.india;
+package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
-
 import io.swagger.annotations.ApiModelProperty;
 
 public class BaseVendor implements Serializable {
 
 	private static final long serialVersionUID = 8214137480361551399L;
-	
+
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String code;

@@ -1,10 +1,15 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class IndiaNonAirProductInput {
-	
+import io.swagger.annotations.ApiModelProperty;
+
+public class IndiaNonAirProductInput implements Serializable {
+
+	private static final long serialVersionUID = -6696859941182854729L;
+
 	private Double ot1Percent;
 	private Double ot2Percent;
 	private Double gstPercent;
@@ -12,7 +17,7 @@ public class IndiaNonAirProductInput {
 	@ApiModelProperty(required = true)
 	@NotEmpty
 	private String productCode;
-	
+
 	public Double getOt1Percent() {
 		return ot1Percent;
 	}
@@ -28,7 +33,7 @@ public class IndiaNonAirProductInput {
 	public void setOt2Percent(Double ot2Percent) {
 		this.ot2Percent = ot2Percent;
 	}
-	
+
 	public Double getGstPercent() {
 		return gstPercent;
 	}
@@ -36,7 +41,7 @@ public class IndiaNonAirProductInput {
 	public void setGstPercent(Double gstPercent) {
 		this.gstPercent = gstPercent;
 	}
-	
+
 	public String getProductCode() {
 		return productCode;
 	}

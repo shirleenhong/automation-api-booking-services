@@ -8,6 +8,7 @@ import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import io.swagger.annotations.ApiModelProperty;
 
 public class Request implements Serializable {
@@ -333,4 +334,19 @@ public class Request implements Serializable {
 		this.train = train;
 	}
 
+	public Instant getTravelDate() {
+		return travelDate;
+	}
+
+	public void setTravelDate(Instant travelDate) {
+		this.travelDate = travelDate;
+	}
+
+	public String getPackageName() {
+		return packageName;
+	}
+
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
+	}
 }

@@ -1,6 +1,10 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
-public class Train {
+import java.io.Serializable;
+
+public class Train implements Serializable {
+
+	private static final long serialVersionUID = 2737677039047402942L;
 
 	private String number;
 

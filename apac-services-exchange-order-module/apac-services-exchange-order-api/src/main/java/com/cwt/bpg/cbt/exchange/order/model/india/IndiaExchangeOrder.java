@@ -90,7 +90,6 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 		return serviceInfo;
 	}
 
-//    @Override
     public void setServiceInfo(IndiaServiceInfo serviceInfo) {
         this.serviceInfo = serviceInfo;
     }
@@ -100,7 +99,6 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 		return vendor;
 	}
 
-//	@Override
 	public void setVendor(IndiaVendor vendor) {
 		this.vendor = vendor;
 	}
