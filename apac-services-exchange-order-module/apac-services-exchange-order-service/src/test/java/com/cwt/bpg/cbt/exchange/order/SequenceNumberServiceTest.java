@@ -84,11 +84,12 @@ public class SequenceNumberServiceTest {
 		final SequenceNumber sn = mock(SequenceNumber.class);
 		Key<SequenceNumber> key = mock(Key.class);
 		when(sequentNumberRepo.get(anyString())).thenReturn(Collections.emptyList());
-		when(sequentNumberRepo.save(sn)).thenReturn(key);
+		when(sequentNumberRepo.save(any(SequenceNumber.class))).thenReturn(key);
 
 		int result = service.getSequenceNumber("HK");
 
 		assertThat(result, is(equalTo(1)));
+		verify(sequentNumberRepo, times(1)).save(any(SequenceNumber.class));
 	}
 
 	@Test
