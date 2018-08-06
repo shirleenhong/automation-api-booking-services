@@ -21,6 +21,7 @@ import java.util.*;
 
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaVendor;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -133,6 +134,10 @@ public class ExchangeOrderControllerTest
         IndiaExchangeOrder order = new IndiaExchangeOrder();
         order.setEoNumber(null);
         order.setCountryCode("IN");
+        order.setProductCode("PR01");
+        IndiaVendor vendor = new IndiaVendor();
+        vendor.setCode("VEN090909");
+        order.setVendor(vendor);
 
         when(eoService.saveExchangeOrder(any(ExchangeOrder.class))).thenReturn(order);
 
