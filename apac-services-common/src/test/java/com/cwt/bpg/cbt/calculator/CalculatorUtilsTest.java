@@ -81,6 +81,19 @@ public class CalculatorUtilsTest
 	}
 
 	@Test
+	public void shouldReturnScaledValue() {
+		BigDecimal decimal = new BigDecimal("10.9999");
+		BigDecimal roundedDecimal = CalculatorUtils.scale(decimal, 2);
+		assertThat(roundedDecimal, is(equalTo(new BigDecimal("10.99"))));
+	}
+
+	@Test
+	public void scaleCanHandleNull() {
+		BigDecimal roundedDecimal = CalculatorUtils.scale(null, 2);
+		assertThat(roundedDecimal, is(equalTo(null)));
+	}
+
+	@Test
 	public void percentDecimalReturnsZeroWhenValueIsNull() {
 		BigDecimal bigDecimal = null;
 		BigDecimal percentDecimal = CalculatorUtils.percentDecimal(bigDecimal);

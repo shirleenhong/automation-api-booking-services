@@ -1,6 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
@@ -12,6 +15,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mongodb.morphia.Key;
 import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -72,6 +76,19 @@ public class SequenceNumberServiceTest {
 		when(sequentNumberRepo.save(eq(sn))).thenThrow(ConcurrentModificationException.class);
 		service.getSequenceNumber("HK");
 		verify(sequentNumberRepo, times(3)).save(sn);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldReturn1() {
+		final SequenceNumber sn = mock(SequenceNumber.class);
+		Key<SequenceNumber> key = mock(Key.class);
+		when(sequentNumberRepo.get(anyString())).thenReturn(Collections.emptyList());
+		when(sequentNumberRepo.save(sn)).thenReturn(key);
+
+		int result = service.getSequenceNumber("HK");
+
+		assertThat(result, is(equalTo(1)));
 	}
 
 	@Test
