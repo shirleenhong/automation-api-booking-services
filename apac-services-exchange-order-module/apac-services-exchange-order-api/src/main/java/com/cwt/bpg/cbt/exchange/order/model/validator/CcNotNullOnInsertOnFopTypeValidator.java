@@ -1,7 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model.validator;
 
+import com.cwt.bpg.cbt.exchange.order.model.BaseServiceInfo;
 import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
-import com.cwt.bpg.cbt.exchange.order.model.ServiceInfo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 
@@ -32,7 +32,7 @@ public class CcNotNullOnInsertOnFopTypeValidator implements ConstraintValidator<
 		try {
 			String eoNumberValue = BeanUtils.getProperty(value, "eoNumber");
 			if (eoNumberValue == null) {
-				ServiceInfo serviceInfo = (ServiceInfo) PropertyUtils.getProperty(value, "serviceInfo");
+				BaseServiceInfo serviceInfo = (BaseServiceInfo) PropertyUtils.getProperty(value, "serviceInfo");
 
 				if (serviceInfo != null && serviceInfo.getFormOfPayment() != null
 						&& serviceInfo.getFormOfPayment().getFopType() != null) {
