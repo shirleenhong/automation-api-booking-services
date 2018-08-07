@@ -36,6 +36,7 @@ public class ExchangeOrderUpdateService
                 existingExchangeOrder.getEoNumber(),
                 existingExchangeOrder.getCountryCode());
 
+        exchangeOrder.setCreateDateTime(existingExchangeOrder.getCreateDateTime());
         exchangeOrder.setUpdateDateTime(Instant.now());
 
         exchangeOrderAmountScaler.scale(exchangeOrder);
