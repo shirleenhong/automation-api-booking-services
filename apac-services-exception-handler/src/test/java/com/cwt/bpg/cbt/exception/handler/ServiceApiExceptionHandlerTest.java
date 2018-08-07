@@ -143,6 +143,17 @@ public class ServiceApiExceptionHandlerTest {
 		assertTrue(handleInternalServerError.getBody() instanceof ApiError);
 	}
 
+	@Test
+	public void canHandleIllegalArgumentException() {
+ 		IllegalArgumentException cause = new IllegalArgumentException("Illegal Argument Exception");
+		Exception ex = new 	Exception(cause);
+
+		ResponseEntity<Object> illegalArgumentException = exceptionHandler.handleInternalServerError(ex);
+
+		assertNotNull(illegalArgumentException);
+		assertTrue(illegalArgumentException.getBody() instanceof ApiError);
+	}
+
 	static class DummyType {
 		public void testMethod() {
 		}
