@@ -1,5 +1,9 @@
 package com.cwt.bpg.cbt.cache.rest;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -56,6 +60,17 @@ public class ApplicationCacheResourceTest {
 		verify(cacheManager, times(1)).getCache(Mockito.anyString());
 		verify(cache, times(1)).getNativeCache();
 	}
+
+	@Test
+	@SuppressWarnings("rawtypes")
+	public void fetchCanHandleNullCache() {
+		Mockito.when(cacheManager.getCache(Mockito.anyString())).thenReturn(null);
+
+		List list = cacheResource.fetch("products-cache");
+
+		verify(cacheManager, times(1)).getCache(Mockito.anyString());
+		assertTrue(list.isEmpty());
+	}
 	
 	@Test
 	@SuppressWarnings("rawtypes")
@@ -66,5 +81,16 @@ public class ApplicationCacheResourceTest {
 		List list = cacheResource.evict("products-cache");
 		
 		verify(cacheManager, times(1)).getCache(Mockito.anyString());
+	}
+
+	@Test
+	@SuppressWarnings("rawtypes")
+	public void evictCanHandleNullCache() {
+		Mockito.when(cacheManager.getCache(Mockito.anyString())).thenReturn(null);
+
+		List list = cacheResource.evict("products-cache");
+
+		verify(cacheManager, times(1)).getCache(Mockito.anyString());
+		assertTrue(list.isEmpty());
 	}
 }
