@@ -8,6 +8,9 @@ import static org.mockito.Mockito.verify;
 
 import java.math.BigDecimal;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaServiceInfo;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -47,6 +50,25 @@ public class ExchangeOrderAmountScalerTest
         verify(exchangeOrder.getServiceInfo(), times(1)).setGstAmount(any(BigDecimal.class));
         verify(exchangeOrder.getServiceInfo(), times(1)).setTax1(any(BigDecimal.class));
         verify(exchangeOrder.getServiceInfo(), times(1)).setTax2(any(BigDecimal.class));
+        verify(exchangeOrder, times(1)).setTotal(any(BigDecimal.class));
+        verify(exchangeOrder.getServiceInfo(), times(1)).setSellingPrice(any(BigDecimal.class));
+        verify(exchangeOrder.getServiceInfo(), times(1)).setTotalSellingPrice(any(BigDecimal.class));
+    }
+
+    @Test
+    public void shouldScaleAmountsForIndia() {
+
+        IndiaExchangeOrder exchangeOrder = mock(IndiaExchangeOrder.class);
+        Mockito.when(exchangeOrder.getCountryCode()).thenReturn(Country.INDIA.getCode());
+        Mockito.when(exchangeOrder.getServiceInfo()).thenReturn(mock(IndiaServiceInfo.class));
+
+        scaler.scale(exchangeOrder);
+
+        verify(scaleConfig, times(1)).getScale(anyString());
+        verify(exchangeOrder.getServiceInfo(), times(1)).setCommission(any(BigDecimal.class));
+        verify(exchangeOrder.getServiceInfo(), times(1)).setMerchantFeeAmount(any(BigDecimal.class));
+        verify(exchangeOrder.getServiceInfo(), times(1)).setNettCost(any(BigDecimal.class));
+        verify(exchangeOrder.getServiceInfo(), times(1)).setGstAmount(any(BigDecimal.class));
         verify(exchangeOrder, times(1)).setTotal(any(BigDecimal.class));
         verify(exchangeOrder.getServiceInfo(), times(1)).setSellingPrice(any(BigDecimal.class));
         verify(exchangeOrder.getServiceInfo(), times(1)).setTotalSellingPrice(any(BigDecimal.class));

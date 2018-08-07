@@ -35,7 +35,7 @@ public class ScaleConfigTest {
 	
 	@Test
 	public void shouldReturnDefault() {
-		assertEquals(1, config.getScale("XX"));
+		assertEquals(1, config.getScale(null));
 	}
 
 }
