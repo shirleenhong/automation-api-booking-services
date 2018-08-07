@@ -100,8 +100,8 @@ public class ExchangeOrderAmountScalerTest {
 	public void shouldScaleINAmounts() {
 
 		IndiaExchangeOrder exchangeOrder = new IndiaExchangeOrder();
-		Mockito.when(scaleConfig.getScale(Country.SINGAPORE.getCode())).thenReturn(2);
-		exchangeOrder.setCountryCode(Country.SINGAPORE.getCode());
+		Mockito.when(scaleConfig.getScale(Country.INDIA.getCode())).thenReturn(2);
+		exchangeOrder.setCountryCode(Country.INDIA.getCode());
 		exchangeOrder.setServiceInfo(new IndiaServiceInfo());
 		exchangeOrder.setGstAmount(BigDecimal.valueOf(Math.random()));
 		exchangeOrder.setTotal(BigDecimal.valueOf(Math.random()));
