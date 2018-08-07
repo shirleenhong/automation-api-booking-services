@@ -42,14 +42,14 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 	private BigDecimal vendorHandling;
 
 	@ApiModelProperty(value = "Merchant Fee on Vendor Handling")
-	private boolean isMerchantFeeVendorHandling;
+	private boolean merchantFeeVendorHandlingFlag;
 
 	private BigDecimal merchantFeeVendorHandling;
 
 	private BigDecimal cwtHandling;
 
 	@ApiModelProperty(value = "Merchant Fee on CWT Handling")
-	private boolean isMerchantFeeCwtHandling;
+	private boolean merchantFeeCwtHandlingFlag;
 
 	private BigDecimal merchantFeeCwtHandling;
 
@@ -228,44 +228,12 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.vendorHandling = vendorHandling;
 	}
 
-	public boolean isMerchantFeeVendorHandling() {
-		return isMerchantFeeVendorHandling;
-	}
-
-	public void setMerchantFeeVendorHandling(boolean merchantFeeVendorHandling) {
-		isMerchantFeeVendorHandling = merchantFeeVendorHandling;
-	}
-
-	public BigDecimal getMerchantFeeVendorHandling() {
-		return merchantFeeVendorHandling;
-	}
-
-	public void setMerchantFeeVendorHandling(BigDecimal merchantFeeVendorHandling) {
-		this.merchantFeeVendorHandling = merchantFeeVendorHandling;
-	}
-
 	public BigDecimal getCwtHandling() {
 		return cwtHandling;
 	}
 
 	public void setCwtHandling(BigDecimal cwtHandling) {
 		this.cwtHandling = cwtHandling;
-	}
-
-	public boolean isMerchantFeeCwtHandling() {
-		return isMerchantFeeCwtHandling;
-	}
-
-	public void setMerchantFeeCwtHandling(boolean merchantFeeCwtHandling) {
-		isMerchantFeeCwtHandling = merchantFeeCwtHandling;
-	}
-
-	public BigDecimal getMerchantFeeCwtHandling() {
-		return merchantFeeCwtHandling;
-	}
-
-	public void setMerchantFeeCwtHandling(BigDecimal merchantFeeCwtHandling) {
-		this.merchantFeeCwtHandling = merchantFeeCwtHandling;
 	}
 
 	public BigDecimal getSellingPrice() {
@@ -514,5 +482,37 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
+	}
+
+	public boolean isMerchantFeeVendorHandlingFlag() {
+		return merchantFeeVendorHandlingFlag;
+	}
+
+	public void setMerchantFeeVendorHandlingFlag(boolean merchantFeeVendorHandlingFlag) {
+		this.merchantFeeVendorHandlingFlag = merchantFeeVendorHandlingFlag;
+	}
+
+	public BigDecimal getMerchantFeeVendorHandling() {
+		return merchantFeeVendorHandling;
+	}
+
+	public void setMerchantFeeVendorHandling(BigDecimal merchantFeeVendorHandling) {
+		this.merchantFeeVendorHandling = merchantFeeVendorHandling;
+	}
+
+	public boolean isMerchantFeeCwtHandlingFlag() {
+		return merchantFeeCwtHandlingFlag;
+	}
+
+	public void setMerchantFeeCwtHandlingFlag(boolean merchantFeeCwtHandlingFlag) {
+		this.merchantFeeCwtHandlingFlag = merchantFeeCwtHandlingFlag;
+	}
+
+	public BigDecimal getMerchantFeeCwtHandling() {
+		return merchantFeeCwtHandling;
+	}
+
+	public void setMerchantFeeCwtHandling(BigDecimal merchantFeeCwtHandling) {
+		this.merchantFeeCwtHandling = merchantFeeCwtHandling;
 	}
 }

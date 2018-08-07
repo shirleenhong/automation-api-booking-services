@@ -117,17 +117,16 @@ public class ExchangeOrderReportService {
 					"Generate pdf for India Exchange order number: [ " + eoNumber + " ] not supported."); 
 		}
 	}
-	
-	private EmailResponse checkEmailCountryCode(String countryCode, EmailResponse response)
-			throws ExchangeOrderNoContentException {
-		
+
+	private EmailResponse checkEmailCountryCode(String countryCode) {
+
+		EmailResponse response = new EmailResponse();
 		response.setSuccess(true);
-		if(Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
+		if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
 			LOGGER.error(EMAIL_ERROR_MESSAGE_INDIA);
 			response.setMessage(EMAIL_ERROR_MESSAGE_INDIA);
 			response.setSuccess(false);
 		}
-		
 		return response;
 	}
 
@@ -290,7 +289,7 @@ public class ExchangeOrderReportService {
 		try {
 
 			ExchangeOrder exchangeOrder = getExchangeOrder(eoNumber);
-			EmailResponse indiaResponse = checkEmailCountryCode(exchangeOrder.getCountryCode(), response);
+			EmailResponse indiaResponse = checkEmailCountryCode(exchangeOrder.getCountryCode());
 			if(!indiaResponse.isSuccess()) {
 				return indiaResponse;
 			}

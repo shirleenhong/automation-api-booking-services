@@ -60,11 +60,10 @@ public class EmailContentProcessor {
 		Optional<ReportHeader> reportHeaderExists = Optional
 				.ofNullable(getReportHeader(countryCode));
 
-		ReportHeader reportHeader = reportHeaderExists
+		return reportHeaderExists
 				.orElseThrow(() -> new ExchangeOrderNoContentException(
 						"Report header not found for country: [ " + countryCode
 								+ " ]"));
-		return reportHeader;
 	}
 	
 	private ReportHeader getReportHeader(String countryCode) {

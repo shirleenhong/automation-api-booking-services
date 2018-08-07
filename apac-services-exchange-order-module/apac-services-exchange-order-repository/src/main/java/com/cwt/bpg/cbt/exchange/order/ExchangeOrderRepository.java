@@ -24,10 +24,13 @@ import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 @Repository
 public class ExchangeOrderRepository {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderRepository.class);
-	
 	@Autowired
 	private MorphiaComponent morphia;
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderRepository.class);
+	private static final String EO_NUMBER = "eoNumber";
+	private static final String RECORD_LOCATOR = "recordLocator";
+	private static final String CREATE_DATETIME = "createDateTime";
 	
 	public String save(BaseExchangeOrder eo) {
 		Key<BaseExchangeOrder> savedEoKey = morphia.getDatastore().save(eo);
@@ -58,29 +61,29 @@ public class ExchangeOrderRepository {
 
 	public ExchangeOrder getExchangeOrder(String eoNumber) {
 		return morphia.getDatastore().createQuery(ExchangeOrder.class)
-			.field("eoNumber")
+			.field(EO_NUMBER)
 			.equal(eoNumber).get();
 	}
 
     public IndiaExchangeOrder getIndiaExchangeOrder(String eoNumber) {
         return morphia.getDatastore().createQuery(IndiaExchangeOrder.class)
-                .field("eoNumber")
+                .field(EO_NUMBER)
                 .equal(eoNumber).get();
     }
 
 	public List<ExchangeOrder> getByRecordLocator(String recordLocator) {
 		return morphia.getDatastore().createQuery(ExchangeOrder.class)
-				.field("recordLocator")
+				.field(RECORD_LOCATOR)
 				.equal(recordLocator)
-				.order(Sort.descending("createDateTime"))
+				.order(Sort.descending(CREATE_DATETIME))
 				.asList();
 	}
 
     public List<IndiaExchangeOrder> getIndiaExchangeOrderByRecordLocator(String recordLocator) {
         return morphia.getDatastore().createQuery(IndiaExchangeOrder.class)
-                .field("recordLocator")
+                .field(RECORD_LOCATOR)
                 .equal(recordLocator)
-                .order(Sort.descending("createDateTime"))
+                .order(Sort.descending(CREATE_DATETIME))
                 .asList();
     }
 	
@@ -89,7 +92,7 @@ public class ExchangeOrderRepository {
         final Query<ExchangeOrder> query = morphia.getDatastore().createQuery(ExchangeOrder.class);
         if (StringUtils.isNotBlank(param.getEoNumber()))
         {
-            query.field("eoNumber").equal(param.getEoNumber());
+            query.field(EO_NUMBER).equal(param.getEoNumber());
         }
         if (StringUtils.isNotBlank(param.getVendor().getCode()))
         {
@@ -109,23 +112,23 @@ public class ExchangeOrderRepository {
         }
         if (StringUtils.isNotBlank(param.getRecordLocator()))
         {
-            query.field("recordLocator").equal(param.getRecordLocator());
+            query.field(RECORD_LOCATOR).equal(param.getRecordLocator());
         }
         if (param.getStartCreationDate() != null && param.getEndCreationDate() != null)
         {
             query.and(
-                    query.criteria("createDateTime").greaterThanOrEq(param.getStartCreationDate()),
-                    query.criteria("createDateTime").lessThanOrEq(param.getEndCreationDate()));
+                    query.criteria(CREATE_DATETIME).greaterThanOrEq(param.getStartCreationDate()),
+                    query.criteria(CREATE_DATETIME).lessThanOrEq(param.getEndCreationDate()));
         }
         else if (param.getStartCreationDate() != null)
         {
-            query.field("createDateTime").greaterThanOrEq(param.getStartCreationDate());
+            query.field(CREATE_DATETIME).greaterThanOrEq(param.getStartCreationDate());
         }
         else if (param.getEndCreationDate() != null)
         {
-            query.field("createDateTime").lessThanOrEq(param.getEndCreationDate());
+            query.field(CREATE_DATETIME).lessThanOrEq(param.getEndCreationDate());
         }
-        query.order(Sort.descending("createDateTime"));
+        query.order(Sort.descending(CREATE_DATETIME));
 
         final FindOptions options = new FindOptions();
         options.limit(100);
@@ -135,7 +138,7 @@ public class ExchangeOrderRepository {
     public boolean updateFinance(ExchangeOrder param)
     {
         final Query<ExchangeOrder> query = morphia.getDatastore().createQuery(ExchangeOrder.class);
-        query.field("eoNumber").equal(param.getEoNumber());
+        query.field(EO_NUMBER).equal(param.getEoNumber());
 
         final UpdateOperations<ExchangeOrder> ops = morphia.getDatastore().createUpdateOperations(ExchangeOrder.class);
         ops.set("status", param.getStatus());
