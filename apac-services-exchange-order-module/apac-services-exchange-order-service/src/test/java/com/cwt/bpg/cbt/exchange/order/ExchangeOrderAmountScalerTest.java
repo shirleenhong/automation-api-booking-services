@@ -56,6 +56,17 @@ public class ExchangeOrderAmountScalerTest
     }
 
     @Test
+    public void scaleCanHandleNullServiceInfo() {
+
+        ExchangeOrder exchangeOrder = mock(ExchangeOrder.class);
+        Mockito.when(exchangeOrder.getServiceInfo()).thenReturn(null);
+
+        scaler.scale(exchangeOrder);
+
+        verify(scaleConfig, times(1)).getScale(anyString());
+    }
+
+    @Test
     public void shouldScaleAmountsForIndia() {
 
         IndiaExchangeOrder exchangeOrder = mock(IndiaExchangeOrder.class);
@@ -72,5 +83,17 @@ public class ExchangeOrderAmountScalerTest
         verify(exchangeOrder, times(1)).setTotal(any(BigDecimal.class));
         verify(exchangeOrder.getServiceInfo(), times(1)).setSellingPrice(any(BigDecimal.class));
         verify(exchangeOrder.getServiceInfo(), times(1)).setTotalSellingPrice(any(BigDecimal.class));
+    }
+
+    @Test
+    public void scaleForIndiaCanHandleNullServiceInfo() {
+
+        IndiaExchangeOrder exchangeOrder = mock(IndiaExchangeOrder.class);
+        Mockito.when(exchangeOrder.getCountryCode()).thenReturn(Country.INDIA.getCode());
+        Mockito.when(exchangeOrder.getServiceInfo()).thenReturn(null);
+
+        scaler.scale(exchangeOrder);
+
+        verify(scaleConfig, times(1)).getScale(anyString());
     }
 }
