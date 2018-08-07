@@ -3,21 +3,16 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
-import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnInsertOnFopType;
-import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
-import com.cwt.bpg.cbt.exchange.order.model.validator.ValidateOnInsert;
-
 import io.swagger.annotations.ApiModelProperty;
 
-
-@NotEmptyOnInsert(dependentFields = {"productCode","vendor"})
-@CcNotNullOnInsertOnFopType(fopTypes ={"CC","CX4"})
-@ValidateOnInsert(dependentFields={"serviceInfo.formOfPayment.creditCard","vendor"})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
@@ -30,8 +25,11 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private String passengerName;
 
+	@Valid
 	private ServiceInfo serviceInfo;
 
+	@NotNull
+	@Valid
 	@ApiModelProperty(required = true)
 	private Vendor vendor;
 

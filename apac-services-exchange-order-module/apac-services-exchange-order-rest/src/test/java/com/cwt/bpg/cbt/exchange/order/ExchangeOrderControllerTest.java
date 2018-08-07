@@ -33,6 +33,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.util.NestedServletException;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -251,7 +252,7 @@ public class ExchangeOrderControllerTest
         verify(eoService, times(1)).getExchangeOrderByRecordLocator("IN",pnr);
     }
 
-    @Test(expected = NestedServletException.class)
+    @Test
     public void shouldNotReturnExchangeOrder() throws Exception
     {
 

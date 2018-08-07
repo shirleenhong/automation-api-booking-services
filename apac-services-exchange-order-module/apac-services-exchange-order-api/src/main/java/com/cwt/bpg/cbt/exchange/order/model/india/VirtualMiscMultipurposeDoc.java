@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 
 import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
 
+import javax.validation.Valid;
+
 public class VirtualMiscMultipurposeDoc implements Serializable {
 
 	private static final long serialVersionUID = 4559501238956808793L;
@@ -20,6 +22,7 @@ public class VirtualMiscMultipurposeDoc implements Serializable {
 
 	private BigDecimal equivalentAmountPaid;
 
+	@Valid
 	private FormOfPayment formOfPayment;
 
 	private String issueInExchangeFor;

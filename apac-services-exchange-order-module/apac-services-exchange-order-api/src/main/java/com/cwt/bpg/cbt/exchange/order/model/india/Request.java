@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.Valid;
+
 public class Request implements Serializable {
 
 	private static final long serialVersionUID = 3951172881169529734L;
@@ -19,6 +21,7 @@ public class Request implements Serializable {
 
 	private String fareType;
 
+	@Valid
 	private FormOfPayment formOfPayment;
 
 	private VirtualMiscMultipurposeDoc vmpd;
