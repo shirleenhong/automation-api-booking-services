@@ -19,10 +19,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Constraint(validatedBy = CcNotNullOnInsertOnFopTypeValidator.class)
 @Documented
-public @interface CcNotNullOnInsertOnFopType {
+public @interface CcNotNullOnFopType {
     String[] fopTypes();
 
-    String message() default "{CcNotNullOnInsertOnFopType.message}";
+    String message() default "{CcNotNullOnFopType.message}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 

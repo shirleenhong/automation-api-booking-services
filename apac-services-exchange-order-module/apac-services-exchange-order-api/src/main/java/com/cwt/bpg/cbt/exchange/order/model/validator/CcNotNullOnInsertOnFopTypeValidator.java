@@ -1,24 +1,24 @@
 package com.cwt.bpg.cbt.exchange.order.model.validator;
 
-import com.cwt.bpg.cbt.exchange.order.model.BaseServiceInfo;
-import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.PropertyUtils;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.lang.reflect.InvocationTargetException;
+
+import org.apache.commons.beanutils.PropertyUtils;
+
+import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
+import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
 
 /**
- * Implementation of {@link CcNotNullOnInsertOnFopType} validator.
+ * Implementation of {@link CcNotNullOnFopType} validator.
  **/
-public class CcNotNullOnInsertOnFopTypeValidator implements ConstraintValidator<CcNotNullOnInsertOnFopType, Object> {
+public class CcNotNullOnInsertOnFopTypeValidator implements ConstraintValidator<CcNotNullOnFopType, Object> {
 
 	private String[] fopTypes;
 
 	@Override
-	public void initialize(CcNotNullOnInsertOnFopType annotation) {
-
+	public void initialize(CcNotNullOnFopType annotation) {
 		fopTypes = annotation.fopTypes();
 	}
 
@@ -30,30 +30,19 @@ public class CcNotNullOnInsertOnFopTypeValidator implements ConstraintValidator<
 		}
 
 		try {
-			String eoNumberValue = BeanUtils.getProperty(value, "eoNumber");
-			if (eoNumberValue == null) {
-				BaseServiceInfo serviceInfo = (BaseServiceInfo) PropertyUtils.getProperty(value, "serviceInfo");
+			FopTypes fopTypeVal = (FopTypes) PropertyUtils.getProperty(value, "fopType");
+			CreditCard cc = (CreditCard) PropertyUtils.getProperty(value, "creditCard");
 
-				if (serviceInfo != null && serviceInfo.getFormOfPayment() != null
-						&& serviceInfo.getFormOfPayment().getFopType() != null) {
-					String fopTypeVal = serviceInfo.getFormOfPayment().getFopType().getCode();
-					CreditCard creditCard = serviceInfo.getFormOfPayment().getCreditCard();
-
-					for (String fopType : fopTypes) {
-						if (fopTypeVal.equals(fopType) && creditCard == null) {
-							ctx.disableDefaultConstraintViolation();
-							ctx.buildConstraintViolationWithTemplate(ctx.getDefaultConstraintMessageTemplate())
-									.addNode("creditCard").addConstraintViolation();
-							throw new IllegalArgumentException(
-									"[creditCard] should not be null if [fopType] is [" + fopType + "].");
-						}
+			if (fopTypeVal != null) {
+				for (String fopType : fopTypes) {
+					if (fopTypeVal.getCode().equals(fopType) && cc == null) {
+						throw new IllegalArgumentException(
+								"[creditCard] should not be null if [fopType] is [" + fopType + "].");
+					}else if(fopTypeVal.getCode().equalsIgnoreCase(FopTypes.INVOICE.getCode()) && cc!=null){
+						PropertyUtils.setProperty(value,"creditCard",null);
 					}
-
 				}
 			}
-
-
-
 		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
 			throw new RuntimeException(ex);
 		}

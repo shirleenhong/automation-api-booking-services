@@ -37,17 +37,9 @@ public class ExchangeOrderUpdateService
                 existingExchangeOrder.getCountryCode());
 
         exchangeOrder.setUpdateDateTime(Instant.now());
-        ExchangeOrderObjectModifier.modifyTargetObject(exchangeOrder, existingExchangeOrder);
 
-        if(existingExchangeOrder.getServiceInfo() != null &&
-                existingExchangeOrder.getServiceInfo().getFormOfPayment() != null &&
-                existingExchangeOrder.getServiceInfo().getFormOfPayment().getFopType() != null &&
-                existingExchangeOrder.getServiceInfo().getFormOfPayment().getFopType() == FopTypes.INVOICE){
-            existingExchangeOrder.getServiceInfo().getFormOfPayment().setCreditCard(null);
-        }
-
-        exchangeOrderAmountScaler.scale(existingExchangeOrder);
-        String updatedEoNumber = exchangeOrderRepo.save(existingExchangeOrder);
+        exchangeOrderAmountScaler.scale(exchangeOrder);
+        String updatedEoNumber = exchangeOrderRepo.save(exchangeOrder);
         
         return exchangeOrderRepo.getExchangeOrder(existingExchangeOrder.getCountryCode(), updatedEoNumber);
     }

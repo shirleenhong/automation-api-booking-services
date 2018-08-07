@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 
 import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
 
+import javax.validation.Valid;
+
 public class AssocServiceInfo implements Serializable {
 
     private static final long serialVersionUID = -7551325200425808468L;
@@ -15,6 +17,7 @@ public class AssocServiceInfo implements Serializable {
 
     private String vendorCode;
 
+    @Valid
     private FormOfPayment formOfPayment;
 
     private BigDecimal nettCost;

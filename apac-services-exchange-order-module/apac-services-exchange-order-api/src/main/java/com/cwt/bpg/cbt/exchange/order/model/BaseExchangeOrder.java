@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Id;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
@@ -48,6 +49,7 @@ public abstract class BaseExchangeOrder implements Serializable {
 
 	private boolean merchantFeeAbsorb;
 
+	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String productCode;
 
