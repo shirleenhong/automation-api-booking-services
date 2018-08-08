@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.Max;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -20,6 +22,7 @@ public class MiscInfo implements Serializable {
 
     private String lowFareCarrier;
 
+    @ApiModelProperty(allowableValues = "PT, ET")
     @Max(value = 2)
     private Timezone timezone;
 

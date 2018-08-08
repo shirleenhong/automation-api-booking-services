@@ -1,11 +1,14 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 public class FormOfPayment implements Serializable {
 
     private static final long serialVersionUID = 1850641277169808339L;
 
+	@ApiModelProperty(allowableValues = "CX4, CC, INV, BTC")
 	private FopTypes fopType;
 
     private CreditCard creditCard;
