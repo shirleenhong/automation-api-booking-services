@@ -44,17 +44,14 @@ public class ExchangeOrderUpdateServiceTest
         ExchangeOrder exchangeOrder = createExchangeOrder(eoNumber, newGstAmount);
 
         when(repository.getExchangeOrder(exchangeOrder.getCountryCode(), eoNumber)).thenReturn(existingExchangeOrder);
-        when(repository.save(existingExchangeOrder)).thenReturn(eoNumber);
+        when(repository.save(exchangeOrder)).thenReturn(eoNumber);
 
         ExchangeOrder updatedExchangeOrder = (ExchangeOrder) service.update(exchangeOrder);
 
-        assertThat(updatedExchangeOrder.getServiceInfo().getGstAmount().doubleValue(), is(75d));
-        assertThat(updatedExchangeOrder.getUpdateDateTime(), is(notNullValue()));
-
         InOrder inOrder = Mockito.inOrder(repository, scaler);
         inOrder.verify(repository, times(1)).getExchangeOrder(exchangeOrder.getCountryCode(),eoNumber);
-        inOrder.verify(scaler, times(1)).scale(existingExchangeOrder);
-        inOrder.verify(repository, times(1)).save(existingExchangeOrder);
+        inOrder.verify(scaler, times(1)).scale(exchangeOrder);
+        inOrder.verify(repository, times(1)).save(exchangeOrder);
     }
 
     @Test(expected = ExchangeOrderNoContentException.class)

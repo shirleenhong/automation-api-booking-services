@@ -2,9 +2,9 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
 
-import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnInsertOnFopType;
-import com.cwt.bpg.cbt.exchange.order.model.validator.NotEmptyOnInsert;
-import com.cwt.bpg.cbt.exchange.order.model.validator.ValidateOnInsert;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
@@ -12,21 +12,22 @@ import org.mongodb.morphia.annotations.Indexes;
 
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 
-@NotEmptyOnInsert(dependentFields = {"productCode","vendor"})
-@CcNotNullOnInsertOnFopType(fopTypes ={"CC","CX4"})
-@ValidateOnInsert(dependentFields={"serviceInfo.formOfPayment.creditCard","vendor"})
 @Entity(value = "exchangeOrderTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = {@Field("eoNumber"),@Field("recordLocator")}))
 public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	private static final long serialVersionUID = -5915661302682405152L;
 
+	@Valid
 	private IndiaServiceInfo serviceInfo;
-	
+
+	@Valid
+	@NotNull
 	private IndiaVendor vendor;
 
 	private IndiaMiscInfo miscInfo;
 
+	@Valid
 	private AssocServiceInfo assocServiceInfo;
 
 	private Request request;

@@ -1,14 +1,20 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.calculator.CalculatorUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
-import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 
 @Component
 public class ExchangeOrderAmountScaler
@@ -18,44 +24,55 @@ public class ExchangeOrderAmountScaler
     private ScaleConfig scaleConfig;
 
     public void scale(BaseExchangeOrder exchangeOrder) {
-        if (Country.INDIA.getCode().equalsIgnoreCase(exchangeOrder.getCountryCode())) {
-            scale((IndiaExchangeOrder) exchangeOrder);
-        }
-        else {
-            scale((ExchangeOrder) exchangeOrder);
-        }
+    	
+    	int scale = scaleConfig.getScale(exchangeOrder.getCountryCode());
+    	
+    	scale(exchangeOrder,scale);
+    	
     }
 
-    private void scale(ExchangeOrder exchangeOrder) {
+        
+    private void scale(Object source, int scale) {
+    	
+		String[] propertyNames = getPropertyNames(source);
 
-        int scale = scaleConfig.getScale(exchangeOrder.getCountryCode());
+		for (String fieldName : propertyNames) {
 
-        if(exchangeOrder.getServiceInfo() != null) {
-            exchangeOrder.getServiceInfo().setCommission(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getCommission(), scale));
-            exchangeOrder.getServiceInfo().setMerchantFeeAmount(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getMerchantFeeAmount(), scale));
-            exchangeOrder.getServiceInfo().setNettCost(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getNettCost(), scale));
-            exchangeOrder.getServiceInfo().setGstAmount(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getGstAmount(), scale));
-            exchangeOrder.getServiceInfo().setTax1(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTax1(), scale));
-            exchangeOrder.getServiceInfo().setTax2(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTax2(), scale));
-            exchangeOrder.setTotal(CalculatorUtils.scale(exchangeOrder.getTotal(), scale));
-            exchangeOrder.getServiceInfo().setSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getSellingPrice(), scale));
-            exchangeOrder.getServiceInfo().setTotalSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTotalSellingPrice(), scale));
-        }
-    }
+			try {
+				Object obj = PropertyUtils.getProperty(source, fieldName);
+				
+				if (obj != null) {
 
-    private void scale(IndiaExchangeOrder exchangeOrder) {
+					if (obj instanceof BigDecimal) {
+						
+						PropertyUtils.setProperty(source, fieldName, CalculatorUtils.scale((BigDecimal) PropertyUtils.getProperty(source, fieldName),scale));
 
-        int scale = scaleConfig.getScale(exchangeOrder.getCountryCode());
+					}else if (obj.getClass().getName().contains("com.cwt.bpg")
+							&& PropertyUtils.getProperty(source, fieldName) != null) {
 
-        if(exchangeOrder.getServiceInfo() != null){
-            exchangeOrder.getServiceInfo().setCommission(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getCommission(), scale));
-            exchangeOrder.getServiceInfo().setMerchantFeeAmount(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getMerchantFeeAmount(), scale));
-            exchangeOrder.getServiceInfo().setNettCost(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getNettCost(), scale));
-            exchangeOrder.getServiceInfo().setGstAmount(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getGstAmount(), scale));
-            exchangeOrder.setTotal(CalculatorUtils.scale(exchangeOrder.getTotal(), scale));
-            exchangeOrder.getServiceInfo().setSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getSellingPrice(), scale));
-            exchangeOrder.getServiceInfo().setTotalSellingPrice(CalculatorUtils.scale(exchangeOrder.getServiceInfo().getTotalSellingPrice(), scale));
-        }
+						scale(PropertyUtils.getProperty(source, fieldName),scale);
+					}
 
-    }
+				}
+			} catch (IllegalAccessException | InvocationTargetException
+					| NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+    
+    private String[] getPropertyNames(Object source) {
+    	
+		final BeanWrapper src = new BeanWrapperImpl(source);
+		PropertyDescriptor[] keys = src.getPropertyDescriptors();
+
+		Set<String> names = new HashSet<>();
+		for (PropertyDescriptor key : keys) {
+			names.add(key.getName());
+		}
+		
+		String[] result = new String[names.size()];
+		return names.toArray(result);
+	}
 }

@@ -1,16 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 
-import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.india.IndiaServiceInfo;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -19,81 +12,117 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ServiceInfo;
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaServiceInfo;
 
-public class ExchangeOrderAmountScalerTest
-{
-    @InjectMocks
-    private ExchangeOrderAmountScaler scaler;
+public class ExchangeOrderAmountScalerTest {
+	@InjectMocks
+	private ExchangeOrderAmountScaler scaler;
 
-    @Mock
-    private ScaleConfig scaleConfig;
+	@Mock
+	private ScaleConfig scaleConfig;
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
+	@Before
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
+	}
 
-    @Test
-    public void shouldScaleAmounts() {
-    	
-        ExchangeOrder exchangeOrder = mock(ExchangeOrder.class);
-        Mockito.when(exchangeOrder.getServiceInfo()).thenReturn(mock(ServiceInfo.class));
-        
-        scaler.scale(exchangeOrder);
+	@Test
+	public void shouldScaleHKAmounts() {
 
-        verify(scaleConfig, times(1)).getScale(anyString());
-        verify(exchangeOrder.getServiceInfo(), times(1)).setCommission(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setMerchantFeeAmount(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setNettCost(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setGstAmount(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setTax1(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setTax2(any(BigDecimal.class));
-        verify(exchangeOrder, times(1)).setTotal(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setSellingPrice(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setTotalSellingPrice(any(BigDecimal.class));
-    }
+		ExchangeOrder exchangeOrder = new ExchangeOrder();
+		Mockito.when(scaleConfig.getScale(Country.HONG_KONG.getCode())).thenReturn(0);
+		exchangeOrder.setCountryCode(Country.HONG_KONG.getCode());
+		exchangeOrder.setServiceInfo(new ServiceInfo());
+		exchangeOrder.setGstAmount(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.setTotal(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setCommission(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setMerchantFeeAmount(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setNettCost(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setGstAmount(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setTax1(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setTax2(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setSellingPrice(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setTotalSellingPrice(BigDecimal.valueOf(Math.random() * 100));
 
-    @Test
-    public void scaleCanHandleNullServiceInfo() {
+		scaler.scale(exchangeOrder);
 
-        ExchangeOrder exchangeOrder = mock(ExchangeOrder.class);
-        Mockito.when(exchangeOrder.getServiceInfo()).thenReturn(null);
+		assertEquals(0, exchangeOrder.getGstAmount().scale());
+		assertEquals(0, exchangeOrder.getTotal().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getCommission().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getMerchantFeeAmount().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getNettCost().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getGstAmount().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getTax1().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getTax2().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getSellingPrice().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getTotalSellingPrice().scale());
 
-        scaler.scale(exchangeOrder);
+	}
 
-        verify(scaleConfig, times(1)).getScale(anyString());
-    }
+	@Test
+	public void shouldScaleSGAmounts() {
 
-    @Test
-    public void shouldScaleAmountsForIndia() {
+		ExchangeOrder exchangeOrder = new ExchangeOrder();
+		Mockito.when(scaleConfig.getScale(Country.SINGAPORE.getCode())).thenReturn(2);
+		exchangeOrder.setCountryCode(Country.SINGAPORE.getCode());
+		exchangeOrder.setServiceInfo(new ServiceInfo());
+		exchangeOrder.setGstAmount(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.setTotal(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setCommission(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setMerchantFeeAmount(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setNettCost(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setGstAmount(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setTax1(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setTax2(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setSellingPrice(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setTotalSellingPrice(BigDecimal.valueOf(Math.random() * 100));
 
-        IndiaExchangeOrder exchangeOrder = mock(IndiaExchangeOrder.class);
-        Mockito.when(exchangeOrder.getCountryCode()).thenReturn(Country.INDIA.getCode());
-        Mockito.when(exchangeOrder.getServiceInfo()).thenReturn(mock(IndiaServiceInfo.class));
+		scaler.scale(exchangeOrder);
 
-        scaler.scale(exchangeOrder);
+		assertEquals(2, exchangeOrder.getGstAmount().scale());
+		assertEquals(2, exchangeOrder.getTotal().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getCommission().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getMerchantFeeAmount().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getNettCost().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getGstAmount().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getTax1().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getTax2().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getSellingPrice().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getTotalSellingPrice().scale());
 
-        verify(scaleConfig, times(1)).getScale(anyString());
-        verify(exchangeOrder.getServiceInfo(), times(1)).setCommission(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setMerchantFeeAmount(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setNettCost(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setGstAmount(any(BigDecimal.class));
-        verify(exchangeOrder, times(1)).setTotal(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setSellingPrice(any(BigDecimal.class));
-        verify(exchangeOrder.getServiceInfo(), times(1)).setTotalSellingPrice(any(BigDecimal.class));
-    }
+	}
 
-    @Test
-    public void scaleForIndiaCanHandleNullServiceInfo() {
+	@Test
+	public void shouldScaleINAmounts() {
 
-        IndiaExchangeOrder exchangeOrder = mock(IndiaExchangeOrder.class);
-        Mockito.when(exchangeOrder.getCountryCode()).thenReturn(Country.INDIA.getCode());
-        Mockito.when(exchangeOrder.getServiceInfo()).thenReturn(null);
+		IndiaExchangeOrder exchangeOrder = new IndiaExchangeOrder();
+		Mockito.when(scaleConfig.getScale(Country.SINGAPORE.getCode())).thenReturn(2);
+		exchangeOrder.setCountryCode(Country.SINGAPORE.getCode());
+		exchangeOrder.setServiceInfo(new IndiaServiceInfo());
+		exchangeOrder.setGstAmount(BigDecimal.valueOf(Math.random()));
+		exchangeOrder.setTotal(BigDecimal.valueOf(Math.random()));
+		exchangeOrder.getServiceInfo().setCommission(BigDecimal.valueOf(Math.random()));
+		exchangeOrder.getServiceInfo().setMerchantFeeAmount(BigDecimal.valueOf(Math.random()));
+		exchangeOrder.getServiceInfo().setNettCost(BigDecimal.valueOf(Math.random()));
+		exchangeOrder.getServiceInfo().setGstAmount(BigDecimal.valueOf(Math.random()));
+		exchangeOrder.getServiceInfo().setSellingPrice(BigDecimal.valueOf(Math.random()));
+		exchangeOrder.getServiceInfo().setTotalSellingPrice(BigDecimal.valueOf(Math.random()));
 
-        scaler.scale(exchangeOrder);
+		scaler.scale(exchangeOrder);
 
-        verify(scaleConfig, times(1)).getScale(anyString());
-    }
+		assertEquals(2, exchangeOrder.getGstAmount().scale());
+		assertEquals(2, exchangeOrder.getTotal().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getCommission().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getMerchantFeeAmount().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getNettCost().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getGstAmount().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getSellingPrice().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getTotalSellingPrice().scale());
+
+	}
+    
 }
