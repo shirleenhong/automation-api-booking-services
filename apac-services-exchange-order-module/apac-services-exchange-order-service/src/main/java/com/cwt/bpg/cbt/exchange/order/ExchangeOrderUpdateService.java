@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
-import com.cwt.bpg.cbt.exchange.order.utils.ExchangeOrderObjectModifier;
 
 @Service
 public class ExchangeOrderUpdateService
