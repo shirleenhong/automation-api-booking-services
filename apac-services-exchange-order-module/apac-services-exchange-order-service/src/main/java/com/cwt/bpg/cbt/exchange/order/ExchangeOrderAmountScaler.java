@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class ExchangeOrderAmountScaler
     @Autowired
     private ScaleConfig scaleConfig;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderAmountScaler.class);
+    
     public void scale(BaseExchangeOrder exchangeOrder) {
     	
     	int scale = scaleConfig.getScale(exchangeOrder.getCountryCode());
@@ -56,8 +60,7 @@ public class ExchangeOrderAmountScaler
 				}
 			} catch (IllegalAccessException | InvocationTargetException
 					| NoSuchMethodException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOGGER.error("Exception encountered on scale ", e);
 			}
 		}
 	}
