@@ -63,7 +63,7 @@ public class OtherServiceFeesService {
 		return this.nonAirFeeCalculator.calculate(input, merchantFee, countryCode);
 	}
 
-	NonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
+	IndiaNonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
 
 		final Client client = clientService.getClient(input.getClientAccountNumber());
 		final Client defaultClient = clientService.getDefaultClient();
