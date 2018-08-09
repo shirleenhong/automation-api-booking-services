@@ -8,6 +8,8 @@ public class IndiaNonAirFeesBreakdown extends NonAirFeesBreakdown {
 
 	private BigDecimal commissionAmount;
 	private BigDecimal discountAmount;
+	private boolean noMerchantFee;
+	private boolean clientExempt;
 	
 	public BigDecimal getCommissionAmount() {
 		return commissionAmount;
@@ -20,5 +22,21 @@ public class IndiaNonAirFeesBreakdown extends NonAirFeesBreakdown {
 	}
 	public void setDiscountAmount(BigDecimal discountAmount) {
 		this.discountAmount = discountAmount;
+	}
+
+	public boolean isNoMerchantFee() {
+		return noMerchantFee;
+	}
+
+	public void setNoMerchantFee(boolean noMerchantFee) {
+		this.noMerchantFee = noMerchantFee;
+	}
+
+	public boolean isClientExempt() {
+		return clientExempt;
+	}
+
+	public void setClientExempt(boolean clientExempt) {
+		this.clientExempt = clientExempt;
 	}
 }
