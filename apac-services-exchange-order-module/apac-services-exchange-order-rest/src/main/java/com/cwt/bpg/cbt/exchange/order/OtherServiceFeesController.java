@@ -32,7 +32,7 @@ public class OtherServiceFeesController {
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Computes non air fees. Applicable to India air products.")
-	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(@Valid @RequestBody @ApiParam(
+	public ResponseEntity<IndiaNonAirFeesBreakdown> computeNonAirFees(@Valid @RequestBody @ApiParam(
 			value = "Values needed for calculation") IndiaNonAirFeesInput input) {
 
 		return new ResponseEntity<>(service.calculateIndiaNonAirFees(input), HttpStatus.OK);

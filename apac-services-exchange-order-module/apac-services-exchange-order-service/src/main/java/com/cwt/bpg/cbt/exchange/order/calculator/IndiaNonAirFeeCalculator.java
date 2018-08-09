@@ -20,11 +20,11 @@ public class IndiaNonAirFeeCalculator {
 	private ScaleConfig scaleConfig;
 	private static final int BILL_TO_COMPANY = 3;
 
-	public NonAirFeesBreakdown calculate(IndiaNonAirFeesInput input,
+	public IndiaNonAirFeesBreakdown calculate(IndiaNonAirFeesInput input,
 			Client client, 
 			Client defaultClient) {
 
-		NonAirFeesBreakdown result = new NonAirFeesBreakdown();
+		IndiaNonAirFeesBreakdown result = new IndiaNonAirFeesBreakdown();
 
 		if (input == null || client == null) {
 			return result;
@@ -81,7 +81,9 @@ public class IndiaNonAirFeeCalculator {
 		result.setMerchantFee(merchantFeeAmount);
 		result.setTotalSellingPrice(totalSellAmount);
 		result.setGrossSellingPrice(grossSell);
-
+		result.setCommissionAmount(commission);
+		result.setDiscountAmount(discount);
+		
 		return result;
 	}
 
