@@ -81,8 +81,8 @@ public class IndiaNonAirFeeCalculator {
 		result.setMerchantFee(merchantFeeAmount);
 		result.setTotalSellingPrice(totalSellAmount);
 		result.setGrossSellingPrice(grossSell);
-		result.setCommissionAmount(commission);
-		result.setDiscountAmount(discount);
+		result.setCommission(commission);
+		result.setDiscount(discount);
 		
 		return result;
 	}
