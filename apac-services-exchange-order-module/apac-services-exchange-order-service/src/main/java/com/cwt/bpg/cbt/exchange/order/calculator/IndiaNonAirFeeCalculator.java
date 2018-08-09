@@ -77,7 +77,6 @@ public class IndiaNonAirFeeCalculator {
 				safeValue(grossSell).add(gstAmount).add(safeValue(merchantFeeAmount)),
 				scale);
 
-
         if(mfPercent == 0){
             result.setNoMerchantFee(true);
         }
@@ -92,7 +91,7 @@ public class IndiaNonAirFeeCalculator {
 		result.setGrossSellingPrice(grossSell);
 		result.setCommissionAmount(commission);
 		result.setDiscountAmount(discount);
-		
+
 		return result;
 	}
 
