@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Insurance implements Serializable {
 	private static final long serialVersionUID = -2416249545097859674L;
@@ -10,7 +11,7 @@ public class Insurance implements Serializable {
 	private int noOfDays;
 	private Date fromDate;
 	private String plan;
-	private Insured insured;
+	private List<Insured> insured;
 
 	public String getGeographicalArea() {
 		return geographicalArea;
@@ -44,11 +45,11 @@ public class Insurance implements Serializable {
 		this.plan = plan;
 	}
 
-	public Insured getInsured() {
+	public List<Insured> getInsured() {
 		return insured;
 	}
 
-	public void setInsured(Insured insured) {
+	public void setInsured(List<Insured> insured) {
 		this.insured = insured;
 	}
 
