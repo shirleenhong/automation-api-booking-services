@@ -30,7 +30,6 @@ public class ClientController {
 	@PutMapping(path = "/clients", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Put client")
-	@Internal
 	public ResponseEntity<Client> putClient(@RequestBody Client client) {
 
 		return new ResponseEntity<>(clientService.save(client), HttpStatus.OK);
@@ -39,7 +38,6 @@ public class ClientController {
 	@DeleteMapping(path = "/clients/{clientAccountNumber}")
 	@ResponseBody
 	@ApiOperation(value = "Remove client by clientAccountNumber")
-	@Internal
 	public ResponseEntity<String> removeClient(@PathVariable String clientAccountNumber) {
 
 		return new ResponseEntity<>(clientService.delete(clientAccountNumber), HttpStatus.OK);
