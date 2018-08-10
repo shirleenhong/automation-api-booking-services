@@ -142,7 +142,7 @@ public class ExchangeOrderReportService {
 		BigDecimal tax1 = null;
 		
 		if (exchangeOrder.getServiceInfo() != null) {
-			gstAmount = exchangeOrder.getServiceInfo().getGstAmount();
+			gstAmount = exchangeOrder.getServiceInfo().getGst();
 			tax1 = exchangeOrder.getServiceInfo().getTax1();
 			AdditionalInfo additionalInfo = exchangeOrder.getServiceInfo()
 					.getAdditionalInfo();
