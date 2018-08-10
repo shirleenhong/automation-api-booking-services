@@ -6,33 +6,33 @@ public class CheckList implements Serializable {
 
 	private static final long serialVersionUID = -3803907240885033917L;
 
-	private boolean passportCopiesReceived;
+	private Boolean passportCopiesReceived;
 
-	private boolean refundCopiesReceived;
+	private Boolean refundCopiesReceived;
 
-	private boolean vtmCardReceived;
+	private Boolean vtmCardReceived;
 
-	public boolean isPassportCopiesReceived() {
+	public Boolean isPassportCopiesReceived() {
 		return passportCopiesReceived;
 	}
 
-	public void setPassportCopiesReceived(boolean passportCopiesReceived) {
+	public void setPassportCopiesReceived(Boolean passportCopiesReceived) {
 		this.passportCopiesReceived = passportCopiesReceived;
 	}
 
-	public boolean isRefundCopiesReceived() {
+	public Boolean isRefundCopiesReceived() {
 		return refundCopiesReceived;
 	}
 
-	public void setRefundCopiesReceived(boolean refundCopiesReceived) {
+	public void setRefundCopiesReceived(Boolean refundCopiesReceived) {
 		this.refundCopiesReceived = refundCopiesReceived;
 	}
 
-	public boolean isVtmCardReceived() {
+	public Boolean isVtmCardReceived() {
 		return vtmCardReceived;
 	}
 
-	public void setVtmCardReceived(boolean vtmCardReceived) {
+	public void setVtmCardReceived(Boolean vtmCardReceived) {
 		this.vtmCardReceived = vtmCardReceived;
 	}
 

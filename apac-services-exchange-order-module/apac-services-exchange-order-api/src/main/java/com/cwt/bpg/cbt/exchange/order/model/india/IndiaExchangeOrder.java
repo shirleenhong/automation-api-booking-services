@@ -30,6 +30,7 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 	@Valid
 	private AssocServiceInfo assocServiceInfo;
 
+	@Valid
 	private Request request;
 
 	private String agentId;

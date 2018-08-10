@@ -43,14 +43,14 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 	private BigDecimal vendorHandling;
 
 	@ApiModelProperty(value = "Merchant Fee on Vendor Handling")
-	private boolean merchantFeeVendorHandlingFlag;
+	private Boolean merchantFeeVendorHandlingFlag;
 
 	private BigDecimal merchantFeeVendorHandling;
 
 	private BigDecimal cwtHandling;
 
 	@ApiModelProperty(value = "Merchant Fee on CWT Handling")
-	private boolean merchantFeeCwtHandlingFlag;
+	private Boolean merchantFeeCwtHandlingFlag;
 
 	private BigDecimal merchantFeeCwtHandling;
 
@@ -63,21 +63,21 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 	private BigDecimal gst;
 
 	@ApiModelProperty(value = "CWT Absorb GST")
-	private boolean gstAbsorb;
+	private Boolean gstAbsorb;
 
 	private BigDecimal merchantFee;
 
 	@ApiModelProperty(value = "CWT Absorb Merchant Fee")
-	private boolean merchantFeeAbsorb;
+	private Boolean merchantFeeAbsorb;
 
-	private boolean uatp;
+	private Boolean uatp;
 
 	private BigDecimal totalSellingPrice;
 
 	private BigDecimal serviceFee;
 
 	@ApiModelProperty(value = "TF in NRCC")
-	private boolean tfInNrcc;
+	private Boolean tfInNrcc;
 
 	private BigDecimal fuelSurcharge;
 
@@ -269,11 +269,11 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.gst = gst;
 	}
 
-	public boolean isGstAbsorb() {
+	public Boolean isGstAbsorb() {
 		return gstAbsorb;
 	}
 
-	public void setGstAbsorb(boolean gstAbsorb) {
+	public void setGstAbsorb(Boolean gstAbsorb) {
 		this.gstAbsorb = gstAbsorb;
 	}
 
@@ -285,19 +285,19 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.merchantFee = merchantFee;
 	}
 
-	public boolean isMerchantFeeAbsorb() {
+	public Boolean isMerchantFeeAbsorb() {
 		return merchantFeeAbsorb;
 	}
 
-	public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
+	public void setMerchantFeeAbsorb(Boolean merchantFeeAbsorb) {
 		this.merchantFeeAbsorb = merchantFeeAbsorb;
 	}
 
-	public boolean isUatp() {
+	public Boolean isUatp() {
 		return uatp;
 	}
 
-	public void setUatp(boolean uatp) {
+	public void setUatp(Boolean uatp) {
 		this.uatp = uatp;
 	}
 
@@ -317,11 +317,11 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.serviceFee = serviceFee;
 	}
 
-	public boolean isTfInNrcc() {
+	public Boolean isTfInNrcc() {
 		return tfInNrcc;
 	}
 
-	public void setTfInNrcc(boolean tfInNrcc) {
+	public void setTfInNrcc(Boolean tfInNrcc) {
 		this.tfInNrcc = tfInNrcc;
 	}
 
@@ -485,11 +485,11 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.ticket = ticket;
 	}
 
-	public boolean isMerchantFeeVendorHandlingFlag() {
+	public Boolean isMerchantFeeVendorHandlingFlag() {
 		return merchantFeeVendorHandlingFlag;
 	}
 
-	public void setMerchantFeeVendorHandlingFlag(boolean merchantFeeVendorHandlingFlag) {
+	public void setMerchantFeeVendorHandlingFlag(Boolean merchantFeeVendorHandlingFlag) {
 		this.merchantFeeVendorHandlingFlag = merchantFeeVendorHandlingFlag;
 	}
 
@@ -501,11 +501,11 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.merchantFeeVendorHandling = merchantFeeVendorHandling;
 	}
 
-	public boolean isMerchantFeeCwtHandlingFlag() {
+	public Boolean isMerchantFeeCwtHandlingFlag() {
 		return merchantFeeCwtHandlingFlag;
 	}
 
-	public void setMerchantFeeCwtHandlingFlag(boolean merchantFeeCwtHandlingFlag) {
+	public void setMerchantFeeCwtHandlingFlag(Boolean merchantFeeCwtHandlingFlag) {
 		this.merchantFeeCwtHandlingFlag = merchantFeeCwtHandlingFlag;
 	}
 

@@ -3,6 +3,8 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.validation.Valid;
+
 public class Hotel implements Serializable {
 
 	private static final long serialVersionUID = 4676705321251464166L;
@@ -25,11 +27,12 @@ public class Hotel implements Serializable {
 
 	private String confirmationNumber;
 
+	@Valid
 	private Guarantor guarantor;
 
 	private String roomType;
 
-	private int noOfPeople;
+	private Integer noOfPeople;
 
 	public String getName() {
 		return name;
@@ -119,11 +122,11 @@ public class Hotel implements Serializable {
 		this.roomType = roomType;
 	}
 
-	public int getNoOfPeople() {
+	public Integer getNoOfPeople() {
 		return noOfPeople;
 	}
 
-	public void setNoOfPeople(int noOfPeople) {
+	public void setNoOfPeople(Integer noOfPeople) {
 		this.noOfPeople = noOfPeople;
 	}
 }
