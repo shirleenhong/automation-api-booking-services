@@ -2,8 +2,6 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
 
-import io.swagger.annotations.ApiModelProperty;
-
 public class NonAirFeesBreakdown extends FeesBreakdown {
 
 	private static final long serialVersionUID = 3847345778240245241L;
@@ -12,9 +10,6 @@ public class NonAirFeesBreakdown extends FeesBreakdown {
 	private BigDecimal gstAmount;
 	private BigDecimal merchantFee;
 	private BigDecimal nettCostGst;
-
-	@ApiModelProperty(value = "Returned only for India.", allowEmptyValue = true)
-	private BigDecimal grossSellingPrice;
 
 	public BigDecimal getTotalSellingPrice() {
 		return totalSellingPrice;
@@ -46,13 +41,5 @@ public class NonAirFeesBreakdown extends FeesBreakdown {
 
 	public void setNettCostGst(BigDecimal nettCostGst) {
 		this.nettCostGst = nettCostGst;
-	}
-
-	public BigDecimal getGrossSellingPrice() {
-		return grossSellingPrice;
-	}
-
-	public void setGrossSellingPrice(BigDecimal grossSellingPrice) {
-		this.grossSellingPrice = grossSellingPrice;
 	}
 }
