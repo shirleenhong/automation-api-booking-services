@@ -30,7 +30,7 @@ public class AssocServiceInfo implements Serializable {
 
     private BigDecimal vatGstAmount;
 
-    private BigDecimal merchantFeeAmount;
+    private BigDecimal merchantFee;
 
     private String productDescription;
 
@@ -112,12 +112,12 @@ public class AssocServiceInfo implements Serializable {
         this.vatGstAmount = vatGstAmount;
     }
 
-    public BigDecimal getMerchantFeeAmount() {
-        return merchantFeeAmount;
+    public BigDecimal getMerchantFee() {
+        return merchantFee;
     }
 
-    public void setMerchantFeeAmount(BigDecimal merchantFeeAmount) {
-        this.merchantFeeAmount = merchantFeeAmount;
+    public void setMerchantFee(BigDecimal merchantFee) {
+        this.merchantFee = merchantFee;
     }
 
     public String getProductDescription() {
