@@ -137,11 +137,11 @@ public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
         this.entries = entries;
     }
 
-    public int getValidityLength() {
+    public Integer getValidityLength() {
         return validityLength;
     }
 
-    public void setValidityLength(int validityLength) {
+    public void setValidityLength(Integer validityLength) {
         this.validityLength = validityLength;
     }
 
