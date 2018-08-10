@@ -100,7 +100,7 @@ public class ExchangeOrderAmountScalerTest {
 	public void shouldScaleINAmounts() {
 
 		IndiaExchangeOrder exchangeOrder = new IndiaExchangeOrder();
-		Mockito.when(scaleConfig.getScale(Country.INDIA.getCode())).thenReturn(2);
+		Mockito.when(scaleConfig.getScale(Country.INDIA.getCode())).thenReturn(0);
 		exchangeOrder.setCountryCode(Country.INDIA.getCode());
 		exchangeOrder.setServiceInfo(new IndiaServiceInfo());
 		exchangeOrder.setGstAmount(BigDecimal.valueOf(Math.random()));
@@ -114,14 +114,14 @@ public class ExchangeOrderAmountScalerTest {
 
 		scaler.scale(exchangeOrder);
 
-		assertEquals(2, exchangeOrder.getGstAmount().scale());
-		assertEquals(2, exchangeOrder.getTotal().scale());
-		assertEquals(2, exchangeOrder.getServiceInfo().getCommission().scale());
-		assertEquals(2, exchangeOrder.getServiceInfo().getMerchantFee().scale());
-		assertEquals(2, exchangeOrder.getServiceInfo().getNettCost().scale());
-		assertEquals(2, exchangeOrder.getServiceInfo().getGst().scale());
-		assertEquals(2, exchangeOrder.getServiceInfo().getSellingPrice().scale());
-		assertEquals(2, exchangeOrder.getServiceInfo().getTotalSellingPrice().scale());
+		assertEquals(0, exchangeOrder.getGstAmount().scale());
+		assertEquals(0, exchangeOrder.getTotal().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getCommission().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getMerchantFee().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getNettCost().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getGst().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getSellingPrice().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getTotalSellingPrice().scale());
 
 	}
     
