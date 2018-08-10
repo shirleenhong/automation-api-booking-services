@@ -30,9 +30,6 @@ public class ExchangeOrderInsertService {
 	@Autowired
 	private ExchangeOrderRepository exchangeOrderRepo;
 
-	@Autowired
-	private ExchangeOrderAmountScaler exchangeOrderAmountScaler;
-
 	BaseExchangeOrder insert(BaseExchangeOrder exchangeOrder) {
 		exchangeOrder.setCreateDateTime(Instant.now());
 		exchangeOrder.setEoNumber(constructEoNumber(exchangeOrder.getCountryCode()));
@@ -55,7 +52,6 @@ public class ExchangeOrderInsertService {
 					+ " ] ");
 		}
 
-		exchangeOrderAmountScaler.scale(exchangeOrder);
 		String savedEoNumber = exchangeOrderRepo.save(exchangeOrder);
 
 		return exchangeOrderRepo.getExchangeOrder(exchangeOrder.getCountryCode(),
