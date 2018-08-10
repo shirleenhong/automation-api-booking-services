@@ -24,14 +24,9 @@ public class ExchangeOrderUpdateServiceTest
     @Mock
     private ExchangeOrderRepository repository;
 
-    @Mock
-    private ExchangeOrderAmountScaler scaler;
-
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-
-        doNothing().when(scaler).scale(any(ExchangeOrder.class));
     }
 
     @Test
@@ -48,9 +43,8 @@ public class ExchangeOrderUpdateServiceTest
 
         ExchangeOrder updatedExchangeOrder = (ExchangeOrder) service.update(exchangeOrder);
 
-        InOrder inOrder = Mockito.inOrder(repository, scaler);
+        InOrder inOrder = Mockito.inOrder(repository);
         inOrder.verify(repository, times(1)).getExchangeOrder(exchangeOrder.getCountryCode(),eoNumber);
-        inOrder.verify(scaler, times(1)).scale(exchangeOrder);
         inOrder.verify(repository, times(1)).save(exchangeOrder);
     }
 

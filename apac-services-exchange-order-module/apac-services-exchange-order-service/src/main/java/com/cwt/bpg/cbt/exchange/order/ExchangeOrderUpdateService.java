@@ -19,9 +19,6 @@ public class ExchangeOrderUpdateService
     @Autowired
     private ExchangeOrderRepository exchangeOrderRepo;
 
-    @Autowired
-    private ExchangeOrderAmountScaler exchangeOrderAmountScaler;
-    
     BaseExchangeOrder update(BaseExchangeOrder exchangeOrder) throws ExchangeOrderNoContentException {
         final String eoNumber = exchangeOrder.getEoNumber();
         Optional<BaseExchangeOrder> isEoExist = Optional.ofNullable(exchangeOrderRepo.getExchangeOrder(exchangeOrder.getCountryCode(), eoNumber));
@@ -37,7 +34,6 @@ public class ExchangeOrderUpdateService
         exchangeOrder.setCreateDateTime(existingExchangeOrder.getCreateDateTime());
         exchangeOrder.setUpdateDateTime(Instant.now());
 
-        exchangeOrderAmountScaler.scale(exchangeOrder);
         String updatedEoNumber = exchangeOrderRepo.save(exchangeOrder);
         
         return exchangeOrderRepo.getExchangeOrder(existingExchangeOrder.getCountryCode(), updatedEoNumber);
