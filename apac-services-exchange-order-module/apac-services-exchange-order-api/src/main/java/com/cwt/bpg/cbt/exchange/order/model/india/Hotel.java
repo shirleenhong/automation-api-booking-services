@@ -32,7 +32,7 @@ public class Hotel implements Serializable {
 
 	private String roomType;
 
-	private int noOfPeople;
+	private Integer noOfPeople;
 
 	public String getName() {
 		return name;
@@ -122,11 +122,11 @@ public class Hotel implements Serializable {
 		this.roomType = roomType;
 	}
 
-	public int getNoOfPeople() {
+	public Integer getNoOfPeople() {
 		return noOfPeople;
 	}
 
-	public void setNoOfPeople(int noOfPeople) {
+	public void setNoOfPeople(Integer noOfPeople) {
 		this.noOfPeople = noOfPeople;
 	}
 }

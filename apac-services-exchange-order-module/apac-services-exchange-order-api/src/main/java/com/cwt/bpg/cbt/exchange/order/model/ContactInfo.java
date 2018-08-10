@@ -22,7 +22,7 @@ public class ContactInfo implements Serializable {
     
     @NotEmpty
     @ApiModelProperty(required = true)
-    private boolean preferred;
+    private Boolean preferred;
     
     @ApiModelProperty(hidden = true)
     private String vendorNumber;
@@ -51,11 +51,11 @@ public class ContactInfo implements Serializable {
 		this.detail = detail;
 	}
 
-	public boolean isPreferred() {
+	public Boolean isPreferred() {
 		return preferred;
 	}
 
-	public void setPreferred(boolean preferred) {
+	public void setPreferred(Boolean preferred) {
 		this.preferred = preferred;
 	}
 }

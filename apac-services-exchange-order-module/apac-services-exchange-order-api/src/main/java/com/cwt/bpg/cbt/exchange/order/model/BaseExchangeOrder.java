@@ -43,11 +43,9 @@ public abstract class BaseExchangeOrder implements Serializable {
 	
 	private BigDecimal total;
 
-	private BigDecimal gstAmount;
+	private Boolean gstAbsorb;
 
-	private boolean gstAbsorb;
-
-	private boolean merchantFeeAbsorb;
+	private Boolean merchantFeeAbsorb;
 
 	@NotEmpty
 	@ApiModelProperty(required = true)
@@ -125,27 +123,19 @@ public abstract class BaseExchangeOrder implements Serializable {
 		this.eoAction = eoAction;
 	}
 
-	public BigDecimal getGstAmount() {
-		return gstAmount;
-	}
-
-	public void setGstAmount(BigDecimal gstAmount) {
-		this.gstAmount = gstAmount;
-	}
-
-	public boolean isGstAbsorb() {
+	public Boolean isGstAbsorb() {
 		return gstAbsorb;
 	}
 
-	public void setGstAbsorb(boolean gstAbsorb) {
+	public void setGstAbsorb(Boolean gstAbsorb) {
 		this.gstAbsorb = gstAbsorb;
 	}
 
-	public boolean isMerchantFeeAbsorb() {
+	public Boolean isMerchantFeeAbsorb() {
 		return merchantFeeAbsorb;
 	}
 
-	public void setMerchantFeeAbsorb(boolean merchantFeeAbsorb) {
+	public void setMerchantFeeAbsorb(Boolean merchantFeeAbsorb) {
 		this.merchantFeeAbsorb = merchantFeeAbsorb;
 	}
 
