@@ -134,7 +134,7 @@ public class OtherServiceFeesServiceTest {
 
 	@Test
 	public void shouldReturnNonAirFeeIndia() {
-		when(indiaNonAirFeeCalculator.calculate(anyObject(), anyObject(), anyObject())).thenReturn(new NonAirFeesBreakdown());
+		when(indiaNonAirFeeCalculator.calculate(anyObject(), anyObject(), anyObject())).thenReturn(new IndiaNonAirFeesBreakdown());
 
 		Client client = new Client();
 		client.setPricingId(20);

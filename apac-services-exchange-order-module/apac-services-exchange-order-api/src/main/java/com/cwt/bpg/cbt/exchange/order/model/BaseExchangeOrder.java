@@ -35,10 +35,10 @@ public abstract class BaseExchangeOrder implements Serializable {
 	
 	private String recordLocator;
 
-	@ApiModelProperty(required = true)
+	@ApiModelProperty(required = true, allowableValues = "Email, Print, Request Cheque")
 	private EoAction eoAction;
 
-	@ApiModelProperty(required = true)
+	@ApiModelProperty(required = true, allowableValues = "New, Pending, Completed")
 	private EoStatus status;
 	
 	private BigDecimal total;
