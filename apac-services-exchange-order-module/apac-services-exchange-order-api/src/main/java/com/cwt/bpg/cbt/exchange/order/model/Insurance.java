@@ -1,15 +1,27 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
+
+import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import io.swagger.annotations.ApiModelProperty;
 
 public class Insurance implements Serializable {
 	private static final long serialVersionUID = -2416249545097859674L;
 
 	private String geographicalArea;
 	private int noOfDays;
-	private Date fromDate;
+	
+	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T00:00:00.000Z")
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
+	private Instant fromDate;
+
 	private String plan;
 	private List<Insured> insured;
 
@@ -28,12 +40,12 @@ public class Insurance implements Serializable {
 	public void setNoOfDays(int noOfDays) {
 		this.noOfDays = noOfDays;
 	}
-
-	public Date getFromDate() {
+	
+	public Instant getFromDate() {
 		return fromDate;
 	}
-
-	public void setFromDate(Date fromDate) {
+	
+	public void setFromDate(Instant fromDate) {
 		this.fromDate = fromDate;
 	}
 

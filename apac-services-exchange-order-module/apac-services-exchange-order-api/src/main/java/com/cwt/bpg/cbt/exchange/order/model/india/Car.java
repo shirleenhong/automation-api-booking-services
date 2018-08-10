@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+import javax.validation.Valid;
+
 public class Car implements Serializable {
 
 	private static final long serialVersionUID = -1953882582608518378L;
@@ -43,7 +45,8 @@ public class Car implements Serializable {
 	private String confirmationNumber;
 
 	private String type;
-
+	
+	@Valid
 	private Guarantor guarantor;
 
 	public Instant getPickupDateTime() {

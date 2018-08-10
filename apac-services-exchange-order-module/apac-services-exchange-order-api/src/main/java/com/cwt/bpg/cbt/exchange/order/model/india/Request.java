@@ -48,6 +48,7 @@ public class Request implements Serializable {
 
 	private CheckList docCheckList;
 
+	@Valid
 	private Hotel hotel;
 
 	private String packageName;
@@ -95,6 +96,7 @@ public class Request implements Serializable {
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant applicationDate;
 
+	@Valid
 	private Car car;
 
 	public String getPlatingCarrier() {
