@@ -76,7 +76,7 @@ public class ExchangeOrderUpdateServiceTest
         eo.setProductCode("1");
         eo.setVendor(vendor);
         eo.setServiceInfo(new ServiceInfo());
-        eo.getServiceInfo().setGstAmount(gstAmount);
+        eo.getServiceInfo().setGst(gstAmount);
         eo.getServiceInfo().setFormOfPayment(new FormOfPayment());
         return eo;
     }
