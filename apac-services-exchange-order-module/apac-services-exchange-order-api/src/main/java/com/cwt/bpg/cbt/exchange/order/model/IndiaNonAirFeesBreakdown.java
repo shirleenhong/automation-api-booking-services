@@ -7,6 +7,7 @@ public class IndiaNonAirFeesBreakdown extends NonAirFeesBreakdown {
 	private static final long serialVersionUID = 3847345778240245241L;
 
 	private BigDecimal discount;
+	private BigDecimal grossSellingPrice;
 	private boolean noMerchantFee;
 	private boolean clientExempt;
 	
@@ -16,6 +17,14 @@ public class IndiaNonAirFeesBreakdown extends NonAirFeesBreakdown {
 
 	public void setDiscount(BigDecimal discount) {
 		this.discount = discount;
+	}
+	
+	public BigDecimal getGrossSellingPrice() {
+		return grossSellingPrice;
+	}
+
+	public void setGrossSellingPrice(BigDecimal grossSellingPrice) {
+		this.grossSellingPrice = grossSellingPrice;
 	}
 
 	public boolean isNoMerchantFee() {

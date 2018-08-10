@@ -60,7 +60,6 @@ public class NonAirFeeCalculatorTest {
 		assertEquals(round(new BigDecimal(75.63), 2), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(76.4135), 2), result.getNettCostGst());
 		assertEquals(round(new BigDecimal(1272.53), 2), result.getTotalSellingPrice());
-		assertNull(result.getGrossSellingPrice());
 	}
 	
 	@Test
@@ -80,7 +79,6 @@ public class NonAirFeeCalculatorTest {
 		assertEquals(round(new BigDecimal(94.5315)), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(61.4135)), result.getNettCostGst());
 		assertEquals(round(new BigDecimal(1590.95)), result.getTotalSellingPrice());
-		assertNull(result.getGrossSellingPrice());
 	}
 
 	@Test
@@ -101,7 +99,6 @@ public class NonAirFeeCalculatorTest {
 		assertNull(result.getMerchantFee());
 		assertNull(result.getNettCostGst());
 		assertEquals(round(new BigDecimal(1143.33)), result.getTotalSellingPrice());
-		assertNull(result.getGrossSellingPrice());
 	}
 
 	@Test
@@ -113,7 +110,6 @@ public class NonAirFeeCalculatorTest {
 		assertThat(result.getMerchantFee(), is(nullValue(BigDecimal.class)));
 		assertThat(result.getNettCostGst(), is(nullValue(BigDecimal.class)));
 		assertThat(result.getTotalSellingPrice(), is(nullValue(BigDecimal.class)));
-		assertThat(result.getGrossSellingPrice(), is(nullValue(BigDecimal.class)));
 	}
 
 	@Test
@@ -126,7 +122,6 @@ public class NonAirFeeCalculatorTest {
 		assertNull(result.getMerchantFee());
 		assertEquals(round(BigDecimal.ZERO, 2), result.getNettCostGst());
 		assertEquals(round(BigDecimal.ZERO, 2), result.getTotalSellingPrice());
-		assertNull(result.getGrossSellingPrice());
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -141,9 +136,7 @@ public class NonAirFeeCalculatorTest {
 
 	}
 
-
-	@SuppressWarnings("SameParameterValue")
-    private BigDecimal round(BigDecimal value, int scale) {
+	private BigDecimal round(BigDecimal value, int scale) {
 		return value.setScale(scale, RoundingMode.HALF_UP);
 	}
 
