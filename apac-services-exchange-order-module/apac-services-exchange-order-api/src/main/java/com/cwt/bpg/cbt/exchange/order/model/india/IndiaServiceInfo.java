@@ -17,11 +17,11 @@ public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
 
 	private BigDecimal discount;
 
-	private BigDecimal gstAmount;
+	private BigDecimal gst;
 
 	private boolean gstAbsorb;
 
-	private BigDecimal merchantFeeAmount;
+	private BigDecimal merchantFee;
 
 	private boolean merchantFeeAbsorb;
 
@@ -73,12 +73,12 @@ public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
         this.discount = discount;
     }
 
-    public BigDecimal getGstAmount() {
-        return gstAmount;
+    public BigDecimal getGst() {
+        return gst;
     }
 
-    public void setGstAmount(BigDecimal gstAmount) {
-        this.gstAmount = gstAmount;
+    public void setGst(BigDecimal gst) {
+        this.gst = gst;
     }
 
     public boolean isGstAbsorb() {
@@ -89,12 +89,12 @@ public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
         this.gstAbsorb = gstAbsorb;
     }
 
-    public BigDecimal getMerchantFeeAmount() {
-        return merchantFeeAmount;
+    public BigDecimal getMerchantFee() {
+        return merchantFee;
     }
 
-    public void setMerchantFeeAmount(BigDecimal merchantFeeAmount) {
-        this.merchantFeeAmount = merchantFeeAmount;
+    public void setMerchantFee(BigDecimal merchantFee) {
+        this.merchantFee = merchantFee;
     }
 
     public boolean isMerchantFeeAbsorb() {

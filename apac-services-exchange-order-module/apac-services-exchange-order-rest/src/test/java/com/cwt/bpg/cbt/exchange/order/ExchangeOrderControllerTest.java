@@ -91,8 +91,8 @@ public class ExchangeOrderControllerTest
 
         ExchangeOrder order = createExchangeOrder();
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
-        order.getServiceInfo().setGstAmount(BigDecimal.ZERO);
-        order.getServiceInfo().setMerchantFeeAmount(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
         order.setEoNumber("1122334455");
 
         when(eoService.saveExchangeOrder(anyString(),any(ExchangeOrder.class))).thenReturn(order);
@@ -111,8 +111,8 @@ public class ExchangeOrderControllerTest
 
         ExchangeOrder order = createExchangeOrder();
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
-        order.getServiceInfo().setGstAmount(BigDecimal.ZERO);
-        order.getServiceInfo().setMerchantFeeAmount(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
         order.setEoNumber(null);
 
         when(eoService.saveExchangeOrder(anyString(), any(ExchangeOrder.class))).thenReturn(order);
@@ -153,8 +153,8 @@ public class ExchangeOrderControllerTest
 
         ExchangeOrder order = createExchangeOrder();
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
-        order.getServiceInfo().setGstAmount(BigDecimal.ZERO);
-        order.getServiceInfo().setMerchantFeeAmount(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
         order.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CWT);
         order.setEoNumber("1122334455");
 
@@ -172,8 +172,8 @@ public class ExchangeOrderControllerTest
 
         ExchangeOrder order = createExchangeOrder();
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
-        order.getServiceInfo().setGstAmount(BigDecimal.ZERO);
-        order.getServiceInfo().setMerchantFeeAmount(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
         order.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CWT);
         order.setEoNumber(null);
         order.getServiceInfo().getFormOfPayment().setCreditCard(null);
@@ -192,8 +192,8 @@ public class ExchangeOrderControllerTest
 
         ExchangeOrder order = createExchangeOrder();
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
-        order.getServiceInfo().setGstAmount(BigDecimal.ZERO);
-        order.getServiceInfo().setMerchantFeeAmount(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
         when(eoService.saveExchangeOrder(anyString(),any(ExchangeOrder.class)))
                 .thenThrow(new ExchangeOrderNoContentException("eo number not found"));
 
