@@ -2,6 +2,8 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
 
+import javax.validation.Valid;
+
 import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
 
 public class Guarantor implements Serializable {
@@ -10,6 +12,7 @@ public class Guarantor implements Serializable {
 
 	private String type;
 
+	@Valid
 	private CreditCard creditCard;
 
 	public String getType() {

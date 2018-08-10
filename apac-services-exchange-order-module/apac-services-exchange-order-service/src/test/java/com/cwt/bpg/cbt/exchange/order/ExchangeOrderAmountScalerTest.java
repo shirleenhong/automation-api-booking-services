@@ -40,9 +40,9 @@ public class ExchangeOrderAmountScalerTest {
 		exchangeOrder.setGstAmount(BigDecimal.valueOf(Math.random() * 100));
 		exchangeOrder.setTotal(BigDecimal.valueOf(Math.random() * 100));
 		exchangeOrder.getServiceInfo().setCommission(BigDecimal.valueOf(Math.random() * 100));
-		exchangeOrder.getServiceInfo().setMerchantFeeAmount(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setMerchantFee(BigDecimal.valueOf(Math.random() * 100));
 		exchangeOrder.getServiceInfo().setNettCost(BigDecimal.valueOf(Math.random() * 100));
-		exchangeOrder.getServiceInfo().setGstAmount(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setGst(BigDecimal.valueOf(Math.random() * 100));
 		exchangeOrder.getServiceInfo().setTax1(BigDecimal.valueOf(Math.random() * 100));
 		exchangeOrder.getServiceInfo().setTax2(BigDecimal.valueOf(Math.random() * 100));
 		exchangeOrder.getServiceInfo().setSellingPrice(BigDecimal.valueOf(Math.random() * 100));
@@ -53,9 +53,9 @@ public class ExchangeOrderAmountScalerTest {
 		assertEquals(0, exchangeOrder.getGstAmount().scale());
 		assertEquals(0, exchangeOrder.getTotal().scale());
 		assertEquals(0, exchangeOrder.getServiceInfo().getCommission().scale());
-		assertEquals(0, exchangeOrder.getServiceInfo().getMerchantFeeAmount().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getMerchantFee().scale());
 		assertEquals(0, exchangeOrder.getServiceInfo().getNettCost().scale());
-		assertEquals(0, exchangeOrder.getServiceInfo().getGstAmount().scale());
+		assertEquals(0, exchangeOrder.getServiceInfo().getGst().scale());
 		assertEquals(0, exchangeOrder.getServiceInfo().getTax1().scale());
 		assertEquals(0, exchangeOrder.getServiceInfo().getTax2().scale());
 		assertEquals(0, exchangeOrder.getServiceInfo().getSellingPrice().scale());
@@ -73,9 +73,9 @@ public class ExchangeOrderAmountScalerTest {
 		exchangeOrder.setGstAmount(BigDecimal.valueOf(Math.random() * 100));
 		exchangeOrder.setTotal(BigDecimal.valueOf(Math.random() * 100));
 		exchangeOrder.getServiceInfo().setCommission(BigDecimal.valueOf(Math.random() * 100));
-		exchangeOrder.getServiceInfo().setMerchantFeeAmount(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setMerchantFee(BigDecimal.valueOf(Math.random() * 100));
 		exchangeOrder.getServiceInfo().setNettCost(BigDecimal.valueOf(Math.random() * 100));
-		exchangeOrder.getServiceInfo().setGstAmount(BigDecimal.valueOf(Math.random() * 100));
+		exchangeOrder.getServiceInfo().setGst(BigDecimal.valueOf(Math.random() * 100));
 		exchangeOrder.getServiceInfo().setTax1(BigDecimal.valueOf(Math.random() * 100));
 		exchangeOrder.getServiceInfo().setTax2(BigDecimal.valueOf(Math.random() * 100));
 		exchangeOrder.getServiceInfo().setSellingPrice(BigDecimal.valueOf(Math.random() * 100));
@@ -86,9 +86,9 @@ public class ExchangeOrderAmountScalerTest {
 		assertEquals(2, exchangeOrder.getGstAmount().scale());
 		assertEquals(2, exchangeOrder.getTotal().scale());
 		assertEquals(2, exchangeOrder.getServiceInfo().getCommission().scale());
-		assertEquals(2, exchangeOrder.getServiceInfo().getMerchantFeeAmount().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getMerchantFee().scale());
 		assertEquals(2, exchangeOrder.getServiceInfo().getNettCost().scale());
-		assertEquals(2, exchangeOrder.getServiceInfo().getGstAmount().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getGst().scale());
 		assertEquals(2, exchangeOrder.getServiceInfo().getTax1().scale());
 		assertEquals(2, exchangeOrder.getServiceInfo().getTax2().scale());
 		assertEquals(2, exchangeOrder.getServiceInfo().getSellingPrice().scale());
@@ -106,9 +106,9 @@ public class ExchangeOrderAmountScalerTest {
 		exchangeOrder.setGstAmount(BigDecimal.valueOf(Math.random()));
 		exchangeOrder.setTotal(BigDecimal.valueOf(Math.random()));
 		exchangeOrder.getServiceInfo().setCommission(BigDecimal.valueOf(Math.random()));
-		exchangeOrder.getServiceInfo().setMerchantFeeAmount(BigDecimal.valueOf(Math.random()));
+		exchangeOrder.getServiceInfo().setMerchantFee(BigDecimal.valueOf(Math.random()));
 		exchangeOrder.getServiceInfo().setNettCost(BigDecimal.valueOf(Math.random()));
-		exchangeOrder.getServiceInfo().setGstAmount(BigDecimal.valueOf(Math.random()));
+		exchangeOrder.getServiceInfo().setGst(BigDecimal.valueOf(Math.random()));
 		exchangeOrder.getServiceInfo().setSellingPrice(BigDecimal.valueOf(Math.random()));
 		exchangeOrder.getServiceInfo().setTotalSellingPrice(BigDecimal.valueOf(Math.random()));
 
@@ -117,9 +117,9 @@ public class ExchangeOrderAmountScalerTest {
 		assertEquals(2, exchangeOrder.getGstAmount().scale());
 		assertEquals(2, exchangeOrder.getTotal().scale());
 		assertEquals(2, exchangeOrder.getServiceInfo().getCommission().scale());
-		assertEquals(2, exchangeOrder.getServiceInfo().getMerchantFeeAmount().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getMerchantFee().scale());
 		assertEquals(2, exchangeOrder.getServiceInfo().getNettCost().scale());
-		assertEquals(2, exchangeOrder.getServiceInfo().getGstAmount().scale());
+		assertEquals(2, exchangeOrder.getServiceInfo().getGst().scale());
 		assertEquals(2, exchangeOrder.getServiceInfo().getSellingPrice().scale());
 		assertEquals(2, exchangeOrder.getServiceInfo().getTotalSellingPrice().scale());
 
