@@ -59,14 +59,6 @@ public class ExchangeOrderInsertServiceTest {
 		this.productService = productService;
 	}
 
-	public ExchangeOrderAmountScaler getScaler() {
-		return scaler;
-	}
-
-	public void setScaler(ExchangeOrderAmountScaler scaler) {
-		this.scaler = scaler;
-	}
-
 	@InjectMocks
 	private ExchangeOrderInsertService service;
 
@@ -79,15 +71,11 @@ public class ExchangeOrderInsertServiceTest {
 	@Mock
 	private ProductService productService;
 
-	@Mock
-	private ExchangeOrderAmountScaler scaler;
-
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
 		when(sequenceNumberService.getSequenceNumber(anyString())).thenReturn(1);
-		doNothing().when(scaler).scale(any(ExchangeOrder.class));
 	}
 
 	@Test
@@ -106,10 +94,9 @@ public class ExchangeOrderInsertServiceTest {
 
 		assertThat(result.getEoNumber(), is(equalTo(newEoNumber)));
 
-		InOrder inOrder = inOrder(sequenceNumberService, productService, scaler, repo);
+		InOrder inOrder = inOrder(sequenceNumberService, productService, repo);
 		inOrder.verify(sequenceNumberService, times(1)).getSequenceNumber(eo.getCountryCode());
 		inOrder.verify(productService, times(1)).getProductByCode(eo.getCountryCode(), eo.getProductCode());
-		inOrder.verify(scaler, times(1)).scale(savedEo);
 		inOrder.verify(repo, times(1)).save(savedEo);
 	}
 
@@ -158,5 +145,4 @@ public class ExchangeOrderInsertServiceTest {
 		vendor.setCode(vendorCode);
 		return vendor;
 	}
-
 }
