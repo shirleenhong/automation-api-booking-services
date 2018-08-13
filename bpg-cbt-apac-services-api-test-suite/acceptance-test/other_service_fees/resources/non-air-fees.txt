@@ -24,10 +24,10 @@ Append Fields For Non-Air Fees For India
     Run Keyword If    "${cost_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "costAmount":${cost_amount_value}
     Run Keyword If    "${comm_by_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionByPercent":${comm_by_percent_value}
     Run Keyword If    "${comm_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commissionPercent":${comm_percentage_value}
-    Run Keyword If    "${commission_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commission":${commission_value}
+    Run Keyword If    "${commission_amt_value}"!="null"    Append To List    ${other_service_fees_request_list}    "commission":${commission_amt_value}
     Run Keyword If    "${discount_by_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountByPercent":${discount_by_percent_value}
     Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discountPercent":${discount_percentage_value}
-    Run Keyword If    "${discount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discount":${discount_value}
+    Run Keyword If    "${discount_amt_value}"!="null"    Append To List    ${other_service_fees_request_list}    "discount":${discount_amt_value}
     Run Keyword If    "${fop_mode_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopMode":${fop_mode_value}
     Run Keyword If    "${fop_number_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopNumber":"${fop_number_value}"
     Run Keyword If    "${gst_percentage_value}"!="null"    Append To List    ${product_request_list}    "gstPercent":${gst_percentage_value}
@@ -50,7 +50,7 @@ Calculate Non-Air Fees Discount
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
-    Set Test Variable    ${discount_amount}    ${calculated_value}
+    Set Test Variable    ${discount_value}    ${calculated_value}
 
 Calculate Non-Air Fees For HK/SG
     Run Keyword If    "${gst_absorb_value}" == "false"    Run Keywords    Calculate Non-Air Fees GST
@@ -61,15 +61,14 @@ Calculate Non-Air Fees For HK/SG
     Calculate Non-Air Fees Selling Price In DI
     Run Keyword If    ${total_selling_price_value}>${nett_cost_value}    Calculate Non-Air Fees Commission
     ...    ELSE    Set Commission Value
-    Run Keyword If    "${country.lower()}" == "hk"    Remove Decimal Places
 
 Calculate Non-Air Fees For IN
     Run Keyword If    "${fop_mode_value}" != "3"    Calculate Non-Air Fees Merchant Fee Percentage
     ...    ELSE    Set Test Variable    ${merchant_fee_percentage_amount}    0
     Run Keyword If    "${comm_by_percent_value}" == "true"    Calculate Non-Air Fees Commission
-    ...    ELSE    Set Test Variable    ${commission_amount}    ${commission_value}
+    ...    ELSE    Set Test Variable    ${commission_value}    ${commission_amt_value}
     Run Keyword If    "${discount_by_percent_value}" == "true"    Calculate Non-Air Fees Discount
-    ...    ELSE    Set Test Variable    ${discount_amount}    ${discount_value}
+    ...    ELSE    Set Test Variable    ${discount_value}    ${discount_amt_value}
     Calculate Non-Air Fees Gross Sell Amount
     Calculate Non-Air Fees VAT/ GST Amount
     Calculate Non-Air Fees Total Sell Amount
@@ -82,7 +81,7 @@ Calculate Non-Air Fees GST
     Set Test Variable    ${gst_amount_value}    ${calculated_value}
 
 Calculate Non-Air Fees Gross Sell Amount
-    ${calculated_value}    Evaluate    ${cost_amount_value}+${commission_value}-${discount_amount}
+    ${calculated_value}    Evaluate    ${cost_amount_value}+${commission_value}-${discount_value}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
@@ -152,10 +151,11 @@ Create Test Variables For Non-Air Fees
 Generate Test Variables For Non-Air Fees
     [Arguments]    ${fees_list}    ${country}=sg
     Create Test Variables For Non-Air Fees    ${fees_list}    ${country}
-    Run Keyword If    "${country}"=="sg" or "${country}"=="in"    Set Test Variable    ${decimal_place}    2
+    Run Keyword If    "${country}"=="sg"    Set Test Variable    ${decimal_place}    2
     ...    ELSE    Set Test Variable    ${decimal_place}    0
     Run Keyword If    "${country}"=="in"    Calculate Non-Air Fees For IN
     ...    ELSE    Calculate Non-Air Fees For HK/SG
+    Remove Decimal Places
 
 Get Rounding Rules
     Send Currency Get Request
@@ -165,6 +165,9 @@ Get Rounding Rules
     Set Test Variable    ${rounding_rule}    ${round_rule_value}
 
 Remove Decimal Places
+    Run Keyword If    "${country.lower()}"=="in"    Remove Decimal Places For IN    ELSE IF    "${country.lower()}"=="hk"    Remove Decimal Places For HK
+
+Remove Decimal Places For HK
     ${total_selling_price_value}    Convert To String    ${total_selling_price_value}
     ${gst_amount_value}    Convert To String    ${gst_amount_value}
     ${merchant_fee_value}    Convert To String    ${merchant_fee_value}
@@ -180,6 +183,27 @@ Remove Decimal Places
     Set Test Variable    ${merchant_fee_value}
     Set Test Variable    ${commission_value}
     Set Test Variable    ${nett_cost_gst_value}
+
+Remove Decimal Places For IN
+    ${total_selling_price_value}    Convert To String    ${total_selling_price_value}
+    ${gst_amount_value}    Convert To String    ${gst_amount_value}
+    ${merchant_fee_value}    Convert To String    ${merchant_fee_value}
+    ${commission_value}    Convert To String    ${commission_value}
+    ${gross_selling_price_value}    Convert To String    ${gross_selling_price_value}
+    ${discount_value}    Convert To String    ${discount_value}
+    ${total_selling_price_value}    Remove String    ${total_selling_price_value}    .00
+    ${gst_amount_value}    Remove String    ${gst_amount_value}    .00
+    ${merchant_fee_value}    Remove String    ${merchant_fee_value}    .00
+    ${commission_value}    Remove String    ${commission_value}    .00
+    ${gross_selling_price_value}    Remove String    ${gross_selling_price_value}    .00
+    ${discount_value}    Remove String    ${discount_value}    .00
+    Set Test Variable    ${total_selling_price_value}
+    Set Test Variable    ${gst_amount_value}
+    Set Test Variable    ${merchant_fee_value}
+    Set Test Variable    ${commission_value}
+    Set Test Variable    ${gross_selling_price_value}
+    Set Test Variable    ${discount_value}
+
 
 Send Other Service Fees For Non-Air Fees Post Request
     [Arguments]    ${token}=${default_token}
@@ -227,7 +251,10 @@ Verify Calculated Non-Air Fees Are Not Returned
     Verify String Does Not Contain Substring    ${response.text}    "merchantFee"
     Verify String Does Not Contain Substring    ${response.text}    "gstAmount"
     Verify String Does Not Contain Substring    ${response.text}    "grossSellingPrice"
-    Run Keyword If    "${country}"!="in"    Verify String Does Not Contain Substring    ${response.text}    "commission"
+    Verify String Does Not Contain Substring    ${response.text}    "commission"
+    Verify String Does Not Contain Substring    ${response.text}    "discount"
+    Verify String Does Not Contain Substring    ${response.text}    "nettCostGst"
+    
 
 Verify Calculated Non-Air Fees Are Returned Correctly
     ${data}    Remove String    ${response.text}    {

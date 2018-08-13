@@ -215,7 +215,8 @@ Calculate Air Fees-IN Total Overhead Commission Percent
     Run Keyword If    "${calculated_value}" != "None"    Set Test Variable    ${total_overhead_commission_amount}    ${calculated_value}
 
 Calculate Air Fees-IN Total Sell Fare
-    Set Test Variable    ${total_sell_fare_amount}    ${base_fare_value}
+    ${calculated_value}    Evaluate    round(${base_fare_value},${decimal_place})
+    Set Test Variable    ${total_sell_fare_amount}    ${calculated_value}
 
 Calculate Air Fees-IN Total Selling Fare
     ${total_selling_fare_formula}    Set Variable If    "${air_pricing_id}" != "26"    ${total_sell_fare_amount}-${total_discount_amount}+${total_gst_amount}+${total_merchant_fee_amount}    ${total_sell_fare_amount}+${total_gst_amount}+${total_merchant_fee_amount}
@@ -388,8 +389,8 @@ Generate Test Variables For Air Fees-IN
     [Arguments]    ${fees_list}    ${country}
     Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
     Set Test Variable    ${air_pricing_id}    ${clients_dict["${client_account_number_value}.air_pricing_id"]}
-    ${decimal_place}    Set Variable If    "${country.lower()}" == "hk"    0    2
-    Set Test Variable    ${decimal_place}
+    #${decimal_place}    Set Variable If    "${country.lower()}" == "hk"    0    2
+    Set Test Variable    ${decimal_place}    0
     ${total_gst_amount}    Set Variable If    "${gst_enabled_value}" == "true"    0
     Run Keyword If    "${include_yq_comm_value}" == "false"    Set Test Variable    ${yq_tax_value}    0
     Run Keyword If    "${exempt_tax_value}" == "false" and "${gst_enabled_value}" == "true"    Calculate Air Fees-IN Total GST

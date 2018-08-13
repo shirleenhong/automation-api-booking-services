@@ -1,0 +1,895 @@
+*** Setting ***
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
+
+*** Keywords ***
+Append Exchange Order Associated Tab Fields For India
+    [Arguments]    ${eo_index}=0
+    ${exchange_order_assoc_fields_list}    Create List
+    ${exchange_order_assoc_fop_list}    Create List
+    ${exchange_order_assoc_cc_list}    Create List
+    Run Keyword If    "${assoc_details_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "details":"${assoc_details_${eo_index}_value}"
+    Run Keyword If    "${assoc_product_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "productCode":"${assoc_product_${eo_index}_value}"
+    Run Keyword If    "${assoc_vendor_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "vendorCode":"${assoc_vendor_${eo_index}_value}"
+    Run Keyword If    "${assoc_fop_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fop_list}    "fopType":"${assoc_fop_${eo_index}_value}"
+    Run Keyword If    "${assoc_cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_cc_list}    "ccType":"${assoc_cc_type_${eo_index}_value}"
+    Run Keyword If    "${assoc_cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_cc_list}    "ccNumber":"${assoc_cc_number_${eo_index}_value}"
+    Run Keyword If    "${assoc_expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_cc_list}    "expiryDate":"${assoc_expiry_date_${eo_index}_value}"
+    Run Keyword If    "${assoc_nett_cost_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "nettCost":${assoc_nett_cost_${eo_index}_value}
+    Run Keyword If    "${assoc_commission_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "commission":${assoc_commission_${eo_index}_value}
+    Run Keyword If    "${assoc_discount_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "discount":${assoc_discount_${eo_index}_value}
+    Run Keyword If    "${assoc_selling_price_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "sellingPrice":${assoc_selling_price_${eo_index}_value}
+    Run Keyword If    "${assoc_vat_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "vatGstAmount":${assoc_vat_${eo_index}_value}
+    Run Keyword If    "${assoc_merchant_fee_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "merchantFee":${assoc_merchant_fee_${eo_index}_value}
+    Run Keyword If    "${assoc_prod_desc_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "productDescription":"${assoc_prod_desc_${eo_index}_value}"
+    Run Keyword If    "${assoc_cwt_ref_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "cwtRefNoTk":"${assoc_cwt_ref_${eo_index}_value}"
+    Run Keyword If    "${assoc_vendor_ref_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "vendorRefNoGsa":"${assoc_vendor_ref_${eo_index}_value}"
+    Run Keyword If    "${assoc_other_related_${eo_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "otherRelatedNoPo":"${assoc_other_related_${eo_index}_value}"
+    Set Test Variable    ${exchange_order_assoc_fields_list}
+    Set Test Variable    ${exchange_order_assoc_fop_list}
+    Set Test Variable    ${exchange_order_assoc_cc_list}
+
+Append Exchange Order Miscellaneous Information Tab Fields For India
+    [Arguments]    ${eo_index}=0
+    ${exchange_order_misc_info_list}    Create List
+    Run Keyword If    "${reference_fare_${eo_index}_value}"!="none"    Append To List    ${exchange_order_misc_info_list}    "referenceFare":${reference_fare_${eo_index}_value}
+    Run Keyword If    "${low_fare_${eo_index}_value}"!="none"    Append To List    ${exchange_order_misc_info_list}    "lowFare":${low_fare_${eo_index}_value}
+    Run Keyword If    "${class_of_service_${eo_index}_value}"!="none"    Append To List    ${exchange_order_misc_info_list}    "classOfServices":"${class_of_service_${eo_index}_value}"
+    Run Keyword If    "${low_fare_carrier_${eo_index}_value}"!="none"    Append To List    ${exchange_order_misc_info_list}    "lowFareCarrier":"${low_fare_carrier_${eo_index}_value}"
+    Run Keyword If    "${booking_action_${eo_index}_value}"!="none"    Append To List    ${exchange_order_misc_info_list}    "bookingAction":"${booking_action_${eo_index}_value}"
+    Run Keyword If    "${realised_savings_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_misc_info_list}    "realisedSavingsCode":"${realised_savings_code_${eo_index}_value}"
+    Run Keyword If    "${missed_savings_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_misc_info_list}    "missedSavingsCode":"${missed_savings_code_${eo_index}_value}"
+    Run Keyword If    "${declined_airline_1_${eo_index}_value}"!="none"    Append To List    ${exchange_order_misc_info_list}    "declinedAirline1":"${declined_airline_1_${eo_index}_value}"
+    Run Keyword If    "${declined_fare_1_${eo_index}_value}"!="none"    Append To List    ${exchange_order_misc_info_list}    "declinedFare1":${declined_fare_1_${eo_index}_value}
+    Run Keyword If    "${declined_airline_2_${eo_index}_value}"!="none"    Append To List    ${exchange_order_misc_info_list}    "declinedAirline2":"${declined_airline_2_${eo_index}_value}"
+    Run Keyword If    "${declined_fare_2_${eo_index}_value}"!="none"    Append To List    ${exchange_order_misc_info_list}    "declinedFare2":${declined_fare_2_${eo_index}_value}
+    Set Test Variable    ${exchange_order_misc_info_list}
+
+Append Exchange Order Other Information Tab Fields For India
+    [Arguments]    ${eo_index}=0
+    ${exchange_order_other_info_list}    Create List
+    Run Keyword If    "${eo_action_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "eoAction":"${eo_action_${eo_index}_value}"
+    Run Keyword If    "${status_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "status":"${status_${eo_index}_value}"
+    Run Keyword If    "${agent_id_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "agentId":"${agent_id_${eo_index}_value}"
+    Run Keyword If    "${agent_name_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "agentName":"${agent_name_${eo_index}_value}"
+    Run Keyword If    "${country_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "countryCode":"${country_code_${eo_index}_value}"
+    Run Keyword If    "${pcc_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "pcc":"${pcc_${eo_index}_value}"
+    Run Keyword If    "${product_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "productCode":"${product_code_${eo_index}_value}"
+    Run Keyword If    "${record_locator_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "recordLocator":"${record_locator_${eo_index}_value}"
+    Run Keyword If    "${total_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "total":${total_${eo_index}_value}
+    Set Test Variable    ${exchange_order_other_info_list}
+
+Append Exchange Order Request Tab Fields For India
+    [Arguments]    ${eo_index}=0
+    ${exchange_order_request_fields_list}    Create List
+    ${exchange_order_request_fop_list}    Create List
+    ${exchange_order_request_cc_list}    Create List
+    ${exchange_order_request_vmpd_list}    Create List
+    ${exchange_order_request_vmpd_fop_list}    Create List
+    ${exchange_order_request_vmpd_cc_list}    Create List
+    ${exchange_order_request_consol_list}    Create List
+    ${exchange_order_request_amount_list}    Create List
+    ${exchange_order_request_hotel_list}    Create List
+    ${exchange_order_request_hotel_fop_list}    Create List
+    ${exchange_order_request_hotel_cc_list}    Create List
+    ${exchange_order_request_document_list}    Create List
+    ${exchange_order_request_car_list}    Create List
+    ${exchange_order_request_car_fop_list}    Create List
+    ${exchange_order_request_car_cc_list}    Create List
+    ${exchange_order_request_train_list}    Create List
+    Run Keyword If    "${plating_carrier_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "platingCarrier":"${plating_carrier_${eo_index}_value}"
+    Run Keyword If    "${fare_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "fareType":"${fare_type_${eo_index}_value}"
+    Run Keyword If    "${request_fop_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fop_list}    "fopType":"${request_fop_${eo_index}_value}"
+    Run Keyword If    "${request_cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_cc_list}    "ccType":"${request_cc_type_${eo_index}_value}"
+    Run Keyword If    "${request_cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_cc_list}    "ccNumber":"${request_cc_number_${eo_index}_value}"
+    Run Keyword If    "${request_expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_cc_list}    "expiryDate":"${request_expiry_date_${eo_index}_value}"
+    Run Keyword If    "${vmpd_record_locator_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "recordLocator":"${vmpd_record_locator_${eo_index}_value}"
+    Run Keyword If    "${vmpd_fare_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "fare":${vmpd_fare_${eo_index}_value}
+    Run Keyword If    "${vmpd_taxes_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "taxes":${vmpd_taxes_${eo_index}_value}
+    Run Keyword If    "${vmpd_reason_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "reasonForIssue":"${vmpd_reason_${eo_index}_value}"
+    Run Keyword If    "${vmpd_headline_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "headlineCurrency":"${vmpd_headline_${eo_index}_value}"
+    Run Keyword If    "${vmpd_equivalent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "equivalentAmountPaid":${vmpd_equivalent_${eo_index}_value}
+    Run Keyword If    "${vmpd_fop_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_fop_list}    "fopType":"${vmpd_fop_${eo_index}_value}"
+    Run Keyword If    "${vmpd_cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_cc_list}    "ccType":"${vmpd_cc_type_${eo_index}_value}"
+    Run Keyword If    "${vmpd_cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_cc_list}    "ccNumber":"${vmpd_cc_number_${eo_index}_value}"
+    Run Keyword If    "${vmpd_expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_cc_list}    "expiryDate":"${vmpd_expiry_date_${eo_index}_value}"
+    Run Keyword If    "${vmpd_issue_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "issueInExchangeFor":"${vmpd_issue_${eo_index}_value}"
+    Run Keyword If    "${vmpd_conjunction_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "inConjuctionWith":"${vmpd_conjunction_${eo_index}_value}"
+    Run Keyword If    "${vmpd_original_place_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "origPlaceOfIssue":"${vmpd_original_place_${eo_index}_value}"
+    Run Keyword If    "${vmpd_remark_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "remark":"${vmpd_remark_${eo_index}_value}"
+    Run Keyword If    "${consol_tour_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_consol_list}    "tourCode":"${consol_tour_code_${eo_index}_value}"
+    Run Keyword If    "${consol_threshold_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_consol_list}    "thresholdAmount":${consol_threshold_${eo_index}_value}
+    Run Keyword If    "${forex_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "forexType":"${forex_type_${eo_index}_value}"
+    Run Keyword If    "${travel_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "travelType":"${travel_type_${eo_index}_value}"
+    Run Keyword If    "${travel_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "travelDate":"${travel_date_${eo_index}_value}"
+    Run Keyword If    "${expected_delivery_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "expectedDeliveryDate":"${expected_delivery_date_${eo_index}_value}"
+    Run Keyword If    "${delivery_address_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "deliveryAddress":"${delivery_address_${eo_index}_value}"
+    Run Keyword If    "${passenger_employee_id_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "passengerEmployeeId":"${passenger_employee_id_${eo_index}_value}"
+    Run Keyword If    "${business_unit_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "businessUnit":"${business_unit_${eo_index}_value}"
+    Run Keyword If    "${passport_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "passportNumber":"${passport_number_${eo_index}_value}"
+    Run Keyword If    "${contact_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "contactNumber":"${contact_number_${eo_index}_value}"
+    Run Keyword If    "${amount_req_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_amount_list}    "type":"${amount_req_type_${eo_index}_value}"
+    Run Keyword If    "${amount_req_currency_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_amount_list}    "currency":"${amount_req_currency_${eo_index}_value}"
+    Run Keyword If    "${amount_req_amount_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_amount_list}    "amount":${amount_req_amount_${eo_index}_value}
+    Run Keyword If    "${passport_copies_check_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_document_list}    "passportCopiesReceived":${passport_copies_check_${eo_index}_value}
+    Run Keyword If    "${refund_copies_check_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_document_list}    "refundCopiesReceived":${refund_copies_check_${eo_index}_value}
+    Run Keyword If    "${vtm_card_check_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_document_list}    "vtmCardReceived":${vtm_card_check_${eo_index}_value}
+    Run Keyword If    "${hotel_room_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_list}    "roomType":"${hotel_room_type_${eo_index}_value}"
+    Run Keyword If    "${number_of_people_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_list}    "noOfPeople":${number_of_people_${eo_index}_value}
+    Run Keyword If    "${hotel_name_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_list}    "name":"${hotel_name_${eo_index}_value}"
+    Run Keyword If    "${hotel_address_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_list}    "address":"${hotel_address_${eo_index}_value}"
+    Run Keyword If    "${hotel_city_name_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_list}    "cityName":"${hotel_city_name_${eo_index}_value}"
+    Run Keyword If    "${hotel_state_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_list}    "stateProvince":"${hotel_state_${eo_index}_value}"
+    Run Keyword If    "${hotel_post_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_list}    "postCode":"${hotel_post_code_${eo_index}_value}"
+    Run Keyword If    "${hotel_phone_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_list}    "phoneNumber":"${hotel_phone_${eo_index}_value}"
+    Run Keyword If    "${hotel_daily_currency_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_list}    "dailyRateCurrency":"${hotel_daily_currency_${eo_index}_value}"
+    Run Keyword If    "${hotel_daily_amount_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_list}    "dailyRateAmount":${hotel_daily_amount_${eo_index}_value}
+    Run Keyword If    "${hotel_confirmation_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_list}    "confirmationNumber":"${hotel_confirmation_${eo_index}_value}"
+    Run Keyword If    "${hotel_guarantee_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_fop_list}    "type":"${hotel_guarantee_type_${eo_index}_value}"
+    Run Keyword If    "${hotel_guarantee_cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_cc_list}    "ccType":"${hotel_guarantee_cc_type_${eo_index}_value}"
+    Run Keyword If    "${hotel_guarantee_cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_cc_list}    "ccNumber":"${hotel_guarantee_cc_number_${eo_index}_value}"
+    Run Keyword If    "${hotel_guarantee_cc_expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_hotel_cc_list}    "expiryDate":"${hotel_guarantee_cc_expiry_date_${eo_index}_value}"
+    Run Keyword If    "${date_time_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "dateTime":"${date_time_${eo_index}_value}"
+    Run Keyword If    "${city_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "city":"${city_${eo_index}_value}"
+    Run Keyword If    "${location_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "location":"${location_${eo_index}_value}"
+    Run Keyword If    "${start_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "startDate":"${start_date_${eo_index}_value}"
+    Run Keyword If    "${end_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "endDate":"${end_date_${eo_index}_value}"
+    Run Keyword If    "${package_name_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "packageName":"${package_name_${eo_index}_value}"
+    Run Keyword If    "${details_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "details":"${details_${eo_index}_value}"
+    Run Keyword If    "${origin_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "origin":"${origin_${eo_index}_value}"
+    Run Keyword If    "${origin_description_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "originDesc":"${origin_description_${eo_index}_value}"
+    Run Keyword If    "${destination_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "destination":"${destination_${eo_index}_value}"
+    Run Keyword If    "${destination_description_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "destinationDesc":"${destination_description_${eo_index}_value}"
+    Run Keyword If    "${train_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_train_list}    "number":"${train_number_${eo_index}_value}"
+    Run Keyword If    "${train_name_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_train_list}    "name":"${train_name_${eo_index}_value}"
+    Run Keyword If    "${document_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_train_list}    "cabinClass":"${document_${eo_index}_value}"
+    Run Keyword If    "${date_of_application_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_fields_list}    "applicationDate":"${date_of_application_${eo_index}_value}"
+    Run Keyword If    "${car_pickup_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_list}    "pickupDateTime":"${car_pickup_date_${eo_index}_value}"
+    Run Keyword If    "${car_pickup_location_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_list}    "pickupLocation":"${car_pickup_location_${eo_index}_value}"
+    Run Keyword If    "${car_pickup_description_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_list}    "pickupDescription":"${car_pickup_description_${eo_index}_value}"
+    Run Keyword If    "${car_company_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_list}    "company":"${car_company_${eo_index}_value}"
+    Run Keyword If    "${car_name_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_list}    "name":"${car_name_${eo_index}_value}"
+    Run Keyword If    "${car_dropoff_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_list}    "dropOffDateTime":"${car_dropoff_date_${eo_index}_value}"
+    Run Keyword If    "${car_dropoff_location_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_list}    "dropOffLocation":"${car_dropoff_location_${eo_index}_value}"
+    Run Keyword If    "${car_dropoff_description_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_list}    "dropOffDescription":"${car_dropoff_description_${eo_index}_value}"
+    Run Keyword If    "${car_daily_currency_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_list}    "dailyRateCurrency":"${car_daily_currency_${eo_index}_value}"
+    Run Keyword If    "${car_daily_amount_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_list}    "dailyRateAmount":${car_daily_amount_${eo_index}_value}
+    Run Keyword If    "${car_confirmtion_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_list}    "confirmationNumber":"${car_confirmtion_number_${eo_index}_value}"
+    Run Keyword If    "${car_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_list}    "type":"${car_type_${eo_index}_value}"
+    Run Keyword If    "${car_guarantee_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_fop_list}    "type":"${car_guarantee_type_${eo_index}_value}"
+    Run Keyword If    "${car_cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_cc_list}    "ccType":"${car_cc_type_${eo_index}_value}"
+    Run Keyword If    "${car_cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_cc_list}    "ccNumber":"${car_cc_number_${eo_index}_value}"
+    Run Keyword If    "${car_expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_car_cc_list}    "expiryDate":"${car_expiry_date_${eo_index}_value}"
+    Set Test Variable    ${exchange_order_request_fields_list}
+    Set Test Variable    ${exchange_order_request_fop_list}
+    Set Test Variable    ${exchange_order_request_cc_list}
+    Set Test Variable    ${exchange_order_request_vmpd_list}
+    Set Test Variable    ${exchange_order_request_vmpd_fop_list}
+    Set Test Variable    ${exchange_order_request_vmpd_cc_list}
+    Set Test Variable    ${exchange_order_request_consol_list}
+    Set Test Variable    ${exchange_order_request_amount_list}
+    Set Test Variable    ${exchange_order_request_hotel_list}
+    Set Test Variable    ${exchange_order_request_hotel_fop_list}
+    Set Test Variable    ${exchange_order_request_hotel_cc_list}
+    Set Test Variable    ${exchange_order_request_document_list}
+    Set Test Variable    ${exchange_order_request_car_list}
+    Set Test Variable    ${exchange_order_request_car_fop_list}
+    Set Test Variable    ${exchange_order_request_car_cc_list}
+    Set Test Variable    ${exchange_order_request_train_list}
+
+Append Exchange Order Service Information Tab Fields For India
+    [Arguments]    ${eo_index}=0
+    ${exchange_order_service_info_list}    Create List
+    ${exchange_order_service_fop_list}    Create List
+    ${exchange_order_service_cc_list}    Create List
+    Run Keyword If    "${nett_cost_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "nettCost":${nett_cost_${eo_index}_value}
+    Run Keyword If    "${selling_price_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "sellingPrice":${selling_price_${eo_index}_value}
+    Run Keyword If    "${commission_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "commission":${commission_${eo_index}_value}
+    Run Keyword If    "${discount_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "discount":${discount_${eo_index}_value}
+    Run Keyword If    "${gst_amount_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "gst":${gst_amount_${eo_index}_value}
+    Run Keyword If    "${gst_absorb_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "gstAbsorb":${gst_absorb_${eo_index}_value}
+    Run Keyword If    "${merchant_fee_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "merchantFee":${merchant_fee_${eo_index}_value}
+    Run Keyword If    "${merchant_fee_absorb_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "merchantFeeAbsorb":${merchant_fee_absorb_${eo_index}_value}
+    Run Keyword If    "${total_selling_price_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "totalSellingPrice":${total_selling_price_${eo_index}_value}
+    Run Keyword If    "${country_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "country":"${country_${eo_index}_value}"
+    Run Keyword If    "${type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "type":"${type_${eo_index}_value}"
+    Run Keyword If    "${entries_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "entries":"${entries_${eo_index}_value}"
+    Run Keyword If    "${validity_length_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "validityLength":${validity_length_${eo_index}_value}
+    Run Keyword If    "${validity_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "validityType":"${validity_type_${eo_index}_value}"
+    Run Keyword If    "${processing_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "processingType":"${processing_${eo_index}_value}"
+    Run Keyword If    "${description_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "classCabin":"${description_${eo_index}_value}"
+    Run Keyword If    "${fop_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_fop_list}    "fopType":"${fop_type_${eo_index}_value}"
+    Run Keyword If    "${cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_cc_list}    "ccType":"${cc_type_${eo_index}_value}"
+    Run Keyword If    "${cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_cc_list}    "ccNumber":"${cc_number_${eo_index}_value}"
+    Run Keyword If    "${expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_cc_list}    "expiryDate":"${expiry_date_${eo_index}_value}"
+    Set Test Variable    ${exchange_order_service_info_list}
+    Set Test Variable    ${exchange_order_service_fop_list}
+    Set Test Variable    ${exchange_order_service_cc_list}
+
+Append Exchange Order Vendor Information Tab Fields For India
+    [Arguments]    ${eo_index}=0
+    ${exchange_order_vendor_info_list}    Create List
+    ${exchange_order_vendor_contact_list}    Create List
+    Run Keyword If    "${vendor_contact_no_${eo_index}_value}"!="none"    Append To List    ${exchange_order_vendor_info_list}    "contactNo":${vendor_contact_no_${eo_index}_value}
+    Run Keyword If    "${vendor_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_vendor_info_list}    "code":"${vendor_code_${eo_index}_value}"
+    Run Keyword If    "${vendor_name_${eo_index}_value}"!="none"    Append To List    ${exchange_order_vendor_info_list}    "name":"${vendor_name_${eo_index}_value}"
+    Run Keyword If    "${vendor_address_1_${eo_index}_value}"!="none"    Append To List    ${exchange_order_vendor_info_list}    "address1":"${vendor_address_1_${eo_index}_value}"
+    Run Keyword If    "${vendor_address_2_${eo_index}_value}"!="none"    Append To List    ${exchange_order_vendor_info_list}    "address2":"${vendor_address_2_${eo_index}_value}"
+    Run Keyword If    "${vendor_city_${eo_index}_value}"!="none"    Append To List    ${exchange_order_vendor_info_list}    "city":"${vendor_city_${eo_index}_value}"
+    Run Keyword If    "${vendor_country_${eo_index}_value}"!="none"    Append To List    ${exchange_order_vendor_info_list}    "country":"${vendor_country_${eo_index}_value}"
+    Run Keyword If    "${vendor_support_email_${eo_index}_value}"!="none"    Append To List    ${exchange_order_vendor_info_list}    "supportEmail":"${vendor_support_email_${eo_index}_value}"
+    : FOR    ${index}    IN RANGE    0    ${vendor_contact_data_length_${eo_index}}
+    \    Append To List    ${exchange_order_vendor_contact_list}    {"type":"${vendor_contact_type_${eo_index}_${index}_value}","detail":"${vendor_contact_details_${eo_index}_${index}_value}","preferred":${vendor_preferred_${eo_index}_${index}_value}}
+    Set Test Variable    ${exchange_order_vendor_info_list}
+    Set Test Variable    ${exchange_order_vendor_contact_list}
+
+Cleanup Data
+    [Arguments]    ${data}
+    ${data}    Replace String    ${data}    ,,    ,
+    ${data}    Replace String    ${data}    {,    {
+    ${data}    Replace String    ${data}    ,}    }
+    ${data}    Replace String    ${data}    "null"    null
+    ${data}    Replace String    ${data}    "None"    None
+    [Return]    ${data}
+
+Create Exchange Order Request
+    [Arguments]    ${eo_index}=0    ${amend_eo}=false
+    Create Exchange Order Request Body    data=${exchange_order_service_info_list}    tab_name=service_info
+    Create Exchange Order Request Body    data=${exchange_order_service_fop_list}    tab_name=service_fop
+    Create Exchange Order Request Body    data=${exchange_order_service_cc_list}    tab_name=service_cc
+    Create Exchange Order Request Body    data=${exchange_order_vendor_info_list}    tab_name=vendor_info
+    Create Exchange Order Request Body    data=${exchange_order_vendor_contact_list}    tab_name=vendor_contact
+    Create Exchange Order Request Body    data=${exchange_order_misc_info_list}    tab_name=misc_info
+    Create Exchange Order Request Body    data=${exchange_order_other_info_list}    tab_name=other_info
+    Create Exchange Order Request Body    data=${exchange_order_assoc_fields_list}    tab_name=assoc_fields
+    Create Exchange Order Request Body    data=${exchange_order_assoc_fop_list}    tab_name=assoc_fop
+    Create Exchange Order Request Body    data=${exchange_order_assoc_cc_list}    tab_name=assoc_cc
+    Create Exchange Order Request Body    data=${exchange_order_request_fields_list}    tab_name=request_fields
+    Create Exchange Order Request Body    data=${exchange_order_request_fop_list}    tab_name=request_fop
+    Create Exchange Order Request Body    data=${exchange_order_request_cc_list}    tab_name=request_cc
+    Create Exchange Order Request Body    data=${exchange_order_request_vmpd_list}    tab_name=request_vmpd
+    Create Exchange Order Request Body    data=${exchange_order_request_vmpd_fop_list}    tab_name=request_vmpd_fop
+    Create Exchange Order Request Body    data=${exchange_order_request_vmpd_cc_list}    tab_name=request_vmpd_cc
+    Create Exchange Order Request Body    data=${exchange_order_request_consol_list}    tab_name=request_consol
+    Create Exchange Order Request Body    data=${exchange_order_request_amount_list}    tab_name=request_amount
+    Create Exchange Order Request Body    data=${exchange_order_request_hotel_list}    tab_name=request_hotel
+    Create Exchange Order Request Body    data=${exchange_order_request_hotel_fop_list}    tab_name=request_hotel_fop
+    Create Exchange Order Request Body    data=${exchange_order_request_hotel_cc_list}    tab_name=request_hotel_cc
+    Create Exchange Order Request Body    data=${exchange_order_request_document_list}    tab_name=request_document
+    Create Exchange Order Request Body    data=${exchange_order_request_car_list}    tab_name=request_car
+    Create Exchange Order Request Body    data=${exchange_order_request_car_fop_list}    tab_name=request_car_fop
+    Create Exchange Order Request Body    data=${exchange_order_request_car_cc_list}    tab_name=request_car_cc
+    Create Exchange Order Request Body    data=${exchange_order_request_train_list}    tab_name=request_train
+    ${data}    Set Variable If    "${amend_eo}"=="false"    {${other_info_list},"serviceInfo":{${service_info_list},"formOfPayment":{${service_fop_list},"creditCard":{${service_cc_list}}}},"vendor":{${vendor_info_list},"contactInfo":[${vendor_contact_list}]},"miscInfo":{${misc_info_list}},"assocServiceInfo":{${assoc_fields_list},"formOfPayment":{${assoc_fop_list},"creditCard":{${assoc_cc_list}}}},"request":{${request_fields_list},"vmpd":{${request_vmpd_list},"formOfPayment":{${request_vmpd_fop_list},"creditCard":{${request_vmpd_cc_list}}}},"consolInfo":{${request_consol_list}},"requestAmount":{${request_amount_list}},"formOfPayment":{${request_fop_list},"creditCard":{${request_cc_list}}},"docCheckList":{${request_document_list}},"hotel":{${request_hotel_list},"guarantor":{${request_hotel_fop_list},"creditCard":{${request_hotel_cc_list}}}},"car":{${request_car_list},"guarantor":{${request_car_fop_list},"creditCard":{${request_car_cc_list}}}},"train":{${request_train_list}}}}    "${amend_eo}"=="true"    {"eoNumber":"${exchange_order_number}",${other_info_list},"serviceInfo":{${service_info_list},"formOfPayment":{${service_fop_list},"creditCard":{${service_cc_list}}}},"vendor":{${vendor_info_list},"contactInfo":[${vendor_contact_list}]},"miscInfo":{${misc_info_list}},"assocServiceInfo":{${assoc_fields_list},"formOfPayment":{${assoc_fop_list},"creditCard":{${assoc_cc_list}}}},"request":{${request_fields_list},"vmpd":{${request_vmpd_list},"formOfPayment":{${request_vmpd_fop_list},"creditCard":{${request_vmpd_cc_list}}}},"consolInfo":{${request_consol_list}},"requestAmount":{${request_amount_list}},"formOfPayment":{${request_fop_list},"creditCard":{${request_cc_list}}},"docCheckList":{${request_document_list}},"hotel":{${request_hotel_list},"guarantor":{${request_hotel_fop_list},"creditCard":{${request_hotel_cc_list}}}},"car":{${request_car_list},"guarantor":{${request_car_fop_list},"creditCard":{${request_car_cc_list}}}},"train":{${request_train_list}}}}
+    ${data}    Sanitize Exchange Order Body    ${data}    eo_index=${eo_index}
+    Set Test Variable    ${data}
+    Log    ${data}
+
+Create Exchange Order Request Body
+    [Arguments]    ${data}    ${tab_name}
+    ${data_list_length}    Get Length    ${data}
+    : FOR    ${i}    IN RANGE    0    ${data_list_length}
+    \    ${data_list}    Set Variable If    ${i}==0    ${EMPTY}    ${data_list},
+    \    ${data_list}    Set Variable    ${data_list}${data[${i}]}
+    ${data_list}    Set Variable If    "${data_list_length}"=="0"    ${EMPTY}    ${data_list}
+    Set Test Variable    ${${tab_name}_list}    ${data_list}
+
+Create Test Variables For Exchange Order India
+    [Arguments]    ${service_info_data}=${EMPTY}    ${vendor_info_data}=${EMPTY}    ${vendor_contact_data}=${EMPTY}    ${misc_info_data}=${EMPTY}    ${other_info_data}=${EMPTY}    ${assoc_info_data}=${EMPTY}
+    ...    ${request_info_data}=${EMPTY}    ${total_eo}=1    ${generate_pnr}=false
+    ${eo_index}    Set Variable    0
+    ${index}    Set Variable    0
+    ${pnr_value}    Run Keyword If    "${generate_pnr.lower()}"=="true"    Generate Random Record Locator
+    ...    ELSE    Set Variable    ${EMPTY}
+    : FOR    ${eo_index}    IN RANGE    ${total_eo}
+    \    Run Keyword If    "${service_info_data}"!="${EMPTY}"    Create Test Variables For Exchange Order Tabs And Fields    eo_data=${service_info_data}    tab_name=service_info    eo_index=${eo_index}
+    \    Run Keyword If    "${vendor_info_data}"!="${EMPTY}"    Create Test Variables For Exchange Order Tabs And Fields    eo_data=${vendor_info_data}    tab_name=vendor_info    eo_index=${eo_index}
+    \    Run Keyword If    "${vendor_contact_data}"!="${EMPTY}"    Create Test Variables For Exchange Order Tabs And Fields    eo_data=${vendor_contact_data}    tab_name=vendor_contact    eo_index=${eo_index}
+    \    ...    is_contact_info=true
+    \    Run Keyword If    "${misc_info_data}"!="${EMPTY}"    Create Test Variables For Exchange Order Tabs And Fields    eo_data=${misc_info_data}    tab_name=misc_info    eo_index=${eo_index}
+    \    Run Keyword If    "${other_info_data}"!="${EMPTY}"    Create Test Variables For Exchange Order Tabs And Fields    eo_data=${other_info_data}    tab_name=other_info    eo_index=${eo_index}
+    \    Run Keyword If    "${assoc_info_data}"!="${EMPTY}"    Create Test Variables For Exchange Order Tabs And Fields    eo_data=${assoc_info_data}    tab_name=assoc_info    eo_index=${eo_index}
+    \    Run Keyword If    "${request_info_data}"!="${EMPTY}"    Create Test Variables For Exchange Order Tabs And Fields    eo_data=${request_info_data}    tab_name=request_info    eo_index=${eo_index}
+    \    Set Test Variable    ${market_${eo_index}}    3
+    \    Run Keyword If    "${generate_pnr.lower()}"=="true"    Run Keywords    Set Test Variable    ${record_locator_${eo_index}_value}    ${pnr_value}
+    \    ...    AND    Set Test Variable    ${pnr_value}
+    \    ...    ELSE    Set Test Variable    ${pnr_value}    ${record_locator_${eo_index}_value}
+    \    Set Test Variable    ${vendor_contact_data_length_${eo_index}}    ${index}
+    \    Set Test Variable    ${service_info_data_${eo_index}}    ${service_info_data}
+    \    Set Test Variable    ${vendor_info_data_${eo_index}}    ${vendor_info_data}
+    \    Set Test Variable    ${vendor_contact_data_${eo_index}}    ${vendor_contact_data}
+    \    Set Test Variable    ${misc_info_data_${eo_index}}    ${misc_info_data}
+    \    Set Test Variable    ${other_info_data_${eo_index}}    ${other_info_data}
+    \    Set Test Variable    ${assoc_info_data_${eo_index}}    ${assoc_info_data}
+    \    Set Test Variable    ${request_info_data_${eo_index}}    ${request_info_data}
+    \    ${eo_index}    Evaluate    ${eo_index}+1
+
+Create Test Variables For Exchange Order Tabs And Fields
+    [Arguments]    ${eo_data}    ${tab_name}    ${eo_index}=0    ${is_contact_info}=false    ${index}=0
+    ${eo_data}    Split String    ${eo_data}    |
+    : FOR    ${data}    IN    @{eo_data}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Run Keyword If    "${is_contact_info}"=="false"    Set Test Variable    ${${data_item[0]}_${eo_index}_value}    ${data_item[1]}
+    \    ...    ELSE    Create Test Variables For Vendor Contact Info India    data_item=${data_item}    eo_index=${eo_index}    index=${index} 
+    Set Test Variable    ${${tab_name}_list}    ${eo_data}
+
+Create Test Variables For Vendor Contact Info India
+    [Arguments]    ${data_item}    ${eo_index}=0    ${index}=0
+    ${contact_type}    Set Variable If    "${data_item[0]}"=="email"    Email    "${data_item[0]}"=="phone"    Phone    "${data_item[0]}"=="fax"    Fax    null
+    Set Test Variable    ${vendor_contact_type_${eo_index}_${index}_value}    ${contact_type}
+    Set Test Variable    ${vendor_contact_details_${eo_index}_${index}_value}    ${data_item[1]}
+    Set Test Variable    ${vendor_preferred_${eo_index}_${index}_value}    ${data_item[2]}
+    ${index}    Run Keyword If    "${contact_type}"!="null"    Evaluate    ${index}+1    ELSE    Set Variable    0
+    Set Test Variable    ${index}
+
+Evict Exchange Order Cache
+    [Arguments]    ${number}=2    ${token}=${default_token}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    : FOR    ${index}    IN RANGE    0    ${number}
+    \    ${response}    Get Request    exchange-order    /apac-services-rest/api/caches/evict/exchange-order    headers=${headers}
+    \    Set Test Variable    ${response}
+    \    Verify Response Status Code Is Correct    200
+    \    Log    ${response.headers}
+    \    Log    ${response.content}
+    Set Test Variable    ${api_flag}    exchange-order
+
+Generate Random Record Locator
+    [Arguments]    ${length}=6    ${chars}=[UPPER][NUMBERS]
+    ${pnr}    Generate Random String    ${length}    ${chars}
+    [Return]    ${pnr}
+
+Get Json Value From Array
+    [Arguments]    ${json_object}    ${json_path}
+    ${res_content}=    To Json    ${json_object}
+    ${actual_value}    Get Value From Json    ${res_content}    ${json_path}
+    ${actual_value}    Convert JSON To String    ${actual_value}
+    ${actual_value}    Get Substring    ${actual_value}    1    -1
+    [Return]    ${actual_value}
+
+Reset Exchange Order Variables For Amend Exchange Order
+    [Arguments]    ${service_info_data}=${default_service_info_data_in}    ${vendor_info_data}=${default_vendor_info_data_in}    ${vendor_contact_data}=${default_vendor_contact_data_in}    ${misc_info_data}=${default_misc_info_data_in}    ${other_info_data}=${default_other_info_data_in}    ${assoc_info_data}=${default_assoc_info_data_in}
+    ...    ${request_info_data}=${default_request_info_data_in}
+    ${amend_eo_list}    Set Variable    ${service_info_data}|${vendor_info_data}|${misc_info_data}|${other_info_data}|${assoc_info_data}|${request_info_data}
+    ${amend_contact_list}    Set Variable    ${vendor_contact_data}
+    Create Test Variables For Exchange Order Tabs And Fields    eo_data=${amend_eo_list}    tab_name=all    field_name=amend
+    Create Test Variables For Exchange Order Tabs And Fields    eo_data=${amend_contact_list}    tab_name=vendor_contact    field_name=amend
+
+Sanitize Assoc Info Data
+    [Arguments]    ${data}    ${eo_index}=0
+    ${data}    Run Keyword If    "${assoc_info_data_${eo_index}}"=="${EMPTY}"    Replace String    ${data}    "assocServiceInfo":{"formOfPayment":{"creditCard":{}}},    ${EMPTY}
+    ...    ELSE    Set Variable    ${data}
+    [Return]    ${data}
+
+Sanitize Exchange Order Body
+    [Arguments]    ${data}    ${eo_index}=0
+    ${data}    Cleanup Data    ${data}
+    ${data}    Sanitize Service Info Data    ${data}    ${eo_index}
+    ${data}    Sanitize Vendor Info Data    ${data}    ${eo_index}
+    ${data}    Sanitize Misc Info Data    ${data}    ${eo_index}
+    ${data}    Sanitize Assoc Info Data    ${data}    ${eo_index}
+    ${data}    Sanitize Request Info Data    ${data}    ${eo_index}
+    ${data}    Replace String    ${data}    "creditCard":{}    ${EMPTY}
+    ${data}    Replace String    ${data}    "creditCard":{"ccType":null,"ccNumber":null,"expiryDate":null}    "creditCard":null
+    ${data}    Replace String    ${data}    "formOfPayment":{}    ${EMPTY}
+    ${data}    Cleanup Data    ${data}
+    [Return]    ${data}
+
+Sanitize Misc Info Data
+    [Arguments]    ${data}    ${eo_index}=0
+    ${data}    Run Keyword If    "${misc_info_data_${eo_index}}"=="${EMPTY}"    Replace String    ${data}    "miscInfo":{},    ${EMPTY}
+    ...    ELSE    Set Variable    ${data}
+    [Return]    ${data}
+
+Sanitize Request Info Data
+    [Arguments]    ${data}    ${eo_index}=0
+    ${data}    Run Keyword If    "${request_info_data_${eo_index}}"=="${EMPTY}"    Replace String    ${data}    "request":{"vmpd":{"formOfPayment":{"creditCard":{}}},"consolInfo":{},"requestAmount":{},"formOfPayment":{"creditCard":{}},"docCheckList":{},"hotel":{"guarantor":{"creditCard":{}}},"car":{"guarantor":{"creditCard":{}}},"train":{}}    ${EMPTY}
+    ...    ELSE    Set Variable    ${data}
+    ${data}    Convert To String    ${data}
+    ${data}    Replace String    ${data}    "train":{}    ${EMPTY}
+    ${data}    Replace String    ${data}    "docCheckList":{},    ${EMPTY}
+    ${data}    Replace String    ${data}    "consolInfo":{},    ${EMPTY}
+    ${data}    Replace String    ${data}    "requestAmount":{},    ${EMPTY}
+    ${data}    Replace String    ${data}    "creditCard":{}    ${EMPTY}
+    ${data}    Replace String    ${data}    "car":{"guarantor":{}},    ${EMPTY}
+    ${data}    Replace String    ${data}    "hotel":{"guarantor":{}},    ${EMPTY}
+    ${data}    Replace String    ${data}    "guarantor":{}    ${EMPTY}
+    ${data}    Replace String    ${data}    "car":{},    ${EMPTY}
+    ${data}    Replace String    ${data}    "hotel":{},    ${EMPTY}
+    ${data}    Replace String    ${data}    "vmpd":{"formOfPayment":{}},    ${EMPTY}
+    ${data}    Replace String    ${data}    "formOfPayment":{},    ${EMPTY}
+    ${data}    Replace String    ${data}    "vmpd":{},    ${EMPTY}
+    ${data}    Replace String    ${data}    "request":{}    ${EMPTY}
+    [Return]    ${data}
+
+Sanitize Service Info Data
+    [Arguments]    ${data}    ${eo_index}=0
+    ${data}    Run Keyword If    "${service_info_data_${eo_index}}"=="${EMPTY}"    Replace String    ${data}    "serviceInfo":{"formOfPayment":{"creditCard":{}}},    ${EMPTY}
+    ...    ELSE    Set Variable    ${data}
+    [Return]    ${data}
+
+Sanitize Vendor Info Data
+    [Arguments]    ${data}    ${eo_index}=0
+    ${data}    Run Keyword If    "${vendor_info_data_${eo_index}}"=="${EMPTY}" or "${vendor_contact_data_${eo_index}}"=="${EMPTY}"    Replace String    ${data}    "vendor":{"contactInfo":[]},    ${EMPTY}
+    ...    ELSE    Set Variable    ${data}
+    ${data}    Convert To String    ${data}
+    ${data}    Replace String    ${data}    "contactInfo":[]    ${EMPTY}
+    [Return]    ${data}
+
+Send Exchange Order Get Request
+    [Arguments]    ${token}=${default_token}    ${eo_index}=0    ${eo_number}=${exchange_order_number}    ${pnr_value}=${pnr_value}    ${via}=eo
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${path_param}    Set Variable If    "${via}"=="eo"    ${eo_number}    ${pnr_value}
+    ${response}    Get Request    exchange-order    /apac-services-rest/api/exchange-order/in/${path_param}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Verify Response Status Code Is Correct    200
+    Set Test Variable    ${response_${eo_index}}    ${response}
+    Log    ${response_${eo_index}.headers}
+    Log    ${response_${eo_index}.content}
+    Set Test Variable    ${api_flag}    exchange-order
+
+Send Exchange Order Post Request For India
+    [Arguments]    ${token}=${default_token}    ${total_eo}=1    ${amend_eo}=false
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${eo_index}    Set Variable    0
+    : FOR    ${eo_index}    IN RANGE    ${total_eo}
+    \    Run Keyword If    "${service_info_data_${eo_index}}"!="${EMPTY}"    Append Exchange Order Service Information Tab Fields For India
+    \    ...    ELSE    Set Exchange Order Service Info List To Default Value
+    \    Run Keyword If    "${vendor_info_data_${eo_index}}"!="${EMPTY}" or "${vendor_contact_data_${eo_index}}"!="${EMPTY}"    Append Exchange Order Vendor Information Tab Fields For India
+    \    ...    ELSE    Set Exchange Order Vendor Info List To Default Value
+    \    Run Keyword If    "${misc_info_data_${eo_index}}"!="${EMPTY}"    Append Exchange Order Miscellaneous Information Tab Fields For India
+    \    ...    ELSE    Set Exchange Order Miscellaneous Info List To Default Value
+    \    Run Keyword If    "${other_info_data_${eo_index}}"!="${EMPTY}"    Append Exchange Order Other Information Tab Fields For India
+    \    ...    ELSE    Set Exchange Order Other Info List To Default Value
+    \    Run Keyword If    "${assoc_info_data_${eo_index}}"!="${EMPTY}"    Append Exchange Order Associated Tab Fields For India
+    \    ...    ELSE    Set Exchange Order Associated Info List To Default Value
+    \    Run Keyword If    "${request_info_data_${eo_index}}"!="${EMPTY}"    Append Exchange Order Request Tab Fields For India
+    \    ...    ELSE    Set Exchange Order Request Info List To Default Value
+    \    Create Exchange Order Request    eo_index=${eo_index}    amend_eo=${amend_eo}
+    \    ${response}    Post Request    exchange-order    /apac-services-rest/api/exchange-order/in    data=${data}    headers=${headers}
+    \    ${current_date_time}    Get Current Date    time_zone=utc
+    \    Set Test Variable    ${response}
+    \    Set Test Variable    ${total_eo}
+    \    ${status_code}    Set Variable If    "${amend_eo}"=="false"    201    200
+    \    Verify Response Status Code Is Correct    ${status_code}
+    \    Set Test Variable    ${response_${eo_index}}    ${response}
+    \    Set Test Variable    ${current_date_time_${eo_index}}    ${current_date_time}
+    \    Verify Exchange Order Number Is Saved Correctly
+    \    Log    ${response_${eo_index}.headers}
+    \    Log    ${response_${eo_index}.content}
+
+Set Exchange Order Associated Info List To Default Value
+    Set Test Variable    ${exchange_order_assoc_fields_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_assoc_fop_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_assoc_cc_list}    ${EMPTY}
+
+Set Exchange Order Miscellaneous Info List To Default Value
+    Set Test Variable    ${exchange_order_misc_info_list}    ${EMPTY}
+
+Set Exchange Order Other Info List To Default Value
+    Set Test Variable    ${exchange_order_other_info_list}    ${EMPTY}
+
+Set Exchange Order Request Info List To Default Value
+    Set Test Variable    ${exchange_order_request_fields_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_fop_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_cc_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_vmpd_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_vmpd_fop_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_vmpd_cc_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_consol_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_amount_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_hotel_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_hotel_fop_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_hotel_cc_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_document_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_car_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_car_fop_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_car_cc_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_request_train_list}    ${EMPTY}
+
+Set Exchange Order Service Info List To Default Value
+    Set Test Variable    ${exchange_order_service_info_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_service_fop_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_service_cc_list}    ${EMPTY}
+
+Set Exchange Order Vendor Info List To Default Value
+    Set Test Variable    ${exchange_order_vendor_info_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_vendor_contact_list}    ${EMPTY}
+
+Verify Exchange Order Associated Information Tab Is Saved Correctly
+    [Arguments]    ${eo_index}=0
+    Run Keyword If    "${assoc_details_${eo_index}_value}"!="null" and "${assoc_details_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.details    ${assoc_details_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.details
+    Run Keyword If    "${assoc_product_${eo_index}_value}"!="null" and "${assoc_product_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.productCode    ${assoc_product_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.productCode
+    Run Keyword If    "${assoc_vendor_${eo_index}_value}"!="null" and "${assoc_vendor_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.vendorCode    ${assoc_vendor_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.vendorCode
+    Run Keyword If    "${assoc_fop_${eo_index}_value}"!="null" and "${assoc_fop_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.formOfPayment.fopType    ${assoc_fop_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.formOfPayment.fopType
+    Run Keyword If    "${assoc_cc_type_${eo_index}_value}"!="null" and "${assoc_cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.formOfPayment.creditCard.ccType    ${assoc_cc_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.formOfPayment.creditCard.ccType
+    Run Keyword If    "${assoc_cc_number_${eo_index}_value}"!="null" and "${assoc_cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.formOfPayment.creditCard.ccNumber    ${assoc_cc_number_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.formOfPayment.creditCard.ccNumber
+    Run Keyword If    "${assoc_expiry_date_${eo_index}_value}"!="null" and "${assoc_expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.formOfPayment.creditCard.expiryDate    ${assoc_expiry_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.formOfPayment.creditCard.expiryDate
+    Run Keyword If    "${assoc_nett_cost_${eo_index}_value}"!="null" and "${assoc_nett_cost_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.nettCost    ${assoc_nett_cost_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.nettCost
+    Run Keyword If    "${assoc_commission_${eo_index}_value}"!="null" and "${assoc_commission_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.commission    ${assoc_commission_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.commission
+    Run Keyword If    "${assoc_discount_${eo_index}_value}"!="null" and "${assoc_discount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.discount    ${assoc_discount_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.discount
+    Run Keyword If    "${assoc_selling_price_${eo_index}_value}"!="null" and "${assoc_selling_price_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.sellingPrice    ${assoc_selling_price_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.sellingPrice
+    Run Keyword If    "${assoc_vat_${eo_index}_value}"!="null" and "${assoc_vat_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.vatGstAmount    ${assoc_vat_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.vatGstAmount
+    Run Keyword If    "${assoc_merchant_fee_${eo_index}_value}"!="null" and "${assoc_merchant_fee_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.merchantFee    ${assoc_merchant_fee_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.merchantFee
+    Run Keyword If    "${assoc_prod_desc_${eo_index}_value}"!="null" and "${assoc_prod_desc_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.productDescription    ${assoc_prod_desc_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.productDescription
+    Run Keyword If    "${assoc_cwt_ref_${eo_index}_value}"!="null" and "${assoc_cwt_ref_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.cwtRefNoTk    ${assoc_cwt_ref_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.cwtRefNoTk
+    Run Keyword If    "${assoc_vendor_ref_${eo_index}_value}"!="null" and "${assoc_vendor_ref_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.vendorRefNoGsa    ${assoc_vendor_ref_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.vendorReferenceNoGsa
+    Run Keyword If    "${assoc_other_related_${eo_index}_value}"!="null" and "${assoc_other_related_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfo.otherRelatedNoPo    ${assoc_other_related_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo.otherRelatedNoPo
+
+Verify Exchange Order Create Date Time Is Saved Correctly
+    [Arguments]    ${eo_index}=0
+    ${expected_date_time}    Get Substring    ${current_date_time_${eo_index}}    0    16
+    ${expected_date_time}    Replace String    ${expected_date_time}    ${SPACE}    T
+    ${actual_date_time}    Get Json Value As String    ${response.content}    $.createDateTime
+    Set Test Variable    ${create_date_time_${eo_index}_value}    ${actual_date_time}
+    ${actual_date_time}    Get Substring    ${actual_date_time}    0    16
+    Verify Actual Value Matches Expected Value    ${actual_date_time}    ${expected_date_time}
+    Verify Json Value Matches Pattern    $.createDateTime    ^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z+$
+
+Verify Exchange Order Is Saved Correctly
+    [Arguments]    ${eo_index}=0    ${amend_eo}=false
+    ${data}    Run Keyword If    ${total_eo}>1    Convert JSON To String    ${response_${eo_index}.content}
+    ...    ELSE    Set Variable    ${response_${eo_index}.content}
+    Set Test Variable    ${response}    ${data}
+    Set Test Variable    ${response.content}    ${data}
+    Verify Exchange Order Other Information Is Saved Correctly    eo_index=${eo_index}    amend_eo=${amend_eo}
+    Run Keyword If    "${assoc_info_data_${eo_index}}"!="${EMPTY}"    Verify Exchange Order Associated Information Tab Is Saved Correctly    eo_index=${eo_index}
+    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfo
+    Run Keyword If    "${misc_info_data_${eo_index}}"!="${EMPTY}"    Verify Exchange Order Miscellaneous Information Tab Is Saved Correctly    eo_index=${eo_index}
+    ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo
+    Run Keyword If    "${request_info_data_${eo_index}}"!="${EMPTY}"    Verify Exchange Order Request Information Is Saved Correctly    eo_index=${eo_index}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request
+    Run Keyword If    "${service_info_data_${eo_index}}"!="${EMPTY}"    Verify Exchange Order Service Information Is Saved Correctly    eo_index=${eo_index}
+    ...    ELSE    Verify Json Element Does Not Exist    $.service
+    Run Keyword If    "${vendor_info_data_${eo_index}}"!="${EMPTY}"    Verify Exchange Order Vendor Information Is Saved Correctly    eo_index=${eo_index}
+    ...    ELSE    Verify Json Element Does Not Exist    $.vendor
+
+Verify Exchange Order List Is Retrieved Correctly
+    [Arguments]    ${total_eo}=1
+    Set Test Variable    ${eo_list_from_pnr}    ${response.content}
+    ${eo_index}    Evaluate    ${total_eo}-1
+    : FOR    ${index}    IN RANGE    0    ${total_eo}
+    \    ${response}    Get Json Value From Array    ${eo_list_from_pnr}    $.[${index}]
+    \    ${response.content}    To Json    ${response}
+    \    Set Test Variable    ${response_${eo_index}.content}    ${response.content}
+    \    Verify Exchange Order Is Saved Correctly    eo_index=${eo_index}
+    \    ${eo_index}    Evaluate    ${eo_index}-1
+
+Verify Exchange Order Miscellaneous Information Tab Is Saved Correctly
+    [Arguments]    ${eo_index}=0
+    Run Keyword If    "${reference_fare_${eo_index}_value}"!="null" and "${reference_fare_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.miscInfo.referenceFare    ${reference_fare_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo.referenceFare
+    Run Keyword If    "${low_fare_${eo_index}_value}"!="null" and "${low_fare_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.miscInfo.lowFare    ${low_fare_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo.lowFare
+    Run Keyword If    "${class_of_service_${eo_index}_value}"!="null" and "${class_of_service_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.miscInfo.classOfServices    ${class_of_service_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo.classOfServices
+    Run Keyword If    "${low_fare_carrier_${eo_index}_value}"!="null" and "${low_fare_carrier_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.miscInfo.lowFareCarrier    ${low_fare_carrier_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo.lowFareCarrier
+    Run Keyword If    "${booking_action_${eo_index}_value}"!="null" and "${booking_action_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.miscInfo.bookingAction    ${booking_action_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo.bookingAction
+    Run Keyword If    "${realised_savings_code_${eo_index}_value}"!="null" and "${realised_savings_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.miscInfo.realisedSavingsCode    ${realised_savings_code_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo.realisedSavingsCode
+    Run Keyword If    "${missed_savings_code_${eo_index}_value}"!="null" and "${missed_savings_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.miscInfo.missedSavingsCode    ${missed_savings_code_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo.missedSavingsCode
+    Run Keyword If    "${declined_airline_1_${eo_index}_value}"!="null" and "${declined_airline_1_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.miscInfo.declinedAirline1    ${declined_airline_1_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo.declinedAirline1
+    Run Keyword If    "${declined_fare_1_${eo_index}_value}"!="null" and "${declined_fare_1_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.miscInfo.declinedFare1    ${declined_fare_1_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo.declinedFare1
+    Run Keyword If    "${declined_airline_2_${eo_index}_value}"!="null" and "${declined_airline_2_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.miscInfo.declinedAirline2    ${declined_airline_2_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo.declinedAirline2
+    Run Keyword If    "${declined_fare_2_${eo_index}_value}"!="null" and "${declined_fare_2_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.miscInfo.declinedFare2    ${declined_fare_2_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo.declinedFare2
+
+Verify Exchange Order Number Is Saved Correctly
+    [Arguments]    ${eo_index}=0
+    ${exchange_order_number}    Get Json Value As String    ${response.content}    $.eoNumber
+    ${eo_year}    Get Substring    ${exchange_order_number}    0    2
+    ${eo_month}    Get Substring    ${exchange_order_number}    2    4
+    ${eo_market}    Get Substring    ${exchange_order_number}    4    5
+    ${eo_sequence}    Get Substring    ${exchange_order_number}    5    10
+    ${current_year}    Get Substring    ${current_date_time_${eo_index}}    2    4
+    ${current_month}    Get Substring    ${current_date_time_${eo_index}}    5    7
+    Verify Actual Value Matches Expected Value    ${eo_year}    ${current_year}
+    Verify Actual Value Matches Expected Value    ${eo_month}    ${current_month}
+    Verify Actual Value Matches Expected Value    ${eo_market}    ${market_${eo_index}}
+    Verify String Matches Pattern    ${eo_sequence}    ^[0-9_]*$
+    Set Test Variable    ${exchange_order_number_${eo_index}}    ${exchange_order_number}
+    Set Test Variable    ${exchange_order_number}
+
+Verify Exchange Order Other Information Is Saved Correctly
+    [Arguments]    ${eo_index}=0    ${amend_eo}=false
+    Verify Exchange Order Number Is Saved Correctly    eo_index=${eo_index}
+    Run Keyword If    "${amend_eo}"!="true"    Verify Exchange Order Create Date Time Is Saved Correctly    eo_index=${eo_index}
+    Run Keyword If    "${amend_eo}"=="true"    Run Keywords    Verify Exchange Order Update Date Time Is Saved Correctly    eo_index=${eo_index}
+    ...    AND    Verify Json Value Is Correct    $.createDateTime    ${create_date_time_${eo_index}_value}
+    Run Keyword If    "${eo_action_${eo_index}_value}"!="null" and "${eo_action_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.eoAction    ${eo_action_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.eoAction
+    Run Keyword If    "${status_${eo_index}_value}"!="null" and "${status_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.status    ${status_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.status
+    Run Keyword If    "${agent_id_${eo_index}_value}"!="null" and "${agent_id_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.agentId    ${agent_id_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.agentId
+    Run Keyword If    "${agent_name_${eo_index}_value}"!="null" and "${agent_name_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.agentName    ${agent_name_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.agentName
+    Run Keyword If    "${country_code_${eo_index}_value}"!="null" and "${country_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.countryCode    ${country_code_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.countryCode
+    Run Keyword If    "${pcc_${eo_index}_value}"!="null" and "${pcc_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.pcc    ${pcc_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.pcc
+    Run Keyword If    "${product_code_${eo_index}_value}"!="null" and "${product_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.productCode    ${product_code_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.productCode
+    Run Keyword If    "${record_locator_${eo_index}_value}"!="null" and "${record_locator_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.recordLocator    ${record_locator_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.recordLocator
+    Run Keyword If    "${total_${eo_index}_value}"!="null" and "${total_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.total    ${total_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.total
+
+Verify Exchange Order Request Information Is Saved Correctly
+    [Arguments]    ${eo_index}=0
+    Run Keyword If    "${plating_carrier_${eo_index}_value}"!="null" and "${plating_carrier_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.platingCarrier    ${plating_carrier_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.platingCarrier
+    Run Keyword If    "${fare_type_${eo_index}_value}"!="null" and "${fare_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.fareType    ${fare_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.fareType
+    Run Keyword If    "${request_fop_${eo_index}_value}"!="null" and "${request_fop_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.formOfPayment.fopType    ${request_fop_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.formOfPayment.fopType
+    Run Keyword If    "${request_cc_type_${eo_index}_value}"!="null" and "${request_cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.formOfPayment.creditCard.ccType    ${request_cc_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.formOfPayment.creditCard.ccType
+    Run Keyword If    "${request_cc_number_${eo_index}_value}"!="null" and "${request_cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.formOfPayment.creditCard.ccNumber    ${request_cc_number_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.formOfPayment.creditCard.ccNumber
+    Run Keyword If    "${request_expiry_date_${eo_index}_value}"!="null" and "${request_expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.formOfPayment.creditCard.expiryDate    ${request_expiry_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.formOfPayment.creditCard.expiryDate
+    Run Keyword If    "${vmpd_record_locator_${eo_index}_value}"!="null" and "${vmpd_record_locator_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.recordLocator    ${vmpd_record_locator_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.recordLocator
+    Run Keyword If    "${vmpd_fare_${eo_index}_value}"!="null" and "${vmpd_fare_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.fare    ${vmpd_fare_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.fare
+    Run Keyword If    "${vmpd_taxes_${eo_index}_value}"!="null" and "${vmpd_taxes_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.taxes    ${vmpd_taxes_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.taxes
+    Run Keyword If    "${vmpd_reason_${eo_index}_value}"!="null" and "${vmpd_reason_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.reasonForIssue    ${vmpd_reason_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.reasonForIssue
+    Run Keyword If    "${vmpd_headline_${eo_index}_value}"!="null" and "${vmpd_headline_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.headlineCurrency    ${vmpd_headline_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.headlineCurrrency
+    Run Keyword If    "${vmpd_equivalent_${eo_index}_value}"!="null" and "${vmpd_equivalent_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.equivalentAmountPaid    ${vmpd_equivalent_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.equivalentAmountPaid
+    Run Keyword If    "${vmpd_fop_${eo_index}_value}"!="null" and "${vmpd_fop_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.formOfPayment.fopType    ${vmpd_fop_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.formOfPaymentfopType
+    Run Keyword If    "${vmpd_cc_type_${eo_index}_value}"!="null" and "${vmpd_cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.formOfPayment.creditCard.ccType    ${vmpd_cc_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.formOfPayment.creditCard.ccType
+    Run Keyword If    "${vmpd_cc_number_${eo_index}_value}"!="null" and "${vmpd_cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.formOfPayment.creditCard.ccNumber    ${vmpd_cc_number_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.formOfPayment.creditCard.ccNumber
+    Run Keyword If    "${vmpd_expiry_date_${eo_index}_value}"!="null" and "${vmpd_expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.formOfPayment.creditCard.expiryDate    ${vmpd_expiry_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.formOfPayment.creditCard.expiryDate
+    Run Keyword If    "${vmpd_issue_${eo_index}_value}"!="null" and "${vmpd_issue_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.issueInExchangeFor    ${vmpd_issue_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.issueInExchangeFor
+    Run Keyword If    "${vmpd_conjunction_${eo_index}_value}"!="null" and "${vmpd_conjunction_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.inConjuctionWith    ${vmpd_conjunction_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.inConjuctionWith
+    Run Keyword If    "${vmpd_original_place_${eo_index}_value}"!="null" and "${vmpd_original_place_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.origPlaceOfIssue    ${vmpd_original_place_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.origPlaceOfIssue
+    Run Keyword If    "${vmpd_remark_${eo_index}_value}"!="null" and "${vmpd_remark_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.vmpd.remark    ${vmpd_remark_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.vmpd.remark
+    Run Keyword If    "${consol_tour_code_${eo_index}_value}"!="null" and "${consol_tour_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.consolInfo.tourCode    ${consol_tour_code_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.consolInfo.tourCode
+    Run Keyword If    "${consol_threshold_${eo_index}_value}"!="null" and "${consol_threshold_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.consolInfo.thresholdAmount    ${consol_threshold_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.consolInfo.thresholdAmount
+    Run Keyword If    "${forex_type_${eo_index}_value}"!="null" and "${forex_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.forexType    ${forex_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.forexType
+    Run Keyword If    "${travel_type_${eo_index}_value}"!="null" and "${travel_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.travelType    ${travel_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.travelType
+    Run Keyword If    "${travel_date_${eo_index}_value}"!="null" and "${travel_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.travelDate    ${travel_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.travelDate
+    Run Keyword If    "${expected_delivery_date_${eo_index}_value}"!="null" and "${expected_delivery_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.expectedDeliveryDate    ${expected_delivery_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.expectedDeliveryDate
+    Run Keyword If    "${delivery_address_${eo_index}_value}"!="null" and "${delivery_address_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.deliveryAddress    ${delivery_address_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.deliveryAddress
+    Run Keyword If    "${passenger_employee_id_${eo_index}_value}"!="null" and "${passenger_employee_id_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.passengerEmployeeId    ${passenger_employee_id_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.passengerEmployeeId
+    Run Keyword If    "${business_unit_${eo_index}_value}"!="null" and "${business_unit_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.businessUnit    ${business_unit_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.businessUnit
+    Run Keyword If    "${passport_number_${eo_index}_value}"!="null" and "${passport_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.passportNumber    ${passport_number_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.passportNumber
+    Run Keyword If    "${contact_number_${eo_index}_value}"!="null" and "${contact_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.contactNumber    ${contact_number_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.contactNumber
+    Run Keyword If    "${amount_req_type_${eo_index}_value}"!="null" and "${amount_req_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.requestAmount.type    ${amount_req_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.requestAmount.type
+    Run Keyword If    "${amount_req_currency_${eo_index}_value}"!="null" and "${amount_req_currency_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.requestAmount.currency    ${amount_req_currency_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.requestAmount.currency
+    Run Keyword If    "${amount_req_amount_${eo_index}_value}"!="null" and "${amount_req_amount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.requestAmount.amount    ${amount_req_amount_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.requestAmount.amount
+    Run Keyword If    "${passport_copies_check_${eo_index}_value}"!="null" and "${passport_copies_check_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.docCheckList.passportCopiesReceived    ${passport_copies_check_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.docCheckListpassportCopiesReceived
+    Run Keyword If    "${refund_copies_check_${eo_index}_value}"!="null" and "${refund_copies_check_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.docCheckList.refundCopiesReceived    ${refund_copies_check_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.docCheckListrefundCopiesReceived
+    Run Keyword If    "${vtm_card_check_${eo_index}_value}"!="null" and "${vtm_card_check_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.docCheckList.vtmCardReceived    ${vtm_card_check_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.docCheckListvtmCardReceived
+    Run Keyword If    "${hotel_room_type_${eo_index}_value}"!="null" and "${hotel_room_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.roomType    ${hotel_room_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.hotel.roomType
+    Run Keyword If    "${number_of_people_${eo_index}_value}"!="null" and "${number_of_people_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.noOfPeople    ${number_of_people_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.hotel.noOfPeople
+    Run Keyword If    "${hotel_name_${eo_index}_value}"!="null" and "${hotel_name_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.name    ${hotel_name_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.hotel.name
+    Run Keyword If    "${hotel_address_${eo_index}_value}"!="null" and "${hotel_address_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.address    ${hotel_address_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.hotel.address
+    Run Keyword If    "${hotel_city_name_${eo_index}_value}"!="null" and "${hotel_city_name_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.cityName    ${hotel_city_name_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.hotel.cityName
+    Run Keyword If    "${hotel_state_${eo_index}_value}"!="null" and "${hotel_state_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.stateProvince    ${hotel_state_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.hotel.stateProvince
+    Run Keyword If    "${hotel_post_code_${eo_index}_value}"!="null" and "${hotel_post_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.postCode    ${hotel_post_code_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.hotel.postCode
+    Run Keyword If    "${hotel_phone_${eo_index}_value}"!="null" and "${hotel_phone_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.phoneNumber    ${hotel_phone_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.hotel.phoneNumber
+    Run Keyword If    "${hotel_daily_currency_${eo_index}_value}"!="null" and "${hotel_daily_currency_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.dailyRateCurrency    ${hotel_daily_currency_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.hotel.dailyRateCurrency
+    Run Keyword If    "${hotel_daily_amount_${eo_index}_value}"!="null" and "${hotel_daily_amount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.dailyRateAmount    ${hotel_daily_amount_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.hotel.dailyRateAmount
+    Run Keyword If    "${hotel_confirmation_${eo_index}_value}"!="null" and "${hotel_confirmation_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.confirmationNumber    ${hotel_confirmation_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.hotel.confirmationNumber
+    Run Keyword If    "${hotel_guarantee_type_${eo_index}_value}"!="null" and "${hotel_guarantee_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.guarantor.type    ${hotel_guarantee_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.guarantor.type
+    Run Keyword If    "${hotel_guarantee_cc_type_${eo_index}_value}"!="null" and "${hotel_guarantee_cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.guarantor.creditCard.ccType    ${hotel_guarantee_cc_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.guarantor.creditCard.ccType
+    Run Keyword If    "${hotel_guarantee_cc_number_${eo_index}_value}"!="null" and "${hotel_guarantee_cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.guarantor.creditCard.ccNumber    ${hotel_guarantee_cc_number_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.guarantor.creditCard.ccNumber
+    Run Keyword If    "${hotel_guarantee_cc_expiry_date_${eo_index}_value}"!="null" and "${hotel_guarantee_cc_expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.hotel.guarantor.creditCard.expiryDate    ${hotel_guarantee_cc_expiry_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.guarantor.creditCard.expiryDate
+    Run Keyword If    "${date_time_${eo_index}_value}"!="null" and "${date_time_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.dateTime    ${date_time_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.dateTime
+    Run Keyword If    "${city_${eo_index}_value}"!="null" and "${city_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.city    ${city_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.city
+    Run Keyword If    "${location_${eo_index}_value}"!="null" and "${location_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.location    ${location_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.location
+    Run Keyword If    "${start_date_${eo_index}_value}"!="null" and "${start_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.startDate    ${start_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.startDate
+    Run Keyword If    "${end_date_${eo_index}_value}"!="null" and "${end_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.endDate    ${end_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.endDate
+    Run Keyword If    "${package_name_${eo_index}_value}"!="null" and "${package_name_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.packageName    ${package_name_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.packageName
+    Run Keyword If    "${details_${eo_index}_value}"!="null" and "${details_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.details    ${details_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.details
+    Run Keyword If    "${origin_${eo_index}_value}"!="null" and "${origin_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.origin    ${origin_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.origin
+    Run Keyword If    "${origin_description_${eo_index}_value}"!="null" and "${origin_description_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.originDesc    ${origin_description_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.originDes
+    Run Keyword If    "${destination_${eo_index}_value}"!="null" and "${destination_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.destination    ${destination_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.destination
+    Run Keyword If    "${destination_description_${eo_index}_value}"!="null" and "${destination_description_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.destinationDesc    ${destination_description_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.destinationDesc
+    Run Keyword If    "${train_number_${eo_index}_value}"!="null" and "${train_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.train.number    ${train_number_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.train.number
+    Run Keyword If    "${train_name_${eo_index}_value}"!="null" and "${train_name_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.train.name    ${train_name_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.train.name
+    Run Keyword If    "${document_${eo_index}_value}"!="null" and "${document_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.train.cabinClass    ${document_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.train.cabinClass
+    Run Keyword If    "${date_of_application_${eo_index}_value}"!="null" and "${date_of_application_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.applicationDate    ${date_of_application_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.applicationDate
+    Run Keyword If    "${car_pickup_date_${eo_index}_value}"!="null" and "${car_pickup_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.pickupDateTime    ${car_pickup_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.pickupDateTime
+    Run Keyword If    "${car_pickup_location_${eo_index}_value}"!="null" and "${car_pickup_location_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.pickupLocation    ${car_pickup_location_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.pickupLocation
+    Run Keyword If    "${car_pickup_description_${eo_index}_value}"!="null" and "${car_pickup_description_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.pickupDescription    ${car_pickup_description_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.pickupDescription
+    Run Keyword If    "${car_company_${eo_index}_value}"!="null" and "${car_company_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.company    ${car_company_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.company
+    Run Keyword If    "${car_name_${eo_index}_value}"!="null" and "${car_name_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.name    ${car_name_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.name
+    Run Keyword If    "${car_dropoff_date_${eo_index}_value}"!="null" and "${car_dropoff_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.dropOffDateTime    ${car_dropoff_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.dropOffDateTime
+    Run Keyword If    "${car_dropoff_location_${eo_index}_value}"!="null" and "${car_dropoff_location_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.dropOffLocation    ${car_dropoff_location_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.dropOffLocation
+    Run Keyword If    "${car_dropoff_description_${eo_index}_value}"!="null" and "${car_dropoff_description_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.dropOffDescription    ${car_dropoff_description_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.dropOffDescription
+    Run Keyword If    "${car_daily_currency_${eo_index}_value}"!="null" and "${car_daily_currency_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.dailyRateCurrency    ${car_daily_currency_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.dailyRateCurrency
+    Run Keyword If    "${car_daily_amount_${eo_index}_value}"!="null" and "${car_daily_amount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.dailyRateAmount    ${car_daily_amount_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.dailyRateAmount
+    Run Keyword If    "${car_confirmtion_number_${eo_index}_value}"!="null" and "${car_confirmtion_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.confirmationNumber    ${car_confirmtion_number_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.confirmationNumber
+    Run Keyword If    "${car_type_${eo_index}_value}"!="null" and "${car_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.type    ${car_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.type
+    Run Keyword If    "${car_guarantee_type_${eo_index}_value}"!="null" and "${car_guarantee_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.guarantor.type    ${car_guarantee_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.guarantor.type
+    Run Keyword If    "${car_cc_type_${eo_index}_value}"!="null" and "${car_cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.guarantor.creditCard.ccType    ${car_cc_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.guarantor.creditCard.ccType
+    Run Keyword If    "${car_cc_number_${eo_index}_value}"!="null" and "${car_cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.guarantor.creditCard.ccNumber    ${car_cc_number_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.guarantor.creditCard.ccNumber
+    Run Keyword If    "${car_expiry_date_${eo_index}_value}"!="null" and "${car_expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.car.guarantor.creditCard.expiryDate    ${car_expiry_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.request.car.guarantor.creditCard.expiryDate
+
+Verify Exchange Order Service Information Is Saved Correctly
+    [Arguments]    ${eo_index}=0
+    Run Keyword If    "${nett_cost_${eo_index}_value}"!="null" and "${nett_cost_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.nettCost    ${nett_cost_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.nettCost
+    Run Keyword If    "${selling_price_${eo_index}_value}"!="null" and "${selling_price_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.sellingPrice    ${selling_price_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.sellingPrice
+    Run Keyword If    "${commission_${eo_index}_value}"!="null" and "${commission_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.commission    ${commission_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.commission
+    Run Keyword If    "${discount_${eo_index}_value}"!="null" and "${discount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.discount    ${discount_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.discount
+    Run Keyword If    "${gst_amount_${eo_index}_value}"!="null" and "${gst_amount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.gst    ${gst_amount_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.gst
+    Run Keyword If    "${gst_absorb_${eo_index}_value}"!="null" and "${gst_absorb_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.gstAbsorb    ${gst_absorb_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.gstAbsorb
+    Run Keyword If    "${merchant_fee_${eo_index}_value}"!="null" and "${merchant_fee_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.merchantFee    ${merchant_fee_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.merchantFee
+    Run Keyword If    "${merchant_fee_absorb_${eo_index}_value}"!="null" and "${merchant_fee_absorb_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.merchantFeeAbsorb    ${merchant_fee_absorb_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.merchantFeeAbsorb
+    Run Keyword If    "${total_selling_price_${eo_index}_value}"!="null" and "${total_selling_price_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.totalSellingPrice    ${total_selling_price_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.totalSellingPrice
+    Run Keyword If    "${country_${eo_index}_value}"!="null" and "${country_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.country    ${country_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.country
+    Run Keyword If    "${type_${eo_index}_value}"!="null" and "${type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.type    ${type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.type
+    Run Keyword If    "${entries_${eo_index}_value}"!="null" and "${entries_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.entries    ${entries_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.entries
+    Run Keyword If    "${validity_length_${eo_index}_value}"!="null" and "${validity_length_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.validityLength    ${validity_length_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.validityLength
+    Run Keyword If    "${validity_type_${eo_index}_value}"!="null" and "${validity_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.validityType    ${validity_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.validityType
+    Run Keyword If    "${processing_${eo_index}_value}"!="null" and "${processing_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.processingType    ${processing_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.processingType
+    Run Keyword If    "${description_${eo_index}_value}"!="null" and "${description_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.classCabin    ${description_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.classOrCabin
+    Run Keyword If    "${fop_type_${eo_index}_value}"!="null" and "${fop_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.formOfPayment.fopType    ${fop_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.formOfPayment.fopType
+    Run Keyword If    "${cc_type_${eo_index}_value}"!="null" and "${cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.formOfPayment.creditCard.ccType    ${cc_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.formOfPayment.creditCard.ccType
+    Run Keyword If    "${cc_number_${eo_index}_value}"!="null" and "${cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.formOfPayment.creditCard.ccNumber    ${cc_number_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.formOfPayment.creditCard.ccNumber
+    Run Keyword If    "${expiry_date_${eo_index}_value}"!="null" and "${expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.formOfPayment.creditCard.expiryDate    ${expiry_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.formOfPayment.creditCard.expiryDate
+
+Verify Exchange Order Update Date Time Is Saved Correctly
+    [Arguments]    ${eo_index}=0
+    ${expected_date_time}    Get Substring    ${current_date_time_${eo_index}}    0    16
+    ${expected_date_time}    Replace String    ${expected_date_time}    ${SPACE}    T
+    ${actual_date_time}    Get Json Value As String    ${response_${eo_index}.content}    $.updateDateTime
+    ${actual_date_time}    Get Substring    ${actual_date_time}    0    16
+    Verify Actual Value Matches Expected Value    ${actual_date_time}    ${expected_date_time}
+    Verify Json Value Matches Pattern    $.createDateTime    ^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z+$
+
+Verify Exchange Order Vendor Information Is Saved Correctly
+    [Arguments]    ${eo_index}=0
+    Run Keyword If    "${vendor_contact_no_${eo_index}_value}"!="null" and "${vendor_contact_no_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.vendor.contactNo    ${vendor_contact_no_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.vendor.contactNo
+    Run Keyword If    "${vendor_code_${eo_index}_value}"!="null" and "${vendor_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.vendor.code    ${vendor_code_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.vendor.code
+    Run Keyword If    "${vendor_name_${eo_index}_value}"!="null" and "${vendor_name_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.vendor.name    ${vendor_name_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.vendor.name
+    Run Keyword If    "${vendor_address_1_${eo_index}_value}"!="null" and "${vendor_address_1_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.vendor.address1    ${vendor_address_1_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.vendor.address1
+    Run Keyword If    "${vendor_address_2_${eo_index}_value}"!="null" and "${vendor_address_2_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.vendor.address2    ${vendor_address_2_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.vendor.address2
+    Run Keyword If    "${vendor_city_${eo_index}_value}"!="null" and "${vendor_city_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.vendor.city    ${vendor_city_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.vendor.city
+    Run Keyword If    "${vendor_country_${eo_index}_value}"!="null" and "${vendor_country_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.vendor.country    ${vendor_country_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.vendor.country
+    Run Keyword If    "${vendor_support_email_${eo_index}_value}"!="null" and "${vendor_support_email_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.vendor.supportEmail    ${vendor_support_email_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.vendor.supportEmail
+    : FOR    ${index}    IN RANGE    0    ${vendor_contact_data_length_${eo_index}}
+    \    Verify Json Value Is Correct    $.vendor.contactInfo.[${index}].type    ${vendor_contact_type_${eo_index}_${index}_value}
+    \    Verify Json Value Is Correct    $.vendor.contactInfo.[${index}].detail    ${vendor_contact_details_${eo_index}_${index}_value}
+    \    Verify Json Value Is Correct    $.vendor.contactInfo.[${index}].preferred    ${vendor_preferred_${eo_index}_${index}_value}
+    Run Keyword If    "${vendor_contact_data_length_${eo_index}}"=="0"    Verify Json Element Does Not Exist    $.vendor.contactInfo
+
+Save Response For Multiple Exchange Orders
+    [Arguments]    ${eo_index}=0
