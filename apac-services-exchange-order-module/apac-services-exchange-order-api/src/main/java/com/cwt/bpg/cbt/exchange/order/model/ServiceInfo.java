@@ -87,13 +87,13 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 
 	private String entries;
 
-	private int validityLength;
+	private Integer validityLength;
 
 	private String validityType;
 
 	private String processingType;
 
-	private int processingLength;
+	private Integer processingLength;
 
 	private String visaNumber;
 
@@ -357,11 +357,11 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.entries = entries;
 	}
 
-	public int getValidityLength() {
+	public Integer getValidityLength() {
 		return validityLength;
 	}
 
-	public void setValidityLength(int validityLength) {
+	public void setValidityLength(Integer validityLength) {
 		this.validityLength = validityLength;
 	}
 
@@ -381,11 +381,11 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.processingType = processingType;
 	}
 
-	public int getProcessingLength() {
+	public Integer getProcessingLength() {
 		return processingLength;
 	}
 
-	public void setProcessingLength(int processingLength) {
+	public void setProcessingLength(Integer processingLength) {
 		this.processingLength = processingLength;
 	}
 

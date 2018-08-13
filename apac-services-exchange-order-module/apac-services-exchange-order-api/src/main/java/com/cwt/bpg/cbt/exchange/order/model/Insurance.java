@@ -15,7 +15,7 @@ public class Insurance implements Serializable {
 	private static final long serialVersionUID = -2416249545097859674L;
 
 	private String geographicalArea;
-	private int noOfDays;
+	private Integer noOfDays;
 	
 	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T00:00:00.000Z")
 	@JsonSerialize(using = DateSerializer.class)
@@ -33,14 +33,14 @@ public class Insurance implements Serializable {
 		this.geographicalArea = geographicalArea;
 	}
 
-	public int getNoOfDays() {
+	public Integer getNoOfDays() {
 		return noOfDays;
 	}
 
-	public void setNoOfDays(int noOfDays) {
+	public void setNoOfDays(Integer noOfDays) {
 		this.noOfDays = noOfDays;
 	}
-	
+
 	public Instant getFromDate() {
 		return fromDate;
 	}
