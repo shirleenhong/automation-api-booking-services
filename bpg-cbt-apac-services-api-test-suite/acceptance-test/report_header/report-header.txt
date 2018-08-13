@@ -112,9 +112,7 @@ Verify That Header Information Is Retrieved Correctly When Deleted
     Create Test Variables For Header Information    country=sg
     Send Report Header Delete Request
     Verify Response Status Code Is Correct    200
-    Verify Header Information Is Not Returned
     Evict Report Headers Cache
     Send Report Header Get Request
-    Verify Response Status Code Is Correct    200
     Verify Header Information Is Not Returned
     [Teardown]    Revert Changes To Original Value    country=sg

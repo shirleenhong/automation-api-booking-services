@@ -83,11 +83,11 @@ Verify Header Information Is Retrieved Correctly
     Verify Json Value Is Correct    $.faxNumber    ${fax_number}
 
 Verify Header Information Is Not Returned
-    Verify String Does Not Contain Substring    ${response.content}    "countryCode"
-    Verify String Does Not Contain Substring    ${response.content}    "companyName"
-    Verify String Does Not Contain Substring    ${response.content}    "address"
-    Verify String Does Not Contain Substring    ${response.content}    "phoneNumber"
-    Verify String Does Not Contain Substring    ${response.content}    "faxNumber"
+    Verify String Does Not Contain Substring    ${response.text}    "countryCode"
+    Verify String Does Not Contain Substring    ${response.text}    "companyName"
+    Verify String Does Not Contain Substring    ${response.text}    "address"
+    Verify String Does Not Contain Substring    ${response.text}    "phoneNumber"
+    Verify String Does Not Contain Substring    ${response.text}    "faxNumber"
 
 Evict Report Headers Cache
     [Arguments]    ${number}=2    ${token}=${default_token}

@@ -72,6 +72,10 @@ Calculate Non-Air Fees For IN
     Calculate Non-Air Fees Gross Sell Amount
     Calculate Non-Air Fees VAT/ GST Amount
     Calculate Non-Air Fees Total Sell Amount
+    ${client_exempt_value}    Set Variable If    ${gst_percentage_value} == 0    true    false
+    Set Test Variable    ${client_exempt_value}
+    ${no_merchant_fee_value}    Set Variable If    ${merchant_fee_percentage_amount} == 0    true    false
+    Set Test Variable    ${no_merchant_fee_value}
 
 Calculate Non-Air Fees GST
     ${calculated_value}    Evaluate    ${selling_price_value}*(${gst_percent_value}*0.01)
@@ -254,6 +258,8 @@ Verify Calculated Non-Air Fees Are Not Returned
     Verify String Does Not Contain Substring    ${response.text}    "commission"
     Verify String Does Not Contain Substring    ${response.text}    "discount"
     Verify String Does Not Contain Substring    ${response.text}    "nettCostGst"
+    Verify String Does Not Contain Substring    ${response.text}    "clientExempt"
+    Verify String Does Not Contain Substring    ${response.text}    "noMerchantFee"
     
 
 Verify Calculated Non-Air Fees Are Returned Correctly
@@ -265,6 +271,6 @@ Verify Calculated Non-Air Fees Are Returned Correctly
     \    ${items}    Split String    ${item}    :
     \    Verify Actual Value Matches Expected Value    ${items[1]}    ${${items[0]}_value}
 
-Verify Response Does Not Contain Calculated Fee
+Verify Response Does Not Contain Element
     [Arguments]    ${element}
     Verify String Does Not Contain Substring    ${response.text}    "${element}"
