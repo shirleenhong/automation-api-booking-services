@@ -23,7 +23,7 @@ public class MiscChargeOrderInfo implements Serializable {
 
 	private BigDecimal taxes;
 
-	private double rateOfExchange;
+	private Double rateOfExchange;
 
 	private String exchangeIssue;
 

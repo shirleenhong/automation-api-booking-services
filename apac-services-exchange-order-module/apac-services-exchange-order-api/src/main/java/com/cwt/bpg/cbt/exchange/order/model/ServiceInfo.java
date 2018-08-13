@@ -113,7 +113,7 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant returnDateAndTime;
 
-	private Route returRoute;
+	private Route returnRoute;
 
 	private String cabin;
 
@@ -437,12 +437,12 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.returnDateAndTime = returnDateAndTime;
 	}
 
-	public Route getReturRoute() {
-		return returRoute;
+	public Route getReturnRoute() {
+		return returnRoute;
 	}
 
-	public void setReturRoute(Route returRoute) {
-		this.returRoute = returRoute;
+	public void setReturnRoute(Route returnRoute) {
+		this.returnRoute = returnRoute;
 	}
 
 	public String getCabin() {
