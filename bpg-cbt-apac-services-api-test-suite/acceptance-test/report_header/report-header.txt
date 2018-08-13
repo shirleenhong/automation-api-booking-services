@@ -1,0 +1,120 @@
+*** Settings ***
+Force Tags        report-headers
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/report-header.txt
+Resource          ../resources/api-variables.txt
+
+*** Test Cases ***
+Verify That Header Information Is Retrieved Correctly For Singapore
+    [Tags]    migration
+    Create Test Variables For Header Information    country=sg
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+
+Verify That Header Information Is Retrieved Correctly For Hong Kong
+    [Tags]    migration
+    Create Test Variables For Header Information    country=hk
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+
+Verify That Header Information Is Retrieved Correctly For India
+    [Tags]    migration
+    Create Test Variables For Header Information    country=in
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+
+Verify That Header Information Is Retrieved Correctly When Company Name Is Updated
+    [Tags]    migration
+    Create Test Variables For Header Information    country=sg
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    Update Test Variables For Header Information    SG|Updated Test Carlson Wagonlit Travel Singapore, Inc.|Test Address Singapore|0987654321|123456789
+    Send Report Header Put Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    Evict Report Headers Cache
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    [Teardown]    Revert Changes To Original Value    country=sg
+
+Verify That Header Information Is Retrieved Correctly When Address Is Updated
+    [Tags]    migration
+    Create Test Variables For Header Information    country=hk
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    Update Test Variables For Header Information    HK|Test Carlson Wagonlit Travel Hongkong, Inc.|Updated Test Address Hongkong|77889910|1122334455
+    Send Report Header Put Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    Evict Report Headers Cache
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    [Teardown]    Revert Changes To Original Value    country=hk
+
+Verify That Header Information Is Retrieved Correctly When Phone Number Is Updated
+    [Tags]    migration
+    Create Test Variables For Header Information    country=in
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    Update Test Variables For Header Information    IN|Test Carlson Wagonlit Travel India, Inc.|Test Address India|11223344|87654
+    Send Report Header Put Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    Evict Report Headers Cache
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    [Teardown]    Revert Changes To Original Value    country=in
+
+Verify That Header Information Is Retrieved Correctly When Fax Number Is Updated
+    [Tags]    migration
+    Create Test Variables For Header Information    country=in
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    Update Test Variables For Header Information    IN|Test Carlson Wagonlit Travel India, Inc.|Test Address India|4321|1122334455
+    Send Report Header Put Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    Evict Report Headers Cache
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    [Teardown]    Revert Changes To Original Value    country=in
+
+Verify That Header Information Is Retrieved Correctly When Multiple Fields Are Updated
+    [Tags]    migration
+    Create Test Variables For Header Information    country=sg
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    Update Test Variables For Header Information    SG|Updated Test Carlson Wagonlit Travel Singapore, Inc.|Updated Test Address Singapore|1110987654321|1234567890000
+    Send Report Header Put Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    Evict Report Headers Cache
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Retrieved Correctly
+    [Teardown]    Revert Changes To Original Value    country=sg
+
+Verify That Header Information Is Retrieved Correctly When Deleted
+    [Tags]    migration
+    Create Test Variables For Header Information    country=sg
+    Send Report Header Delete Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Not Returned
+    Evict Report Headers Cache
+    Send Report Header Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Header Information Is Not Returned
+    [Teardown]    Revert Changes To Original Value    country=sg
