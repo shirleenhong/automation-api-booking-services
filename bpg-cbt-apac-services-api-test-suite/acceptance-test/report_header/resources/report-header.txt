@@ -1,0 +1,103 @@
+*** Setting ***
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
+
+*** Keywords ***
+Create Test Variables For Header Information
+    [Arguments]    ${country}=sg
+    ${data_item}    Split String    ${${country}_header}    |
+    Set Test Variable    ${country}    ${data_item[0]}
+    Set Test Variable    ${company_name}    ${data_item[1]}
+    Set Test Variable    ${address}    ${data_item[2]}
+    Set Test Variable    ${phone_number}    ${data_item[3]}
+    Set Test Variable    ${fax_number}    ${data_item[4]}
+
+Update Test Variables For Header Information
+    [Arguments]    ${data}
+    ${data_item}    Split String    ${data}    |
+    ${report_headers}    Create List
+    Set Test Variable    ${country}    ${data_item[0]}
+    Set Test Variable    ${company_name}    ${data_item[1]}
+    Set Test Variable    ${address}    ${data_item[2]}
+    Set Test Variable    ${phone_number}    ${data_item[3]}
+    Set Test Variable    ${fax_number}    ${data_item[4]}
+    Append To List    ${report_headers}    "countryCode":"${country.upper()}"
+    Append To List    ${report_headers}    "companyName":"${company_name}"
+    Append To List    ${report_headers}    "address":"${address}"
+    Append To List    ${report_headers}    "phoneNumber":"${phone_number}"
+    Append To List    ${report_headers}    "faxNumber":"${fax_number}"
+    ${report_headers_length}    Get Length    ${report_headers}
+    : FOR    ${i}    IN RANGE    0    ${report_headers_length}
+    \    ${rpt_header}    Set Variable If    ${i}==0    ${EMPTY}    ${rpt_header},
+    \    ${rpt_header}    Set Variable    ${rpt_header}${report_headers[${i}]}
+    ${rpt_header}    Replace String    ${rpt_header}    "null"    null
+    ${rpt_header}    Replace String    ${rpt_header}    "None"    None
+    Set Test Variable    ${rpt_header_data}    {${rpt_header}}
+
+Revert Changes To Original Value
+    [Arguments]    ${country}=sg
+    Update Test Variables For Header Information    data=${${country}_header}
+    Send Report Header Put Request
+    Verify Response Status Code Is Correct    200
+    Evict Report Headers Cache
+
+Send Report Header Delete Request
+    [Arguments]    ${token}=${default_token}    ${country}=${country}
+    Create Session    report-headers    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Delete Request    report-headers    /apac-services-rest/api/report-headers/${country.upper()}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    report-headers
+
+Send Report Header Get Request
+    [Arguments]    ${token}=${default_token}    ${country}=${country}
+    Create Session    report-headers    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    report-headers    /apac-services-rest/api/report-headers/${country.upper()}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    report-headers
+
+Send Report Header Put Request
+    [Arguments]    ${token}=${default_token}    ${country}=${country}
+    Create Session    report-headers    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Put Request    report-headers    /apac-services-rest/api/report-headers    headers=${headers}    data=${rpt_header_data}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    report-headers
+
+Verify Header Information Is Retrieved Correctly
+    Verify Json Value Is Correct    $.countryCode    ${country}
+    Verify Json Value Is Correct    $.companyName    ${company_name}
+    Verify Json Value Is Correct    $.address    ${address}
+    Verify Json Value Is Correct    $.phoneNumber    ${phone_number}
+    Verify Json Value Is Correct    $.faxNumber    ${fax_number}
+
+Verify Header Information Is Not Returned
+    Verify String Does Not Contain Substring    ${response.content}    "countryCode"
+    Verify String Does Not Contain Substring    ${response.content}    "companyName"
+    Verify String Does Not Contain Substring    ${response.content}    "address"
+    Verify String Does Not Contain Substring    ${response.content}    "phoneNumber"
+    Verify String Does Not Contain Substring    ${response.content}    "faxNumber"
+
+Evict Report Headers Cache
+    [Arguments]    ${number}=2    ${token}=${default_token}
+    Create Session    report-headers    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    : FOR    ${index}    IN RANGE    0    ${number}
+    \    ${response}    Get Request    report-headers    /apac-services-rest/api/caches/evict/report-headers    headers=${headers}
+    \    Set Test Variable    ${response}
+    \    Verify Response Status Code Is Correct    200
+    \    Log    ${response.headers}
+    \    Log    ${response.content}
+    Set Test Variable    ${api_flag}    report-headers
