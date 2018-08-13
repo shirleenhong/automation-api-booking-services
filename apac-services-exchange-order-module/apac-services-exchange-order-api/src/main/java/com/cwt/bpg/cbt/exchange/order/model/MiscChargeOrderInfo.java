@@ -23,7 +23,7 @@ public class MiscChargeOrderInfo implements Serializable {
 
 	private BigDecimal taxes;
 
-	private double rateOfExchange;
+	private Double rateOfExchange;
 
 	private String exchangeIssue;
 
@@ -97,11 +97,11 @@ public class MiscChargeOrderInfo implements Serializable {
 		this.taxes = taxes;
 	}
 
-	public double getRateOfExchange() {
+	public Double getRateOfExchange() {
 		return rateOfExchange;
 	}
 
-	public void setRateOfExchange(double rateOfExchange) {
+	public void setRateOfExchange(Double rateOfExchange) {
 		this.rateOfExchange = rateOfExchange;
 	}
 
