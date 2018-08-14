@@ -34,7 +34,6 @@ public class IndiaNonAirFeesInput extends FeesInput {
 
 	private String ccType;
 
-	@NotEmpty
 	private String fopNumber;
 	
 	public String getCcType() {
