@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class IndiaNonAirFeesInput extends FeesInput {
 	private static final long serialVersionUID = 7271039286429340584L;
 
-	@ApiModelProperty(allowableValues = "CX4,CC,INV")
+	@ApiModelProperty(allowableValues = "CX,CC,INV")
 	private String fopType;
 
 	private boolean commissionByPercent;

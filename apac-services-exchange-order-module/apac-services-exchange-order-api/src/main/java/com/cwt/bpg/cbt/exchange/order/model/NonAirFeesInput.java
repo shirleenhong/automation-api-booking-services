@@ -12,7 +12,7 @@ public class NonAirFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = 7271039286429340584L;
 
-	@ApiModelProperty(required = true, allowableValues = "CX4,CC,INV")
+	@ApiModelProperty(required = true, allowableValues = "CX,CC,INV")
 	@NotEmpty
     private String fopType;
 
