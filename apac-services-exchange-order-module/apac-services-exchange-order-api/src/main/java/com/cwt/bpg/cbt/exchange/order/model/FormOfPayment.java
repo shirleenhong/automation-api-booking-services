@@ -6,12 +6,12 @@ import javax.validation.Valid;
 import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnFopType;
 import java.io.Serializable;
 
-@CcNotNullOnFopType(fopTypes ={"CC","CX4"})
+@CcNotNullOnFopType(fopTypes ={"CC","CX"})
 public class FormOfPayment implements Serializable {
 
     private static final long serialVersionUID = 1850641277169808339L;
 
-	@ApiModelProperty(allowableValues = "CX4, CC, INV, BTC")
+	@ApiModelProperty(allowableValues = "CX, CC, INV, BTC")
 	private FopTypes fopType;
 
 	@Valid
