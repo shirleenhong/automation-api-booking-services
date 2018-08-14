@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum FopTypes
 {
 
-	CWT("CX4"),
+	CWT("CX"),
 	CREDIT_CARD("CC"), 
 	INVOICE("INV"),
 	BTC("BTC");
