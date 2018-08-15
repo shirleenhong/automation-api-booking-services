@@ -39,7 +39,7 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 		}
 
 		BigDecimal merchantFeeAmount = null;
-		if (!input.isMerchantFeeAbsorb() && FopTypes.CWT.getCode().equals(input.getFopType())
+		if (!input.isMerchantFeeAbsorb() && FopTypes.CWT.equals(input.getFopType())
 				&& !input.isMerchantFeeWaive()) {
 
 			merchantFeeAmount = round(

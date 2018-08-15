@@ -48,7 +48,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		input.setDiscountPercent(5D);
 		input.setFopMode(4);
 		input.setFopNumber("1234");
-		input.setFopType(FopTypes.CWT.getCode());
+		input.setFopType(FopTypes.CWT);
 
 		IndiaNonAirProductInput product= new IndiaNonAirProductInput();
 		product.setGstPercent(6D);
@@ -342,7 +342,7 @@ public class IndiaNonAirFeeCalculatorTest {
 	@Test
 	public void nonPresentVendorBank() {
 		input.setCcType("MasterCard");
-		input.setFopType("");
+		input.setFopType(null);
 		input.setClientAccountNumber("1234");
 
 		client = new Client();

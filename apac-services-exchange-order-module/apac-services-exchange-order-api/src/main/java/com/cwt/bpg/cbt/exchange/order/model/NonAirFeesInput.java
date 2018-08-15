@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import io.swagger.annotations.ApiModelProperty;
 
 public class NonAirFeesInput extends FeesInput {
@@ -13,8 +11,8 @@ public class NonAirFeesInput extends FeesInput {
 	private static final long serialVersionUID = 7271039286429340584L;
 
 	@ApiModelProperty(required = true, allowableValues = "CX,CC,INV")
-	@NotEmpty
-    private String fopType;
+	@NotNull
+    private FopTypes fopType;
 
 	private BigDecimal sellingPrice;
 
@@ -41,14 +39,6 @@ public class NonAirFeesInput extends FeesInput {
 
 	public void setMerchantFeeWaive(boolean merchantFeeWaive) {
 		this.merchantFeeWaive = merchantFeeWaive;
-	}
-
-	public String getFopType() {
-		return fopType;
-	}
-
-	public void setFopType(String fopType) {
-		this.fopType = fopType;
 	}
 
 	public boolean isGstAbsorb() {
@@ -90,5 +80,15 @@ public class NonAirFeesInput extends FeesInput {
 	public void setNettCost(BigDecimal nettCost) {
 		this.nettCost = nettCost;
 	}
+
+	public FopTypes getFopType() {
+		return fopType;
+	}
+
+	public void setFopType(FopTypes fopType) {
+		this.fopType = fopType;
+	}
+	
+	
 }
 
