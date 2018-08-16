@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
@@ -48,7 +49,7 @@ public class NonAirFeeCalculatorTest {
 
 		NonAirFeesInput input = new NonAirFeesInput();
 
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setSellingPrice(new BigDecimal(1200.50));
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1528.27));
@@ -67,7 +68,7 @@ public class NonAirFeeCalculatorTest {
 
 		NonAirFeesInput input = new NonAirFeesInput();
 
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setSellingPrice(new BigDecimal(1500.50));
 		input.setGstPercent(5D);
 		input.setNettCost(new BigDecimal(1228.27));
@@ -85,7 +86,7 @@ public class NonAirFeeCalculatorTest {
 	public void shouldCalculateFeesFlagsTrue() {
 		NonAirFeesInput input = new NonAirFeesInput();
 
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setSellingPrice(new BigDecimal(1200.50));
 		input.setGstPercent(5D);
 		input.setGstAbsorb(true);
@@ -127,7 +128,7 @@ public class NonAirFeeCalculatorTest {
 	@Test(expected = NullPointerException.class)
 	public void shouldThrowExceptionWhenFopTypeIsCXAndMerchantFeeIsNull() {
 		NonAirFeesInput input = new NonAirFeesInput();
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
         input.setSellingPrice(new BigDecimal(1200.50));
         input.setGstPercent(5D);
         input.setNettCost(new BigDecimal(1528.27));

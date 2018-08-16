@@ -46,7 +46,7 @@ public class OtherServiceFeesController {
 	@ApiOperation(value = "Computes non air fees.")
 	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
-			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NonAirFeesInput input) {
+			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NonAirFeesInput input){
 
 		return new ResponseEntity<>(service.calculateNonAirFees(input, countryCode.toUpperCase()), HttpStatus.OK);
 	}
