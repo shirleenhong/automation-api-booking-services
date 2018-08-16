@@ -15,7 +15,7 @@ public class AirFeesInput extends FeesInput {
 
 	@ApiModelProperty(required = true, allowableValues = "CX,CC,INV")
 	@NotEmpty
-	private String fopType;
+	private FopTypes fopType;
 
 	private BigDecimal sellingPrice;
 	private boolean merchantFeeWaive;
@@ -47,11 +47,11 @@ public class AirFeesInput extends FeesInput {
 		this.clientType = clientType;
 	}
 
-	public String getFopType() {
+	public FopTypes getFopType() {
 		return fopType;
 	}
 
-	public void setFopType(String fopType) {
+	public void setFopType(FopTypes fopType) {
 		this.fopType = fopType;
 	}
 

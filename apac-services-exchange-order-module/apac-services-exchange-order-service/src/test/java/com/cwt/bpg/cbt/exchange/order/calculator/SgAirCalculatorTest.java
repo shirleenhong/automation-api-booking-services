@@ -15,6 +15,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public class SgAirCalculatorTest {
@@ -146,7 +147,7 @@ public class SgAirCalculatorTest {
 		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setProductType("CT");
 		input.setClientType("TF");
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(true);
@@ -179,7 +180,7 @@ public class SgAirCalculatorTest {
 		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setProductType("CT");
 		input.setClientType("DU");
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(false);
@@ -213,7 +214,7 @@ public class SgAirCalculatorTest {
 		input.setDiscount(bigDecimal("45.00"));
 		input.setProductType("CT");
 		input.setClientType("TF");
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(false);
@@ -247,7 +248,7 @@ public class SgAirCalculatorTest {
 		input.setDiscount(bigDecimal("45.00"));
 		input.setProductType("CT");
 		input.setClientType("TF");
-		input.setFopType("CXT");
+		input.setFopType(FopTypes.CWT);
 		input.setCwtAbsorb(true);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(false);
@@ -281,7 +282,7 @@ public class SgAirCalculatorTest {
 		input.setDiscount(bigDecimal("45.00"));
 		input.setProductType("CT");
 		input.setClientType("TF");
-		input.setFopType("CXT");
+		input.setFopType(FopTypes.CWT);
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(true);
 		merchantFee.setIncludeTransactionFee(false);
@@ -311,7 +312,7 @@ public class SgAirCalculatorTest {
 		AirFeesInput input = new AirFeesInput();
 		input.setApplyFormula(true);
 		input.setCwtAbsorb(false);
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setMerchantFeeWaive(false);
 		input.setNettFare(bigDecimal("300"));
 		input.setSellingPrice(bigDecimal("200"));
