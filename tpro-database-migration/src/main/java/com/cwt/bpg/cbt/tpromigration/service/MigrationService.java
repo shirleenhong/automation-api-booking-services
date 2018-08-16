@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.tpromigration.service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Passthrough;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ public class MigrationService {
 
 	private static final String AIRPORT_COLLECTION = "airports";
 	private static final String CLIENT_COLLECTION = "clients";
+	private static final String PASSTHROUGH_COLLECTION = "passthroughs";
 
 	@Autowired
 	private MongoDbConnection mongoDbConnection;
@@ -54,6 +56,9 @@ public class MigrationService {
 
     @Autowired
     private RemarkDAO remarkDAO;
+
+	@Autowired
+	private PassthroughDAOImpl passthroughDAOImpl;
 
 	@Value("${com.cwt.tpromigration.mongodb.dbuser}")
 	private String dbUser;
@@ -382,6 +387,23 @@ public class MigrationService {
 
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
+	}
+
+
+
+	@SuppressWarnings("unchecked")
+	public void migratePassthroughs() throws JsonProcessingException {
+		List<Passthrough> passthroughs = passthroughDAOImpl.getList();
+
+		List<Document> docs = new ArrayList<>();
+
+		for (Passthrough passthrough : passthroughs) {
+			docs.add(dBObjectMapper.mapAsDbDocument(passthrough));
+		}
+
+		mongoDbConnection.getCollection(PASSTHROUGH_COLLECTION).insertMany(docs);
+
+		System.out.println("Finished migration of passthroughs");
 	}
 
 }
