@@ -6,12 +6,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class IndiaNonAirFeesInput extends FeesInput {
 	private static final long serialVersionUID = 7271039286429340584L;
 
-	@ApiModelProperty(allowableValues = "CX4,CC,INV")
-	private String fopType;
+	@ApiModelProperty(allowableValues = "CX,CC,INV")
+	private FopTypes fopType;
 
 	private boolean commissionByPercent;
 
@@ -32,6 +33,7 @@ public class IndiaNonAirFeesInput extends FeesInput {
 	private IndiaNonAirProductInput product;
 
 	private String ccType;
+
 	private String fopNumber;
 	
 	public String getCcType() {
@@ -98,14 +100,6 @@ public class IndiaNonAirFeesInput extends FeesInput {
 		this.product = product;
 	}
 
-	public String getFopType() {
-		return fopType;
-	}
-
-	public void setFopType(String fopType) {
-		this.fopType = fopType;
-	}
-
 	public String getFopNumber() {
 		return fopNumber;
 	}
@@ -129,4 +123,13 @@ public class IndiaNonAirFeesInput extends FeesInput {
 	public void setDiscount(BigDecimal discount) {
 		this.discount = discount;
 	}
+
+	public FopTypes getFopType() {
+		return fopType;
+	}
+
+	public void setFopType(FopTypes fopType) {
+		this.fopType = fopType;
+	}
+	
 }

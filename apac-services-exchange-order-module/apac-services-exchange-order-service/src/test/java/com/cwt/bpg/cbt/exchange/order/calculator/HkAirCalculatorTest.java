@@ -211,7 +211,7 @@ public class HkAirCalculatorTest {
 		input.setDiscountByPercent(false);
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
-		input.setFopType("CX4");
+		input.setFopType("CX");
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setTransactionFee(new BigDecimal(5000));
@@ -240,7 +240,7 @@ public class HkAirCalculatorTest {
 		input.setDiscountByPercent(false);
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
-		input.setFopType("CX4");
+		input.setFopType("CX");
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setTransactionFee(new BigDecimal(5000));
@@ -269,7 +269,7 @@ public class HkAirCalculatorTest {
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		input.setUatp(true);
-		input.setFopType("CX4");
+		input.setFopType("CX");
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setTransactionFee(new BigDecimal(5000));
@@ -299,7 +299,7 @@ public class HkAirCalculatorTest {
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		input.setUatp(true);
-		input.setFopType("CX4");
+		input.setFopType("CX");
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setTransactionFee(new BigDecimal(5000));
@@ -328,7 +328,7 @@ public class HkAirCalculatorTest {
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		input.setUatp(true);
-		input.setFopType("CX4");
+		input.setFopType("CX");
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(1000));
 		input.setTransactionFee(new BigDecimal(5000));
@@ -357,7 +357,7 @@ public class HkAirCalculatorTest {
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		input.setUatp(true);
-		input.setFopType("CX4");
+		input.setFopType("CX");
 		input.setCommission(new BigDecimal(-20000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setTransactionFee(new BigDecimal(5000));
