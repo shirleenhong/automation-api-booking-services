@@ -2,6 +2,8 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -14,7 +16,7 @@ public class AirFeesInput extends FeesInput {
 	private String clientType;
 
 	@ApiModelProperty(required = true, allowableValues = "CX,CC,INV")
-	@NotEmpty
+	@NotNull
 	private FopTypes fopType;
 
 	private BigDecimal sellingPrice;
