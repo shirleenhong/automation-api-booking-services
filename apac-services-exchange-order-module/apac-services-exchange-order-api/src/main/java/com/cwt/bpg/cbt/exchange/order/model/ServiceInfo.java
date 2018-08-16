@@ -24,6 +24,8 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 
 	private String insurancePlan;
 
+	private BigDecimal sellingFareToClient;
+
 	private BigDecimal nettCost;
 
 	private BigDecimal nettFare;
@@ -53,6 +55,8 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 	private Boolean merchantFeeCwtHandlingFlag;
 
 	private BigDecimal merchantFeeCwtHandling;
+
+	private BigDecimal publishedFare;
 
 	private BigDecimal sellingPrice;
 
@@ -125,7 +129,13 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 
 	private Ticket ticket;
 
-	public ClientTypes getClientType() {
+    private String prefixConsolidatorEoNumber;
+
+    private String consolidatorEoNumber;
+
+    private String fileFareNumber;
+
+    public ClientTypes getClientType() {
 		return clientType;
 	}
 
@@ -269,7 +279,7 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.gst = gst;
 	}
 
-	public Boolean isGstAbsorb() {
+	public Boolean getGstAbsorb() {
 		return gstAbsorb;
 	}
 
@@ -285,7 +295,7 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.merchantFee = merchantFee;
 	}
 
-	public Boolean isMerchantFeeAbsorb() {
+	public Boolean getMerchantFeeAbsorb() {
 		return merchantFeeAbsorb;
 	}
 
@@ -293,7 +303,7 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.merchantFeeAbsorb = merchantFeeAbsorb;
 	}
 
-	public Boolean isUatp() {
+	public Boolean getUatp() {
 		return uatp;
 	}
 
@@ -317,7 +327,7 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.serviceFee = serviceFee;
 	}
 
-	public Boolean isTfInNrcc() {
+	public Boolean getTfInNrcc() {
 		return tfInNrcc;
 	}
 
@@ -485,7 +495,7 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.ticket = ticket;
 	}
 
-	public Boolean isMerchantFeeVendorHandlingFlag() {
+	public Boolean getMerchantFeeVendorHandlingFlag() {
 		return merchantFeeVendorHandlingFlag;
 	}
 
@@ -501,7 +511,7 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 		this.merchantFeeVendorHandling = merchantFeeVendorHandling;
 	}
 
-	public Boolean isMerchantFeeCwtHandlingFlag() {
+	public Boolean getMerchantFeeCwtHandlingFlag() {
 		return merchantFeeCwtHandlingFlag;
 	}
 
@@ -516,4 +526,54 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 	public void setMerchantFeeCwtHandling(BigDecimal merchantFeeCwtHandling) {
 		this.merchantFeeCwtHandling = merchantFeeCwtHandling;
 	}
+
+    public BigDecimal getSellingFareToClient()
+    {
+        return sellingFareToClient;
+    }
+
+    public void setSellingFareToClient(BigDecimal sellingFareToClient)
+    {
+        this.sellingFareToClient = sellingFareToClient;
+    }
+
+    public BigDecimal getPublishedFare()
+    {
+        return publishedFare;
+    }
+
+    public void setPublishedFare(BigDecimal publishedFare)
+    {
+        this.publishedFare = publishedFare;
+    }
+
+    public String getPrefixConsolidatorEoNumber()
+    {
+        return prefixConsolidatorEoNumber;
+    }
+
+    public void setPrefixConsolidatorEoNumber(String prefixConsolidatorEoNumber)
+    {
+        this.prefixConsolidatorEoNumber = prefixConsolidatorEoNumber;
+    }
+
+    public String getConsolidatorEoNumber()
+    {
+        return consolidatorEoNumber;
+    }
+
+    public void setConsolidatorEoNumber(String consolidatorEoNumber)
+    {
+        this.consolidatorEoNumber = consolidatorEoNumber;
+    }
+
+    public String getFileFareNumber()
+    {
+        return fileFareNumber;
+    }
+
+    public void setFileFareNumber(String fileFareNumber)
+    {
+        this.fileFareNumber = fileFareNumber;
+    }
 }
