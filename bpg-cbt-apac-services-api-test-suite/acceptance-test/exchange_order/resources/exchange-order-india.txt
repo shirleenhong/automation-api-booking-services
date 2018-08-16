@@ -311,16 +311,18 @@ Create Test Variables For Exchange Order Tabs And Fields
     : FOR    ${data}    IN    @{eo_data}
     \    ${data_item}    Split String    ${data}    ,
     \    Run Keyword If    "${is_contact_info}"=="false"    Set Test Variable    ${${data_item[0]}_${eo_index}_value}    ${data_item[1]}
-    \    ...    ELSE    Create Test Variables For Vendor Contact Info India    data_item=${data_item}    eo_index=${eo_index}    index=${index} 
+    \    ...    ELSE    Create Test Variables For Vendor Contact Info India    data_item=${data_item}    eo_index=${eo_index}    index=${index}
     Set Test Variable    ${${tab_name}_list}    ${eo_data}
 
 Create Test Variables For Vendor Contact Info India
     [Arguments]    ${data_item}    ${eo_index}=0    ${index}=0
-    ${contact_type}    Set Variable If    "${data_item[0]}"=="email"    Email    "${data_item[0]}"=="phone"    Phone    "${data_item[0]}"=="fax"    Fax    null
+    ${contact_type}    Set Variable If    "${data_item[0]}"=="email"    Email    "${data_item[0]}"=="phone"    Phone    "${data_item[0]}"=="fax"
+    ...    Fax    null
     Set Test Variable    ${vendor_contact_type_${eo_index}_${index}_value}    ${contact_type}
     Set Test Variable    ${vendor_contact_details_${eo_index}_${index}_value}    ${data_item[1]}
     Set Test Variable    ${vendor_preferred_${eo_index}_${index}_value}    ${data_item[2]}
-    ${index}    Run Keyword If    "${contact_type}"!="null"    Evaluate    ${index}+1    ELSE    Set Variable    0
+    ${index}    Run Keyword If    "${contact_type}"!="null"    Evaluate    ${index}+1
+    ...    ELSE    Set Variable    0
     Set Test Variable    ${index}
 
 Evict Exchange Order Cache
@@ -417,6 +419,9 @@ Sanitize Vendor Info Data
     ${data}    Convert To String    ${data}
     ${data}    Replace String    ${data}    "contactInfo":[]    ${EMPTY}
     [Return]    ${data}
+
+Save Response For Multiple Exchange Orders
+    [Arguments]    ${eo_index}=0
 
 Send Exchange Order Get Request
     [Arguments]    ${token}=${default_token}    ${eo_index}=0    ${eo_number}=${exchange_order_number}    ${pnr_value}=${pnr_value}    ${via}=eo
@@ -890,6 +895,3 @@ Verify Exchange Order Vendor Information Is Saved Correctly
     \    Verify Json Value Is Correct    $.vendor.contactInfo.[${index}].detail    ${vendor_contact_details_${eo_index}_${index}_value}
     \    Verify Json Value Is Correct    $.vendor.contactInfo.[${index}].preferred    ${vendor_preferred_${eo_index}_${index}_value}
     Run Keyword If    "${vendor_contact_data_length_${eo_index}}"=="0"    Verify Json Element Does Not Exist    $.vendor.contactInfo
-
-Save Response For Multiple Exchange Orders
-    [Arguments]    ${eo_index}=0

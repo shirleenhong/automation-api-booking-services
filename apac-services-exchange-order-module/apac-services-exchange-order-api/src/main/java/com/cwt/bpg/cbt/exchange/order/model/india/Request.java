@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
@@ -53,12 +54,12 @@ public class Request implements Serializable {
 
 	private String packageName;
 
-	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant travelDate;
 
-	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant dateTime;
@@ -67,12 +68,12 @@ public class Request implements Serializable {
 
 	private String location;
 
-	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant startDate;
 
-	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant endDate;
@@ -81,23 +82,18 @@ public class Request implements Serializable {
 
 	private String details;
 
-	private String origin;
+	private List<Train> trains;
 
-	private String originDesc;
-
-	private String destination;
-
-	private String destinationDesc;
-
-	private Train train;
-
-	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant applicationDate;
 
 	@Valid
 	private Car car;
+
+	@Valid
+	private CancellationPolicy cancellationPolicy;
 
 	public String getPlatingCarrier() {
 		return platingCarrier;
@@ -275,38 +271,6 @@ public class Request implements Serializable {
 		this.details = details;
 	}
 
-	public String getOrigin() {
-		return origin;
-	}
-
-	public void setOrigin(String origin) {
-		this.origin = origin;
-	}
-
-	public String getOriginDesc() {
-		return originDesc;
-	}
-
-	public void setOriginDesc(String originDesc) {
-		this.originDesc = originDesc;
-	}
-
-	public String getDestination() {
-		return destination;
-	}
-
-	public void setDestination(String destination) {
-		this.destination = destination;
-	}
-
-	public String getDestinationDesc() {
-		return destinationDesc;
-	}
-
-	public void setDestinationDesc(String destinationDesc) {
-		this.destinationDesc = destinationDesc;
-	}
-
 	public Instant getApplicationDate() {
 		return applicationDate;
 	}
@@ -331,12 +295,12 @@ public class Request implements Serializable {
 		this.docCheckList = docCheckList;
 	}
 
-	public Train getTrain() {
-		return train;
+	public List<Train> getTrains() {
+		return trains;
 	}
 
-	public void setTrain(Train train) {
-		this.train = train;
+	public void setTrains(List<Train> trains) {
+		this.trains = trains;
 	}
 
 	public Instant getTravelDate() {
@@ -354,4 +318,14 @@ public class Request implements Serializable {
 	public void setPackageName(String packageName) {
 		this.packageName = packageName;
 	}
+
+    public CancellationPolicy getCancellationPolicy()
+    {
+        return cancellationPolicy;
+    }
+
+    public void setCancellationPolicy(CancellationPolicy cancellationPolicy)
+    {
+        this.cancellationPolicy = cancellationPolicy;
+    }
 }
