@@ -52,6 +52,7 @@ public class SgAirCalculatorTest {
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommission(bigDecimal("15"));
 		input.setNettFare(bigDecimal("300"));
+		input.setFopType(FopTypes.CWT);
 		AirFeesBreakdown afb = calculator.calculate(input, null, "HK");
 
 		assertThat(afb.getCommission(), nullValue());
@@ -73,6 +74,7 @@ public class SgAirCalculatorTest {
 		input.setTax2(bigDecimal("14"));
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommission(bigDecimal("15"));
+		input.setFopType(FopTypes.CWT);
 
 		AirFeesBreakdown afb = calculator.calculate(input, null, null);
 
@@ -96,6 +98,7 @@ public class SgAirCalculatorTest {
 		input.setTax2(bigDecimal("14"));
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommission(bigDecimal("15"));
+		input.setFopType(FopTypes.INVOICE);
 
 		AirFeesBreakdown afb = calculator.calculate(input, null, null);
 
@@ -120,6 +123,7 @@ public class SgAirCalculatorTest {
 		input.setCommissionPercent(Double.parseDouble("20"));
 		input.setDiscountByPercent(true);
 		input.setDiscountPercent(Double.parseDouble("15"));
+		input.setFopType(FopTypes.INVOICE);
 
 		AirFeesBreakdown afb = calculator.calculate(input, null, "SG");
 
