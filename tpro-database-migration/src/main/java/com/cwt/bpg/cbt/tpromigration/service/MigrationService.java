@@ -1,9 +1,12 @@
 package com.cwt.bpg.cbt.tpromigration.service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Passthrough;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +15,29 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
+import com.cwt.bpg.cbt.exchange.order.model.Bank;
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.ClientPricing;
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
+import com.cwt.bpg.cbt.exchange.order.model.CreditCardVendor;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.Passthrough;
+import com.cwt.bpg.cbt.exchange.order.model.ProductMerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.Remark;
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFee;
 import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.*;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirlineRuleDAOImpl;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirportDAO;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientDAOImpl;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientMerchantFeeDAO;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.PassthroughDAOImpl;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductDAOFactory;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.RemarkDAO;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAOFactory;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
@@ -144,7 +166,7 @@ public class MigrationService {
 	}
 
 	private void setMigratedContactInfo(List<ContactInfo> contactList,
-			ContactInfoType type, String detail, boolean preferred) {
+			ContactInfoType type, String detail, Boolean preferred) {
 		
 		ContactInfo contactInfo = new ContactInfo();
 		contactInfo.setType(type);
