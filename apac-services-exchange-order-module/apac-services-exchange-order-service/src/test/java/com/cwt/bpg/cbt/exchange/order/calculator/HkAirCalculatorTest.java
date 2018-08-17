@@ -14,6 +14,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public class HkAirCalculatorTest {
@@ -211,7 +212,7 @@ public class HkAirCalculatorTest {
 		input.setDiscountByPercent(false);
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setTransactionFee(new BigDecimal(5000));
@@ -240,7 +241,7 @@ public class HkAirCalculatorTest {
 		input.setDiscountByPercent(false);
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setTransactionFee(new BigDecimal(5000));
@@ -269,7 +270,7 @@ public class HkAirCalculatorTest {
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		input.setUatp(true);
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setTransactionFee(new BigDecimal(5000));
@@ -299,7 +300,7 @@ public class HkAirCalculatorTest {
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		input.setUatp(true);
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setTransactionFee(new BigDecimal(5000));
@@ -328,7 +329,7 @@ public class HkAirCalculatorTest {
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		input.setUatp(true);
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setCommission(new BigDecimal(2000));
 		input.setNettFare(new BigDecimal(1000));
 		input.setTransactionFee(new BigDecimal(5000));
@@ -357,7 +358,7 @@ public class HkAirCalculatorTest {
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		input.setUatp(true);
-		input.setFopType("CX");
+		input.setFopType(FopTypes.CWT);
 		input.setCommission(new BigDecimal(-20000));
 		input.setNettFare(new BigDecimal(10000));
 		input.setTransactionFee(new BigDecimal(5000));

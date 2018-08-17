@@ -56,7 +56,7 @@ Create Test Variables For Products And Vendors
     : FOR    ${item}    IN RANGE    0    ${index}+1
     \    Set Test Variable    ${product_list_${item}}
     \    Log    ${product_list_${item}}
-    Run Keyword If    "${country}"!="in"    Create Test Data For Vendor Raise Type    ${country}
+    #Run Keyword If    "${country}"!="in"    Create Test Data For Vendor Raise Type    ${country}
     Set Test Variable    ${country}    ${country.upper()}
     Set Test Variable    ${all_product_list}
 
@@ -97,6 +97,28 @@ Create Test Variables For Vendor Data India
     \    Set Test Variable    ${${vendor_code}_contact_info_${${vendor_code}_contact_info_type_index.strip()}}    ${data_item[10]}
     \    Set Test Variable    ${${vendor_code}_contact_person}    ${data_item[11]}
     \    Set Test Variable    ${${vendor_code}_contact_info_preferred}    ${data_item[12]}
+
+Create Test Variables For Vendor Raise-Type
+    [Arguments]    ${country}
+    ${product_list}    Create List
+    ${data_list_1}    Split String    ${${country}_raise_type_list}    |
+    : FOR    ${data}    IN    @{data_list_1}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Set Test Variable    ${raise_type_${data_item[0]}_${data_item[1]}}    ${data_item[2]}
+    \    ${is_product_added_to_list}    Run Keyword And Return Status    List Should Contain Value    ${product_list}    ${data_item[0]}        
+    \    Run Keyword If    "${is_product_added_to_list}"=="False"    Append To List    ${product_list}    ${data_item[0]}
+    \    ${is_product_list_created}    Run Keyword And Return Status    Variable Should Exist    ${${data_item[0]}_list}
+    \    Run Keyword If    "${is_product_list_created}"=="False"    Create New Vendor List For Raise-Type    product_code=${data_item[0]}    vendor_code=${data_item[1]}
+    \    Append To List    ${${data_item[0]}_list}    ${data_item[1]}
+    \    Set Test Variable    ${${data_item[0]}_list}
+    \    Log    ${${data_item[0]}_list}
+    Set Test Variable    ${product_list}
+    Set Test Variable    ${country}    ${country.lower()}
+
+Create New Vendor List For Raise-Type
+    [Arguments]    ${product_code}    ${vendor_code}
+    ${new_list}    Create List
+    Set Test Variable    ${${product_code}_list}    ${new_list}
 
 Send Product Get Request
     [Arguments]    ${token}=${default_token}    ${country}=${country}
@@ -245,7 +267,7 @@ Verify Vendors Are Retrieved Correctly
     \    ${list_item}    Get From List    ${item_vendor_list}    ${vendor_index}
     \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].code    ${list_item}
     \    Verify Json Value Is Correct    $[${index}].vendors.[${vendor_index}].name    ${vendor_code_${list_item}}
-    \    Run Keyword If    "${country}"!="IN"    Verify Vendor Raise Type Is Retrieved Correctly    ${index}    ${list_item}    ${vendor_index}
+    #\    Run Keyword If    "${country}"!="IN"    Verify Vendor Raise Type Is Retrieved Correctly    ${index}    ${list_item}    ${vendor_index}
     \    ${vendor_index}    Evaluate    ${vendor_index}+1
     Verify Json Element Does Not Exist    $[${index}].vendors.[${vendor_index}].vendorName
 
@@ -255,3 +277,35 @@ Verify Vendors Details Are Retrieved Correctly
     \    ${item_product_code}    Get Json Value As String    ${response.content}    $.[${index}].productCode
     \    Run Keyword If    "${country.upper()}" != "IN"    Verify Vendor Details Are Retrieved Correctly    ${index}    ${${item_product_code}_vendor_list}
     \    ...    ELSE    Verify Vendor Details India Are Retrieved Correctly    ${index}    ${${item_product_code}_vendor_list}
+
+Verify Vendor Raise-Type Is Retrieved Correctly
+    ${data}    To Json    ${response.content}
+    Set Test Variable    ${data}
+    ${product_list_length}    Get Length    ${data}
+    :FOR    ${index}    IN RANGE    0    ${product_list_length}
+    \    ${data_product_code}    Get Json Value As String    ${response.content}    $.[${index}].productCode
+    \    Set Test Variable    ${data_product_code}   
+    \    ${product_code_in_list}    Run Keyword And Return Status    List Should Contain Value    ${product_list}    ${data_product_code}
+    \    Run Keyword If    "${product_code_in_list}"=="True"    Verify Vendor Raise Type Value Is Correct    index=${index} 
+
+Verify Vendor Raise Type Value Is Correct
+    [Arguments]    ${index}=0
+    ${vendor_list}    Get Json Value From Array    ${response.content}    $.[${index}].vendors
+    Log    ${vendor_list}
+    ${vendor_list}    To Json    ${vendor_list}
+    ${vendor_list_length}    Get Length    ${vendor_list}
+    :FOR    ${vendor_index}    IN RANGE    0    ${vendor_list_length}
+    \    ${data_vendor_code}    Get Json Value As String    ${response.content}    $.[${index}].vendors.[${vendor_index}].code
+    \    ${vendor_code_in_list}    Run Keyword And Return Status    List Should Contain Value    ${${data_product_code}_list}    ${data_vendor_code}
+    \    ${raise_type_value_exists}    Run Keyword And Return Status    Variable Should Exist    ${raise_type_${data_product_code}_${data_vendor_code}}
+    \    ${raise_type_value}    Run Keyword If    "${vendor_code_in_list}"=="True" and "${raise_type_value_exists}"=="True"    Run Keyword And Return Status    Should Contain    ${raise_type_${data_product_code}_${data_vendor_code}}    null    ELSE    Set Variable    ${EMPTY}        
+    \    Run Keyword If    "${raise_type_value}"=="True"    Verify Json Element Does Not Exist    $.[${index}].vendors.[${vendor_index}].raiseType    ELSE IF    "${raise_type_value}"=="False"    Verify Json Value Is Correct    $.[${index}].vendors.[${vendor_index}].raiseType    ${raise_type_${data_product_code}_${data_vendor_code}}
+    
+Get Json Value From Array
+    [Arguments]    ${json_object}    ${json_path}
+    ${res_content}=    To Json    ${json_object}
+    ${actual_value}    Get Value From Json    ${res_content}    ${json_path}
+    ${actual_value}    Convert JSON To String    ${actual_value}
+    ${actual_value}    Get Substring    ${actual_value}    1    -1
+    [Return]    ${actual_value}
+        
