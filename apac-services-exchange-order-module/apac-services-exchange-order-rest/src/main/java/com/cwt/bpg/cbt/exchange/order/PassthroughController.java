@@ -27,20 +27,20 @@ public class PassthroughController {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	public ResponseEntity<PassthroughOutput> getClient(
-			@RequestParam("bookingClass") String bookingClass,
 			@RequestParam("airlineCode") String airlineCode,
+			@RequestParam("bookingClass") String bookingClass,
 			@RequestParam("ccVendorCode") String ccVendorCode,
 			@RequestParam("countryCode") String countryCode,
 			@RequestParam("clientAccountNumber") String clientAccountNumber)
 			throws ExchangeOrderNoContentException {
 
-		PassthroughInput input = formPassthroughInput(bookingClass, airlineCode,
+		PassthroughInput input = formPassthroughInput(airlineCode, bookingClass,
 				ccVendorCode, countryCode, clientAccountNumber);
 		
-		return new ResponseEntity<>(passService.getPassThroughType(input), HttpStatus.OK);
+		return new ResponseEntity<>(passService.getPassthroughType(input), HttpStatus.OK);
 	}
 
-	private PassthroughInput formPassthroughInput(String bookingClass, String airlineCode,
+	private PassthroughInput formPassthroughInput(String airlineCode, String bookingClass,
 			String ccVendorCode, String countryCode, String clientAccountNumber) {
 		
 		PassthroughInput input = new PassthroughInput();

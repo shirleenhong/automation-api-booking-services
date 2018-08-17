@@ -20,40 +20,35 @@ public class PassthroughService {
 	
 	private static final String CWT = "CWT";
 	private static final String AIRLINE = "Airline";
-	
-	public PassthroughOutput getPassThroughType(PassthroughInput basePassthrough)
+
+	public PassthroughOutput getPassthroughType(PassthroughInput input)
 			throws ExchangeOrderNoContentException {
 
-		List<Passthrough> passthroughList = getPassthrough(basePassthrough);
+		List<Passthrough> passthroughList = getPassthrough(input);
 		checkEmptyList(passthroughList);
 
 		Optional<Passthrough> passthroughCWT = passthroughList.stream()
 				.filter(p -> p.getPassthroughType().equals(CWT)).findFirst();
 
-		return passthroughCWT.isPresent() ? setCwtPassthrough() : setAirlinePassthrough();
+		return passthroughCWT.isPresent() ? createPassthroughOutput(CWT)
+				: createPassthroughOutput(AIRLINE);
 	}
 
-	private PassthroughOutput setAirlinePassthrough() {
-		PassthroughOutput passthroughAirlineOutput = new PassthroughOutput();
-		passthroughAirlineOutput.setPassthroughType(AIRLINE);
-		
-		return passthroughAirlineOutput;
+	private PassthroughOutput createPassthroughOutput(String type) {
+		PassthroughOutput output = new PassthroughOutput();
+		output.setPassthroughType(type);
+
+		return output;
 	}
 
-	private PassthroughOutput setCwtPassthrough() {
-		PassthroughOutput passthroughCwtOutput = new PassthroughOutput();
-		passthroughCwtOutput.setPassthroughType(CWT);
-		
-		return passthroughCwtOutput;
-	}
 	private void checkEmptyList(List<Passthrough> passthroughList)
 			throws ExchangeOrderNoContentException {
-		
+
 		if (ObjectUtils.isEmpty(passthroughList)) {
 			throw new ExchangeOrderNoContentException("Passthrough data not found.");
 		}
 	}
-	
+
 	private List<Passthrough> getPassthrough(PassthroughInput param) {
 		return passthroughRepo.getPassthrough(param);
 	}
