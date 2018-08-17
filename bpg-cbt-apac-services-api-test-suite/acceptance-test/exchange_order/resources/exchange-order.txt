@@ -577,8 +577,7 @@ Create Test Variables For Vendor Contact Info
     ${index}    Set Variable    0
     : FOR    ${data}    IN    @{contact_data}
     \    ${data_item}    Split String    ${data}    ,
-    \    ${contact_type}    Set Variable If    "${data_item[0]}"=="email"    Email    "${data_item[0]}"=="phone"    Phone
-    \    ...    Fax
+    \    ${contact_type}    Set Variable If    "${data_item[0]}"=="email"    Email    "${data_item[0]}"=="phone"    Phone    "${data_item[0]}"=="fax"    Fax    ${data_item[0]}
     \    Set Test Variable    ${contact_type_${eo_index}_${index}}    ${contact_type}
     \    Set Test Variable    ${contact_details_${eo_index}_${index}}    ${data_item[1]}
     \    Set Test Variable    ${contact_preferred_${eo_index}_${index}}    ${data_item[2]}
@@ -907,7 +906,6 @@ Verify Exchange Order Is Not Returned
     Verify String Does Not Contain Substring    ${response.text}    "raiseCheque"
     Verify String Does Not Contain Substring    ${response.text}    "recordLocator"
     Verify String Does Not Contain Substring    ${response.text}    "serviceInfo"
-    Verify String Does Not Contain Substring    ${response.text}    "status"
     Verify String Does Not Contain Substring    ${response.text}    "total"
     Verify String Does Not Contain Substring    ${response.text}    "vendor"
 
