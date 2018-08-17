@@ -7,12 +7,12 @@ import org.mongodb.morphia.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.exchange.order.model.BasePassthrough;
+import com.cwt.bpg.cbt.exchange.order.model.PassthroughInput;
 import com.cwt.bpg.cbt.exchange.order.model.Passthrough;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
-public class PassThroughRepository {
+public class PassthroughRepository {
 
 	@Autowired
 	private MorphiaComponent morphia;
@@ -23,7 +23,7 @@ public class PassThroughRepository {
 	private static final String COUNTRY_CODE = "countryCode";
 	private static final String CLIENT_ACCT_NUM = "clientAccountNumber";
 	
-	public List<Passthrough> getPassthrough(BasePassthrough params) {
+	public List<Passthrough> getPassthrough(PassthroughInput params) {
 		
 		final Query<Passthrough> query = morphia.getDatastore().createQuery(Passthrough.class);
 		

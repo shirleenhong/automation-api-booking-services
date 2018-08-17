@@ -2,7 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
-public class BasePassthrough implements Serializable {
+public class PassthroughInput implements Serializable {
 
 	private static final long serialVersionUID = 5943172847055937530L;
 
