@@ -49,3 +49,18 @@ Verify That Vendor Details Are Correctly Retrieved For India
     Send Product Get Request
     Verify Response Status Code Is Correct    200
     Verify Vendors Details Are Retrieved Correctly
+    
+Verify That Vendor Raise Type Are Correctly Retrieved For Singapore
+    [Tags]    migration    spot-check
+    Create Test Variables For Vendor Raise-Type    country=sg
+    Send Product Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Vendor Raise-Type Is Retrieved Correctly
+    
+Verify That Vendor Raise type Are Correctly Retrieved For Hong Kong
+    [Tags]    migration    spot-check
+    Create Test Variables For Vendor Raise-Type    country=hk
+    Send Product Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Vendor Raise-Type Is Retrieved Correctly
+    
