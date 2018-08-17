@@ -22,8 +22,6 @@ public class Application {
 			MigrationService service = context.getBean(MigrationService.class);
 			service.setCountryCode(countryCode);
 			
-			service.migrateProductList();
-			
 			/*if ("IN".equalsIgnoreCase(countryCode)) {
 				service.migrateAirlineRules();
 				service.migrateAirports();
