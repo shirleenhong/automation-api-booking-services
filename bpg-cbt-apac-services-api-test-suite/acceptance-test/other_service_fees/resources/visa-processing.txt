@@ -48,9 +48,9 @@ Generate Test Variables For Visa Processing
     Create Test Variables For Visa Processing    ${fees_list}    ${country}
     ${decimal_place}    Set Variable If    "${country.upper()}" == "SG"    2    0
     Set Test Variable    ${decimal_place}
-    Run Keyword If    "${mf_nett_check_value.lower()}"=="true" and "${cc_value.upper()}" == "CX4"    Calculate Visa Processing Merchant Fee Nett Cost
+    Run Keyword If    "${mf_nett_check_value.lower()}"=="true"    Calculate Visa Processing Merchant Fee Nett Cost
     ...    ELSE    Set Test Variable    ${nett_cost_merchant_fee_amount}    0
-    Run Keyword If    "${mf_cwt_check_value.lower()}"=="true" and "${cc_value.upper()}" == "CX4"    Calculate Visa Processing Merchant Fee CWT Handling
+    Run Keyword If    "${mf_cwt_check_value.lower()}"=="true"    Calculate Visa Processing Merchant Fee CWT Handling
     ...    ELSE    Set Test Variable    ${cwt_handling_merchant_fee_amount}    0
     Calculate Visa Processing Selling Price For Visa Processing
     Calculate Visa Processing Commission
@@ -77,7 +77,6 @@ Send Other Service Fees For Visa Processing Post Request
     ${length_country_code}    Get Length    ${country}
     Run Keyword If    ${length_country_code} > 2    Append To List    ${other_service_fees_request_list}    "countryCode":${country}
     ...    ELSE    Append To List    ${other_service_fees_request_list}    "countryCode":"${country}"
-    Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
     ${client_type}    Set Variable If    "${client_type_value}"=="NULL"    null    "${client_type_value}"=="None"    None    "${client_type_value}"
     Run Keyword If    "${client_account_number_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientAccountNumber":"${client_account_number_value}"
     Run Keyword If    "${cwt_handling_value}"!="null"    Append To List    ${other_service_fees_request_list}    "cwtHandling":${cwt_handling_value}

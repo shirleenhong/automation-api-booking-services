@@ -56,7 +56,7 @@ Calculate Non-Air Fees For HK/SG
     Run Keyword If    "${gst_absorb_value}" == "false"    Run Keywords    Calculate Non-Air Fees GST
     ...    AND    Calculate Non-Air Fees Nett Cost GST
     ...    ELSE    Set GST And Nett Cost GST
-    Run Keyword If    "${merchant_fee_absorb_value}" == "false" and "${cc_value.upper()}" == "CX4" and "${merchant_fee_waive_value}" == "false"    Calculate Non-Air Fees Merchant Fee
+    Run Keyword If    "${merchant_fee_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Non-Air Fees Merchant Fee
     ...    ELSE    Set Merchant Fee
     Calculate Non-Air Fees Selling Price In DI
     Run Keyword If    ${total_selling_price_value}>${nett_cost_value}    Calculate Non-Air Fees Commission
