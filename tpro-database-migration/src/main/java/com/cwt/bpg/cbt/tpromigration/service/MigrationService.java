@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,26 +16,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
-import com.cwt.bpg.cbt.exchange.order.model.Airport;
-import com.cwt.bpg.cbt.exchange.order.model.Bank;
-import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
-import com.cwt.bpg.cbt.exchange.order.model.ClientPricing;
-import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
-import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
-import com.cwt.bpg.cbt.exchange.order.model.CreditCardVendor;
-import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
-import com.cwt.bpg.cbt.exchange.order.model.Passthrough;
-import com.cwt.bpg.cbt.exchange.order.model.ProductMerchantFee;
-import com.cwt.bpg.cbt.exchange.order.model.Remark;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFee;
+import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
 import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirlineRuleDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirportDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientMerchantFeeDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.PassthroughDAOImpl;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirTransactionDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductDAOFactory;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.RemarkDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAOFactory;
@@ -80,7 +69,7 @@ public class MigrationService {
     private RemarkDAO remarkDAO;
 
 	@Autowired
-	private PassthroughDAOImpl passthroughDAOImpl;
+	private AirTransactionDAOImpl airTransactionDAOImpl;
 
 	@Value("${com.cwt.tpromigration.mongodb.dbuser}")
 	private String dbUser;
@@ -415,17 +404,17 @@ public class MigrationService {
 
 	@SuppressWarnings("unchecked")
 	public void migratePassthroughs() throws JsonProcessingException {
-		List<Passthrough> passthroughs = passthroughDAOImpl.getList();
+		List<AirTransaction> airTransactions = airTransactionDAOImpl.getList();
 
 		List<Document> docs = new ArrayList<>();
 
-		for (Passthrough passthrough : passthroughs) {
-			docs.add(dBObjectMapper.mapAsDbDocument(passthrough));
+		for (AirTransaction airTransaction : airTransactions) {
+			docs.add(dBObjectMapper.mapAsDbDocument(airTransaction));
 		}
 
 		mongoDbConnection.getCollection(PASSTHROUGH_COLLECTION).insertMany(docs);
 
-		System.out.println("Finished migration of passthroughs");
+		System.out.println("Finished migration of airTransactions");
 	}
 
 }
