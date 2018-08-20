@@ -14,17 +14,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.exchange.order.model.Passthrough;
+import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
 
 @Repository
-public class PassthroughDAOImpl {
-	private static final Logger logger = LoggerFactory.getLogger(PassthroughDAOImpl.class);
+public class AirTransactionDAOImpl {
+	private static final Logger logger = LoggerFactory.getLogger(AirTransactionDAOImpl.class);
 
 	@Autowired
 	private DataSource dataSource;
 
-	public List<Passthrough> getList() {
-		List<Passthrough> passthroughs = new ArrayList<>();
+	public List<AirTransaction> getList() {
+		List<AirTransaction> airTransactions = new ArrayList<>();
 		String sql =
 				" select h.countryCode, f.BkClass, a.AirlineCode, c.AirlineDescription, a.CCVendorCode, d.CCVendorName, a.CCType, "+
 				" 	case CCType "+
@@ -51,22 +51,22 @@ public class PassthroughDAOImpl {
 		Connection conn = null;
 
 		try {
-			logger.info("getting passthroughs from mssqldb");
+			logger.info("getting airTransactions from mssqldb");
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Passthrough passthrough = new Passthrough();
-				passthrough.setCountryCode(rs.getString("countryCode"));
-				passthrough.setBookingClass(rs.getString("BkClass"));
-				passthrough.setAirlineCode(rs.getString("AirlineCode"));
-				passthrough.setAirlineDescription(rs.getString("AirlineDescription"));
-				passthrough.setCcVendorCode(rs.getString("CCVendorCode"));
-				passthrough.setCcVendorName(rs.getString("CCVendorName"));
-				passthrough.setCcType(rs.getString("CCType"));
-				passthrough.setPassthroughType(rs.getString("PassthroughType"));
-				passthrough.setClientAccountNumber(rs.getString("clientNumber"));
-				passthroughs.add(passthrough);
+				AirTransaction airTransaction = new AirTransaction();
+				airTransaction.setCountryCode(rs.getString("countryCode"));
+				airTransaction.setBookingClass(rs.getString("BkClass"));
+				airTransaction.setAirlineCode(rs.getString("AirlineCode"));
+				airTransaction.setAirlineDescription(rs.getString("AirlineDescription"));
+				airTransaction.setCcVendorCode(rs.getString("CCVendorCode"));
+				airTransaction.setCcVendorName(rs.getString("CCVendorName"));
+				airTransaction.setCcType(rs.getString("CCType"));
+				airTransaction.setPassthroughType(rs.getString("PassthroughType"));
+				airTransaction.setClientAccountNumber(rs.getString("clientNumber"));
+				airTransactions.add(airTransaction);
 			}
 			rs.close();
 			ps.close();
@@ -83,7 +83,7 @@ public class PassthroughDAOImpl {
 				}
 			}
 		}
-		logger.info("size of passthroughs from mssqldb: {}", passthroughs.size());
-		return passthroughs;
+		logger.info("size of airTransactions from mssqldb: {}", airTransactions.size());
+		return airTransactions;
 	}
 }

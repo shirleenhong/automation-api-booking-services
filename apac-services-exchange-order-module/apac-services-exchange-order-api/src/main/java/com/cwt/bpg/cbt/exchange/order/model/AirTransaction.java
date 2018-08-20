@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import org.mongodb.morphia.annotations.Entity;
 
-@Entity(value = "passthroughs", noClassnameStored = true)
-public class Passthrough implements Serializable {
+@Entity(value = "airTransactions", noClassnameStored = true)
+public class AirTransaction implements Serializable {
 
 	private static final long serialVersionUID = 5943172847055937530L;
 

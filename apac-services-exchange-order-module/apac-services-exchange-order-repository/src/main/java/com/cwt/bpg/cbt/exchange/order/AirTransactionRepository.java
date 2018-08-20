@@ -2,17 +2,17 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
+import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
 import org.apache.commons.lang.StringUtils;
 import org.mongodb.morphia.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.exchange.order.model.PassthroughInput;
-import com.cwt.bpg.cbt.exchange.order.model.Passthrough;
+import com.cwt.bpg.cbt.exchange.order.model.AirTransactionInput;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
-public class PassthroughRepository {
+public class AirTransactionRepository {
 
 	@Autowired
 	private MorphiaComponent morphia;
@@ -23,9 +23,9 @@ public class PassthroughRepository {
 	private static final String COUNTRY_CODE = "countryCode";
 	private static final String CLIENT_ACCT_NUM = "clientAccountNumber";
 	
-	public List<Passthrough> getPassthrough(PassthroughInput params) {
+	public List<AirTransaction> getAirTransaction(AirTransactionInput params) {
 		
-		final Query<Passthrough> query = morphia.getDatastore().createQuery(Passthrough.class);
+		final Query<AirTransaction> query = morphia.getDatastore().createQuery(AirTransaction.class);
 		
 		if(StringUtils.isNotBlank(params.getAirlineCode())) {
 			query.field(AIRLINE_CODE).equal(params.getAirlineCode());

@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.PassthroughInput;
-import com.cwt.bpg.cbt.exchange.order.model.PassthroughOutput;
+import com.cwt.bpg.cbt.exchange.order.model.AirTransactionInput;
+import com.cwt.bpg.cbt.exchange.order.model.AirTransactionOutput;
 
 import io.swagger.annotations.Api;
 
 @RestController
-@Api(tags = "Passthrough")
-public class PassthroughController {
+@Api(tags = "AirTransaction")
+public class AirTransactionController {
 
 	@Autowired
-	private PassthroughService passService;
+	private AirTransactionService airTransService;
 
-	@GetMapping(value = "/passthrough", consumes = {
+	@GetMapping(value = "/air-transaction", consumes = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	public ResponseEntity<PassthroughOutput> getClient(
+	public ResponseEntity<AirTransactionOutput> getClient(
 			@RequestParam("airlineCode") String airlineCode,
 			@RequestParam("bookingClass") String bookingClass,
 			@RequestParam("ccVendorCode") String ccVendorCode,
@@ -34,16 +34,16 @@ public class PassthroughController {
 			@RequestParam("clientAccountNumber") String clientAccountNumber)
 			throws ExchangeOrderNoContentException {
 
-		PassthroughInput input = formPassthroughInput(airlineCode, bookingClass,
+		AirTransactionInput input = formAirTransactionInput(airlineCode, bookingClass,
 				ccVendorCode, countryCode, clientAccountNumber);
 		
-		return new ResponseEntity<>(passService.getPassthroughType(input), HttpStatus.OK);
+		return new ResponseEntity<>(airTransService.getPassthroughType(input), HttpStatus.OK);
 	}
 
-	private PassthroughInput formPassthroughInput(String airlineCode, String bookingClass,
+	private AirTransactionInput formAirTransactionInput(String airlineCode, String bookingClass,
 			String ccVendorCode, String countryCode, String clientAccountNumber) {
 		
-		PassthroughInput input = new PassthroughInput();
+		AirTransactionInput input = new AirTransactionInput();
 		input.setBookingClass(bookingClass);
 		input.setAirlineCode(airlineCode);
 		input.setCcVendorCode(ccVendorCode);
