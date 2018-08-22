@@ -39,7 +39,7 @@ public class MigrationService {
 
 	private static final String AIRPORT_COLLECTION = "airports";
 	private static final String CLIENT_COLLECTION = "clients";
-	private static final String PASSTHROUGH_COLLECTION = "passthroughs";
+	private static final String AIR_TRANSACTION_COLLECTION = "airTransactions";
 
 	@Autowired
 	private MongoDbConnection mongoDbConnection;
@@ -412,7 +412,7 @@ public class MigrationService {
 			docs.add(dBObjectMapper.mapAsDbDocument(airTransaction));
 		}
 
-		mongoDbConnection.getCollection(PASSTHROUGH_COLLECTION).insertMany(docs);
+		mongoDbConnection.getCollection(AIR_TRANSACTION_COLLECTION).insertMany(docs);
 
 		System.out.println("Finished migration of airTransactions");
 	}

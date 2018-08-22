@@ -22,16 +22,15 @@ public class AirTransactionController {
 	@Autowired
 	private AirTransactionService airTransService;
 
-	@GetMapping(value = "/air-transaction", consumes = {
-			MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = {
+	@GetMapping(value = "/air-transaction", produces = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	public ResponseEntity<AirTransactionOutput> getClient(
+	public ResponseEntity<AirTransactionOutput> getAirTransaction(
 			@RequestParam("airlineCode") String airlineCode,
 			@RequestParam("bookingClass") String bookingClass,
 			@RequestParam("ccVendorCode") String ccVendorCode,
-			@RequestParam("countryCode") String countryCode,
-			@RequestParam("clientAccountNumber") String clientAccountNumber)
+			@RequestParam(value = "countryCode", required = false) String countryCode,
+			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber)
 			throws ExchangeOrderNoContentException {
 
 		AirTransactionInput input = formAirTransactionInput(airlineCode, bookingClass,
