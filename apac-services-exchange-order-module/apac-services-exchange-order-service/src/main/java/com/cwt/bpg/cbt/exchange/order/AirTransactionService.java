@@ -52,8 +52,8 @@ public class AirTransactionService {
 	public List<AirTransaction> getAirTransactionList(AirTransactionInput param) {
 		return airTransactionRepo.getAirTransactions(param);
 	}
-	
-	public AirTransaction getAirTransactionById(String id) {
-		return airTransactionRepo.getAirTransactionById(id);
+
+	public AirTransaction save(AirTransaction airTrans) {
+		return airTransactionRepo.put(airTrans);
 	}
 }
