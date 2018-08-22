@@ -64,7 +64,7 @@ public class AirTransactionController {
 	}
 
 	@PutMapping(path = "/air-transaction")
-	@ApiOperation(value = "Add Air Transaction")
+	@ApiOperation(value = "Save Air Transaction")
 	@ResponseBody
 	public ResponseEntity<AirTransaction> putAirTransaction(@Valid @RequestBody AirTransaction airTrans) {
 		return new ResponseEntity<>(airTransService.save(airTrans), HttpStatus.OK);

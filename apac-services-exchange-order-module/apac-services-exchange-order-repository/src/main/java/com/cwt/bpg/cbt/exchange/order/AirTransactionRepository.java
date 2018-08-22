@@ -16,10 +16,8 @@ import com.cwt.bpg.cbt.exchange.order.model.AirTransactionInput;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
-public class AirTransactionRepository {
+public class AirTransactionRepository extends CommonRepository<AirTransaction, String>{
 
-	@Autowired
-	private MorphiaComponent morphia;
 	private static final Logger LOGGER = LoggerFactory.getLogger(AirTransactionRepository.class);
 	private static final String ID = "_id";
 	private static final String AIRLINE_CODE = "airlineCode";
@@ -27,6 +25,10 @@ public class AirTransactionRepository {
 	private static final String BOOKING_CLASS = "bookingClass";
 	private static final String COUNTRY_CODE = "countryCode";
 	private static final String CLIENT_ACCT_NUM = "clientAccountNumber";
+
+	public AirTransactionRepository() {
+		super(AirTransaction.class, ID);
+	}
 	
 	public List<AirTransaction> getAirTransactions(AirTransactionInput params) {
 		
@@ -50,17 +52,4 @@ public class AirTransactionRepository {
 		
 		return query.asList();	
 	}
-
-	public String save(AirTransaction airTrans) {
-		Key<AirTransaction> key = morphia.getDatastore().save(airTrans);
-		LOGGER.info("Save: Air Transaction, [{}]", key.getId().toString());
-
-		return key.getId().toString();
-	}
-	
-	public AirTransaction getAirTransactionById(String id) {
-		return morphia.getDatastore().createQuery(AirTransaction.class).field(ID)
-				.equal(id).get();
-	}
-	
 }
