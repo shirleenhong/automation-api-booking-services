@@ -56,4 +56,9 @@ public class AirTransactionService {
 	public AirTransaction getAirTransactionById(String id) {
 		return airTransactionRepo.getAirTransactionById(id);
 	}
+
+	public AirTransaction save(AirTransaction airTrans) {
+		String airTransId = airTransactionRepo.save(airTrans);
+		return airTransactionRepo.getAirTransactionById(airTransId);
+	}
 }
