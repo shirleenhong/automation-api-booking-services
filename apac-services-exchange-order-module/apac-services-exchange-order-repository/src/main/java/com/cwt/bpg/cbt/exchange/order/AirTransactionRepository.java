@@ -2,12 +2,12 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
-import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
 import org.apache.commons.lang.StringUtils;
 import org.mongodb.morphia.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
 import com.cwt.bpg.cbt.exchange.order.model.AirTransactionInput;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
@@ -17,13 +17,14 @@ public class AirTransactionRepository {
 	@Autowired
 	private MorphiaComponent morphia;
 	
+	private static final String ID = "_id";
 	private static final String AIRLINE_CODE = "airlineCode";
 	private static final String CC_VENDOR_CODE = "ccVendorCode";
 	private static final String BOOKING_CLASS = "bookingClass";
 	private static final String COUNTRY_CODE = "countryCode";
 	private static final String CLIENT_ACCT_NUM = "clientAccountNumber";
 	
-	public List<AirTransaction> getAirTransaction(AirTransactionInput params) {
+	public List<AirTransaction> getAirTransactions(AirTransactionInput params) {
 		
 		final Query<AirTransaction> query = morphia.getDatastore().createQuery(AirTransaction.class);
 		
@@ -44,6 +45,11 @@ public class AirTransactionRepository {
 		}
 		
 		return query.asList();	
+	}
+	
+	public AirTransaction getAirTransactionById(String id) {
+		return morphia.getDatastore().createQuery(AirTransaction.class).field(ID)
+				.equal(id).get();
 	}
 	
 }

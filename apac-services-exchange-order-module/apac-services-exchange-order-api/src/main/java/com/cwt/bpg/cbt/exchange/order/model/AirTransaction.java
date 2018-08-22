@@ -3,11 +3,15 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.io.Serializable;
 
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 
 @Entity(value = "airTransactions", noClassnameStored = true)
 public class AirTransaction implements Serializable {
 
 	private static final long serialVersionUID = 5943172847055937530L;
+
+	@Id
+	private String id;
 
 	private String airlineDescription;
 
@@ -26,6 +30,14 @@ public class AirTransaction implements Serializable {
 	private String countryCode;
 
 	private String clientAccountNumber;
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getBookingClass() {
 		return bookingClass;
