@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
+import com.cwt.bpg.cbt.exchange.order.exception.AirTransactionNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
 import com.cwt.bpg.cbt.exchange.order.model.AirTransactionInput;
 import com.cwt.bpg.cbt.exchange.order.model.AirTransactionOutput;
@@ -21,10 +21,10 @@ public class AirTransactionService {
 	private static final String CWT = "CWT";
 	private static final String AIRLINE = "Airline";
 
-	public AirTransactionOutput getPassthroughType(AirTransactionInput input)
-			throws ExchangeOrderNoContentException {
+	public AirTransactionOutput getAirTransaction(AirTransactionInput input)
+			throws AirTransactionNoContentException {
 
-		List<AirTransaction> airTransactionList = getPassthrough(input);
+		List<AirTransaction> airTransactionList = getAirTransactionList(input);
 		checkEmptyList(airTransactionList);
 
 		Optional<AirTransaction> passthroughCWT = airTransactionList.stream()
@@ -42,14 +42,18 @@ public class AirTransactionService {
 	}
 
 	private void checkEmptyList(List<AirTransaction> airTransactionList)
-			throws ExchangeOrderNoContentException {
+			throws AirTransactionNoContentException {
 
 		if (ObjectUtils.isEmpty(airTransactionList)) {
-			throw new ExchangeOrderNoContentException("AirTransaction data not found.");
+			throw new AirTransactionNoContentException("AirTransaction data not found.");
 		}
 	}
 
-	private List<AirTransaction> getPassthrough(AirTransactionInput param) {
-		return airTransactionRepo.getAirTransaction(param);
+	public List<AirTransaction> getAirTransactionList(AirTransactionInput param) {
+		return airTransactionRepo.getAirTransactions(param);
+	}
+	
+	public AirTransaction getAirTransactionById(String id) {
+		return airTransactionRepo.getAirTransactionById(id);
 	}
 }
