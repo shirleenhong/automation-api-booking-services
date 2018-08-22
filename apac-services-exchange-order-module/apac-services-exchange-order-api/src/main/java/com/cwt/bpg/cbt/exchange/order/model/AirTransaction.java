@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
@@ -21,7 +22,7 @@ public class AirTransaction implements Serializable {
 
 	private String passthroughType;
 	
-	private String bookingClass;
+	private List<BookingClass> bookingClass;
 
 	private String airlineCode;
 
@@ -39,11 +40,11 @@ public class AirTransaction implements Serializable {
 		this.id = id;
 	}
 
-	public String getBookingClass() {
+	public List<BookingClass> getBookingClass() {
 		return bookingClass;
 	}
 
-	public void setBookingClass(String bookingClass) {
+	public void setBookingClass(List<BookingClass> bookingClass) {
 		this.bookingClass = bookingClass;
 	}
 
