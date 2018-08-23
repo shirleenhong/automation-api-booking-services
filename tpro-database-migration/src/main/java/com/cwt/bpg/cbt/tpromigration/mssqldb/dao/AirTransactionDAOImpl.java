@@ -27,7 +27,7 @@ public class AirTransactionDAOImpl {
 	public List<AirTransaction> getList() {
 		List<AirTransaction> airTransactions = new ArrayList<>();
 		String sql =
-				"select  a.AirlineCode, c.AirlineDescription, a.CCVendorCode, d.CCVendorName, a.CCType, x.countrycode, x.clientid, x.clientNumber, "+
+				"select a.id, a.AirlineCode, c.AirlineDescription, a.CCVendorCode, d.CCVendorName, a.CCType, x.countrycode, x.clientid, x.clientNumber, "+
 				"case CCType "+
 					"when 'UATP' then case PassthroughType "+
 				 		"when 'FP' then 'Airline' "+
