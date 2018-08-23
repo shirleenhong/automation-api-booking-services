@@ -3,11 +3,14 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.io.Serializable;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity(value = "airTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("id")))
@@ -16,7 +19,8 @@ public class AirTransaction implements Serializable {
 	private static final long serialVersionUID = 5943172847055937530L;
 
 	@Id
-	private String id;
+	@JsonSerialize(using = ObjectIdSerializer.class)
+	private ObjectId id;
 
 	private String airlineDescription;
 
@@ -36,11 +40,11 @@ public class AirTransaction implements Serializable {
 
 	private String clientAccountNumber;
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
