@@ -409,6 +409,15 @@ public class MigrationService {
 		List<Document> docs = new ArrayList<>();
 
 		for (AirTransaction airTransaction : airTransactions) {
+			
+			List<BookingClass> bookingClassList = airTransactionDAOImpl.getBookingClassList(airTransaction.getAirlineCode()); 
+			
+			if (!ObjectUtils.isEmpty(bookingClassList)) {
+				
+				airTransaction.setBookingClass(bookingClassList);
+				
+			}
+			
 			docs.add(dBObjectMapper.mapAsDbDocument(airTransaction));
 		}
 

@@ -20,7 +20,7 @@ public class Application {
 		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");) {
 			
 			MigrationService service = context.getBean(MigrationService.class);
-			service.setCountryCode(countryCode);
+			//service.setCountryCode(countryCode);
 			
 			/*if ("IN".equalsIgnoreCase(countryCode)) {
 				service.migrateAirlineRules();
