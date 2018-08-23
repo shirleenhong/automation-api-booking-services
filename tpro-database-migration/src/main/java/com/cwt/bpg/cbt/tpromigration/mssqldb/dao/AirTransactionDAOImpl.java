@@ -56,7 +56,6 @@ public class AirTransactionDAOImpl {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				AirTransaction airTransaction = new AirTransaction();
-				airTransaction.setId(rs.getString("id"));
 				airTransaction.setCountryCode(rs.getString("countryCode"));
 				airTransaction.setAirlineCode(rs.getString("AirlineCode"));
 				airTransaction.setAirlineDescription(rs.getString("AirlineDescription"));
