@@ -56,6 +56,7 @@ public class ExchangeOrderService {
 		return exchangeOrderRepo.updateFinance(param);
 	}
 
+	@Cacheable(cacheNames = "exchange-orders", key = "#eoNumber.toString()")
 	public BaseExchangeOrder getExchangeOrder(String countryCode, String eoNumber) {
 		return exchangeOrderRepo.getExchangeOrder(countryCode, eoNumber);
 	}
