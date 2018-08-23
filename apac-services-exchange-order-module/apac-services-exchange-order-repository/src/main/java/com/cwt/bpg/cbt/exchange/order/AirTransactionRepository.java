@@ -2,30 +2,26 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
-import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
 import org.apache.commons.lang.StringUtils;
-import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
 import com.cwt.bpg.cbt.exchange.order.model.AirTransactionInput;
-import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
+import com.mongodb.BasicDBObjectBuilder;
 
 @Repository
 public class AirTransactionRepository extends CommonRepository<AirTransaction, String>{
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AirTransactionRepository.class);
-	private static final String ID = "_id";
+	private static final String ID = "id";
 	private static final String AIRLINE_CODE = "airlineCode";
 	private static final String CC_VENDOR_CODE = "ccVendorCode";
 	private static final String BOOKING_CLASS = "bookingClass";
 	private static final String COUNTRY_CODE = "countryCode";
 	private static final String CLIENT_ACCT_NUM = "clientAccountNumber";
-
+	private static final String BOOKING_CLASS_CODE = "code";
+	private static final String ELEM_MATCH = " elem";
+	
 	public AirTransactionRepository() {
 		super(AirTransaction.class, ID);
 	}
@@ -40,8 +36,9 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, S
 		if(StringUtils.isNotBlank(params.getCcVendorCode())) {
 			query.field(CC_VENDOR_CODE).equal(params.getCcVendorCode());
 		}
-		if(StringUtils.isNotBlank(params.getBookingClass())) {
-			query.field(BOOKING_CLASS).equal(params.getBookingClass());
+		if (StringUtils.isNotBlank(params.getBookingClass())) {
+			query.filter(BOOKING_CLASS + ELEM_MATCH, BasicDBObjectBuilder
+					.start(BOOKING_CLASS_CODE, params.getBookingClass()).get());
 		}
 		if(StringUtils.isNotBlank(params.getCountryCode())) {
 			query.field(COUNTRY_CODE).equal(params.getCountryCode());

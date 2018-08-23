@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 
 @Entity(value = "airTransactions", noClassnameStored = true)
+@Indexes(@Index(fields = @Field("id")))
 public class AirTransaction implements Serializable {
 
 	private static final long serialVersionUID = 5943172847055937530L;
@@ -31,7 +35,7 @@ public class AirTransaction implements Serializable {
 	private String countryCode;
 
 	private String clientAccountNumber;
-	
+
 	public String getId() {
 		return id;
 	}

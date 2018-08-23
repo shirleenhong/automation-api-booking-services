@@ -1,13 +1,20 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
-import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
-import io.swagger.annotations.ApiOperation;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exchange.order.exception.AirTransactionNoContentException;
@@ -17,8 +24,6 @@ import com.cwt.bpg.cbt.exchange.order.model.AirTransactionOutput;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
-import javax.validation.Valid;
 
 @RestController
 @Api(tags = "AirTransaction")
@@ -62,12 +67,22 @@ public class AirTransactionController {
 		return new ResponseEntity<>(airTransService.getAirTransactionList(input),
 				HttpStatus.OK);
 	}
-
+	
+	@Internal
 	@PutMapping(path = "/air-transaction")
 	@ApiOperation(value = "Save Air Transaction")
 	@ResponseBody
 	public ResponseEntity<AirTransaction> putAirTransaction(@Valid @RequestBody AirTransaction airTrans) {
 		return new ResponseEntity<>(airTransService.save(airTrans), HttpStatus.OK);
+	}
+
+	@Internal
+	@DeleteMapping(path = "/air-transactions/{id}")
+	@ResponseBody
+	@ApiOperation(value = "Remove air transaction")
+	public ResponseEntity<String> removeAirTransaction(
+			@RequestParam("id") String id) {
+		return new ResponseEntity<>(airTransService.delete(id), HttpStatus.OK);
 	}
 
 	private AirTransactionInput formAirTransactionInput(String airlineCode, String bookingClass,
