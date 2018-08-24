@@ -72,8 +72,8 @@ public class AirTransactionController {
 	@PutMapping(path = "/air-transactions")
 	@ApiOperation(value = "[Maintenance] Save or update Air Transaction")
 	@ResponseBody
-	public ResponseEntity<AirTransaction> putAirTransaction(@Valid @RequestBody AirTransaction airTrans) {
-		return new ResponseEntity<>(airTransService.save(airTrans), HttpStatus.OK);
+	public ResponseEntity<AirTransaction> putAirTransaction(@Valid @RequestBody AirTransaction airTransaction) {
+		return new ResponseEntity<>(airTransService.save(airTransaction), HttpStatus.OK);
 	}
 
 	@Internal
