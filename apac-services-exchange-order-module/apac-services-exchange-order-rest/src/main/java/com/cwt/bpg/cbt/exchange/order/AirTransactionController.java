@@ -32,6 +32,7 @@ public class AirTransactionController {
 	@Autowired
 	private AirTransactionService airTransService;
 
+	@Internal
 	@GetMapping(value = "/air-transaction", produces = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
@@ -58,11 +59,10 @@ public class AirTransactionController {
 	@ApiOperation(value = "[Maintenance] Pulls air transactions based on airline code and client number.")
 	public ResponseEntity<List<AirTransaction>> getAirTransactions(
 			@RequestParam("airlineCode") String airlineCode,
-			@RequestParam("clientAccountNumber") String clientAccountNumber)
-			throws AirTransactionNoContentException {
+			@RequestParam("clientAccountNumber") String clientAccountNumber) {
 
-		AirTransactionInput input = formAirTransactionInput(airlineCode, null,
-				null, null, clientAccountNumber);
+		AirTransactionInput input = formAirTransactionInput(airlineCode, null, null, null,
+				clientAccountNumber);
 
 		return new ResponseEntity<>(airTransService.getAirTransactionList(input),
 				HttpStatus.OK);
