@@ -16,7 +16,7 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 	private static final long serialVersionUID = 3555913363549766564L;
 
 	@ApiModelProperty(allowableValues = "DU, DB, MN, TF, MG, TP")
-	private ClientTypes clientType;
+	private ClientType clientType;
 
 	private String fareType;
 
@@ -135,11 +135,11 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
 
     private String fileFareNumber;
 
-    public ClientTypes getClientType() {
+    public ClientType getClientType() {
 		return clientType;
 	}
 
-	public void setClientType(ClientTypes clientType) {
+	public void setClientType(ClientType clientType) {
 		this.clientType = clientType;
 	}
 

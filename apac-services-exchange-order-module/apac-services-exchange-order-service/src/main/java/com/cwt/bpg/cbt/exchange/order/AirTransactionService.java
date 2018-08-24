@@ -12,15 +12,13 @@ import com.cwt.bpg.cbt.exchange.order.exception.AirTransactionNoContentException
 import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
 import com.cwt.bpg.cbt.exchange.order.model.AirTransactionInput;
 import com.cwt.bpg.cbt.exchange.order.model.AirTransactionOutput;
+import com.cwt.bpg.cbt.exchange.order.model.PassthroughType;
 
 @Service
 public class AirTransactionService {
 
 	@Autowired
 	private AirTransactionRepository airTransactionRepo;
-	
-	private static final String CWT = "CWT";
-	private static final String AIRLINE = "Airline";
 	
 	public AirTransactionOutput getAirTransaction(AirTransactionInput input)
 			throws AirTransactionNoContentException {
@@ -29,16 +27,15 @@ public class AirTransactionService {
 		checkEmptyList(airTransactionList);
 
 		Optional<AirTransaction> passthroughCWT = airTransactionList.stream()
-				.filter(p -> p.getPassthroughType().equals(CWT)).findFirst();
+				.filter(p -> p.getPassthroughType().equals(PassthroughType.CWT)).findFirst();
 
-		return passthroughCWT.isPresent() ? createPassthroughOutput(CWT)
-				: createPassthroughOutput(AIRLINE);
+		return passthroughCWT.isPresent() ? createPassthroughOutput(PassthroughType.CWT)
+				: createPassthroughOutput(PassthroughType.AIRLINE);
 	}
 
-	private AirTransactionOutput createPassthroughOutput(String type) {
+	private AirTransactionOutput createPassthroughOutput(PassthroughType type) {
 		AirTransactionOutput output = new AirTransactionOutput();
 		output.setPassthroughType(type);
-
 		return output;
 	}
 

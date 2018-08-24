@@ -1,11 +1,10 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,11 +14,11 @@ import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
-import com.cwt.bpg.cbt.exchange.order.model.*;
-import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.india.IndiaVendor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,12 +32,14 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.util.NestedServletException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
+import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaVendor;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 import com.cwt.bpg.cbt.exchange.order.validator.FopTypeValidator;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -155,7 +156,7 @@ public class ExchangeOrderControllerTest
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
         order.getServiceInfo().setGst(BigDecimal.ZERO);
         order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-        order.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CWT);
+        order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
         order.setEoNumber("1122334455");
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
@@ -174,7 +175,7 @@ public class ExchangeOrderControllerTest
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
         order.getServiceInfo().setGst(BigDecimal.ZERO);
         order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-        order.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CWT);
+        order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
         order.setEoNumber(null);
         order.getServiceInfo().getFormOfPayment().setCreditCard(null);
 
@@ -275,7 +276,7 @@ public class ExchangeOrderControllerTest
         order.setServiceInfo(new ServiceInfo());
         order.getServiceInfo().setFormOfPayment(new FormOfPayment());
         order.getServiceInfo().setAdditionalInfo(new AdditionalInfo());
-        order.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CWT);
+        order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
         order.getServiceInfo().getAdditionalInfo().setDescription("test_description");
         order.getServiceInfo().getAdditionalInfo().setDate(Instant.now());
         order.setProductCode("PR01");

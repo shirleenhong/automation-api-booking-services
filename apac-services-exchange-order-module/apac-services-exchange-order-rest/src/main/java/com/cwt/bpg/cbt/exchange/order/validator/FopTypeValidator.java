@@ -6,14 +6,14 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
+import com.cwt.bpg.cbt.exchange.order.model.FopType;
 
 @Component
 public class FopTypeValidator implements Validator<ExchangeOrder> {
 
 	private List<String> creditCardTypes = Arrays.asList(
-			FopTypes.CWT.getCode(),
-			FopTypes.CREDIT_CARD.getCode());
+			FopType.CWT.getCode(),
+			FopType.CREDIT_CARD.getCode());
 
 	@Override
 	public void validate(ExchangeOrder input) {

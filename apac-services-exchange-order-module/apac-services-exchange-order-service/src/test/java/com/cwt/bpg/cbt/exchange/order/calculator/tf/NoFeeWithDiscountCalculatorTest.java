@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.TripTypes;
+import com.cwt.bpg.cbt.exchange.order.model.TripType;
 
 public class NoFeeWithDiscountCalculatorTest {
 
@@ -18,7 +18,7 @@ public class NoFeeWithDiscountCalculatorTest {
 	@Test
 	public void getMfOnTfShouldReturnNullIfTripTypeInt() {
         IndiaAirFeesInput input = new IndiaAirFeesInput();
-        input.setTripType(TripTypes.INTERNATIONAL.getCode());
+        input.setTripType(TripType.INTERNATIONAL.getCode());
 		assertNull(noFeeWithDiscountCalculator.getMfOnTf(input, new IndiaAirFeesBreakdown(), new BigDecimal(1)));
 	}
 

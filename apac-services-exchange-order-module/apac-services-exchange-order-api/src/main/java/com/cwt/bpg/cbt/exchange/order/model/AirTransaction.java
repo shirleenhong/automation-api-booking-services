@@ -4,11 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Field;
-import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Index;
-import org.mongodb.morphia.annotations.Indexes;
+import org.mongodb.morphia.annotations.*;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -28,7 +24,7 @@ public class AirTransaction implements Serializable {
 
 	private String ccType;
 
-	private String passthroughType;
+	private PassthroughType passthroughType;
 	
 	private List<BookingClass> bookingClass;
 
@@ -112,11 +108,11 @@ public class AirTransaction implements Serializable {
 		this.ccType = ccType;
 	}
 
-	public String getPassthroughType() {
+	public PassthroughType getPassthroughType() {
 		return passthroughType;
 	}
 
-	public void setPassthroughType(String passthroughType) {
+	public void setPassthroughType(PassthroughType passthroughType) {
 		this.passthroughType = passthroughType;
 	}
 }

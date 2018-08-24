@@ -17,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
-import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 public class FeeCalculatorTest {
@@ -58,7 +57,7 @@ public class FeeCalculatorTest {
         input.setDiscountPercent(5d);
         input.setFeeOverride(false);
         input.setCityCode("BLR");
-        input.setTripType(TripTypes.INTERNATIONAL.getCode());
+        input.setTripType(TripType.INTERNATIONAL.getCode());
 		input.setProduct(createProduct());
 		input.setAirlineOverheadCommissionByPercent(true);
 
@@ -358,7 +357,7 @@ public class FeeCalculatorTest {
 
     @Test
     public void shouldGetTotalDiscountInternational() {
-        input.setTripType(TripTypes.INTERNATIONAL.getCode());
+        input.setTripType(TripType.INTERNATIONAL.getCode());
         input.setDiscountPercent(10d);
         IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
         breakdown.setTotalAirlineCommission(new BigDecimal(50));
@@ -371,7 +370,7 @@ public class FeeCalculatorTest {
 
     @Test
     public void shouldGetTotalDiscountNotInternational() {
-        input.setTripType(TripTypes.DOMESTIC.getCode());
+        input.setTripType(TripType.DOMESTIC.getCode());
         input.setDiscountPercent(10d);
         IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
         breakdown.setTotalAirlineCommission(new BigDecimal(50));
@@ -384,7 +383,7 @@ public class FeeCalculatorTest {
 
     @Test
     public void shouldGetTotalOverheadCommissionInternational() {
-        input.setTripType(TripTypes.INTERNATIONAL.getCode());
+        input.setTripType(TripType.INTERNATIONAL.getCode());
         input.setBaseFare(new BigDecimal(100));
         input.setAirlineOverheadCommissionPercent(10d);
         input.setClientOverheadCommissionPercent(50d);
@@ -396,7 +395,7 @@ public class FeeCalculatorTest {
 
     @Test
     public void shouldGetTotalOverheadCommissionNotInternational() {
-        input.setTripType(TripTypes.DOMESTIC.getCode());
+        input.setTripType(TripType.DOMESTIC.getCode());
 
         BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission(input, new BigDecimal(15));
 
@@ -405,7 +404,7 @@ public class FeeCalculatorTest {
 
     @Test
     public void shouldGetTotalOverheadCommission2International() {
-        input.setTripType(TripTypes.INTERNATIONAL.getCode());
+        input.setTripType(TripType.INTERNATIONAL.getCode());
         input.setBaseFare(new BigDecimal(100));
         input.setAirlineOverheadCommissionByPercent(false);
 
@@ -420,7 +419,7 @@ public class FeeCalculatorTest {
 
     @Test
     public void shouldGetTotalOverheadCommission2NotInternational() {
-        input.setTripType(TripTypes.DOMESTIC.getCode());
+        input.setTripType(TripType.DOMESTIC.getCode());
 
         BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission2(input);
 
@@ -602,7 +601,7 @@ public class FeeCalculatorTest {
 		transactionFee.setEndAmount(new BigDecimal(1000));
 		transactionFee.setMaxAmount(new BigDecimal(10));
 		
-		input.setTripType(TripTypes.DOMESTIC.getCode());
+		input.setTripType(TripType.DOMESTIC.getCode());
 		input.setFeeOverride(true);
 		input.setFee(new BigDecimal(500));
 

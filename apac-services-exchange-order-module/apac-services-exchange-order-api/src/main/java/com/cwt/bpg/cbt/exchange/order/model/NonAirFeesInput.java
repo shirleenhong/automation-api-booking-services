@@ -12,7 +12,7 @@ public class NonAirFeesInput extends FeesInput {
 
 	@ApiModelProperty(required = true, allowableValues = "CX,CC,INV")
 	@NotNull
-    private FopTypes fopType;
+    private FopType fopType;
 
 	private BigDecimal sellingPrice;
 
@@ -81,11 +81,11 @@ public class NonAirFeesInput extends FeesInput {
 		this.nettCost = nettCost;
 	}
 
-	public FopTypes getFopType() {
+	public FopType getFopType() {
 		return fopType;
 	}
 
-	public void setFopType(FopTypes fopType) {
+	public void setFopType(FopType fopType) {
 		this.fopType = fopType;
 	}
 	

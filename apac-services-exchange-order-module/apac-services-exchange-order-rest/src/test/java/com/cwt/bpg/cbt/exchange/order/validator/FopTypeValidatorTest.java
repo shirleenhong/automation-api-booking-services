@@ -5,11 +5,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
-import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
-import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
-import com.cwt.bpg.cbt.exchange.order.model.ServiceInfo;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 
 public class FopTypeValidatorTest {
 
@@ -27,7 +23,7 @@ public class FopTypeValidatorTest {
         ExchangeOrder exchangeOrder = new ExchangeOrder();
         exchangeOrder.setServiceInfo(new ServiceInfo());
         exchangeOrder.getServiceInfo().setFormOfPayment(new FormOfPayment());
-        exchangeOrder.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CREDIT_CARD);
+        exchangeOrder.getServiceInfo().getFormOfPayment().setFopType(FopType.CREDIT_CARD);
         CreditCard creditCard = new CreditCard();
         exchangeOrder.getServiceInfo().getFormOfPayment().setCreditCard(creditCard);
 
@@ -40,7 +36,7 @@ public class FopTypeValidatorTest {
         ExchangeOrder exchangeOrder = new ExchangeOrder();
         exchangeOrder.setServiceInfo(new ServiceInfo());
         exchangeOrder.getServiceInfo().setFormOfPayment(new FormOfPayment());
-        exchangeOrder.getServiceInfo().getFormOfPayment().setFopType(FopTypes.CWT);
+        exchangeOrder.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
 
         validator.validate(exchangeOrder);
     }
@@ -51,7 +47,7 @@ public class FopTypeValidatorTest {
         ExchangeOrder exchangeOrder = new ExchangeOrder();
         exchangeOrder.setServiceInfo(new ServiceInfo());
         exchangeOrder.getServiceInfo().setFormOfPayment(new FormOfPayment());
-        exchangeOrder.getServiceInfo().getFormOfPayment().setFopType(FopTypes.INVOICE);
+        exchangeOrder.getServiceInfo().getFormOfPayment().setFopType(FopType.INVOICE);
         CreditCard creditCard = new CreditCard();
         exchangeOrder.getServiceInfo().getFormOfPayment().setCreditCard(creditCard);
 
@@ -64,7 +60,7 @@ public class FopTypeValidatorTest {
         ExchangeOrder exchangeOrder = new ExchangeOrder();
         exchangeOrder.setServiceInfo(new ServiceInfo());
         exchangeOrder.getServiceInfo().setFormOfPayment(new FormOfPayment());
-        exchangeOrder.getServiceInfo().getFormOfPayment().setFopType(FopTypes.INVOICE);
+        exchangeOrder.getServiceInfo().getFormOfPayment().setFopType(FopType.INVOICE);
 
         validator.validate(exchangeOrder);
     }
