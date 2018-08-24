@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
 import com.cwt.bpg.cbt.exchange.order.model.BookingClass;
+import com.cwt.bpg.cbt.exchange.order.model.PassthroughType;
 
 @Repository
 public class AirTransactionDAOImpl {
@@ -62,7 +63,7 @@ public class AirTransactionDAOImpl {
 				airTransaction.setCcVendorCode(rs.getString("CCVendorCode"));
 				airTransaction.setCcVendorName(rs.getString("CCVendorName"));
 				airTransaction.setCcType(rs.getString("CCType"));
-				airTransaction.setPassthroughType(rs.getString("PassthroughType"));
+				airTransaction.setPassthroughType(PassthroughType.fromString(rs.getString("PassthroughType")));
 				airTransaction.setClientAccountNumber(rs.getString("clientNumber"));
 				airTransactions.add(airTransaction);
 			}

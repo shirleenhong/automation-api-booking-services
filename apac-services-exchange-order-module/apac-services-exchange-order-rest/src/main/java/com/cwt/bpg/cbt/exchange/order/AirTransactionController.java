@@ -26,6 +26,7 @@ public class AirTransactionController {
 	@Autowired
 	private AirTransactionService airTransService;
 
+	@Internal
 	@GetMapping(value = "/air-transaction", produces = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
@@ -55,7 +56,7 @@ public class AirTransactionController {
 
 		AirTransactionInput input = formAirTransactionInput(airlineCode, null,
 				null, clientAccountNumber);
-
+    
 		return new ResponseEntity<>(airTransService.getAirTransactionList(input),
 				HttpStatus.OK);
 	}
