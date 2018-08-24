@@ -26,7 +26,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(tags = "AirTransaction")
+@Api(tags = "Air Transaction")
 public class AirTransactionController {
 
 	@Autowired
@@ -69,17 +69,17 @@ public class AirTransactionController {
 	}
 	
 	@Internal
-	@PutMapping(path = "/air-transaction")
-	@ApiOperation(value = "Save Air Transaction")
+	@PutMapping(path = "/air-transactions")
+	@ApiOperation(value = "[Maintenance] Save or update Air Transaction")
 	@ResponseBody
 	public ResponseEntity<AirTransaction> putAirTransaction(@Valid @RequestBody AirTransaction airTrans) {
 		return new ResponseEntity<>(airTransService.save(airTrans), HttpStatus.OK);
 	}
 
 	@Internal
-	@DeleteMapping(path = "/air-transactions/{id}")
+	@DeleteMapping(path = "/air-transactions")
 	@ResponseBody
-	@ApiOperation(value = "Remove air transaction")
+	@ApiOperation(value = "[Maintenance] Remove air transaction")
 	public ResponseEntity<String> removeAirTransaction(
 			@RequestParam("id") String id) {
 		return new ResponseEntity<>(airTransService.delete(id), HttpStatus.OK);

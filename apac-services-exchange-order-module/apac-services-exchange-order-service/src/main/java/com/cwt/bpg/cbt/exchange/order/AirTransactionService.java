@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -58,6 +59,6 @@ public class AirTransactionService {
 	}
 	
 	public String delete(String id) {
-		return airTransactionRepo.remove(id);
+		return airTransactionRepo.remove(new ObjectId(id));
 	}
 }
