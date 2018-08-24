@@ -88,7 +88,6 @@ Append Exchange Order Main Request Fields
     ${exchange_order_main_request_list}    Create List
     ${eo_exists}    Run Keyword And Return Status    Variable Should Exist    ${exchange_order_number_${eo_index}}
     Run Keyword If    "${eo_exists}"=="True"    Append To List    ${exchange_order_main_request_list}    "eoNumber":"${exchange_order_number_${eo_index}}"
-    #Run Keyword If    "${exchange_order_number_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_main_request_list}    "eoNumber":"${exchange_order_number_${eo_index}_${field_name}}"
     Run Keyword If    "${account_number_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_main_request_list}    "accountNumber":"${account_number_${eo_index}_${field_name}}"
     Run Keyword If    "${agent_id_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_main_request_list}    "agentId":"${agent_id_${eo_index}_${field_name}}"
     Run Keyword If    "${agent_name_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_main_request_list}    "agentName":"${agent_name_${eo_index}_${field_name}}"
@@ -224,10 +223,14 @@ Append Exchange Order Service Information Request Fields
     Run Keyword If    "${passenger_id_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_service_info_request_list}    "passengerId":"${passenger_id_${eo_index}_${field_name}}"
     Run Keyword If    "${eo_exists}"=="True"    Append To List    ${exchange_order_service_info_request_list}    "eoNumber":"${exchange_order_number_${eo_index}}"
     Run Keyword If    "${eo_exists}"=="True"    Set Test Variable    ${exchange_order_number_${eo_index}_${field_name}}    ${exchange_order_number_${eo_index}}
-    #Run Keyword If    "${exchange_order_number_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_service_info_request_list}    "eoNumber":"${exchange_order_number_${eo_index}_${field_name}}"
     Run Keyword If    "${depart_date_time_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_service_info_request_list}    "departDateAndTime":"${depart_date_time_${eo_index}_${field_name}}"
     Run Keyword If    "${return_date_time_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_service_info_request_list}    "returnDateAndTime":"${return_date_time_${eo_index}_${field_name}}"
-    Run Keyword If    "${class_cabin_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_request_list}    "cabin":"${class_cabin_${eo_index}_value}"
+    Run Keyword If    "${class_cabin_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_service_info_request_list}    "cabin":"${class_cabin_${eo_index}_${field_name}}"
+    Run Keyword If    "${selling_fare_to_client_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_service_info_request_list}    "sellingFareToClient":"${selling_fare_to_client_${eo_index}_${field_name}}"
+    Run Keyword If    "${publish_fare_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_service_info_request_list}    "publishedFare":"${publish_fare_${eo_index}_${field_name}}"
+    Run Keyword If    "${prefix_consolidator_eo_number_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_service_info_request_list}    "prefixConsolidatorEoNumber":"${prefix_consolidator_eo_number_${eo_index}_${field_name}}"
+    Run Keyword If    "${consolidator_eo_number_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_service_info_request_list}    "consolidatorEoNumber":"${consolidator_eo_number_${eo_index}_${field_name}}"
+    Run Keyword If    "${file_fare_number_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_service_info_request_list}    "fileFareNumber":"${file_fare_number_${eo_index}_${field_name}}"
     Append Exchange Order Additional Information Request Fields    ${eo_index}
     Append Exchange Order Arrival Request Fields    ${eo_index}
     Append Exchange Order Depart Routing Request Fields    ${eo_index}
@@ -487,6 +490,7 @@ Create Test Variables For Exchange Order
     \    Run Keyword If    "${vendor_contact_info_data}"!="${EMPTY}"    Create Test Variables For Vendor Contact Info    ${vendor_contact_info_data}    ${eo_index}
     \    ...    ELSE    Set Test Variable    ${contact_data_length_${eo_index}}    0
     \    Identify Exchange Order Market    ${eo_index}
+    \    Format Additional Info Date    ${eo_index}
 
 Create Test Variables For Exchange Order Main
     [Arguments]    ${eo_data_list}    ${eo_index}=0    ${field_name}=value
@@ -605,9 +609,9 @@ Evict Exchange Order Cache
 
 Format Additional Info Date
     [Arguments]    ${eo_index}=0
-    ${year}    Get Substring    ${date_${eo_index}_value}    0    4
-    ${month}    Get Substring    ${date_${eo_index}_value}    5    7
-    ${day}    Get Substring    ${date_${eo_index}_value}    8    10
+    ${year}    Get Substring    ${ai_date_${eo_index}_value}    0    4
+    ${month}    Get Substring    ${ai_date_${eo_index}_value}    5    7
+    ${day}    Get Substring    ${ai_date_${eo_index}_value}    8    10
     ${month}    Set Variable If    "${month}"=="01"    Jan    "${month}"=="02"    Feb    "${month}"=="03"
     ...    Mar    "${month}"=="04"    Apr    "${month}"=="05"    May    "${month}"=="06"
     ...    Jun    "${month}"=="07"    Jul    "${month}"=="08"    Aug    "${month}"=="09"
@@ -829,30 +833,30 @@ Verify Exchange Order Information For PDF Is Retrieved Correctly
     Verify String Contains Substring    ${pdf_response}    ${display_additional_info_date_${eo_index}}
     Verify String Contains Substring    ${pdf_response}    ${agent_id_${eo_index}_value}
     Verify String Contains Substring    ${pdf_response}    ${agent_name_${eo_index}_value}
-    Run Keyword If    "${bta_description_${eo_index}_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${bta_description_${eo_index}_value}
-    ...    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${bta_description_${eo_index}_value}
-    Verify String Contains Substring    ${pdf_response}    ${description_${eo_index}_value}
+    Run Keyword If    "${ai_bta_description_${eo_index}_value}"!="none"    Verify String Contains Substring    ${pdf_response}    ${ai_bta_description_${eo_index}_value}
+    ...    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${ai_bta_description_${eo_index}_value}
+    Verify String Contains Substring    ${pdf_response}    ${ai_description_${eo_index}_value}
     Verify String Contains Substring    ${pdf_response}    ${exchange_order_number_${eo_index}}
-    Run Keyword If    "${gst_amount_${eo_index}_value}"!="null" and ${gst_amount_${eo_index}_value}>0    Verify String Contains Substring    ${pdf_response}    ${gst_amount_${eo_index}_value}
+    Run Keyword If    "${gst_${eo_index}_value}"!="none" and ${gst_${eo_index}_value}>0    Verify String Contains Substring    ${pdf_response}    ${gst_amount_${eo_index}_value}
     Verify String Contains Substring    ${pdf_response}    ${header_address_${eo_index}_value}
-    Run Keyword If    "${header_fax_${eo_index}_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${header_fax_${eo_index}_value}
+    Run Keyword If    "${header_fax_${eo_index}_value}"!="none"    Verify String Contains Substring    ${pdf_response}    ${header_fax_${eo_index}_value}
     ...    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${header_fax_${eo_index}_value}
-    Run Keyword If    "${header_telephone_${eo_index}_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${header_telephone_${eo_index}_value}
+    Run Keyword If    "${header_telephone_${eo_index}_value}"!="none"    Verify String Contains Substring    ${pdf_response}    ${header_telephone_${eo_index}_value}
     ...    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${header_telephone_${eo_index}_value}
-    Run Keyword If    "${nett_cost_${eo_index}_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${nett_cost_${eo_index}_value}
+    Run Keyword If    "${nett_cost_${eo_index}_value}"!="none"    Verify String Contains Substring    ${pdf_response}    ${nett_cost_${eo_index}_value}
     ...    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${nett_cost_${eo_index}_value}
     Verify String Contains Substring    ${pdf_response}    ${passenger_name_${eo_index}_value}
     Verify String Contains Substring    ${pdf_response}    ${record_locator_${eo_index}_value}
-    Run Keyword If    ("${gst_amount_${eo_index}_value}"=="null" or "${gst_amount_${eo_index}_value}"=="0") and "${tax_1_${eo_index}_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${tax_1_${eo_index}_value}
+    Run Keyword If    ("${gst_${eo_index}_value}"=="none" or "${gst_${eo_index}_value}"=="0") and "${tax_1_${eo_index}_value}"!="none"    Verify String Contains Substring    ${pdf_response}    ${tax_1_${eo_index}_value}
     ...    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${tax_1_${eo_index}_value}
-    Run Keyword If    ("${tax_1_${eo_index}_value}"!="null" or "${tax_1_${eo_index}_value}"!="0") and "${tax_2_${eo_index}_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${tax_2_${eo_index}_value}
+    Run Keyword If    ("${tax_1_${eo_index}_value}"!="none" or "${tax_1_${eo_index}_value}"!="0") and "${tax_2_${eo_index}_value}"!="none"    Verify String Contains Substring    ${pdf_response}    ${tax_2_${eo_index}_value}
     ...    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${tax_2_${eo_index}_value}
     ${total_value}    Run Keyword If    "${country_${eo_index}_value.upper()}"=="SG"    Convert To Number    ${total_${eo_index}_value}
     ...    ELSE    Convert To Integer    ${total_${eo_index}_value}
     ${total_value}    Format Number    ${total_value}
     Verify String Contains Substring    ${pdf_response}    ${total_value}
-    Run Keyword If    "${vendor_contact_${eo_index}_value}"!="null"    Verify String Contains Substring    ${pdf_response}    ${vendor_contact_${eo_index}_value}
-    ...    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${vendor_contact_${eo_index}_value}
+    Run Keyword If    "${vendor_contact_person_${eo_index}_value}"!="none"    Verify String Contains Substring    ${pdf_response}    ${vendor_contact_person_${eo_index}_value}
+    ...    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${vendor_contact_person_${eo_index}_value}
     Verify String Contains Substring X Times    ${pdf_response}    ${vendor_name_${eo_index}_value}    2
     Verify String Contains Substring    ${pdf_response}    ${vendor_address_1_${eo_index}_value}
     Verify String Contains Substring    ${pdf_response}    ${vendor_address_2_${eo_index}_value}
@@ -1188,6 +1192,16 @@ Verify Exchange Order Service Information Is Saved Correctly
     ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.ticket.connector
     Run Keyword If    "${ticket_number_in_exchange_for_${eo_index}_${field_name}}"!="null" and "${ticket_number_in_exchange_for_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.ticket.exchangeTicketNumber    ${ticket_number_in_exchange_for_${eo_index}_${field_name}}
     ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.ticket.exchangeTicketNumber
+    Run Keyword If    "${selling_fare_to_client_${eo_index}_${field_name}}"!="null" and "${selling_fare_to_client_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.sellingFareToClient    ${selling_fare_to_client_${eo_index}_${field_name}}
+    ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.sellingFareToClient
+    Run Keyword If    "${publish_fare_${eo_index}_${field_name}}"!="null" and "${publish_fare_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.publishedFare    ${publish_fare_${eo_index}_${field_name}}
+    ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.publishedFare
+    Run Keyword If    "${prefix_consolidator_eo_number_${eo_index}_${field_name}}"!="null" and "${prefix_consolidator_eo_number_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.prefixConsolidatorEoNumber    ${prefix_consolidator_eo_number_${eo_index}_${field_name}}
+    ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.prefixConsolidatorEoNumber
+    Run Keyword If    "${consolidator_eo_number_${eo_index}_${field_name}}"!="null" and "${consolidator_eo_number_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.consolidatorEoNumber    ${consolidator_eo_number_${eo_index}_${field_name}}
+    ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.consolidatorEoNumber
+    Run Keyword If    "${file_fare_number_${eo_index}_${field_name}}"!="null" and "${file_fare_number_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.fileFareNumber    ${file_fare_number_${eo_index}_${field_name}}
+    ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.fileFareNumber
 
 Verify Exchange Order Vendor Is Saved Correctly
     [Arguments]    ${eo_index}=0    ${field_name}=value
