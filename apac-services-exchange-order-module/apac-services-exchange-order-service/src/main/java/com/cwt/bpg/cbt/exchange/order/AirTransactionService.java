@@ -3,8 +3,11 @@ package com.cwt.bpg.cbt.exchange.order;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.Resource;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -17,13 +20,16 @@ import com.cwt.bpg.cbt.exchange.order.model.PassthroughType;
 @Service
 public class AirTransactionService {
 
+	@Resource
+	private AirTransactionService proxy;
+	
 	@Autowired
 	private AirTransactionRepository airTransactionRepo;
 	
 	public AirTransactionOutput getAirTransaction(AirTransactionInput input)
 			throws AirTransactionNoContentException {
 
-		List<AirTransaction> airTransactionList = getAirTransactionList(input);
+		List<AirTransaction> airTransactionList = proxy.getAirTransactionList(input);
 		checkEmptyList(airTransactionList);
 
 		Optional<AirTransaction> passthroughCWT = airTransactionList.stream()
@@ -47,8 +53,9 @@ public class AirTransactionService {
 		}
 	}
 
-	public List<AirTransaction> getAirTransactionList(AirTransactionInput param) {
-		return airTransactionRepo.getAirTransactions(param);
+	@Cacheable(cacheNames = "air-transactions", key = "#input.airlineCode.toString() + #input.clientAccountNumber.toString()")
+	public List<AirTransaction> getAirTransactionList(AirTransactionInput input) {
+		return airTransactionRepo.getAirTransactions(input);
 	}
 
 	public AirTransaction save(AirTransaction airTrans) {
