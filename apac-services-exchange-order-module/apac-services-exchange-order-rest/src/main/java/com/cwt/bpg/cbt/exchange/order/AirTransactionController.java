@@ -8,13 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exchange.order.exception.AirTransactionNoContentException;
@@ -41,13 +35,12 @@ public class AirTransactionController {
 			@RequestParam("airlineCode") String airlineCode,
 			@RequestParam("bookingClass") String bookingClass,
 			@RequestParam("ccVendorCode") String ccVendorCode,
-			@RequestParam(value = "countryCode", required = false) String countryCode,
 			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber)
 			throws AirTransactionNoContentException {
 
 		AirTransactionInput input = formAirTransactionInput(airlineCode, bookingClass,
-				ccVendorCode, countryCode, clientAccountNumber);
-		
+				ccVendorCode, clientAccountNumber);
+
 		return new ResponseEntity<>(airTransService.getAirTransaction(input), HttpStatus.OK);
 	}
 
@@ -58,16 +51,15 @@ public class AirTransactionController {
 	@ApiOperation(value = "[Maintenance] Pulls air transactions based on airline code and client number.")
 	public ResponseEntity<List<AirTransaction>> getAirTransactions(
 			@RequestParam("airlineCode") String airlineCode,
-			@RequestParam("clientAccountNumber") String clientAccountNumber)
-			throws AirTransactionNoContentException {
+			@RequestParam("clientAccountNumber") String clientAccountNumber) {
 
 		AirTransactionInput input = formAirTransactionInput(airlineCode, null,
-				null, null, clientAccountNumber);
+				null, clientAccountNumber);
 
 		return new ResponseEntity<>(airTransService.getAirTransactionList(input),
 				HttpStatus.OK);
 	}
-	
+
 	@Internal
 	@PutMapping(path = "/air-transactions")
 	@ApiOperation(value = "[Maintenance] Save or update Air Transaction")
@@ -86,15 +78,13 @@ public class AirTransactionController {
 	}
 
 	private AirTransactionInput formAirTransactionInput(String airlineCode, String bookingClass,
-			String ccVendorCode, String countryCode, String clientAccountNumber) {
-		
+														String ccVendorCode, String clientAccountNumber) {
+
 		AirTransactionInput input = new AirTransactionInput();
 		input.setBookingClass(bookingClass);
 		input.setAirlineCode(airlineCode);
 		input.setCcVendorCode(ccVendorCode);
-		input.setCountryCode(countryCode);
 		input.setClientAccountNumber(clientAccountNumber);
-		
 		return input;
 	}
 

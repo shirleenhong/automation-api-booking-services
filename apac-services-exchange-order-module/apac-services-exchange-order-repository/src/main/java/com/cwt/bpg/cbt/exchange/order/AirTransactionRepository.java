@@ -18,7 +18,6 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 	private static final String AIRLINE_CODE = "airlineCode";
 	private static final String CC_VENDOR_CODE = "ccVendorCode";
 	private static final String BOOKING_CLASS = "bookingClass";
-	private static final String COUNTRY_CODE = "countryCode";
 	private static final String CLIENT_ACCT_NUM = "clientAccountNumber";
 	private static final String BOOKING_CLASS_CODE = "code";
 	private static final String ELEM_MATCH = " elem";
@@ -40,9 +39,6 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 		if (StringUtils.isNotBlank(params.getBookingClass())) {
 			query.filter(BOOKING_CLASS + ELEM_MATCH, BasicDBObjectBuilder
 					.start(BOOKING_CLASS_CODE, params.getBookingClass()).get());
-		}
-		if(StringUtils.isNotBlank(params.getCountryCode())) {
-			query.field(COUNTRY_CODE).equal(params.getCountryCode());
 		}
 		if(StringUtils.isNotBlank(params.getClientAccountNumber())) {
 			query.field(CLIENT_ACCT_NUM).equal(params.getClientAccountNumber());
