@@ -23,6 +23,9 @@ import static org.mockito.Mockito.*;
 public class AirTransactionServiceTest {
 
     @Mock
+    private AirTransactionService proxy;
+
+    @Mock
     private AirTransactionRepository repository;
 
     @InjectMocks
@@ -52,13 +55,13 @@ public class AirTransactionServiceTest {
         List<AirTransaction> airTransactions = new ArrayList<>();
         airTransactions.add(airTransaction);
 
-        when(repository.getAirTransactions(any(AirTransactionInput.class))).thenReturn(airTransactions);
+        when(proxy.getAirTransactionList(any(AirTransactionInput.class))).thenReturn(airTransactions);
 
         AirTransactionOutput result = service.getAirTransaction(new AirTransactionInput());
 
         assertNotNull(result);
         assertEquals(PassthroughType.CWT, result.getPassthroughType());
-        verify(repository, times(1)).getAirTransactions(any(AirTransactionInput.class));
+        verify(proxy, times(1)).getAirTransactionList(any(AirTransactionInput.class));
     }
 
     @Test
