@@ -17,4 +17,13 @@ public enum PassthroughType {
 	public String getCode() {
 		return code;
 	}
+	
+	public static PassthroughType fromString(String code) {
+		for (PassthroughType type : PassthroughType.values()) {
+			if (type.code.equalsIgnoreCase(code)) {
+				return type;
+			}
+		}
+		return null;
+	}
 }
