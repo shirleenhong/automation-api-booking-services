@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import com.cwt.bpg.cbt.exchange.order.model.AirTransactionInput;
 import com.mongodb.BasicDBObjectBuilder;
 
 @Repository
-public class AirTransactionRepository extends CommonRepository<AirTransaction, String>{
+public class AirTransactionRepository extends CommonRepository<AirTransaction, ObjectId>{
 
 	private static final String ID = "id";
 	private static final String AIRLINE_CODE = "airlineCode";
