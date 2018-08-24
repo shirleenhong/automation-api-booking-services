@@ -48,7 +48,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		input.setDiscountPercent(5D);
 		input.setFopMode(4);
 		input.setFopNumber("1234");
-		input.setFopType(FopTypes.CWT);
+		input.setFopType(FopType.CWT);
 
 		IndiaNonAirProductInput product= new IndiaNonAirProductInput();
 		product.setGstPercent(6D);

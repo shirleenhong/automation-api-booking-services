@@ -37,7 +37,7 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 		BigDecimal inDiscount = safeValue(input.getDiscount());
 		BigDecimal inCommission = safeValue(input.getCommission());
 		Boolean isConstTkt = "CT".equals(input.getProductType());
-		Boolean isFopTypeCX = safeValue(input.getFopType().getCode()).equals(FopTypes.CWT.getCode());
+		Boolean isFopTypeCX = safeValue(input.getFopType().getCode()).equals(FopType.CWT.getCode());
 		String inClientType = safeValue(input.getClientType());
 
 		if (!input.isApplyFormula()) {
@@ -115,7 +115,7 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 
 	private BigDecimal getDiscountAmt(BigDecimal sellFare, Double discountPercent, String clientType, int scale) {
 		BigDecimal discountAmt = BigDecimal.ZERO;
-		if (ClientTypes.clientsWithDiscount().contains(clientType)) {
+		if (ClientType.clientsWithDiscount().contains(clientType)) {
 			discountAmt = round(sellFare.multiply(percentDecimal(discountPercent)), scale);
 		}
 		return discountAmt;
@@ -125,7 +125,7 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 			Boolean incMF) {
 		BigDecimal total;
 
-		if (ClientTypes.TF.getCode().equals(clientType) && incMF) {
+		if (ClientType.TF.getCode().equals(clientType) && incMF) {
 			total = totalCharge.add(transFee);
 		}
 		else {

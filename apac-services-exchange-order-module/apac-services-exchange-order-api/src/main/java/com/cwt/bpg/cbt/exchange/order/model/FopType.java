@@ -2,8 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum FopTypes
-{
+public enum FopType {
 
 	CWT("CX"),
 	CREDIT_CARD("CC"), 
@@ -13,7 +12,7 @@ public enum FopTypes
 	@JsonValue
 	private final String code;
 
-	FopTypes(String code) {
+	FopType(String code) {
 		this.code = code;
 	}
 

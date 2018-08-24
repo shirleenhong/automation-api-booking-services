@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
-import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
+import com.cwt.bpg.cbt.exchange.order.model.FopType;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
@@ -39,7 +39,7 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 		}
 
 		BigDecimal merchantFeeAmount = null;
-		if (!input.isMerchantFeeAbsorb() && FopTypes.CWT.equals(input.getFopType())
+		if (!input.isMerchantFeeAbsorb() && FopType.CWT.equals(input.getFopType())
 				&& !input.isMerchantFeeWaive()) {
 
 			merchantFeeAmount = round(

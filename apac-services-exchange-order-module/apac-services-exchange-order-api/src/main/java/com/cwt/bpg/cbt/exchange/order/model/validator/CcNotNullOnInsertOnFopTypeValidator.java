@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
-import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
+import com.cwt.bpg.cbt.exchange.order.model.FopType;
 
 /**
  * Implementation of {@link CcNotNullOnFopType} validator.
@@ -30,7 +30,7 @@ public class CcNotNullOnInsertOnFopTypeValidator implements ConstraintValidator<
 		}
 
 		try {
-			FopTypes fopTypeVal = (FopTypes) PropertyUtils.getProperty(value, "fopType");
+			FopType fopTypeVal = (FopType) PropertyUtils.getProperty(value, "fopType");
 			CreditCard cc = (CreditCard) PropertyUtils.getProperty(value, "creditCard");
 
 			if (fopTypeVal != null) {
@@ -38,7 +38,7 @@ public class CcNotNullOnInsertOnFopTypeValidator implements ConstraintValidator<
 					if (fopTypeVal.getCode().equals(fopType) && cc == null) {
 						throw new IllegalArgumentException(
 								"[creditCard] should not be null if [fopType] is [" + fopType + "].");
-					}else if(fopTypeVal.getCode().equalsIgnoreCase(FopTypes.INVOICE.getCode()) && cc!=null){
+					} else if(fopTypeVal.getCode().equalsIgnoreCase(FopType.INVOICE.getCode()) && cc!=null) {
 						PropertyUtils.setProperty(value,"creditCard",null);
 					}
 				}

@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-public enum TripTypes {
+public enum TripType
+{
 	
 	INTERNATIONAL("I"),
 	DOMESTIC("D"),
@@ -8,7 +9,7 @@ public enum TripTypes {
 
 	private final String code;
 
-	private TripTypes(String code) {
+	private TripType(String code) {
 		this.code = code;
 	}
 

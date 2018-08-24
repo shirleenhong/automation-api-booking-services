@@ -17,7 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
+import com.cwt.bpg.cbt.exchange.order.model.FopType;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,7 +50,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
 
         NonAirFeesInput input = new NonAirFeesInput();
 
-        input.setFopType(FopTypes.CWT);
+        input.setFopType(FopType.CWT);
         input.setGstPercent(2D);
         input.setClientAccountNumber("1234");
 
@@ -91,7 +91,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
 
         NonAirFeesInput input = new NonAirFeesInput();
 
-        input.setFopType(FopTypes.CWT);
+        input.setFopType(FopType.CWT);
         input.setClientAccountNumber("1234");
 
         mockMvc.perform(post("/other-service-fees/non-air-fees/sg")
@@ -107,7 +107,7 @@ public class OtherServiceFeesControllerNonAirFeeTest {
 
         NonAirFeesInput input = new NonAirFeesInput();
 
-        input.setFopType(FopTypes.CWT);
+        input.setFopType(FopType.CWT);
         input.setGstPercent(2D);
 
         mockMvc.perform(post("/other-service-fees/non-air-fees/sg")

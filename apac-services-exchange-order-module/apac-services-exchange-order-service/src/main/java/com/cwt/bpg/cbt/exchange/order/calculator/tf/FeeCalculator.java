@@ -6,11 +6,11 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Optional;
 
-import com.cwt.bpg.cbt.calculator.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component("tfCalculator")
@@ -319,7 +319,7 @@ public class FeeCalculator {
 		BigDecimal discountAmount = calculatePercentage(breakdown.getTotalAirlineCommission(),
 				input.getDiscountPercent());
 
-		if (TripTypes.isInternational(input.getTripType())) {
+		if (TripType.isInternational(input.getTripType())) {
 			return discountAmount.add(safeValue(breakdown.getTotalOverheadCommission()));
 		}
 
@@ -328,7 +328,7 @@ public class FeeCalculator {
 
 	//Airline OR Commission %
 	public BigDecimal getTotalOverheadCommission(IndiaAirFeesInput input, BigDecimal totalAirlineCommission) {
-		if (TripTypes.isInternational(input.getTripType())) {
+		if (TripType.isInternational(input.getTripType())) {
 			return calculatePercentage(calculatePercentage(safeValue(input.getBaseFare())
 						.subtract(safeValue(totalAirlineCommission)), input.getAirlineOverheadCommissionPercent()),
 					input.getClientOverheadCommissionPercent());
@@ -338,7 +338,7 @@ public class FeeCalculator {
 
 	//Airline OR Commission $
 	public BigDecimal getTotalOverheadCommission2(IndiaAirFeesInput input) {
-		if (TripTypes.isInternational(input.getTripType())) {
+		if (TripType.isInternational(input.getTripType())) {
 			return calculatePercentage(input.getAirlineOverheadCommission(),
 					input.getClientOverheadCommissionPercent());
 		}
@@ -358,7 +358,7 @@ public class FeeCalculator {
 								IndiaAirFeesBreakdown breakdown,
 								BigDecimal totalGstOnTf) {
 
-		if (TripTypes.isInternational(input.getTripType())) {
+		if (TripType.isInternational(input.getTripType())) {
 			return calculatePercentage(safeValue(breakdown.getFee()).add(totalGstOnTf),
 					input.getMerchantFeePercent());
 		}

@@ -15,7 +15,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.FopTypes;
+import com.cwt.bpg.cbt.exchange.order.model.FopType;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 public class SgAirCalculatorTest {
@@ -52,7 +52,7 @@ public class SgAirCalculatorTest {
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommission(bigDecimal("15"));
 		input.setNettFare(bigDecimal("300"));
-		input.setFopType(FopTypes.CWT);
+		input.setFopType(FopType.CWT);
 		AirFeesBreakdown afb = calculator.calculate(input, null, "HK");
 
 		assertThat(afb.getCommission(), nullValue());
@@ -74,7 +74,7 @@ public class SgAirCalculatorTest {
 		input.setTax2(bigDecimal("14"));
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommission(bigDecimal("15"));
-		input.setFopType(FopTypes.CWT);
+		input.setFopType(FopType.CWT);
 
 		AirFeesBreakdown afb = calculator.calculate(input, null, null);
 
@@ -98,7 +98,7 @@ public class SgAirCalculatorTest {
 		input.setTax2(bigDecimal("14"));
 		input.setMerchantFee(bigDecimal("30"));
 		input.setCommission(bigDecimal("15"));
-		input.setFopType(FopTypes.INVOICE);
+		input.setFopType(FopType.INVOICE);
 
 		AirFeesBreakdown afb = calculator.calculate(input, null, null);
 
@@ -123,7 +123,7 @@ public class SgAirCalculatorTest {
 		input.setCommissionPercent(Double.parseDouble("20"));
 		input.setDiscountByPercent(true);
 		input.setDiscountPercent(Double.parseDouble("15"));
-		input.setFopType(FopTypes.INVOICE);
+		input.setFopType(FopType.INVOICE);
 
 		AirFeesBreakdown afb = calculator.calculate(input, null, "SG");
 
@@ -151,7 +151,7 @@ public class SgAirCalculatorTest {
 		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setProductType("CT");
 		input.setClientType("TF");
-		input.setFopType(FopTypes.CWT);
+		input.setFopType(FopType.CWT);
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(true);
@@ -184,7 +184,7 @@ public class SgAirCalculatorTest {
 		input.setDiscountPercent(Double.parseDouble("15"));
 		input.setProductType("CT");
 		input.setClientType("DU");
-		input.setFopType(FopTypes.CWT);
+		input.setFopType(FopType.CWT);
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(false);
@@ -218,7 +218,7 @@ public class SgAirCalculatorTest {
 		input.setDiscount(bigDecimal("45.00"));
 		input.setProductType("CT");
 		input.setClientType("TF");
-		input.setFopType(FopTypes.CWT);
+		input.setFopType(FopType.CWT);
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(false);
@@ -252,7 +252,7 @@ public class SgAirCalculatorTest {
 		input.setDiscount(bigDecimal("45.00"));
 		input.setProductType("CT");
 		input.setClientType("TF");
-		input.setFopType(FopTypes.CWT);
+		input.setFopType(FopType.CWT);
 		input.setCwtAbsorb(true);
 		input.setMerchantFeeWaive(false);
 		merchantFee.setIncludeTransactionFee(false);
@@ -286,7 +286,7 @@ public class SgAirCalculatorTest {
 		input.setDiscount(bigDecimal("45.00"));
 		input.setProductType("CT");
 		input.setClientType("TF");
-		input.setFopType(FopTypes.CWT);
+		input.setFopType(FopType.CWT);
 		input.setCwtAbsorb(false);
 		input.setMerchantFeeWaive(true);
 		merchantFee.setIncludeTransactionFee(false);
@@ -316,7 +316,7 @@ public class SgAirCalculatorTest {
 		AirFeesInput input = new AirFeesInput();
 		input.setApplyFormula(true);
 		input.setCwtAbsorb(false);
-		input.setFopType(FopTypes.CWT);
+		input.setFopType(FopType.CWT);
 		input.setMerchantFeeWaive(false);
 		input.setNettFare(bigDecimal("300"));
 		input.setSellingPrice(bigDecimal("200"));

@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-public enum PricingNames {
+public enum PricingName {
 
 	TRANSACTION_FEE(20),
 	TF_ON_FULL_FARE(21),
@@ -16,7 +16,7 @@ public enum PricingNames {
 
 	private final int id;
 
-	private PricingNames(int id) {
+	PricingName(int id) {
 		this.id = id;
 	}
 

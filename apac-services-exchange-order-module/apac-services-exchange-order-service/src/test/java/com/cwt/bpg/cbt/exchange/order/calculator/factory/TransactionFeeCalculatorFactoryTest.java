@@ -6,18 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.NoFeeCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.NoFeeWithDiscountCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.BaseAndYqCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.BasicCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.FareCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.FullFareCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.GrossFareCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.NettFareCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.WithVatCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.RebateCalculator;
-import com.cwt.bpg.cbt.exchange.order.calculator.tf.FeeCalculator;
-import com.cwt.bpg.cbt.exchange.order.model.PricingNames;
+import com.cwt.bpg.cbt.exchange.order.calculator.tf.*;
+import com.cwt.bpg.cbt.exchange.order.model.PricingName;
 
 public class TransactionFeeCalculatorFactoryTest {
 
@@ -43,56 +33,56 @@ public class TransactionFeeCalculatorFactoryTest {
 
 	@Test
 	public void tfFullFareCalculator() {
-		assertTrue(factory.getCalculator(PricingNames.TF_ON_FULL_FARE.getId()) instanceof FeeCalculator);
+		assertTrue(factory.getCalculator(PricingName.TF_ON_FULL_FARE.getId()) instanceof FeeCalculator);
 	}
 	
 	@Test
 	public void tfNettFareCalculator() {
-		assertTrue(factory.getCalculator(PricingNames.TF_ON_NETT_FARE.getId()) instanceof FeeCalculator);
+		assertTrue(factory.getCalculator(PricingName.TF_ON_NETT_FARE.getId()) instanceof FeeCalculator);
 	}
 	
 	@Test
 	public void tfGrossFareCalculator() {
-		assertTrue(factory.getCalculator(PricingNames.TF_ON_GROSS_FARE.getId()) instanceof FeeCalculator);
+		assertTrue(factory.getCalculator(PricingName.TF_ON_GROSS_FARE.getId()) instanceof FeeCalculator);
 	}
 	
 	@Test
 	public void tfFareCalculator() {
-		assertTrue(factory.getCalculator(PricingNames.TF_ON_FARE.getId()) instanceof FeeCalculator);
+		assertTrue(factory.getCalculator(PricingName.TF_ON_FARE.getId()) instanceof FeeCalculator);
 	}
 	
 	@Test
 	public void tfBasicCalculator() {
-		assertTrue(factory.getCalculator(PricingNames.TF_ON_BASIC.getId()) instanceof FeeCalculator);
+		assertTrue(factory.getCalculator(PricingName.TF_ON_BASIC.getId()) instanceof FeeCalculator);
 	}
 	
 	@Test
 	public void noFeeCalculator() {
-		assertTrue(factory.getCalculator(PricingNames.NO_FEE.getId()) instanceof FeeCalculator);
+		assertTrue(factory.getCalculator(PricingName.NO_FEE.getId()) instanceof FeeCalculator);
 	}
 	
 	@Test
 	public void tfPlusVatCalculator() {
-		assertTrue(factory.getCalculator(PricingNames.TF_PLUS_VAT.getId()) instanceof FeeCalculator);
+		assertTrue(factory.getCalculator(PricingName.TF_PLUS_VAT.getId()) instanceof FeeCalculator);
 	}
 	
 	@Test
 	public void tfRebateCalculator() {
-		assertTrue(factory.getCalculator(PricingNames.TF_REBATE.getId()) instanceof FeeCalculator);
+		assertTrue(factory.getCalculator(PricingName.TF_REBATE.getId()) instanceof FeeCalculator);
 	}
 	
 	@Test
 	public void noFeeWithDiscountCalculator() {
-		assertTrue(factory.getCalculator(PricingNames.NO_FEE_WITH_DISCOUNT.getId()) instanceof FeeCalculator);
+		assertTrue(factory.getCalculator(PricingName.NO_FEE_WITH_DISCOUNT.getId()) instanceof FeeCalculator);
 	}
 	
 	@Test
 	public void tfBaseAndYqCalculator() {
-		assertTrue(factory.getCalculator(PricingNames.TF_ON_BASE_AND_YQ.getId()) instanceof FeeCalculator);
+		assertTrue(factory.getCalculator(PricingName.TF_ON_BASE_AND_YQ.getId()) instanceof FeeCalculator);
 	}
 	
 	@Test
 	public void tfCalculator() {
-		assertTrue(factory.getCalculator(PricingNames.TRANSACTION_FEE.getId()) instanceof FeeCalculator);
+		assertTrue(factory.getCalculator(PricingName.TRANSACTION_FEE.getId()) instanceof FeeCalculator);
 	}
 }

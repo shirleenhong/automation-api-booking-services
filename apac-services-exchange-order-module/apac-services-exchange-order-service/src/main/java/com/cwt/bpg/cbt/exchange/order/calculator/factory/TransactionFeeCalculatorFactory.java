@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.cwt.bpg.cbt.exchange.order.calculator.tf.FeeCalculator;
-import com.cwt.bpg.cbt.exchange.order.model.PricingNames;
+import com.cwt.bpg.cbt.exchange.order.model.PricingName;
 
 public class TransactionFeeCalculatorFactory {
 
@@ -62,17 +62,17 @@ public class TransactionFeeCalculatorFactory {
 	@PostConstruct
 	public void init() {
 
-		serviceMap.put(PricingNames.TRANSACTION_FEE.getId(), tfCalculator);
-		serviceMap.put(PricingNames.TF_ON_FULL_FARE.getId(), tfFullFareCalculator);
-		serviceMap.put(PricingNames.TF_ON_NETT_FARE.getId(), tfNettFareCalculator);
-		serviceMap.put(PricingNames.TF_ON_GROSS_FARE.getId(), tfGrossFareCalculator);
-		serviceMap.put(PricingNames.TF_ON_FARE.getId(), tfFareCalculator);
-		serviceMap.put(PricingNames.TF_ON_BASIC.getId(), tfBasicCalculator);
-		serviceMap.put(PricingNames.NO_FEE.getId(), noFeeCalculator);
-		serviceMap.put(PricingNames.TF_PLUS_VAT.getId(), tfPlusVatCalculator);
-		serviceMap.put(PricingNames.TF_REBATE.getId(), tfRebateCalculator);
-		serviceMap.put(PricingNames.NO_FEE_WITH_DISCOUNT.getId(), noFeeWithDiscountCalculator);
-		serviceMap.put(PricingNames.TF_ON_BASE_AND_YQ.getId(), tfBaseAndYqCalculator);
+		serviceMap.put(PricingName.TRANSACTION_FEE.getId(), tfCalculator);
+		serviceMap.put(PricingName.TF_ON_FULL_FARE.getId(), tfFullFareCalculator);
+		serviceMap.put(PricingName.TF_ON_NETT_FARE.getId(), tfNettFareCalculator);
+		serviceMap.put(PricingName.TF_ON_GROSS_FARE.getId(), tfGrossFareCalculator);
+		serviceMap.put(PricingName.TF_ON_FARE.getId(), tfFareCalculator);
+		serviceMap.put(PricingName.TF_ON_BASIC.getId(), tfBasicCalculator);
+		serviceMap.put(PricingName.NO_FEE.getId(), noFeeCalculator);
+		serviceMap.put(PricingName.TF_PLUS_VAT.getId(), tfPlusVatCalculator);
+		serviceMap.put(PricingName.TF_REBATE.getId(), tfRebateCalculator);
+		serviceMap.put(PricingName.NO_FEE_WITH_DISCOUNT.getId(), noFeeWithDiscountCalculator);
+		serviceMap.put(PricingName.TF_ON_BASE_AND_YQ.getId(), tfBaseAndYqCalculator);
 	}
 
 	public FeeCalculator getCalculator(int id) {

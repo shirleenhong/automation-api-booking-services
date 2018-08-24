@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
-import com.cwt.bpg.cbt.exchange.order.model.TripTypes;
+import com.cwt.bpg.cbt.exchange.order.model.TripType;
 
 @Component("noFeeWithDiscountCalculator")
 public class NoFeeWithDiscountCalculator extends FeeCalculator {
@@ -16,7 +16,7 @@ public class NoFeeWithDiscountCalculator extends FeeCalculator {
 			IndiaAirFeesBreakdown breakdown,
 			BigDecimal totalGstOnTf) {
 		
-		if (TripTypes.isInternational(input.getTripType())) {
+		if (TripType.isInternational(input.getTripType())) {
 			return null;
 		}
 		else {

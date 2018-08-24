@@ -20,19 +20,19 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 	@Autowired
 	private ScaleConfig scaleConfig;
 
-	private final List<String> clientsWithAdditionalSellPrice = Arrays.asList(ClientTypes.MG.getCode(),
-			ClientTypes.DB.getCode(),
-			ClientTypes.TF.getCode(),
-			ClientTypes.MN.getCode());
+	private final List<String> clientsWithAdditionalSellPrice = Arrays.asList(ClientType.MG.getCode(),
+			ClientType.DB.getCode(),
+			ClientType.TF.getCode(),
+			ClientType.MN.getCode());
 
-	private final List<String> clientsWithPercentageDiscount = Arrays.asList(ClientTypes.DU.getCode(),
-			ClientTypes.DB.getCode());
+	private final List<String> clientsWithPercentageDiscount = Arrays.asList(ClientType.DU.getCode(),
+			ClientType.DB.getCode());
 
 	private final List<String> clientsWithCommissionDiscount = Arrays
-			.asList(ClientTypes.MN.getCode(), ClientTypes.TF.getCode(), ClientTypes.TP.getCode());
+			.asList(ClientType.MN.getCode(), ClientType.TF.getCode(), ClientType.TP.getCode());
 
-	private final List<String> clientsWithNoDiscount = Arrays.asList(ClientTypes.MN.getCode(),
-			ClientTypes.TF.getCode());
+	private final List<String> clientsWithNoDiscount = Arrays.asList(ClientType.MN.getCode(),
+			ClientType.TF.getCode());
 
 	@Override
 	public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFee, String countryCode) {
@@ -62,7 +62,7 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 		}
 		else {
 			if (input.isCommissionByPercent()) {
-				if (!ClientTypes.TP.getCode().equals(input.getClientType())) {
+				if (!ClientType.TP.getCode().equals(input.getClientType())) {
 					commission = getCommission(input, scale, nettFare);
 				}
 
@@ -110,7 +110,7 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 				.subtract(nettFare);
 
 		if (commission.compareTo(BigDecimal.ZERO) > 0
-				&& ClientTypes.DU.getCode().equals(input.getClientType())) {
+				&& ClientType.DU.getCode().equals(input.getClientType())) {
 			commission = commission.add(BigDecimal.TEN);
 		}
 		return round(commission, scale);
@@ -121,14 +121,14 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 
 		BigDecimal merchantFeeAmount = null;
 
-		if (!input.isCwtAbsorb() && FopTypes.CWT.equals(input.getFopType())
+		if (!input.isCwtAbsorb() && FopType.CWT.equals(input.getFopType())
                 && !input.isMerchantFeeWaive()) {
 
             BigDecimal mFTotal;
             BigDecimal transactionFee = safeValue(input.getTransactionFee());
 
             if (input.isUatp()) {
-                if (ClientTypes.TF.getCode().equals(input.getClientType())) {
+                if (ClientType.TF.getCode().equals(input.getClientType())) {
                     mFTotal = transactionFee;
                 }
                 else {
@@ -138,7 +138,7 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
             else {
                 mFTotal = nettFare;
 
-                if (ClientTypes.TF.getCode().equals(input.getClientType()) && merchantFee.isIncludeTransactionFee()) {
+                if (ClientType.TF.getCode().equals(input.getClientType()) && merchantFee.isIncludeTransactionFee()) {
                     mFTotal = mFTotal.add(transactionFee);
                 }
             }

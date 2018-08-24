@@ -1,10 +1,13 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 
-import io.swagger.annotations.ApiModelProperty;
-import javax.validation.Valid;
-import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnFopType;
 import java.io.Serializable;
+
+import javax.validation.Valid;
+
+import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnFopType;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @CcNotNullOnFopType(fopTypes ={"CC","CX"})
 public class FormOfPayment implements Serializable {
@@ -12,16 +15,16 @@ public class FormOfPayment implements Serializable {
     private static final long serialVersionUID = 1850641277169808339L;
 
 	@ApiModelProperty(allowableValues = "CX, CC, INV, BTC")
-	private FopTypes fopType;
+	private FopType fopType;
 
 	@Valid
     private CreditCard creditCard;
 
-	public FopTypes getFopType() {
+	public FopType getFopType() {
 		return fopType;
 	}
 
-	public void setFopType(FopTypes fopType) {
+	public void setFopType(FopType fopType) {
 		this.fopType = fopType;
 	}
 
