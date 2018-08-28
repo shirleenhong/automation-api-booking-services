@@ -57,7 +57,7 @@ public class AirTransactionControllerTest {
 
         when(service.getAirTransaction(any(AirTransactionInput.class))).thenReturn(output);
 
-        mockMvc.perform(get("/air-transaction?airlineCode=&bookingClass=&ccVendorCode=")
+        mockMvc.perform(get("/air-transaction?airlineCode=&bookingClass=&ccVendorCode=&ccType=")
                 .contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(output)))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -66,7 +66,8 @@ public class AirTransactionControllerTest {
         verify(service, times(1)).getAirTransaction(any(AirTransactionInput.class));
     }
 
-    @Test
+    @SuppressWarnings("unchecked")
+	@Test
     public void getAirTransactionsShouldReturnAirTransactions() throws Exception {
 
         when(service.getAirTransactionList(any(AirTransactionInput.class))).thenReturn(anyList());
