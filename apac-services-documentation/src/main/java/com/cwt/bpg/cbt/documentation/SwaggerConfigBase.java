@@ -78,6 +78,10 @@ public class SwaggerConfigBase
     Tag exchangeOrder() {
         return new Tag("Exchange Order", "Services related to Exchange Order");
     }
+    
+    Tag airTransaction() {
+        return new Tag("Air Transaction", "Services related to Air Transaction");
+    }
 
 	Tag appInfo() {
 		return new Tag("App Info", "Services that display application info");

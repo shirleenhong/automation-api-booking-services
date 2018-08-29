@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
-import com.cwt.bpg.cbt.exchange.order.model.BookingClass;
-import com.cwt.bpg.cbt.exchange.order.model.PassthroughType;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.air.transaction.model.BookingClass;
+import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
 
 @Repository
 public class AirTransactionDAOImpl {
