@@ -87,6 +87,10 @@ public class SwaggerConfigBase
 		return new Tag("App Info", "Services that display application info");
 	}
 
+	Tag obtList() {
+		return new Tag("OBT List", "Services related to OBT List");
+	}
+
 	ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("APAC Services API")
 				.license("Apache License Version 2.0")
