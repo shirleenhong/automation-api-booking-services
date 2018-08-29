@@ -25,7 +25,7 @@ public class ObtListController {
     public ResponseEntity<ObtList> getObtList(
             @PathVariable
             @ApiParam(value = "Country Code") String countryCode) {
-        return new ResponseEntity<>(service.get(countryCode), HttpStatus.OK);
+        return new ResponseEntity<>(service.get(countryCode.toUpperCase()), HttpStatus.OK);
     }
 
     @PutMapping(path = "/obt-list")
@@ -42,7 +42,7 @@ public class ObtListController {
     @Internal
     public ResponseEntity<String> removeObtList(@PathVariable
                                                 @ApiParam(value = "Country Code") String countryCode) {
-        return new ResponseEntity<>(service.delete(countryCode), HttpStatus.OK);
+        return new ResponseEntity<>(service.delete(countryCode.toUpperCase()), HttpStatus.OK);
     }
 
 }
