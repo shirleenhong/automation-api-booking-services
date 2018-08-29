@@ -112,6 +112,11 @@
 	    </dependency>
 	    <dependency>
 	      <groupId>com.cwt.bpg.cbt</groupId>
+	      <artifactId>apac-services-air-transaction-api</artifactId>
+	      <version>${project.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.cwt.bpg.cbt</groupId>
 	      <artifactId>apac-services-fees-api</artifactId>
 	      <version>${project.version}</version>
 	    </dependency>
