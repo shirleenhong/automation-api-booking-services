@@ -20,7 +20,7 @@ public class ObtList implements Serializable {
     private String countryCode;
 
     @Valid
-	private List<Obt> obts;
+	private List<OnlineBookingTool> onlineBookingTools;
 
 	public String getCountryCode() {
 		return countryCode;
@@ -30,11 +30,11 @@ public class ObtList implements Serializable {
 		this.countryCode = countryCode;
 	}
 
-	public List<Obt> getObts() {
-		return obts;
+	public List<OnlineBookingTool> getOnlineBookingTools() {
+		return onlineBookingTools;
 	}
 
-	public void setObts(List<Obt> obts) {
-		this.obts = obts;
+	public void setOnlineBookingTools(List<OnlineBookingTool> onlineBookingTools) {
+		this.onlineBookingTools = onlineBookingTools;
 	}
 }
