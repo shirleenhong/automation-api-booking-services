@@ -29,7 +29,7 @@ public class SwaggerConfigInt extends SwaggerConfigBase
                 .build()
                 .groupName("apac-services")
                 .apiInfo(apiInfo())
-                .tags(appInfo(), exchangeOrder(), serviceFees())
+                .tags(appInfo(), exchangeOrder(), serviceFees(), obtList())
                 .securitySchemes(Lists.newArrayList(securityScheme()))
                 .securityContexts(Lists.newArrayList(securityContext()));
     }

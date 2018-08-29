@@ -5,6 +5,7 @@
 		<artifactId>apac-services-exchange-order-module</artifactId>
 		<version>1.4.0-SNAPSHOT</version>
 	</parent>
+
 	<artifactId>apac-services-exchange-order-rest</artifactId>
 	<name>apac-services-exchange-order-rest</name>
 	<description>apac-services-exchange-order-rest</description>

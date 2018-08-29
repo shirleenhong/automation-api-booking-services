@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>apac-services</artifactId>
+        <groupId>com.cwt.bpg.cbt</groupId>
+        <version>1.4.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>apac-services-obt-module</artifactId>
+    <packaging>pom</packaging>
+
+    <name>apac-services-obt-module</name>
+    <modules>
+        <module>apac-services-obt-api</module>
+        <module>apac-services-obt-repository</module>
+        <module>apac-services-obt-rest</module>
+        <module>apac-services-obt-service</module>
+    </modules>
+</project>
