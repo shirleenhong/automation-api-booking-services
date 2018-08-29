@@ -1,6 +1,6 @@
-package com.cwt.bpg.cbt.exchange.order;
+package com.cwt.bpg.cbt.air.transaction;
 
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.air.transaction.model.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;

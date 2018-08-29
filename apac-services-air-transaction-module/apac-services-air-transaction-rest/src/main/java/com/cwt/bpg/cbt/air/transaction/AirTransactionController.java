@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.exchange.order;
+package com.cwt.bpg.cbt.air.transaction;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
-import com.cwt.bpg.cbt.exchange.order.exception.AirTransactionNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
-import com.cwt.bpg.cbt.exchange.order.model.AirTransactionInput;
-import com.cwt.bpg.cbt.exchange.order.model.AirTransactionOutput;
+import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransactionOutput;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.exchange.order.exception;
+package com.cwt.bpg.cbt.air.transaction.exception;
 
 import com.cwt.bpg.cbt.exceptions.NoContentException;
 

@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.exchange.order.model;
+package com.cwt.bpg.cbt.air.transaction.model;
 
 import java.io.Serializable;
 

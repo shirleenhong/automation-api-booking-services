@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.exchange.order.model;
+package com.cwt.bpg.cbt.air.transaction.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
+import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity(value = "airTransactions", noClassnameStored = true)

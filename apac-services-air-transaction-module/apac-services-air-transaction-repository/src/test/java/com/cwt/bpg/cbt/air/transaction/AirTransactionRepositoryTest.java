@@ -1,7 +1,7 @@
-package com.cwt.bpg.cbt.exchange.order;
+package com.cwt.bpg.cbt.air.transaction;
 
-import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
-import com.cwt.bpg.cbt.exchange.order.model.AirTransactionInput;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,10 +1,10 @@
-package com.cwt.bpg.cbt.exchange.order;
+package com.cwt.bpg.cbt.air.transaction;
 
-import com.cwt.bpg.cbt.exchange.order.exception.AirTransactionNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
-import com.cwt.bpg.cbt.exchange.order.model.AirTransactionInput;
-import com.cwt.bpg.cbt.exchange.order.model.AirTransactionOutput;
-import com.cwt.bpg.cbt.exchange.order.model.PassthroughType;
+import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransactionOutput;
+import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;

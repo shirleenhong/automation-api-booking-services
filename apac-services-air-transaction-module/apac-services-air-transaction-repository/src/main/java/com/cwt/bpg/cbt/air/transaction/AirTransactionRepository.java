@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.exchange.order;
+package com.cwt.bpg.cbt.air.transaction;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Repository;
 
-import com.cwt.bpg.cbt.exchange.order.model.AirTransaction;
-import com.cwt.bpg.cbt.exchange.order.model.AirTransactionInput;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
 import com.mongodb.BasicDBObjectBuilder;
 
 @Repository
