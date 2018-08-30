@@ -11,6 +11,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+      <version>${jsonwebtoken.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.cwt.bpg.cbt</groupId>
 			<artifactId>apac-services-security-api</artifactId>
 			<version>${project.version}</version>
