@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
-import com.cwt.bpg.cbt.air.transaction.model.BookingClass;
 import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
 
 @Repository
@@ -28,25 +27,34 @@ public class AirTransactionDAOImpl {
 	public List<AirTransaction> getList() {
 		List<AirTransaction> airTransactions = new ArrayList<>();
 		String sql =
-				"select a.id, a.AirlineCode, c.AirlineDescription, a.CCVendorCode, d.CCVendorName, a.CCType, x.countrycode, x.clientid, x.clientNumber, "+
-				"case CCType "+
-					"when 'UATP' then case PassthroughType "+
-				 		"when 'FP' then 'Airline' "+
-				 		"when 'NP' then 'CWT' "+
-					"end "+
-				 	"when 'NRCC' then "+
-				 	"case PassthroughType "+
-				 	"when 'FP' then 'Airline' "+
-				 	"when 'NP' then 'CWT' "+
-				 	"end "+
-				 	"end as PassthroughType "+
-				 "from tblAirlineCC a "+ 
-				 	"left join CWTStandardData.dbo.tblAirlines c on c.AirlineCode = a.AirlineCode "+ 
-					"left join CWTStandardData.dbo.tblCCVendor d on d.CCVendorCode = a.CCVendorCode "+
-					"left join (select distinct e.clientNumber,e.clientid,h.countrycode from tblClientMaster e "+
-						"left join cwtstandarddata.dbo.tblcsp_linedefclientmapping g on g.clientid = e.clientid "+
-						"left join cwtstandarddata.dbo.configinstances h on h.keyId = g.configInstanceKeyId "+
-						"where h.countryCode = 'IN') x on x.clientid = a.clientid";
+				"SELECT a.id, a.AirlineCode,c.AirlineDescription, a.CCVendorCode, a.CCType, x.Countrycode, x.Clientid, x.ClientNumber, "+
+			     "a.PassthroughType as PassthroughTypeOrig, "+
+			    "CASE a.CCVendorCode "+
+			        "WHEN 'TP' THEN 'Airplus' "+
+			        "WHEN 'DC' THEN 'Diners' "+
+			        "ELSE d.CCVendorName "+
+			    "END as CCVendorName, "+
+			    "CASE WHEN PassthroughType = 'FP' THEN 'Airline' "+
+			        "WHEN PassthroughType = 'NP' THEN 'CWT' "+
+			        "WHEN PassthroughType = 'SP' THEN "+
+			            "CASE  WHEN a.CCVendorCode = 'DC' OR a.CCVendorCode = 'TP' THEN 'CWT' "+
+			                  "WHEN a.AirlineCode = 'SQ' THEN 'Airline' "+
+			                  "WHEN a.AirlineCode = 'MI' THEN "+
+			                    "CASE WHEN a.CCVendorCode='CA' OR a.CCVendorCode='VI' THEN "+
+			                        "'CWT' "+
+			                    "WHEN a.CCVendorCode='AX' THEN "+
+			                        "'Airline' "+
+			                    "END "+
+			            "END "+
+			    "END as PassthroughType "+
+			"FROM tblAirlineCC a "+
+			    "left join CWTStandardData.dbo.tblAirlines c ON c.AirlineCode = a.AirlineCode "+
+			    "left join CWTStandardData.dbo.tblCCVendor d ON d.CCVendorCode = a.CCVendorCode "+
+			    "left join (SELECT DISTINCT e.clientNumber,e.clientid,h.countrycode FROM tblClientMaster e "+
+			        "left join cwtstandarddata.dbo.tblcsp_linedefclientmapping g ON g.clientid = e.clientid "+
+			        "left join cwtstandarddata.dbo.configinstances h ON h.keyId = g.configInstanceKeyId "+
+			        "WHERE h.countryCode = 'IN') x ON x.clientid = a.clientid;";
+	
 
 		Connection conn = null;
 
@@ -57,14 +65,15 @@ public class AirTransactionDAOImpl {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				AirTransaction airTransaction = new AirTransaction();
-				airTransaction.setCountryCode(rs.getString("countryCode"));
+				airTransaction.setCountryCode(rs.getString("CountryCode"));
 				airTransaction.setAirlineCode(rs.getString("AirlineCode"));
 				airTransaction.setAirlineDescription(rs.getString("AirlineDescription"));
 				airTransaction.setCcVendorCode(rs.getString("CCVendorCode"));
 				airTransaction.setCcVendorName(rs.getString("CCVendorName"));
 				airTransaction.setCcType(rs.getString("CCType"));
 				airTransaction.setPassthroughType(PassthroughType.fromString(rs.getString("PassthroughType")));
-				airTransaction.setClientAccountNumber(rs.getString("clientNumber"));
+				airTransaction.setPassthroughTypeOriginal(rs.getString("PassthroughTypeOrig"));
+				airTransaction.setClientAccountNumber(rs.getString("ClientNumber"));
 				airTransactions.add(airTransaction);
 			}
 			rs.close();
@@ -84,49 +93,6 @@ public class AirTransactionDAOImpl {
 		}
 		logger.info("size of airTransactions from mssqldb: {}", airTransactions.size());
 		return airTransactions;
-	}
-	
-	
-	public List<BookingClass> getBookingClassList(String carrier) {
-		List<BookingClass> bookingClassList = new ArrayList<>();
-		String sql =
-				"select * from CWTStandardData.dbo.tblBookingClass where carrier = ?";
-
-		Connection conn = null;
-
-		try {
-			logger.info("getting getBookingClass from mssqldb for carrier "+carrier);
-			conn = dataSource.getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, carrier);
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				
-				BookingClass bookingClass = new BookingClass();
-				
-				bookingClass.setCode(rs.getString("BkClass"));
-				bookingClass.setDescription(rs.getString("ClassDesc"));
-				
-				bookingClassList.add(bookingClass);
-					
-			}
-			rs.close();
-			ps.close();
-		}
-		catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				}
-				catch (SQLException e) {
-				}
-			}
-		}
-		logger.info("size of bookingClassList from mssqldb: {}", bookingClassList.size());
-		return bookingClassList;
 	}
 	
 }

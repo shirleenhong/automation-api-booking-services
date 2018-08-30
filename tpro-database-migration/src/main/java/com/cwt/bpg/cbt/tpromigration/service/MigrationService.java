@@ -3,11 +3,11 @@ package com.cwt.bpg.cbt.tpromigration.service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.cwt.bpg.cbt.exchange.order.model.*;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,15 +16,28 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import com.cwt.bpg.cbt.air.transaction.model.BookingClass;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.air.transaction.model.BookingClass;
+import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
+import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
+import com.cwt.bpg.cbt.exchange.order.model.Bank;
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.ClientPricing;
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
+import com.cwt.bpg.cbt.exchange.order.model.CreditCardVendor;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.ProductMerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.Remark;
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFee;
 import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirTransactionDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirlineRuleDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirportDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientMerchantFeeDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirTransactionDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductDAOFactory;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.RemarkDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAOFactory;
@@ -401,30 +414,146 @@ public class MigrationService {
 		this.countryCode = countryCode;
 	}
 
-
-
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked" })
 	public void migratePassthroughs() throws JsonProcessingException {
 		List<AirTransaction> airTransactions = airTransactionDAOImpl.getList();
 
 		List<Document> docs = new ArrayList<>();
-
+		
 		for (AirTransaction airTransaction : airTransactions) {
+
+			AirTransaction airTransaction2 = new AirTransaction(airTransaction);
+			List<BookingClass> cwtBkClassList = new ArrayList<>();
+			List<BookingClass> airlineBkClassList = new ArrayList<>();
 			
-			List<BookingClass> bookingClassList = airTransactionDAOImpl.getBookingClassList(airTransaction.getAirlineCode()); 
+			Map<String, Object> mhBookingClasses = formMHBookingClass();
+			Iterator<String> mhKeySetIterator = mhBookingClasses.keySet().iterator();
 			
-			if (!ObjectUtils.isEmpty(bookingClassList)) {
+			Map<String, Object> tgFullPassBookingClasses = formTGFullPassBookingClasses();
+			Iterator<String> tgFullKeySetIterator = tgFullPassBookingClasses.keySet().iterator();
+			
+			Map<String, Object> tgNonPassBookingClasses = formTGNonPassBookingClasses();
+			Iterator<String> tgNonkeySetIterator = tgNonPassBookingClasses.keySet().iterator();
+			
+			if (airTransaction.getPassthroughTypeOriginal().equals("SP")
+					&& (airTransaction.getAirlineCode().equals("MH"))) {
+
+				while(mhKeySetIterator.hasNext()){
+					String key = mhKeySetIterator.next();
+					BookingClass bookingClass = new BookingClass();
+					bookingClass.setCode(key);
+					
+					if(key!="O" && key!="Q") {
+						airlineBkClassList.add(bookingClass);
+					}else {
+						cwtBkClassList.add(bookingClass);
+					}
+				}
+			
+				airTransaction.setBookingClass(cwtBkClassList);
+				airTransaction.setPassthroughType(PassthroughType.CWT);
 				
-				airTransaction.setBookingClass(bookingClassList);
+				airTransaction2.setBookingClass(airlineBkClassList);
+				airTransaction2.setPassthroughType(PassthroughType.AIRLINE);
 				
+				airTransaction2.setPassthroughTypeOriginal(null);
+				docs.add(dBObjectMapper.mapAsDbDocument(airTransaction2));
+			}	
+			else if(airTransaction.getPassthroughTypeOriginal().equals("SP")
+					&& (airTransaction.getAirlineCode().equals("TG"))) {
+								
+				while(tgFullKeySetIterator.hasNext()){
+					String key = tgFullKeySetIterator.next();
+					BookingClass bookingClass = new BookingClass();
+					bookingClass.setCode(key);
+					airlineBkClassList.add(bookingClass);
+				}
+	
+				while(tgNonkeySetIterator.hasNext()){
+					String key = tgNonkeySetIterator.next();
+					BookingClass bookingClass = new BookingClass();
+					bookingClass.setCode(key);
+					cwtBkClassList.add(bookingClass);
+				}
+
+				airTransaction.setBookingClass(cwtBkClassList);
+				airTransaction.setPassthroughType(PassthroughType.CWT);
+				
+				airTransaction2.setBookingClass(airlineBkClassList);
+				airTransaction2.setPassthroughType(PassthroughType.AIRLINE);
+				
+				airTransaction2.setPassthroughTypeOriginal(null);
+				docs.add(dBObjectMapper.mapAsDbDocument(airTransaction2));
 			}
-			
-			docs.add(dBObjectMapper.mapAsDbDocument(airTransaction));
+			airTransaction.setPassthroughTypeOriginal(null);
+			docs.add(dBObjectMapper.mapAsDbDocument(airTransaction));			
 		}
 
 		mongoDbConnection.getCollection(AIR_TRANSACTION_COLLECTION).insertMany(docs);
 
 		System.out.println("Finished migration of airTransactions");
+	}
+
+	private Map<String, Object> formTGNonPassBookingClasses() {
+		
+		Map<String, Object> tgNonPassBookingClasses = new HashMap<>();
+		tgNonPassBookingClasses.put("T", null);
+		tgNonPassBookingClasses.put("K", null);
+		tgNonPassBookingClasses.put("S", null);
+		tgNonPassBookingClasses.put("V", null);
+		tgNonPassBookingClasses.put("W", null);
+		tgNonPassBookingClasses.put("L", null);
+		
+		return tgNonPassBookingClasses;
+	}
+
+	private Map<String, Object> formTGFullPassBookingClasses() {
+		
+		Map<String, Object> tgFullPassBookingClasses = new HashMap<>();
+		tgFullPassBookingClasses.put("F", null);
+		tgFullPassBookingClasses.put("A", null);
+		tgFullPassBookingClasses.put("P", null);
+		tgFullPassBookingClasses.put("C", null);
+		tgFullPassBookingClasses.put("D", null);
+		tgFullPassBookingClasses.put("J", null);
+		tgFullPassBookingClasses.put("Z", null);
+		tgFullPassBookingClasses.put("Y", null);
+		tgFullPassBookingClasses.put("B", null);
+		tgFullPassBookingClasses.put("M", null);
+		tgFullPassBookingClasses.put("H", null);
+		tgFullPassBookingClasses.put("Q", null);
+		
+		return tgFullPassBookingClasses;
+	}
+
+	private Map<String, Object> formMHBookingClass() {
+		
+		Map<String, Object> mhParameters = new HashMap<>();
+		mhParameters.put("O", null);
+		mhParameters.put("Q", null);
+		mhParameters.put("F", null);
+		mhParameters.put("A", null);
+		mhParameters.put("P", null);
+		mhParameters.put("J", null);
+		mhParameters.put("C", null);
+		mhParameters.put("D", null);
+		mhParameters.put("Z", null);
+		mhParameters.put("I", null);
+		mhParameters.put("U", null);
+		mhParameters.put("Y", null);
+		mhParameters.put("B", null);
+		mhParameters.put("H", null);
+		mhParameters.put("K", null);
+		mhParameters.put("M", null);
+		mhParameters.put("L", null);
+		mhParameters.put("V", null);
+		mhParameters.put("S", null);
+		mhParameters.put("N", null);
+		mhParameters.put("E", null);
+		mhParameters.put("X", null);
+		mhParameters.put("G", null);
+
+		return mhParameters;
 	}
 
 }
