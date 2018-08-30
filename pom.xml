@@ -15,30 +15,30 @@
 	<name>apac-services</name>
 
 	<properties>
-		<target.jdk.version>1.8</target.jdk.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.boot.version>1.5.10.RELEASE</spring.boot.version>
+		<apache.commons.version>2.6</apache.commons.version>
 		<artifact.repo.url>https://ci1.carlsonwagonlit.com/nexus/content/repositories</artifact.repo.url>
 		<commons-pool2.version>2.5.0</commons-pool2.version>
-		<apache.commons.version>2.6</apache.commons.version>
-		<javax.inject.version>1</javax.inject.version>
 		<commons-io.version>2.5</commons-io.version>
-		<commons-logging.version>1.1.1</commons-logging.version>
-		<json-smart.version>2.3</json-smart.version>
 		<commons-lang.version>2.6</commons-lang.version>
-		<hamcrest.version>1.3</hamcrest.version>
-		<javax.validation.version>1.1.0.Final</javax.validation.version>
-		<hibernate.validator.version>5.4.1.Final</hibernate.validator.version>
-		<mongodb.morphia.version>1.3.2</mongodb.morphia.version>
-		<springfox.swagger.version>2.8.0</springfox.swagger.version>
-		<javax.ws.rs.version>2.0.1</javax.ws.rs.version>
-		<scm.repo.url>https://github.com/cwt-dev/bpg-cbt-apac-services.git</scm.repo.url>
-		<project.scm.id>aws-command-runner-scm</project.scm.id>			
+		<commons-logging.version>1.1.1</commons-logging.version>
 		<freemarker.version>2.3.28</freemarker.version>
+		<groovy.version>2.4.15</groovy.version>
+		<hamcrest.version>1.3</hamcrest.version>
 		<hibernate.validator.version>5.4.1.Final</hibernate.validator.version>
 		<jackson.version>2.9.5</jackson.version>
-		<groovy.version>2.4.15</groovy.version>
 		<jasper.report.version>6.6.0</jasper.report.version>
+		<javax.inject.version>1</javax.inject.version>
+		<javax.validation.version>1.1.0.Final</javax.validation.version>
+		<javax.ws.rs.version>2.0.1</javax.ws.rs.version>
+		<json-smart.version>2.3</json-smart.version>
+		<jsonwebtoken.version>0.7.0</jsonwebtoken.version>
+		<mongodb.morphia.version>1.3.2</mongodb.morphia.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.scm.id>aws-command-runner-scm</project.scm.id>
+		<scm.repo.url>https://github.com/cwt-dev/bpg-cbt-apac-services.git</scm.repo.url>
+		<spring.boot.version>1.5.10.RELEASE</spring.boot.version>
+		<springfox.swagger.version>2.8.0</springfox.swagger.version>
+		<target.jdk.version>1.8</target.jdk.version>
 	</properties>
 
 	<scm>
