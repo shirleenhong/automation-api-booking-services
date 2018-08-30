@@ -81,7 +81,7 @@ public class AirTransactionControllerTest {
     }
 
     @Test
-    public void putRemarkShouldSaveAndReturnSavedRemark() throws Exception {
+    public void putAirTransactionShouldSaveAndReturnSavedAirTransaction() throws Exception {
 		AirTransaction airTransaction = new AirTransaction();
 
 		when(service.save(any(AirTransaction.class))).thenReturn(airTransaction);
@@ -97,7 +97,7 @@ public class AirTransactionControllerTest {
     }
 
     @Test
-    public void removeRemarkShouldRemoveRemark() throws Exception {
+    public void removeAirTransactionShouldRemoveAirTransaction() throws Exception {
 
 		when(service.delete(anyString())).thenReturn(anyString());
 
