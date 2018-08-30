@@ -3,7 +3,7 @@
 	<parent>
     	<groupId>com.cwt.bpg.cbt</groupId>
     	<artifactId>apac-services-air-transaction-module</artifactId>
-    	<version>1.4.0-SNAPSHOT</version>
+    	<version>1.5.0-SNAPSHOT</version>
   	</parent>
 	<artifactId>apac-services-air-transaction-rest</artifactId>
 	<name>apac-services-air-transaction-rest</name>
