@@ -1,0 +1,131 @@
+*** Setting ***
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
+
+***Keywords***
+Create OBT List For OBT List
+    [Arguments]    ${obt_list}    ${country_code}=sg    ${remove_obt}=false
+    ${data_list}    Split String    ${obt_list}    ,
+    ${obt_list_exists}    Run Keyword And Return Status    Variable Should Exist    ${${country_code}_list_length}
+    ${list_length}    Run Keyword If    "${obt_list_exists}"=="True" and "${remove_obt}"=="false"    Set Variable    ${${country_code}_list_length}    ELSE    Set Variable    0       
+    ${index}    Set Variable    ${list_length}
+    :FOR    ${data}    IN    @{data_list}
+    \    Set Suite Variable    ${${country_code}_obt_${index}}    ${data}
+    \    ${index}    Evaluate    ${index}+1
+    Set Test Variable    ${${country_code}_list_length}    ${index}
+    Set Test Variable    ${country_code}
+
+Create OBT List Request Body
+    [Arguments]    ${request_country}=${country_code}
+    ${obt_list}    Create List
+    :FOR    ${index}    IN RANGE    0    ${${country_code}_list_length}
+    \    Append To List    ${obt_list}    {"onlineUnassistedCode":"${${country_code}_obt_${index}}","name":"${${${country_code}_obt_${index}}_name}","agentAssistedCode":"${${${country_code}_obt_${index}}_agent_code}"}
+    Set Test Variable    ${obt_list}
+    : FOR    ${i}    IN RANGE    0    ${${country_code}_list_length}
+    \    ${data_list}    Set Variable If    ${i}==0    ${EMPTY}    ${data_list},
+    \    ${data_list}    Set Variable    ${data_list}${obt_list[${i}]}
+    ${data_list}    Set Variable If    "${${country_code}_list_length}"=="0"    ${EMPTY}    ${data_list}
+    ${data}    Set Variable If    "${request_country}"!="${EMPTY}"    {"countryCode":"${country_code.upper()}","onlineBookingTools":[${data_list}]}    {"countryCode":"${request_country}","onlineBookingTools":[${data_list}]}
+    Set Test Variable    ${data}
+    Log    ${data}
+
+Delete Created OBT and Evict Cache
+    [Arguments]    ${token}=${default_token}    ${country_code}=sg    ${number}=4
+    Send OBT List Delete Request    token=${token}    country_code=${country_code}
+    Evict OBT List Cache    token=${token}    number=${number}
+    
+Evict OBT List Cache
+    [Arguments]    ${number}=2    ${token}=${default_token}
+    Create Session    obt-list    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    : FOR    ${index}    IN RANGE    0    ${number}
+    \    ${response}    Get Request    obt-list    /apac-services-rest/api/caches/evict/obt_list    headers=${headers}
+    \    Set Test Variable    ${response}
+    \    Verify Response Status Code Is Correct    200
+    \    Log    ${response.headers}
+    \    Log    ${response.content}
+    Set Test Variable    ${api_flag}    obt-list
+
+Generate Suite Variables For OBT
+    [Arguments]    ${sg_obt_list}=EBA,GET,EBS,CBK,EAM,KDS    ${hk_obt_list}=EBA,GET,EBS,CBK,EAM,KDS    ${in_obt_list}=EBA,GET,EAM,CYT    ${obt_name_list}=EBA,Concur|GET,Get There|EBS,Arnold|CBK,Cliqbook|EAM,Etravel/AetM|KDS,null|CYT,Cytric    ${obt_code_list}=EBA,AMA|EBS,AMS|CBK,AMA|GET,AMI|EAM,AME|KDS,AMK|CYT,AM6    
+    Set Suite Variable    ${sg_obt_list}
+    Set Suite Variable    ${hk_obt_list}
+    Set Suite Variable    ${in_obt_list}
+    ${data_list}    Split String    ${sg_obt_list}    ,
+    ${index}    Set Variable    0
+    :FOR    ${data}    IN    @{data_list}
+    \    Set Suite Variable    ${sg_obt_${index}}    ${data}
+    \    ${index}    Evaluate    ${index}+1
+    Set Suite Variable    ${sg_list_length}    ${index}
+    ${data_list}    Split String    ${hk_obt_list}    ,
+    ${index}    Set Variable    0
+    :FOR    ${data}    IN    @{data_list}
+    \    Set Suite Variable    ${hk_obt_${index}}    ${data}
+    \    ${index}    Evaluate    ${index}+1
+    Set Suite Variable    ${hk_list_length}    ${index}
+    ${data_list}    Split String    ${in_obt_list}    ,
+    ${index}    Set Variable    0
+    :FOR    ${data}    IN    @{data_list}
+    \    Set Suite Variable    ${in_obt_${index}}    ${data}
+    \    ${index}    Evaluate    ${index}+1
+    Set Suite Variable    ${in_list_length}    ${index}
+    ${data_list}    Split String    ${obt_name_list}    |
+    ${index}    Set Variable    0
+    :FOR    ${data}    IN    @{data_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Set Suite Variable    ${${data_item[0]}_name}    ${data_item[1]}        
+    ${data_list}    Split String    ${obt_code_list}    |
+    ${index}    Set Variable    0
+    :FOR    ${data}    IN    @{data_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Set Suite Variable    ${${data_item[0]}_agent_code}    ${data_item[1]}
+
+Send OBT List Delete Request
+    [Arguments]    ${token}=${default_token}    ${country_code}=sg
+    Create Session    obt-list    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Delete Request    obt-list    /apac-services-rest/api/obt-list/${country_code}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${country_code}    ${country_code.upper()}
+    Set Test Variable    ${api_flag}    obt-list
+    
+Send OBT List Get Request
+    [Arguments]    ${token}=${default_token}    ${country_code}=sg
+    Create Session    obt-list    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    obt-list    /apac-services-rest/api/obt-list/${country_code}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${country_code}    ${country_code.upper()}
+    Set Test Variable    ${api_flag}    obt-list
+
+Send OBT List Put Request
+    [Arguments]    ${token}=${default_token}    ${request_country}=${country_code}
+    Create Session    obt-list    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    Create OBT List Request Body    request_country=${request_country}
+    ${response}    Put Request    obt-list    /apac-services-rest/api/obt-list    data=${data}   headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${country_code}    ${country_code.upper()}
+    Set Test Variable    ${api_flag}    obt-list
+    
+Verify OBT List Is Retrieved Correctly
+    Verify Json Value Is Correct    $.countryCode    ${country_code}
+    :FOR    ${index}    IN RANGE    0    ${${country_code}_list_length}
+    \    Verify Json Value Is Correct    $.onlineBookingTools.[${index}].onlineUnassistedCode    ${${country_code}_obt_${index}}
+    \    Run Keyword If    "${${${country_code}_obt_${index}}_name}"!="null"    Verify Json Value Is Correct    $.onlineBookingTools.[${index}].name    ${${${country_code}_obt_${index}}_name}    ELSE    Verify Json Element Does Not Exist    $.onlineBookingTools.[${index}].name
+    \    Verify Json Value Is Correct    $.onlineBookingTools.[${index}].agentAssistedCode    ${${${country_code}_obt_${index}}_agent_code}        
+
+Verify No OBT List Is Returned
+    Verify String Does Not Contain Substring    ${response.text}    "countryCode"
+    Verify String Does Not Contain Substring    ${response.text}    "onlineBookingTools"
