@@ -3,11 +3,7 @@ package com.cwt.bpg.cbt.services.rest.security;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -113,7 +109,7 @@ class MockedTokenImpl extends TokenService {
 	}
 
 	@Override
-	public boolean isTokenExist(String token) {
+	public boolean isTokenExist(String tokenKey) {
 		return this.isTokenExists();
 	}
 
