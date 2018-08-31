@@ -34,13 +34,13 @@ public class AirTransactionController {
 			+ "booking class, ccvendor code, country code, and client number.")
 	public ResponseEntity<AirTransactionOutput> getAirTransaction(
 			@RequestParam("airlineCode") String airlineCode,
-			@RequestParam("bookingClass") String bookingClass,
+			@RequestParam("bookingClasses") List<String> bookingClasses,
 			@RequestParam("ccVendorCode") String ccVendorCode,
 			@RequestParam("ccType") String ccType,
 			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber)
 			throws AirTransactionNoContentException {
 
-		AirTransactionInput input = formAirTransactionInput(airlineCode, bookingClass,
+		AirTransactionInput input = formAirTransactionInput(airlineCode, bookingClasses,
 				ccVendorCode, ccType, clientAccountNumber);
 
 		return new ResponseEntity<>(airTransService.getAirTransaction(input), HttpStatus.OK);
@@ -79,11 +79,12 @@ public class AirTransactionController {
 		return new ResponseEntity<>(airTransService.delete(id), HttpStatus.OK);
 	}
 
-	private AirTransactionInput formAirTransactionInput(String airlineCode, String bookingClass,
-														String ccVendorCode, String ccType, String clientAccountNumber) {
+	private AirTransactionInput formAirTransactionInput(String airlineCode,
+			List<String> bookingClasses, String ccVendorCode, String ccType,
+			String clientAccountNumber) {
 
 		AirTransactionInput input = new AirTransactionInput();
-		input.setBookingClass(bookingClass);
+		input.setBookingClasses(bookingClasses);
 		input.setAirlineCode(airlineCode);
 		input.setCcVendorCode(ccVendorCode);
 		input.setCcType(ccType);
