@@ -9,23 +9,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
-import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 
@@ -130,7 +119,6 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(body, headers, HttpStatus.OK);
 	}
 
-	@Internal
 	@GetMapping(path = "/exchange-order/email/{eoNumber}")
 	@ResponseBody
 	@ApiOperation(value = "Emails exchange order pdf of the specified eoNumber")
@@ -144,8 +132,7 @@ public class ExchangeOrderController {
 	@GetMapping(value = "/exchange-orders", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ApiOperation(value = "Search for exchange orders.")
-	public List<ExchangeOrder> search(final ExchangeOrderSearchDTO p)
-			throws ApiServiceException {
+	public List<ExchangeOrder> search(final ExchangeOrderSearchDTO p) {
 		final ExchangeOrderSearchParam param = new ExchangeOrderSearchParam();
 		param.setEoNumber(p.getEoNumber());
 		param.setCountryCode(p.getCountryCode());
