@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
-import com.cwt.bpg.cbt.air.transaction.model.BookingClass;
 
 @Repository
 public class AirTransactionRepository extends CommonRepository<AirTransaction, ObjectId>{
@@ -18,9 +17,8 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 	private static final String AIRLINE_CODE = "airlineCode";
 	private static final String CC_VENDOR_CODE = "ccVendorCode";
 	private static final String CC_TYPE = "ccType";
-	private static final String BOOKING_CLASS = "bookingClass";
+	private static final String BOOKING_CLASSES = "bookingClasses";
 	private static final String CLIENT_ACCT_NUM = "clientAccountNumber";
-	private static final String BOOKING_CLASS_CODE = "code";
 	
 	public AirTransactionRepository() {
 		super(AirTransaction.class, ID);
@@ -36,16 +34,9 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 		if(StringUtils.isNotBlank(params.getCcVendorCode())) {
 			query.field(CC_VENDOR_CODE).equal(params.getCcVendorCode());
 		}
-		if (StringUtils.isNotBlank(params.getBookingClass())) {
-			
-			Query<BookingClass> bookingClassQuery = morphia.getDatastore()
-					.createQuery(BookingClass.class);
-			bookingClassQuery.field(BOOKING_CLASS_CODE).equal(params.getBookingClass());
-			bookingClassQuery.asList();
-
-			query.or(query.criteria(BOOKING_CLASS).doesNotExist(),
-					query.criteria(BOOKING_CLASS).elemMatch(bookingClassQuery));
-			
+		if (params.getBookingClasses()!=null && !params.getBookingClasses().isEmpty()) {
+			query.or(query.criteria(BOOKING_CLASSES).doesNotExist(),
+                    query.criteria(BOOKING_CLASSES).hasAnyOf(params.getBookingClasses()));
 		}
 		if(StringUtils.isNotBlank(params.getClientAccountNumber())) {
 			query.field(CLIENT_ACCT_NUM).equal(params.getClientAccountNumber());
