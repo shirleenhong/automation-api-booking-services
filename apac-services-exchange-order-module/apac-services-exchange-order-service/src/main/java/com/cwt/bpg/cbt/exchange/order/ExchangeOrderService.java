@@ -3,8 +3,6 @@ package com.cwt.bpg.cbt.exchange.order;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
@@ -24,7 +22,6 @@ public class ExchangeOrderService {
 	@Autowired
 	private ExchangeOrderUpdateService eoUpdateService;
 
-	@CachePut(cacheNames = "exchange-orders", key = "#exchangeOrder.eoNumber")
 	public BaseExchangeOrder saveExchangeOrder(String countryCode, BaseExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
 
@@ -38,12 +35,10 @@ public class ExchangeOrderService {
 		}
 	}
 
-	@Cacheable(cacheNames = "exchange-orders", key = "#eoNumber")
 	public ExchangeOrder getExchangeOrder(String eoNumber) {
 		return exchangeOrderRepo.getExchangeOrder(eoNumber);
 	}
 
-	@Cacheable(cacheNames = "exchange-orders", key = "#recordLocator")
     List<? extends BaseExchangeOrder> getExchangeOrderByRecordLocator(String countryCode, String recordLocator) {
 		return exchangeOrderRepo.getExchangeOrderByRecordLocator(countryCode, recordLocator);
 	}
@@ -56,7 +51,6 @@ public class ExchangeOrderService {
 		return exchangeOrderRepo.updateFinance(param);
 	}
 
-	@Cacheable(cacheNames = "exchange-orders", key = "#eoNumber")
 	public BaseExchangeOrder getExchangeOrder(String countryCode, String eoNumber) {
 		return exchangeOrderRepo.getExchangeOrder(countryCode, eoNumber);
 	}
