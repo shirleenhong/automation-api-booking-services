@@ -1,0 +1,66 @@
+*** Setting ***
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
+Resource    resources/obt-list.txt
+
+Suite Setup    Generate Suite Variables For OBT
+
+*** Test Cases ***
+Verify That OBT List Is Retrieved Correctly For Singapore
+    [Tags]    functional
+    Send OBT List Get Request    country_code=sg
+    Verify Response Status Code Is Correct    200
+    Verify OBT List Is Retrieved Correctly
+    
+Verify That OBT List Is Retrieved Correctly For Hong Kong
+    [Tags]    functional
+    Send OBT List Get Request    country_code=hk
+    Verify Response Status Code Is Correct    200
+    Verify OBT List Is Retrieved Correctly
+    
+Verify That OBT List Is Retrieved Correctly For India
+    [Tags]    functional
+    Send OBT List Get Request    country_code=in
+    Verify Response Status Code Is Correct    200
+    Verify OBT List Is Retrieved Correctly
+    
+Verify That OBT List Is Updated Correctly After Put Request
+    [Tags]    functional    not-ready
+    Create OBT List For OBT List    obt_list=EBS,CYT    country_code=ph
+    Send OBT List Put Request
+    Verify Response Status Code Is Correct    200
+    Verify OBT List Is Retrieved Correctly
+    Create OBT List For OBT List    obt_list=EBA    country_code=ph
+    Send OBT List Put Request
+    Verify Response Status Code Is Correct    200
+    Verify OBT List Is Retrieved Correctly
+    Create OBT List For OBT List    obt_list=EBS,EBA    country_code=ph    remove_obt=true
+    Send OBT List Put Request
+    Verify Response Status Code Is Correct    200
+    Verify OBT List Is Retrieved Correctly
+    [Teardown]    Delete Created OBT And Evict Cache    country_code=ph    number=5   
+
+Verify That OBT List Is Retrieved Correctly After Put Request
+    [Tags]    functional    not-ready
+    Create OBT List For OBT List    obt_list=EBS,CYT    country_code=ph
+    Send OBT List Put Request
+    Verify Response Status Code Is Correct    200
+    Verify OBT List Is Retrieved Correctly
+    Send OBT List Get Request    country_code=ph
+    Verify Response Status Code Is Correct    200
+    Verify OBT List Is Retrieved Correctly
+    [Teardown]    Delete Created OBT And Evict Cache    country_code=ph    number=5
+
+Verify That OBT List Is Updated Correctly After Delete Request
+    [Tags]    functional    not-ready
+    Create OBT List For OBT List    obt_list=EBS,CYT    country_code=ph
+    Send OBT List Put Request
+    Verify Response Status Code Is Correct    200
+    Verify OBT List Is Retrieved Correctly
+    Send OBT List Delete Request    country_code=ph
+    Verify Response Status Code Is Correct    200
+    Send OBT List Get Request    country_code=ph
+    Verify Response Status Code Is Correct    200
+    Verify No OBT List Is Returned
+    [Teardown]    Evict OBT List Cache    number=5

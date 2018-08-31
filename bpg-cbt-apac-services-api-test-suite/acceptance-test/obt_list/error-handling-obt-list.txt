@@ -1,0 +1,122 @@
+*** Setting ***
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
+Resource    resources/obt-list.txt
+
+Suite Setup    Generate Suite Variables For OBT
+
+*** Test Cases ***
+Verify That Error Is Encountered When Invalid Token Is Used For Get Request
+    [Tags]    functional
+    Send OBT List Get Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify No OBT List Is Returned
+    Send OBT List Get Request    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify No OBT List Is Returned
+    Send OBT List Get Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    Verify No OBT List Is Returned
+    
+Verify That Error Is Encountered When Empty Token Is Used For Get Request
+    [Tags]    functional
+    Send OBT List Get Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify No OBT List Is Returned
+
+Verify That Error Is Encountered When Null Token Is Used For Get Request
+    [Tags]    functional
+    Send OBT List Get Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify No OBT List Is Returned
+
+Verify That Error Is Encountered When No Token Is Used For Get Request
+    [Tags]    functional
+    Send OBT List Get Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify No OBT List Is Returned
+    
+Verify That Error Is Encountered When Invalid Token Is Used For Put Request
+    [Tags]    functional
+    Create OBT List For OBT List    obt_list=EBS,CYT    country_code=ph
+    Send OBT List Put Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify No OBT List Is Returned
+    Send OBT List Put Request    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify No OBT List Is Returned
+    Send OBT List Put Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    Verify No OBT List Is Returned
+    
+Verify That Error Is Encountered When Empty Token Is Used For Put Request
+    [Tags]    functional
+    Create OBT List For OBT List    obt_list=EBS,CYT    country_code=ph
+    Send OBT List Put Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify No OBT List Is Returned
+
+Verify That Error Is Encountered When Null Token Is Used For Put Request
+    [Tags]    functional
+    Create OBT List For OBT List    obt_list=EBS,CYT    country_code=ph
+    Send OBT List Put Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify No OBT List Is Returned
+
+Verify That Error Is Encountered When No Token Is Used For Put Request
+    [Tags]    functional
+    Create OBT List For OBT List    obt_list=EBS,CYT    country_code=ph
+    Send OBT List Put Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify No OBT List Is Returned
+    
+Verify That Error Is Encountered When Invalid Token Is Used For Delete Request
+    [Tags]    functional
+    Send OBT List Delete Request    token=12345.12345.12345    country_code=ph
+    Verify Response Status Code Is Correct    401
+    Verify No OBT List Is Returned
+    Send OBT List Delete Request    token=abcde.abcde.abcde    country_code=ph
+    Verify Response Status Code Is Correct    401
+    Verify No OBT List Is Returned
+    Send OBT List Delete Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+    country_code=ph
+    Verify Response Status Code Is Correct    401
+    Verify No OBT List Is Returned
+    
+Verify That Error Is Encountered When Empty Token Is Used For Delete Request
+    [Tags]    functional
+    Send OBT List Delete Request    token=${EMPTY}    country_code=ph
+    Verify Response Status Code Is Correct    400
+    Verify No OBT List Is Returned
+
+Verify That Error Is Encountered When Null Token Is Used For Delete Request
+    [Tags]    functional
+    Send OBT List Delete Request    token=null    country_code=ph
+    Verify Response Status Code Is Correct    401
+    Verify No OBT List Is Returned
+
+Verify That Error Is Encountered When No Token Is Used For Delete Request
+    [Tags]    functional
+    Send OBT List Delete Request    token=None    country_code=ph
+    Verify Response Status Code Is Correct    400
+    Verify No OBT List Is Returned
+    
+Verify That Error Is Encountered When Empty Country Is Used For Get Request
+    [Tags]    functional
+    Send OBT List Get Request    country_code=${EMPTY}
+    Verify Response Status Code Is Correct    405
+    Verify No OBT List Is Returned
+    
+Verify That Error Is Encountered When Empty Country Is Used For Put Request
+    [Tags]    functional
+    Create OBT List For OBT List    obt_list=EBS,CYT    country_code=ph
+    Send OBT List Put Request    request_country=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify No OBT List Is Returned
+    
+Verify That Error Is Encountered When Empty Country Is Used For Delete Request
+    [Tags]    functional
+    Send OBT List Delete Request    country_code=${EMPTY}
+    Verify Response Status Code Is Correct    405
+    Verify No OBT List Is Returned
+    
