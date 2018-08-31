@@ -1,12 +1,13 @@
 package com.cwt.bpg.cbt.air.transaction.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class AirTransactionInput implements Serializable {
 
 	private static final long serialVersionUID = 5943172847055937530L;
 
-	private String bookingClass;
+	private List<String> bookingClasses;
 
 	private String airlineCode;
 
@@ -16,16 +17,16 @@ public class AirTransactionInput implements Serializable {
 	
 	private String clientAccountNumber;
 
-	public String getBookingClass() {
-		return bookingClass;
-	}
-
-	public void setBookingClass(String bookingClass) {
-		this.bookingClass = bookingClass;
-	}
-
 	public String getAirlineCode() {
 		return airlineCode;
+	}
+
+	public List<String> getBookingClasses() {
+		return bookingClasses;
+	}
+
+	public void setBookingClasses(List<String> bookingClasses) {
+		this.bookingClasses = bookingClasses;
 	}
 
 	public void setAirlineCode(String airlineCode) {

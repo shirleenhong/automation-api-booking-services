@@ -27,7 +27,7 @@ public class AirTransaction implements Serializable {
 
 	private PassthroughType passthroughType;
 	
-	private List<BookingClass> bookingClass;
+	private List<String> bookingClasses;
 
 	private String airlineCode;
 
@@ -43,14 +43,6 @@ public class AirTransaction implements Serializable {
 
 	public void setId(ObjectId id) {
 		this.id = id;
-	}
-
-	public List<BookingClass> getBookingClass() {
-		return bookingClass;
-	}
-
-	public void setBookingClass(List<BookingClass> bookingClass) {
-		this.bookingClass = bookingClass;
 	}
 
 	public String getAirlineCode() {
