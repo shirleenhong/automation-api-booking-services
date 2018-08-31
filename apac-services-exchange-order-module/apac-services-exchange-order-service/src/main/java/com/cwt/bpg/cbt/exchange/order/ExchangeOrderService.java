@@ -25,7 +25,7 @@ public class ExchangeOrderService {
 	private ExchangeOrderUpdateService eoUpdateService;
 
 	@CachePut(cacheNames = "exchange-orders", key = "#exchangeOrder.eoNumber")
-	BaseExchangeOrder saveExchangeOrder(String countryCode, BaseExchangeOrder exchangeOrder)
+	public BaseExchangeOrder saveExchangeOrder(String countryCode, BaseExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
 
 		String eoNumber = exchangeOrder.getEoNumber();
@@ -56,7 +56,7 @@ public class ExchangeOrderService {
 		return exchangeOrderRepo.updateFinance(param);
 	}
 
-	@Cacheable(cacheNames = "exchange-orders", key = "#eoNumber.toString()")
+	@Cacheable(cacheNames = "exchange-orders", key = "#eoNumber")
 	public BaseExchangeOrder getExchangeOrder(String countryCode, String eoNumber) {
 		return exchangeOrderRepo.getExchangeOrder(countryCode, eoNumber);
 	}
