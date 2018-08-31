@@ -1,13 +1,13 @@
 package com.cwt.bpg.cbt.tpromigration.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.cwt.bpg.cbt.exchange.order.model.*;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,15 +16,27 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import com.cwt.bpg.cbt.air.transaction.model.BookingClass;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
+import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
+import com.cwt.bpg.cbt.exchange.order.model.Bank;
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.ClientPricing;
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
+import com.cwt.bpg.cbt.exchange.order.model.CreditCardVendor;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.ProductMerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.Remark;
+import com.cwt.bpg.cbt.exchange.order.model.TransactionFee;
 import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirTransactionDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirlineRuleDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirportDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientMerchantFeeDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirTransactionDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductDAOFactory;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.RemarkDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAOFactory;
@@ -401,24 +413,32 @@ public class MigrationService {
 		this.countryCode = countryCode;
 	}
 
-
-
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked" })
 	public void migratePassthroughs() throws JsonProcessingException {
-		List<AirTransaction> airTransactions = airTransactionDAOImpl.getList();
+		List<AirTransaction> airTransactionsFPNP = airTransactionDAOImpl.getList(false);
+		List<AirTransaction> airTransactionsSP = airTransactionDAOImpl.getList(true);
 
 		List<Document> docs = new ArrayList<>();
 
-		for (AirTransaction airTransaction : airTransactions) {
-			
-			List<BookingClass> bookingClassList = airTransactionDAOImpl.getBookingClassList(airTransaction.getAirlineCode()); 
-			
-			if (!ObjectUtils.isEmpty(bookingClassList)) {
-				
-				airTransaction.setBookingClass(bookingClassList);
-				
-			}
-			
+		for (AirTransaction airTransaction : airTransactionsFPNP) {
+			docs.add(dBObjectMapper.mapAsDbDocument(airTransaction));
+		}
+
+		for (AirTransaction airTransaction : airTransactionsSP) {
+
+			AirTransaction airTransaction2 = new AirTransaction(airTransaction);
+			List<String> cwtBkClassList = formBookingClasses(
+					airTransaction.getAirlineCode(), PassthroughType.CWT.getCode());
+			List<String> airlineBkClassList = formBookingClasses(
+					airTransaction.getAirlineCode(), PassthroughType.AIRLINE.getCode());
+
+			airTransaction.setBookingClasses(cwtBkClassList);
+			airTransaction.setPassthroughType(PassthroughType.CWT);
+
+			airTransaction2.setBookingClasses(airlineBkClassList);
+			airTransaction2.setPassthroughType(PassthroughType.AIRLINE);
+
+			docs.add(dBObjectMapper.mapAsDbDocument(airTransaction2));
 			docs.add(dBObjectMapper.mapAsDbDocument(airTransaction));
 		}
 
@@ -427,4 +447,21 @@ public class MigrationService {
 		System.out.println("Finished migration of airTransactions");
 	}
 
+	private Map<String, Object> mapBookingClasses() {
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("TGCWT", Arrays.asList("T", "K", "S", "V", "W", "L"));
+		parameters.put("TGAirline", Arrays.asList("F", "A", "P", "C", "D", "J", "Z", "Y",
+				"B", "M", "H", "Q"));
+		parameters.put("MHCWT", Arrays.asList("O", "Q"));
+		parameters.put("MHAirline", Arrays.asList("F", "A", "P", "J", "C", "D", "Z", "I",
+				"U", "Y", "B", "H", "K", "M", "L", "V", "S", "N", "E", "X", "G"));
+
+		return parameters;
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<String> formBookingClasses(String airlineCode, String passthroughType) {
+		return (List<String>) mapBookingClasses().get(airlineCode + passthroughType);
+
+	}
 }

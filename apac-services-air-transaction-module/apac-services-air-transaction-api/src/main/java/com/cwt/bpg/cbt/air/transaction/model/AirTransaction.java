@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.*;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 
 import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -36,7 +40,23 @@ public class AirTransaction implements Serializable {
 	private String countryCode;
 
 	private String clientAccountNumber;
-
+	
+	public AirTransaction() {
+	}
+	
+	public AirTransaction(AirTransaction airTransaction) {
+		this.id = airTransaction.id;
+		this.airlineDescription = airTransaction.airlineDescription;
+		this.ccVendorName = airTransaction.ccVendorName;
+		this.ccType = airTransaction.ccType;
+		this.passthroughType = airTransaction.passthroughType;
+		this.bookingClasses = airTransaction.bookingClasses;
+		this.airlineCode = airTransaction.airlineCode;
+		this.ccVendorCode = airTransaction.ccVendorCode;
+		this.countryCode = airTransaction.countryCode;
+		this.clientAccountNumber = airTransaction.clientAccountNumber;
+	}
+	
 	public ObjectId getId() {
 		return id;
 	}
@@ -107,5 +127,13 @@ public class AirTransaction implements Serializable {
 
 	public void setPassthroughType(PassthroughType passthroughType) {
 		this.passthroughType = passthroughType;
+	}
+	
+	public List<String> getBookingClasses() {
+		return bookingClasses;
+	}
+
+	public void setBookingClasses(List<String> bookingClasses) {
+		this.bookingClasses = bookingClasses;
 	}
 }
