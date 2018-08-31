@@ -52,7 +52,7 @@ public class MigrationService {
 
 	private static final String AIRPORT_COLLECTION = "airports";
 	private static final String CLIENT_COLLECTION = "clients";
-	private static final String AIR_TRANSACTION_COLLECTION = "airTransactions_";
+	private static final String AIR_TRANSACTION_COLLECTION = "airTransactions";
 
 	@Autowired
 	private MongoDbConnection mongoDbConnection;
