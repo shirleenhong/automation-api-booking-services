@@ -20,7 +20,7 @@ public class Application {
 		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");) {
 			
 			MigrationService service = context.getBean(MigrationService.class);
-			//service.setCountryCode(countryCode);
+			service.setCountryCode(countryCode);
 			
 			/*if ("IN".equalsIgnoreCase(countryCode)) {
 				service.migrateAirlineRules();
@@ -32,9 +32,9 @@ public class Application {
 				service.migrateRemarks();
 			}
 			
-			service.migrateProductList();*/
-
-			//service.migratePassthroughs();
+			service.migrateProductList();
+			service.migratePassthroughs();
+			*/
 		}
 	}
 
