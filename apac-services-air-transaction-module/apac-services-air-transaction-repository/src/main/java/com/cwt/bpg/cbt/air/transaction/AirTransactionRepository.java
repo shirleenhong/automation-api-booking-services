@@ -38,9 +38,13 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 			query.or(query.criteria(BOOKING_CLASSES).doesNotExist(),
                     query.criteria(BOOKING_CLASSES).hasAnyOf(params.getBookingClasses()));
 		}
+		
 		if(StringUtils.isNotBlank(params.getClientAccountNumber())) {
 			query.field(CLIENT_ACCT_NUM).equal(params.getClientAccountNumber());
+		}else {
+			query.field(CLIENT_ACCT_NUM).doesNotExist();
 		}
+		
 		if(StringUtils.isNotBlank(params.getCcType())) {
 			query.field(CC_TYPE).equal(params.getCcType());
 		}
