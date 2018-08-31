@@ -27,7 +27,7 @@ public class AirTransactionDAOImpl {
 	public List<AirTransaction> getList(boolean isSP) {
 		List<AirTransaction> airTransactions = new ArrayList<>();
 		logger.info("setting up query");
-		String sql = "SELECT a.id, a.AirlineCode,c.AirlineDescription, a.CCVendorCode, a.CCType, x.Countrycode, x.Clientid, x.ClientNumber, "
+		String sql = "SELECT distinct a.AirlineCode,c.AirlineDescription, a.CCVendorCode, a.CCType, x.Countrycode, x.ClientNumber, "
 					+ "CASE a.CCVendorCode " + "WHEN 'TP' THEN 'Airplus' "
 					+ "WHEN 'DC' THEN 'Diners' " + "ELSE d.CCVendorName "
 					+ "END as CCVendorName, "
