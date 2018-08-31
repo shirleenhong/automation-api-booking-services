@@ -79,8 +79,9 @@ public class AirTransactionController {
 		return new ResponseEntity<>(airTransService.delete(id), HttpStatus.OK);
 	}
 
-	private AirTransactionInput formAirTransactionInput(String airlineCode, List<String> bookingClasses,
-														String ccVendorCode, String ccType, String clientAccountNumber) {
+	private AirTransactionInput formAirTransactionInput(String airlineCode,
+			List<String> bookingClasses, String ccVendorCode, String ccType,
+			String clientAccountNumber) {
 
 		AirTransactionInput input = new AirTransactionInput();
 		input.setBookingClasses(bookingClasses);

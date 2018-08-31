@@ -17,16 +17,17 @@ public class AirTransactionInput implements Serializable {
 	
 	private String clientAccountNumber;
 
-	public String getAirlineCode() {
-		return airlineCode;
-	}
-
+	
 	public List<String> getBookingClasses() {
 		return bookingClasses;
 	}
 
 	public void setBookingClasses(List<String> bookingClasses) {
 		this.bookingClasses = bookingClasses;
+	}
+
+	public String getAirlineCode() {
+		return airlineCode;
 	}
 
 	public void setAirlineCode(String airlineCode) {
@@ -56,5 +57,4 @@ public class AirTransactionInput implements Serializable {
 	public void setCcType(String ccType) {
 		this.ccType = ccType;
 	}
-
 }
