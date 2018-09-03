@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.isEmptyString;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -136,7 +137,7 @@ public class CommonRepositoryTest {
 		when(query.field("type")).thenReturn(fieldEnd);
 		when(fieldEnd.equal(key)).thenReturn(query);
 
-		WriteResult writeResult = new WriteResult(1, true, null);
+		WriteResult writeResult = new WriteResult(1, false, null);
 		when(datastore.delete(query)).thenReturn(writeResult);
 
         String result = repo.remove(key);
@@ -144,5 +145,26 @@ public class CommonRepositoryTest {
         assertThat(result, is(equalTo(key)));
         verify(morphia, times(1)).getDatastore();
         verify(datastore, times(1)).delete(query);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void shouldDoNothingWhenRecordDoesNotExist() {
+		final String key = "test";
+
+		Query<InsurancePlan> query = mock(Query.class);
+		when(datastore.createQuery(InsurancePlan.class)).thenReturn(query);
+		FieldEnd fieldEnd = mock(FieldEnd.class);
+		when(query.field("type")).thenReturn(fieldEnd);
+		when(fieldEnd.equal(key)).thenReturn(query);
+
+		WriteResult writeResult = new WriteResult(0, false, null);
+		when(datastore.delete(query)).thenReturn(writeResult);
+
+		String result = repo.remove(key);
+
+		assertThat(result, isEmptyString());
+		verify(morphia, times(1)).getDatastore();
+		verify(datastore, times(1)).delete(query);
 	}
 }
