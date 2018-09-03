@@ -4,41 +4,42 @@ Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-imports.txt
 Resource    resources/air-transaction.txt
 
-Suite Setup    Generate Suite Variables For Air Transaction    cc_vendor_data_list=TP,Airplus|DC,Diners|CA,Mastercard|AX,Amex    rbd_data_list=G,ECONOMY|Q,ECONOMY|C,EXECUTIVE|I,ECONOMY    airline_data_list=AB,Air Berlin|TST,Test Airline|SG,SpiceJet   
+Suite Setup    Generate Suite Variables For Air Transaction    cc_vendor_data_list=TP,Airplus|DC,Diners|CA,Mastercard|AX,Amex|VI,VISA    rbd_data_list=G,ECONOMY|Q,ECONOMY|C,EXECUTIVE|I,ECONOMY    airline_data_list=AB,Air Berlin|SG,SpiceJet|AA,American Airlines|TST,Test Airline|TST1,Test Airline 1|TST2,Test Airline 2|TST3,Test Airline 3  
 
 *** Test Cases ***
 Verify That Air Transactions Are Correctly Retrieved
     [Tags]    functional
-    Create Test Variable For Air Transaction    data_list=AB,TP,NRCC,null,Airline;G|AB,DC,UATP,null,Airline;G|AB,CA,NRCC,null,Airline;G|AB,AX,UATP,null,Airline;G|AB,TP,UATP,null,Airline;G|AB,AX,NRCC,null,Airline;G|AB,DC,NRCC,null,Airline;G|AB,CA,UATP,null,Airline;G    consumer=maintenance
-    Send Air Transaction Get Request (Maintenance)    airline_code=AB
+    Create Test Variable For Air Transaction    data_list=AA,AX,NRCC,3104300001,CWT;null|AA,VI,UATP,3104300001,CWT;null    consumer=maintenance
+    Send Air Transaction Get Request (Maintenance)    client_account_number=3104300001
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Retrieved Correctly
+    [Teardown]    Evict Air Transaction Cache    
     
 Verify That Air Transactions Are Updated Correctly After Put Request
     [Tags]    functional
     #Single Booking Class
-    Create Test Variable For Air Transaction    data_list=TST1,CA,NRCC,1111111111,CWT;C
+    Create Test Variable For Air Transaction    data_list=TST1,CA,NRCC,1111111111,CWT;C    consumer=maintenance
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Send Air Transaction Get Request (Maintenance)    airline_code=TST    client_account_number=1111111111
+    Send Air Transaction Get Request (Maintenance)    airline_code=TST1    client_account_number=1111111111
     Verify Air Transaction Record Is Retrieved Correctly
     #Multiple Booking Class
-    Create Test Variable For Air Transaction    data_list=TST2,CA,NRCC,1111122222,CWT;C,G,Q
+    Create Test Variable For Air Transaction    data_list=TST2,CA,NRCC,1111122222,CWT;C,G,Q        consumer=maintenance
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Send Air Transaction Get Request (Maintenance)    airline_code=TST    client_account_number=1111122222
+    Send Air Transaction Get Request (Maintenance)    airline_code=TST2    client_account_number=1111122222
     Verify Air Transaction Record Is Retrieved Correctly
     #No Client Account Number
-    Create Test Variable For Air Transaction    data_list=TST3,CA,NRCC,null,CWT;C,G,Q
+    Create Test Variable For Air Transaction    data_list=TST3,CA,NRCC,null,CWT;C,G,Q    consumer=maintenance
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Send Air Transaction Get Request (Maintenance)    airline_code=TST
+    Send Air Transaction Get Request (Maintenance)    airline_code=TST3
     Verify Air Transaction Record Is Retrieved Correctly
     [Teardown]    Delete Created Air Transaction And Evict Cache
     
@@ -55,3 +56,4 @@ Verify That Air Transactions Are Deleted Correctly After Delete Request
     Send Air Transaction Get Request (Maintenance)     airline_code=TST    client_account_number=1111111111 
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Not Retrieved
+    [Teardown]    Evict Air Transaction Cache    
