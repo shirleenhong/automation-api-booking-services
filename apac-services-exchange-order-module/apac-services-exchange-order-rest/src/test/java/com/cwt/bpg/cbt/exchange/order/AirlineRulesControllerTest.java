@@ -1,9 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 
@@ -58,6 +56,16 @@ public class AirlineRulesControllerTest {
 		
 		ResponseEntity<?> client = airlineRulesController.removeAirlineRules(airlineCode);
 		assertEquals(HttpStatus.OK, client.getStatusCode());
+		verify(service, times(1)).delete(airlineCode);
+	}
+
+	@Test
+	public void returnNotFoundWhenAirlineDoesNotExist() {
+		final String airlineCode = "A1";
+		when(service.delete(airlineCode)).thenReturn("");
+
+		ResponseEntity<?> client = airlineRulesController.removeAirlineRules(airlineCode);
+		assertEquals(HttpStatus.NOT_FOUND, client.getStatusCode());
 		verify(service, times(1)).delete(airlineCode);
 	}
 }
