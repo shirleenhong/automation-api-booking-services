@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,12 +10,16 @@ import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.RoomType;
 
 @Service
 public class ExchangeOrderService {
 
 	@Autowired
 	private ExchangeOrderRepository exchangeOrderRepo;
+	
+	@Autowired
+	private RoomTypeRepository roomTypeRepository;
 
 	@Autowired
 	private ExchangeOrderInsertService eoInsertService;
@@ -53,6 +58,18 @@ public class ExchangeOrderService {
 
 	public BaseExchangeOrder getExchangeOrder(String countryCode, String eoNumber) {
 		return exchangeOrderRepo.getExchangeOrder(countryCode, eoNumber);
+	}
+	
+	public List<RoomType> getRoomTypes() {
+		return roomTypeRepository.getRoomTypes();
+	}
+	
+	public RoomType save(RoomType roomType) {
+		return roomTypeRepository.put(roomType);
+	}
+	
+	public String delete(String code) {
+		return roomTypeRepository.remove(new ObjectId(code));
 	}
 
 }
