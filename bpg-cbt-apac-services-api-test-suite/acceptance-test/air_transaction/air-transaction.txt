@@ -13,6 +13,7 @@ Verify That Air Transaction Returns Correct Passthrough Type For Full Passthroug
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
+    [Teardown]    Evict Air Transaction Cache    
     
 Verify That Air Transaction Returns Correct Passthrough Type For Non-Passthrough In Client Level
     [Tags]    functional
@@ -20,13 +21,27 @@ Verify That Air Transaction Returns Correct Passthrough Type For Non-Passthrough
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
+    [Teardown]    Evict Air Transaction Cache    
     
 Verify That Air Transaction Returns Correct Passthrough Type For Selective Passthrough In Client Level
     [Tags]    functional
-    Create Test Variable For Air Transaction    data_list=9W,AX,UATP,3098300014,Airline;Q
+    Create Test Variable For Air Transaction    data_list=TST,AX,UATP,2222222222,Airline;Q
+    Send Air Transaction Put Request (Maintenance)
+    Verify Response Status Code Is Correct    200
+    Verify Air Transaction Record Is Saved Correctly
+    Evict Air Transaction Cache
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
+    Create Test Variable For Air Transaction    data_list=TST,AX,UATP,2222222222,CWT;L,C,G
+    Send Air Transaction Put Request (Maintenance)
+    Verify Response Status Code Is Correct    200
+    Verify Air Transaction Record Is Saved Correctly
+    Evict Air Transaction Cache
+    Send Air Transaction Get Request    booking_class=L
+    Verify Response Status Code Is Correct    200
+    Verify Air Transaction Passthrough Type Is Retrieved Correctly
+    [Teardown]    Delete Created Air Transaction And Evict Cache    
     
 Verify That Air Transaction Returns Correct Passthrough Type For Full Passthrough In Country Level
     [Tags]    functional
@@ -34,6 +49,7 @@ Verify That Air Transaction Returns Correct Passthrough Type For Full Passthroug
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
+    [Teardown]    Evict Air Transaction Cache    
     
 Verify That Air Transaction Returns Correct Passthrough Type For Non-Passthrough In Country Level
     [Tags]    functional
@@ -41,6 +57,7 @@ Verify That Air Transaction Returns Correct Passthrough Type For Non-Passthrough
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
+    [Teardown]    Evict Air Transaction Cache    
 
 Verify That Air Transaction Returns Correct Passthrough Type For Selective Passthrough Type In Country Level
     [Tags]    functional
@@ -52,15 +69,16 @@ Verify That Air Transaction Returns Correct Passthrough Type For Selective Passt
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
+    [Teardown]    Evict Air Transaction Cache    
 
-Verify That Air Transactions Returns Correct Passthrough Type For Multiple Booking Class
+Verify That Air Transactions Return Correct Passthrough Type For Multiple Booking Class
     [Tags]    functional
-    Create Test Variable For Air Transaction    data_list=data_list=TST,CA,NRCC,1111111111,CWT;C
+    Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,CWT;C
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=data_list=TST,CA,NRCC,1111111111,Airline;Q
+    Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,Airline;Q
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly

@@ -31,15 +31,27 @@ Verify That OBT List Is Updated Correctly After Put Request
     Send OBT List Put Request
     Verify Response Status Code Is Correct    200
     Verify OBT List Is Retrieved Correctly
+    Evict OBT List Cache    
+    Send OBT List Get Request    country_code=ph
+    Verify Response Status Code Is Correct    200
+    Verify OBT List Is Retrieved Correctly
     Create OBT List For OBT List    obt_list=EBA    country_code=ph
     Send OBT List Put Request
+    Verify Response Status Code Is Correct    200
+    Verify OBT List Is Retrieved Correctly
+    Evict OBT List Cache    
+    Send OBT List Get Request    country_code=ph
     Verify Response Status Code Is Correct    200
     Verify OBT List Is Retrieved Correctly
     Create OBT List For OBT List    obt_list=EBS,EBA    country_code=ph    remove_obt=true
     Send OBT List Put Request
     Verify Response Status Code Is Correct    200
     Verify OBT List Is Retrieved Correctly
-    [Teardown]    Delete Created OBT And Evict Cache    country_code=ph    number=5   
+    Evict OBT List Cache    
+    Send OBT List Get Request    country_code=ph
+    Verify Response Status Code Is Correct    200
+    Verify OBT List Is Retrieved Correctly
+    [Teardown]    Delete Created OBT And Evict Cache    country_code=ph
 
 Verify That OBT List Is Retrieved Correctly After Put Request
     [Tags]    functional    not-ready
@@ -47,10 +59,11 @@ Verify That OBT List Is Retrieved Correctly After Put Request
     Send OBT List Put Request
     Verify Response Status Code Is Correct    200
     Verify OBT List Is Retrieved Correctly
+    Evict OBT List Cache    
     Send OBT List Get Request    country_code=ph
     Verify Response Status Code Is Correct    200
     Verify OBT List Is Retrieved Correctly
-    [Teardown]    Delete Created OBT And Evict Cache    country_code=ph    number=5
+    [Teardown]    Delete Created OBT And Evict Cache    country_code=ph
 
 Verify That OBT List Is Updated Correctly After Delete Request
     [Tags]    functional    not-ready
