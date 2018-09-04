@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.air.transaction;
+package com.cwt.bpg.cbt.repository;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -20,7 +20,7 @@ import com.mongodb.WriteResult;
  * @param <T> 
  * @param <D>
  */
-class CommonRepository<T, D> {
+public class CommonRepository<T, D> {
 
 	@Autowired
 	protected MorphiaComponent morphia;
@@ -28,12 +28,12 @@ class CommonRepository<T, D> {
 	private final Class<T> typeClass;
 	private final String keyColumn;
 
-	CommonRepository(Class<T> typeClass, String keyColumn) {
+	protected CommonRepository(Class<T> typeClass, String keyColumn) {
 		this.typeClass = typeClass;
 		this.keyColumn = keyColumn;
 	}
 
-    List<T> getAll() {
+    public List<T> getAll() {
 		return morphia.getDatastore().createQuery(typeClass).asList();
 	}
     
@@ -42,14 +42,14 @@ class CommonRepository<T, D> {
      * @param criteria
      * @return
      */
-    T get(D criteria) {
+    public T get(D criteria) {
     	return morphia.getDatastore().createQuery(typeClass)
     			.field(keyColumn)
     			.equal(criteria)
     			.get();
     }
 
-	T put(T object) {
+	public T put(T object) {
 		final D keyValue = getKeyValue(object);
 		if (keyValue != null) {
             remove(keyValue);
@@ -61,7 +61,7 @@ class CommonRepository<T, D> {
 		return object;
 	}
 
-	String remove(D keyValue) {
+	public String remove(D keyValue) {
 		final Datastore datastore = morphia.getDatastore();
 		final Query<T> query = datastore.createQuery(typeClass).field(keyColumn).equal(keyValue);
 
@@ -69,7 +69,7 @@ class CommonRepository<T, D> {
 
 		LoggerFactory.getLogger(typeClass).info("Delete Result: {}", delete);
 
-		return keyValue.toString();
+		return delete.getN() > 0 ? keyValue.toString() : "";
 	}
 
 	@SuppressWarnings("unchecked")
