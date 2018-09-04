@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.isEmptyString;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
@@ -81,12 +82,11 @@ public class ClientRepositoryTest {
         Query<Client> query = Mockito.mock(Query.class);
         FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
         String clientAccountNumber = "12345678";
-        WriteResult deleteResult = new WriteResult(0, true, clientAccountNumber);
+        WriteResult deleteResult = new WriteResult(1, false, clientAccountNumber);
         when(dataStore.createQuery(Client.class)).thenReturn(query);
         when(dataStore.delete(query)).thenReturn(deleteResult);
         when(query.field(anyString())).thenReturn(fieldEnd);
         when(fieldEnd.equal(clientAccountNumber)).thenReturn(query);
-        when(query.get()).thenReturn(new Client());
 
         String result = repo.remove(clientAccountNumber);
 
@@ -95,6 +95,26 @@ public class ClientRepositoryTest {
         verify(dataStore, times(1)).delete(query);
 
         assertThat(result, is(equalTo(clientAccountNumber)));
+	}
+
+	@Test
+	public void shouldDeleteNothingWhenClientDoesNotExist() {
+		Query<Client> query = Mockito.mock(Query.class);
+		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
+		String clientAccountNumber = "12345678";
+		WriteResult deleteResult = new WriteResult(0, false, clientAccountNumber);
+		when(dataStore.createQuery(Client.class)).thenReturn(query);
+		when(dataStore.delete(query)).thenReturn(deleteResult);
+		when(query.field(anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equal(clientAccountNumber)).thenReturn(query);
+
+		String result = repo.remove(clientAccountNumber);
+
+		verify(morphia, times(1)).getDatastore();
+		verify(dataStore, times(1)).createQuery(Client.class);
+		verify(dataStore, times(1)).delete(query);
+
+		assertThat(result, isEmptyString());
 	}
 
 	@Test

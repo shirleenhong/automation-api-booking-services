@@ -1,8 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,8 +45,21 @@ public class ClientControllerTest {
 	@Test
 	public void canRemoveClientPricing() {
 		final String clientAccountNumber = "123456";
+		when(clientPricingService.delete(clientAccountNumber)).thenReturn(clientAccountNumber);
+
 		ResponseEntity<?> client = clientController.removeClient(clientAccountNumber);
 		verify(clientPricingService, times(1)).delete(clientAccountNumber);
 		assertEquals(HttpStatus.OK, client.getStatusCode());
 	}
+
+    @Test
+    public void removeReturnsNotFoundWhenRecordDoesNotExist() {
+        final String clientAccountNumber = "123456";
+        when(clientPricingService.delete(clientAccountNumber)).thenReturn("");
+
+        ResponseEntity<?> client = clientController.removeClient(clientAccountNumber);
+        verify(clientPricingService, times(1)).delete(clientAccountNumber);
+        assertEquals(HttpStatus.NOT_FOUND, client.getStatusCode());
+    }
+
 }

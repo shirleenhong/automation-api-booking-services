@@ -42,7 +42,9 @@ public class AirlineRulesController {
 	@ApiOperation(value = "Remove airline rules")
 	@Internal
 	public ResponseEntity<String> removeAirlineRules(@PathVariable String airlineCode) {
-		return new ResponseEntity<>(service.delete(airlineCode), HttpStatus.OK);
+		String deleteResult = service.delete(airlineCode);
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		return new ResponseEntity<>(deleteResult, status);
 	}
 
 }

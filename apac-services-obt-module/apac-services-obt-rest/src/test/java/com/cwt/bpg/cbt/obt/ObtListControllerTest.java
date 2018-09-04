@@ -1,9 +1,13 @@
 package com.cwt.bpg.cbt.obt;
 
-import com.cwt.bpg.cbt.obt.model.ObtList;
-import com.cwt.bpg.cbt.obt.model.OnlineBookingTool;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,15 +20,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.cwt.bpg.cbt.obt.model.ObtList;
+import com.cwt.bpg.cbt.obt.model.OnlineBookingTool;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -109,7 +108,7 @@ public class ObtListControllerTest {
     public void removeObtListShouldRemoveObtList() throws Exception {
 		String countryCode = "IN";
 
-		when(service.delete(countryCode)).thenReturn(anyString());
+		when(service.delete(countryCode)).thenReturn(countryCode);
 
         mockMvc.perform(delete("/obt-list/IN")
                 .contentType(APPLICATION_JSON_UTF8))
@@ -121,14 +120,29 @@ public class ObtListControllerTest {
     }
 
 	@Test
-	public void removeObtListShouldRemoveObtList_for_unmatch_case() throws Exception {
+	public void removeObtListShouldRemoveObtListForUnmatchedCase() throws Exception {
 		String countryCode = "IN";
 
-		when(service.delete(countryCode)).thenReturn(anyString());
+		when(service.delete(countryCode)).thenReturn(countryCode);
 
-		mockMvc.perform(delete("/obt-list/in")
+		mockMvc.perform(delete("/obt-list/" + countryCode.toLowerCase())
 				.contentType(APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk())
+				.andReturn()
+				.getResponse();
+
+		verify(service, times(1)).delete(countryCode);
+	}
+
+	@Test
+	public void removeObtListShouldReturnNoFoundWhenRecordDoesNotExist() throws Exception {
+		String countryCode = "IN";
+
+		when(service.delete(countryCode)).thenReturn("");
+
+		mockMvc.perform(delete("/obt-list/" + countryCode.toLowerCase())
+				.contentType(APPLICATION_JSON_UTF8))
+				.andExpect(status().isNotFound())
 				.andReturn()
 				.getResponse();
 

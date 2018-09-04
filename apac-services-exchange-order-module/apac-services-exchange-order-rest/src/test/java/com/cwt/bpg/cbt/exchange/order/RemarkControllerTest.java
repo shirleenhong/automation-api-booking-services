@@ -2,16 +2,12 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerNonAirFeeTest.convertObjectToJsonBytes;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.Charset;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +20,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.cwt.bpg.cbt.exchange.order.model.Airport;
 import com.cwt.bpg.cbt.exchange.order.model.Remark;
 
 import net.minidev.json.JSONObject;
@@ -105,11 +100,29 @@ public class RemarkControllerTest {
 
     @Test
     public void removeRemarkShouldRemoveRemark() throws Exception {
-        mockMvc.perform(delete("/remarks/remarkId123")
+        String remarkId = "remarkId123";
+        when(service.delete(remarkId)).thenReturn(remarkId);
+
+        mockMvc.perform(delete("/remarks/" + remarkId)
                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
+
+        verify(service, times(1)).delete("remarkId123");
+    }
+
+    @Test
+    public void removeRemarkShouldReturnNotFoundWhenRecordDoesNotExist() throws Exception {
+        String remarkId = "remarkId123";
+        when(service.delete(remarkId)).thenReturn("");
+
+        mockMvc.perform(delete("/remarks/" + remarkId)
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isNotFound())
+                .andReturn()
+                .getResponse();
+
         verify(service, times(1)).delete("remarkId123");
     }
 

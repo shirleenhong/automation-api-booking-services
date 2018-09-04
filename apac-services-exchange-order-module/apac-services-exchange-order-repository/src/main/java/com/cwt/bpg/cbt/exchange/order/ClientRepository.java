@@ -33,6 +33,6 @@ class ClientRepository extends CommonRepository<Client, Integer> {
 
         LoggerFactory.getLogger(ClientRepository.class).info("Delete Result: {}", deleteResult);
 
-        return deleteResult.getUpsertedId().toString();
+        return deleteResult.getN() > 0 ? clientAccountNumber : "";
     }
 }

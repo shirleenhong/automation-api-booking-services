@@ -44,6 +44,8 @@ public class ReportHeaderController {
     @Internal
     public ResponseEntity<String> removeReportHeader(@PathVariable
                                                 @ApiParam(value = "Country Code") String countryCode) {
-        return new ResponseEntity<>(service.delete(countryCode), HttpStatus.OK);
+        String deleteResult = service.delete(countryCode);
+        HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+        return new ResponseEntity<>(deleteResult, status);
     }
 }
