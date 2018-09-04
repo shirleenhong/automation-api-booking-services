@@ -172,18 +172,18 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping(path = "/exchange-order/room-types/", produces = {
+	@GetMapping(path = "/exchange-order/room-types", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Return all room types")
-	public ResponseEntity<List<RoomType>> getRoomTypes() {
+	public ResponseEntity<List<RoomType>> getAll() {
 
 		return new ResponseEntity<>((List<RoomType>)
 				eoService.getRoomTypes(), HttpStatus.OK);
 	}
 	
 	@Internal
-	@PutMapping(path = "/exchange-order/room-type/")
+	@PutMapping(path = "/exchange-order/room-types")
 	@ApiOperation(value = "Save or update room type")
 	@ResponseBody
 	public ResponseEntity<RoomType> putRoomType(@Valid @RequestBody RoomType roomType) {
@@ -191,11 +191,10 @@ public class ExchangeOrderController {
 	}
 
 	@Internal
-	@DeleteMapping(path = "/exchange-order/room-type/")
+	@DeleteMapping(path = "/exchange-order/room-types/{code}")
 	@ResponseBody
 	@ApiOperation(value = "Remove room type")
-	public ResponseEntity<String> removeRoomType(
-			@RequestParam("code") String code) {
+	public ResponseEntity<String> removeRoomType(@PathVariable String code) {
 		return new ResponseEntity<>(eoService.delete(code), HttpStatus.OK);
 	}
 

@@ -69,7 +69,7 @@ public class ExchangeOrderService {
 	}
 	
 	public String delete(String code) {
-		return roomTypeRepository.remove(new ObjectId(code));
+		return roomTypeRepository.remove(code);
 	}
 
 }
