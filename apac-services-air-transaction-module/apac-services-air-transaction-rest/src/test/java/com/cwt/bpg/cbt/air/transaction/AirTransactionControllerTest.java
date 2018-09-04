@@ -61,7 +61,7 @@ public class AirTransactionControllerTest {
 
         when(service.getAirTransaction(any(AirTransactionInput.class))).thenReturn(output);
 
-        mockMvc.perform(get("/air-transaction?airlineCode=&bookingClasses=&ccVendorCode=&ccType=")
+        mockMvc.perform(get("/air-transactions?airlineCode=&bookingClasses=&ccVendorCode=&ccType=")
                 .contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(output)))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -76,7 +76,7 @@ public class AirTransactionControllerTest {
 
         when(service.getAirTransactionList(any(AirTransactionInput.class))).thenReturn(anyList());
 
-        mockMvc.perform(get("/air-transactions?airlineCode=&clientAccountNumber=")
+        mockMvc.perform(get("/air-transactions/SQ?clientAccountNumber=")
                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andReturn()
