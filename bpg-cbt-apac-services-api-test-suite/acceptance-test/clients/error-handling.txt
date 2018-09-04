@@ -108,27 +108,27 @@ Verify That Error Is Encountered When No Client Id Is Used During Put Request
 Verify That Error Is Encountered When Null Client Id Is Used During Delete Request
     [Tags]    migration
     Send Delete Request For Client    client_account_number=null
-    Verify Response Status Code Is Correct    400 
+    Verify Response Status Code Is Correct    404 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache
     
 Verify That Error Is Encountered When Invalid Client Id Is Used During Delete Request
     [Tags]    migration
     Send Get Request For Client    client_account_number=*&&^^%
-    Verify Response Status Code Is Correct    400 
+    Verify Response Status Code Is Correct    404 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache  
     
 Verify That Error Is Encountered When No Client Id Is Used During Delete Request
     [Tags]    migration
     Send Get Request For Client    client_account_number=None
-    Verify Response Status Code Is Correct    400 
+    Verify Response Status Code Is Correct    404 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache   
     
 Verify That Error Is Encountered When Empty Client Id Is Used During Delete Request
     [Tags]    migration
     Send Get Request For Client    client_account_number=${EMPTY}
-    Verify Response Status Code Is Correct    405 
+    Verify Response Status Code Is Correct    404 
     Verify Client Are Not Retrieved
     [Teardown]    Evict Client Cache             

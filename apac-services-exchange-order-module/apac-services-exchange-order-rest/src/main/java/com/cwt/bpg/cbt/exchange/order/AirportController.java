@@ -1,17 +1,20 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import com.cwt.bpg.cbt.documentation.annotation.Internal;
-import com.cwt.bpg.cbt.exchange.order.model.Airport;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
+import com.cwt.bpg.cbt.documentation.annotation.Internal;
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(tags = "Airport")
@@ -51,7 +54,9 @@ public class AirportController {
     @Internal
     public ResponseEntity<String> removeAirport(@PathVariable
                                                 @ApiParam(value = "Airport Code") String airportCode) {
-        return new ResponseEntity<>(service.delete(airportCode), HttpStatus.OK);
+        String deleteResult = service.delete(airportCode);
+        HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+        return new ResponseEntity<>(deleteResult, status);
     }
 
 }
