@@ -31,7 +31,7 @@ Create OBT List Request Body
     Log    ${data}
 
 Delete Created OBT and Evict Cache
-    [Arguments]    ${token}=${default_token}    ${country_code}=sg    ${number}=4
+    [Arguments]    ${token}=${default_token}    ${country_code}=sg    ${number}=2
     Send OBT List Delete Request    token=${token}    country_code=${country_code}
     Evict OBT List Cache    token=${token}    number=${number}
     
@@ -41,7 +41,7 @@ Evict OBT List Cache
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
     : FOR    ${index}    IN RANGE    0    ${number}
-    \    ${response}    Get Request    obt-list    /apac-services-rest/api/caches/evict/obt_list    headers=${headers}
+    \    ${response}    Get Request    obt-list    /apac-services-rest/api/caches/evict/obt-list    headers=${headers}
     \    Set Test Variable    ${response}
     \    Verify Response Status Code Is Correct    200
     \    Log    ${response.headers}

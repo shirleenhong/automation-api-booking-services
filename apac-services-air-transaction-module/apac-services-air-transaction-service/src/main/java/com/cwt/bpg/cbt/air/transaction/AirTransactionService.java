@@ -53,7 +53,7 @@ public class AirTransactionService {
 		}
 	}
 
-	@Cacheable(cacheNames = "air-transactions", key = "#input.airlineCode + #input.clientAccountNumber")
+	@Cacheable(cacheNames = "air-transactions", key = "#input.airlineCode + #input.clientAccountNumber + #input.bookingClasses + #input.ccVendorCode + #input.ccType")
 	public List<AirTransaction> getAirTransactionList(AirTransactionInput input) {
 		return airTransactionRepo.getAirTransactions(input);
 	}

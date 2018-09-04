@@ -1,2 +1,2 @@
 *** Settings ***
-Force Tags        obt-list    not-ready
+Force Tags        obt-list

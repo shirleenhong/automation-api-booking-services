@@ -20,8 +20,23 @@ Append Air Transaction Request Fields
 Append Air Transaction Booking Class Fields
     ${booking_class_request_list}    Create List    
     :FOR    ${booking_class_index}    IN RANGE    0    ${booking_class_list_length}
-    \    Append To List   ${booking_class_request_list}    {"code":"${booking_class_${booking_class_index}}","description":"${booking_class_description_${booking_class_index}}"}         
+    \    Append To List   ${booking_class_request_list}    "${booking_class_${booking_class_index}}"         
     Set Test Variable    ${booking_class_request_list}
+
+Create Get Request URL Location
+    [Arguments]    ${airline_code}=${airline_code}    ${booking_class}=${booking_class_list}    ${cc_vendor_code}=${cc_vendor_code}    ${cc_type}=${cc_type}    ${client_account_number}=${client_account_number}
+    ${url_location_list}    Create List
+    Run Keyword If    "${airline_code}"!="null"    Append To List    ${url_location_list}    airlineCode=${airline_code}
+    Run Keyword If    "${booking_class}"!="null"    Append To List    ${url_location_list}    bookingClasses=${booking_class}
+    Run Keyword If    "${cc_vendor_code}"!="null"    Append To List    ${url_location_list}    ccVendorCode=${cc_vendor_code}
+    Run Keyword If    "${cc_type}"!="null"    Append To List    ${url_location_list}    ccType=${cc_type}
+    Run Keyword If    "${client_account_number}"!="null"    Append To List    ${url_location_list}    clientAccountNumber=${clientAccountNumber}
+    ${url_location_list_length}    Get Length    ${url_location_list}    
+    : FOR    ${i}    IN RANGE    0    ${url_location_list_length}
+    \    ${url_data_list}    Set Variable If    ${i}==0    ${EMPTY}    ${url_data_list}&
+    \    ${url_data_list}    Set Variable    ${url_data_list}${url_location_list[${i}]}
+    ${url_data_list}    Set Variable If    "${url_location_list_length}"=="0"    ${EMPTY}    ${url_data_list}
+    Set Test Variable    ${url_data_list}    
 
 Create Put Request Body
     Append Air Transaction Request Fields
@@ -35,7 +50,7 @@ Create Put Request Body
     \    ${booking_class_data_list}    Set Variable If    ${i}==0    ${EMPTY}    ${booking_class_data_list},
     \    ${booking_class_data_list}    Set Variable    ${booking_class_data_list}${booking_class_request_list[${i}]}
     ${booking_class_data_list}    Set Variable If    "${booking_class_request_list_length}"=="0"    ${EMPTY}    ${booking_class_data_list}
-    ${data}    Set Variable If    "${booking_class_list}"!="${EMPTY}"    {${air_transaction_data_list},"bookingClass":[${booking_class_data_list}]}
+    ${data}    Set Variable If    "${booking_class_list}"!="${EMPTY}"    {${air_transaction_data_list},"bookingClasses":[${booking_class_data_list}]}
     Set Test Variable    ${data}
     Log    ${data}
 
@@ -47,8 +62,9 @@ Create Test Variable For Air Transaction
     :FOR    ${data}    IN    @{data_list}
     \    ${data}    Split String    ${data}    ;
     \    Create Test Variables For Air Transaction Main Fields    main_data_list=${data[0]}
-    \    Create Test Variables For Air Transaction Booking Class Fields    booking_data_list=${data[1]}
-    \    Run Keyword If    "${consumer}"=="maintenance"    Append To List    ${air_transaction_list}    ${airline_code},${${airline_code}_airline_description},${cc_vendor_code},${cc_type},${passthrough_type},${client_account_number},${booking_class_list}        
+    \    Run Keyword If    "${data[1]}"!="null"    Create Test Variables For Air Transaction Booking Class Fields    booking_data_list=${data[1]}    ELSE    Run Keywords    Set Test Variable    ${booking_class_list}    null    AND    Set Test Variable    ${booking_class_list_length}    0
+    \    Run Keyword If    "${consumer}"=="maintenance"    Append To List    ${air_transaction_list}    ${airline_code},${${airline_code}_airline_description},${cc_vendor_code},${cc_type},${passthrough_type},${client_account_number},${booking_class_list}
+    \    Log    ${air_transaction_list}        
     Set Test Variable    ${air_transaction_records_length}    ${data_list_length}
     Set Test Variable    ${air_transaction_list}
 
@@ -77,13 +93,13 @@ Create Test Variables For Air Transaction Booking Class Fields
     Set Test Variable    ${booking_class_list_length}
 
 Delete Created Air Transaction And Evict Cache
-    [Arguments]    ${number}=2    ${token}=${default_token}
+    [Arguments]    ${number}=3    ${token}=${default_token}
     :FOR    ${data}    IN    @{id_list}
-    \    Send Air Transaction Delete Request    token=${token}    id=${data}
+    \    Send Air Transaction Delete Request (Maintenance)    token=${token}    id=${data}
     \    Evict Air Transaction Cache    token=${token}    number=${number}
 
 Evict Air Transaction Cache
-    [Arguments]    ${number}=2    ${token}=${default_token}
+    [Arguments]    ${number}=3    ${token}=${default_token}
     Create Session    air-transactions    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
@@ -139,7 +155,8 @@ Send Air Transaction Get Request
     Create Session    air-transaction    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${response}    Get Request    air-transaction    /apac-services-rest/api/air-transaction?airlineCode=${airline_code}&bookingClasses=${booking_class}&ccVendorCode=${cc_vendor_code}&ccType=${cc_type}&clientAccountNumber=${client_account_number}    headers=${headers}
+    Create Get Request URL Location    airline_code=${airline_code}    booking_class=${booking_class}    cc_vendor_code=${cc_vendor_code}    cc_type=${cc_type}    client_account_number=${client_account_number}
+    ${response}    Get Request    air-transaction    /apac-services-rest/api/air-transaction?${url_data_list}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
@@ -150,7 +167,8 @@ Send Air Transaction Get Request (Maintenance)
     Create Session    air-transactions    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${response}    Get Request    air-transactions    /apac-services-rest/api/air-transactions?airlineCode=${airline_code}&clientAccountNumber=${client_account_number}    headers=${headers}
+    Create Get Request URL Location    airline_code=${airline_code}    client_account_number=${client_account_number}    booking_class=null    cc_vendor_code=null    cc_type=null
+    ${response}    Get Request    air-transactions    /apac-services-rest/api/air-transactions?${url_data_list}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
@@ -175,22 +193,27 @@ Verify Air Transaction Passthrough Type Is Not Retrieved
     Verify String Does Not Contain Substring    ${response.text}    "passthroughType"      
     
 Verify Air Transaction Record Is Retrieved Correctly
-    :FOR    ${index}    IN RANGE    0    ${air_transaction_records_length}
+    ${record_matched}    Set Variable    0
+    ${data_list}    To Json    ${response.content}
+    ${response_length}    Get Length    ${data_list}
+    :FOR    ${index}    IN RANGE    0    ${response_length}
     \    ${actual_airline_code}    Get Json Value As String    ${response.content}    $.[${index}].airlineCode
     \    ${actual_airline_description}    Get Json Value As String    ${response.content}    $.[${index}].airlineDescription
     \    ${actual_cc_vendor_code}    Get Json Value As String    ${response.content}    $.[${index}].ccVendorCode
     \    ${actual_cc_type}    Get Json Value As String    ${response.content}    $.[${index}].ccType
     \    ${actual_passthrough_type}    Get Json Value As String    ${response.content}    $.[${index}].passthroughType
-    \    ${booking_class_exists}    Run Keyword And Return Status    Verify Json Element Exists    $.[${index}].bookingClass
-    \    ${actual_booking_class}    Run Keyword If    "${booking_class_exists}"=="True"    Get Json Value As String    ${response.content}    $.[${index}].bookingClass.[0].code    ELSE    Set Variable    null
+    \    ${booking_class_exists}    Run Keyword And Return Status    Verify Json Element Exists    $.[${index}].bookingClasses
+    \    ${actual_booking_class}    Run Keyword If    "${booking_class_exists}"=="True"    Get Json Value As String    ${response.content}    $.[${index}].bookingClasses    ELSE    Set Variable    null
+    \    ${actual_booking_class}    Remove String    ${actual_booking_class}    "
+    \    ${actual_booking_class}    Remove String    ${actual_booking_class}    ${SPACE}
     \    ${client_account_number_exists}    Run Keyword And Return Status    Verify Json Element Exists    $.[${index}].clientAccountNumber
     \    ${actual_client_account_number}    Run Keyword If    "${client_account_number_exists}"=="True"    Get Json Value As String    ${response.content}    $.[${index}].clientAccountNumber    ELSE    Set Variable    null
     \    ${actual_air_transaction}    Set Variable    ${actual_airline_code},${actual_airline_description},${actual_cc_vendor_code},${actual_cc_type},${actual_passthrough_type},${actual_client_account_number},${actual_booking_class}
-    \    List Should Contain Value    ${air_transaction_list}    ${actual_air_transaction} 
+    \    ${record_was_matched}    Run Keyword And Return Status    List Should Contain Value    ${air_transaction_list}    ${actual_air_transaction}
+    \    ${record_matched}    Run Keyword If    "${record_was_matched}"=="True"    Evaluate    ${record_matched}+1    ELSE    Set Variable    ${record_matched} 
     \    Verify Json Value Is Correct    $.[${index}].ccVendorName    ${${actual_cc_vendor_code}_cc_description}
-    \    Verify Json Value Is Correct    $.[${index}].airlineDescription    ${${actual_airline_code}_airline_description}
-    \    Run Keyword If    "${booking_class_exists}"=="True"    Verify Json Value Is Correct    $.[${index}].bookingClass.[0].description    ${${actual_booking_class}_rbd_description}
-    \    Verify Json Element Exists    $.[${index}].id           
+    \    Verify Json Element Exists    $.[${index}].id   
+    Verify Actual Value Matches Expected Value    ${air_transaction_records_length}    ${record_matched}        
 
 Verify Air Transaction Record Is Not Retrieved
     Verify String Does Not Contain Substring    ${response.text}    "airlineCode"
@@ -204,7 +227,7 @@ Verify Air Transaction Record Is Not Retrieved
     Verify String Does Not Contain Substring    ${response.text}    "bookingClass"
 
 Verify Air Transaction Record Is Saved Correctly
-    ${id_list_exists}    Run Keyword And Return Status    Variable Should Exists    ${id_list}
+    ${id_list_exists}    Run Keyword And Return Status    Variable Should Exist    ${id_list}
     ${id_list}    Run Keyword If    "${id_list_exists}"=="True"    Set Variable    ${id_list}    ELSE    Create List
     Verify Json Element Exists    $.id
     ${actual_id}    Get Json Value As String    ${response.content}    $.id
@@ -218,10 +241,9 @@ Verify Air Transaction Record Is Saved Correctly
     Verify Json Value Is Correct    $.countryCode    IN
     Verify Json Value Is Correct    $.ccType    ${cc_type}
     Verify Json Value Is Correct    $.passthroughType    ${passthrough_type}
-    Verify Json Value Is Correct    $.clientAccountNumber    ${client_account_number}
+    Run Keyword If    "${client_account_number}"!="null"    Verify Json Value Is Correct    $.clientAccountNumber    ${client_account_number}    ELSE    Verify Json Element Does Not Exist    $.clientAccountNumber
     : FOR    ${booking_class_index}    IN RANGE    0    ${booking_class_list_length}
-    \    Verify Json Value Is Correct    $.bookingClass.[${booking_class_index}].code    ${booking_class_${booking_class_index}}
-    \    Verify Json Value Is Correct    $.bookingClass.[${booking_class_index}].description    ${booking_class_description_${booking_class_index}}
+    \    Verify Json Value Is Correct    $.bookingClasses.[${booking_class_index}]   ${booking_class_${booking_class_index}}
 
 
      
