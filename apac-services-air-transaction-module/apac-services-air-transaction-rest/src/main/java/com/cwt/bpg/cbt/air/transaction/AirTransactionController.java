@@ -18,6 +18,7 @@ import com.cwt.bpg.cbt.documentation.annotation.Internal;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(tags = "Air Transaction")
@@ -26,8 +27,7 @@ public class AirTransactionController {
 	@Autowired
 	private AirTransactionService airTransService;
 
-	@Internal
-	@GetMapping(value = "/air-transaction", produces = {
+	@GetMapping(value = "/air-transactions", produces = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Returns CWT (Non-Passthrough) or Airline (Full Passthrough) based on airline code, "
@@ -47,12 +47,12 @@ public class AirTransactionController {
 	}
 
 	@Internal
-	@GetMapping(value = "/air-transactions", produces = {
+	@GetMapping(value = "/air-transactions/{airlineCode}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "[Maintenance] Pulls air transactions based on airline code and client number.")
 	public ResponseEntity<List<AirTransaction>> getAirTransactions(
-			@RequestParam("airlineCode") String airlineCode,
+			@PathVariable("airlineCode") @ApiParam("2-character airline code") String airlineCode,
 			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber) {
 
 		AirTransactionInput input = formAirTransactionInput(airlineCode, null,

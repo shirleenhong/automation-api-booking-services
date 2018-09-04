@@ -6,6 +6,7 @@ import org.mongodb.morphia.query.Sort;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.exchange.order.model.RoomType;
+import com.cwt.bpg.cbt.repository.CommonRepository;
 
 @Repository
 public class RoomTypeRepository extends CommonRepository<RoomType, String>{

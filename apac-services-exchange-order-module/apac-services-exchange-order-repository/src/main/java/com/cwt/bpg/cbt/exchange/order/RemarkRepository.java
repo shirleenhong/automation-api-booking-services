@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.exchange.order.model.Remark;
+import com.cwt.bpg.cbt.repository.CommonRepository;
 
 @Repository
 public class RemarkRepository extends CommonRepository<Remark, ObjectId>{

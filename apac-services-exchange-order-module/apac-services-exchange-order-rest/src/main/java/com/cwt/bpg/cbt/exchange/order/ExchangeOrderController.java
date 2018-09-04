@@ -28,6 +28,7 @@ import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.RoomType;
+import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
@@ -202,4 +203,28 @@ public class ExchangeOrderController {
 		
 	}
 
+	@GetMapping(path = "/exchange-order/vmpd")
+	@ResponseBody
+	@ApiOperation(value = "Pulls all Reason for Issue.")
+	public ResponseEntity<List<VmpdReasonCode>> getVMPDReasonCodes() {
+		return new ResponseEntity<>(eoService.getAllVMPDReasonCodes(), HttpStatus.OK);
+	}
+	
+	@Internal
+    @PutMapping(path = "/exchange-order/vmpd")
+    @ResponseBody
+    @ApiOperation(value = "Save or update Reason for Issue.")
+    public ResponseEntity<VmpdReasonCode> saveVMPDReasonCode(@Valid @RequestBody VmpdReasonCode reasonCode) {
+        return new ResponseEntity<>(eoService.saveVMPDReasonCode(reasonCode), HttpStatus.OK);
+    }
+	
+	@Internal
+	@DeleteMapping(path = "/exchange-order/vmpd/{code}")
+	@ResponseBody
+	@ApiOperation(value = "Deletes Reason for Issue data by vmpd code.")
+	public ResponseEntity<String> deleteVmpdReasonCode(@PathVariable @ApiParam(value = "VMPD Code") String code) {
+		String deleteResult = eoService.deleteVmpdReasonCode(code);
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		return new ResponseEntity<>(deleteResult, status);
+	}
 }

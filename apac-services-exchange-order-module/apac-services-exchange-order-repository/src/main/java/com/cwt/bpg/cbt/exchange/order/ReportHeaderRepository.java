@@ -5,6 +5,7 @@ import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
+import com.cwt.bpg.cbt.repository.CommonRepository;
 
 @Repository
 public class ReportHeaderRepository extends CommonRepository<ReportHeader, String>{
