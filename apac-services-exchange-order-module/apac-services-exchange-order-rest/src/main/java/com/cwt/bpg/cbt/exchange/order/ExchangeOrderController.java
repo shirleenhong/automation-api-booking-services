@@ -179,7 +179,7 @@ public class ExchangeOrderController {
 	public ResponseEntity<List<RoomType>> getAll() {
 
 		return new ResponseEntity<>((List<RoomType>)
-				eoService.getRoomTypes(), HttpStatus.OK);
+				eoService.getAll(), HttpStatus.OK);
 	}
 	
 	@Internal
@@ -195,7 +195,11 @@ public class ExchangeOrderController {
 	@ResponseBody
 	@ApiOperation(value = "Remove room type")
 	public ResponseEntity<String> removeRoomType(@PathVariable String code) {
-		return new ResponseEntity<>(eoService.delete(code), HttpStatus.OK);
+		
+		String deleteResult = eoService.delete(code);
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		return new ResponseEntity<>(deleteResult, status);
+		
 	}
 
 }

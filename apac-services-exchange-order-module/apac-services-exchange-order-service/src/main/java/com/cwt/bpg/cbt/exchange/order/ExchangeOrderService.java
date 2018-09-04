@@ -60,8 +60,8 @@ public class ExchangeOrderService {
 		return exchangeOrderRepo.getExchangeOrder(countryCode, eoNumber);
 	}
 	
-	public List<RoomType> getRoomTypes() {
-		return roomTypeRepository.getRoomTypes();
+	public List<RoomType> getAll() {
+		return roomTypeRepository.getAll();
 	}
 	
 	public RoomType save(RoomType roomType) {
