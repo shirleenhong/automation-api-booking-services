@@ -1,9 +1,13 @@
-package com.cwt.bpg.cbt.air.transaction;
+package com.cwt.bpg.cbt.repository;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +22,7 @@ import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
-import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.calculator.model.AirTransactionTest;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.WriteResult;
 
@@ -32,11 +36,11 @@ public class CommonRepositoryTest {
 	private MorphiaComponent morphia;
 
 	@InjectMocks
-	private CommonRepository<AirTransaction, String> repo;
+	private CommonRepository<AirTransactionTest, String> repo;
 
 	@Before
 	public void setUp() {
-        repo = new CommonRepository<>(AirTransaction.class, "airlineCode");
+        repo = new CommonRepository<>(AirTransactionTest.class, "airlineCode");
         MockitoAnnotations.initMocks(this);
 
         when(morphia.getDatastore()).thenReturn(datastore);
@@ -44,35 +48,35 @@ public class CommonRepositoryTest {
 
     @Test
 	public void shouldReturnAllRows() {
-		Query<AirTransaction> query = mock(Query.class);
-		when(datastore.createQuery(AirTransaction.class)).thenReturn(query);
-        ArrayList<AirTransaction> rows = new ArrayList<>();
+		Query<AirTransactionTest> query = mock(Query.class);
+		when(datastore.createQuery(AirTransactionTest.class)).thenReturn(query);
+        ArrayList<AirTransactionTest> rows = new ArrayList<>();
         when(query.asList()).thenReturn(rows);
 
-		List<AirTransaction> result = repo.getAll();
+		List<AirTransactionTest> result = repo.getAll();
 
 		assertThat(result, is(equalTo(rows)));
 		verify(morphia, times(1)).getDatastore();
-		verify(datastore, times(1)).createQuery(AirTransaction.class);
+		verify(datastore, times(1)).createQuery(AirTransactionTest.class);
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldInsertOrUpdate() {
-		AirTransaction airTransaction = new AirTransaction();
+		AirTransactionTest airTransaction = new AirTransactionTest();
 		airTransaction.setAirlineCode("airlineCode");
 
-		Key<AirTransaction> key = mock(Key.class);
-		Query<AirTransaction> query = mock(Query.class);
+		Key<AirTransactionTest> key = mock(Key.class);
+		Query<AirTransactionTest> query = mock(Query.class);
 		FieldEnd fieldEnd = mock(FieldEnd.class);
-		when(datastore.createQuery(AirTransaction.class)).thenReturn(query);
+		when(datastore.createQuery(AirTransactionTest.class)).thenReturn(query);
 		when(query.field("airlineCode")).thenReturn(fieldEnd);
 		when(fieldEnd.equal(airTransaction.getAirlineCode())).thenReturn(query);
 		when(datastore.save(airTransaction)).thenReturn(key);
 		WriteResult dkey = new WriteResult(1, true, null);
 		when(datastore.delete(query)).thenReturn(dkey);
 
-		AirTransaction result = repo.put(airTransaction);
+		AirTransactionTest result = repo.put(airTransaction);
 
         assertThat(result, is(equalTo(airTransaction)));
         verify(morphia, times(2)).getDatastore();
@@ -84,12 +88,12 @@ public class CommonRepositoryTest {
 	@Test
     public void shouldInsertOrUpdateWhenKeyValueIsEmpty() {
 
-    	AirTransaction insurance = new AirTransaction();
+    	AirTransactionTest insurance = new AirTransactionTest();
 
-		Key<AirTransaction> key = mock(Key.class);
-		Query<AirTransaction> query = mock(Query.class);
+		Key<AirTransactionTest> key = mock(Key.class);
+		Query<AirTransactionTest> query = mock(Query.class);
 		FieldEnd fieldEnd = mock(FieldEnd.class);
-		when(datastore.createQuery(AirTransaction.class)).thenReturn(query);
+		when(datastore.createQuery(AirTransactionTest.class)).thenReturn(query);
 		when(query.field("type")).thenReturn(fieldEnd);
 		when(fieldEnd.equal(insurance.getAirlineCode())).thenReturn(query);
 		when(datastore.save(insurance)).thenReturn(key);
@@ -97,7 +101,7 @@ public class CommonRepositoryTest {
 		when(datastore.delete(query)).thenReturn(dkey);
 		
 
-		AirTransaction result = repo.put(insurance);
+		AirTransactionTest result = repo.put(insurance);
 
         assertThat(result, is(equalTo(insurance)));
         verify(morphia, times(1)).getDatastore();
@@ -108,18 +112,18 @@ public class CommonRepositoryTest {
     @Test
 	public void shouldUpdateWhenNoRepositoryKey() {
 
-		repo = new CommonRepository<>(AirTransaction.class,  "");
+		repo = new CommonRepository<>(AirTransactionTest.class,  "");
 		MockitoAnnotations.initMocks(this);
 
 		when(morphia.getDatastore()).thenReturn(datastore);
 
-		AirTransaction airTransaction = new AirTransaction();
+		AirTransactionTest airTransaction = new AirTransactionTest();
 		airTransaction.setAirlineCode("airlineCode");
 
-		Key<AirTransaction> key = mock(Key.class);
+		Key<AirTransactionTest> key = mock(Key.class);
 		when(datastore.save(airTransaction)).thenReturn(key);
 
-		AirTransaction result = repo.put(airTransaction);
+		AirTransactionTest result = repo.put(airTransaction);
 
 		assertThat(result, is(equalTo(airTransaction)));
 		verify(morphia, times(1)).getDatastore();
@@ -131,8 +135,8 @@ public class CommonRepositoryTest {
 	public void shouldDelete() {
 		final String key = "test";
 
-		Query<AirTransaction> query = mock(Query.class);
-		when(datastore.createQuery(AirTransaction.class)).thenReturn(query);
+		Query<AirTransactionTest> query = mock(Query.class);
+		when(datastore.createQuery(AirTransactionTest.class)).thenReturn(query);
 		FieldEnd fieldEnd = mock(FieldEnd.class);
 		when(query.field("airlineCode")).thenReturn(fieldEnd);
 		when(fieldEnd.equal(key)).thenReturn(query);

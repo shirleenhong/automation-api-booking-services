@@ -20,5 +20,10 @@
             <artifactId>apac-services-mongodb</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+			<groupId>com.cwt.bpg.cbt</groupId>
+			<artifactId>apac-services-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
     </dependencies>
 </project>

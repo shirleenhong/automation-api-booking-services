@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
+import com.cwt.bpg.cbt.repository.CommonRepository;
+import com.cwt.bpg.cbt.utils.*;
 
 @Repository
 public class AirTransactionRepository extends CommonRepository<AirTransaction, ObjectId>{

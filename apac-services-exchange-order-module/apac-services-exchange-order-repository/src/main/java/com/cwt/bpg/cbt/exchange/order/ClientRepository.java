@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.exchange.order.model.Client;
+import com.cwt.bpg.cbt.repository.CommonRepository;
 import com.mongodb.WriteResult;
 
 @Repository

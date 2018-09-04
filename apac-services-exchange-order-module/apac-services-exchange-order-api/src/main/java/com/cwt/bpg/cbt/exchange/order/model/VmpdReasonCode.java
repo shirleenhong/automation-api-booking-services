@@ -10,7 +10,7 @@ import org.mongodb.morphia.annotations.Indexes;
 
 @Entity(value = "vmpdReasonCodes", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("code")))
-public class VMPDReasonCode implements Serializable {
+public class VmpdReasonCode implements Serializable {
 
 	private static final long serialVersionUID = 5943172847055937530L;
 

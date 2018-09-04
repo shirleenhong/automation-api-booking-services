@@ -26,7 +26,7 @@ import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
-import com.cwt.bpg.cbt.exchange.order.model.VMPDReasonCode;
+import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
@@ -174,7 +174,7 @@ public class ExchangeOrderController {
 	@GetMapping(path = "/exchange-order/vmpd")
 	@ResponseBody
 	@ApiOperation(value = "Pulls all Reason for Issue.")
-	public ResponseEntity<List<VMPDReasonCode>> getVMPDReasonCodes() {
+	public ResponseEntity<List<VmpdReasonCode>> getVMPDReasonCodes() {
 		return new ResponseEntity<>(eoService.getAllVMPDReasonCodes(), HttpStatus.OK);
 	}
 	
@@ -182,7 +182,7 @@ public class ExchangeOrderController {
     @PutMapping(path = "/exchange-order/vmpd")
     @ResponseBody
     @ApiOperation(value = "Save or update Reason for Issue.")
-    public ResponseEntity<VMPDReasonCode> saveVMPDReasonCode(@Valid @RequestBody VMPDReasonCode reasonCode) {
+    public ResponseEntity<VmpdReasonCode> saveVMPDReasonCode(@Valid @RequestBody VmpdReasonCode reasonCode) {
         return new ResponseEntity<>(eoService.saveVMPDReasonCode(reasonCode), HttpStatus.OK);
     }
 	
@@ -191,8 +191,8 @@ public class ExchangeOrderController {
 	@ResponseBody
 	@ApiOperation(value = "Deletes Reason for Issue data by vmpd code.")
 	public ResponseEntity<String> deleteVmpdReasonCode(@PathVariable @ApiParam(value = "VMPD Code") String code) {
-		return new ResponseEntity<>(eoService.deleteVmpdReasonCode(code), HttpStatus.OK);
+		String deleteResult = eoService.deleteVmpdReasonCode(code);
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		return new ResponseEntity<>(deleteResult, status);
 	}
-
-
 }
