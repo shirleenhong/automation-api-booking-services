@@ -3,12 +3,8 @@ package com.cwt.bpg.cbt.exchange.order;
 import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerNonAirFeeTest.convertObjectToJsonBytes;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.Charset;
@@ -36,7 +32,7 @@ public class ReportHeaderControllerTest {
     @InjectMocks
     private ReportHeaderController controller;
 
-    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
+    private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8")
     );
@@ -100,9 +96,26 @@ public class ReportHeaderControllerTest {
     @Test
     public void removeReportHeaderShouldDeleteReportHeader() throws Exception {
 
-        mockMvc.perform(delete("/report-headers/XXX")
+        String countryCode = "XX";
+        when(service.delete(countryCode)).thenReturn(countryCode);
+
+        mockMvc.perform(delete("/report-headers/" + countryCode)
                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
+                .andReturn();
+
+        verify(service, times(1)).delete(anyString());
+    }
+
+    @Test
+    public void removeReportHeaderShouldReturnNotFoundWhenRecordDoesNotExist() throws Exception {
+
+        String countryCode = "XX";
+        when(service.delete(countryCode)).thenReturn("");
+
+        mockMvc.perform(delete("/report-headers/" + countryCode)
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isNotFound())
                 .andReturn();
 
         verify(service, times(1)).delete(anyString());

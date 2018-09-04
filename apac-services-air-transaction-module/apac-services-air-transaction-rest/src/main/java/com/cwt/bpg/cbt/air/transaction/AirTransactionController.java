@@ -10,11 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionOutput;
+import com.cwt.bpg.cbt.documentation.annotation.Internal;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -76,7 +76,9 @@ public class AirTransactionController {
 	@ApiOperation(value = "[Maintenance] Remove air transaction")
 	public ResponseEntity<String> removeAirTransaction(
 			@RequestParam("id") String id) {
-		return new ResponseEntity<>(airTransService.delete(id), HttpStatus.OK);
+		String deleteResult = airTransService.delete(id);
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		return new ResponseEntity<>(deleteResult, status);
 	}
 
 	private AirTransactionInput formAirTransactionInput(String airlineCode,

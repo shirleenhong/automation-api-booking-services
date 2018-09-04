@@ -1,8 +1,15 @@
 package com.cwt.bpg.cbt.air.transaction;
 
-import com.cwt.bpg.cbt.air.transaction.model.*;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,15 +22,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransactionOutput;
+import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -99,11 +103,26 @@ public class AirTransactionControllerTest {
     @Test
     public void removeAirTransactionShouldRemoveAirTransaction() throws Exception {
 
-		when(service.delete(anyString())).thenReturn(anyString());
+        String id = "ID";
+        when(service.delete(id)).thenReturn(id);
 
-        mockMvc.perform(delete("/air-transactions?id=")
+        mockMvc.perform(delete("/air-transactions?id=" + id)
                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+        verify(service, times(1)).delete(anyString());
+    }
+
+    @Test
+    public void removeAirTransactionShouldReturnNotFoundWhenRecordDoesNotExist() throws Exception {
+
+        String id = "ID";
+        when(service.delete(id)).thenReturn("");
+
+        mockMvc.perform(delete("/air-transactions?id=" + id)
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isNotFound())
                 .andReturn()
                 .getResponse();
         verify(service, times(1)).delete(anyString());

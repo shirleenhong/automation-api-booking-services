@@ -66,7 +66,9 @@ public class RemarkController {
 	@ApiOperation(value = "Deletes remark.")
 	@Internal
 	public ResponseEntity<String> removeRemark(@PathVariable @ApiParam(value = "Remark Id") String remarkId) {
-		return new ResponseEntity<>(service.delete(remarkId), HttpStatus.OK);
+		String deleteResult = service.delete(remarkId);
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		return new ResponseEntity<>(deleteResult, status);
 	}
 
 }

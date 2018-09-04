@@ -1,7 +1,14 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import com.cwt.bpg.cbt.exchange.order.model.Airport;
-import net.minidev.json.JSONObject;
+import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerNonAirFeeTest.convertObjectToJsonBytes;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.nio.charset.Charset;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,16 +21,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.nio.charset.Charset;
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
 
-import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerNonAirFeeTest.convertObjectToJsonBytes;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import net.minidev.json.JSONObject;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -109,9 +109,26 @@ public class AirportControllerTest {
     @Test
     public void removeAirportShouldDeleteAirport() throws Exception {
 
-        mockMvc.perform(delete("/airports/XXX")
+        String id = "XXX";
+        when(service.delete(anyString())).thenReturn(id);
+
+        mockMvc.perform(delete("/airports/" + id)
                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
+                .andReturn();
+
+        verify(service, times(1)).delete(anyString());
+    }
+
+    @Test
+    public void returnNoContentWhenRemovingRecordThatDoesNotExist() throws Exception {
+
+        String id = "XXX";
+        when(service.delete(anyString())).thenReturn("");
+
+        mockMvc.perform(delete("/airports/" + id)
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isNotFound())
                 .andReturn();
 
         verify(service, times(1)).delete(anyString());

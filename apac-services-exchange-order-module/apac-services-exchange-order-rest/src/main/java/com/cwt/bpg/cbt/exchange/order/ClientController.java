@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 
 import io.swagger.annotations.Api;
@@ -39,8 +38,9 @@ public class ClientController {
 	@ResponseBody
 	@ApiOperation(value = "Remove client by clientAccountNumber")
 	public ResponseEntity<String> removeClient(@PathVariable String clientAccountNumber) {
-
-		return new ResponseEntity<>(clientService.delete(clientAccountNumber), HttpStatus.OK);
+		String deleteResult = clientService.delete(clientAccountNumber);
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		return new ResponseEntity<>(deleteResult, status);
 	}
 
 }
