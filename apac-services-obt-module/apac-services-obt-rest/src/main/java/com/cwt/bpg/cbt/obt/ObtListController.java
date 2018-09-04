@@ -21,7 +21,6 @@ public class ObtListController {
     @Autowired
     private ObtListService service;
 
-    @Internal // TODO: Remove this before flight
     @GetMapping(path = "/obt-list/{countryCode}")
     @ResponseBody
     @ApiOperation(value = "Pulls OBT List for a specific country")
