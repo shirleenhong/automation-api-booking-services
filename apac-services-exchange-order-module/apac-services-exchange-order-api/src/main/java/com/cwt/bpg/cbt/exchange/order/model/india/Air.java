@@ -16,8 +16,10 @@ public class Air implements Serializable {
 	private String fareType;
 
 	private VirtualMiscMultipurposeDoc vmpd;
-	
+
 	private ConsolInfo consolInfo;
+
+	private AirCustomFields airCustomFields;
 
 	public List<String> getAirSegments() {
 		return airSegments;
@@ -67,5 +69,13 @@ public class Air implements Serializable {
     public void setVmpd(VirtualMiscMultipurposeDoc vmpd)
     {
         this.vmpd = vmpd;
+    }
+
+    public AirCustomFields getAirCustomFields() {
+        return airCustomFields;
+    }
+
+    public void setAirCustomFields(AirCustomFields airCustomFields) {
+        this.airCustomFields = airCustomFields;
     }
 }
