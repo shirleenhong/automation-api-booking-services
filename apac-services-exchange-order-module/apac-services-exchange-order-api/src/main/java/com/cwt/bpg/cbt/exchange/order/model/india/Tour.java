@@ -24,7 +24,7 @@ public class Tour implements Serializable {
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant endDate;
 
-	private String passenger;
+	private String passengerName;
 	private String city;
 	private String packageName;
 	private String details;
@@ -43,14 +43,6 @@ public class Tour implements Serializable {
 
 	public void setEndDate(Instant endDate) {
 		this.endDate = endDate;
-	}
-
-	public String getPassenger() {
-		return passenger;
-	}
-
-	public void setPassenger(String passenger) {
-		this.passenger = passenger;
 	}
 
 	public String getCity() {
@@ -75,5 +67,13 @@ public class Tour implements Serializable {
 
 	public void setDetails(String details) {
 		this.details = details;
+	}
+
+	public String getPassengerName() {
+		return passengerName;
+	}
+
+	public void setPassengerName(String passengerName) {
+		this.passengerName = passengerName;
 	}
 }
