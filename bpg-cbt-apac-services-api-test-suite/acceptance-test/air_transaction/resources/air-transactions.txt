@@ -156,7 +156,7 @@ Send Air Transaction Get Request
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
     Create Get Request URL Location    airline_code=${airline_code}    booking_class=${booking_class}    cc_vendor_code=${cc_vendor_code}    cc_type=${cc_type}    client_account_number=${client_account_number}
-    ${response}    Get Request    air-transaction    /apac-services-rest/api/air-transaction?${url_data_list}    headers=${headers}
+    ${response}    Get Request    air-transaction    /apac-services-rest/api/air-transactions?${url_data_list}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
@@ -167,8 +167,8 @@ Send Air Transaction Get Request (Maintenance)
     Create Session    air-transactions    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    Create Get Request URL Location    airline_code=${airline_code}    client_account_number=${client_account_number}    booking_class=null    cc_vendor_code=null    cc_type=null
-    ${response}    Get Request    air-transactions    /apac-services-rest/api/air-transactions?${url_data_list}    headers=${headers}
+    Create Get Request URL Location    client_account_number=${client_account_number}    airline_code=null    booking_class=null    cc_vendor_code=null    cc_type=null
+    ${response}    Get Request    air-transactions    /apac-services-rest/api/air-transactions/${airline_code}?${url_data_list}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}

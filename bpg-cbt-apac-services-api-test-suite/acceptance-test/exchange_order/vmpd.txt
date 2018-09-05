@@ -1,0 +1,69 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/exchange-order-vmpd.txt
+
+Suite Setup    Generate Suite Variable For VMPD Codes
+
+*** Test Cases ***
+Verify VMPD Codes Are Retrieved Correctly
+    [Tags]    functional   
+    Send VMPD Get Request
+    Verify Response Status Code Is Correct    200
+    Verify VMPD Codes Are Retrieved Correctly
+    
+Verify VMPD Codes Are Added Correctly After Put Request
+    [Tags]    functional
+    Create Test Variable For VMPD Put Request    code=0    description=Test Description
+    Send VMPD Put Request
+    Verify Response Status Code Is Correct    200
+    Verify VMPD Code Is Updated Correctly  
+    Send VMPD Get Request    
+    Verify Response Status Code Is Correct    200
+    Verify VMPD Codes Are Retrieved Correctly
+    [Teardown]    Send VMPD Delete Request    code=0
+    
+Verify VMPD Codes Are Updated Correctly After Put Request
+    [Tags]    functional
+    Create Test Variable For VMPD Put Request    code=A    description=Test Update Description
+    Send VMPD Put Request
+    Verify Response Status Code Is Correct    200
+    Verify VMPD Code Is Updated Correctly   
+    [Teardown]    Update VMPD Codes To Orginal Value    code=A    description=AIR TRANSPORTATION
+    
+Verify VMPD Codes Are Retrieved Correctly After Put Request    
+    [Tags]    functional
+    #Existing VMPD Code
+    Create Test Variable For VMPD Put Request    code=A    description=Test Update Description A
+    Send VMPD Put Request
+    Verify Response Status Code Is Correct    200
+    Verify VMPD Code Is Updated Correctly
+    Send VMPD Get Request    
+    Verify Response Status Code Is Correct    200
+    Verify VMPD Codes Are Retrieved Correctly
+    Update VMPD Codes To Orginal Value   code=A    description=AIR TRANSPORTATION
+    #New VMPD Code
+    Create Test Variable For VMPD Put Request    code=XX    description=Test Update Description XX
+    Send VMPD Put Request
+    Verify Response Status Code Is Correct    200
+    Verify VMPD Code Is Updated Correctly
+    Send VMPD Get Request    
+    Verify Response Status Code Is Correct    200
+    Verify VMPD Codes Are Retrieved Correctly
+    [Teardown]    Send VMPD Delete Request   code=XX
+    
+Verify VMPD Codes Are Updated Correctly After Delete Request
+    [Tags]    functional
+    Create Test Variable For VMPD Put Request    code=XY    description=Test Description XY
+    Send VMPD Put Request
+    Verify Response Status Code Is Correct    200
+    Verify VMPD Code Is Updated Correctly
+    Send VMPD Get Request    
+    Verify Response Status Code Is Correct    200
+    Verify VMPD Codes Are Retrieved Correctly
+    Send VMPD Delete Request    code=XY
+    Verify Response Status Code Is Correct    200
+    Send VMPD Get Request    
+    Verify Response Status Code Is Correct    200
+    Verify VMPD Codes Are Retrieved Correctly

@@ -2,12 +2,75 @@
 Resource          ../resources/api-variables.txt
 Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-imports.txt
-Resource    resources/air-transaction.txt
+Resource    resources/air-transactions.txt
 
 Suite Setup    Generate Suite Variables For Air Transaction    cc_vendor_data_list=TP,Airplus|DC,Diners|CA,Mastercard|AX,Amex|VI,VISA    rbd_data_list=G,ECONOMY|Q,ECONOMY|C,EXECUTIVE|I,ECONOMY    airline_data_list=AB,Air Berlin|SG,SpiceJet|AA,American Airlines|TST,Test Airline|TST1,Test Airline 1|TST2,Test Airline 2|TST3,Test Airline 3
 
 ***Test Case***
 Verify That Error Is Encountered When Invalid Token Is Used For Get Request
+    [Tags]    functional
+    Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
+    Send Air Transaction Get Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Air Transaction Passthrough Type Is Not Retrieved
+    Send Air Transaction Get Request    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify Air Transaction Passthrough Type Is Not Retrieved
+    Send Air Transaction Get Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    Verify Air Transaction Passthrough Type Is Not Retrieved
+
+Verify That Error Is Encountered When Empty Token Is Used For Get Request
+    [Tags]    functional
+    Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
+    Send Air Transaction Get Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Air Transaction Passthrough Type Is Not Retrieved
+
+Verify That Error Is Encountered When Null Token Is Used For Get Request
+    [Tags]    functional
+    Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
+    Send Air Transaction Get Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Air Transaction Passthrough Type Is Not Retrieved
+
+Verify That Error Is Encountered When No Token Is Used For Get Request
+    [Tags]    functional
+    Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
+    Send Air Transaction Get Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Air Transaction Passthrough Type Is Not Retrieved
+
+Verify That Error Is Encountered When Empty Airline Code Is Used For Get Request
+    [Tags]    functional
+    Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
+    Send Air Transaction Get Request    airline_code=null
+    Verify Response Status Code Is Correct    400
+    Verify Air Transaction Passthrough Type Is Not Retrieved
+
+Verify That Error Is Encountered When Empty Booking Class Is Used For Get Request
+    [Tags]    functional
+    Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
+    Send Air Transaction Get Request    booking_class=null
+    Verify Response Status Code Is Correct    400
+    Verify Air Transaction Passthrough Type Is Not Retrieved
+
+Verify That Error Is Encountered When Empty CC Vendor Code Is Used For Get Request
+    [Tags]    functional
+    Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
+    Send Air Transaction Get Request    cc_vendor_code=null
+    Verify Response Status Code Is Correct    400
+    Verify Air Transaction Passthrough Type Is Not Retrieved
+
+Verify That Error Is Encountered When Empty CC Type Is Used For Get Request
+    [Tags]    functional
+    Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
+    Send Air Transaction Get Request    cc_type=null
+    Verify Response Status Code Is Correct    400
+    Verify Air Transaction Passthrough Type Is Not Retrieved
+
+    
+Verify That Error Is Encountered When Invalid Token Is Used For Maintenance Maintenance Get Request
     [Tags]    functional
     Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
     Send Air Transaction Get Request (Maintenance)    token=12345.12345.12345
@@ -20,35 +83,28 @@ Verify That Error Is Encountered When Invalid Token Is Used For Get Request
     Verify Response Status Code Is Correct    401
     Verify Air Transaction Record Is Not Retrieved
 
-Verify That Error Is Encountered When Empty Token Is Used For Get Request
+Verify That Error Is Encountered When Empty Token Is Used For Maintenance Get Request
     [Tags]    functional
     Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
     Send Air Transaction Get Request (Maintenance)    token=${EMPTY}
     Verify Response Status Code Is Correct    400
     Verify Air Transaction Record Is Not Retrieved
 
-Verify That Error Is Encountered When Null Token Is Used For Get Request
+Verify That Error Is Encountered When Null Token Is Used For Maintenance Get Request
     [Tags]    functional
     Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
     Send Air Transaction Get Request (Maintenance)    token=null
     Verify Response Status Code Is Correct    401
     Verify Air Transaction Record Is Not Retrieved
 
-Verify That Error Is Encountered When No Token Is Used For Get Request
+Verify That Error Is Encountered When No Token Is Used For Maintenance Get Request
     [Tags]    functional
     Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
     Send Air Transaction Get Request (Maintenance)    token=None
     Verify Response Status Code Is Correct    400
     Verify Air Transaction Record Is Not Retrieved
 
-Verify That Error Is Encountered When Null Airline Code Is Used For Get Request
-    [Tags]    functional
-    Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline;Q
-    Send Air Transaction Get Request (Maintenance)    airline_code=null
-    Verify Response Status Code Is Correct    400
-    Verify Air Transaction Record Is Not Retrieved
-
-Verify That Error Is Encountered When Invalid Token Is Used For Put Request
+Verify That Error Is Encountered When Invalid Token Is Used For Maintenance Put Request
     [Tags]    functional
     Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,CWT;C
     Send Air Transaction Put Request (Maintenance)    token=12345.12345.12345
@@ -61,28 +117,28 @@ Verify That Error Is Encountered When Invalid Token Is Used For Put Request
     Verify Response Status Code Is Correct    401
     Verify Air Transaction Record Is Not Retrieved
     
-Verify That Error Is Encountered When Empty Token Is Used For Put Request
+Verify That Error Is Encountered When Empty Token Is Used For Maintenance Put Request
     [Tags]    functional
     Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,CWT;C
     Send Air Transaction Put Request (Maintenance)    token=${EMPTY}
     Verify Response Status Code Is Correct    400
     Verify Air Transaction Record Is Not Retrieved
 
-Verify That Error Is Encountered When Null Token Is Used For Put Request
+Verify That Error Is Encountered When Null Token Is Used For Maintenance Put Request
     [Tags]    functional
     Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,CWT;C
     Send Air Transaction Put Request (Maintenance)    token=null
     Verify Response Status Code Is Correct    401
     Verify Air Transaction Record Is Not Retrieved
 
-Verify That Error Is Encountered When No Token Is Used For Put Request
+Verify That Error Is Encountered When No Token Is Used For Maintenance Put Request
     [Tags]    functional
     Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,CWT;C
     Send Air Transaction Put Request (Maintenance)    token=None
     Verify Response Status Code Is Correct    400
     Verify Air Transaction Record Is Not Retrieved
 
-Verify That Error Is Encountered When Invalid Passthrought Type Is Used For Put Request
+Verify That Error Is Encountered When Invalid Passthrought Type Is Used For Maintenance Put Request
     [Tags]    functional
     Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,Cwt;C
     Send Air Transaction Put Request (Maintenance)
@@ -97,7 +153,7 @@ Verify That Error Is Encountered When Invalid Passthrought Type Is Used For Put 
     Verify Response Status Code Is Correct    400
     Verify Air Transaction Record Is Not Retrieved
 
-Verify That Error Is Encountered When Invalid Token Is Used For Delete Request
+Verify That Error Is Encountered When Invalid Token Is Used For Maintenance Delete Request
     [Tags]    functional
     Send Air Transaction Delete Request (Maintenance)    token=12345.12345.12345    id=1
     Verify Response Status Code Is Correct    401
@@ -109,31 +165,37 @@ Verify That Error Is Encountered When Invalid Token Is Used For Delete Request
     Verify Response Status Code Is Correct    401
     Verify Air Transaction Record Is Not Retrieved
     
-Verify That Error Is Encountered When Empty Token Is Used For Delete Request
+Verify That Error Is Encountered When Empty Token Is Used For Maintenance Delete Request
     [Tags]    functional
     Send Air Transaction Delete Request (Maintenance)    token=${EMPTY}    id=1
     Verify Response Status Code Is Correct    400
     Verify Air Transaction Record Is Not Retrieved
 
-Verify That Error Is Encountered When Null Token Is Used For Delete Request
+Verify That Error Is Encountered When Null Token Is Used For Maintenance Delete Request
     [Tags]    functional
     Send Air Transaction Delete Request (Maintenance)    token=null    id=1
     Verify Response Status Code Is Correct    401
     Verify Air Transaction Record Is Not Retrieved
 
-Verify That Error Is Encountered When No Token Is Used For Delete Request
+Verify That Error Is Encountered When No Token Is Used For Maintenance Delete Request
     [Tags]    functional
     Send Air Transaction Delete Request (Maintenance)    token=None    id=1
     Verify Response Status Code Is Correct    400
     Verify Air Transaction Record Is Not Retrieved
 
-Verify That Error Is Encountered When Empty ID Is Used For Delete Request
+Verify That Error Is Encountered When Invalid ID Is Used For Maintenance Delete Request
+    [Tags]    functional
+    Send Air Transaction Delete Request (Maintenance)    id=1b11e9b6a43d37260116d411
+    Verify Response Status Code Is Correct    404
+    Verify Air Transaction Record Is Not Retrieved
+
+Verify That Error Is Encountered When Empty ID Is Used For Maintenance Delete Request
     [Tags]    functional
     Send Air Transaction Delete Request (Maintenance)    id=${EMPTY}
     Verify Response Status Code Is Correct    400
     Verify Air Transaction Record Is Not Retrieved
 
-Verify That Error Is Encountered When Null ID Is Used For Delete Request
+Verify That Error Is Encountered When Null ID Is Used For Maintenance Delete Request
     [Tags]    functional
     Send Air Transaction Delete Request (Maintenance)    id=null
     Verify Response Status Code Is Correct    400

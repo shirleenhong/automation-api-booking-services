@@ -328,7 +328,6 @@ Create Test Variables For Exchange Order Tabs And Fields
     \    ...    ELSE IF    "${is_contact_info}"=="false" and "${is_train_info}"=="true"    Create Test Variables For Request Train Info India    data_item=${data_item}    eo_index=${eo_index}    index=${index}
     Set Test Variable    ${${tab_name}_list}    ${eo_data}
 
-
 Create Test Variables For Request Train Info India
     [Arguments]    ${data_item}    ${eo_index}=0    ${index}=0
     Set Test Variable    ${data_time_${eo_index}_${index}_value}    ${data_item[0]}
@@ -342,7 +341,7 @@ Create Test Variables For Request Train Info India
     ${train_index}    Run Keyword If    "${data_time_${eo_index}_${index}_value}"!="null"    Evaluate    ${index}+1
     ...    ELSE    Set Variable    0
     Set Test Variable    ${train_index}    
-    
+
 Create Test Variables For Vendor Contact Info India
     [Arguments]    ${data_item}    ${eo_index}=0    ${index}=0
     ${contact_type}    Set Variable If    "${data_item[0]}"=="email"    Email    "${data_item[0]}"=="phone"    Phone    "${data_item[0]}"=="fax"
@@ -371,6 +370,9 @@ Generate Random Record Locator
     [Arguments]    ${length}=6    ${chars}=[UPPER][NUMBERS]
     ${pnr}    Generate Random String    ${length}    ${chars}
     [Return]    ${pnr}
+    
+Generate Suite Variable For VMPD Codes
+    [Arguments]    ${data_list}=
 
 Get Json Value From Array
     [Arguments]    ${json_object}    ${json_path}
@@ -379,6 +381,12 @@ Get Json Value From Array
     ${actual_value}    Convert JSON To String    ${actual_value}
     ${actual_value}    Get Substring    ${actual_value}    1    -1
     [Return]    ${actual_value}
+
+Remove Code From Room Type List
+    [Arguments]    ${code}=${code}
+    ${index}    Get Index From List    ${room_type_list}    ${code}
+    Remove From List    ${room_type_list}    ${index}
+    Set Test Variable    ${room_type_list}    
 
 Reset Exchange Order Variables For Amend Exchange Order
     [Arguments]    ${service_info_data}=${default_service_info_data_in}    ${vendor_info_data}=${default_vendor_info_data_in}    ${vendor_contact_data}=${default_vendor_contact_data_in}    ${misc_info_data}=${default_misc_info_data_in}    ${other_info_data}=${default_other_info_data_in}    ${assoc_info_data}=${default_assoc_info_data_in}
