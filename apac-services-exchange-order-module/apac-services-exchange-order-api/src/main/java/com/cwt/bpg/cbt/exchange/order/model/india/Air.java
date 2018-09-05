@@ -14,6 +14,8 @@ public class Air implements Serializable {
 	private String platingCarrier;
 	
 	private String fareType;
+
+	private VirtualMiscMultipurposeDoc vmpd;
 	
 	private ConsolInfo consolInfo;
 
@@ -56,4 +58,14 @@ public class Air implements Serializable {
 	public void setPassengerName(String passengerName) {
 		this.passengerName = passengerName;
 	}
+
+    public VirtualMiscMultipurposeDoc getVmpd()
+    {
+        return vmpd;
+    }
+
+    public void setVmpd(VirtualMiscMultipurposeDoc vmpd)
+    {
+        this.vmpd = vmpd;
+    }
 }

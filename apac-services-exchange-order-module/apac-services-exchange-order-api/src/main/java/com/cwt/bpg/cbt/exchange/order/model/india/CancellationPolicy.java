@@ -1,10 +1,14 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public class CancellationPolicy {
+public class CancellationPolicy implements Serializable {
+
+	private static final long serialVersionUID = -4342985743603042736L;
 
 	@ApiModelProperty(allowableValues = "Duration, SpecialRate, Others")
 	@NotNull

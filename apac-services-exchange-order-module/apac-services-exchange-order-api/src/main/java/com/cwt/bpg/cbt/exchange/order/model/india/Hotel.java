@@ -52,7 +52,10 @@ public class Hotel implements Serializable {
 	
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
-	private Instant checkOutDateTime; 
+	private Instant checkOutDateTime;
+
+	@Valid
+	private CancellationPolicy cancellationPolicy;
 
 	public String getName() {
 		return name;
@@ -189,5 +192,14 @@ public class Hotel implements Serializable {
 	public void setCheckOutDateTime(Instant checkOutDateTime) {
 		this.checkOutDateTime = checkOutDateTime;
 	}
-	
+
+    public CancellationPolicy getCancellationPolicy()
+    {
+        return cancellationPolicy;
+    }
+
+    public void setCancellationPolicy(CancellationPolicy cancellationPolicy)
+    {
+        this.cancellationPolicy = cancellationPolicy;
+    }
 }

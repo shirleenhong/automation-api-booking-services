@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -28,7 +29,7 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 	private IndiaMiscInfo miscInfo;
 
 	@Valid
-	private AssocServiceInfo assocServiceInfo;
+	private List<AssocServiceInfo> assocServiceInfoList;
 
 	@Valid
 	private Request request;
@@ -47,12 +48,12 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 		this.miscInfo = miscInfo;
 	}
 
-	public AssocServiceInfo getAssocServiceInfo() {
-		return assocServiceInfo;
+	public List<AssocServiceInfo> getAssocServiceInfoList() {
+		return assocServiceInfoList;
 	}
 
-	public void setAssocServiceInfo(AssocServiceInfo assocServiceInfo) {
-		this.assocServiceInfo = assocServiceInfo;
+	public void setAssocServiceInfoList(List<AssocServiceInfo> assocServiceInfoList) {
+		this.assocServiceInfoList = assocServiceInfoList;
 	}
 
 	public Request getRequest() {
