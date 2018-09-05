@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +27,7 @@ import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.RoomType;
 import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
@@ -171,6 +173,36 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
+	@GetMapping(path = "/exchange-order/room-types", produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Return all room types")
+	public ResponseEntity<List<RoomType>> getAll() {
+
+		return new ResponseEntity<>((List<RoomType>)
+				eoService.getAll(), HttpStatus.OK);
+	}
+	
+	@Internal
+	@PutMapping(path = "/exchange-order/room-types")
+	@ApiOperation(value = "Save or update room type")
+	@ResponseBody
+	public ResponseEntity<RoomType> putRoomType(@Valid @RequestBody RoomType roomType) {
+		return new ResponseEntity<>(eoService.save(roomType), HttpStatus.OK);
+	}
+
+	@Internal
+	@DeleteMapping(path = "/exchange-order/room-types/{code}")
+	@ResponseBody
+	@ApiOperation(value = "Remove room type")
+	public ResponseEntity<String> removeRoomType(@PathVariable String code) {
+		
+		String deleteResult = eoService.delete(code);
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		return new ResponseEntity<>(deleteResult, status);
+		
+	}
+
 	@GetMapping(path = "/exchange-order/vmpd")
 	@ResponseBody
 	@ApiOperation(value = "Pulls all Reason for Issue.")

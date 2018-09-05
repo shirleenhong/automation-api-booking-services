@@ -9,6 +9,7 @@ import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.RoomType;
 import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
 
 @Service
@@ -16,6 +17,9 @@ public class ExchangeOrderService {
 
 	@Autowired
 	private ExchangeOrderRepository exchangeOrderRepo;
+	
+	@Autowired
+	private RoomTypeRepository roomTypeRepository;
 
 	@Autowired
 	private ExchangeOrderInsertService eoInsertService;
@@ -58,6 +62,18 @@ public class ExchangeOrderService {
 
 	public BaseExchangeOrder getExchangeOrder(String countryCode, String eoNumber) {
 		return exchangeOrderRepo.getExchangeOrder(countryCode, eoNumber);
+	}
+	
+	public List<RoomType> getAll() {
+		return roomTypeRepository.getAll();
+	}
+	
+	public RoomType save(RoomType roomType) {
+		return roomTypeRepository.put(roomType);
+	}
+	
+	public String delete(String code) {
+		return roomTypeRepository.remove(code);
 	}
 
 	public List<VmpdReasonCode> getAllVMPDReasonCodes() {

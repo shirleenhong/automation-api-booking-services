@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.RoomType;
 
 public class ExchangeOrderServiceTest {
 
@@ -21,6 +22,9 @@ public class ExchangeOrderServiceTest {
 
     @Mock
     private ExchangeOrderRepository repository;
+    
+    @Mock
+    private RoomTypeRepository roomTypeRepository;
 
     @Mock
     private ExchangeOrderInsertService insertService;
@@ -83,6 +87,18 @@ public class ExchangeOrderServiceTest {
         String recorLocator = "X1X1X1";
         service.getExchangeOrder("IN",recorLocator);
         verify(repository, times(1)).getExchangeOrder("IN",recorLocator);
+    }
+    
+    @Test
+    public void shouldCallGetAll() {
+        service.getAll();
+        verify(roomTypeRepository, times(1)).getAll();
+    }
+    
+    @Test
+    public void shouldCallSaveRoomType() {
+    	service.save(new RoomType());
+        verify(roomTypeRepository, times(1)).put(Mockito.any(RoomType.class));
     }
 
 }
