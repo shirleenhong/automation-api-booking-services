@@ -1,0 +1,56 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/exchange-order-room-types.txt
+
+Suite Setup    Generate Suite Variable For Room Type Get Request
+
+*** Test Cases ***
+Verify That Room Types Are Retrieved Correctly
+    [Tags]    functional   
+    Send Room Types Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Room Types Are Retrieved Correctly
+
+Verify That Room Types Are Added Correctly After Put Request
+    [Tags]    functional
+    Create Test Variable For Room Type Put Request    code=X    description=Test Description
+    Send Room Types Put Request
+    Verify Response Status Code Is Correct    200
+    Verify Room Type Is Updated Correctly    
+    Send Room Types Get Request    
+    Verify Response Status Code Is Correct    200
+    Verify Room Types Are Retrieved Correctly
+    [Teardown]    Send Room Types Delete Request    code=X    
+
+Verify That Room Types Are Updated Correctly After Put Request
+    [Tags]    functional
+    Create Test Variable For Room Type Put Request    code=A    description=Deluxe Test
+    Send Room Types Put Request
+    Verify Response Status Code Is Correct    200
+    Verify Room Type Is Updated Correctly  
+    [Teardown]    Update Room Types To Orginal Value    code=A    description=Deluxe
+
+Verify That Room Types Are Retrieved Correctly After Put Request
+    [Tags]    functional
+    Create Test Variable For Room Type Put Request    code=A    description=Deluxe Test
+    Send Room Types Put Request
+    Verify Response Status Code Is Correct    200
+    Verify Room Type Is Updated Correctly
+    Send Room Types Get Request    
+    Verify Response Status Code Is Correct    200
+    Verify Room Types Are Retrieved Correctly
+    [Teardown]    Update Room Types To Orginal Value    code=A    description=Deluxe
+
+Verify That Room Types Are Updated Correctly After Delete Request
+    [Tags]    functional
+    Create Test Variable For Room Type Put Request    code=X    description=Test Description
+    Send Room Types Put Request
+    Verify Response Status Code Is Correct    200
+    Verify Room Type Is Updated Correctly 
+    Send Room Types Delete Request
+    Verify Response Status Code Is Correct    200
+    Send Room Types Get Request    
+    Verify Response Status Code Is Correct    200
+    Verify Room Types Are Retrieved Correctly

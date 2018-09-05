@@ -73,13 +73,13 @@ Verify That Error Is Encountered When No Token Is Used For Put Request
     
 Verify That Error Is Encountered When Invalid Token Is Used For Delete Request
     [Tags]    functional
-    Send Room Types Delete Request    token=12345.12345.12345
+    Send Room Types Delete Request    token=12345.12345.12345    code=1
     Verify Response Status Code Is Correct    401
     Verify Room Types Are Not Updated
-    Send Room Types Delete Request    token=abcde.abcde.abcde
+    Send Room Types Delete Request    token=abcde.abcde.abcde    code=1
     Verify Response Status Code Is Correct    401
     Verify Room Types Are Not Updated
-    Send Room Types Delete Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Send Room Types Delete Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+    code=1
     Verify Response Status Code Is Correct    401
     Verify Room Types Are Not Updated
     
