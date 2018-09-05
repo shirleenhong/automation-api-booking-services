@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.List;
 
 import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
+import com.cwt.bpg.cbt.exchange.order.model.Train;
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -82,7 +83,7 @@ public class Request implements Serializable {
 
 	private String details;
 
-	private List<Train> trains;
+	private Train train;
 
 	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
@@ -295,12 +296,12 @@ public class Request implements Serializable {
 		this.docCheckList = docCheckList;
 	}
 
-	public List<Train> getTrains() {
-		return trains;
+	public Train getTrainSegments() {
+		return train;
 	}
 
-	public void setTrains(List<Train> trains) {
-		this.trains = trains;
+	public void setTrainSegments(Train train) {
+		this.train = train;
 	}
 
 	public Instant getTravelDate() {

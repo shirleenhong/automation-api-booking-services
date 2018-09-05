@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 
-public class Train implements Serializable {
+public class TrainSegment implements Serializable {
 
 	private static final long serialVersionUID = 2737677039047402942L;
 
