@@ -16,6 +16,8 @@ public class Car implements Serializable {
 
 	private static final long serialVersionUID = -1953882582608518378L;
 
+	private String segment;
+
 	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
@@ -48,6 +50,14 @@ public class Car implements Serializable {
 	
 	@Valid
 	private Guarantor guarantor;
+
+	public String getSegment() {
+		return segment;
+	}
+
+	public void setSegment(String segment) {
+		this.segment = segment;
+	}
 
 	public Instant getPickupDateTime() {
 		return pickupDateTime;
