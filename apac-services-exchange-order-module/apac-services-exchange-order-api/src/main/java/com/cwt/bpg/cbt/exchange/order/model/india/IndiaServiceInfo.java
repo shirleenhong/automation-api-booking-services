@@ -40,6 +40,14 @@ public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
 	private String processingType;
 
 	private String classCabin;
+	
+	private String description;
+	
+	private String cwtRefNo;
+	
+	private String vendorRefNo;
+	
+	private String otherRelatedNo;
 
     public BigDecimal getNettCost() {
         return nettCost;
@@ -168,4 +176,37 @@ public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
     public void setClassCabin(String classCabin) {
         this.classCabin = classCabin;
     }
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getCwtRefNo() {
+		return cwtRefNo;
+	}
+
+	public void setCwtRefNo(String cwtRefNo) {
+		this.cwtRefNo = cwtRefNo;
+	}
+
+	public String getVendorRefNo() {
+		return vendorRefNo;
+	}
+
+	public void setVendorRefNo(String vendorRefNo) {
+		this.vendorRefNo = vendorRefNo;
+	}
+
+	public String getOtherRelatedNo() {
+		return otherRelatedNo;
+	}
+
+	public void setOtherRelatedNo(String otherRelatedNo) {
+		this.otherRelatedNo = otherRelatedNo;
+	}
+    
 }

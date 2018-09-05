@@ -22,6 +22,7 @@ public class CreditCard implements Serializable {
     @ApiModelProperty(required = true)
     private String expiryDate;
     
+    private String preference;    
 
     public String getCcType() {
         return ccType;
@@ -46,4 +47,13 @@ public class CreditCard implements Serializable {
     public void setExpiryDate(String expiryDate) {
         this.expiryDate = expiryDate;
     }
+
+	public String getPreference() {
+		return preference;
+	}
+
+	public void setPreference(String preference) {
+		this.preference = preference;
+	}
+    
 }

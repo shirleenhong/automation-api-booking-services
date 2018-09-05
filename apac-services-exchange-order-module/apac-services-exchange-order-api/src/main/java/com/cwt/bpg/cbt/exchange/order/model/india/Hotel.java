@@ -2,8 +2,14 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.Instant;
 
 import javax.validation.Valid;
+
+import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class Hotel implements Serializable {
 
@@ -33,6 +39,20 @@ public class Hotel implements Serializable {
 	private String roomType;
 
 	private Integer noOfPeople;
+	
+	private String airSegment;
+	
+	private String hotelSegment;
+	
+	private String cityCode;
+	
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
+	private Instant checkInDateTime;
+	
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
+	private Instant checkOutDateTime; 
 
 	public String getName() {
 		return name;
@@ -129,4 +149,45 @@ public class Hotel implements Serializable {
 	public void setNoOfPeople(Integer noOfPeople) {
 		this.noOfPeople = noOfPeople;
 	}
+
+	public String getAirSegment() {
+		return airSegment;
+	}
+
+	public void setAirSegment(String airSegment) {
+		this.airSegment = airSegment;
+	}
+
+	public String getHotelSegment() {
+		return hotelSegment;
+	}
+
+	public void setHotelSegment(String hotelSegment) {
+		this.hotelSegment = hotelSegment;
+	}
+
+	public String getCityCode() {
+		return cityCode;
+	}
+
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+
+	public Instant getCheckInDateTime() {
+		return checkInDateTime;
+	}
+
+	public void setCheckInDateTime(Instant checkInDateTime) {
+		this.checkInDateTime = checkInDateTime;
+	}
+
+	public Instant getCheckOutDateTime() {
+		return checkOutDateTime;
+	}
+
+	public void setCheckOutDateTime(Instant checkOutDateTime) {
+		this.checkOutDateTime = checkOutDateTime;
+	}
+	
 }
