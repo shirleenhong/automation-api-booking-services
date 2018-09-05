@@ -1,0 +1,109 @@
+*** Setting ***
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
+
+*** Keywords ***
+Create Test Variable For VMPD Put Request
+    [Arguments]    ${code}    ${description}
+    Set Test Variable    ${${code}_description}    ${description}
+    ${code_exists_in_list}    Run Keyword And Return Status    List Should Contain Value    ${vmpd_code_list}    ${code}    
+    Run Keyword If    "${code_exists_in_list}"=="False"    Insert Into List    ${vmpd_code_list}    0    ${code}
+    Sort List    ${vmpd_code_list}
+    Log    ${vmpd_code_list}    
+    Set Test Variable    ${code}
+    Set Test Variable    ${description}
+    Set Test Variable    ${vmpd_code_list}
+
+Delete Created VMPD Codes And Evict Cache
+    [Arguments]    ${token}=${default_token}    ${code}=${code}    ${number}=2
+    Send VMPD Delete Request    token=${token}    code=${code}
+    Evict VMPD Cache    token=${token}    number=${number}
+
+Evict VMPD Cache
+    [Arguments]    ${number}=2    ${token}=${default_token}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    : FOR    ${index}    IN RANGE    0    ${number}
+    \    ${response}    Get Request    exchange-order    /apac-services-rest/api/caches/evict/vmpd   headers=${headers}
+    \    Set Test Variable    ${response}
+    \    Verify Response Status Code Is Correct    200
+    \    Log    ${response.headers}
+    \    Log    ${response.content}
+    Set Test Variable    ${api_flag}    exchange-order
+    
+Generate Suite Variable For VMPD Codes
+    [Arguments]    ${data_list}=1,PREPAID TICKET ADVICE (PTA)|2,RESERVED FOR FUTURE INDUSTRY USE|3,RESERVED FOR FUTURE INDUSTRY USE|4,RESERVED FOR FUTURE INDUSTRY USE|5,RESERVED FOR FUTURE INDUSTRY USE|6,RESERVED FOR FUTURE INDUSTRY USE|7,RESERVED FOR FUTURE INDUSTRY USE|8,RESERVED FOR FUTURE INDUSTRY USE|9,PAPER TICKET FEE|A,AIR TRANSPORTATION|B,SURFACE TRANSPORTATION|C,BAG SHIPPED AS CARGO|D,LAND ARRANGEMENTS FOR INCLUSIVE TOUR|E,CAR HIRE|F,SLEEPER/BERTH|G,UP-GRADING|H,UNDER COLLECTIONS|I,TAXES/FEES/CHARGES|J,DEPOSITS/DOWN PAYMENTS|K,REFUNDABLE BALANCES|L,HOTEL ACCOMMODATIONS|M,SUNDRY CHARGES|N,CANCELLATION FEE|O,OTHER|P,REBOOKING FEE DOMESTIC|Q,REBOOKING FEE INTERNATIONAL|R,LOST TICKET FEE (CHARGE FOR REPLACEMENT)|S,UNACCOMPANIED MINOR FEE DOMESTIC|T,UNACCOMPANIED MINOR FEE INTERNATIONAL|U,COLLECTION FOR EXCESS BAGGAGE CHARGES|V,FOR INDIVIDUAL AIRLINE USE|W,FOR INDIVIDUAL AIRLINE USE|X,FOR INDIVIDUAL AIRLINE USE|Y,FOR INDIVIDUAL AIRLINE USE|Z,FOR INDIVIDUAL AIRLINE USE
+    ${data_list}    Split String    ${data_list}    |
+    ${data_list_length}    Get Length    ${data_list}
+    ${vmpd_code_list}    Create List
+    :For    ${data}    IN    @{data_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Append To List    ${vmpd_code_list}    ${data_item[0]}
+    \    Set Suite Variable    ${${data_item[0]}_description}    ${data_item[1]}
+    Set Suite Variable    ${vmpd_code_list_length}    ${data_list_length}
+    Set Suite Variable    ${vmpd_code_list}
+
+Remove Code From VMPD List
+    [Arguments]    ${code}=${code}
+    ${index}    Get Index From List    ${vmpd_code_list}    ${code}
+    Remove From List    ${vmpd_code_list}    ${index}
+    Set Test Variable    ${vmpd_code_list}    
+    
+Send VMPD Delete Request
+    [Arguments]    ${token}=${default_token}    ${code}=${code}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Delete Request    exchange-order    /apac-services-rest/api/exchange-order/vmpd/${code}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Remove Code From VMPD List    code=${code}
+    Set Test Variable    ${api_flag}    exchange-order
+
+Send VMPD Get Request
+    [Arguments]    ${token}=${default_token}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    exchange-order    /apac-services-rest/api/exchange-order/vmpd    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    exchange-order
+
+Send VMPD Put Request
+    [Arguments]    ${token}=${default_token}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Put Request    exchange-order    /apac-services-rest/api/exchange-order/vmpd    data={"code":"${code}","description":"${description}"}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    exchange-order
+
+Update VMPD Codes To Orginal Value
+    [Arguments]    ${token}=${default_token}    ${code}=${code}    ${description}=${description}
+    Create Test Variable For VMPD Put Request    code=${code}    description=${description}
+    Send VMPD Put Request    token=${token}  
+
+Verify VMPD Codes Are Retrieved Correctly
+    ${index}    Set Variable    0
+    :FOR    ${data}    IN    @{vmpd_code_list}
+    \    Verify Json Value Is Correct    $.[${index}].code    ${data}
+    \    Verify Json Value Is Correct    $.[${index}].description    ${${data}_description}
+    \    ${index}    Evaluate    ${index}+1
+
+Verify VMPD Codes Are Not Updated
+    Verify VMPD Codes Are Not Retrieved
+    
+Verify VMPD Codes Are Not Retrieved
+    Verify String Does Not Contain Substring    ${response.text}    "code"
+    Verify String Does Not Contain Substring    ${response.text}    "description"
+
+Verify VMPD Code Is Updated Correctly
+    Verify Json Value Is Correct    $.code    ${code}
+    Verify Json Value Is Correct    $.description    ${description}

@@ -1,2 +1,2 @@
 *** Settings ***
-Force Tags        air-transaction
+Force Tags        air-transactions

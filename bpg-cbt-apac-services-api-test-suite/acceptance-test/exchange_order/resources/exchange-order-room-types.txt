@@ -1,0 +1,110 @@
+*** Setting ***
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
+
+***Keywords***    
+Create Test Variable For Room Type Put Request
+    [Arguments]    ${code}    ${description}
+    Set Test Variable    ${${code}_description}    ${description}
+    ${code_exists_in_list}    Run Keyword And Return Status    List Should Contain Value    ${room_type_list}    ${code}    
+    Run Keyword If    "${code_exists_in_list}"=="False"    Insert Into List    ${room_type_list}    0    ${code}
+    Sort List    ${room_type_list}
+    Log    ${room_type_list}    
+    Set Test Variable    ${code}
+    Set Test Variable    ${description}
+    Set Test Variable    ${room_type_list}
+
+Delete Created Room Types And Evict Cache
+    [Arguments]    ${token}=${default_token}    ${code}=${code}    ${number}=2
+    Send Room Types Delete Request    token=${token}    code=${code}
+    Evict Room Types Cache    token=${token}    number=${number}
+
+Evict Room Types Cache
+    [Arguments]    ${number}=2    ${token}=${default_token}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    : FOR    ${index}    IN RANGE    0    ${number}
+    \    ${response}    Get Request    exchange-order    /apac-services-rest/api/caches/evict/room-types    headers=${headers}
+    \    Set Test Variable    ${response}
+    \    Verify Response Status Code Is Correct    200
+    \    Log    ${response.headers}
+    \    Log    ${response.content}
+    Set Test Variable    ${api_flag}    exchange-order
+
+Generate Suite Variable For Room Type Get Request
+    [Arguments]    ${data_list}=A,Deluxe|B,Superior|C,Standard Or Condominium|D,Moderate|E,Studio|F,Family|K,Apartment|M ,Meeting Room|N,Non-smoking Room|S,Suite
+    ${data_list}    Split String    ${data_list}    |
+    ${data_list_length}    Get Length    ${data_list}
+    ${room_type_list}    Create List
+    :For    ${data}    IN    @{data_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Append To List    ${room_type_list}    ${data_item[0]}
+    \    Set Suite Variable    ${${data_item[0]}_description}    ${data_item[1]}
+    Set Suite Variable    ${room_type_list_length}    ${data_list_length}
+    Set Suite Variable    ${room_type_list}
+
+Remove Code From Room Type List
+    [Arguments]    ${code}=${code}
+    ${index}    Get Index From List    ${room_type_list}    ${code}
+    Remove From List    ${room_type_list}    ${index}
+    Set Test Variable    ${room_type_list}    
+    
+Send Room Types Delete Request
+    [Arguments]    ${token}=${default_token}    ${code}=${code}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Delete Request    exchange-order    /apac-services-rest/api/exchange-order/room-types/${code}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Remove Code From Room Type List    code=${code}
+    Set Test Variable    ${api_flag}    exchange-order
+
+Send Room Types Get Request
+    [Arguments]    ${token}=${default_token}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    exchange-order    /apac-services-rest/api/exchange-order/room-types    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    exchange-order
+
+Send Room Types Put Request
+    [Arguments]    ${token}=${default_token}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Put Request    exchange-order    /apac-services-rest/api/exchange-order/room-type    data={"code":"${code}","description":"${description}"}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    exchange-order
+
+Update Room Types To Orginal Value And Evict Cache
+    [Arguments]    ${token}=${default_token}    ${code}=${code}    ${description}=${description}    ${number}=2
+    Create Test Variable For Room Type Put Request    code=${code}    description=${description}
+    Send Room Types Put Request    token=${token}
+    Evict Room Types Cache    token=${token}    number=${number}
+    
+Verify Room Types Are Retrieved Correctly
+    ${index}    Set Variable    0
+    :FOR    ${data}    IN    @{room_type_list}
+    \    Verify Json Value Is Correct    $.[${index}].code    ${data}
+    \    Verify Json Value Is Correct    $.[${index}].description    ${${data}_description}
+    \    ${index}    Evaluate    ${index}+1
+
+Verify Room Types Are Not Updated
+    Verify Room Types Are Not Retrieved
+    
+Verify Room Types Are Not Retrieved
+    Verify String Does Not Contain Substring    ${response.text}    "code"
+    Verify String Does Not Contain Substring    ${response.text}    "description"
+
+Verify Room Type Is Updated Correctly
+    Verify Json Value Is Correct    $.code    ${code}
+    Verify Json Value Is Correct    $.description    ${description}

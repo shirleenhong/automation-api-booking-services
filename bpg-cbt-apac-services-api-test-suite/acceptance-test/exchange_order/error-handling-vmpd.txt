@@ -1,0 +1,108 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/exchange-order-vmpd.txt
+
+Suite Setup    Generate Suite Variable For VMPD Codes
+
+*** Test Cases ***
+Verify That Error Is Encountered When Invalid Token Is Used For Get Request
+    [Tags]    functional
+    Send VMPD Get Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify VMPD Codes Are Not Retrieved
+    Send VMPD Get Request    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify VMPD Codes Are Not Retrieved
+    Send VMPD Get Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    Verify VMPD Codes Are Not Retrieved
+
+Verify That Error Is Encountered When Empty Token Is Used For Get Request
+    [Tags]    functional
+    Send VMPD Get Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify VMPD Codes Are Not Retrieved
+
+Verify That Error Is Encountered When Null Token Is Used For Get Request
+    [Tags]    functional
+    Send VMPD Get Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify VMPD Codes Are Not Retrieved
+    
+Verify That Error Is Encountered When None Token Is Used For Get Request
+    [Tags]    functional
+    Send VMPD Get Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify VMPD Codes Are Not Retrieved
+
+Verify That Error Is Encountered When Invalid Token Is Used For Put Request
+    [Tags]    functional
+    Create Test Variable For VMPD Put Request    code=0    description=Test Description
+    Send VMPD Put Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify VMPD Codes Are Not Updated
+    Send VMPD Put Request    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify VMPD Codes Are Not Updated
+    Send VMPD Put Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    Verify VMPD Codes Are Not Updated
+
+Verify That Error Is Encountered When Empty Token Is Used For Put Request
+    [Tags]    functional
+    Create Test Variable For VMPD Put Request    code=0    description=Test Description
+    Send VMPD Put Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify VMPD Codes Are Not Updated
+
+Verify That Error Is Encountered When Null Token Is Used For Put Request
+    [Tags]    functional
+    Create Test Variable For VMPD Put Request    code=0    description=Test Description
+    Send VMPD Put Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify VMPD Codes Are Not Updated
+
+Verify That Error Is Encountered When None Token Is Used For Put Request
+    [Tags]    functional
+    Create Test Variable For VMPD Put Request    code=0    description=Test Description
+    Send VMPD Put Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify VMPD Codes Are Not Updated
+
+Verify That Error Is Encountered When Invalid Token Is Used For Delete Request
+    [Tags]    functional
+    Send VMPD Delete Request    token=12345.12345.12345    code=XY
+    Verify Response Status Code Is Correct    401
+    Verify VMPD Codes Are Not Updated 
+    Send VMPD Delete Request    token=abcde.abcde.abcde    code=XY
+    Verify Response Status Code Is Correct    401
+    Verify VMPD Codes Are Not Updated
+    Send VMPD Delete Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+    code=XY
+    Verify Response Status Code Is Correct    401
+    Verify VMPD Codes Are Not Updated
+
+Verify That Error Is Encountered When Empty Token Is Used For Delete Request
+    [Tags]    functional
+    Send VMPD Delete Request    token=${EMPTY}    code=XY
+    Verify Response Status Code Is Correct    400
+    Verify VMPD Codes Are Not Updated
+    
+Verify That Error Is Encountered When Null Token Is Used For Delete Request
+    [Tags]    functional
+    Send VMPD Delete Request    token=null    code=XY
+    Verify Response Status Code Is Correct    401
+    Verify VMPD Codes Are Not Updated
+
+Verify That Error Is Encountered When None Token Is Used For Delete Request
+    [Tags]    functional
+    Send VMPD Delete Request    token=None    code=XY
+    Verify Response Status Code Is Correct    400
+    Verify VMPD Codes Are Not Updated
+    
+Verify That Error Is Encountered When Invalid ID Is Used For Delete Request
+    [Tags]    functional
+    Send VMPD Delete Request    code=XY
+    Verify Response Status Code Is Correct    404
+    Verify VMPD Codes Are Not Updated

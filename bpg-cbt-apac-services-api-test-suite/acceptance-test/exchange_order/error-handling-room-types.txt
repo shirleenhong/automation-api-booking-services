@@ -1,0 +1,127 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/exchange-order-room-types.txt
+
+Suite Setup    Generate Suite Variable For Room Type Get Request
+
+*** Test Cases ***
+Verify That Error Is Encountered When Invalid Token Is Used For Get Request
+    [Tags]    functional
+    Send Room Types Get Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Room Types Are Not Retrieved
+    Send Room Types Get Request    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify Room Types Are Not Retrieved
+    Send Room Types Get Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+.
+    Verify Response Status Code Is Correct    401
+    Verify Room Types Are Not Retrieved
+    
+Verify That Error Is Encountered When Empty Token Is Used For Get Request
+    [Tags]    functional
+    Send Room Types Get Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Room Types Are Not Retrieved
+    
+Verify That Error Is Encountered When Null Token Is Used For Get Request
+    [Tags]    functional
+    Send Room Types Get Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Room Types Are Not Retrieved
+    
+Verify That Error Is Encountered When No Token Is Used For Get Request
+    [Tags]    functional
+    Send Room Types Get Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Room Types Are Not Retrieved
+    
+Verify That Error Is Encountered When Invalid Token Is Used For Put Request
+    [Tags]    functional
+    Create Test Variable For Room Type Put Request    code=X    description=Test Description
+    Send Room Types Put Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Room Types Are Not Updated
+    Send Room Types Put Request    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify Room Types Are Not Updated
+    Send Room Types Put Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    Verify Room Types Are Not Updated
+    
+Verify That Error Is Encountered When Empty Token Is Used For Put Request
+    [Tags]    functional
+    Create Test Variable For Room Type Put Request    code=X    description=Test Description
+    Send Room Types Put Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Room Types Are Not Updated
+    
+Verify That Error Is Encountered When Null Token Is Used For Put Request
+    [Tags]    functional
+    Create Test Variable For Room Type Put Request    code=X    description=Test Description
+    Send Room Types Put Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Room Types Are Not Updated
+    
+Verify That Error Is Encountered When No Token Is Used For Put Request
+    [Tags]    functional
+    Create Test Variable For Room Type Put Request    code=X    description=Test Description
+    Send Room Types Put Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Room Types Are Not Updated
+    
+Verify That Error Is Encountered When Invalid Token Is Used For Delete Request
+    [Tags]    functional
+    Send Room Types Delete Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Room Types Are Not Updated
+    Send Room Types Delete Request    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify Room Types Are Not Updated
+    Send Room Types Delete Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    Verify Room Types Are Not Updated
+    
+Verify That Error Is Encountered When Empty Token Is Used For Delete Request
+    [Tags]    functional
+    Send Room Types Delete Request    token=${EMPTY}    code=1
+    Verify Response Status Code Is Correct    400
+    Verify Room Types Are Not Updated
+    
+Verify That Error Is Encountered When Null Token Is Used For Delete Request
+    [Tags]    functional
+    Send Room Types Delete Request    token=null    code=1
+    Verify Response Status Code Is Correct    401
+    Verify Room Types Are Not Updated
+    
+Verify That Error Is Encountered When No Token Is Used For Delete Request
+    [Tags]    functional
+    Send Room Types Delete Request    token=None    code=1
+    Verify Response Status Code Is Correct    400
+    Verify Room Types Are Not Updated
+    
+Verify That Error Is Encountered When Invalid Code Is Used For Delete Request
+    [Tags]    functional
+    Send Room Types Delete Request    code=1
+    Verify Response Status Code Is Correct    404
+    Verify Room Types Are Not Updated
+    
+Verify That Error Is Encountered When Empty Code Is Used For Delete Request
+    [Tags]    functional
+    Send Room Types Delete Request    code=${EMPTY}
+    Verify Response Status Code Is Correct    405
+    Verify Room Types Are Not Updated
+
+Verify That Error Is Encountered When Null Code Is Used For Delete Request
+    [Tags]    functional
+    Send Room Types Delete Request    code=null
+    Verify Response Status Code Is Correct    404
+    Verify Room Types Are Not Updated
+
+Verify That Error Is Encountered When No Code Is Used For Delete Request
+    [Tags]    functional
+    Send Room Types Delete Request    code=None
+    Verify Response Status Code Is Correct    404
+    Verify Room Types Are Not Updated
+    
