@@ -16,6 +16,9 @@ import org.mongodb.morphia.query.Query;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AirTransactionRepositoryTest {
 
     @Mock
@@ -33,8 +36,9 @@ public class AirTransactionRepositoryTest {
         when(morphia.getDatastore()).thenReturn(dataStore);
     }
 
-    @Test
-    public void shouldReturnAirTransactions(){
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
+    public void shouldReturnAirTransactionsNullParams(){
         Query query = Mockito.mock(Query.class);
         FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
         when(dataStore.createQuery(AirTransaction.class)).thenReturn(query);
@@ -47,4 +51,37 @@ public class AirTransactionRepositoryTest {
         verify(morphia, times(1)).getDatastore();
         verify(dataStore, times(1)).createQuery(AirTransaction.class);
     }
+    
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
+    public void shouldReturnAirTransactions(){
+        Query query = Mockito.mock(Query.class);
+        FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
+        when(dataStore.createQuery(AirTransaction.class)).thenReturn(query);
+        when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
+        when(fieldEnd.equal(anyString())).thenReturn(query);
+        when(query.filter(Mockito.anyString(), Mockito.anyObject())).thenReturn(query);
+
+        when(query.criteria(anyString())).thenReturn(fieldEnd);
+        
+        AirTransactionInput input = createAirTransactionInput();
+        
+        repository.getAirTransactions(input);
+
+        verify(morphia, times(1)).getDatastore();
+        verify(dataStore, times(1)).createQuery(AirTransaction.class);
+    }
+
+	private AirTransactionInput createAirTransactionInput() {
+		List<String> bookingClasses = new ArrayList<>();
+        bookingClasses.add("A");
+        
+        AirTransactionInput input = new AirTransactionInput();
+        input.setAirlineCode("TG");
+        input.setCcVendorCode("V");
+        input.setCcType("UATP");
+        input.setClientAccountNumber("12345");
+        input.setBookingClasses(bookingClasses);
+		return input;
+	}
 }
