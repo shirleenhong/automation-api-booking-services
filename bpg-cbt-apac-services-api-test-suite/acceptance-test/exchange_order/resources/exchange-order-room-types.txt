@@ -15,11 +15,6 @@ Create Test Variable For Room Type Put Request
     Set Test Variable    ${description}
     Set Test Variable    ${room_type_list}
 
-Delete Created Room Types And Evict Cache
-    [Arguments]    ${token}=${default_token}    ${code}=${code}    ${number}=2
-    Send Room Types Delete Request    token=${token}    code=${code}
-    Evict Room Types Cache    token=${token}    number=${number}
-
 Evict Room Types Cache
     [Arguments]    ${number}=2    ${token}=${default_token}
     Create Session    exchange-order    ${${env}_base_url}    verify=True
@@ -34,7 +29,7 @@ Evict Room Types Cache
     Set Test Variable    ${api_flag}    exchange-order
 
 Generate Suite Variable For Room Type Get Request
-    [Arguments]    ${data_list}=A,Deluxe|B,Superior|C,Standard Or Condominium|D,Moderate|E,Studio|F,Family|K,Apartment|M ,Meeting Room|N,Non-smoking Room|S,Suite
+    [Arguments]    ${data_list}=A,Deluxe|B,Superior|C,Standard or Condominium|D,Moderate|E,Studio|F,Family|K,Apartment|M ,Meeting Room|N,Non-smoking Room|S,Suite
     ${data_list}    Split String    ${data_list}    |
     ${data_list_length}    Get Length    ${data_list}
     ${room_type_list}    Create List
@@ -79,17 +74,16 @@ Send Room Types Put Request
     Create Session    exchange-order    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${response}    Put Request    exchange-order    /apac-services-rest/api/exchange-order/room-type    data={"code":"${code}","description":"${description}"}    headers=${headers}
+    ${response}    Put Request    exchange-order    /apac-services-rest/api/exchange-order/room-types    data={"code":"${code}","description":"${description}"}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
     Set Test Variable    ${api_flag}    exchange-order
 
-Update Room Types To Orginal Value And Evict Cache
-    [Arguments]    ${token}=${default_token}    ${code}=${code}    ${description}=${description}    ${number}=2
+Update Room Types To Orginal Value
+    [Arguments]    ${token}=${default_token}    ${code}=${code}    ${description}=${description}
     Create Test Variable For Room Type Put Request    code=${code}    description=${description}
     Send Room Types Put Request    token=${token}
-    Evict Room Types Cache    token=${token}    number=${number}
     
 Verify Room Types Are Retrieved Correctly
     ${index}    Set Variable    0

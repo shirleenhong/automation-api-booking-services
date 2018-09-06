@@ -1,16 +1,17 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
-import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
-import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
 import javax.validation.Valid;
+
+import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import io.swagger.annotations.ApiModelProperty;
 
 public class Car implements Serializable {
 
@@ -50,6 +51,9 @@ public class Car implements Serializable {
 	
 	@Valid
 	private Guarantor guarantor;
+
+	@Valid
+	private CancellationPolicy cancellationPolicy;
 
 	public String getSegment() {
 		return segment;
@@ -162,5 +166,14 @@ public class Car implements Serializable {
 	public void setGuarantor(Guarantor guarantor) {
 		this.guarantor = guarantor;
 	}
-	
+
+	public CancellationPolicy getCancellationPolicy()
+	{
+		return cancellationPolicy;
+	}
+
+	public void setCancellationPolicy(CancellationPolicy cancellationPolicy)
+	{
+		this.cancellationPolicy = cancellationPolicy;
+	}
 }

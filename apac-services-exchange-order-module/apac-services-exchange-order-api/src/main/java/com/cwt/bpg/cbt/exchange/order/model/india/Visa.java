@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.exchange.order.model;
+package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
