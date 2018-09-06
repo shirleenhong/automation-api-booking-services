@@ -32,6 +32,8 @@ public class Visa implements Serializable {
 
 	private String processingType;
 
+	private VisaCustomFields customFields;
+
 	public String getDocument() {
 		return document;
 	}
@@ -94,5 +96,13 @@ public class Visa implements Serializable {
 
 	public void setProcessingType(String processingType) {
 		this.processingType = processingType;
+	}
+
+	public VisaCustomFields getCustomFields() {
+		return customFields;
+	}
+
+	public void setCustomFields(VisaCustomFields customFields) {
+		this.customFields = customFields;
 	}
 }
