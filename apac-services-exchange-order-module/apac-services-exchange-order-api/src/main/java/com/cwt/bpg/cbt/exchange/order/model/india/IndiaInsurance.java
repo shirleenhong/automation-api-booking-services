@@ -6,8 +6,12 @@ public class IndiaInsurance implements Serializable {
 	private static final long serialVersionUID = -2416249545097859674L;
 
 	private String details;
+	
 	private String details1;
+	
 	private String details2;
+	
+	private IndiaInsuranceCustomFields indiaInsuranceCustomFields;
 	
 	public String getDetails() {
 		return details;
@@ -26,5 +30,11 @@ public class IndiaInsurance implements Serializable {
 	}
 	public void setDetails2(String details2) {
 		this.details2 = details2;
+	}
+	public IndiaInsuranceCustomFields getIndiaInsuranceCustomFields() {
+		return indiaInsuranceCustomFields;
+	}
+	public void setIndiaInsuranceCustomFields(IndiaInsuranceCustomFields indiaInsuranceCustomFields) {
+		this.indiaInsuranceCustomFields = indiaInsuranceCustomFields;
 	}
 }
