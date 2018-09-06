@@ -1,7 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
-import com.cwt.bpg.cbt.exchange.order.model.Train;
-
 import java.io.Serializable;
 
 import javax.validation.Valid;
