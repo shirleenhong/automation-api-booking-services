@@ -39,8 +39,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true)
 	private String pcc;
 
-	private String faxNumber;
-
 	@ApiModelProperty(required = true)
 	private String agentName;
 
@@ -88,14 +86,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	public void setPcc(String pcc) {
 		this.pcc = pcc;
-	}
-
-	public String getFaxNumber() {
-		return faxNumber;
-	}
-
-	public void setFaxNumber(String faxNumber) {
-		this.faxNumber = faxNumber;
 	}
 
 	public String getAgentName() {
@@ -167,7 +157,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 		return serviceInfo;
 	}
 
-//	@Override
 	public void setServiceInfo(ServiceInfo serviceInfo) {
 		this.serviceInfo = serviceInfo;
 	}
@@ -177,7 +166,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
         return vendor;
     }
 
-//    @Override
     public void setVendor(Vendor vendor) {
         this.vendor = vendor;
     }

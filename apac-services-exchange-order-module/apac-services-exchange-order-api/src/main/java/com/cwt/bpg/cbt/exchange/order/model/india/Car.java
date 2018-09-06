@@ -1,20 +1,23 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
-import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
-import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
 import javax.validation.Valid;
 
+import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
+import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import io.swagger.annotations.ApiModelProperty;
+
 public class Car implements Serializable {
 
 	private static final long serialVersionUID = -1953882582608518378L;
+
+	private String segment;
 
 	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
@@ -48,6 +51,17 @@ public class Car implements Serializable {
 	
 	@Valid
 	private Guarantor guarantor;
+
+	@Valid
+	private CancellationPolicy cancellationPolicy;
+
+	public String getSegment() {
+		return segment;
+	}
+
+	public void setSegment(String segment) {
+		this.segment = segment;
+	}
 
 	public Instant getPickupDateTime() {
 		return pickupDateTime;
@@ -152,5 +166,14 @@ public class Car implements Serializable {
 	public void setGuarantor(Guarantor guarantor) {
 		this.guarantor = guarantor;
 	}
-	
+
+	public CancellationPolicy getCancellationPolicy()
+	{
+		return cancellationPolicy;
+	}
+
+	public void setCancellationPolicy(CancellationPolicy cancellationPolicy)
+	{
+		this.cancellationPolicy = cancellationPolicy;
+	}
 }

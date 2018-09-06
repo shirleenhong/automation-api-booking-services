@@ -39,6 +39,12 @@ public class AssocServiceInfo implements Serializable {
     private String vendorRefNoGsa;
 
     private String otherRelatedNoPo;
+    
+    private BigDecimal totalSellingPrice;
+    
+    private boolean clientExempt;
+    
+    private boolean noMerchantFee;
 
     public String getDetails() {
         return details;
@@ -151,4 +157,28 @@ public class AssocServiceInfo implements Serializable {
     public void setOtherRelatedNoPo(String otherRelatedNoPo) {
         this.otherRelatedNoPo = otherRelatedNoPo;
     }
+
+	public BigDecimal getTotalSellingPrice() {
+		return totalSellingPrice;
+	}
+
+	public void setTotalSellingPrice(BigDecimal totalSellingPrice) {
+		this.totalSellingPrice = totalSellingPrice;
+	}
+
+	public boolean isClientExempt() {
+		return clientExempt;
+	}
+
+	public void setClientExempt(boolean clientExempt) {
+		this.clientExempt = clientExempt;
+	}
+
+	public boolean isNoMerchantFee() {
+		return noMerchantFee;
+	}
+
+	public void setNoMerchantFee(boolean noMerchantFee) {
+		this.noMerchantFee = noMerchantFee;
+	}
 }

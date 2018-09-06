@@ -5,10 +5,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
@@ -16,11 +13,7 @@ import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +37,6 @@ import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaVendor;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
-import com.cwt.bpg.cbt.exchange.order.validator.FopTypeValidator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -60,9 +52,6 @@ public class ExchangeOrderControllerTest
 
     @Mock
     private ExchangeOrderReportService eoReportService;
-
-    @Mock
-    private FopTypeValidator fopTypeValidator;
 
     @InjectMocks
     private ExchangeOrderController controller;
@@ -288,7 +277,6 @@ public class ExchangeOrderControllerTest
         Vendor vendor = new Vendor();
         vendor.setCode("VEN090909");
         order.setVendor(vendor);
-        order.setFaxNumber("111");
         order.setAccountNumber("987654321");
         order.setPassengerName("Passenger");
         order.setAgentId("U001XXX");
