@@ -200,6 +200,35 @@ public class ExchangeOrderReportServiceTest {
 		
 	}
 	
+	@Test
+	public void shouldEmailPdfSuccess_India() throws Exception {
+		
+		ReflectionTestUtils.setField(eoReportService, "eoMailSender", "testEmail@email.com");
+		
+		EmailResponse response = new EmailResponse();
+		Vendor vendor = createVendor();
+		ReportHeader reportHeader = createReportHeader();
+		Session session = Session.getDefaultInstance(new Properties());
+		InputStream stubInputStream = 
+			     IOUtils.toInputStream("some test data for my input stream", "UTF-8");
+		
+		MimeMessage message = new MimeMessage(session, stubInputStream);
+		ExchangeOrder exchangeOrder = createExchangeOrder("IN", productCode,
+				vendorCode, true, true, false, false);
+	
+		when(productService.getVendor(countryCode, productCode, vendorCode)).thenReturn(vendor);
+		when(eoService.getExchangeOrder(eoNumber)).thenReturn(exchangeOrder);
+		when(mailSender.createMimeMessage()).thenReturn(message);
+		when(emailContentProcessor.getEmailSubject(exchangeOrder)).thenReturn(eoNumber);
+		when(emailContentProcessor.getEmailBody(exchangeOrder)).thenReturn(eoNumber);
+		when(reportHeaderService.getHeaderReport(countryCode)).thenReturn(reportHeader);
+		
+		response = eoReportService.emailPdf(eoNumber);
+		assertNotNull(response);
+		assertThat(response.isSuccess(), is(false));
+		
+	}
+	
 	@Test (expected = ApiServiceException.class)
 	public void shouldEmailPdfException() throws Exception {
 		

@@ -14,6 +14,7 @@ import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.RoomType;
+import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
 
 public class ExchangeOrderServiceTest {
 
@@ -25,6 +26,9 @@ public class ExchangeOrderServiceTest {
     
     @Mock
     private RoomTypeRepository roomTypeRepository;
+    
+    @Mock
+    private VmpdReasonCodesRepository reasonCodeRepository;
 
     @Mock
     private ExchangeOrderInsertService insertService;
@@ -99,6 +103,32 @@ public class ExchangeOrderServiceTest {
     public void shouldCallSaveRoomType() {
     	service.save(new RoomType());
         verify(roomTypeRepository, times(1)).put(Mockito.any(RoomType.class));
+    }
+    
+    @Test
+    public void shouldCallDelete() {
+    	String code = "A";
+        service.delete(code);
+        verify(roomTypeRepository, times(1)).remove(code);
+    }
+    
+    @Test
+    public void shouldCallGetAllVmpdReasonCodes() {
+        service.getAllVMPDReasonCodes();
+        verify(reasonCodeRepository, times(1)).getAll();
+    }
+    
+    @Test
+    public void shouldCallSaveVmpdReasonCode() {
+    	service.saveVMPDReasonCode(new VmpdReasonCode());
+        verify(reasonCodeRepository, times(1)).put(Mockito.any(VmpdReasonCode.class));
+    }
+    
+    @Test
+    public void shouldCallDeleteVmpd() {
+    	String code = "A";
+        service.deleteVmpdReasonCode(code);
+        verify(reasonCodeRepository, times(1)).remove(code);
     }
 
 }
