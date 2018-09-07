@@ -63,6 +63,23 @@ public class AirTransactionServiceTest {
         assertEquals(PassthroughType.CWT, result.getPassthroughType());
         verify(proxy, times(1)).getAirTransactionList(any(AirTransactionInput.class));
     }
+    
+    
+    @Test(expected = AirTransactionNoContentException.class)
+    public void getAirTransactionListShouldThrowException() throws AirTransactionNoContentException {
+    	AirTransaction airTransaction = mock(AirTransaction.class);
+        when(airTransaction.getPassthroughType()).thenReturn(PassthroughType.CWT);
+
+        List<AirTransaction> airTransactions = new ArrayList<>();
+
+        when(proxy.getAirTransactionList(any(AirTransactionInput.class))).thenReturn(airTransactions);
+
+        AirTransactionOutput result = service.getAirTransaction(new AirTransactionInput());
+
+        assertNotNull(result);
+        assertEquals(PassthroughType.CWT, result.getPassthroughType());
+        verify(proxy, times(1)).getAirTransactionList(any(AirTransactionInput.class));
+    }
 
     @Test
     public void saveShouldReturnSavedAirTransaction() {

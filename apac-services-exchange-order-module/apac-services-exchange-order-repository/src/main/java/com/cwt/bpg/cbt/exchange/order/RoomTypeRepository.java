@@ -17,6 +17,7 @@ public class RoomTypeRepository extends CommonRepository<RoomType, String>{
 		super(RoomType.class, CODE);
 	}
 	
+	@Override
 	public List<RoomType> getAll() {
 		return morphia.getDatastore().createQuery(RoomType.class).order(Sort.ascending(CODE))
 				.asList();

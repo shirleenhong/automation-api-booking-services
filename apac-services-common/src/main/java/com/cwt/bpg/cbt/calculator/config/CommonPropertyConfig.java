@@ -6,6 +6,8 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration("com.cwt.bpg.cbt.calculator.property.config")
 public class CommonPropertyConfig {
+	private CommonPropertyConfig() {
+	}
 
 	@Configuration("com.cwt.bpg.cbt.calculator.config.source")
 	@Profile("local")

@@ -16,22 +16,25 @@ public class ReportHeaderRepository extends CommonRepository<ReportHeader, Strin
         super(ReportHeader.class, KEY_COLUMN);
     }
 
+    @Override
     public ReportHeader get(String countryCode){
         return morphia.getDatastore().createQuery(ReportHeader.class)
-                .field("countryCode")
+                .field(KEY_COLUMN)
                 .equalIgnoreCase(countryCode).get();
     }
 
+    @Override
     public String remove(String countryCode) {
         final Datastore datastore = morphia.getDatastore();
         final Query<ReportHeader> query =  datastore.createQuery(ReportHeader.class)
-                .field("countryCode")
+                .field(KEY_COLUMN)
                 .equalIgnoreCase(countryCode);
 
         datastore.delete(query);
         return countryCode;
     }
 
+    @Override
     public ReportHeader put(ReportHeader reportHeader){
         morphia.getDatastore().save(reportHeader);
         return reportHeader;
