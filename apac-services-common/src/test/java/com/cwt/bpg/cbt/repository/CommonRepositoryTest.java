@@ -3,19 +3,18 @@ package com.cwt.bpg.cbt.repository;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
@@ -25,6 +24,9 @@ import org.mongodb.morphia.query.Query;
 import com.cwt.bpg.cbt.calculator.model.AirTransactionMock;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.WriteResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings({ "unchecked" })
 public class CommonRepositoryTest {
@@ -45,6 +47,24 @@ public class CommonRepositoryTest {
 
         when(morphia.getDatastore()).thenReturn(datastore);
     }
+
+	@Test
+	public void shouldReturnRow() {
+		AirTransactionMock airTransactionMock = mock(AirTransactionMock.class);
+		Query<AirTransactionMock> query = mock(Query.class);
+		FieldEnd fieldEnd = Mockito.mock(FieldEnd.class);
+
+		when(datastore.createQuery(AirTransactionMock.class)).thenReturn(query);
+		when(query.field(anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equal(anyString())).thenReturn(query);
+		when(query.get()).thenReturn(airTransactionMock);
+
+		AirTransactionMock result = repo.get("");
+
+		assertThat(result, is(equalTo(airTransactionMock)));
+		verify(morphia, times(1)).getDatastore();
+		verify(datastore, times(1)).createQuery(AirTransactionMock.class);
+	}
 
     @Test
 	public void shouldReturnAllRows() {

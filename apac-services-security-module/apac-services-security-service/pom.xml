@@ -9,6 +9,10 @@
 	<name>apac-services-security-service</name>
 	<description>apac-services-security-service</description>
 
+	<properties>
+		<sonar.coverage.exclusions>**/*PropertyConfig.java</sonar.coverage.exclusions>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>

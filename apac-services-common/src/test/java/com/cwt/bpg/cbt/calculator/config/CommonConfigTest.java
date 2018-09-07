@@ -12,10 +12,4 @@ public class CommonConfigTest {
 	public void testScaleConfig() {
 		assertNotNull(config.scaleConfig());
 	}
-	
-	@Test
-	public void testObjectModifier() {
-		assertNotNull(config.objectModifier());
-	}
-
 }

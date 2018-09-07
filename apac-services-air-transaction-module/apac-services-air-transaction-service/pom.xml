@@ -38,6 +38,6 @@
 	</dependencies>
 
 	<properties>
-		<sonar.coverage.exclusions>**/*PropertyConfig.java</sonar.coverage.exclusions>
+		<sonar.coverage.exclusions>**/*AirTransactionNoContentException.java</sonar.coverage.exclusions>
 	</properties>
 </project>
