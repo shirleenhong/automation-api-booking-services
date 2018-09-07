@@ -93,7 +93,7 @@ Append Exchange Order Main Request Fields
     Run Keyword If    "${agent_name_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_main_request_list}    "agentName":"${agent_name_${eo_index}_${field_name}}"
     Run Keyword If    "${country_code_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_main_request_list}    "countryCode":"${country_code_${eo_index}_${field_name}}"
     Run Keyword If    "${eo_action_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_main_request_list}    "eoAction":"${eo_action_${eo_index}_${field_name}}"
-    Run Keyword If    "${fax_number_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_main_request_list}    "faxNumber":"${fax_number_${eo_index}_${field_name}}"
+    #Run Keyword If    "${fax_number_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_main_request_list}    "faxNumber":"${fax_number_${eo_index}_${field_name}}"
     Run Keyword If    "${last_updated_by_user_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_main_request_list}    "lastUpdatedByUser":"${last_updated_by_user_${eo_index}_${field_name}}"
     Run Keyword If    "${passenger_name_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_main_request_list}    "passengerName":"${passenger_name_${eo_index}_${field_name}}"
     Run Keyword If    "${pcc_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_main_request_list}    "pcc":"${pcc_${eo_index}_${field_name}}"
@@ -261,7 +261,7 @@ Append Exchange Order Vendor Request Fields
     [Arguments]    ${eo_index}    ${field_name}=value
     ${exchange_order_vendor_request_list}    Create List
     Run Keyword If    "${vendor_contact_person_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_vendor_request_list}    "contactPerson":"${vendor_contact_person_${eo_index}_${field_name}}"
-    Run Keyword If    "${vendor_contact_no_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_vendor_request_list}    "contactNo":"${vendor_contact_no_${eo_index}_${field_name}}"
+    #Run Keyword If    "${vendor_contact_no_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_vendor_request_list}    "contactNo":"${vendor_contact_no_${eo_index}_${field_name}}"
     Run Keyword If    "${vendor_code_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_vendor_request_list}    "code":"${vendor_code_${eo_index}_${field_name}}"
     Run Keyword If    "${vendor_name_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_vendor_request_list}    "name":"${vendor_name_${eo_index}_${field_name}}"
     Run Keyword If    "${vendor_address_1_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_vendor_request_list}    "address1":"${vendor_address_1_${eo_index}_${field_name}}"
@@ -798,8 +798,8 @@ Verify Exchange Order For Record Locator Is Retrieved Correctly
     \    ...    ELSE    Verify Json Element Does Not Exist    $.countryCode
     \    Run Keyword If    "${eo_action_${eo_index}_${field_name}}"!="null" and "${eo_action_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.eoAction    ${eo_action_${eo_index}_${field_name}}
     \    ...    ELSE    Verify Json Element Does Not Exist    $.eoAction
-    \    Run Keyword If    "${fax_number_${eo_index}_${field_name}}"!="null" and "${fax_number_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.faxNumber    ${fax_number_${eo_index}_${field_name}}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.faxNumber
+    \    #Run Keyword If    "${fax_number_${eo_index}_${field_name}}"!="null" and "${fax_number_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.faxNumber    ${fax_number_${eo_index}_${field_name}}
+    \    #...    ELSE    Verify Json Element Does Not Exist    $.faxNumber
     \    Run Keyword If    "${last_updated_by_user_${eo_index}_${field_name}}"!="null" and "${last_updated_by_user_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.lastUpdatedByUser    ${last_updated_by_user_${eo_index}_${field_name}}
     \    ...    ELSE    Verify Json Element Does Not Exist    $.lastUpdatedByUser
     \    Run Keyword If    "${passenger_name_${eo_index}_${field_name}}"!="null" and "${passenger_name_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.passengerName    ${passenger_name_${eo_index}_${field_name}}
@@ -930,8 +930,8 @@ Verify Exchange Order Is Saved Correctly
     ...    ELSE    Verify Json Element Does Not Exist    $.countryCode
     Run Keyword If    "${eo_action_${eo_index}_${field_name}}"!="null" and "${eo_action_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.eoAction    ${eo_action_${eo_index}_${field_name}}
     ...    ELSE    Verify Json Element Does Not Exist    $.eoAction
-    Run Keyword If    "${fax_number_${eo_index}_${field_name}}"!="null" and "${fax_number_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.faxNumber    ${fax_number_${eo_index}_${field_name}}
-    ...    ELSE    Verify Json Element Does Not Exist    $.faxNumber
+    #Run Keyword If    "${fax_number_${eo_index}_${field_name}}"!="null" and "${fax_number_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.faxNumber    ${fax_number_${eo_index}_${field_name}}
+    #...    ELSE    Verify Json Element Does Not Exist    $.faxNumber
     Run Keyword If    "${last_updated_by_user_${eo_index}_${field_name}}"!="null" and "${last_updated_by_user_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.lastUpdatedByUser    ${last_updated_by_user_${eo_index}_${field_name}}
     ...    ELSE    Verify Json Element Does Not Exist    $.lastUpdatedByUser
     Run Keyword If    "${passenger_name_${eo_index}_${field_name}}"!="null" and "${passenger_name_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.passengerName    ${passenger_name_${eo_index}_${field_name}}
@@ -1207,8 +1207,8 @@ Verify Exchange Order Vendor Is Saved Correctly
     [Arguments]    ${eo_index}=0    ${field_name}=value
     Run Keyword If    "${vendor_contact_person_${eo_index}_value}"!="null" and "${vendor_contact_person_${eo_index}_value}"!="none"    Verify Json Value Is Correct With Given Response    $..vendor.contactPerson    ${vendor_contact_person_${eo_index}_${field_name}}
     ...    ELSE    Verify Json Element Does Not Exist    $..vendor.contactPerson
-    Run Keyword If    "${vendor_contact_no_${eo_index}_value}"!="null" and "${vendor_contact_no_${eo_index}_value}"!="none"    Verify Json Value Is Correct With Given Response    $..vendor.contactNo    ${vendor_contact_no_${eo_index}_${field_name}}
-    ...    ELSE    Verify Json Element Does Not Exist    $..vendor.contactNo
+    #Run Keyword If    "${vendor_contact_no_${eo_index}_value}"!="null" and "${vendor_contact_no_${eo_index}_value}"!="none"    Verify Json Value Is Correct With Given Response    $..vendor.contactNo    ${vendor_contact_no_${eo_index}_${field_name}}
+    #...    ELSE    Verify Json Element Does Not Exist    $..vendor.contactNo
     Run Keyword If    "${vendor_code_${eo_index}_value}"!="null" and "${vendor_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct With Given Response    $..vendor.code    ${vendor_code_${eo_index}_${field_name}}
     ...    ELSE    Verify Json Element Does Not Exist    $..vendor.code
     Run Keyword If    "${vendor_name_${eo_index}_value}"!="null" and "${vendor_name_${eo_index}_value}"!="none"    Verify Json Value Is Correct With Given Response    $..vendor.name    ${vendor_name_${eo_index}_${field_name}}
