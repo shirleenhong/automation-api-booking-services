@@ -51,12 +51,6 @@ public class ExchangeOrderReportService {
 
 	private static final String DATE_PATTERN = "dd-MMM-yyyy";
 
-	private static final String PHONE = "PHONE";
-
-	private static final String FAX = "FAX";
-
-	private static final String EMAIL = "EMAIL";
-
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
 
@@ -216,33 +210,22 @@ public class ExchangeOrderReportService {
 
 	private void putContactInfoParameters(List<ContactInfo> contactInfoList, Map<String, Object> parameters) {
 
-		boolean isCurrPhonePref = false;
-		boolean isCurrFaxPref = false;
-		boolean isCurrEmailPref = false;
+		EnumMap<ContactInfoType, Boolean> prefFoundMap = new EnumMap<>(ContactInfoType.class);
+		prefFoundMap.put(ContactInfoType.PHONE, Boolean.FALSE);
+		prefFoundMap.put(ContactInfoType.FAX, Boolean.FALSE);
+		prefFoundMap.put(ContactInfoType.EMAIL, Boolean.FALSE);
 
 		for (ContactInfo contactInfo : contactInfoList) {
-
-			if (contactInfo.getType() != null
-					&& contactInfo.getType() == ContactInfoType.PHONE
-					&& (!parameters.containsKey(PHONE)
-							|| (contactInfo.isPreferred() && !isCurrPhonePref))) {
-				parameters.put(PHONE, contactInfo.getDetail());
-				isCurrPhonePref = contactInfo.isPreferred() && !isCurrPhonePref;
-			}
-			else if (contactInfo.getType() != null
-					&& contactInfo.getType() == ContactInfoType.FAX
-					&& (!parameters.containsKey(FAX)
-							|| (contactInfo.isPreferred() && !isCurrFaxPref))) {
-				parameters.put(FAX, contactInfo.getDetail());
-				isCurrFaxPref = contactInfo.isPreferred() && !isCurrFaxPref;
-			}
-			else if (contactInfo.getType() != null
-					&& contactInfo.getType() == ContactInfoType.EMAIL
-					&& (!parameters.containsKey(EMAIL)
-							|| (contactInfo.isPreferred() && !isCurrEmailPref))) {
-				parameters.put(EMAIL, contactInfo.getDetail());
-				isCurrEmailPref = contactInfo.isPreferred() && !isCurrEmailPref;
-			}
+			if (contactInfo.getType() != null) {
+                prefFoundMap.keySet().forEach(contactInfoType -> {
+                    if (contactInfo.getType() == contactInfoType
+                            && (!parameters.containsKey(contactInfoType.toString())
+                            || (contactInfo.isPreferred() && !prefFoundMap.get(contactInfoType)))) {
+                        parameters.put(contactInfoType.toString(), contactInfo.getDetail());
+                        prefFoundMap.put(contactInfoType, contactInfo.isPreferred() && !prefFoundMap.get(contactInfoType));
+                    }
+                });
+            }
 		}
 	}
 
