@@ -25,6 +25,8 @@ public class BaseVendor implements Serializable {
 
 	private String supportEmail;
 
+	private String supportPhone;
+
 	private List<ContactInfo> contactInfo;
 
 	private String country;
@@ -75,6 +77,14 @@ public class BaseVendor implements Serializable {
 
 	public void setSupportEmail(String supportEmail) {
 		this.supportEmail = supportEmail;
+	}
+
+	public String getSupportPhone() {
+		return supportPhone;
+	}
+
+	public void setSupportPhone(String supportPhone) {
+		this.supportPhone = supportPhone;
 	}
 
 	public List<ContactInfo> getContactInfo() {
