@@ -42,9 +42,9 @@ public class AssocServiceInfo implements Serializable {
     
     private BigDecimal totalSellingPrice;
     
-    private boolean clientExempt;
+    private Boolean clientExempt;
     
-    private boolean noMerchantFee;
+    private Boolean noMerchantFee;
 
     public String getDetails() {
         return details;
@@ -166,19 +166,19 @@ public class AssocServiceInfo implements Serializable {
 		this.totalSellingPrice = totalSellingPrice;
 	}
 
-	public boolean isClientExempt() {
+	public Boolean getClientExempt() {
 		return clientExempt;
 	}
 
-	public void setClientExempt(boolean clientExempt) {
+	public void setClientExempt(Boolean clientExempt) {
 		this.clientExempt = clientExempt;
 	}
 
-	public boolean isNoMerchantFee() {
+	public Boolean getNoMerchantFee() {
 		return noMerchantFee;
 	}
 
-	public void setNoMerchantFee(boolean noMerchantFee) {
+	public void setNoMerchantFee(Boolean noMerchantFee) {
 		this.noMerchantFee = noMerchantFee;
 	}
 }
