@@ -30,14 +30,7 @@ import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.ReportHeaderService;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.AdditionalInfo;
-import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
-import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
-import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
-import com.cwt.bpg.cbt.exchange.order.model.ServiceInfo;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 public class ExchangeOrderReportServiceTest {
@@ -92,7 +85,7 @@ public class ExchangeOrderReportServiceTest {
 		Vendor vendor = createVendor();
 		ReportHeader reportHeader = createReportHeader();
 		
-		when(eoService.getExchangeOrder(eoNumber)).thenReturn(exchangeOrder);
+		when(eoService.get(eoNumber)).thenReturn(exchangeOrder);
 		when(productService.getVendor(countryCode, productCode, vendorCode)).thenReturn(vendor);
 		when(reportHeaderService.getHeaderReport(countryCode)).thenReturn(reportHeader);
 		
@@ -106,7 +99,7 @@ public class ExchangeOrderReportServiceTest {
 		Vendor vendor = createVendor();
 		ReportHeader reportHeader = createReportHeader();
 		
-		when(eoService.getExchangeOrder(eoNumber)).thenReturn(null);
+		when(eoService.get(eoNumber)).thenReturn(null);
 		when(productService.getVendor(countryCode, productCode, vendorCode)).thenReturn(vendor);
 		when(reportHeaderService.getHeaderReport(countryCode)).thenReturn(reportHeader);
 		
@@ -131,7 +124,7 @@ public class ExchangeOrderReportServiceTest {
 				vendorCode, true, true, false, false);
 	
 		when(productService.getVendor(countryCode, productCode, vendorCode)).thenReturn(vendor);
-		when(eoService.getExchangeOrder(eoNumber)).thenReturn(exchangeOrder);
+		when(eoService.get(eoNumber)).thenReturn(exchangeOrder);
 		when(mailSender.createMimeMessage()).thenReturn(message);
 		when(emailContentProcessor.getEmailSubject(exchangeOrder)).thenReturn(eoNumber);
 		when(emailContentProcessor.getEmailBody(exchangeOrder)).thenReturn(eoNumber);
@@ -160,7 +153,7 @@ public class ExchangeOrderReportServiceTest {
 				vendorCode, false, true, false, false);
 	
 		when(productService.getVendor(countryCode, productCode, vendorCode)).thenReturn(vendor);
-		when(eoService.getExchangeOrder(eoNumber)).thenReturn(exchangeOrder);
+		when(eoService.get(eoNumber)).thenReturn(exchangeOrder);
 		when(mailSender.createMimeMessage()).thenReturn(message);
 		when(emailContentProcessor.getEmailSubject(exchangeOrder)).thenReturn(eoNumber);
 		when(emailContentProcessor.getEmailBody(exchangeOrder)).thenReturn(eoNumber);
@@ -188,7 +181,7 @@ public class ExchangeOrderReportServiceTest {
 
 	
 		when(productService.getVendor(countryCode, productCode, vendorCode)).thenReturn(vendor);
-		when(eoService.getExchangeOrder(eoNumber)).thenReturn(exchangeOrder);
+		when(eoService.get(eoNumber)).thenReturn(exchangeOrder);
 		when(mailSender.createMimeMessage()).thenReturn(message);
 		when(emailContentProcessor.getEmailSubject(exchangeOrder)).thenReturn(eoNumber);
 		when(emailContentProcessor.getEmailBody(exchangeOrder)).thenReturn(eoNumber);
@@ -217,7 +210,7 @@ public class ExchangeOrderReportServiceTest {
 				vendorCode, true, true, false, false);
 	
 		when(productService.getVendor(countryCode, productCode, vendorCode)).thenReturn(vendor);
-		when(eoService.getExchangeOrder(eoNumber)).thenReturn(exchangeOrder);
+		when(eoService.get(eoNumber)).thenReturn(exchangeOrder);
 		when(mailSender.createMimeMessage()).thenReturn(message);
 		when(emailContentProcessor.getEmailSubject(exchangeOrder)).thenReturn(eoNumber);
 		when(emailContentProcessor.getEmailBody(exchangeOrder)).thenReturn(eoNumber);
@@ -246,7 +239,7 @@ public class ExchangeOrderReportServiceTest {
 		ReflectionTestUtils.setField(eoReportService, "eoMailRecipient", "testEmail@email.com");
 	
 		when(productService.getVendor(countryCode, productCode, vendorCode)).thenReturn(vendor);
-		when(eoService.getExchangeOrder(eoNumber)).thenReturn(exchangeOrder);
+		when(eoService.get(eoNumber)).thenReturn(exchangeOrder);
 		when(mailSender.createMimeMessage()).thenReturn(message);
 		when(emailContentProcessor.getEmailSubject(exchangeOrder)).thenReturn(eoNumber);
 		when(reportHeaderService.getHeaderReport(countryCode)).thenReturn(reportHeader);

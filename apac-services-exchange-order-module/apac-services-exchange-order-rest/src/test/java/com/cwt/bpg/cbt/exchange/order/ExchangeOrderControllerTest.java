@@ -87,14 +87,14 @@ public class ExchangeOrderControllerTest {
 		order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
 		order.setEoNumber("1122334455");
 
-		when(eoService.saveExchangeOrder(anyString(), any(ExchangeOrder.class))).thenReturn(order);
+		when(eoService.save(anyString(), any(ExchangeOrder.class))).thenReturn(order);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(1)).saveExchangeOrder(anyString(), any(ExchangeOrder.class));
+		verify(eoService, times(1)).save(anyString(), any(ExchangeOrder.class));
 	}
 
 	@Test
@@ -106,14 +106,14 @@ public class ExchangeOrderControllerTest {
 		order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
 		order.setEoNumber(null);
 
-		when(eoService.saveExchangeOrder(anyString(), any(ExchangeOrder.class))).thenReturn(order);
+		when(eoService.save(anyString(), any(ExchangeOrder.class))).thenReturn(order);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(1)).saveExchangeOrder(anyString(), any(ExchangeOrder.class));
+		verify(eoService, times(1)).save(anyString(), any(ExchangeOrder.class));
 	}
 
 	@Test
@@ -127,14 +127,14 @@ public class ExchangeOrderControllerTest {
 		vendor.setCode("VEN090909");
 		order.setVendor(vendor);
 
-		when(eoService.saveExchangeOrder(anyString(), any(ExchangeOrder.class))).thenReturn(order);
+		when(eoService.save(anyString(), any(ExchangeOrder.class))).thenReturn(order);
 
         mockMvc.perform(post(urlIn).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(1)).saveExchangeOrder(anyString(), any(IndiaExchangeOrder.class));
+		verify(eoService, times(1)).save(anyString(), any(IndiaExchangeOrder.class));
 	}
 
 	@Test
@@ -152,19 +152,8 @@ public class ExchangeOrderControllerTest {
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(1)).saveExchangeOrder(anyString(), any(ExchangeOrder.class));
+		verify(eoService, times(1)).save(anyString(), any(ExchangeOrder.class));
 	}
-
-    @Test
-    public void shouldUpdateExchangeOrderStatus() throws Exception {
-	    when(eoService.updateStatus(eoNumber, EoStatus.PENDING)).thenReturn(true);
-
-        String urlTemplate = url + "/" + eoNumber + "/Pending";
-        mockMvc.perform(put(urlTemplate))
-                .andExpect(status().isOk()).andReturn().getResponse();
-
-        verify(eoService, times(1)).updateStatus(anyString(), any(EoStatus.class));
-    }
 
     @Test
     public void shouldUpdateFinanceFields() throws Exception {
@@ -203,7 +192,7 @@ public class ExchangeOrderControllerTest {
 		order.getServiceInfo().setCommission(BigDecimal.ZERO);
 		order.getServiceInfo().setGst(BigDecimal.ZERO);
 		order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-		when(eoService.saveExchangeOrder(anyString(), any(ExchangeOrder.class)))
+		when(eoService.save(anyString(), any(ExchangeOrder.class)))
 				.thenThrow(new ExchangeOrderNoContentException("eo number not found"));
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
@@ -218,11 +207,11 @@ public class ExchangeOrderControllerTest {
 	public void shouldGetExchangeOrderByExchangeOrderNumber() throws Exception {
 
 		ExchangeOrder order = new ExchangeOrder();
-		when(eoService.getExchangeOrder(eoNumber)).thenReturn(order);
+		when(eoService.get(eoNumber)).thenReturn(order);
 
 		mockMvc.perform(get(urlSg + "/" + eoNumber)).andExpect(status().isOk());
 
-		verify(eoService, times(1)).getExchangeOrder("sg", eoNumber);
+		verify(eoService, times(1)).get("sg", eoNumber);
 	}
 
 	@Test
@@ -239,11 +228,11 @@ public class ExchangeOrderControllerTest {
 	public void shouldGetIndiaExchangeOrderByExchangeOrderNumber() throws Exception {
 
 		ExchangeOrder order = new ExchangeOrder();
-		when(eoService.getExchangeOrder(eoNumber)).thenReturn(order);
+		when(eoService.get(eoNumber)).thenReturn(order);
 
 		mockMvc.perform(get(urlIn + "/" + eoNumber)).andExpect(status().isOk());
 
-		verify(eoService, times(1)).getExchangeOrder("IN", eoNumber);
+		verify(eoService, times(1)).get("IN", eoNumber);
 	}
 
 	@Test
@@ -261,14 +250,14 @@ public class ExchangeOrderControllerTest {
 
 		ExchangeOrder order = new ExchangeOrder();
 
-		when(eoService.saveExchangeOrder("sg", order)).thenReturn(order);
+		when(eoService.save("sg", order)).thenReturn(order);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isBadRequest())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(0)).saveExchangeOrder(anyString(), any(ExchangeOrder.class));
+		verify(eoService, times(0)).save(anyString(), any(ExchangeOrder.class));
 	}
 
 	private ExchangeOrder createExchangeOrder() {
