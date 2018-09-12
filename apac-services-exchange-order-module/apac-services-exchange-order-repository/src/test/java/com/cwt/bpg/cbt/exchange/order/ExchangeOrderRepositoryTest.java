@@ -5,10 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -16,8 +13,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import com.cwt.bpg.cbt.exchange.order.model.*;
-import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -28,6 +23,8 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.*;
 
+import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 public class ExchangeOrderRepositoryTest {
@@ -166,7 +163,29 @@ public class ExchangeOrderRepositoryTest {
         verify(dataStore, times(1)).createQuery(IndiaExchangeOrder.class);
         assertNotNull(result);
     }
-	
+
+    @Test
+    public void shouldUpdateStatusField() {
+        when(dataStore.createQuery(ExchangeOrder.class)).thenReturn(query);
+        when(query.field(Mockito.anyString())).thenReturn(mock(FieldEnd.class));
+
+        when(dataStore.createUpdateOperations(ExchangeOrder.class)).thenReturn(operation);
+        when(operation.set(Mockito.anyString(), Mockito.anyObject())).thenReturn(operation);
+
+        final UpdateResults results = mock(UpdateResults.class);
+        when(results.getUpdatedExisting()).thenReturn(true);
+
+        when(dataStore.update(query, operation)).thenReturn(results);
+
+        String eoNumber = "1809100011";
+        boolean result = repository.updateStatus(eoNumber, EoStatus.PENDING);
+
+        verify(dataStore, times(1)).createQuery(ExchangeOrder.class);
+        verify(dataStore, times(1)).update(query, operation);
+
+        assertTrue(result);
+    }
+
 	@SuppressWarnings("unchecked")
     @Test
 	public void shouldUpdateFinanceFields() {

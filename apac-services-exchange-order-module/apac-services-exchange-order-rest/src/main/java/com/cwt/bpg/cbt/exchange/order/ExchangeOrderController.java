@@ -9,26 +9,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
-import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
-import com.cwt.bpg.cbt.exchange.order.model.RoomType;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
-import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 
@@ -50,7 +37,7 @@ public class ExchangeOrderController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Saves new exchange order transaction.")
+	@ApiOperation(value = "Saves new or updates existing exchange order.")
 	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
@@ -88,7 +75,7 @@ public class ExchangeOrderController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Saves new exchange order transaction.")
+	@ApiOperation(value = "Saves new or updates existing India exchange order.")
 	public ResponseEntity<IndiaExchangeOrder> saveIndiaExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") IndiaExchangeOrder input)
 			throws ExchangeOrderNoContentException {
@@ -161,11 +148,22 @@ public class ExchangeOrderController {
 		return eoService.search(param);
 	}
 
+	@PutMapping(path = "/exchange-order/{eoNumber}/{status}")
+	@ResponseBody
+	@ApiOperation(value = "Updates exchange order status.")
+	public ResponseEntity<Boolean> updateStatus(
+			@RequestBody @ApiParam(value = "Exchange Order number") @PathVariable String eoNumber,
+            @RequestBody @ApiParam(value = "New Exchange Order Status") @PathVariable String status) {
+		final boolean result = eoService.updateStatus(eoNumber, EoStatus.find(status));
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+
 	@PutMapping(path = "/exchange-order", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Update exchange order transaction.")
+	@ApiOperation(value = "[For Finance App] Updates exchange order record.")
 	public ResponseEntity<Boolean> update(
 			@RequestBody @ApiParam(value = "Exchange order to update") ExchangeOrder param) {
 		final boolean result = eoService.update(param);

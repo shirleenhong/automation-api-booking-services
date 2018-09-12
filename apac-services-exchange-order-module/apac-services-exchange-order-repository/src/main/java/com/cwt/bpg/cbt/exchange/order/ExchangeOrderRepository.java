@@ -4,11 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.mongodb.morphia.Key;
-import org.mongodb.morphia.query.FindOptions;
-import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.Sort;
-import org.mongodb.morphia.query.UpdateOperations;
-import org.mongodb.morphia.query.UpdateResults;
+import org.mongodb.morphia.query.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
@@ -23,25 +20,25 @@ import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 @Repository
 public class ExchangeOrderRepository {
-	
+
 	@Autowired
 	private MorphiaComponent morphia;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderRepository.class);
 	private static final String EO_NUMBER = "eoNumber";
 	private static final String RECORD_LOCATOR = "recordLocator";
 	private static final String CREATE_DATETIME = "createDateTime";
-	
+
 	public String save(BaseExchangeOrder eo) {
 		Key<BaseExchangeOrder> savedEoKey = morphia.getDatastore().save(eo);
 		LOGGER.info("Save: Exchange order, [{}]", eo.getEoNumber());
-		
+
 		return savedEoKey.getId().toString();
 	}
 
-    public BaseExchangeOrder getExchangeOrder(String countryCode, String eoNumber) {
-    	
-    	if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
+	public BaseExchangeOrder getExchangeOrder(String countryCode, String eoNumber) {
+
+		if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
 			return getIndiaExchangeOrder(eoNumber);
 		}
 		else {
@@ -49,7 +46,7 @@ public class ExchangeOrderRepository {
 		}
 	}
 
-    public List<? extends BaseExchangeOrder> getExchangeOrderByRecordLocator(String countryCode, String recordLocator) {
+	public List<? extends BaseExchangeOrder> getExchangeOrderByRecordLocator(String countryCode, String recordLocator) {
 
 	    if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
             return getIndiaExchangeOrderByRecordLocator(recordLocator);
@@ -86,7 +83,7 @@ public class ExchangeOrderRepository {
                 .order(Sort.descending(CREATE_DATETIME))
                 .asList();
     }
-	
+
 	public List<ExchangeOrder> search(final ExchangeOrderSearchParam param)
     {
         final Query<ExchangeOrder> query = morphia.getDatastore().createQuery(ExchangeOrder.class);
@@ -146,7 +143,18 @@ public class ExchangeOrderRepository {
         ops.set("updateDateTime", param.getUpdateDateTime());
         ops.set("raiseCheque", param.getRaiseCheque());
 
-        final UpdateResults result = morphia.getDatastore().update(query, ops);
-        return result.getUpdatedExisting();
-    }
+		final UpdateResults result = morphia.getDatastore().update(query, ops);
+		return result.getUpdatedExisting();
+	}
+
+	public boolean updateStatus(String eoNumber, EoStatus status) {
+		final Query<ExchangeOrder> query = morphia.getDatastore().createQuery(ExchangeOrder.class);
+		query.field(EO_NUMBER).equal(eoNumber);
+
+		final UpdateOperations<ExchangeOrder> ops = morphia.getDatastore().createUpdateOperations(ExchangeOrder.class);
+		ops.set("status", status);
+
+		final UpdateResults result = morphia.getDatastore().update(query, ops);
+		return result.getUpdatedExisting();
+	}
 }
