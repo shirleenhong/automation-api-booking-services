@@ -11,10 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
-import com.cwt.bpg.cbt.exchange.order.model.RoomType;
-import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 
 public class ExchangeOrderServiceTest {
 
@@ -80,10 +77,20 @@ public class ExchangeOrderServiceTest {
     }
 
     @Test
+    public void shouldCallUpdateStatus() {
+        String eoNumber = "1809100011";
+        EoStatus status = EoStatus.PENDING;
+
+        service.updateStatus(eoNumber, status);
+
+        verify(repository, times(1)).updateStatus(eoNumber, status);
+    }
+
+    @Test
     public void shouldCallGetExchangeOrderByRecordLocator() {
-        String recorLocator = "X1X1X1";
-        service.getExchangeOrderByRecordLocator("IN",recorLocator);
-        verify(repository, times(1)).getExchangeOrderByRecordLocator("IN",recorLocator);
+        String recordLocator = "X1X1X1";
+        service.getExchangeOrderByRecordLocator("IN",recordLocator);
+        verify(repository, times(1)).getExchangeOrderByRecordLocator("IN",recordLocator);
     }
 
     @Test
