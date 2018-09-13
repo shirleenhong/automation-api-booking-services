@@ -25,6 +25,10 @@ public class ExchangeOrderService {
 
 	@Autowired
 	private VmpdReasonCodesRepository reasonCodeRepository;
+	
+	@Autowired
+	private CarVendorRepository carVendorRepository;
+	
 
 	public BaseExchangeOrder save(String countryCode, BaseExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
@@ -80,5 +84,17 @@ public class ExchangeOrderService {
 
 	public String deleteVmpdReasonCode(String code) {
 		return reasonCodeRepository.remove(code);
+	}
+	
+	public List<CarVendor> getAllCarVendors() {
+		return carVendorRepository.getAll();
+	}
+
+	public CarVendor saveCarVendor(CarVendor carVendor) {
+		return carVendorRepository.put(carVendor);
+	}
+
+	public String deleteCarVendor(String code) {
+		return carVendorRepository.remove(code);
 	}
 }

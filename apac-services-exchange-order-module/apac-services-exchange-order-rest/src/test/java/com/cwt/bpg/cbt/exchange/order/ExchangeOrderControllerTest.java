@@ -61,6 +61,7 @@ public class ExchangeOrderControllerTest {
 	private String eoNumber;
 	private String pnr;
 	private String urlRoomTypes;
+	private String urlCarVendors;
 
 	@Before
 	public void setUp() {
@@ -73,6 +74,7 @@ public class ExchangeOrderControllerTest {
 		eoNumber = "1806100005";
 		pnr = "U9L8VY";
 		urlRoomTypes = "/exchange-order/room-types";
+		urlCarVendors = "/exchange-order/car-vendors";
 	}
 
 	private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -440,4 +442,61 @@ public class ExchangeOrderControllerTest {
         verify(eoService, times(1)).delete(anyString());
     }
 
+	
+	@Test
+	public void shouldGetCarVendors() throws Exception {
+
+		List<CarVendor> carVendors = new ArrayList<>();
+
+		when(eoService.getAllCarVendors()).thenReturn(carVendors);
+
+		mockMvc.perform(get(urlCarVendors)).andExpect(status().isOk());
+
+		verify(eoService, times(1)).getAllCarVendors();
+	}
+	
+	@Test
+	public void shouldSaveCarVendors() throws Exception {
+
+		CarVendor carVendor = new CarVendor();
+		carVendor.setCode("AB");
+		carVendor.setCode("Car Test");
+
+    	mockMvc.perform(put(urlCarVendors)
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(carVendor)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+		verify(eoService, times(1)).saveCarVendor(any(CarVendor.class));
+	}
+	
+	@Test
+	public void shouldRemoveCarVendor() throws Exception {
+
+		String code = "code";
+		when(eoService.deleteCarVendor(code)).thenReturn(code);
+
+        mockMvc.perform(delete(urlCarVendors+"/"+ code)
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+        verify(eoService, times(1)).deleteCarVendor(anyString());
+    }
+
+	@Test
+	public void shouldReturnCarVendorNotFoundWhenRecordDoesNotExist() throws Exception {
+
+		String code = "code";
+		when(eoService.deleteCarVendor(code)).thenReturn("");
+
+        mockMvc.perform(delete(urlCarVendors+"/"+ code)
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isNotFound())
+                .andReturn()
+                .getResponse();
+        verify(eoService, times(1)).deleteCarVendor(anyString());
+    }
 }

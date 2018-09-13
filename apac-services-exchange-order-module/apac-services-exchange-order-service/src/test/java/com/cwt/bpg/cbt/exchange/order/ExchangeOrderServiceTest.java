@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
+import com.cwt.bpg.cbt.exchange.order.model.CarVendor;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.RoomType;
@@ -29,6 +30,9 @@ public class ExchangeOrderServiceTest {
     
     @Mock
     private VmpdReasonCodesRepository reasonCodeRepository;
+    
+    @Mock
+    private CarVendorRepository carVendorRepository;
 
     @Mock
     private ExchangeOrderInsertService insertService;
@@ -129,6 +133,25 @@ public class ExchangeOrderServiceTest {
     	String code = "A";
         service.deleteVmpdReasonCode(code);
         verify(reasonCodeRepository, times(1)).remove(code);
+    }
+    
+    @Test
+    public void shouldCallGetAllCarVendors() {
+        service.getAllCarVendors();
+        verify(carVendorRepository, times(1)).getAll();
+    }
+    
+    @Test
+    public void shouldCallSaveCarVendor() {
+    	service.saveCarVendor(new CarVendor());
+        verify(carVendorRepository, times(1)).put(Mockito.any(CarVendor.class));
+    }
+    
+    @Test
+    public void shouldCallDeleteCarVendor() {
+    	String code = "AB";
+        service.deleteCarVendor(code);
+        verify(carVendorRepository, times(1)).remove(code);
     }
 
 }
