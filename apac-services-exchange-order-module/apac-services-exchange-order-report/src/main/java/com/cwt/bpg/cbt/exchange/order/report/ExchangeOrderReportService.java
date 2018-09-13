@@ -257,7 +257,7 @@ public class ExchangeOrderReportService {
 	}
 
 	private ExchangeOrder getExchangeOrder(String eoNumber) {
-		return exchangeOrderService.getExchangeOrder(eoNumber);
+		return exchangeOrderService.get(eoNumber);
 	}
 	
 	private ReportHeader getReportHeader(String countryCode) {

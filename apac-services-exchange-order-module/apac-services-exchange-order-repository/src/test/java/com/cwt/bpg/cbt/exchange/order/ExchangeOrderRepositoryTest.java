@@ -164,28 +164,6 @@ public class ExchangeOrderRepositoryTest {
         assertNotNull(result);
     }
 
-    @Test
-    public void shouldUpdateStatusField() {
-        when(dataStore.createQuery(ExchangeOrder.class)).thenReturn(query);
-        when(query.field(Mockito.anyString())).thenReturn(mock(FieldEnd.class));
-
-        when(dataStore.createUpdateOperations(ExchangeOrder.class)).thenReturn(operation);
-        when(operation.set(Mockito.anyString(), Mockito.anyObject())).thenReturn(operation);
-
-        final UpdateResults results = mock(UpdateResults.class);
-        when(results.getUpdatedExisting()).thenReturn(true);
-
-        when(dataStore.update(query, operation)).thenReturn(results);
-
-        String eoNumber = "1809100011";
-        boolean result = repository.updateStatus(eoNumber, EoStatus.PENDING);
-
-        verify(dataStore, times(1)).createQuery(ExchangeOrder.class);
-        verify(dataStore, times(1)).update(query, operation);
-
-        assertTrue(result);
-    }
-
 	@SuppressWarnings("unchecked")
     @Test
 	public void shouldUpdateFinanceFields() {

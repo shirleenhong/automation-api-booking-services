@@ -43,7 +43,7 @@ public class ExchangeOrderController {
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
 			throws ExchangeOrderNoContentException {
 		boolean isSave = input.getEoNumber() == null;
-		return new ResponseEntity<>((ExchangeOrder) eoService.saveExchangeOrder(countryCode, input),
+		return new ResponseEntity<>((ExchangeOrder) eoService.save(countryCode, input),
 				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
 
@@ -55,7 +55,7 @@ public class ExchangeOrderController {
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
 
-		return new ResponseEntity<>((ExchangeOrder) eoService.getExchangeOrder(countryCode, eoNumber),
+		return new ResponseEntity<>((ExchangeOrder) eoService.get(countryCode, eoNumber),
 				HttpStatus.OK);
 	}
 
@@ -80,7 +80,7 @@ public class ExchangeOrderController {
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") IndiaExchangeOrder input)
 			throws ExchangeOrderNoContentException {
 		boolean isSave = input.getEoNumber() == null;
-		return new ResponseEntity<>((IndiaExchangeOrder) eoService.saveExchangeOrder(Country.INDIA.getCode(), input),
+		return new ResponseEntity<>((IndiaExchangeOrder) eoService.save(Country.INDIA.getCode(), input),
 				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
 	}
 
@@ -91,7 +91,7 @@ public class ExchangeOrderController {
 	public ResponseEntity<IndiaExchangeOrder> getIndiaExchangeOrder(
 			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
 
-		return new ResponseEntity<>((IndiaExchangeOrder) eoService.getExchangeOrder("IN", eoNumber),
+		return new ResponseEntity<>((IndiaExchangeOrder) eoService.get("IN", eoNumber),
 				HttpStatus.OK);
 	}
 
@@ -148,25 +148,14 @@ public class ExchangeOrderController {
 		return eoService.search(param);
 	}
 
-	@PutMapping(path = "/exchange-order/{eoNumber}/{status}")
-	@ResponseBody
-	@ApiOperation(value = "Updates exchange order status.")
-	public ResponseEntity<Boolean> updateStatus(
-			@RequestBody @ApiParam(value = "Exchange Order number") @PathVariable String eoNumber,
-            @RequestBody @ApiParam(value = "New Exchange Order Status") @PathVariable String status) {
-		final boolean result = eoService.updateStatus(eoNumber, EoStatus.find(status));
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
-
-
 	@PutMapping(path = "/exchange-order", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "[For Finance App] Updates exchange order record.")
+	@ApiOperation(value = "Updates status and/or raise cheque of exchange order record.")
 	public ResponseEntity<Boolean> update(
-			@RequestBody @ApiParam(value = "Exchange order to update") ExchangeOrder param) {
-		final boolean result = eoService.update(param);
+			@RequestBody @ApiParam(value = "Exchange order to update") ExchangeOrder exchangeOrder) {
+		final boolean result = eoService.update(exchangeOrder);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
@@ -204,7 +193,7 @@ public class ExchangeOrderController {
 	@ResponseBody
 	@ApiOperation(value = "Pulls all Reason for Issue.")
 	public ResponseEntity<List<VmpdReasonCode>> getVMPDReasonCodes() {
-		return new ResponseEntity<>(eoService.getAllVMPDReasonCodes(), HttpStatus.OK);
+		return new ResponseEntity<>(eoService.getAllVmpdReasonCodes(), HttpStatus.OK);
 	}
 	
 	@Internal
@@ -212,7 +201,7 @@ public class ExchangeOrderController {
     @ResponseBody
     @ApiOperation(value = "Save or update Reason for Issue.")
     public ResponseEntity<VmpdReasonCode> saveVMPDReasonCode(@Valid @RequestBody VmpdReasonCode reasonCode) {
-        return new ResponseEntity<>(eoService.saveVMPDReasonCode(reasonCode), HttpStatus.OK);
+        return new ResponseEntity<>(eoService.saveVmpdReasonCode(reasonCode), HttpStatus.OK);
     }
 	
 	@Internal

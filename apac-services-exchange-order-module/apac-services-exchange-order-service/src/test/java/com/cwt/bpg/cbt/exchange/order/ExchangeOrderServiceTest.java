@@ -11,7 +11,10 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.RoomType;
+import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
 
 public class ExchangeOrderServiceTest {
 
@@ -42,7 +45,7 @@ public class ExchangeOrderServiceTest {
     public void shouldCallInsertWhenEoNumberIsNull() throws ExchangeOrderNoContentException {
         ExchangeOrder eo = new ExchangeOrder();
 
-        service.saveExchangeOrder("sg",eo);
+        service.save("sg",eo);
 
         verify(insertService, times(1)).insert(eo);
     }
@@ -52,7 +55,7 @@ public class ExchangeOrderServiceTest {
         ExchangeOrder eo = new ExchangeOrder();
         eo.setEoNumber("1234567890");
 
-        service.saveExchangeOrder("sg",eo);
+        service.save("sg",eo);
 
         verify(updateService, times(1)).update(eo);
     }
@@ -60,7 +63,7 @@ public class ExchangeOrderServiceTest {
     @Test
     public void shouldCallGetExchangeOrder() {
         String eoNumber = "1806100005";
-        service.getExchangeOrder(eoNumber);
+        service.get(eoNumber);
         verify(repository, times(1)).getExchangeOrder(eoNumber);
     }
 
@@ -77,16 +80,6 @@ public class ExchangeOrderServiceTest {
     }
 
     @Test
-    public void shouldCallUpdateStatus() {
-        String eoNumber = "1809100011";
-        EoStatus status = EoStatus.PENDING;
-
-        service.updateStatus(eoNumber, status);
-
-        verify(repository, times(1)).updateStatus(eoNumber, status);
-    }
-
-    @Test
     public void shouldCallGetExchangeOrderByRecordLocator() {
         String recordLocator = "X1X1X1";
         service.getExchangeOrderByRecordLocator("IN",recordLocator);
@@ -96,7 +89,7 @@ public class ExchangeOrderServiceTest {
     @Test
     public void shouldCallNewGetExchangeOrder() {
         String recorLocator = "X1X1X1";
-        service.getExchangeOrder("IN",recorLocator);
+        service.get("IN",recorLocator);
         verify(repository, times(1)).getExchangeOrder("IN",recorLocator);
     }
     
@@ -121,13 +114,13 @@ public class ExchangeOrderServiceTest {
     
     @Test
     public void shouldCallGetAllVmpdReasonCodes() {
-        service.getAllVMPDReasonCodes();
+        service.getAllVmpdReasonCodes();
         verify(reasonCodeRepository, times(1)).getAll();
     }
     
     @Test
     public void shouldCallSaveVmpdReasonCode() {
-    	service.saveVMPDReasonCode(new VmpdReasonCode());
+    	service.saveVmpdReasonCode(new VmpdReasonCode());
         verify(reasonCodeRepository, times(1)).put(Mockito.any(VmpdReasonCode.class));
     }
     
