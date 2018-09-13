@@ -1,6 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang.StringUtils;
 import org.mongodb.morphia.Key;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
@@ -140,19 +141,11 @@ public class ExchangeOrderRepository {
         final UpdateOperations<ExchangeOrder> ops = morphia.getDatastore().createUpdateOperations(ExchangeOrder.class);
         ops.set("status", param.getStatus());
         ops.set("lastUpdatedByUser", param.getLastUpdatedByUser());
-        ops.set("updateDateTime", param.getUpdateDateTime());
-        ops.set("raiseCheque", param.getRaiseCheque());
+        ops.set("updateDateTime", Optional.ofNullable(param.getUpdateDateTime()).orElse(Instant.now()));
 
-		final UpdateResults result = morphia.getDatastore().update(query, ops);
-		return result.getUpdatedExisting();
-	}
-
-	public boolean updateStatus(String eoNumber, EoStatus status) {
-		final Query<ExchangeOrder> query = morphia.getDatastore().createQuery(ExchangeOrder.class);
-		query.field(EO_NUMBER).equal(eoNumber);
-
-		final UpdateOperations<ExchangeOrder> ops = morphia.getDatastore().createUpdateOperations(ExchangeOrder.class);
-		ops.set("status", status);
+        if (param.getRaiseCheque() != null) {
+            ops.set("raiseCheque", param.getRaiseCheque());
+        }
 
 		final UpdateResults result = morphia.getDatastore().update(query, ops);
 		return result.getUpdatedExisting();

@@ -26,7 +26,7 @@ public class ExchangeOrderService {
 	@Autowired
 	private VmpdReasonCodesRepository reasonCodeRepository;
 
-	public BaseExchangeOrder saveExchangeOrder(String countryCode, BaseExchangeOrder exchangeOrder)
+	public BaseExchangeOrder save(String countryCode, BaseExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
 
 		String eoNumber = exchangeOrder.getEoNumber();
@@ -38,7 +38,7 @@ public class ExchangeOrderService {
 		}
 	}
 
-	public ExchangeOrder getExchangeOrder(String eoNumber) {
+	public ExchangeOrder get(String eoNumber) {
 		return exchangeOrderRepo.getExchangeOrder(eoNumber);
 	}
 
@@ -50,15 +50,11 @@ public class ExchangeOrderService {
 		return exchangeOrderRepo.search(param);
 	}
 
-    boolean updateStatus(String eoNumber, EoStatus status) {
-        return exchangeOrderRepo.updateStatus(eoNumber, status);
-    }
-
-	boolean update(ExchangeOrder param) {
-		return exchangeOrderRepo.updateFinance(param);
+	boolean update(ExchangeOrder exchangeOrder) {
+		return exchangeOrderRepo.updateFinance(exchangeOrder);
 	}
 
-	public BaseExchangeOrder getExchangeOrder(String countryCode, String eoNumber) {
+	public BaseExchangeOrder get(String countryCode, String eoNumber) {
 		return exchangeOrderRepo.getExchangeOrder(countryCode, eoNumber);
 	}
 
@@ -74,11 +70,11 @@ public class ExchangeOrderService {
 		return roomTypeRepository.remove(code);
 	}
 
-	public List<VmpdReasonCode> getAllVMPDReasonCodes() {
+	public List<VmpdReasonCode> getAllVmpdReasonCodes() {
 		return reasonCodeRepository.getAll();
 	}
 
-	public VmpdReasonCode saveVMPDReasonCode(VmpdReasonCode reasonCode) {
+	public VmpdReasonCode saveVmpdReasonCode(VmpdReasonCode reasonCode) {
 		return reasonCodeRepository.put(reasonCode);
 	}
 
