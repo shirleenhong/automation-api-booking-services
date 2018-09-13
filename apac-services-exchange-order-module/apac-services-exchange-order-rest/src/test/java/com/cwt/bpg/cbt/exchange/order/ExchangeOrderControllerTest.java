@@ -473,7 +473,7 @@ public class ExchangeOrderControllerTest {
 	}
 	
 	@Test
-	public void shouldRemovCarVendor() throws Exception {
+	public void shouldRemoveCarVendor() throws Exception {
 
 		String code = "code";
 		when(eoService.deleteCarVendor(code)).thenReturn(code);
