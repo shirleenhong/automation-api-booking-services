@@ -9,13 +9,27 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.CarVendor;
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
+import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.RoomType;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
 
@@ -184,7 +198,7 @@ public class ExchangeOrderController {
 	public ResponseEntity<String> removeRoomType(@PathVariable String code) {
 		
 		String deleteResult = eoService.delete(code);
-		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		HttpStatus status = checkDeleteResult(deleteResult);
 		return new ResponseEntity<>(deleteResult, status);
 		
 	}
@@ -210,7 +224,36 @@ public class ExchangeOrderController {
 	@ApiOperation(value = "Deletes Reason for Issue data by vmpd code.")
 	public ResponseEntity<String> deleteVmpdReasonCode(@PathVariable @ApiParam(value = "VMPD Code") String code) {
 		String deleteResult = eoService.deleteVmpdReasonCode(code);
-		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		HttpStatus status = checkDeleteResult(deleteResult);
 		return new ResponseEntity<>(deleteResult, status);
+	}
+	
+	@GetMapping(path = "/exchange-order/car-vendors")
+	@ResponseBody
+	@ApiOperation(value = "Pulls all Car Vendors.")
+	public ResponseEntity<List<CarVendor>> getCarVendors() {
+		return new ResponseEntity<>(eoService.getAllCarVendors(), HttpStatus.OK);
+	}
+	
+	@Internal
+    @PutMapping(path = "/exchange-order/car-vendors")
+    @ResponseBody
+    @ApiOperation(value = "Save or update Car Vendor.")
+    public ResponseEntity<CarVendor> saveCarVendor(@Valid @RequestBody CarVendor carVendor) {
+        return new ResponseEntity<>(eoService.saveCarVendor(carVendor), HttpStatus.OK);
+    }
+	
+	@Internal
+	@DeleteMapping(path = "/exchange-order/car-vendors/{code}")
+	@ResponseBody
+	@ApiOperation(value = "Deletes Car Vendor data by code.")
+	public ResponseEntity<String> deleteCarVendor(@PathVariable @ApiParam(value = "Car Vendor Code") String code) {
+		String deleteResult = eoService.deleteCarVendor(code);
+		HttpStatus status = checkDeleteResult(deleteResult);
+		return new ResponseEntity<>(deleteResult, status);
+	}
+
+	private HttpStatus checkDeleteResult(String deleteResult) {
+		return deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
 	}
 }
