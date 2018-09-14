@@ -154,7 +154,8 @@ public class ExchangeOrderController {
 	@ResponseBody
 	@ApiOperation(value = "Updates status and/or raise cheque of exchange order record.")
 	public ResponseEntity<Boolean> update(
-			@RequestBody @ApiParam(value = "Exchange order to update") ExchangeOrder exchangeOrder) {
+			@RequestBody @ApiParam(value = "Exchange order to update") ExchangeOrder exchangeOrder)
+			throws ExchangeOrderNoContentException {
 		final boolean result = eoService.update(exchangeOrder);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

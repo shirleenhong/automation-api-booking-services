@@ -75,6 +75,14 @@ public class ExchangeOrderServiceTest {
 
     @Test
     public void shouldCallUpdate() {
+        ExchangeOrder exchangeOrder = new ExchangeOrder();
+        exchangeOrder.setEoNumber("123456");
+        service.update(exchangeOrder);
+        verify(repository, times(1)).updateFinance(Mockito.any(ExchangeOrder.class));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateShouldReturnErrorWhenEoNumberIsNull() {
         service.update(new ExchangeOrder());
         verify(repository, times(1)).updateFinance(Mockito.any(ExchangeOrder.class));
     }

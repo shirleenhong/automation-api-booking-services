@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,9 @@ public class ExchangeOrderService {
 	}
 
 	boolean update(ExchangeOrder exchangeOrder) {
+        if (StringUtils.isEmpty(exchangeOrder.getEoNumber())) {
+            throw new IllegalArgumentException("Exchange order number is empty.");
+        }
 		return exchangeOrderRepo.updateFinance(exchangeOrder);
 	}
 
