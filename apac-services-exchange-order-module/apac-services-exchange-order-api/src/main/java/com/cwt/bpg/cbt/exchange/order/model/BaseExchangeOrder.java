@@ -43,10 +43,6 @@ public abstract class BaseExchangeOrder implements Serializable {
 	
 	private BigDecimal total;
 
-	private Boolean gstAbsorb;
-
-	private Boolean merchantFeeAbsorb;
-
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String productCode;
@@ -121,22 +117,6 @@ public abstract class BaseExchangeOrder implements Serializable {
 
 	public void setEoAction(EoAction eoAction) {
 		this.eoAction = eoAction;
-	}
-
-	public Boolean isGstAbsorb() {
-		return gstAbsorb;
-	}
-
-	public void setGstAbsorb(Boolean gstAbsorb) {
-		this.gstAbsorb = gstAbsorb;
-	}
-
-	public Boolean isMerchantFeeAbsorb() {
-		return merchantFeeAbsorb;
-	}
-
-	public void setMerchantFeeAbsorb(Boolean merchantFeeAbsorb) {
-		this.merchantFeeAbsorb = merchantFeeAbsorb;
 	}
 
 	public abstract BaseServiceInfo getServiceInfo();
