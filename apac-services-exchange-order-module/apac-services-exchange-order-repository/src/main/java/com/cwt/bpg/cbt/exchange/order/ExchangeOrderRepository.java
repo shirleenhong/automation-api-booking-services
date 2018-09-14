@@ -139,8 +139,15 @@ public class ExchangeOrderRepository {
         query.field(EO_NUMBER).equal(param.getEoNumber());
 
         final UpdateOperations<ExchangeOrder> ops = morphia.getDatastore().createUpdateOperations(ExchangeOrder.class);
-        ops.set("status", param.getStatus());
-        ops.set("lastUpdatedByUser", param.getLastUpdatedByUser());
+
+        if (param.getStatus() != null) {
+            ops.set("status", param.getStatus());
+        }
+
+        if (param.getLastUpdatedByUser() != null) {
+            ops.set("lastUpdatedByUser", param.getLastUpdatedByUser());
+        }
+
         ops.set("updateDateTime", Optional.ofNullable(param.getUpdateDateTime()).orElse(Instant.now()));
 
         if (param.getRaiseCheque() != null) {
