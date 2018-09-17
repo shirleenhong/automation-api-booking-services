@@ -748,6 +748,33 @@ Send Exchange Order Post Request
     \    Log    ${response_${eo_index}.headers}
     \    Log    ${response_${eo_index}.content}
     Set Test Variable    ${api_flag}    exchange-order
+    
+Send Exchange Order Put Request
+    [Arguments]    ${eo_status}    ${user}=suni    ${update_date_time}=2018-09-12T00:00:00.000Z    ${exchange_order_number}=${exchange_order_number}    ${token}=${default_token}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    @{parameters_list_1}    Create List
+    Run Keyword If    "${exchange_order_number}" != "None"    Append To List    ${parameters_list_1}    "eoNumber":"${exchange_order_number}"
+    Run Keyword If    "${eo_status}" != "None"    Append To List    ${parameters_list_1}    "status":"${eo_status}"
+    Run Keyword If    "${user}" != "None"    Append To List    ${parameters_list_1}    "lastUpdatedByUser":"${user}"
+    Run Keyword If    "${update_date_time}" != "None"    Append To List    ${parameters_list_1}    "updateDateTime":"${update_date_time}"
+    ${parameters_1}    Set Variable    ${EMPTY}
+    ${parameters_count_1}    Get Length    ${parameters_list_1}
+    : FOR    ${i}    IN RANGE    0    ${parameters_count_1}
+    \    ${parameters_1}    Set Variable If    ${i}==0    ${EMPTY}    ${parameters_1},
+    \    ${parameters_1}    Set Variable    ${parameters_1}${parameters_list_1[${i}]}  
+    ${data}    Set Variable    {${parameters_1}}
+    ${data}    Replace String    ${data}    "null"    null 
+    ${response}    Put Request    exchange-order    /apac-services-rest/api/exchange-order    data=${data}    headers=${headers}
+    #Set Test Variable    ${response_${eo_index}}    ${response}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    exchange-order
+    Run Keyword If    "${response.status_code}" == "200"    Set Test Variable    ${updated_eo_status}    ${eo_status}
+    Run Keyword If    "${response.status_code}" == "200"    Set Test Variable    ${updated_user}    ${user}
+    Run Keyword If    "${response.status_code}" == "200"    Set Test Variable    ${updated_date_time}    ${update_date_time}        
 
 Verify Amend Date Time Is Returned Correctly
     [Arguments]    ${eo_index}=0
@@ -1238,6 +1265,12 @@ Verify Exchange Order Vendor Is Saved Correctly
     \    Verify Json Value Is Correct With Given Response    $..vendor.contactInfo.[${index}].detail    ${contact_details_${eo_index}_${index}}
     \    Verify Json Value Is Correct With Given Response    $..vendor.contactInfo.[${index}].preferred    ${contact_preferred_${eo_index}_${index}}
     Run Keyword If    "${contact_data_length_${eo_index}}"=="0"    Verify Json Element Does Not Exist    $.vendor.contactInfo
+
+Verify Exchange Order Status Is Saved Correctly
+    Verify Exchange Order Number Is Returned Correctly
+    Verify Json Value Is Correct    $.status    ${updated_eo_status}
+    Verify Json Value Is Correct    $.updateDateTime    ${updated_date_time}
+    Verify Json Value Is Correct    $.lastUpdatedByUser    ${updated_user}
 
 Verify Itinerary Remark Is Retrieved Correctly
     [Arguments]    ${index}=0    ${eo_index}=0
