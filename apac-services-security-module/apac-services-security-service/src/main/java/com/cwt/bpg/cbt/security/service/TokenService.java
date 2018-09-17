@@ -8,26 +8,30 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.security.api.model.Token;
 import com.cwt.bpg.cbt.security.repository.TokenRepository;
-
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 
 @Service
 public class TokenService {
 
-	@Value("${security.secret.key}")
-	private String secretKey;
+    @Value("${security.secret.key}")
+    private String secretKey;
 
-	@Autowired
-	private TokenRepository tokenRepo;
+    @Autowired
+    private TokenRepository tokenRepo;
 
-	public boolean isTokenExist(String tokenKey) {
-		Token token = tokenRepo.getToken(tokenKey);
-		if (token != null) {
-			Jwts.parser().setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).parseClaimsJws(token.getKey());
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public boolean isTokenExist(String tokenKey) {
+        Token token = tokenRepo.getToken(tokenKey);
+        return token != null && parseToken(token);
+    }
 
+    private boolean parseToken(Token token) {
+        try {
+            Jwts.parser().setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).parseClaimsJws(token.getKey());
+            return true;
+        }
+        catch (JwtException e) {
+            return false;
+        }
+    }
 }
