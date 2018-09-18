@@ -19,7 +19,7 @@ public class Car implements Serializable {
 
 	private String segment;
 
-	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant pickupDateTime;
@@ -32,7 +32,7 @@ public class Car implements Serializable {
 
 	private String name;
 
-	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@ApiModelProperty(value = "Date in UTC", example = "2008-05-29T14:09:000Z")
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Instant dropOffDateTime;
