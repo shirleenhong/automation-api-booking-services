@@ -1,0 +1,48 @@
+*** Settings ***
+Suite Setup
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/exchange-order-car-vendors.txt
+
+*** Test Cases ***
+Verify That Exchange Order Car Vendors Are Retrieved Correctly
+    [Tags]    functional
+    Create Test Variables For Car Vendors    ZZ:Car Vendor:Car Vendor|AC:Ace Rent A Car:Ace|AD:Advantage Rent A Car:Advantage|AF:Americar:Americar|AL:Alamo Rent A Car:Alamo|AU:Austrian Rent A Car:Austrian|CC:County Car Rental:Country Car|CO:Continental:Continental|DS:Discount Car and Truck Rentals:Discount|EP:Europcar:Europcar|ET:Enterprise Rent A Car:Enterprise|FX:Fox Rent A Car:Fox|HO:Holiday Car Rental:Holiday Car|IM:Imperial Car Rental:Imperial|LL:Localiza Rent A Car:Localiza|NF:New Frontier:New Frontier|RR:Rent Rite Car Rental System:Rent Rite|SV:U-Save Auto Rental:U-Save|SW:Southwest Car Rental:Southwest|SX:Sixt Rent A Car:Sixt|TS:International Travel:Intl Travel|VR:Specialty Van Rental:Specialty Van|ZA:Payless Car Rental:Payless|ZD:Budget Rent A Car:Budget|ZE:Hertz Corporation:Hertz|ZI:Avis Rent A Car System, Inc.:Avis|ZL:National Car Rental System, Inc.:National|ZR:Dollar Rent A Car:Dollar|ZT:Thrifty Car Rental:Thrifty|ZU:AutoEurope:AutoEurope
+    Send Exchange Order Car Vendors Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Exchange Order Car Vendors Are Retrieved Correctly
+
+Verify That Error Is Encountered When Invalid Token Is Used
+    [Tags]    functional
+    Create Test Variables For Car Vendors    ZZ:Car Vendor:Car Vendor|AC:Ace Rent A Car:Ace|AD:Advantage Rent A Car:Advantage|AF:Americar:Americar|AL:Alamo Rent A Car:Alamo|AU:Austrian Rent A Car:Austrian|CC:County Car Rental:Country Car|CO:Continental:Continental|DS:Discount Car and Truck Rentals:Discount|EP:Europcar:Europcar|ET:Enterprise Rent A Car:Enterprise|FX:Fox Rent A Car:Fox|HO:Holiday Car Rental:Holiday Car|IM:Imperial Car Rental:Imperial|LL:Localiza Rent A Car:Localiza|NF:New Frontier:New Frontier|RR:Rent Rite Car Rental System:Rent Rite|SV:U-Save Auto Rental:U-Save|SW:Southwest Car Rental:Southwest|SX:Sixt Rent A Car:Sixt|TS:International Travel:Intl Travel|VR:Specialty Van Rental:Specialty Van|ZA:Payless Car Rental:Payless|ZD:Budget Rent A Car:Budget|ZE:Hertz Corporation:Hertz|ZI:Avis Rent A Car System, Inc.:Avis|ZL:National Car Rental System, Inc.:National|ZR:Dollar Rent A Car:Dollar|ZT:Thrifty Car Rental:Thrifty|ZU:AutoEurope:AutoEurope
+    Send Exchange Order Car Vendors Get Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Exchange Order Car Vendors Are Not Returned
+    Send Exchange Order Car Vendors Get Request    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify Exchange Order Car Vendors Are Not Returned
+    Send Exchange Order Car Vendors Get Request    token=!@#$%^&*().!@#$%^&*().!@#$%^&*()
+    Verify Response Status Code Is Correct    401
+    Verify Exchange Order Car Vendors Are Not Returned
+    
+Verify That Error Is Encountered When Null Token Is Used
+    [Tags]    functional
+    Create Test Variables For Car Vendors    ZZ:Car Vendor:Car Vendor|AC:Ace Rent A Car:Ace|AD:Advantage Rent A Car:Advantage|AF:Americar:Americar|AL:Alamo Rent A Car:Alamo|AU:Austrian Rent A Car:Austrian|CC:County Car Rental:Country Car|CO:Continental:Continental|DS:Discount Car and Truck Rentals:Discount|EP:Europcar:Europcar|ET:Enterprise Rent A Car:Enterprise|FX:Fox Rent A Car:Fox|HO:Holiday Car Rental:Holiday Car|IM:Imperial Car Rental:Imperial|LL:Localiza Rent A Car:Localiza|NF:New Frontier:New Frontier|RR:Rent Rite Car Rental System:Rent Rite|SV:U-Save Auto Rental:U-Save|SW:Southwest Car Rental:Southwest|SX:Sixt Rent A Car:Sixt|TS:International Travel:Intl Travel|VR:Specialty Van Rental:Specialty Van|ZA:Payless Car Rental:Payless|ZD:Budget Rent A Car:Budget|ZE:Hertz Corporation:Hertz|ZI:Avis Rent A Car System, Inc.:Avis|ZL:National Car Rental System, Inc.:National|ZR:Dollar Rent A Car:Dollar|ZT:Thrifty Car Rental:Thrifty|ZU:AutoEurope:AutoEurope
+    Send Exchange Order Car Vendors Get Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Exchange Order Car Vendors Are Not Returned
+
+Verify That Error Is Encountered When Empty Token Is Used
+    [Tags]    functional
+    Create Test Variables For Car Vendors    ZZ:Car Vendor:Car Vendor|AC:Ace Rent A Car:Ace|AD:Advantage Rent A Car:Advantage|AF:Americar:Americar|AL:Alamo Rent A Car:Alamo|AU:Austrian Rent A Car:Austrian|CC:County Car Rental:Country Car|CO:Continental:Continental|DS:Discount Car and Truck Rentals:Discount|EP:Europcar:Europcar|ET:Enterprise Rent A Car:Enterprise|FX:Fox Rent A Car:Fox|HO:Holiday Car Rental:Holiday Car|IM:Imperial Car Rental:Imperial|LL:Localiza Rent A Car:Localiza|NF:New Frontier:New Frontier|RR:Rent Rite Car Rental System:Rent Rite|SV:U-Save Auto Rental:U-Save|SW:Southwest Car Rental:Southwest|SX:Sixt Rent A Car:Sixt|TS:International Travel:Intl Travel|VR:Specialty Van Rental:Specialty Van|ZA:Payless Car Rental:Payless|ZD:Budget Rent A Car:Budget|ZE:Hertz Corporation:Hertz|ZI:Avis Rent A Car System, Inc.:Avis|ZL:National Car Rental System, Inc.:National|ZR:Dollar Rent A Car:Dollar|ZT:Thrifty Car Rental:Thrifty|ZU:AutoEurope:AutoEurope
+    Send Exchange Order Car Vendors Get Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Car Vendors Are Not Returned
+
+Verify That Error Is Encountered When No Token Is Used
+    [Tags]    functional
+    Create Test Variables For Car Vendors    ZZ:Car Vendor:Car Vendor|AC:Ace Rent A Car:Ace|AD:Advantage Rent A Car:Advantage|AF:Americar:Americar|AL:Alamo Rent A Car:Alamo|AU:Austrian Rent A Car:Austrian|CC:County Car Rental:Country Car|CO:Continental:Continental|DS:Discount Car and Truck Rentals:Discount|EP:Europcar:Europcar|ET:Enterprise Rent A Car:Enterprise|FX:Fox Rent A Car:Fox|HO:Holiday Car Rental:Holiday Car|IM:Imperial Car Rental:Imperial|LL:Localiza Rent A Car:Localiza|NF:New Frontier:New Frontier|RR:Rent Rite Car Rental System:Rent Rite|SV:U-Save Auto Rental:U-Save|SW:Southwest Car Rental:Southwest|SX:Sixt Rent A Car:Sixt|TS:International Travel:Intl Travel|VR:Specialty Van Rental:Specialty Van|ZA:Payless Car Rental:Payless|ZD:Budget Rent A Car:Budget|ZE:Hertz Corporation:Hertz|ZI:Avis Rent A Car System, Inc.:Avis|ZL:National Car Rental System, Inc.:National|ZR:Dollar Rent A Car:Dollar|ZT:Thrifty Car Rental:Thrifty|ZU:AutoEurope:AutoEurope
+    Send Exchange Order Car Vendors Get Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Exchange Order Car Vendors Are Not Returned
