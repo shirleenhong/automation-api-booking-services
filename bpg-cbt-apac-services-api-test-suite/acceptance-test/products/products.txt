@@ -57,7 +57,7 @@ Verify That Vendor Raise Type Are Correctly Retrieved For Singapore
     Verify Response Status Code Is Correct    200
     Verify Vendor Raise-Type Is Retrieved Correctly
     
-Verify That Vendor Raise type Are Correctly Retrieved For Hong Kong
+Verify That Vendor Raise Type Are Correctly Retrieved For Hong Kong
     [Tags]    migration    spot-check
     Create Test Variables For Vendor Raise-Type    country=hk
     Send Product Get Request
