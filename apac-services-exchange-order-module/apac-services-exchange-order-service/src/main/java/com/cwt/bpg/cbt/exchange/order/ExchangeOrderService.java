@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
@@ -66,38 +68,47 @@ public class ExchangeOrderService {
 		return exchangeOrderRepo.getExchangeOrder(countryCode, eoNumber);
 	}
 
+	@Cacheable(cacheNames = "room-types")
 	public List<RoomType> getAll() {
 		return roomTypeRepository.getAll();
 	}
 
+	@CacheEvict(cacheNames = "room-types", allEntries = true)
 	public RoomType save(RoomType roomType) {
 		return roomTypeRepository.put(roomType);
 	}
 
+    @CacheEvict(cacheNames = "room-types", allEntries = true)
 	public String delete(String code) {
 		return roomTypeRepository.remove(code);
 	}
 
+	@Cacheable(cacheNames = "reason-codes")
 	public List<VmpdReasonCode> getAllVmpdReasonCodes() {
 		return reasonCodeRepository.getAll();
 	}
 
+	@CacheEvict(cacheNames = "reason-codes", allEntries = true)
 	public VmpdReasonCode saveVmpdReasonCode(VmpdReasonCode reasonCode) {
 		return reasonCodeRepository.put(reasonCode);
 	}
 
-	public String deleteVmpdReasonCode(String code) {
+    @CacheEvict(cacheNames = "reason-codes", allEntries = true)
+    public String deleteVmpdReasonCode(String code) {
 		return reasonCodeRepository.remove(code);
 	}
-	
+
+	@Cacheable(cacheNames = "car-vendors")
 	public List<CarVendor> getAllCarVendors() {
 		return carVendorRepository.getAll();
 	}
 
+	@CacheEvict(cacheNames = "car-vendors", allEntries = true)
 	public CarVendor saveCarVendor(CarVendor carVendor) {
 		return carVendorRepository.put(carVendor);
 	}
 
+    @CacheEvict(cacheNames = "car-vendors", allEntries = true)
 	public String deleteCarVendor(String code) {
 		return carVendorRepository.remove(code);
 	}

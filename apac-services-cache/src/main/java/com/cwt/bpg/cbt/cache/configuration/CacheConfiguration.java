@@ -18,7 +18,7 @@ public class CacheConfiguration {
 
 	private static final Logger logger = LoggerFactory.getLogger(CacheConfiguration.class);
 
-	private static final String[] cacheNames = new String[] { "products",
+	private static final String[] cacheNames = new String[] {"products",
 			"merchant-fee",
 			"insurance-types",
 			"airline-rules",
@@ -28,7 +28,10 @@ public class CacheConfiguration {
 			"exchange-orders",
 			"report-headers",
 			"air-transactions",
-			"obt-list"};
+			"obt-list",
+	        "room-types",
+            "reason-codes",
+            "car-vendors"};
 
 	@Bean
 	public CacheManager cacheManager() {
@@ -36,7 +39,7 @@ public class CacheConfiguration {
 	}
 
 	@CacheEvict(allEntries = true,
-			cacheNames = { "products",
+			cacheNames = {"products",
 					"merchant-fee",
 					"insurance-types",
 					"airline-rules",
@@ -46,7 +49,10 @@ public class CacheConfiguration {
 					"exchange-orders",
 					"report-headers",
 					"air-transactions",
-					"obt-list"})
+					"obt-list",
+                    "room-types",
+                    "reason-codes",
+                    "car-vendors"})
 	@Scheduled(cron = "0 0 0,12 * * *")
 	public void evictAllCache() {
 		logger.info("Cache Evicted!");
