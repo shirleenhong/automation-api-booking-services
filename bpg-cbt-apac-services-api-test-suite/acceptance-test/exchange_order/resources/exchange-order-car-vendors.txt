@@ -1,0 +1,49 @@
+*** Setting ***
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
+
+*** Keywords ***
+Create Test Variables For Car Vendors
+    [Arguments]    ${car_vendor_list_data}
+    ${car_vendor_list_data}    Split String    ${car_vendor_list_data}    |
+    ${car_vendor_list_data_length}    Get Length    ${car_vendor_list_data}
+    Set Test Variable    ${car_vendor_list_data}
+    Set Test Variable    ${car_vendor_list_data_length}
+    : FOR    ${data}    IN    @{car_vendor_list_data}
+    \    ${data_item}    Split String    ${data}    :
+    \    Set Test Variable    ${car_vendor_code_${data_item[0]}_value}    ${data_item[0]}
+    \    Set Test Variable    ${car_vendor_name_${data_item[0]}_value}    ${data_item[1]}
+    \    Set Test Variable    ${car_vendor_short_name_${data_item[0]}_value}    ${data_item[2]}
+
+Get Response Array Length
+    ${res_content}=    To Json    ${response.content}
+    ${response_list}    Convert JSON To String     ${res_content}
+    ${response_list}  Split String  ${response_list}  },
+    ${item_count}  Get Length  ${response_list}
+    ${item_count}    Evaluate    ${item_count}-1
+    Set Test Variable    ${car_vendor_length}    ${item_count}
+    
+Send Exchange Order Car Vendors Get Request
+    [Arguments]    ${token}=${default_token}
+    Create Session    exchange-order    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    exchange-order    /apac-services-rest/api/exchange-order/car-vendors   headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    exchange-order
+    
+Verify Exchange Order Car Vendors Are Not Returned
+    Verify String Does Not Contain Substring    ${response.text}    "code"
+    Verify String Does Not Contain Substring    ${response.text}    "name"
+    Verify String Does Not Contain Substring    ${response.text}    "shortName
+    
+Verify Exchange Order Car Vendors Are Retrieved Correctly
+    Get Response Array Length
+    : FOR    ${index}    IN RANGE    0    ${car_vendor_length}
+    \    ${indexed_code}    Get Json Value As String    ${response.content}    $[${index}].code 
+    \    Verify Json Value Is Correct    $[${index}].code    ${car_vendor_code_${indexed_code}_value}
+    \    Verify Json Value Is Correct    $[${index}].name    ${car_vendor_name_${indexed_code}_value}
+    \    Verify Json Value Is Correct    $[${index}].shortName    ${car_vendor_short_name_${indexed_code}_value}
