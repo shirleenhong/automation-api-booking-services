@@ -18,7 +18,8 @@ Verify VMPD Codes Are Added Correctly After Put Request
     Create Test Variable For VMPD Put Request    code=0    description=Test Description
     Send VMPD Put Request
     Verify Response Status Code Is Correct    200
-    Verify VMPD Code Is Updated Correctly  
+    Verify VMPD Code Is Updated Correctly
+    Evict VMPD Cache  
     Send VMPD Get Request    
     Verify Response Status Code Is Correct    200
     Verify VMPD Codes Are Retrieved Correctly
@@ -39,6 +40,7 @@ Verify VMPD Codes Are Retrieved Correctly After Put Request
     Send VMPD Put Request
     Verify Response Status Code Is Correct    200
     Verify VMPD Code Is Updated Correctly
+    Evict VMPD Cache
     Send VMPD Get Request    
     Verify Response Status Code Is Correct    200
     Verify VMPD Codes Are Retrieved Correctly
@@ -48,6 +50,7 @@ Verify VMPD Codes Are Retrieved Correctly After Put Request
     Send VMPD Put Request
     Verify Response Status Code Is Correct    200
     Verify VMPD Code Is Updated Correctly
+    Evict VMPD Cache
     Send VMPD Get Request    
     Verify Response Status Code Is Correct    200
     Verify VMPD Codes Are Retrieved Correctly
@@ -59,11 +62,13 @@ Verify VMPD Codes Are Updated Correctly After Delete Request
     Send VMPD Put Request
     Verify Response Status Code Is Correct    200
     Verify VMPD Code Is Updated Correctly
+    Evict VMPD Cache
     Send VMPD Get Request    
     Verify Response Status Code Is Correct    200
     Verify VMPD Codes Are Retrieved Correctly
     Send VMPD Delete Request    code=XY
     Verify Response Status Code Is Correct    200
+    Evict VMPD Cache
     Send VMPD Get Request    
     Verify Response Status Code Is Correct    200
     Verify VMPD Codes Are Retrieved Correctly
