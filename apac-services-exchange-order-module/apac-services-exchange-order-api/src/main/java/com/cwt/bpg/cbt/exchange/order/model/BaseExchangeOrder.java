@@ -11,7 +11,6 @@ import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import io.swagger.annotations.ApiModelProperty;
 
 public abstract class BaseExchangeOrder implements Serializable {
@@ -38,7 +37,7 @@ public abstract class BaseExchangeOrder implements Serializable {
 	@ApiModelProperty(required = true, allowableValues = "Email, Print, Request Cheque")
 	private EoAction eoAction;
 
-	@ApiModelProperty(required = true, allowableValues = "New, Pending, Completed")
+	@ApiModelProperty(required = true, allowableValues = "New, Pending, Completed, Cancelled")
 	private EoStatus status;
 	
 	private BigDecimal total;
