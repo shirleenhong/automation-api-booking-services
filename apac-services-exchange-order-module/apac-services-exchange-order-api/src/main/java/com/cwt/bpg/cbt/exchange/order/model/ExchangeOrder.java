@@ -1,8 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
-import java.util.List;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -44,10 +42,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	private String raiseCheque;
 
-	private List<String> eoRemarks;
-
-	private List<String> itineraryRemarks;
-	
 	private MiscInfo miscInfo;
 	
 	private Insurance insurance;
@@ -104,23 +98,7 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 		this.raiseCheque = raiseCheque;
 	}
 
-	public List<String> getEoRemarks() {
-		return eoRemarks;
-	}
-
-	public void setEoRemarks(List<String> eoRemarks) {
-		this.eoRemarks = eoRemarks;
-	}
-
-	public List<String> getItineraryRemarks() {
-		return itineraryRemarks;
-	}
-
-	public void setItineraryRemarks(List<String> itineraryRemarks) {
-		this.itineraryRemarks = itineraryRemarks;
-	}
-
-    public String getLastUpdatedByUser() {
+	public String getLastUpdatedByUser() {
         return lastUpdatedByUser;
     }
 
