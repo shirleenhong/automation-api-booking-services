@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class IndiaMiscInfo implements Serializable {
 
@@ -28,6 +29,8 @@ public class IndiaMiscInfo implements Serializable {
 	private String declinedAirline2;
 
 	private BigDecimal declinedFare2;
+
+	private List<ClientMiscInfo> clientMI;
 
 	public BigDecimal getReferenceFare() {
 		return referenceFare;
@@ -116,4 +119,12 @@ public class IndiaMiscInfo implements Serializable {
 	public void setDeclinedFare2(BigDecimal declinedFare2) {
 		this.declinedFare2 = declinedFare2;
 	}
+
+    public List<ClientMiscInfo> getClientMI() {
+        return clientMI;
+    }
+
+    public void setClientMI(List<ClientMiscInfo> clientMI) {
+        this.clientMI = clientMI;
+    }
 }

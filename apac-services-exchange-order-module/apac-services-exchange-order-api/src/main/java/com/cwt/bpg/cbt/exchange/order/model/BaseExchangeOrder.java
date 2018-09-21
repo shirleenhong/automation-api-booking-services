@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Id;
@@ -45,6 +46,10 @@ public abstract class BaseExchangeOrder implements Serializable {
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String productCode;
+
+	private List<String> eoRemarks;
+
+	private List<String> itineraryRemarks;
 
 	public void setEoNumber(String eoNumber) {
 		this.eoNumber = eoNumber;
@@ -116,6 +121,22 @@ public abstract class BaseExchangeOrder implements Serializable {
 
 	public void setEoAction(EoAction eoAction) {
 		this.eoAction = eoAction;
+	}
+
+	public List<String> getEoRemarks() {
+		return eoRemarks;
+	}
+
+	public void setEoRemarks(List<String> eoRemarks) {
+		this.eoRemarks = eoRemarks;
+	}
+
+	public List<String> getItineraryRemarks() {
+		return itineraryRemarks;
+	}
+
+	public void setItineraryRemarks(List<String> itineraryRemarks) {
+		this.itineraryRemarks = itineraryRemarks;
 	}
 
 	public abstract BaseServiceInfo getServiceInfo();
