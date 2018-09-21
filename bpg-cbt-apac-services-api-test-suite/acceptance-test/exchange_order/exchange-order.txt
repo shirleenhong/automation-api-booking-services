@@ -263,6 +263,11 @@ Verify That Exchange Order Status Is Updated Successfully For Singapore
     Send Exchange Order Get Request    country_code=sg
     Verify Response Status Code Is Correct For Exchange Order Request    200 
     Verify Exchange Order Status Is Saved Correctly    
+    Send Exchange Order Put Request    eo_status=Cancelled
+    Verify Response Status Code Is Correct    200
+    Send Exchange Order Get Request    country_code=sg
+    Verify Response Status Code Is Correct For Exchange Order Request    200 
+    Verify Exchange Order Status Is Saved Correctly 
     
 Verify That Exchange Order Status Is Updated Successfully For Hong Kong
     [Tags]    functional
@@ -271,6 +276,11 @@ Verify That Exchange Order Status Is Updated Successfully For Hong Kong
     Verify Response Status Code Is Correct For Exchange Order Request    201
     Verify Exchange Order Is Saved Correctly
     Send Exchange Order Put Request    eo_status=Pending
+    Send Exchange Order Get Request    country_code=hk
+    Verify Response Status Code Is Correct For Exchange Order Request    200 
+    Verify Exchange Order Status Is Saved Correctly
+    Send Exchange Order Put Request    eo_status=Cancelled
+    Verify Response Status Code Is Correct    200
     Send Exchange Order Get Request    country_code=hk
     Verify Response Status Code Is Correct For Exchange Order Request    200 
     Verify Exchange Order Status Is Saved Correctly
