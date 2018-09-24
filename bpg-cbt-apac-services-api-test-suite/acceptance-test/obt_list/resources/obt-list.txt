@@ -50,7 +50,7 @@ Evict OBT List Cache
     Set Test Variable    ${api_flag}    obt-list
 
 Generate Suite Variables For OBT
-    [Arguments]    ${sg_obt_list}=EBA,GET,EBS,CBK,EAM,KDS,CTG    ${hk_obt_list}=EBA,GET,EBS,CBK,EAM,KDS,CTG    ${in_obt_list}=EBA,GET,EAM,CYT,ZIL,OTH    ${obt_name_list}=EBA,Concur|GET,Get There|EBS,Arnold|CBK,Cliqbook|EAM,Etravel/AetM|KDS,KDS|CYT,Cytric|CTG,CWT To Go|ZIL,Zillious|OTH,Zillious    ${obt_code_list}=EBA,AMA|EBS,AMS|CBK,AMA|GET,AMI|EAM,AME|KDS,AMK|CYT,AM6|CTG,AM5|ZIL,AMA|OTH,AMA
+    [Arguments]    ${sg_obt_list}=EBA,GET,EBS,CBK,EAM,KDS,CTG    ${hk_obt_list}=EBA,GET,EBS,CBK,EAM,KDS,CTG    ${in_obt_list}=EBA,GET,EAM,CYT,ZIL,OTH,CTG    ${obt_name_list}=EBA,Concur|GET,Get There|EBS,Arnold|CBK,Cliqbook|EAM,Etravel/AetM|KDS,KDS|CYT,Cytric|CTG,CWT To Go|ZIL,Zillious|OTH,Zillious    ${obt_code_list}=EBA,AMA|EBS,AMS|CBK,AMA|GET,AMI|EAM,AME|KDS,AMK|CYT,AM6|CTG,AM5|ZIL,AMA|OTH,AMA
     Set Suite Variable    ${sg_obt_list}
     Set Suite Variable    ${hk_obt_list}
     Set Suite Variable    ${in_obt_list}
