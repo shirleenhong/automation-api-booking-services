@@ -130,7 +130,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 		this.miscChargeOrder = miscChargeOrder;
 	}
 
-	@Override
 	public ServiceInfo getServiceInfo() {
 		return serviceInfo;
 	}

@@ -3,15 +3,15 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import javax.validation.Valid;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
 import com.cwt.bpg.cbt.exchange.order.model.serializer.DateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import io.swagger.annotations.ApiModelProperty;
 
-public class ServiceInfo extends BaseServiceInfo implements Serializable {
+public class ServiceInfo implements Serializable {
 
 	private static final long serialVersionUID = 3555913363549766564L;
 
@@ -134,6 +134,9 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
     private String consolidatorEoNumber;
 
     private String fileFareNumber;
+
+	@Valid
+	private FormOfPayment formOfPayment;
 
     public ClientType getClientType() {
 		return clientType;
@@ -575,5 +578,13 @@ public class ServiceInfo extends BaseServiceInfo implements Serializable {
     public void setFileFareNumber(String fileFareNumber)
     {
         this.fileFareNumber = fileFareNumber;
+    }
+
+    public FormOfPayment getFormOfPayment() {
+        return formOfPayment;
+    }
+
+    public void setFormOfPayment(FormOfPayment formOfPayment) {
+        this.formOfPayment = formOfPayment;
     }
 }

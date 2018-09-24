@@ -139,8 +139,6 @@ public abstract class BaseExchangeOrder implements Serializable {
 		this.itineraryRemarks = itineraryRemarks;
 	}
 
-	public abstract BaseServiceInfo getServiceInfo();
-
 	public abstract BaseVendor getVendor();
 
 }
