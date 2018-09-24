@@ -1,6 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -49,6 +51,8 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 	private MiscChargeOrder miscChargeOrder;
 
 	private String lastUpdatedByUser;
+	
+	private List<String> pdfDescriptions;
 
 	public String getAccountNumber() {
 		return accountNumber;
@@ -147,4 +151,12 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
     public void setVendor(Vendor vendor) {
         this.vendor = vendor;
     }
+
+	public List<String> getPdfDescriptions() {
+		return pdfDescriptions;
+	}
+
+	public void setPdfDescriptions(List<String> pdfDescriptions) {
+		this.pdfDescriptions = pdfDescriptions;
+	}
 }
