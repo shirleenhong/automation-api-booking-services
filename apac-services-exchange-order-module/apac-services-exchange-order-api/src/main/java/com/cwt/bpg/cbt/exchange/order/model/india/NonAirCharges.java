@@ -2,10 +2,11 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.validation.Valid;
 
-import com.cwt.bpg.cbt.exchange.order.model.BaseServiceInfo;
+import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
 
-public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
+public class NonAirCharges implements Serializable {
 
 	private static final long serialVersionUID = -6797824920381793390L;
 
@@ -49,6 +50,9 @@ public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
 	
 	private String otherRelatedNo;
 
+    @Valid
+    private FormOfPayment formOfPayment;
+
     public BigDecimal getNettCost() {
         return nettCost;
     }
@@ -89,7 +93,7 @@ public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
         this.gst = gst;
     }
 
-    public Boolean isGstAbsorb() {
+    public Boolean getGstAbsorb() {
         return gstAbsorb;
     }
 
@@ -105,7 +109,7 @@ public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
         this.merchantFee = merchantFee;
     }
 
-    public Boolean isMerchantFeeAbsorb() {
+    public Boolean getMerchantFeeAbsorb() {
         return merchantFeeAbsorb;
     }
 
@@ -208,5 +212,12 @@ public class IndiaServiceInfo extends BaseServiceInfo implements Serializable {
 	public void setOtherRelatedNo(String otherRelatedNo) {
 		this.otherRelatedNo = otherRelatedNo;
 	}
-    
+
+    public FormOfPayment getFormOfPayment() {
+        return formOfPayment;
+    }
+
+    public void setFormOfPayment(FormOfPayment formOfPayment) {
+        this.formOfPayment = formOfPayment;
+    }
 }

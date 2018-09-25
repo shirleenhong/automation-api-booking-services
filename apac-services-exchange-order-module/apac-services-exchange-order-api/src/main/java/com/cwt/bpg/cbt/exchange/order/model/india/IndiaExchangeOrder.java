@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -20,7 +19,9 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 	private static final long serialVersionUID = -5915661302682405152L;
 
 	@Valid
-	private IndiaServiceInfo serviceInfo;
+	private NonAirCharges nonAirCharges;
+
+	private AirCharges airCharges;
 
 	@Valid
 	@NotNull
@@ -29,7 +30,7 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 	private IndiaMiscInfo miscInfo;
 
 	@Valid
-	private List<AssocServiceInfo> assocServiceInfoList;
+	private List<AssociatedCharges> associatedChargesList;
 
 	@Valid
 	private Request request;
@@ -48,12 +49,12 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 		this.miscInfo = miscInfo;
 	}
 
-	public List<AssocServiceInfo> getAssocServiceInfoList() {
-		return assocServiceInfoList;
+	public List<AssociatedCharges> getAssociatedChargesList() {
+		return associatedChargesList;
 	}
 
-	public void setAssocServiceInfoList(List<AssocServiceInfo> assocServiceInfoList) {
-		this.assocServiceInfoList = assocServiceInfoList;
+	public void setAssociatedChargesList(List<AssociatedCharges> associatedChargesList) {
+		this.associatedChargesList = associatedChargesList;
 	}
 
 	public Request getRequest() {
@@ -88,13 +89,20 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 		this.pcc = pcc;
 	}
 
-	@Override
-	public IndiaServiceInfo getServiceInfo() {
-		return serviceInfo;
+	public NonAirCharges getNonAirCharges() {
+		return nonAirCharges;
 	}
 
-    public void setServiceInfo(IndiaServiceInfo serviceInfo) {
-        this.serviceInfo = serviceInfo;
+    public void setNonAirCharges(NonAirCharges nonAirCharges) {
+        this.nonAirCharges = nonAirCharges;
+    }
+
+    public AirCharges getAirCharges() {
+        return airCharges;
+    }
+
+    public void setAirCharges(AirCharges airCharges) {
+        this.airCharges = airCharges;
     }
 
 	@Override
@@ -105,7 +113,4 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 	public void setVendor(IndiaVendor vendor) {
 		this.vendor = vendor;
 	}
-	
-	
-
 }
