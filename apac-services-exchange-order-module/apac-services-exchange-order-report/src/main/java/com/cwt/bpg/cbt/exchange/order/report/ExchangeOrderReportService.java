@@ -130,28 +130,32 @@ public class ExchangeOrderReportService {
 		Map<String, Object> parameters = new HashMap<>();
 		
 		boolean displayServiceInfo = false;
-		boolean displayAdditionalInfo = false;
 
 		BigDecimal gstAmount = null;
 		BigDecimal tax1 = null;
+		BigDecimal vendorHandling = null;
+		String taxCode1 = null;
+		String taxCode2 = null;
+		String productCode = exchangeOrder.getProductCode();
+		String countryCode = exchangeOrder.getCountryCode();
 		
 		if (exchangeOrder.getServiceInfo() != null) {
 			gstAmount = exchangeOrder.getServiceInfo().getGst();
 			tax1 = exchangeOrder.getServiceInfo().getTax1();
-			AdditionalInfo additionalInfo = exchangeOrder.getServiceInfo()
-					.getAdditionalInfo();
-			displayAdditionalInfo = additionalInfo != null;
+			taxCode1 = exchangeOrder.getServiceInfo().getTaxCode1();
+			taxCode2 = exchangeOrder.getServiceInfo().getTaxCode2();
+			vendorHandling = exchangeOrder.getServiceInfo().getVendorHandling();
 			displayServiceInfo = true;
 		}
 
 		parameters.put("CWT_LOGO", ImageIO.read(resourceLogo.getInputStream()));
 		parameters.put("DATE", getDate(exchangeOrder));
 		parameters.put("TOTAL",
-				formatAmount(exchangeOrder.getCountryCode(), exchangeOrder.getTotal()));
+				formatAmount(countryCode, exchangeOrder.getTotal()));
 
 		boolean displayGst = gstAmount != null && gstAmount.doubleValue() > 0d;
 		parameters.put("GST_AMOUNT_TAX1_LABEL", displayGst ? "GST" : "Tax");
-		parameters.put("GST_AMOUNT_TAX1", formatAmount(exchangeOrder.getCountryCode(),
+		parameters.put("GST_AMOUNT_TAX1", formatAmount(countryCode,
 				displayGst ? gstAmount : tax1));
 
 		List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
@@ -164,26 +168,52 @@ public class ExchangeOrderReportService {
 		parameters.put("HEADER_COMPANY_NAME", reportHeader.getCompanyName());
 		
 		parameters.put("TAX2",
-				displayServiceInfo ? formatAmount(exchangeOrder.getCountryCode(),
+				displayServiceInfo ? formatAmount(countryCode,
 						exchangeOrder.getServiceInfo().getTax2()) : null);
 		parameters
 				.put("NETT_COST",
 						displayServiceInfo
-								? formatAmount(exchangeOrder.getCountryCode(),
+								? formatAmount(countryCode,
 										exchangeOrder.getServiceInfo().getNettCost())
 								: null);
-		parameters.put("ADDITIONAL_INFO_DATE",
-				displayAdditionalInfo ? formatDate(
-						exchangeOrder.getServiceInfo().getAdditionalInfo().getDate())
-						: null);
-		parameters.put("DESCRIPTION", displayAdditionalInfo
-				? exchangeOrder.getServiceInfo().getAdditionalInfo().getDescription()
-				: null);
-		parameters.put("BTA_DESCRIPTION", displayAdditionalInfo
-				? exchangeOrder.getServiceInfo().getAdditionalInfo().getBtaDescription()
-				: null);
-
+		
+		
+		if (Country.HONG_KONG.getCode().equalsIgnoreCase(countryCode)) {
+			formatAdditionalHkContent(parameters, vendorHandling, productCode,
+					countryCode);
+		}
+		else {
+			formatAdditionalSgContent(parameters, taxCode1, taxCode2, productCode,
+					displayGst);
+		}
+		
 		return parameters;
+	}
+
+	private void formatAdditionalSgContent(Map<String, Object> parameters,
+			String taxCode1, String taxCode2, String productCode, boolean displayGst) {
+		
+		if (ProductEnum.CONSOLIDATOR_TICKET.getCode().equals(productCode)
+				|| ProductEnum.CLIENT_CARD.getCode().equals(productCode)) {
+			parameters.put("TAX_CODE_1", displayGst ? null : taxCode1);
+			parameters.put("TAX_CODE_2", taxCode2);
+		}
+		if (ProductEnum.TRAIN.getCode().equals(productCode)) {
+			parameters.put("REMARKS_BAND", false);
+		}
+	}
+
+	private void formatAdditionalHkContent(Map<String, Object> parameters,
+			BigDecimal vendorHandling, String productCode, String countryCode) {
+
+		if (ProductEnum.TRANSACTION_FEE.getCode().equals(productCode)) {
+			parameters.put("REMARKS_BAND", false);
+		}
+		if (ProductEnum.VISA_PROCESSING.getCode().equals(productCode)) {
+			parameters.put("VENDOR_HANDLING_BAND", true);
+			parameters.put("VENDOR_HANDLING_FEES",
+					formatAmount(countryCode, vendorHandling));
+		}
 	}
 	
 	
