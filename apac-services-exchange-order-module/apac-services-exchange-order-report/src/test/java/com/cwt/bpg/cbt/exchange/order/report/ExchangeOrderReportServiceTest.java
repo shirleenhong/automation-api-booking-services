@@ -26,6 +26,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.ExchangeOrderService;
 import com.cwt.bpg.cbt.exchange.order.ReportHeaderService;
@@ -69,15 +70,15 @@ public class ExchangeOrderReportServiceTest {
 
 		ReflectionTestUtils.setField(eoReportService, "eoMailSender", "testEmail@email.com");
 		
-        when(scaleConfig.getScale(eq("SG"))).thenReturn(2);
-        when(scaleConfig.getScale(eq("HK"))).thenReturn(0);
-		
 		eoNumber = "1806100005";
-		hkCountryCode = "HK";
-		indiaCountryCode = "IN";
-		sgCountryCode = "SG";
+		hkCountryCode = Country.HONG_KONG.getCode();
+		indiaCountryCode = Country.INDIA.getCode();
+		sgCountryCode = Country.SINGAPORE.getCode();
 		productCode = "Product1";
 		vendorCode = "Vendor1";
+		
+        when(scaleConfig.getScale(eq(sgCountryCode))).thenReturn(2);
+        when(scaleConfig.getScale(eq(hkCountryCode))).thenReturn(0);
 	}
 
 	@Test
@@ -184,7 +185,7 @@ public class ExchangeOrderReportServiceTest {
 		ReportHeader reportHeader = createReportHeader(sgCountryCode);
 
 		when(eoService.get(eoNumber)).thenReturn(exchangeOrder);
-		when(productService.getVendor(hkCountryCode, productCode, vendorCode))
+		when(productService.getVendor(sgCountryCode, productCode, vendorCode))
 				.thenReturn(vendor);
 		when(reportHeaderService.getHeaderReport(sgCountryCode)).thenReturn(reportHeader);
 
@@ -213,11 +214,11 @@ public class ExchangeOrderReportServiceTest {
 				vendorCode, true, true, true, true);
 		
 		Vendor vendor = createVendor();
-		ReportHeader reportHeader = createReportHeader(hkCountryCode);
+		ReportHeader reportHeader = createReportHeader(indiaCountryCode);
 		
 		when(eoService.get(eoNumber)).thenReturn(exchangeOrder);
-		when(productService.getVendor("IN", productCode, vendorCode)).thenReturn(vendor);
-		when(reportHeaderService.getHeaderReport(hkCountryCode)).thenReturn(reportHeader);
+		when(productService.getVendor(indiaCountryCode, productCode, vendorCode)).thenReturn(vendor);
+		when(reportHeaderService.getHeaderReport(indiaCountryCode)).thenReturn(reportHeader);
 		
 		byte[] jasperPrint = eoReportService.generatePdf(eoNumber);
 		assertNotNull(jasperPrint);
@@ -316,21 +317,21 @@ public class ExchangeOrderReportServiceTest {
 		
 		EmailResponse response = new EmailResponse();
 		Vendor vendor = createVendor();
-		ReportHeader reportHeader = createReportHeader(hkCountryCode);
+		ReportHeader reportHeader = createReportHeader(indiaCountryCode);
 		Session session = Session.getDefaultInstance(new Properties());
 		InputStream stubInputStream = 
 			     IOUtils.toInputStream("some test data for my input stream", "UTF-8");
 		
 		MimeMessage message = new MimeMessage(session, stubInputStream);
-		ExchangeOrder exchangeOrder = createExchangeOrder("IN", productCode,
+		ExchangeOrder exchangeOrder = createExchangeOrder(indiaCountryCode, productCode,
 				vendorCode, true, true, false, false);
 	
-		when(productService.getVendor(hkCountryCode, productCode, vendorCode)).thenReturn(vendor);
+		when(productService.getVendor(indiaCountryCode, productCode, vendorCode)).thenReturn(vendor);
 		when(eoService.get(eoNumber)).thenReturn(exchangeOrder);
 		when(mailSender.createMimeMessage()).thenReturn(message);
 		when(emailContentProcessor.getEmailSubject(exchangeOrder)).thenReturn(eoNumber);
 		when(emailContentProcessor.getEmailBody(exchangeOrder)).thenReturn(eoNumber);
-		when(reportHeaderService.getHeaderReport(hkCountryCode)).thenReturn(reportHeader);
+		when(reportHeaderService.getHeaderReport(indiaCountryCode)).thenReturn(reportHeader);
 		
 		response = eoReportService.emailPdf(eoNumber);
 		assertNotNull(response);
