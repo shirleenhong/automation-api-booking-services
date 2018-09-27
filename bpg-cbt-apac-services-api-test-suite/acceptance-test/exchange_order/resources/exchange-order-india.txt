@@ -4,6 +4,62 @@ Resource          ../../resources/api-utilities.txt
 Resource          ../../resources/api-variables.txt
 
 *** Keywords ***
+Append Exchange Order Air Charges Tab Fields For India
+    ${exchange_order_air_charges_list}    Create List
+    ${exchange_order_air_charges_fop_list}    Create List
+    ${exchange_order_air_charges_cc_list}    Create List
+    ${exchange_order_air_charges_oth_tax_1_list}    Create List
+    ${exchange_order_air_charges_oth_tax_2_list}    Create List
+    ${exchange_order_air_charges_oth_tax_3_list}    Create List
+    Run Keyword If    "${airline_or_commission_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "airlineOrCommissionPercent":${airline_or_commission_${eo_index}_value}
+    Run Keyword If    "${base_amount_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "baseAmount":${base_amount_${eo_index}_value}
+    Run Keyword If    "${base_fare_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "baseFare":${base_fare_${eo_index}_value}
+    Run Keyword If    "${client_discount_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "clientDiscount":${client_discount_${eo_index}_value}
+    Run Keyword If    "${conditional_markup_percent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "conditionalMarkUpPercent":${conditional_markup_percent_${eo_index}_value}
+    Run Keyword If    "${cwt_ref_no_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "cwtRefNo":"${cwt_ref_no_${eo_index}_value}"
+    Run Keyword If    "${final_destination_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "finalDestination":"${final_destination_${eo_index}_value}"
+    Run Keyword If    "${fop_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_fop_list}    "fopType":"${fop_type_${eo_index}_value}"
+    Run Keyword If    "${cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_cc_list}    "ccNumber":"${cc_number_${eo_index}_value}"
+    Run Keyword If    "${cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_cc_list}    "ccType":"${cc_type_${eo_index}_value}"
+    Run Keyword If    "${expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_cc_list}    "expiryDate":"${expiry_date_${eo_index}_value}"
+    Run Keyword If    "${preference_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_cc_list}    "preference":"${preference_${eo_index}_value}"
+    Run Keyword If    "${iata_commission_percent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "iataCommissionPercent":${iata_commission_percent_${eo_index}_value}
+    Run Keyword If    "${issue_in_exchange_for_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "issueInExchangeFor":"${issue_in_exchange_for_${eo_index}_value}"
+    Run Keyword If    "${markup_percent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "markUpPercent":${markup_percent_${eo_index}_value}
+    Run Keyword If    "${merchant_fee_on_tf_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "merchantFeeOnTf":${merchant_fee_on_tf_${eo_index}_value}
+    Run Keyword If    "${mf_on_air_fare_merchant_fee_percent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "mfOnAirFareMerchantFeePercent":${mf_on_air_fare_merchant_fee_percent_${eo_index}_value}
+    Run Keyword If    "${mf_on_air_fare_ot1_percent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "mfOnAirFareOt1Percent":${mf_on_air_fare_ot1_percent_${eo_index}_value}
+    Run Keyword If    "${mf_on_air_fare_ot2_percent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "mfOnAirFareOt2Percent":${mf_on_air_fare_ot2_percent_${eo_index}_value}
+    Run Keyword If    "${mf_on_air_fare_vat_gst_percent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "mfOnAirFareVatGstPercent":${mf_on_air_fare_vat_gst_percent_${eo_index}_value}
+    Run Keyword If    "${mf_on_cwt_tx_fee_fuel_surcharge_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "mfOnCwtTxFeeFuelSurcharge":${mf_on_cwt_tx_fee_fuel_surcharge_${eo_index}_value}
+    Run Keyword If    "${mf_on_cwt_tx_fee_merchant_fee_percent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "mfOnCwtTxFeeMerchantFeePercent":${mf_on_cwt_tx_fee_merchant_fee_percent_${eo_index}_value}
+    Run Keyword If    "${mf_on_cwt_tx_fee_override_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "mfOnCwtTxFeeOverride":${mf_on_cwt_tx_fee_override_${eo_index}_value}
+    Run Keyword If    "${mf_on_cwt_txt_fee_override_flag_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "mfOnCwtTxFeeOverrideFlag":${mf_on_cwt_txt_fee_override_flag_${eo_index}_value}
+    Run Keyword If    "${oth_tax_1_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_oth_tax_1_list}    "code":"${oth_tax_1_code_${eo_index}_value}"
+    Run Keyword If    "${oth_tax_1_value_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_oth_tax_1_list}    "value":${oth_tax_1_value_${eo_index}_value}
+    Run Keyword If    "${oth_tax_2_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_oth_tax_2_list}    "code":"${oth_tax_2_code_${eo_index}_value}"
+    Run Keyword If    "${oth_tax_2_value_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_oth_tax_2_list}    "value":${oth_tax_2_value_${eo_index}_value}
+    Run Keyword If    "${oth_tax_3_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_oth_tax_3_list}    "code":"${oth_tax_3_code_${eo_index}_value}"
+    Run Keyword If    "${oth_tax_3_value_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_oth_tax_3_list}    "value":${oth_tax_3_value_${eo_index}_value}
+    Run Keyword If    "${other_related_no_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "otherRelatedNo":"${other_related_no_${eo_index}_value}"
+    Run Keyword If    "${pricing_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "pricing":"${pricing_${eo_index}_value}"
+    Run Keyword If    "${reissued_ticket_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "reissuedTicket":${reissued_ticket_${eo_index}_value}
+    Run Keyword If    "${returnable_or_percent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "returnableOrPercent":${returnable_or_percent_${eo_index}_value}
+    Run Keyword If    "${total_charge_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "totalCharge":${total_charge_${eo_index}_value}
+    Run Keyword If    "${total_iata_commission_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "totalIataCommission":${total_iata_commission_${eo_index}_value}
+    Run Keyword If    "${total_markup_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "totalMarkup":${total_markup_${eo_index}_value}
+    Run Keyword If    "${total_returnable_or_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "totalReturnableOr":${total_returnable_or_${eo_index}_value}
+    Run Keyword If    "${total_tax_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "totalTax":${total_tax_${eo_index}_value}
+    Run Keyword If    "${trip_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "tripType":"${trip_type_${eo_index}_value}"
+    Run Keyword If    "${uatp_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "uatp":"${uatp_${eo_index}_value}"
+    Run Keyword If    "${yq_tax_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "yqTax":${yq_tax_${eo_index}_value}
+    Set Test Variable    ${exchange_order_air_charges_list}
+    Set Test Variable    ${exchange_order_air_charges_fop_list}
+    Set Test Variable    ${exchange_order_air_charges_cc_list}
+    Set Test Variable    ${exchange_order_air_charges_oth_tax_1_list}
+    Set Test Variable    ${exchange_order_air_charges_oth_tax_2_list}
+    Set Test Variable    ${exchange_order_air_charges_oth_tax_3_list}
+    
 Append Exchange Order Other Information Tab Fields For India
     ${exchange_order_other_info_list}    Create List
     Run Keyword If    "${eo_action_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "eoAction":"${eo_action_${eo_index}_value}"
@@ -385,6 +441,12 @@ Create Exchange Order Request
 	Create Exchange Order Request Body    
 	Create Exchange Order Request Body    data=${exchange_order_misc_info_list}    tab_name=misc_info
 	Create Exchange Order Request Body    data=${exchange_order_other_info_list}    tab_name=other_info
+	Create Exchange Order Request Body    data=${exchange_order_air_charges_list}    tab_name=air_charges
+	Create Exchange Order Request Body    data=${exchange_order_air_charges_fop_list}    tab_name=air_charges_fop
+	Create Exchange Order Request Body    data=${exchange_order_air_charges_cc_list}    tab_name=air_charges_cc
+	Create Exchange Order Request Body    data=${exchange_order_air_charges_oth_tax_1_list}    tab_name=air_charges_oth_tax1
+	Create Exchange Order Request Body    data=${exchange_order_air_charges_oth_tax_2_list}    tab_name=air_charges_oth_tax2
+	Create Exchange Order Request Body    data=${exchange_order_air_charges_oth_tax_3_list}    tab_name=air_charges_oth_tax3
 	Create Exchange Order Request Body    data=${exchange_order_service_info_list}    tab_name=service_info
 	Create Exchange Order Request Body    data=${exchange_order_service_fop_list}    tab_name=service_fop
 	Create Exchange Order Request Body    data=${exchange_order_service_cc_list}    tab_name=service_cc
@@ -417,7 +479,7 @@ Create Exchange Order Request
     Create Exchange Order Request Body    data=${exchange_order_request_train_trans_list}    tab_name=request_train_trans
     Create Exchange Order Request Body    data=${exchange_order_request_visa_list}    tab_name=request_visa
     Create Exchange Order Request Body    data=${exchange_order_request_visa_custom_list}    tab_name=request_visa_custom
-    ${data}    Set Variable If    "${amend_eo}"=="false"    {${other_info_list},"assocServiceInfoList":[${assoc_info_list}],"miscInfo":{${misc_info_list}},"serviceInfo":{${service_info_list},"formOfPayment":{${service_fop_list},"creditCard":{${service_cc_list}}}},"vendor":{${vendor_info_list},"contactInfo":[${vendor_contact_list}]},"request":{${request_intenal_remark_list},"air":{${request_air_list},"airCustomFields":{${request_air_custom_list}},"consolInfo":{${request_consol_list}},"airSegments":[${request_air_segments_list}],"vmpd":{${request_vmpd_list},"formOfPayment":{${request_vmpd_fop_list},"creditCard":{${request_vmpd_cc_list}}}}},"car":{${request_car_list},"cancellationPolicy":{${request_car_cancellation_list}},"guarantor":{${request_car_fop_list},"creditCard":{${request_car_cc_list}}}},"forex":{${request_forex_list},"docCheckList":{${request_document_list}},"requestAmount":{${request_amount_list}}},"hotel":{${request_hotel_list},"cancellationPolicy":{${request_hotel_cancellation_list}},"guarantor":{${request_hotel_fop_list},"creditCard":{${request_hotel_cc_list}}}},"insurance":{${request_insurance_list},"indiaInsuranceCustomFields":{${request_insurance_custom_list}}},"meeting":{${request_meeting_list}},"tour":{${request_tour_list}},"train":{"domCustomFields":{${request_train_custom_list}},"segments":[${request_train_segments_list}],"transChargesCustomFields":{${request_train_trans_list}}},"visa":{${request_visa_list},"customFields":{${request_visa_custom_list}}}}}    {"eoNumber":"${exchange_order_number}",${other_info_list},"assocServiceInfoList":[${assoc_info_list}],"miscInfo":{${misc_info_list}},"serviceInfo":{${service_info_list},"formOfPayment":{${service_fop_list},"creditCard":{${service_cc_list}}}},"vendor":{${vendor_info_list},"contactInfo":[${vendor_contact_list}]},"request":{${request_intenal_remark_list},"air":{${request_air_list},"airCustomFields":{${request_air_custom_list}},"consolInfo":{${request_consol_list}},"airSegments":[${request_air_segments_list}],"vmpd":{${request_vmpd_list},"formOfPayment":{${request_vmpd_fop_list},"creditCard":{${request_vmpd_cc_list}}}}},"car":{${request_car_list},"cancellationPolicy":{${request_car_cancellation_list}},"guarantor":{${request_car_fop_list},"creditCard":{${request_car_cc_list}}}},"forex":{${request_forex_list},"docCheckList":{${request_document_list}},"requestAmount":{${request_amount_list}}},"hotel":{${request_hotel_list},"cancellationPolicy":{${request_hotel_cancellation_list}},"guarantor":{${request_hotel_fop_list},"creditCard":{${request_hotel_cc_list}}}},"insurance":{${request_insurance_list},"indiaInsuranceCustomFields":{${request_insurance_custom_list}}},"meeting":{${request_meeting_list}},"tour":{${request_tour_list}},"train":{"domCustomFields":{${request_train_custom_list}},"segments":[${request_train_segments_list}],"transChargesCustomFields":{${request_train_trans_list}}},"visa":{${request_visa_list},"customFields":{${request_visa_custom_list}}}}}
+    ${data}    Set Variable If    "${amend_eo}"=="false"    {${other_info_list},"associatedChargesList":[${assoc_info_list}],"miscInfo":{${misc_info_list}}, "airCharges":{${air_charges_list},"formOfPayment":{"creditCard":{${air_charges_cc_list}},${air_charges_fop_list}},"othTax1":{${air_charges_oth_tax1_list}},"othTax2":{${air_charges_oth_tax2_list}},"othTax3":{${air_charges_oth_tax3_list}}},"nonAirCharges":{${service_info_list},"formOfPayment":{${service_fop_list},"creditCard":{${service_cc_list}}}},"vendor":{${vendor_info_list},"contactInfo":[${vendor_contact_list}]},"request":{${request_intenal_remark_list},"air":{${request_air_list},"airCustomFields":{${request_air_custom_list}},"consolInfo":{${request_consol_list}},"airSegments":[${request_air_segments_list}],"vmpd":{${request_vmpd_list},"formOfPayment":{${request_vmpd_fop_list},"creditCard":{${request_vmpd_cc_list}}}}},"car":{${request_car_list},"cancellationPolicy":{${request_car_cancellation_list}},"guarantor":{${request_car_fop_list},"creditCard":{${request_car_cc_list}}}},"forex":{${request_forex_list},"docCheckList":{${request_document_list}},"requestAmount":{${request_amount_list}}},"hotel":{${request_hotel_list},"cancellationPolicy":{${request_hotel_cancellation_list}},"guarantor":{${request_hotel_fop_list},"creditCard":{${request_hotel_cc_list}}}},"insurance":{${request_insurance_list},"indiaInsuranceCustomFields":{${request_insurance_custom_list}}},"meeting":{${request_meeting_list}},"tour":{${request_tour_list}},"train":{"domCustomFields":{${request_train_custom_list}},"segments":[${request_train_segments_list}],"transChargesCustomFields":{${request_train_trans_list}}},"visa":{${request_visa_list},"customFields":{${request_visa_custom_list}}}}}    {"eoNumber":"${exchange_order_number}",${other_info_list},"associatedChargesList":[${assoc_info_list}],"miscInfo":{${misc_info_list}},"airCharges":{${air_charges_list},"formOfPayment":{"creditCard": {${air_charges_cc_list}},${air_charges_fop_list}},"othTax1":{${air_charges_oth_tax1_list}},"othTax2":{${air_charges_oth_tax2_list}},"othTax3":{${air_charges_oth_tax3_list}}},"nonAirCharges":{${service_info_list},"formOfPayment":{${service_fop_list},"creditCard":{${service_cc_list}}}},"vendor":{${vendor_info_list},"contactInfo":[${vendor_contact_list}]},"request":{${request_intenal_remark_list},"air":{${request_air_list},"airCustomFields":{${request_air_custom_list}},"consolInfo":{${request_consol_list}},"airSegments":[${request_air_segments_list}],"vmpd":{${request_vmpd_list},"formOfPayment":{${request_vmpd_fop_list},"creditCard":{${request_vmpd_cc_list}}}}},"car":{${request_car_list},"cancellationPolicy":{${request_car_cancellation_list}},"guarantor":{${request_car_fop_list},"creditCard":{${request_car_cc_list}}}},"forex":{${request_forex_list},"docCheckList":{${request_document_list}},"requestAmount":{${request_amount_list}}},"hotel":{${request_hotel_list},"cancellationPolicy":{${request_hotel_cancellation_list}},"guarantor":{${request_hotel_fop_list},"creditCard":{${request_hotel_cc_list}}}},"insurance":{${request_insurance_list},"indiaInsuranceCustomFields":{${request_insurance_custom_list}}},"meeting":{${request_meeting_list}},"tour":{${request_tour_list}},"train":{"domCustomFields":{${request_train_custom_list}},"segments":[${request_train_segments_list}],"transChargesCustomFields":{${request_train_trans_list}}},"visa":{${request_visa_list},"customFields":{${request_visa_custom_list}}}}}
     ${data}    Sanitize Exchange Order Body    ${data}    eo_index=${eo_index}
     Set Test Variable    ${data}
     Log    ${data}
@@ -450,11 +512,12 @@ Create Exchange Order Body List
     Log    ${assoc_info_list}    
 
 Create Test Variables For Exchange Order India
-    [Arguments]    ${other_info_data}=${default_other_info_data}    ${assoc_info_data}=${default_assoc_info_data}    ${assoc_info_number}=0    ${misc_info_data}=${default_misc_info_data}    ${request_info_data}=${default_request_info_data}    ${train_info_number}=0    ${air_segments_number}=0    ${request_info_tab_data}=${default_request_info_tab_data}    ${service_info_data}=${default_service_info_data}    ${vendor_info_data}=${default_vendor_info_data}    ${total_eo}=1    ${generate_pnr}=false
+    [Arguments]    ${other_info_data}=${default_other_info_data}    ${air_charges_data}=${default_air_charges_data}    ${assoc_info_data}=${default_assoc_info_data}    ${assoc_info_number}=0    ${misc_info_data}=${default_misc_info_data}    ${request_info_data}=${default_request_info_data}    ${train_info_number}=0    ${air_segments_number}=0    ${request_info_tab_data}=${default_request_info_tab_data}    ${service_info_data}=${default_service_info_data}    ${vendor_info_data}=${default_vendor_info_data}    ${total_eo}=1    ${generate_pnr}=false
     ${pnr_value}    Run Keyword If    "${generate_pnr.lower()}"=="true"    Generate Random Record Locator
     ...    ELSE    Set Variable    ${EMPTY}
     : FOR    ${eo_index}    IN RANGE    0    ${total_eo}
     \    Create Test Variables For Other Info Tab    eo_data=${other_info_data}    eo_index=${eo_index}
+    \    Create Test Variables For Air Charges Tab    eo_data=${air_charges_data}    eo_index=${eo_index}    
     \    Create Test Variables For Associated Info Tab    eo_data=${assoc_info_data}    eo_index=${eo_index}    assoc_info_number=${assoc_info_number}
     \    Create Test Variables For Misc Info Tab    eo_data=${misc_info_data}    eo_index=${eo_index}
     \    Create Test Variables For Request Info Tab    eo_data=${request_info_data}    eo_index=${eo_index}    train_info_number=${train_info_number}    air_segments_number=${air_segments_number}
@@ -467,6 +530,14 @@ Create Test Variables For Exchange Order India
     \    Set Test Variable    ${request_info_tab_data_${eo_index}}    ${request_info_tab_data}
     \    ${eo_index}    Evaluate    ${eo_index}+1
     Set Test Variable    ${total_eo}
+    
+Create Test Variables For Air Charges Tab
+    [Arguments]    ${eo_data}    ${eo_index}=0
+    Set Test Variable    ${air_charges_data_${eo_index}}    ${eo_data}
+    ${eo_data}    Split String    ${eo_data}    |
+    : FOR    ${data}    IN    @{eo_data}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Run keyword If    "${data_item[0]}"!="null"    Set Test Variable    ${${data_item[0]}_${eo_index}_value}    ${data_item[1]}
 
 Create Test Variables For Service Info Tab
     [Arguments]    ${eo_data}    ${eo_index}=0
@@ -679,13 +750,23 @@ Sanitize Request Info Data
     ${data}    Replace String    ${data}    "tour":{}    ${EMPTY}
     ${data}    Replace String    ${data}    "visa":{}    ${EMPTY}
     [Return]    ${data}
+    
+Sanitize Air Charges Data
+    [Arguments]    ${data}    ${eo_index}=0
+    ${data}    Run Keyword If    "${air_charges_data_${eo_index}}"=="null"    Replace String    ${data}    "airCharges":{"formOfPayment":{"creditCard":{}},"othTax1":{},"othTax2":{},"othTax3":{}},    ${EMPTY}
+    ...    ELSE    Set Variable    ${data}
+    ${data}    Replace String    ${data}    "airCharges":{"formOfPayment":{"creditCard":{}}},    ${EMPTY}
+    ${data}    Replace String    ${data}    "airCharges":{"formOfPayment":{}},    ${EMPTY}
+    ${data}    Replace String    ${data}    "airCharges":{},    ${EMPTY}
+    Log    ${data}
+    [Return]    ${data}
 
 Sanitize Service Info Data
     [Arguments]    ${data}    ${eo_index}=0
-    ${data}    Run Keyword If    "${service_info_data_${eo_index}}"=="null"    Replace String    ${data}    "serviceInfo":{"formOfPayment":{"creditCard":{}}},    ${EMPTY}
+    ${data}    Run Keyword If    "${service_info_data_${eo_index}}"=="null"    Replace String    ${data}    "nonAirCharges":{"formOfPayment":{"creditCard":{}}},    ${EMPTY}
     ...    ELSE    Set Variable    ${data}
-    ${data}    Replace String    ${data}    "serviceInfo":{"formOfPayment":{}},    ${EMPTY}
-    ${data}    Replace String    ${data}    "serviceInfo":{},    ${EMPTY}
+    ${data}    Replace String    ${data}    "nonAirCharges":{"formOfPayment":{}},    ${EMPTY}
+    ${data}    Replace String    ${data}    "nonAirCharges":{},    ${EMPTY}
     Log    ${data}
     [Return]    ${data}
 
@@ -725,7 +806,9 @@ Send Exchange Order Post Request For India
     : FOR    ${eo_index}    IN RANGE    ${total_eo}
     \    Set Test Variable    ${eo_index}
     \    Run Keyword If    "${other_info_data_${eo_index}}"!="null"    Append Exchange Order Other Information Tab Fields For India
-    \    ...    ELSE    Set Exchange Order Other Info List To Default Value    
+    \    ...    ELSE    Set Exchange Order Other Info List To Default Value
+    \    Run Keyword If    "${air_charges_data_${eo_index}}"!="null"    Append Exchange Order Air Charges Tab Fields For India
+    \    ...    ELSE    Set Exchange Order Air Charges List To Default Value    
     \    Run Keyword If    "${assoc_info_data_${eo_index}}"!="null"    Append Exchange Order Associated Tab Fields For India
     \    ...    ELSE    Set Exchange Order Associated Info List To Default Value
     \    Run Keyword If    "${misc_info_data_${eo_index}}"!="null"    Append Exchange Order Miscellaneous Information Tab Fields For India
@@ -747,6 +830,14 @@ Send Exchange Order Post Request For India
     \    Run Keyword If    "${status_code}"=="201"    Verify Exchange Order Number Is Saved Correctly
     \    Log    ${response_${eo_index}.headers}
     \    Log    ${response_${eo_index}.content}
+
+Set Exchange Order Air Charges List To Default Value
+    Set Test Variable    ${exchange_order_air_charges_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_air_charges_fop_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_air_charges_cc_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_air_charges_oth_tax_1_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_air_charges_oth_tax_2_list}    ${EMPTY}
+    Set Test Variable    ${exchange_order_air_charges_oth_tax_3_list}    ${EMPTY}
 
 Set Exchange Order Associated Info List To Default Value
     Set Test Variable    ${exchange_order_assoc_fields_list}    ${EMPTY}
@@ -880,11 +971,13 @@ Verify Exchange Order Is Saved Correctly
     Set Test Variable    ${response.content}    ${data}
     Verify Exchange Order Other Information Is Saved Correctly    eo_index=${eo_index}    amend_eo=${amend_eo}
     Run Keyword If    "${assoc_info_data_${eo_index}}"!="null"    Verify Exchange Order Associated Information Tab Is Saved Correctly    eo_index=${eo_index}
-    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList
+    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList
     Run Keyword If    "${misc_info_data_${eo_index}}"!="null"    Verify Exchange Order Miscellaneous Information Tab Is Saved Correctly    eo_index=${eo_index}
     ...    ELSE    Verify Json Element Does Not Exist    $.miscInfo
     Run Keyword If    "${request_info_data_${eo_index}}"!="null"    Verify Exchange Order Request Information Is Saved Correctly    eo_index=${eo_index}
     ...    ELSE    Verify Json Element Does Not Exist    $.request
+    Run Keyword If    "${air_charges_data${eo_index}}"!="null"    Verify Exchange Order Air Charges Is Saved Correctly    eo_index=${eo_index}    
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges
     Run Keyword If    "${service_info_data_${eo_index}}"!="null"    Verify Exchange Order Service Information Is Saved Correctly    eo_index=${eo_index}
     ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo
     Run Keyword If    "${vendor_info_data_${eo_index}}"!="null"    Verify Exchange Order Vendor Information Is Saved Correctly    eo_index=${eo_index}
@@ -918,46 +1011,46 @@ Verify Exchange Order Other Information Is Saved Correctly
 Verify Exchange Order Associated Information Tab Is Saved Correctly
     [Arguments]    ${eo_index}=0
     :FOR    ${assoc_index}    IN RANGE    0    ${assoc_info_number}
-    \    Run Keyword If    "${assoc_details_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_details_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].details    ${assoc_details_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].details
-    \    Run Keyword If    "${assoc_product_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_product_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].productCode    ${assoc_product_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].productCode
-    \    Run Keyword If    "${assoc_vendor_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_vendor_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].vendorCode    ${assoc_vendor_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].vendorCode
-    \    Run Keyword If    "${assoc_fop_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_fop_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].formOfPayment.fopType    ${assoc_fop_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].formOfPayment.fopType
-    \    Run Keyword If    "${assoc_cc_type_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_cc_type_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].formOfPayment.creditCard.ccType    ${assoc_cc_type_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].formOfPayment.creditCard.ccType
-    \    Run Keyword If    "${assoc_cc_number_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_cc_number_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].formOfPayment.creditCard.ccNumber    ${assoc_cc_number_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].formOfPayment.creditCard.ccNumber
-    \    Run Keyword If    "${assoc_expiry_date_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_expiry_date_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].formOfPayment.creditCard.expiryDate    ${assoc_expiry_date_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].formOfPayment.creditCard.expiryDate
-    \    Run Keyword If    "${assoc_nett_cost_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_nett_cost_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].nettCost    ${assoc_nett_cost_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].nettCost
-    \    Run Keyword If    "${assoc_commission_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_commission_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].commission    ${assoc_commission_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].commission
-    \    Run Keyword If    "${assoc_discount_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_discount_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].discount    ${assoc_discount_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].discount
-    \    Run Keyword If    "${assoc_selling_price_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_selling_price_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].sellingPrice    ${assoc_selling_price_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].sellingPrice
-    \    Run Keyword If    "${assoc_vat_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_vat_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].vatGstAmount    ${assoc_vat_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].vatGstAmount
-    \    Run Keyword If    "${assoc_merchant_fee_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_merchant_fee_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].merchantFee    ${assoc_merchant_fee_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].merchantFee
-    \    Run Keyword If    "${assoc_prod_desc_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_prod_desc_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].productDescription    ${assoc_prod_desc_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].productDescription
-    \    Run Keyword If    "${assoc_cwt_ref_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_cwt_ref_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].cwtRefNoTk    ${assoc_cwt_ref_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].cwtRefNoTk
-    \    Run Keyword If    "${assoc_vendor_ref_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_vendor_ref_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].vendorRefNoGsa    ${assoc_vendor_ref_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].vendorReferenceNoGsa
-    \    Run Keyword If    "${assoc_other_related_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_other_related_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].otherRelatedNoPo    ${assoc_other_related_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].otherRelatedNoPo
-    \    Run Keyword If    "${assoc_total_selling_price_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_total_selling_price_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].totalSellingPrice    ${assoc_total_selling_price_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].totalSellingPrice
-    \    Run Keyword If    "${assoc_client_exempt_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_client_exempt_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].clientExempt    ${assoc_client_exempt_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].clientExempt
-    \    Run Keyword If    "${assoc_no_merchant_fee_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_no_merchant_fee_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.assocServiceInfoList.[${assoc_index}].noMerchantFee    ${assoc_no_merchant_fee_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.assocServiceInfoList.[${assoc_index}].noMerchantFee
+    \    Run Keyword If    "${assoc_details_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_details_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].details    ${assoc_details_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].details
+    \    Run Keyword If    "${assoc_product_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_product_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].productCode    ${assoc_product_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].productCode
+    \    Run Keyword If    "${assoc_vendor_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_vendor_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].vendorCode    ${assoc_vendor_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].vendorCode
+    \    Run Keyword If    "${assoc_fop_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_fop_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].formOfPayment.fopType    ${assoc_fop_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].formOfPayment.fopType
+    \    Run Keyword If    "${assoc_cc_type_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_cc_type_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.ccType    ${assoc_cc_type_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.ccType
+    \    Run Keyword If    "${assoc_cc_number_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_cc_number_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.ccNumber    ${assoc_cc_number_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.ccNumber
+    \    Run Keyword If    "${assoc_expiry_date_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_expiry_date_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.expiryDate    ${assoc_expiry_date_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.expiryDate
+    \    Run Keyword If    "${assoc_nett_cost_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_nett_cost_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].nettCost    ${assoc_nett_cost_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].nettCost
+    \    Run Keyword If    "${assoc_commission_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_commission_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].commission    ${assoc_commission_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].commission
+    \    Run Keyword If    "${assoc_discount_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_discount_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].discount    ${assoc_discount_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].discount
+    \    Run Keyword If    "${assoc_selling_price_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_selling_price_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].sellingPrice    ${assoc_selling_price_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].sellingPrice
+    \    Run Keyword If    "${assoc_vat_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_vat_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].vatGstAmount    ${assoc_vat_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].vatGstAmount
+    \    Run Keyword If    "${assoc_merchant_fee_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_merchant_fee_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].merchantFee    ${assoc_merchant_fee_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].merchantFee
+    \    Run Keyword If    "${assoc_prod_desc_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_prod_desc_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].productDescription    ${assoc_prod_desc_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].productDescription
+    \    Run Keyword If    "${assoc_cwt_ref_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_cwt_ref_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].cwtRefNoTk    ${assoc_cwt_ref_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].cwtRefNoTk
+    \    Run Keyword If    "${assoc_vendor_ref_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_vendor_ref_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].vendorRefNoGsa    ${assoc_vendor_ref_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].vendorReferenceNoGsa
+    \    Run Keyword If    "${assoc_other_related_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_other_related_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].otherRelatedNoPo    ${assoc_other_related_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].otherRelatedNoPo
+    \    Run Keyword If    "${assoc_total_selling_price_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_total_selling_price_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].totalSellingPrice    ${assoc_total_selling_price_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].totalSellingPrice
+    \    Run Keyword If    "${assoc_client_exempt_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_client_exempt_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].clientExempt    ${assoc_client_exempt_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].clientExempt
+    \    Run Keyword If    "${assoc_no_merchant_fee_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_no_merchant_fee_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].noMerchantFee    ${assoc_no_merchant_fee_${eo_index}_${assoc_index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].noMerchantFee
 
 Verify Exchange Order Miscellaneous Information Tab Is Saved Correctly
     [Arguments]    ${eo_index}=0
@@ -1005,56 +1098,143 @@ Verify Exchange Order Vendor Information Is Saved Correctly
     \    Verify Json Value Is Correct    $.vendor.contactInfo.[${index}].detail    ${vendor_contact_details_${eo_index}_${index}_value}
     \    Verify Json Value Is Correct    $.vendor.contactInfo.[${index}].preferred    ${vendor_preferred_${eo_index}_${index}_value}
 
+Verify Exchange Order Air Charges Is Saved Correctly
+    [Arguments]    ${eo_index}=0
+    Run Keyword If    "${airline_or_commission_${eo_index}_value}"!="null" and "${airline_or_commission_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.airlineOrCommissionPercent    ${airline_or_commission_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.airlineOrCommissionPercent
+	Run Keyword If    "${base_amount_${eo_index}_value}"!="null" and "${base_amount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.baseAmount    ${base_amount_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.baseAmount
+	Run Keyword If    "${base_fare_${eo_index}_value}"!="null" and "${base_fare_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.baseFare    ${base_fare_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.baseFare
+	Run Keyword If    "${client_discount_${eo_index}_value}"!="null" and "${client_discount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.clientDiscount    ${client_discount_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.clientDiscount
+	Run Keyword If    "${conditional_markup_percent_${eo_index}_value}"!="null" and "${conditional_markup_percent_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.conditionalMarkUpPercent    ${conditional_markup_percent_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.conditionalMarkUpPercent
+	Run Keyword If    "${cwt_ref_no_${eo_index}_value}"!="null" and "${cwt_ref_no_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.cwtRefNo    ${cwt_ref_no_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.cwtRefNo
+	Run Keyword If    "${final_destination_${eo_index}_value}"!="null" and "${final_destination_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.finalDestination    ${final_destination_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.finalDestination
+	Run Keyword If    "${iata_commission_percent_${eo_index}_value}"!="null" and "${iata_commission_percent_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.iataCommissionPercent    ${iata_commission_percent_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.iataCommissionPercent
+	Run Keyword If    "${issue_in_exchange_for_${eo_index}_value}"!="null" and "${issue_in_exchange_for_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.issueInExchangeFor    ${issue_in_exchange_for_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.issueInExchangeFor
+	Run Keyword If    "${markup_percent_${eo_index}_value}"!="null" and "${markup_percent_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.markUpPercent    ${markup_percent_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.markUpPercent
+	Run Keyword If    "${merchant_fee_on_tf_${eo_index}_value}"!="null" and "${merchant_fee_on_tf_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.merchantFeeOnTf    ${merchant_fee_on_tf_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.merchantFeeOnTf
+	Run Keyword If    "${mf_on_air_fare_merchant_fee_percent_${eo_index}_value}"!="null" and "${mf_on_air_fare_merchant_fee_percent_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.mfOnAirFareMerchantFeePercent    ${mf_on_air_fare_merchant_fee_percent_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.mfOnAirFareMerchantFeePercent
+	Run Keyword If    "${mf_on_air_fare_ot1_percent_${eo_index}_value}"!="null" and "${mf_on_air_fare_ot1_percent_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.mfOnAirFareOt1Percent    ${mf_on_air_fare_ot1_percent_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.mfOnAirFareOt1Percent
+	Run Keyword If    "${mf_on_air_fare_ot2_percent_${eo_index}_value}"!="null" and "${mf_on_air_fare_ot2_percent_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.mfOnAirFareOt2Percent    ${mf_on_air_fare_ot2_percent_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.mfOnAirFareOt2Percent
+	Run Keyword If    "${mf_on_air_fare_vat_gst_percent_${eo_index}_value}"!="null" and "${mf_on_air_fare_vat_gst_percent_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.mfOnAirFareVatGstPercent    ${mf_on_air_fare_vat_gst_percent_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.mfOnAirFareVatGstPercent
+	Run Keyword If    "${mf_on_cwt_tx_fee_fuel_surcharge_${eo_index}_value}"!="null" and "${mf_on_cwt_tx_fee_fuel_surcharge_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.mfOnCwtTxFeeFuelSurcharge    ${mf_on_cwt_tx_fee_fuel_surcharge_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.mfOnCwtTxFeeFuelSurcharge
+	Run Keyword If    "${mf_on_cwt_tx_fee_merchant_fee_percent_${eo_index}_value}"!="null" and "${mf_on_cwt_tx_fee_merchant_fee_percent_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.mfOnCwtTxFeeMerchantFeePercent    ${mf_on_cwt_tx_fee_merchant_fee_percent_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.mfOnCwtTxFeeMerchantFeePercent
+	Run Keyword If    "${mf_on_cwt_tx_fee_override_${eo_index}_value}"!="null" and "${mf_on_cwt_tx_fee_override_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.mfOnCwtTxFeeOverride    ${mf_on_cwt_tx_fee_override_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.mfOnCwtTxFeeOverride
+	Run Keyword If    "${mf_on_cwt_txt_fee_override_flag_${eo_index}_value}"!="null" and "${mf_on_cwt_txt_fee_override_flag_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.mfOnCwtTxFeeOverrideFlag    ${mf_on_cwt_txt_fee_override_flag_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.mfOnCwtTxFeeOverrideFlag
+	Run Keyword If    "${other_related_no_${eo_index}_value}"!="null" and "${other_related_no_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.otherRelatedNo    ${other_related_no_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.otherRelatedNo
+	Run Keyword If    "${pricing_${eo_index}_value}"!="null" and "${pricing_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.pricing    ${pricing_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.pricing
+	Run Keyword If    "${reissued_ticket_${eo_index}_value}"!="null" and "${reissued_ticket_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.reissuedTicket    ${reissued_ticket_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.reissuedTicket
+	Run Keyword If    "${returnable_or_percent_${eo_index}_value}"!="null" and "${returnable_or_percent_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.returnableOrPercent    ${returnable_or_percent_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.returnableOrPercent
+	Run Keyword If    "${total_charge_${eo_index}_value}"!="null" and "${total_charge_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.totalCharge    ${total_charge_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.totalCharge
+	Run Keyword If    "${total_iata_commission_${eo_index}_value}"!="null" and "${total_iata_commission_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.totalIataCommission    ${total_iata_commission_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.totalIataCommission
+	Run Keyword If    "${total_markup_${eo_index}_value}"!="null" and "${total_markup_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.totalMarkup    ${total_markup_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.totalMarkup
+	Run Keyword If    "${total_returnable_or_${eo_index}_value}"!="null" and "${total_returnable_or_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.totalReturnableOr    ${total_returnable_or_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.totalReturnableOr
+	Run Keyword If    "${total_tax_${eo_index}_value}"!="null" and "${total_tax_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.totalTax    ${total_tax_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.totalTax
+	Run Keyword If    "${trip_type_${eo_index}_value}"!="null" and "${trip_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.tripType    ${trip_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.tripType
+	Run Keyword If    "${uatp_${eo_index}_value}"!="null" and "${uatp_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.uatp    ${uatp_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.uatp
+	Run Keyword If    "${yq_tax_${eo_index}_value}"!="null" and "${yq_tax_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.yqTax    ${yq_tax_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.yqTax
+	Run Keyword If    "${cc_number_${eo_index}_value}"!="null" and "${cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.ccNumber    ${cc_number_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.creditCard.ccNumber
+	Run Keyword If    "${cc_type_${eo_index}_value}"!="null" and "${cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.ccType    ${cc_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.creditCard.ccType
+	Run Keyword If    "${expiry_date_${eo_index}_value}"!="null" and "${expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.expiryDate    ${expiry_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.creditCard.expiryDate
+	Run Keyword If    "${preference_${eo_index}_value}"!="null" and "${preference_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.preference    ${preference_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.creditCard.preference
+	Run Keyword If    "${fop_type_${eo_index}_value}"!="null" and "${fop_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.fopType    ${fop_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.fopType
+	Run Keyword If    "${oth_tax_1_code_${eo_index}_value}"!="null" and "${oth_tax_1_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.othTax1.code    ${oth_tax_1_code_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.othTax1.code
+	Run Keyword If    "${oth_tax_1_value_${eo_index}_value}"!="null" and "${oth_tax_1_value_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.othTax1.value    ${oth_tax_1_value_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.othTax1.value
+	Run Keyword If    "${oth_tax_2_code_${eo_index}_value}"!="null" and "${oth_tax_2_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.othTax2.code    ${oth_tax_2_code_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.othTax2.code
+	Run Keyword If    "${oth_tax_2_value_${eo_index}_value}"!="null" and "${oth_tax_2_value_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.othTax2.value    ${oth_tax_2_value_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.othTax2.value
+	Run Keyword If    "${oth_tax_3_code_${eo_index}_value}"!="null" and "${oth_tax_3_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.othTax3.code    ${oth_tax_3_code_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.othTax3.code
+	Run Keyword If    "${oth_tax_3_value_${eo_index}_value}"!="null" and "${oth_tax_3_value_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.othTax3.value    ${oth_tax_3_value_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.othTax3.value
+
 Verify Exchange Order Service Information Is Saved Correctly
     [Arguments]    ${eo_index}=0
-    Run Keyword If    "${service_nett_cost_${eo_index}_value}"!="null" and "${service_nett_cost_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.nettCost    ${service_nett_cost_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.nettCost
-    Run Keyword If    "${service_selling_price_${eo_index}_value}"!="null" and "${service_selling_price_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.sellingPrice    ${service_selling_price_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.sellingPrice
-    Run Keyword If    "${service_commission_${eo_index}_value}"!="null" and "${service_commission_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.commission    ${service_commission_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.commission
-    Run Keyword If    "${service_discount_${eo_index}_value}"!="null" and "${service_discount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.discount    ${service_discount_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.discount
-    Run Keyword If    "$service_{gst_amount_${eo_index}_value}"!="null" and "${service_gst_amount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.gst    ${service_gst_amount_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.gst
-    Run Keyword If    "${service_gst_absorb_${eo_index}_value}"!="null" and "${service_gst_absorb_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.gstAbsorb    ${service_gst_absorb_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.gstAbsorb
-    Run Keyword If    "${service_merchant_fee_${eo_index}_value}"!="null" and "${service_merchant_fee_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.merchantFee    ${service_merchant_fee_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.merchantFee
-    Run Keyword If    "${service_merchant_fee_absorb_${eo_index}_value}"!="null" and "${service_merchant_fee_absorb_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.merchantFeeAbsorb    ${service_merchant_fee_absorb_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.merchantFeeAbsorb
-    Run Keyword If    "${service_total_selling_price_${eo_index}_value}"!="null" and "${service_total_selling_price_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.totalSellingPrice    ${service_total_selling_price_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.totalSellingPrice
-    Run Keyword If    "${service_country_${eo_index}_value}"!="null" and "${service_country_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.country    ${service_country_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.country
-    Run Keyword If    "${service_type_${eo_index}_value}"!="null" and "${service_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.type    ${service_type_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.type
-    Run Keyword If    "${service_entries_${eo_index}_value}"!="null" and "${service_entries_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.entries    ${service_entries_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.entries
-    Run Keyword If    "${service_validity_length_${eo_index}_value}"!="null" and "${service_validity_length_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.validityLength    ${service_validity_length_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.validityLength
-    Run Keyword If    "${service_validity_type_${eo_index}_value}"!="null" and "${service_validity_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.validityType    ${service_validity_type_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.validityType
-    Run Keyword If    "${service_processing_${eo_index}_value}"!="null" and "${service_processing_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.processingType    ${service_processing_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.processingType
-    Run Keyword If    "${service_description_${eo_index}_value}"!="null" and "${service_description_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.classCabin    ${service_description_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.classOrCabin
-    Run Keyword If    "${service_fop_type_${eo_index}_value}"!="null" and "${service_fop_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.formOfPayment.fopType    ${service_fop_type_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.formOfPayment.fopType
-    Run Keyword If    "${service_cc_type_${eo_index}_value}"!="null" and "${service_cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.formOfPayment.creditCard.ccType    ${service_cc_type_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.formOfPayment.creditCard.ccType
-    Run Keyword If    "${service_cc_number_${eo_index}_value}"!="null" and "${service_cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.formOfPayment.creditCard.ccNumber    ${service_cc_number_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.formOfPayment.creditCard.ccNumber
-    Run Keyword If    "${service_expiry_date_${eo_index}_value}"!="null" and "${service_expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.formOfPayment.creditCard.expiryDate    ${service_expiry_date_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.formOfPayment.creditCard.expiryDate
-    Run Keyword If    "${service_prod_desc_${eo_index}_value}"!="null" and "${service_prod_desc_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.description    ${service_prod_desc_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.description
-    Run Keyword If    "${service_cwt_ref_${eo_index}_value}"!="null" and "${service_cwt_ref_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.cwtRefNo    ${service_cwt_ref_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.cwtRefNo
-    Run Keyword If    "${service_vendor_ref_${eo_index}_value}"!="null" and "${service_vendor_ref_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.vendorRefNo    ${service_vendor_ref_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.vendorRefNo
-    Run Keyword If    "${service_other_related_${eo_index}_value}"!="null" and "${service_other_related_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.serviceInfo.otherRelatedNo    ${service_other_related_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.serviceInfo.otherRelatedNo
+    Run Keyword If    "${service_nett_cost_${eo_index}_value}"!="null" and "${service_nett_cost_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.nettCost    ${service_nett_cost_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.nettCost
+    Run Keyword If    "${service_selling_price_${eo_index}_value}"!="null" and "${service_selling_price_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.sellingPrice    ${service_selling_price_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.sellingPrice
+    Run Keyword If    "${service_commission_${eo_index}_value}"!="null" and "${service_commission_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.commission    ${service_commission_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.commission
+    Run Keyword If    "${service_discount_${eo_index}_value}"!="null" and "${service_discount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.discount    ${service_discount_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.discount
+    Run Keyword If    "$service_{gst_amount_${eo_index}_value}"!="null" and "${service_gst_amount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.gst    ${service_gst_amount_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.gst
+    Run Keyword If    "${service_gst_absorb_${eo_index}_value}"!="null" and "${service_gst_absorb_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.gstAbsorb    ${service_gst_absorb_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.gstAbsorb
+    Run Keyword If    "${service_merchant_fee_${eo_index}_value}"!="null" and "${service_merchant_fee_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.merchantFee    ${service_merchant_fee_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.merchantFee
+    Run Keyword If    "${service_merchant_fee_absorb_${eo_index}_value}"!="null" and "${service_merchant_fee_absorb_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.merchantFeeAbsorb    ${service_merchant_fee_absorb_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.merchantFeeAbsorb
+    Run Keyword If    "${service_total_selling_price_${eo_index}_value}"!="null" and "${service_total_selling_price_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.totalSellingPrice    ${service_total_selling_price_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.totalSellingPrice
+    Run Keyword If    "${service_country_${eo_index}_value}"!="null" and "${service_country_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.country    ${service_country_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.country
+    Run Keyword If    "${service_type_${eo_index}_value}"!="null" and "${service_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.type    ${service_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.type
+    Run Keyword If    "${service_entries_${eo_index}_value}"!="null" and "${service_entries_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.entries    ${service_entries_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.entries
+    Run Keyword If    "${service_validity_length_${eo_index}_value}"!="null" and "${service_validity_length_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.validityLength    ${service_validity_length_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.validityLength
+    Run Keyword If    "${service_validity_type_${eo_index}_value}"!="null" and "${service_validity_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.validityType    ${service_validity_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.validityType
+    Run Keyword If    "${service_processing_${eo_index}_value}"!="null" and "${service_processing_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.processingType    ${service_processing_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.processingType
+    Run Keyword If    "${service_description_${eo_index}_value}"!="null" and "${service_description_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.classCabin    ${service_description_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.classOrCabin
+    Run Keyword If    "${service_fop_type_${eo_index}_value}"!="null" and "${service_fop_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.formOfPayment.fopType    ${service_fop_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.formOfPayment.fopType
+    Run Keyword If    "${service_cc_type_${eo_index}_value}"!="null" and "${service_cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.formOfPayment.creditCard.ccType    ${service_cc_type_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.formOfPayment.creditCard.ccType
+    Run Keyword If    "${service_cc_number_${eo_index}_value}"!="null" and "${service_cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.formOfPayment.creditCard.ccNumber    ${service_cc_number_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.formOfPayment.creditCard.ccNumber
+    Run Keyword If    "${service_expiry_date_${eo_index}_value}"!="null" and "${service_expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.formOfPayment.creditCard.expiryDate    ${service_expiry_date_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.formOfPayment.creditCard.expiryDate
+    Run Keyword If    "${service_prod_desc_${eo_index}_value}"!="null" and "${service_prod_desc_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.description    ${service_prod_desc_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.description
+    Run Keyword If    "${service_cwt_ref_${eo_index}_value}"!="null" and "${service_cwt_ref_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.cwtRefNo    ${service_cwt_ref_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.cwtRefNo
+    Run Keyword If    "${service_vendor_ref_${eo_index}_value}"!="null" and "${service_vendor_ref_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.vendorRefNo    ${service_vendor_ref_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.vendorRefNo
+    Run Keyword If    "${service_other_related_${eo_index}_value}"!="null" and "${service_other_related_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.otherRelatedNo    ${service_other_related_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.otherRelatedNo
 
 Verify Exchange Order Request Information Is Saved Correctly
     [Arguments]    ${eo_index}=0
