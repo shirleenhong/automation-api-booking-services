@@ -1,11 +1,20 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
+import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Id;
+
 import java.io.Serializable;
 
 public class AirContract implements Serializable {
 	
 	private static final long serialVersionUID = -4494953673618734452L;
-	
+
+	@Id
+	@JsonSerialize(using = ObjectIdSerializer.class)
+	private ObjectId id;
+
 	private String clientAccountNumber;
 	
 	private String countryCode;
@@ -13,6 +22,14 @@ public class AirContract implements Serializable {
 	private String carrier;
 	
 	private String fopCode;
+
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 
 	public String getClientAccountNumber() {
 		return clientAccountNumber;
@@ -45,5 +62,4 @@ public class AirContract implements Serializable {
 	public void setFopCode(String fopCode) {
 		this.fopCode = fopCode;
 	}
-	
 }
