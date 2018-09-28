@@ -1,7 +1,9 @@
-package com.cwt.bpg.cbt.exchange.order;
+package com.cwt.bpg.cbt.air.contract;
 
+import com.cwt.bpg.cbt.air.contract.AirContractService;
+import com.cwt.bpg.cbt.air.contract.model.AirContract;
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
-import com.cwt.bpg.cbt.exchange.order.model.AirContract;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

@@ -1,13 +1,11 @@
-package com.cwt.bpg.cbt.exchange.order;
+package com.cwt.bpg.cbt.air.contract;
 
-import com.cwt.bpg.cbt.exchange.order.model.AirContract;
-import com.cwt.bpg.cbt.repository.CommonRepository;
-import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.cwt.bpg.cbt.air.contract.model.AirContract;
+import com.cwt.bpg.cbt.repository.CommonRepository;
 
 @Repository
 public class AirContractRepository extends CommonRepository<AirContract, ObjectId>{

@@ -1,12 +1,14 @@
-package com.cwt.bpg.cbt.exchange.order;
+package com.cwt.bpg.cbt.air.contract;
 
-import com.cwt.bpg.cbt.exchange.order.model.AirContract;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import com.cwt.bpg.cbt.air.contract.AirContractRepository;
+import com.cwt.bpg.cbt.air.contract.model.AirContract;
 
 @Service
 public class AirContractService {

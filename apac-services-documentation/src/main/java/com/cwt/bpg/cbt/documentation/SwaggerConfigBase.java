@@ -82,13 +82,17 @@ public class SwaggerConfigBase
     Tag airTransaction() {
         return new Tag("Air Transaction", "Services related to Air Transaction");
     }
+    
+    Tag airContract() {
+		return new Tag("Air Contract", "Services related to Air Contract");
+	}
+    
+	Tag obtList() {
+		return new Tag("OBT List", "Services related to OBT List");
+	}
 
 	Tag appInfo() {
 		return new Tag("App Info", "Services that display application info");
-	}
-
-	Tag obtList() {
-		return new Tag("OBT List", "Services related to OBT List");
 	}
 
 	ApiInfo apiInfo() {
