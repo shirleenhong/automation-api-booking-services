@@ -19,7 +19,7 @@ public class AirContract implements Serializable {
 	
 	private String countryCode;
 	
-	private String carrier;
+	private String airlineCode;
 	
 	private String fopCode;
 
@@ -47,12 +47,12 @@ public class AirContract implements Serializable {
 		this.countryCode = countryCode;
 	}
 
-	public String getCarrier() {
-		return carrier;
+	public String getAirlineCode() {
+		return airlineCode;
 	}
 
-	public void setCarrier(String carrier) {
-		this.carrier = carrier;
+	public void setAirlineCode(String airlineCode) {
+		this.airlineCode = airlineCode;
 	}
 
 	public String getFopCode() {
