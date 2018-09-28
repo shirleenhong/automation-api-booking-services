@@ -46,8 +46,8 @@ public class FeeCalculatorTest {
 		input.setYqTax(new BigDecimal(50));
 		input.setAirlineCommissionPercent(new Double(45));
 		input.setAirlineOverheadCommissionPercent(5d);
-		input.setTax1(new BigDecimal(25));
-		input.setTax2(new BigDecimal(35));
+		input.setOthTax1(new BigDecimal(25));
+		input.setOthTax2(new BigDecimal(35));
         input.setGstEnabled(true);
         input.setCommissionEnabled(true);
         input.setOverheadCommissionEnabled(true);
