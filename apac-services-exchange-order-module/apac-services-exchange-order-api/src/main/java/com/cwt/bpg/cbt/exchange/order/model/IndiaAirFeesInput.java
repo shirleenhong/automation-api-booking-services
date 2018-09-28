@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.math.BigDecimal;
-
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -22,8 +21,9 @@ public class IndiaAirFeesInput extends FeesInput {
 	private Double airlineOverheadCommissionPercent;
 	private boolean airlineOverheadCommissionByPercent;
 	private Double merchantFeePercent;
-	private BigDecimal tax1;
-	private BigDecimal tax2;
+	private BigDecimal othTax1;
+	private BigDecimal othTax2;
+	private BigDecimal othTax3;
 
 	@NotEmpty
 	private String tripType;
@@ -162,20 +162,28 @@ public class IndiaAirFeesInput extends FeesInput {
 		this.discountEnabled = discountEnabled;
 	}
 
-	public BigDecimal getTax1() {
-		return tax1;
+	public BigDecimal getOthTax1() {
+		return othTax1;
 	}
 
-	public void setTax1(BigDecimal tax1) {
-		this.tax1 = tax1;
+	public void setOthTax1(BigDecimal othTax1) {
+		this.othTax1 = othTax1;
 	}
 
-	public BigDecimal getTax2() {
-		return tax2;
+	public BigDecimal getOthTax2() {
+		return othTax2;
 	}
 
-	public void setTax2(BigDecimal tax2) {
-		this.tax2 = tax2;
+	public void setOthTax2(BigDecimal othTax2) {
+		this.othTax2 = othTax2;
+	}
+
+	public BigDecimal getOthTax3() {
+		return othTax3;
+	}
+
+	public void setOthTax3(BigDecimal othTax3) {
+		this.othTax3 = othTax3;
 	}
 
 	public int getAirSegmentCount() {

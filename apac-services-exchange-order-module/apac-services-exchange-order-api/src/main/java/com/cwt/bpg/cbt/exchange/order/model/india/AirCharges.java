@@ -30,6 +30,8 @@ public class AirCharges implements Serializable {
     private Tax othTax3;
     private Double iataCommissionPercent;
     private Double airlineOrCommissionPercent;
+    private Boolean airlineOrCommissionPercentFlag;
+    private BigDecimal airlineOrCommission;
     private Double returnableOrPercent;
     private BigDecimal clientDiscount;
     private Double markUpPercent;
@@ -45,7 +47,12 @@ public class AirCharges implements Serializable {
     private BigDecimal baseAmount;
     private BigDecimal totalIataCommission;
     private BigDecimal totalReturnableOr;
+    private BigDecimal totalDiscount;
     private BigDecimal totalMarkup;
+    private BigDecimal totalSellFare;
+    private BigDecimal totalVatGst;
+    private BigDecimal totalMerchantFee;
+    private BigDecimal totalSellingFare;
     private BigDecimal totalTax;
     private BigDecimal merchantFeeOnTf;
     private BigDecimal totalCharge;
@@ -328,5 +335,61 @@ public class AirCharges implements Serializable {
 
     public void setTotalCharge(BigDecimal totalCharge) {
         this.totalCharge = totalCharge;
+    }
+
+    public Boolean getAirlineOrCommissionPercentFlag() {
+        return airlineOrCommissionPercentFlag;
+    }
+
+    public void setAirlineOrCommissionPercentFlag(Boolean airlineOrCommissionPercentFlag) {
+        this.airlineOrCommissionPercentFlag = airlineOrCommissionPercentFlag;
+    }
+
+    public BigDecimal getAirlineOrCommission() {
+        return airlineOrCommission;
+    }
+
+    public void setAirlineOrCommission(BigDecimal airlineOrCommission) {
+        this.airlineOrCommission = airlineOrCommission;
+    }
+
+    public BigDecimal getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public void setTotalDiscount(BigDecimal totalDiscount) {
+        this.totalDiscount = totalDiscount;
+    }
+
+    public BigDecimal getTotalSellFare() {
+        return totalSellFare;
+    }
+
+    public void setTotalSellFare(BigDecimal totalSellFare) {
+        this.totalSellFare = totalSellFare;
+    }
+
+    public BigDecimal getTotalVatGst() {
+        return totalVatGst;
+    }
+
+    public void setTotalVatGst(BigDecimal totalVatGst) {
+        this.totalVatGst = totalVatGst;
+    }
+
+    public BigDecimal getTotalMerchantFee() {
+        return totalMerchantFee;
+    }
+
+    public void setTotalMerchantFee(BigDecimal totalMerchantFee) {
+        this.totalMerchantFee = totalMerchantFee;
+    }
+
+    public BigDecimal getTotalSellingFare() {
+        return totalSellingFare;
+    }
+
+    public void setTotalSellingFare(BigDecimal totalSellingFare) {
+        this.totalSellingFare = totalSellingFare;
     }
 }

@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,8 +15,6 @@ import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorF
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
-
-import java.util.Optional;
 
 @Service
 public class OtherServiceFeesService {
@@ -91,10 +91,9 @@ public class OtherServiceFeesService {
 
 		Airport airport = isAirportExist
 				.orElseThrow(() -> new IllegalArgumentException(
-						"Airport City Code [ " + input.getClientAccountNumber() + " ] not found."));
+						"Airport City Code [ " + input.getCityCode() + " ] not found."));
 
         final IndiaProduct airProduct = (IndiaProduct) getProduct(Country.INDIA.getCode(), AIR_PRODUCT_CODE);
-
 
         return this.tfFactory.getCalculator(pricingId)
                 .calculate(input, airlineRule, client, airport, airProduct);
