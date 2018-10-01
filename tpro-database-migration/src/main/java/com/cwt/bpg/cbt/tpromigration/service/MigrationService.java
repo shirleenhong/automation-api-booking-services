@@ -393,8 +393,10 @@ public class MigrationService {
 			}
 			
 			for (Client clientGstin : clientsGstin) {
-				if (clientGstin.getClientAccountNumber()
-						.equals(client.getClientAccountNumber())) {
+				if (client.getClientAccountNumber() != null
+						&& clientGstin.getClientAccountNumber() != null
+						&& clientGstin.getClientAccountNumber()
+								.equals(client.getClientAccountNumber())) {
 					client.setGstin(clientGstin.getGstin());
 					break;
 				}
