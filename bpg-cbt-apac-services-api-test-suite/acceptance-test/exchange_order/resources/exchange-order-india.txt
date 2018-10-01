@@ -14,7 +14,7 @@ Append Exchange Order Air Charges Tab Fields For India
     Run Keyword If    "${airline_or_commission_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "airlineOrCommissionPercent":${airline_or_commission_${eo_index}_value}
     Run Keyword If    "${base_amount_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "baseAmount":${base_amount_${eo_index}_value}
     Run Keyword If    "${base_fare_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "baseFare":${base_fare_${eo_index}_value}
-    Run Keyword If    "${client_discount_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "clientDiscount":${client_discount_${eo_index}_value}
+    Run Keyword If    "${client_discount_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "clientDiscountPercent":${client_discount_${eo_index}_value}
     Run Keyword If    "${conditional_markup_percent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "conditionalMarkUpPercent":${conditional_markup_percent_${eo_index}_value}
     Run Keyword If    "${cwt_ref_no_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "cwtRefNo":"${cwt_ref_no_${eo_index}_value}"
     Run Keyword If    "${final_destination_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "finalDestination":"${final_destination_${eo_index}_value}"
@@ -52,6 +52,7 @@ Append Exchange Order Air Charges Tab Fields For India
     Run Keyword If    "${total_tax_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "totalTax":${total_tax_${eo_index}_value}
     Run Keyword If    "${trip_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "tripType":"${trip_type_${eo_index}_value}"
     Run Keyword If    "${uatp_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "uatp":"${uatp_${eo_index}_value}"
+    Run Keyword If    "${vendor_ref_no_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "vendorRefNo":"${vendor_ref_no_${eo_index}_value}"
     Run Keyword If    "${yq_tax_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "yqTax":${yq_tax_${eo_index}_value}
     Set Test Variable    ${exchange_order_air_charges_list}
     Set Test Variable    ${exchange_order_air_charges_fop_list}
@@ -1106,8 +1107,8 @@ Verify Exchange Order Air Charges Is Saved Correctly
     ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.baseAmount
 	Run Keyword If    "${base_fare_${eo_index}_value}"!="null" and "${base_fare_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.baseFare    ${base_fare_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.baseFare
-	Run Keyword If    "${client_discount_${eo_index}_value}"!="null" and "${client_discount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.clientDiscount    ${client_discount_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.clientDiscount
+	Run Keyword If    "${client_discount_${eo_index}_value}"!="null" and "${client_discount_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.clientDiscountPercent    ${client_discount_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.clientDiscountPercent
 	Run Keyword If    "${conditional_markup_percent_${eo_index}_value}"!="null" and "${conditional_markup_percent_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.conditionalMarkUpPercent    ${conditional_markup_percent_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.conditionalMarkUpPercent
 	Run Keyword If    "${cwt_ref_no_${eo_index}_value}"!="null" and "${cwt_ref_no_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.cwtRefNo    ${cwt_ref_no_${eo_index}_value}
@@ -1160,6 +1161,8 @@ Verify Exchange Order Air Charges Is Saved Correctly
     ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.tripType
 	Run Keyword If    "${uatp_${eo_index}_value}"!="null" and "${uatp_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.uatp    ${uatp_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.uatp
+    Run Keyword If    "${vendor_ref_no_${eo_index}_value}"!="null" and "${vendor_ref_no_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.vendorRefNo    ${vendor_ref_no_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.vendorRefNo
 	Run Keyword If    "${yq_tax_${eo_index}_value}"!="null" and "${yq_tax_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.yqTax    ${yq_tax_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.yqTax
 	Run Keyword If    "${cc_number_${eo_index}_value}"!="null" and "${cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.ccNumber    ${cc_number_${eo_index}_value}
