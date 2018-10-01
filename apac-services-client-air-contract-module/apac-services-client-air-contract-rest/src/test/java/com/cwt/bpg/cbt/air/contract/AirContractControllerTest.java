@@ -57,25 +57,41 @@ public class AirContractControllerTest {
 		airContract.setClientAccountNumber("3407002");
     }
 
+	@Test
+	public void getAirContractShouldReturnAirContract() throws Exception {
+
+		when(service.get(airContract.getCountryCode(), airContract.getAirlineCode(), airContract.getClientAccountNumber()))
+				.thenReturn(airContract);
+
+		mockMvc.perform(get("/air-contract/"+
+				airContract.getCountryCode() +"/"+
+				airContract.getAirlineCode() +"/"+
+				airContract.getClientAccountNumber())
+				.contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(airContract)))
+				.andExpect(status().isOk())
+				.andReturn()
+				.getResponse();
+
+		verify(service, times(1)).get(
+				airContract.getCountryCode(),
+				airContract.getAirlineCode(),
+				airContract.getClientAccountNumber());
+	}
+
     @Test
-    public void getAirContractShouldReturnAirContract() throws Exception {
+    public void getAirContractByIdShouldReturnAirContract() throws Exception {
 
-        when(service.getAirContract(airContract.getCountryCode(), airContract.getAirlineCode(), airContract.getClientAccountNumber()))
-			.thenReturn(airContract);
+    	ObjectId id = new ObjectId();
 
-        mockMvc.perform(get("/air-contract/"+
-			airContract.getCountryCode() +"/"+
-			airContract.getAirlineCode() +"/"+
-			airContract.getClientAccountNumber())
+        when(service.get(id.toString())).thenReturn(airContract);
+
+        mockMvc.perform(get("/air-contract/"+ id.toString())
                 .contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(airContract)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        verify(service, times(1)).getAirContract(
-			airContract.getCountryCode(),
-			airContract.getAirlineCode(),
-			airContract.getClientAccountNumber());
+        verify(service, times(1)).get(id.toString());
     }
 
     @Test

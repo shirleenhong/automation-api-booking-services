@@ -17,8 +17,12 @@ public class AirContractService {
 	private AirContractRepository repository;
 
 	@Cacheable(cacheNames = "air-contracts", key = "#countryCode + #airlineCode + #clientAccountNumber")
-	public AirContract getAirContract(String countryCode, String airlineCode, String clientAccountNumber) {
+	public AirContract get(String countryCode, String airlineCode, String clientAccountNumber) {
 		return repository.get(countryCode, airlineCode, clientAccountNumber);
+	}
+
+	public AirContract get(String id) {
+		return repository.get(new ObjectId(id));
 	}
 
 	@CachePut(cacheNames = "air-contracts", key = "#airContract.countryCode + #airContract.airlineCode + #airContract.clientAccountNumber")

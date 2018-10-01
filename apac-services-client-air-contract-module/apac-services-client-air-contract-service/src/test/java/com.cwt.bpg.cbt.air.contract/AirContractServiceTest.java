@@ -29,10 +29,21 @@ public class AirContractServiceTest {
         AirContract airContract = mock(AirContract.class);
         when(repository.get(anyString(), anyString(), anyString())).thenReturn(airContract);
 
-        AirContract result = service.getAirContract("SG", "BR", "3407002");
+        AirContract result = service.get("SG", "BR", "3407002");
 
         assertEquals(airContract, result);
         verify(repository, times(1)).get(anyString(), anyString(), anyString());
+    }
+
+    @Test
+    public void getByIdShouldReturnAirContract() {
+        AirContract airContract = mock(AirContract.class);
+        when(repository.get(anyObject())).thenReturn(airContract);
+
+        AirContract result = service.get(new ObjectId().toString());
+
+        assertEquals(airContract, result);
+        verify(repository, times(1)).get(anyObject());
     }
 
     @Test

@@ -24,15 +24,27 @@ public class AirContractController {
 
 	@GetMapping(value = "/air-contract/{countryCode}/{airlineCode}/{clientAccountNumber}", produces = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
-	@ResponseBody
 	@ApiOperation(value = "Returns Air Contract, which contains BCODE, based on country code, "
 			+ "airline code, and client account number.")
+	@ResponseBody
 	public ResponseEntity<AirContract> getAirContract(
 			@PathVariable("countryCode") @ApiParam("2-character country code") String countryCode,
 			@PathVariable("airlineCode") @ApiParam("2-character airline code") String airlineCode,
 			@PathVariable("clientAccountNumber") @ApiParam("Client account number") String clientAccountNumber) {
 
-		return new ResponseEntity<>(airContractService.getAirContract(countryCode, airlineCode, clientAccountNumber), HttpStatus.OK);
+		return new ResponseEntity<>(airContractService.get(countryCode, airlineCode, clientAccountNumber), HttpStatus.OK);
+	}
+
+	@Internal
+	@GetMapping(value = "/air-contract/{id}", produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ApiOperation(value = "Returns Air Contract, which contains BCODE, based on country code, "
+			+ "airline code, and client account number.")
+	@ResponseBody
+	public ResponseEntity<AirContract> getAirContract(
+			@PathVariable("id") @ApiParam("System generated Air Contract ID") String id) {
+
+		return new ResponseEntity<>(airContractService.get(id), HttpStatus.OK);
 	}
 
 	@Internal
