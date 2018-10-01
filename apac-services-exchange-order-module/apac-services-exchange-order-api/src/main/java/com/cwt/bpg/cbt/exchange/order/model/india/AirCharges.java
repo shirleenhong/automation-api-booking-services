@@ -33,7 +33,7 @@ public class AirCharges implements Serializable {
     private Boolean airlineOrCommissionPercentFlag;
     private BigDecimal airlineOrCommission;
     private Double returnableOrPercent;
-    private BigDecimal clientDiscount;
+    private Double clientDiscountPercent;
     private Double markUpPercent;
     private Double conditionalMarkUpPercent;
     private Double mfOnAirFareVatGstPercent;
@@ -193,12 +193,12 @@ public class AirCharges implements Serializable {
         this.returnableOrPercent = returnableOrPercent;
     }
 
-    public BigDecimal getClientDiscount() {
-        return clientDiscount;
+    public Double getClientDiscountPercent() {
+        return clientDiscountPercent;
     }
 
-    public void setClientDiscount(BigDecimal clientDiscount) {
-        this.clientDiscount = clientDiscount;
+    public void setClientDiscountPercent(Double clientDiscountPercent) {
+        this.clientDiscountPercent = clientDiscountPercent;
     }
 
     public Double getMarkUpPercent() {
