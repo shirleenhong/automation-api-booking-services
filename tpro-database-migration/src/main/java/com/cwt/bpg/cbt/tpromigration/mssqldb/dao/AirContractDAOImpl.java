@@ -26,7 +26,7 @@ public class AirContractDAOImpl {
 	public List<AirContract> getList() {
 		List<AirContract> airContracts = new ArrayList<>();
 		logger.info("setting up query");
-		String sql = "select CN, Carrier, FOPCode from tblClientAirContracts";
+		String sql = "select CN, Carrier, FOPCode from tblClientAirContracts where FOPCode like '%BCODE%'";
 
 
 		Connection conn = null;
@@ -40,7 +40,7 @@ public class AirContractDAOImpl {
 				AirContract airContract = new AirContract();
 				airContract.setAirlineCode(rs.getString("Carrier"));
 				airContract.setClientAccountNumber(rs.getString("CN"));
-				airContract.setFopCode(rs.getString("FOPCode"));
+				airContract.setFopCode(rs.getString("FOPCode"));				
 				airContracts.add(airContract);
 			}
 			rs.close();
