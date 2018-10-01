@@ -3,10 +3,16 @@ package com.cwt.bpg.cbt.air.contract.model;
 import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 
 import java.io.Serializable;
 
+@Entity(value = "airContracts", noClassnameStored = true)
+@Indexes(@Index(fields = @Field("id")))
 public class AirContract implements Serializable {
 	
 	private static final long serialVersionUID = -4494953673618734452L;
