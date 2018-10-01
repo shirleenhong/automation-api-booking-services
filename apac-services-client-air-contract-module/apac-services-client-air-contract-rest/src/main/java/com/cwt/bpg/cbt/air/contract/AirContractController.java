@@ -44,11 +44,11 @@ public class AirContractController {
 	}
 
 	@Internal
-	@DeleteMapping(path = "/air-contract")
+	@DeleteMapping(path = "/air-contract/{id}")
 	@ResponseBody
 	@ApiOperation(value = "[Maintenance] Remove Air Contract")
 	public ResponseEntity<String> removeAirContract(
-			@RequestParam("id") String id) {
+			@PathVariable("id") String id) {
 		String deleteResult = airContractService.delete(id);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
 		return new ResponseEntity<>(deleteResult, status);

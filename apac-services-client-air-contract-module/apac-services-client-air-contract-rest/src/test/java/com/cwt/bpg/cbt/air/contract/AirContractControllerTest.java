@@ -1,13 +1,9 @@
-package com.cwt.bpg.cbt.obt;
+package com.cwt.bpg.cbt.air.contract;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
-
+import com.cwt.bpg.cbt.air.contract.model.AirContract;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,22 +16,28 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.cwt.bpg.cbt.obt.model.ObtList;
-import com.cwt.bpg.cbt.obt.model.OnlineBookingTool;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.nio.charset.Charset;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-public class ObtListControllerTest {
+public class AirContractControllerTest {
 
     private MockMvc mockMvc;
 
     @Mock
-    private ObtListService service;
+    private AirContractService service;
 
     @InjectMocks
-    private ObtListController controller;
+    private AirContractController controller;
+
+	private AirContract airContract;
 
     public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -48,105 +50,77 @@ public class ObtListControllerTest {
         mockMvc = MockMvcBuilders
                 .standaloneSetup(controller)
                 .build();
+
+		airContract = new AirContract();
+		airContract.setCountryCode("SG");
+		airContract.setAirlineCode("BR");
+		airContract.setClientAccountNumber("3407002");
     }
 
     @Test
-    public void getObtListShouldReturnObtList() throws Exception {
-		ObtList obtList = new ObtList();
-		obtList.setCountryCode("IN");
+    public void getAirContractShouldReturnAirContract() throws Exception {
 
-        when(service.get(obtList.getCountryCode())).thenReturn(obtList);
+        when(service.getAirContract(airContract.getCountryCode(), airContract.getAirlineCode(), airContract.getClientAccountNumber()))
+			.thenReturn(airContract);
 
-        mockMvc.perform(get("/obt-list/IN")
-                .contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(obtList)))
+        mockMvc.perform(get("/air-contract/"+
+			airContract.getCountryCode() +"/"+
+			airContract.getAirlineCode() +"/"+
+			airContract.getClientAccountNumber())
+                .contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(airContract)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        verify(service, times(1)).get(obtList.getCountryCode());
+        verify(service, times(1)).getAirContract(
+			airContract.getCountryCode(),
+			airContract.getAirlineCode(),
+			airContract.getClientAccountNumber());
     }
 
-	@Test
-	public void getObtListShouldReturnObtList_for_unmatch_case() throws Exception {
-		ObtList obtList = new ObtList();
-		obtList.setCountryCode("IN");
-
-		when(service.get(obtList.getCountryCode())).thenReturn(obtList);
-
-		mockMvc.perform(get("/obt-list/in")
-				.contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(obtList)))
-				.andExpect(status().isOk())
-				.andReturn()
-				.getResponse();
-
-		verify(service, times(1)).get(obtList.getCountryCode());
-	}
-
     @Test
-    public void putObtListShouldSaveAndReturnSavedObtList() throws Exception {
-		ObtList obtList = new ObtList();
-		obtList.setCountryCode("IN");
+    public void putAirContractShouldSaveAndReturnSavedAirContract() throws Exception {
 
-		OnlineBookingTool obt = new OnlineBookingTool();
-		obt.setOnlineUnassistedCode("EBA");
-		obt.setName("Concur");
-		obt.setAgentAssistedCode("AMA");
+		when(service.save(any(AirContract.class))).thenReturn(airContract);
 
-		when(service.save(any(ObtList.class))).thenReturn(obtList);
-
-        mockMvc.perform(put("/obt-list")
+        mockMvc.perform(put("/air-contract")
                 .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(obtList)))
+                .content(convertObjectToJsonBytes(airContract)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        verify(service, times(1)).save(any(ObtList.class));
+        verify(service, times(1)).save(any(AirContract.class));
     }
 
     @Test
-    public void removeObtListShouldRemoveObtList() throws Exception {
-		String countryCode = "IN";
+    public void removeAirContractShouldRemoveAirContract() throws Exception {
+		String id = new ObjectId().toString();
 
-		when(service.delete(countryCode)).thenReturn(countryCode);
+		when(service.delete(anyString())).thenReturn(id);
 
-        mockMvc.perform(delete("/obt-list/IN")
+        mockMvc.perform(delete("/air-contract/"+ id)
                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        verify(service, times(1)).delete(countryCode);
+        verify(service, times(1)).delete(anyString());
     }
 
 	@Test
-	public void removeObtListShouldRemoveObtListForUnmatchedCase() throws Exception {
-		String countryCode = "IN";
+	public void removeAirContractShouldReturnNoFoundWhenRecordDoesNotExist() throws Exception {
+		String id = new ObjectId().toString();
 
-		when(service.delete(countryCode)).thenReturn(countryCode);
+		when(service.delete(id)).thenReturn("");
 
-		mockMvc.perform(delete("/obt-list/" + countryCode.toLowerCase())
-				.contentType(APPLICATION_JSON_UTF8))
-				.andExpect(status().isOk())
-				.andReturn()
-				.getResponse();
-
-		verify(service, times(1)).delete(countryCode);
-	}
-
-	@Test
-	public void removeObtListShouldReturnNoFoundWhenRecordDoesNotExist() throws Exception {
-		String countryCode = "IN";
-
-		when(service.delete(countryCode)).thenReturn("");
-
-		mockMvc.perform(delete("/obt-list/" + countryCode.toLowerCase())
+		mockMvc.perform(delete("/air-contract/" + id)
 				.contentType(APPLICATION_JSON_UTF8))
 				.andExpect(status().isNotFound())
 				.andReturn()
 				.getResponse();
 
-		verify(service, times(1)).delete(countryCode);
+		verify(service, times(1)).delete(id);
 	}
 
 	static byte[] convertObjectToJsonBytes(Object object) throws IOException {

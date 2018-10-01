@@ -49,7 +49,7 @@ public class AirContractServiceTest {
 
     @Test
     public void deleteShouldReturnWriteResult() {
-    	String id = "any";
+    	String id = new ObjectId().toString();
         when(repository.remove(any(ObjectId.class))).thenReturn(id);
 
         String result = service.delete(id);
