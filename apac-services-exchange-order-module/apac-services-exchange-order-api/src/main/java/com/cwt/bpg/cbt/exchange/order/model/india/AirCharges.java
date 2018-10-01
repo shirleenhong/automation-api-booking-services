@@ -11,6 +11,7 @@ public class AirCharges implements Serializable {
     private static final long serialVersionUID = -1917788559776695996L;
 
     private String cwtRefNo;
+    private String vendorRefNo;
     private String otherRelatedNo;
     private Boolean reissuedTicket;
     private String issueInExchangeFor;
@@ -33,7 +34,7 @@ public class AirCharges implements Serializable {
     private Boolean airlineOrCommissionPercentFlag;
     private BigDecimal airlineOrCommission;
     private Double returnableOrPercent;
-    private BigDecimal clientDiscount;
+    private Double clientDiscountPercent;
     private Double markUpPercent;
     private Double conditionalMarkUpPercent;
     private Double mfOnAirFareVatGstPercent;
@@ -63,6 +64,14 @@ public class AirCharges implements Serializable {
 
     public void setCwtRefNo(String cwtRefNo) {
         this.cwtRefNo = cwtRefNo;
+    }
+
+    public String getVendorRefNo() {
+        return vendorRefNo;
+    }
+
+    public void setVendorRefNo(String vendorRefNo) {
+        this.vendorRefNo = vendorRefNo;
     }
 
     public String getOtherRelatedNo() {
@@ -193,12 +202,12 @@ public class AirCharges implements Serializable {
         this.returnableOrPercent = returnableOrPercent;
     }
 
-    public BigDecimal getClientDiscount() {
-        return clientDiscount;
+    public Double getClientDiscountPercent() {
+        return clientDiscountPercent;
     }
 
-    public void setClientDiscount(BigDecimal clientDiscount) {
-        this.clientDiscount = clientDiscount;
+    public void setClientDiscountPercent(Double clientDiscountPercent) {
+        this.clientDiscountPercent = clientDiscountPercent;
     }
 
     public Double getMarkUpPercent() {
