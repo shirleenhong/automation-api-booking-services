@@ -12,21 +12,21 @@ import com.cwt.bpg.cbt.repository.CommonRepository;
 import com.mongodb.WriteResult;
 
 @Repository
-class ClientRepository extends CommonRepository<Client, Integer> {
+public class ClientRepository extends CommonRepository<Client, Integer> {
 	
 	private static final String ID = "clientId";
 
-	ClientRepository() {
+	public ClientRepository() {
 		super(Client.class, ID);
 	}
 
-	Client getClient(String clientAccountNumber) {
+	public Client getClient(String clientAccountNumber) {
 		return morphia.getDatastore().createQuery(Client.class)
 			.field("clientAccountNumber")
 			.equal(leftPad(clientAccountNumber, 10, '0')).get();
 	}
 
-    String remove(String clientAccountNumber) {
+    public String remove(String clientAccountNumber) {
         final Datastore datastore = morphia.getDatastore();
         final Query<Client> query = datastore.createQuery(Client.class).field("clientAccountNumber").equal(clientAccountNumber);
 

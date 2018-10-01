@@ -28,6 +28,59 @@ public class ClientDAOImpl {
 	@Autowired
 	private DataSource dataSource;
 	
+	@Autowired
+	private DataSource middlewareDataSource;
+	
+	
+	public List<Client> getClientsWithGstin() {
+		List<Client> clients = new ArrayList<>();
+		String sql = "select CNCode, GSTIN from ClientMaster where GSTIN is not NULL and GSTIN <> ''";
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			LOGGER.info("Getting clients with gstin from mssqldb middleware");
+			conn = middlewareDataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				Client client = new Client();
+				client.setClientAccountNumber(rs.getString("CNCode"));
+				client.setGstin(rs.getString("GSTIN"));
+				clients.add(client);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading clients from mssqldb middleware, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+				//
+			}
+		}
+
+		LOGGER.info("Size of clients from mssqldb middleware: {}", clients.size());
+		return clients;
+	}
+	
 	public List<Client> getClients() {
 
 		List<Client> clients = new ArrayList<>();
@@ -109,7 +162,6 @@ public class ClientDAOImpl {
 		}
 
 		LOGGER.info("Size of clients from mssqldb: {}", clients.size());
-
 		return clients;
 	}
 
