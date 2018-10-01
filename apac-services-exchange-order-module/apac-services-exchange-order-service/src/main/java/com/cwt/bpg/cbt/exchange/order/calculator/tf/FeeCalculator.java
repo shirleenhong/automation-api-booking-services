@@ -4,6 +4,8 @@ import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,8 +81,9 @@ public class FeeCalculator {
 		}
 
 		breakdown.setTotalTaxes(round(safeValue(yqTax)
-									.add(safeValue(input.getTax1()))
-									.add(safeValue(input.getTax2())), scale));
+									.add(safeValue(input.getOthTax1()))
+									.add(safeValue(input.getOthTax2()))
+									.add(safeValue(input.getOthTax3())), scale));
 
 		breakdown.setTotalGst(round(gstAmount, scale));
 		breakdown.setTotalSellFare(round(safeValue(input.getBaseFare()), scale));
@@ -126,7 +129,10 @@ public class FeeCalculator {
 
 		if (!input.isFeeOverride()) {
 
-			Optional<ClientPricing> pricing = client.getClientPricings().stream()
+            List<ClientPricing> clientPricings = Optional.ofNullable(client.getClientPricings())
+                    .orElse(Collections.emptyList());
+
+            Optional<ClientPricing> pricing = clientPricings.stream()
 							.filter(i -> i.getTripType().equals(input.getTripType()))
 							.findFirst();
 

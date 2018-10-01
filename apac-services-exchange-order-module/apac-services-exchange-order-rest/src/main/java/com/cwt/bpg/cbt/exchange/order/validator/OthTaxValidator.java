@@ -9,7 +9,7 @@ public class OthTaxValidator implements Validator<IndiaAirFeesInput> {
 
 	@Override
 	public void validate(IndiaAirFeesInput input) {
-		if (input.getTax1() == null && input.getTax2() == null) {
+		if (input.getOthTax1() == null && input.getOthTax2() == null && input.getOthTax3() == null) {
 			throw new IllegalArgumentException("At least one tax required.");
 		}
 	}

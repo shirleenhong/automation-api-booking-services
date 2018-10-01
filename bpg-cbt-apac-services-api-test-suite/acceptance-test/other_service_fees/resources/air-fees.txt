@@ -227,7 +227,7 @@ Calculate Air Fees-IN Total Selling Fare
     Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}
 
 Calculate Air Fees-IN Total Taxes
-    ${calculated_value}    Evaluate    ${yq_tax_value}+${tax_1_value}+${tax_2_value}
+    ${calculated_value}    Evaluate    ${yq_tax_value}+${tax_1_value}+${tax_2_value}+${tax_3_value}
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
@@ -388,6 +388,7 @@ Generate Test Variables For Air Fees-HK Without Formula
 Generate Test Variables For Air Fees-IN
     [Arguments]    ${fees_list}    ${country}
     Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
+    Set Test Variable    ${tax_3_value}    0
     Set Test Variable    ${air_pricing_id}    ${clients_dict["${client_account_number_value}.air_pricing_id"]}
     #${decimal_place}    Set Variable If    "${country.lower()}" == "hk"    0    2
     Set Test Variable    ${decimal_place}    0
@@ -488,8 +489,9 @@ Send Other Service Fees For Air Fees IN Post Request
     Run Keyword If    "${products_ot1_percentage_value}"!="null"    Append To List    ${other_service_fees_products_list}    "ot1Percent":${products_ot1_percentage_value}
     Run Keyword If    "${products_ot2_percentage_value}"!="null"    Append To List    ${other_service_fees_products_list}    "ot2Percent":${products_ot2_percentage_value}
     Run Keyword If    "${products_override_pc_value}"!="null"    Append To List    ${other_service_fees_products_list}    "overridePc":${products_override_pc_value}
-    Run Keyword If    "${tax_1_value}"!="null"    Append To List    ${other_service_fees_request_list_2}    "tax1":${tax_1_value}
-    Run Keyword If    "${tax_2_value}"!="null"    Append To List    ${other_service_fees_request_list_2}    "tax2":${tax_2_value}
+    Run Keyword If    "${tax_1_value}"!="null"    Append To List    ${other_service_fees_request_list_2}    "othTax1":${tax_1_value}
+    Run Keyword If    "${tax_2_value}"!="null"    Append To List    ${other_service_fees_request_list_2}    "othTax2":${tax_2_value}
+    Run Keyword If    "${tax_3_value}"!="null"    Append To List    ${other_service_fees_request_list_2}    "othTax3":${tax_3_value}
     Run Keyword If    "${trip_type_value}"!="null"    Append To List    ${other_service_fees_request_list_2}    "tripType":"${trip_type_value}"
     Run Keyword If    "${yq_tax_value}"!="null"    Append To List    ${other_service_fees_request_list_2}    "yqTax":${yq_tax_value}
     ${list_count_1}    Get Length    ${other_service_fees_request_list_1}

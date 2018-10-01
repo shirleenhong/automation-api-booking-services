@@ -30,8 +30,9 @@ public class OthTaxValidatorTest {
 	@Test
 	public void shouldCheckTaxNull() {
 		IndiaAirFeesInput input = new IndiaAirFeesInput();
-		input.setTax1(null);
-		input.setTax2(null);
+		input.setOthTax1(null);
+		input.setOthTax2(null);
+		input.setOthTax3(null);
 
 		thrown.expect(IllegalArgumentException.class);
 		validator.validate(input);
@@ -40,10 +41,22 @@ public class OthTaxValidatorTest {
 	}
 	
 	@Test
-	public void shouldCheckTaxSuccess() {
+	public void shouldCheckTaxSuccessWhenAllTaxesHaveValue() {
 		IndiaAirFeesInput input = new IndiaAirFeesInput();
-		input.setTax1(new BigDecimal(50));
-		input.setTax2(new BigDecimal(50));
+		input.setOthTax1(new BigDecimal(50));
+		input.setOthTax2(new BigDecimal(50));
+		input.setOthTax3(new BigDecimal(50));
+
+		validator.validate(input);
+		assertNotNull(validator);
+	}
+
+	@Test
+	public void shouldCheckTaxSuccessOnlyOneTaxIsNull() {
+		IndiaAirFeesInput input = new IndiaAirFeesInput();
+		input.setOthTax1(new BigDecimal(50));
+		input.setOthTax2(new BigDecimal(50));
+		input.setOthTax3(null);
 
 		validator.validate(input);
 		assertNotNull(validator);
