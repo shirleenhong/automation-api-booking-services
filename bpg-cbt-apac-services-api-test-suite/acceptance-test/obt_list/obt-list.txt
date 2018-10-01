@@ -73,6 +73,7 @@ Verify That OBT List Is Updated Correctly After Delete Request
     Verify OBT List Is Retrieved Correctly
     Send OBT List Delete Request    country_code=ph
     Verify Response Status Code Is Correct    200
+    Evict OBT List Cache    number=5
     Send OBT List Get Request    country_code=ph
     Verify Response Status Code Is Correct    200
     Verify No OBT List Is Returned
