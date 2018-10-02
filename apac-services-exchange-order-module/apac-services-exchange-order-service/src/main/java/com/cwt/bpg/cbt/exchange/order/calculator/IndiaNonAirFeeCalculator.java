@@ -3,26 +3,25 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.Client;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirFeesInput;
 
 @Component
 public class IndiaNonAirFeeCalculator {
 
 	@Autowired
 	private ScaleConfig scaleConfig;
-	private static final int BILL_TO_COMPANY = 3;
 
 	public IndiaNonAirFeesBreakdown calculate(IndiaNonAirFeesInput input,
-			Client client, 
-			Client defaultClient) {
+                                              Client client,
+                                              Double mfPercent) {
 
 		IndiaNonAirFeesBreakdown result = new IndiaNonAirFeesBreakdown();
 
@@ -32,18 +31,6 @@ public class IndiaNonAirFeeCalculator {
 
 		BigDecimal commission = safeValue(input.getCommission());
 		BigDecimal discount = safeValue(input.getDiscount());
-		Double mfPercent = 0D;
-
-		if (input.getFopMode() != BILL_TO_COMPANY) {
-
-			ProductMerchantFee product = getProduct(client, input.getProduct());
-			if (product != null && product.isSubjectToMf()) {
-				mfPercent = 0D;
-			}
-			else {
-				mfPercent = calculateMfPercent(input, client, defaultClient);
-			}
-		}
 
 		int scale = scaleConfig.getScale(Country.INDIA.getCode());
 
@@ -93,88 +80,5 @@ public class IndiaNonAirFeeCalculator {
 		result.setDiscount(discount);
 		
 		return result;
-	}
-
-	private Double calculateMfPercent(IndiaNonAirFeesInput input,
-			Client client, 
-			Client defaultClient) {
-
-		Double mfPercent = client.getMerchantFee();
-	
-		if(isSubjectToMF(client.isStandardMfProduct() 
-				? defaultClient : client, 
-				input.getProduct().getProductCode())) {
-			mfPercent = 0D;
-		}
-		else {
-			Bank bank = getBank(client, input.getFopNumber(), client.isApplyMfBank());
-			if (bank != null && !StringUtils.isEmpty(bank.getCcNumberPrefix())) {
-				mfPercent = bank.getPercentage();
-			}
-			else if (!StringUtils.isEmpty(input.getFopType())) {
-				CreditCardVendor vendor = getCreditCard(client, input.getCcType(), client.isApplyMfCc());
-				mfPercent = vendor != null ? vendor.getPercentage() : 0D;
-			}	
-		}
-		
-		return mfPercent;
-	}
-
-	private boolean isSubjectToMF(Client client, String productCode) {
-
-		if (client.getMfProducts() != null) {
-			Optional<ProductMerchantFee> pmf = client.getMfProducts().stream()
-					.filter(p -> p.getProductCode().equals(productCode)).findFirst();
-
-			if (pmf.isPresent()) {
-				return pmf.get().isSubjectToMf();
-			}
-
-		}
-
-		return false;
-	}
-
-	private ProductMerchantFee getProduct(Client client, IndiaNonAirProductInput indiaProduct) {
-		if (client.getMfProducts() != null) {
-			Optional<ProductMerchantFee> result = client.getMfProducts().stream()
-					.filter(item -> item.getProductCode().equals(indiaProduct.getProductCode())).findFirst();
-
-			if (result.isPresent()) {
-				return result.get();
-			}
-		}
-		return null;
-	}
-
-	private CreditCardVendor getCreditCard(Client client, String acctType, boolean isStandard) {
-
-		if (client.getMfCcs() != null) {
-
-			Optional<CreditCardVendor> vendor = client.getMfCcs().stream()
-					.filter(item -> item.getVendorName().equals(acctType) && item.isStandard() == isStandard).findFirst();
-
-			if (vendor.isPresent()) {
-				return vendor.get();
-			}
-		}
-
-		return null;
-	}
-
-	private Bank getBank(Client client, String fopNumber, boolean isStandard) {
-
-		if (client.getMfBanks() != null) {
-
-			Optional<Bank> bank = client.getMfBanks().stream()
-					.filter(item -> fopNumber.startsWith(item.getCcNumberPrefix()) && item.isStandard() == isStandard).findFirst();
-
-			if (bank.isPresent()) {
-				return bank.get();
-			}
-
-		}
-
-		return null;
 	}
 }

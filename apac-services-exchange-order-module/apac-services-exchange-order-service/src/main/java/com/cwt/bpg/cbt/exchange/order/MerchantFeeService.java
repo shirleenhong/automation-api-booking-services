@@ -11,21 +11,22 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 @Service
 public class MerchantFeeService {
 
-	@Autowired
-	private MerchantFeeRepository merchantFeeRepo;
-	
-	@Cacheable(cacheNames="merchant-fee", key="{#countryCode, #clientAccountNumber}")
-	public MerchantFee getMerchantFee(String countryCode, String clientAccountNumber) {
-		return merchantFeeRepo.getMerchantFee(countryCode, clientAccountNumber);
-	}
+    @Autowired
+    private MerchantFeeRepository merchantFeeRepo;
 
-	@CachePut(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.clientAccountNumber}")
-	public MerchantFee putMerchantFee(MerchantFee fee) {
-		return merchantFeeRepo.putMerchantFee(fee);
-	}
-	
-	@CacheEvict(cacheNames="merchant-fee", key="{#fee.countryCode, #fee.clientAccountNumber}")
-	public MerchantFee remove(MerchantFee fee) {
-		return merchantFeeRepo.removeMerchantFee(fee);
-	}
+    @Cacheable(cacheNames = "merchant-fee", key = "{#countryCode, #clientAccountNumber}")
+    public MerchantFee getMerchantFee(String countryCode, String clientAccountNumber) {
+        return merchantFeeRepo.getMerchantFee(countryCode, clientAccountNumber);
+    }
+
+    @CachePut(cacheNames = "merchant-fee", key = "{#fee.countryCode, #fee.clientAccountNumber}")
+    public MerchantFee putMerchantFee(MerchantFee fee) {
+        return merchantFeeRepo.putMerchantFee(fee);
+    }
+
+    @CacheEvict(cacheNames = "merchant-fee", key = "{#fee.countryCode, #fee.clientAccountNumber}")
+    public MerchantFee remove(MerchantFee fee) {
+        return merchantFeeRepo.removeMerchantFee(fee);
+    }
+
 }
