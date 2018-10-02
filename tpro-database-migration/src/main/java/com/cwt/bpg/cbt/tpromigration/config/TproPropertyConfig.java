@@ -13,7 +13,7 @@ public class TproPropertyConfig {
 
 	@Conditional(IndiaCondition.class)
 	@Configuration("com.cwt.bpg.cbt.tpromigration.tprodb.config.property.source")
-	@PropertySource(value = { "classpath:properties/tprodb-in.properties" }, ignoreResourceNotFound = true)
+	@PropertySource(value = { "classpath:properties/tprodb-in.properties", "classpath:properties/middlewaredb-in.properties" }, ignoreResourceNotFound = true)
 	static class IndiaPropertyConfig {
 	}
 

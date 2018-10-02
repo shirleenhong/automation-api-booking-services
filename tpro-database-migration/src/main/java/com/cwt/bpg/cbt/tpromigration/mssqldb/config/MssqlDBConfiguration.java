@@ -24,6 +24,17 @@ public class MssqlDBConfiguration {
     private String dbuser;
     @Value("${com.cwt.tprodb.dbpwd}")
     private String dbPwd;
+    
+    @Value("${com.cwt.middlewaredb.host}")
+    private String middlewareDbHost;
+    @Value("${com.cwt.middlewaredb.port}")
+    private String middlewareDbPort;
+    @Value("${com.cwt.middlewaredb.dbname}")
+    private String middlewareDbName;
+	@Value("${com.cwt.middlewaredb.dbuser}")
+    private String middlewareDbuser;
+    @Value("${com.cwt.middlewaredb.dbpwd}")
+    private String middlewareDbPwd;
 
 	@Bean
 	public DriverManagerDataSource dataSource() {
@@ -33,6 +44,17 @@ public class MssqlDBConfiguration {
 		dataSource.setUrl("jdbc:sqlserver://"+dbHost+":"+dbPort+";databaseName="+ dbName);
 		dataSource.setUsername(encryptor.decrypt(dbuser));
 		dataSource.setPassword(encryptor.decrypt(dbPwd));
+		return dataSource;
+	}
+	
+	@Bean
+	public DriverManagerDataSource middlewareDataSource() {
+
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		dataSource.setUrl("jdbc:sqlserver://"+middlewareDbHost+":"+middlewareDbPort+";databaseName="+ middlewareDbName);
+		dataSource.setUsername(encryptor.decrypt(middlewareDbuser));
+		dataSource.setPassword(encryptor.decrypt(middlewareDbPwd));
 		return dataSource;
 	}
 }

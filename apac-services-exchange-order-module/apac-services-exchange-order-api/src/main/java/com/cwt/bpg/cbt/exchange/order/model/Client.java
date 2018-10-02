@@ -33,6 +33,7 @@ public class Client implements Serializable {
 	private boolean lccSameAsInt;
 	private String lccDdlFeeApply;
 	private String intDdlFeeApply;
+	private String gstin;
 
 	public int getClientId() {
 		return clientId;
@@ -160,5 +161,13 @@ public class Client implements Serializable {
 
 	public void setMfBanks(List<Bank> mfBanks) {
 		this.mfBanks = mfBanks;
+	}
+
+	public String getGstin() {
+		return gstin;
+	}
+
+	public void setGstin(String gstin) {
+		this.gstin = gstin;
 	}
 }

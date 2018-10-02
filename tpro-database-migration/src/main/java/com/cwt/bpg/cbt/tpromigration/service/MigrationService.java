@@ -245,6 +245,7 @@ public class MigrationService {
 		Map<Integer, List<TransactionFee>> transactionFeeByTicket = getTransactionFeesMap(
 				clientDAO.getTransactionFeeByTicket());
 		List<Client> clients = clientDAO.getClients();
+		List<Client> clientsGstin = clientDAO.getClientsWithGstin();
 
 		Client defaultClient = new Client();
 		defaultClient.setClientId(-1);
@@ -253,6 +254,7 @@ public class MigrationService {
 		clients.add(defaultClient);
 
 		updateClients(clients,
+				clientsGstin,
 				productsMap,
 				ccsMap,
 				banksMap,
@@ -270,7 +272,7 @@ public class MigrationService {
 		mongoDbConnection.getCollection(CLIENT_COLLECTION).insertMany(docs);
 
 		LOGGER.info("End of clients migration...");
-
+		
 	}
 
 	private Map<Integer, List<TransactionFee>> getTransactionFeesMap(List<TransactionFee> transactionFees) {
@@ -355,7 +357,7 @@ public class MigrationService {
 		return result;
 	}
 
-	private Collection<? extends Client> updateClients(List<Client> clients,
+	private Collection<? extends Client> updateClients(List<Client> clients, List<Client> clientsGstin,
 			Map<Integer, List<ProductMerchantFee>> productsMap,
 			Map<Integer, List<CreditCardVendor>> vendorsMap, Map<Integer, List<Bank>> banksMap,
 			Map<Integer, Map<String, ClientPricing>> clientPricingMaps,
@@ -394,6 +396,16 @@ public class MigrationService {
 					clientPricings.add(clientPricing);
 				}
 				client.setClientPricings(clientPricings);
+			}
+			
+			for (Client clientGstin : clientsGstin) {
+				if (client.getClientAccountNumber() != null
+						&& clientGstin.getClientAccountNumber() != null
+						&& clientGstin.getClientAccountNumber()
+								.equals(client.getClientAccountNumber())) {
+					client.setGstin(clientGstin.getGstin());
+					break;
+				}
 			}
 		}
 
