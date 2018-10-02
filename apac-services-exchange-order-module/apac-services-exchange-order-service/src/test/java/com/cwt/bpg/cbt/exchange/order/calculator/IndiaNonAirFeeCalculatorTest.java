@@ -76,7 +76,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, client);
+		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, 0D);
 
 		assertThat(result.getGstAmount(), is(equalTo(new BigDecimal(177))));
 		assertThat(result.getMerchantFee(), is(equalTo(BigDecimal.ZERO)));
@@ -104,7 +104,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, client);
+		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, 0D);
 
 		assertThat(result.getGstAmount(), is(equalTo(new BigDecimal(177))));
 		assertThat(result.getMerchantFee(), is(equalTo(BigDecimal.ZERO)));
@@ -132,7 +132,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setApplyMfCc(true);
 		client.setApplyMfBank(true);
 
-		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, client);
+		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, 2D);
 
 		assertThat(result.getGstAmount(), is(equalTo(new BigDecimal(177))));
 		assertThat(result.getMerchantFee(), is(equalTo(new BigDecimal(29))));
@@ -166,9 +166,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		calculator.calculate(input, client, client);
-
-		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, client);
+		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, 2D);
 
 		assertThat(result.getGstAmount(), is(equalTo(new BigDecimal(177))));
 		assertThat(result.getMerchantFee(), is(equalTo(new BigDecimal(29))));
@@ -197,7 +195,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(true);
 
-		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, client);
+		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, 2D);
 
 		assertThat(result.getGstAmount(), is(equalTo(new BigDecimal(177))));
 		assertThat(result.getMerchantFee(), is(equalTo(new BigDecimal(29))));
@@ -226,7 +224,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(true);
 
-		NonAirFeesBreakdown result = calculator.calculate(input, client, client);
+		NonAirFeesBreakdown result = calculator.calculate(input, client, 0D);
 
 		assertNotNull(result);
 	}
@@ -234,7 +232,7 @@ public class IndiaNonAirFeeCalculatorTest {
 	@Test
 	public void nullInput() {
 
-		IndiaNonAirFeesBreakdown result = calculator.calculate(null, null, null);
+		IndiaNonAirFeesBreakdown result = calculator.calculate(null, null, 0D);
 
 		assertThat(result.getGstAmount(), is(nullValue()));
 		assertThat(result.getMerchantFee(), is(nullValue()));
@@ -243,8 +241,8 @@ public class IndiaNonAirFeeCalculatorTest {
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getNettCostGst(), is(nullValue()));
 
-		assertNotNull(calculator.calculate(new IndiaNonAirFeesInput(), null, null));
-		assertNotNull(calculator.calculate(null, new Client(), null));
+		assertNotNull(calculator.calculate(new IndiaNonAirFeesInput(), null, 0D));
+		assertNotNull(calculator.calculate(null, new Client(), 0D));
 	}
 
 	@Test
@@ -264,9 +262,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		calculator.calculate(input, client, client);
-
-		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, client);
+		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, 2D);
 
 		assertThat(result.getGstAmount(), is(equalTo(new BigDecimal(182))));
 		assertThat(result.getMerchantFee(), is(equalTo(new BigDecimal(30))));
@@ -296,9 +292,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		calculator.calculate(input, client, client);
-
-		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, client);
+		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, 0D);
 
 		assertThat(result.getGstAmount(), is(equalTo(new BigDecimal(182))));
 		assertThat(result.getMerchantFee(), is(equalTo(BigDecimal.ZERO)));
@@ -327,9 +321,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		calculator.calculate(input, client, client);
-
-		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, client);
+		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, 0D);
 
 		assertThat(result.getMerchantFee(), is(equalTo(BigDecimal.ZERO)));
 		assertThat(result.getGstAmount(), is(equalTo(new BigDecimal(177))));
@@ -365,9 +357,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setApplyMfCc(true);
 		client.setApplyMfBank(true);
 
-		calculator.calculate(input, client, client);
-
-		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, client);
+		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, 3D);
 
 		assertThat(result.getMerchantFee(), is(equalTo(new BigDecimal(43))));
 		assertThat(result.getGstAmount(), is(equalTo(new BigDecimal(177))));
@@ -399,7 +389,7 @@ public class IndiaNonAirFeeCalculatorTest {
 		client.setApplyMfBank(false);
 		client.setApplyMfCc(false);
 
-		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, client);
+		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, 0D);
 
 		assertThat(result.getGstAmount(), is(equalTo(new BigDecimal(177))));
 		assertThat(result.getMerchantFee(), is(equalTo(BigDecimal.ZERO)));
@@ -431,7 +421,8 @@ public class IndiaNonAirFeeCalculatorTest {
 		pf2.setSubjectToMf(true);
 		pf2.setProductCode("01");
 		defaultClient.setMfProducts(singletonList(pf2));
-		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, defaultClient);
+
+		IndiaNonAirFeesBreakdown result = calculator.calculate(input, client, 0D);
 
 		assertThat(result.getGstAmount(), is(equalTo(new BigDecimal(177))));
 		assertThat(result.getMerchantFee(), is(equalTo(BigDecimal.ZERO)));

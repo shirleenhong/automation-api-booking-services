@@ -9,8 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.india.MerchantFeePercentInput;
+import com.cwt.bpg.cbt.exchange.order.model.india.MerchantFeePercentOutput;
 import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -75,6 +76,21 @@ public class OtherServiceFeesController {
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") AirFeesInput input) {
 
 		return new ResponseEntity<>(service.calculateAirFees(input, countryCode.toUpperCase()), HttpStatus.OK);
+	}
+
+	@PostMapping(
+			path = "/merchant-fee-percent",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Returns merchant fee percent value for India product.")
+	public ResponseEntity<MerchantFeePercentOutput> getMerchantFeePercent(
+			@Valid @RequestBody @ApiParam(value = "Values needed for merchant fee percent identification") MerchantFeePercentInput input) {
+
+        Double merchantFeePercent = service.getMerchantFeePercent(input);
+        MerchantFeePercentOutput output = new MerchantFeePercentOutput();
+        output.setMerchantFeePercent(merchantFeePercent);
+        return new ResponseEntity<>(output, HttpStatus.OK);
 	}
 
 	@PostMapping(

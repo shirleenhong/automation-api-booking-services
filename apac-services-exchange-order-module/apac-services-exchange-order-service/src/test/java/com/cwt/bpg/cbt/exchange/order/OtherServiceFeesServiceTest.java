@@ -1,8 +1,12 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
+
+import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +23,7 @@ import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorF
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.tf.FeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.india.MerchantFeePercentInput;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 public class OtherServiceFeesServiceTest {
@@ -134,7 +139,7 @@ public class OtherServiceFeesServiceTest {
 
 	@Test
 	public void shouldReturnNonAirFeeIndia() {
-		when(indiaNonAirFeeCalculator.calculate(anyObject(), anyObject(), anyObject())).thenReturn(new IndiaNonAirFeesBreakdown());
+		when(indiaNonAirFeeCalculator.calculate(anyObject(), anyObject(), anyDouble())).thenReturn(new IndiaNonAirFeesBreakdown());
 
 		Client client = new Client();
 		client.setPricingId(20);
@@ -142,6 +147,7 @@ public class OtherServiceFeesServiceTest {
 		when(clientService.getClient(anyString())).thenReturn(client);
 
 		IndiaNonAirFeesInput input = new IndiaNonAirFeesInput();
+		input.setProduct(new IndiaNonAirProductInput());
 
 		assertNotNull(service.calculateIndiaNonAirFees(input));
 	}
@@ -159,4 +165,38 @@ public class OtherServiceFeesServiceTest {
 		
 		assertNotNull(service.calculateNonAirFees(input, "HK"));
 	}
+
+    @Test
+    public void shouldReturnZeroMerchantFeePercentWhenFopModeIsBTC() {
+        when(clientService.getClient(anyString())).thenReturn(any(Client.class));
+
+        MerchantFeePercentInput input = new MerchantFeePercentInput();
+        input.setFopMode(OtherServiceFeesService.BILL_TO_COMPANY);
+
+        Double merchantFeePercent = service.getMerchantFeePercent(input);
+
+        assertThat(merchantFeePercent, equalTo(0d));
+    }
+
+    @Test
+    public void shouldReturnZeroMerchantFeePercentWhenClientMFProductIsSubjectToMF() {
+        final String productCode = "PROD1";
+
+        Client client = new Client();
+        ProductMerchantFee mfProduct = new ProductMerchantFee();
+        mfProduct.setProductCode(productCode);
+        mfProduct.setSubjectToMf(true);
+        client.setMfProducts(Collections.singletonList(mfProduct));
+
+        when(clientService.getClient(anyString())).thenReturn(client);
+
+        MerchantFeePercentInput input = new MerchantFeePercentInput();
+        input.setFopMode(2);
+        input.setProductCode(productCode);
+
+        Double merchantFeePercent = service.getMerchantFeePercent(input);
+
+        assertThat(merchantFeePercent, equalTo(0d));
+    }
+
 }
