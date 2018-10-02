@@ -20,6 +20,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.cwt.bpg.cbt</groupId>
+			<artifactId>apac-services-client-air-contract-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.cwt.bpg.cbt</groupId>
 			<artifactId>apac-services-air-transaction-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
