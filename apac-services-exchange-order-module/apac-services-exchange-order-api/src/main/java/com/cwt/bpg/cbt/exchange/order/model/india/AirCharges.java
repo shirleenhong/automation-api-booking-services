@@ -11,6 +11,7 @@ public class AirCharges implements Serializable {
     private static final long serialVersionUID = -1917788559776695996L;
 
     private String cwtRefNo;
+    private String vendorRefNo;
     private String otherRelatedNo;
     private Boolean reissuedTicket;
     private String issueInExchangeFor;
@@ -63,6 +64,14 @@ public class AirCharges implements Serializable {
 
     public void setCwtRefNo(String cwtRefNo) {
         this.cwtRefNo = cwtRefNo;
+    }
+
+    public String getVendorRefNo() {
+        return vendorRefNo;
+    }
+
+    public void setVendorRefNo(String vendorRefNo) {
+        this.vendorRefNo = vendorRefNo;
     }
 
     public String getOtherRelatedNo() {
