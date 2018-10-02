@@ -105,6 +105,9 @@ Append Exchange Order Main Request Fields
     Run Keyword If    ${eo_remarks_data_length_${eo_index}}>0 or ${itin_remarks_data_length_${eo_index}}>0    Append Exchange Order Remarks Request Fields    ${eo_index}
     ...    ELSE    Run Keywords    Set Test Variable    ${exchange_order_eo_rmk_request_list}    ${EMPTY}
     ...    AND    Set Test Variable    ${exchange_order_itin_rmk_request_list}    ${EMPTY}
+    Run Keyword If    ${pdf_descriptions_data_length_${eo_index}}>0 or ${pdf_descriptions_data_length_${eo_index}}>0    Append Exchange Order Pdf Descriptons Request Fields    ${eo_index}
+    ...    ELSE    Run Keywords    Set Test Variable    ${exchange_order_pdf_descriptions_request_list}    ${EMPTY}
+    ...    AND    Set Test Variable    ${exchange_order_pdf_descriptions_request_list}    ${EMPTY}
     Set Test Variable    ${exchange_order_main_request_list}
 
 Append Exchange Order Miscellaneous Charges Order Info Request Fields
@@ -156,6 +159,14 @@ Append Exchange Order Miscellaneous Information Request Fields
     Run Keyword If    "${realised_savings_code_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_miscellaneous_information_request_list}    "realisedSavingsCode":"${realised_savings_code_${eo_index}_${field_name}}"
     Run Keyword If    "${missed_savings_code_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_miscellaneous_information_request_list}    "missedSavingsCode":"${missed_savings_code_${eo_index}_${field_name}}"
     Set Test Variable    ${exchange_order_miscellaneous_information_request_list}
+    
+Append Exchange Order Pdf Descriptons Request Fields
+    [Arguments]    ${eo_index}
+    ${exchange_order_pdf_descriptions_request_list}    Create List
+    : FOR    ${pdf_desc_index}    IN RANGE    0    ${pdf_descriptions_data_length_${eo_index}}
+    \    ${pdf_descriptions_parameter_list}    Set Variable    "${pdf_descriptions_text_${eo_index}_${pdf_desc_index}}"
+    \    Append To List    ${exchange_order_pdf_descriptions_request_list}    ${pdf_descriptions_parameter_list}
+    Set Test Variable    ${exchange_order_pdf_descriptions_request_list}
 
 Append Exchange Order Remarks Request Fields
     [Arguments]    ${eo_index}
@@ -313,9 +324,16 @@ Create Exchange Order Main Request
     \    ${itin_rmk_list}    Set Variable    ${itin_rmk_list}${exchange_order_itin_rmk_request_list[${i}]}
     ${itin_rmk_list}    Set Variable If    "${itin_rmk_count}"=="0"    ${EMPTY}    ${itin_rmk_list}
     ${itin_rmk_list_count}    Get Length    ${itin_rmk_list}
+    ${pdf_descriptions_count}    Get Length    ${exchange_order_pdf_descriptions_request_list}
+    : FOR    ${i}    IN RANGE    0    ${pdf_descriptions_count}
+    \    ${pdf_descriptions_list}    Set Variable If    ${i}==0    ${EMPTY}    ${pdf_descriptions_list},
+    \    ${pdf_descriptions_list}    Set Variable    ${pdf_descriptions_list}${exchange_order_pdf_descriptions_request_list[${i}]}
+    ${pdf_descriptions_list}    Set Variable If    "${pdf_descriptions_count}"=="0"    ${EMPTY}    ${pdf_descriptions_list}
+    ${pdf_descriptions_list_count}    Get Length    ${pdf_descriptions_list}
     ${data_main}    Set Variable If    ${eo_main_list_count}>0    ${eo_main_list}    ${EMPTY}
     ${data_main}    Set Variable If    ${eo_rmk_list_count}>0    ${data_main},"eoRemarks": [${eo_rmk_list}]    ${data_main}
     ${data_main}    Set Variable If    ${itin_rmk_list_count}>0    ${data_main},"itineraryRemarks": [${itin_rmk_list}]    ${data_main}
+    ${data_main}    Set Variable If    ${pdf_descriptions_list_count}>0    ${data_main},"pdfDescriptions": [${pdf_descriptions_list}]    ${data_main}
     Set Test Variable    ${data_main}
 
 Create Exchange Order Miscellaneous Charges Order Request
@@ -451,7 +469,7 @@ Create Exchange Order Vendor Request
 
 Create Test Variables For Exchange Order
     [Arguments]    ${number_of_eo}=1    ${eo_main_data}=${EMPTY}    ${eo_remarks_data}=${EMPTY}    ${itin_remarks_data}=${EMPTY}    ${insurance_data}=${EMPTY}    ${insured_remarks_data}=${EMPTY}
-    ...    ${mco_data}=${EMPTY}    ${mco_remarks_data}=${EMPTY}    ${misc_info_data}=${EMPTY}    ${service_info_data}=${EMPTY}    ${vendor_data}=${EMPTY}    ${vendor_contact_info_data}=${EMPTY}
+    ...    ${mco_data}=${EMPTY}    ${mco_remarks_data}=${EMPTY}    ${misc_info_data}=${EMPTY}    ${service_info_data}=${EMPTY}    ${vendor_data}=${EMPTY}    ${vendor_contact_info_data}=${EMPTY}    ${pdf_descriptions_data}=${EMPTY}
     ...    ${generate_pnr}=false    ${field_name}=value
     Set Test Variable    ${number_of_eo}
     ${pnr_value}    Run Keyword If    "${generate_pnr.lower()}"=="true"    Generate Random Record Locator
@@ -489,6 +507,8 @@ Create Test Variables For Exchange Order
     \    Run Keyword If    "${vendor_data}"!="${EMPTY}"    Create Test Variables For Vendor    ${vendor_data_list}    ${eo_index}    ${field_name}
     \    Run Keyword If    "${vendor_contact_info_data}"!="${EMPTY}"    Create Test Variables For Vendor Contact Info    ${vendor_contact_info_data}    ${eo_index}
     \    ...    ELSE    Set Test Variable    ${contact_data_length_${eo_index}}    0
+    \    Run Keyword If    "${pdf_descriptions_data}"!="${EMPTY}"    Create Test Variables For Pdf Descriptions    ${pdf_descriptions_data}    ${eo_index}
+    \    ...    ELSE    Set Test Variable    ${pdf_descriptions_data_length_${eo_index}}    0
     \    Identify Exchange Order Market    ${eo_index}
     \    Format Additional Info Date    ${eo_index}
 
@@ -559,6 +579,15 @@ Create Test Variables For Miscellaneous Information
     : FOR    ${data}    IN    @{eo_data_list}
     \    ${data_item}    Split String    ${data}    ,
     \    Set Test Variable    ${${data_item[0]}_${eo_index}_${field_name}}    ${data_item[1]}
+
+Create Test Variables For Pdf Descriptions
+    [Arguments]    ${pdf_descriptions_data}    ${eo_index}=0
+    ${pdf_descriptions_data}    Split String    ${pdf_descriptions_data}    ,
+    ${pdf_descriptions_data_length}    Get Length    ${pdf_descriptions_data}
+    Set Test Variable    ${pdf_descriptions_data_${eo_index}}    ${pdf_descriptions_data}
+    Set Test Variable    ${pdf_descriptions_data_length_${eo_index}}    ${pdf_descriptions_data_length}
+    : FOR    ${index}    IN RANGE    0    ${pdf_descriptions_data_length}
+    \    Set Test Variable    ${pdf_descriptions_text_${eo_index}_${index}}    ${pdf_descriptions_data[${index}]}
 
 Create Test Variables For Service Information
     [Arguments]    ${eo_data_list}    ${eo_index}=0    ${field_name}=value
@@ -857,12 +886,12 @@ Verify Exchange Order Information For PDF Is Retrieved Correctly
     Decode String Response    ${eo_index}
     Verify Static Labels Is Retrieved Correctly
     Verify String Contains Substring    ${pdf_response}    ${display_date_${eo_index}}
-    Verify String Contains Substring    ${pdf_response}    ${display_additional_info_date_${eo_index}}
+    #Verify String Contains Substring    ${pdf_response}    ${display_additional_info_date_${eo_index}}
     Verify String Contains Substring    ${pdf_response}    ${agent_id_${eo_index}_value}
     Verify String Contains Substring    ${pdf_response}    ${agent_name_${eo_index}_value}
-    Run Keyword If    "${ai_bta_description_${eo_index}_value}"!="none"    Verify String Contains Substring    ${pdf_response}    ${ai_bta_description_${eo_index}_value}
-    ...    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${ai_bta_description_${eo_index}_value}
-    Verify String Contains Substring    ${pdf_response}    ${ai_description_${eo_index}_value}
+    #Run Keyword If    "${ai_bta_description_${eo_index}_value}"!="none"    Verify String Contains Substring    ${pdf_response}    ${ai_bta_description_${eo_index}_value}
+    #...    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${ai_bta_description_${eo_index}_value}
+    #Verify String Contains Substring    ${pdf_response}    ${ai_description_${eo_index}_value}
     Verify String Contains Substring    ${pdf_response}    ${exchange_order_number_${eo_index}}
     Run Keyword If    "${gst_${eo_index}_value}"!="none" and ${gst_${eo_index}_value}>0    Verify String Contains Substring    ${pdf_response}    ${gst_amount_${eo_index}_value}
     Verify String Contains Substring    ${pdf_response}    ${header_address_${eo_index}_value}
@@ -981,6 +1010,9 @@ Verify Exchange Order Is Saved Correctly
     : FOR    ${index}    IN RANGE    0    ${itin_remarks_data_length_${eo_index}}
     \    Verify Json Value Is Correct With Given Response    $.itineraryRemarks.[${index}]    ${itin_remark_text_${eo_index}_${index}}
     Run Keyword If    "${itin_remarks_data_length_${eo_index}}"=="0"    Verify Json Element Does Not Exist    $.itineraryRemarks
+    : FOR    ${index}    IN RANGE    0    ${pdf_descriptions_data_length_${eo_index}}
+    \    Verify Json Value Is Correct With Given Response    $.pdfDescriptions.[${index}]    ${pdf_descriptions_text_${eo_index}_${index}}
+    Run Keyword If    "${pdf_descriptions_data_length_${eo_index}}"=="0"    Verify Json Element Does Not Exist    $.pdfDescriptions
     Verify Exchange Order Insurance Is Saved Correctly    ${eo_index}    ${field_name}
     Verify Exchange Order Miscellaneous Charges Order Is Saved Correctly    ${eo_index}    ${field_name}
     Verify Exchange Order Miscellaneous Information Is Saved Correctly    ${eo_index}    ${field_name}
