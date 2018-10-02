@@ -34,6 +34,7 @@ public class Application {
 			
 			service.migrateProductList();
 			service.migratePassthroughs();
+			service.migrateAirContracts();
 			*/
 		}
 	}

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import com.cwt.bpg.cbt.air.contract.model.AirContract;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
 import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
@@ -32,6 +33,7 @@ import com.cwt.bpg.cbt.exchange.order.model.Remark;
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFee;
 import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirContractDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirTransactionDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirlineRuleDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirportDAO;
@@ -53,6 +55,7 @@ public class MigrationService {
 	private static final String AIRPORT_COLLECTION = "airports";
 	private static final String CLIENT_COLLECTION = "clients";
 	private static final String AIR_TRANSACTION_COLLECTION = "airTransactions";
+	private static final String AIR_CONTRACTS_COLLECTION = "airContracts";
 
 	@Autowired
 	private MongoDbConnection mongoDbConnection;
@@ -83,6 +86,9 @@ public class MigrationService {
 
 	@Autowired
 	private AirTransactionDAOImpl airTransactionDAOImpl;
+	
+	@Autowired
+	private AirContractDAOImpl airContractDAOImpl;
 
 	@Value("${com.cwt.tpromigration.mongodb.dbuser}")
 	private String dbUser;
@@ -417,12 +423,20 @@ public class MigrationService {
 		}
 	}
 
-	public String getCountryCode() {
-		return countryCode;
-	}
+	@SuppressWarnings("unchecked")
+	public void migrateAirContracts() throws JsonProcessingException {
 
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
+		LOGGER.info("Started client air contracts migration...");
+		List<AirContract> airContracts = airContractDAOImpl.getList();
+		List<Document> docs = new ArrayList<>();
+		for (AirContract airContract : airContracts) {
+			airContract.setCountryCode(countryCode);
+			docs.add(dBObjectMapper.mapAsDbDocument(airContract));
+		}
+
+		mongoDbConnection.getCollection(AIR_CONTRACTS_COLLECTION).insertMany(docs);
+
+		LOGGER.info("End of client air contracts migration...");
 	}
 
 	@SuppressWarnings({ "unchecked" })
@@ -476,4 +490,12 @@ public class MigrationService {
 		return (List<String>) mapBookingClasses().get(airlineCode + passthroughType);
 
 	}
+	
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}	
 }

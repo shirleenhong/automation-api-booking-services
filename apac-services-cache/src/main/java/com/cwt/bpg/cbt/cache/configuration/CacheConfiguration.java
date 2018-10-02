@@ -31,7 +31,8 @@ public class CacheConfiguration {
 			"obt-list",
 	        "room-types",
             "reason-codes",
-            "car-vendors"};
+            "car-vendors",
+            "air-contracts"};
 
 	@Bean
 	public CacheManager cacheManager() {
@@ -52,7 +53,9 @@ public class CacheConfiguration {
 					"obt-list",
                     "room-types",
                     "reason-codes",
-                    "car-vendors"})
+                    "car-vendors",
+                    "air-contracts"})
+	
 	@Scheduled(cron = "0 0 0,12 * * *")
 	public void evictAllCache() {
 		logger.info("Cache Evicted!");

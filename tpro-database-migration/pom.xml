@@ -120,6 +120,11 @@
 	      <artifactId>apac-services-fees-api</artifactId>
 	      <version>${project.version}</version>
 	    </dependency>
+	    <dependency>
+			<groupId>com.cwt.bpg.cbt</groupId>
+			<artifactId>apac-services-client-air-contract-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 
 </project>
