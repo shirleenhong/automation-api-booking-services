@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.ClientPricing;
@@ -47,15 +48,17 @@ public class ClientService {
 		List<ClientPricing> clientPricings = new ArrayList<>();
 		
 		Client client = getClient(clientAccountNumber);
-		
-		client.getClientPricings().stream()
-				.filter(pricing -> pricing.getTripType().equals(tripType))
-				.forEach(pricing -> {
-					pricing.setFeeOption(null);
-					pricing.setTransactionFees(null);
-					clientPricings.add(pricing);
 
-				});
+		if (!ObjectUtils.isEmpty(client.getClientPricings())) {
+			client.getClientPricings().stream()
+					.filter(pricing -> pricing.getTripType().equals(tripType))
+					.forEach(pricing -> {
+						pricing.setFeeOption(null);
+						pricing.setTransactionFees(null);
+						clientPricings.add(pricing);
+
+					});
+		}
 
 		return clientPricings;
 	}
