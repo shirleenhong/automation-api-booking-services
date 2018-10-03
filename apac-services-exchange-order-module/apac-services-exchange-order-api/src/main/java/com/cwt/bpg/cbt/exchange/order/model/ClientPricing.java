@@ -12,8 +12,10 @@ public class ClientPricing implements Serializable {
 	
 	private String tripType;
 	private String feeOption;
-	private Integer group;
+	private Integer value;
 	private Integer cmpid;
+	private Integer fieldId;
+	private String feeName;
 	private List<TransactionFee> transactionFees;
 
 	public String getTripType() {
@@ -40,12 +42,12 @@ public class ClientPricing implements Serializable {
 		this.transactionFees = transactionFees;
 	}
 
-	public Integer getGroup() {
-		return group;
+	public Integer getValue() {
+		return value;
 	}
 
-	public void setGroup(Integer group) {
-		this.group = group;
+	public void setValue(Integer value) {
+		this.value = value;
 	}
 
 	public Integer getCmpid() {
@@ -56,4 +58,19 @@ public class ClientPricing implements Serializable {
 		this.cmpid = cmpid;
 	}
 
+	public Integer getFieldId() {
+		return fieldId;
+	}
+
+	public void setFieldId(Integer fieldId) {
+		this.fieldId = fieldId;
+	}
+
+	public String getFeeName() {
+		return feeName;
+	}
+
+	public void setFeeName(String feeName) {
+		this.feeName = feeName;
+	}
 }
