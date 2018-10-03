@@ -11,7 +11,7 @@
   <artifactId>apac-services-client-air-contract-module</artifactId>
   <packaging>pom</packaging>
 
-  <name>apac-services-air-transaction-module</name>
+  <name>apac-services-client-air-contract-module</name>
   <modules>
     <module>apac-services-client-air-contract-rest</module>
     <module>apac-services-client-air-contract-api</module>
