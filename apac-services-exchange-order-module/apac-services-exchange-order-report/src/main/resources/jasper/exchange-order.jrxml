@@ -218,7 +218,7 @@
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="330" width="59" height="15" uuid="9d80071b-0318-46cf-a234-ef0cb110af47"/>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$P{NETT_COST}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -241,7 +241,7 @@
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="0" width="59" height="15" uuid="8a495d42-33c3-434c-881d-30cf12a5794c"/>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$P{VENDOR_HANDLING_FEES}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -260,7 +260,7 @@
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="160" y="0" width="59" height="15" uuid="f11230ca-273c-43a3-b21c-1fc0431f5b2b"/>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$P{GST_AMOUNT_TAX1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -269,12 +269,12 @@
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="15" width="59" height="15" uuid="1714dddb-e36f-49a6-8f80-b237590b64b6"/>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$P{TAX2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="160" y="30" width="59" height="15" uuid="4a30f97f-c770-4fa4-a58b-c0ea3fd21923"/>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$P{TOTAL}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
