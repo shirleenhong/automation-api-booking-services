@@ -15,6 +15,8 @@ import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsOutput;
 import com.cwt.bpg.cbt.exchange.order.model.india.MerchantFeePercentInput;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
@@ -105,6 +107,10 @@ public class OtherServiceFeesService {
                 .calculate(input, airlineRule, client, airport, airProduct);
     }
 
+    AirFeesDefaultsOutput getAirFeesDefaults(AirFeesDefaultsInput input) {
+        return null;
+    }
+
     Double getMerchantFeePercent(MerchantFeePercentInput input) {
         final Client client = clientService.getClient(input.getClientAccountNumber());
         final Client defaultClient = clientService.getDefaultClient();
@@ -192,5 +198,4 @@ public class OtherServiceFeesService {
     AirFeesBreakdown calculateNettCost(NettCostInput input) {
         return nettCostCalculator.calculateFee(input.getSellingPrice(), input.getCommissionPct());
     }
-
 }

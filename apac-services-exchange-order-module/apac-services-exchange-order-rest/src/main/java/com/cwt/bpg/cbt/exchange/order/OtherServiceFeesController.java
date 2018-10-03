@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsOutput;
 import com.cwt.bpg.cbt.exchange.order.model.india.MerchantFeePercentInput;
 import com.cwt.bpg.cbt.exchange.order.model.india.MerchantFeePercentOutput;
 import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
@@ -92,6 +94,19 @@ public class OtherServiceFeesController {
         output.setMerchantFeePercent(merchantFeePercent);
         return new ResponseEntity<>(output, HttpStatus.OK);
 	}
+
+	@PostMapping(
+			path = "/air-fees/in/default-values",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
+			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Returns default values for India Air product.")
+	public ResponseEntity<AirFeesDefaultsOutput> getAirFeesDefaults(
+			@Valid @RequestBody @ApiParam(value = "Values needed to get air fees defaults") AirFeesDefaultsInput input) {
+
+		return new ResponseEntity<>(service.getAirFeesDefaults(input), HttpStatus.OK);
+	}
+
 
 	@PostMapping(
 			path = "/visa-fees",
