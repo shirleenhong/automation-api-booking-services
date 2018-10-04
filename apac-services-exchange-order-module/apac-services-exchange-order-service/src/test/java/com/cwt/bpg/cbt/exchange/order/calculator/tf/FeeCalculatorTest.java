@@ -82,6 +82,7 @@ public class FeeCalculatorTest {
         clientPricing.setFeeOption(feeOption);
         clientPricing.setTripType("I");
         clientPricing.setTransactionFees(transactionFees);
+        clientPricing.setFieldId(5);
 
         List<ClientPricing> clientPricingList = new ArrayList<>();
         clientPricingList.add(clientPricing);

@@ -25,6 +25,7 @@ public class FeeCalculator {
 	private static final String ALL = "X";
 	static final String SOLO = "SOLO";
 	static final String GROUP = "GROUP";
+	static final int FEE = 5;
 
 	@Autowired
 	private ScaleConfig scaleConfig;
@@ -132,9 +133,10 @@ public class FeeCalculator {
             List<ClientPricing> clientPricings = Optional.ofNullable(client.getClientPricings())
                     .orElse(Collections.emptyList());
 
-            Optional<ClientPricing> pricing = clientPricings.stream()
-							.filter(i -> i.getTripType().equals(input.getTripType()))
-							.findFirst();
+			Optional<ClientPricing> pricing = clientPricings.stream()
+					.filter(i -> i.getFieldId() == FEE
+							&& i.getTripType().equals(input.getTripType()))
+					.findFirst();
 
 			if (pricing.isPresent()) {
 				final ClientPricing clientPricing = pricing.get();

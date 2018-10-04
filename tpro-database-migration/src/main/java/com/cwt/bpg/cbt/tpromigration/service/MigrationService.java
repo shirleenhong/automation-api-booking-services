@@ -412,7 +412,6 @@ public class MigrationService {
 									transactionFeeByTicket.get(clientPricing.getValue()));
 						}
 					}
-					clientPricing.setFieldId(null);
 					clientPricings.add(clientPricing);
 				}
 				client.setClientPricings(clientPricings);

@@ -1,14 +1,15 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.ClientPricing;
@@ -44,23 +45,17 @@ public class ClientService {
 		return clientRepository.getClient(clientAccountNumber);
 	}
 	
-	public List<ClientPricing> getClientPricings(String clientAccountNumber, String tripType){
-		List<ClientPricing> clientPricings = new ArrayList<>();
-		
+	public List<ClientPricing> getClientPricings(String clientAccountNumber,
+			String tripType) {
+
 		Client client = getClient(clientAccountNumber);
 
-		if (!ObjectUtils.isEmpty(client.getClientPricings())) {
-			client.getClientPricings().stream()
-					.filter(pricing -> pricing.getTripType().equals(tripType))
-					.forEach(pricing -> {
-						pricing.setFeeOption(null);
-						pricing.setTransactionFees(null);
-						clientPricings.add(pricing);
+		List<ClientPricing> clientPricings = Optional
+				.ofNullable(client.getClientPricings()).orElse(Collections.emptyList());
 
-					});
-		}
-
-		return clientPricings;
+		return clientPricings.stream()
+				.filter(pricing -> pricing.getTripType().equals(tripType))
+				.collect(Collectors.toList());
 	}
 
 	public Client getDefaultClient() {
