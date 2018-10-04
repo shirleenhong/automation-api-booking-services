@@ -1,15 +1,14 @@
 package com.cwt.bpg.cbt.air.contract.model;
 
+import java.io.Serializable;
+
+import org.bson.types.ObjectId;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.mongodb.morphia.annotations.*;
+
 import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Field;
-import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Index;
-import org.mongodb.morphia.annotations.Indexes;
-
-import java.io.Serializable;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity(value = "airContracts", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("id")))
@@ -21,10 +20,16 @@ public class AirContract implements Serializable {
 	@JsonSerialize(using = ObjectIdSerializer.class)
 	private ObjectId id;
 
+	@ApiModelProperty(required = true)
+	@NotEmpty
 	private String clientAccountNumber;
-	
+
+	@ApiModelProperty(required = true)
+	@NotEmpty
 	private String countryCode;
-	
+
+	@ApiModelProperty(required = true)
+	@NotEmpty
 	private String airlineCode;
 	
 	private String fopCode;
