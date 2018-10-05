@@ -1,10 +1,13 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
@@ -14,7 +17,30 @@ import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
+import com.cwt.bpg.cbt.exchange.order.model.Bank;
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.Client;
+import com.cwt.bpg.cbt.exchange.order.model.ClientFee;
+import com.cwt.bpg.cbt.exchange.order.model.ClientPricing;
+import com.cwt.bpg.cbt.exchange.order.model.CreditCardVendor;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
+import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
+import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.ProductMerchantFee;
+import com.cwt.bpg.cbt.exchange.order.model.VisaFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.VisaFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsOutput;
 import com.cwt.bpg.cbt.exchange.order.model.india.MerchantFeePercentInput;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
@@ -63,12 +89,12 @@ public class OtherServiceFeesService {
     @Autowired
     private ProductService productService;
 
-    NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input, String countryCode) {
+    public NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input, String countryCode) {
         MerchantFee merchantFee = merchantFeeService.getMerchantFee(countryCode, input.getClientAccountNumber());
         return this.nonAirFeeCalculator.calculate(input, merchantFee, countryCode);
     }
 
-    IndiaNonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
+    public IndiaNonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
 
         final Client client = clientService.getClient(input.getClientAccountNumber());
         final Client defaultClient = clientService.getDefaultClient();
@@ -77,12 +103,12 @@ public class OtherServiceFeesService {
         return this.indiaNonAirFeeCalculator.calculate(input, client, merchantFeePercent);
     }
 
-    AirFeesBreakdown calculateAirFees(AirFeesInput input, String countryCode) {
+    public AirFeesBreakdown calculateAirFees(AirFeesInput input, String countryCode) {
         MerchantFee merchantFee = merchantFeeService.getMerchantFee(countryCode, input.getClientAccountNumber());
         return this.osFactory.getCalculator(countryCode).calculate(input, merchantFee, countryCode);
     }
 
-    IndiaAirFeesBreakdown calculateIndiaAirFees(IndiaAirFeesInput input) {
+    public IndiaAirFeesBreakdown calculateIndiaAirFees(IndiaAirFeesInput input) {
 
         Optional<Client> isClientExist = Optional.ofNullable(clientService.getClient(input.getClientAccountNumber()));
 
@@ -105,7 +131,46 @@ public class OtherServiceFeesService {
                 .calculate(input, airlineRule, client, airport, airProduct);
     }
 
-    Double getMerchantFeePercent(MerchantFeePercentInput input) {
+    public AirFeesDefaultsOutput getAirFeesDefaults(AirFeesDefaultsInput input) {
+    	
+    	AirFeesDefaultsOutput output = new AirFeesDefaultsOutput();
+    	List<ClientFee> clientFees = new ArrayList<>();
+    	
+		List<ClientPricing> clientPricings = clientService
+				.getClientPricings(input.getClientAccountNumber(), input.getTripType());
+		
+		if (!ObjectUtils.isEmpty(clientPricings)) {
+			for(ClientPricing pricing : clientPricings) {
+				ClientFee clientFee = new ClientFee();
+				clientFee.setFeeName(pricing.getFeeName());
+				clientFee.setTripType(pricing.getTripType());
+				clientFee.setValue(pricing.getValue());
+				clientFees.add(clientFee);
+			}
+		}
+		output.setClientFees(clientFees);
+		
+		Double merchantFeePercent = getMerchantFeePercent(formMerchantFeeInput(input));
+		output.setMerchantFeePercent(merchantFeePercent);
+
+		return output;
+	}
+
+	private MerchantFeePercentInput formMerchantFeeInput(AirFeesDefaultsInput input) {
+		
+		MerchantFeePercentInput merchantFeeInput = new MerchantFeePercentInput();
+
+		merchantFeeInput.setCcType(input.getCcType());
+		merchantFeeInput.setClientAccountNumber(input.getClientAccountNumber());
+		merchantFeeInput.setFopMode(input.getFopMode());
+		merchantFeeInput.setFopNumber(input.getFopNumber());
+		merchantFeeInput.setFopType(input.getFopType());
+		merchantFeeInput.setProductCode(input.getProductCode());
+		
+		return merchantFeeInput;
+	}
+
+    public Double getMerchantFeePercent(MerchantFeePercentInput input) {
         final Client client = clientService.getClient(input.getClientAccountNumber());
         final Client defaultClient = clientService.getDefaultClient();
 
@@ -184,13 +249,12 @@ public class OtherServiceFeesService {
         return airportService.getAirport(cityCode);
     }
 
-    VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {
+    public VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {
         MerchantFee merchantFee = merchantFeeService.getMerchantFee(input.getCountryCode(), input.getClientAccountNumber());
         return this.visaFeesCalculator.calculate(input, merchantFee, input.getCountryCode());
     }
 
-    AirFeesBreakdown calculateNettCost(NettCostInput input) {
+    public AirFeesBreakdown calculateNettCost(NettCostInput input) {
         return nettCostCalculator.calculateFee(input.getSellingPrice(), input.getCommissionPct());
     }
-
 }

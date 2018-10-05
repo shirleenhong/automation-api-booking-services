@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirVariables;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
 
 import com.cwt.bpg.cbt.exchange.order.model.*;
@@ -336,11 +337,61 @@ public class ClientDAOImpl {
 	}
 
 
+	public List<AirVariables> getAirVariables() {
+		List<AirVariables> airVariables = new ArrayList<>();
+		
+		String sql = "Select FieldID, FieldName from cwtstandarddata.dbo.tblAirVariables";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			LOGGER.info("Getting air variables from mssqldb");
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				AirVariables airVariable = new AirVariables();
+				airVariable.setFieldId(rs.getInt("FieldID"));
+				airVariable.setFieldName(rs.getString("FieldName"));
+				airVariables.add(airVariable);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading air variables, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+			}
+		}
+
+		LOGGER.info("Size of air variables from mssqldb: {}", airVariables.size());
+		return airVariables;
+		
+	}
+	
 	public List<ClientPricing> getClientPricings() {
 
 		List<ClientPricing> resultList = new ArrayList<>();
 
-		String sql = "Select * from tblClientPricing where fieldid = 5";
+		String sql = "Select * from tblClientPricing";
 
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -351,11 +402,12 @@ public class ClientDAOImpl {
 			conn = dataSource.getConnection();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-
+			
 			while (rs.next()) {
 				ClientPricing clientPricing = new ClientPricing();
+				clientPricing.setFieldId(rs.getInt("fieldid"));
 				clientPricing.setCmpid(rs.getInt("cmpid"));
-				clientPricing.setGroup(rs.getInt("value"));
+				clientPricing.setValue(rs.getInt("value"));
 				clientPricing.setTripType(rs.getString("triptype"));
 				clientPricing.setFeeOption(rs.getString("valueoption"));
 				resultList.add(clientPricing);
@@ -385,7 +437,6 @@ public class ClientDAOImpl {
 		}
 
 		LOGGER.info("Size of client pricing from mssqldb: {}", resultList.size());
-
 		return resultList;
 	}
 

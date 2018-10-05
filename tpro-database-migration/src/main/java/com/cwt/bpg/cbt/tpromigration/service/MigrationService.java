@@ -42,6 +42,7 @@ import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientMerchantFeeDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductDAOFactory;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.RemarkDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAOFactory;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirVariables;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
@@ -236,7 +237,7 @@ public class MigrationService {
 		Map<Integer, List<ProductMerchantFee>> productsMap = getProductMap(clientDAO.getProducts());
 		Map<Integer, List<CreditCardVendor>> ccsMap = getVendoMap(clientDAO.getCcs());
 		Map<Integer, List<Bank>> banksMap = getBankMap(clientDAO.getBanks());
-		Map<Integer, Map<String, ClientPricing>> clientPricingMaps = getClientPricingMaps(
+		Map<Integer, Map<Integer, ClientPricing>> clientPricingMaps = getClientPricingMaps(
 				clientDAO.getClientPricings());
 		Map<Integer, List<TransactionFee>> transactionFeeByPNR = getTransactionFeesMap(
 				clientDAO.getTransactionFeeByPNR());
@@ -246,7 +247,8 @@ public class MigrationService {
 				clientDAO.getTransactionFeeByTicket());
 		List<Client> clients = clientDAO.getClients();
 		List<Client> clientsGstin = clientDAO.getClientsWithGstin();
-
+		List<AirVariables> airVariables = clientDAO.getAirVariables();
+		
 		Client defaultClient = new Client();
 		defaultClient.setClientId(-1);
 		defaultClient.setApplyMfBank(false);
@@ -259,6 +261,7 @@ public class MigrationService {
 				ccsMap,
 				banksMap,
 				clientPricingMaps,
+				airVariables,
 				transactionFeeByPNR,
 				transactionFeeByCoupon,
 				transactionFeeByTicket);
@@ -290,18 +293,21 @@ public class MigrationService {
 		return transactionFeesMap;
 	}
 
-	private Map<Integer, Map<String, ClientPricing>> getClientPricingMaps(
+	private Map<Integer, Map<Integer, ClientPricing>> getClientPricingMaps(
 			List<ClientPricing> clientPricings) {
-		Map<Integer, Map<String, ClientPricing>> result = new HashMap<>();
+		Map<Integer, Map<Integer, ClientPricing>> result = new HashMap<>();
 		int previousCmpId = 0;
-		Map<String, ClientPricing> clientPricingMap = null;
+		Integer i = 0;
+		Map<Integer, ClientPricing> clientPricingMap = null;
 		for (ClientPricing clientPricing : clientPricings) {
 			if (previousCmpId != clientPricing.getCmpid()) {
 				clientPricingMap = new HashMap<>();
+				i = 0;
 			}
 			previousCmpId = clientPricing.getCmpid();
-			clientPricingMap.put(clientPricing.getTripType(), clientPricing);
+			clientPricingMap.put(i, clientPricing);
 			result.put(previousCmpId, clientPricingMap);
+			i++;
 		}
 		return result;
 	}
@@ -360,11 +366,13 @@ public class MigrationService {
 	private Collection<? extends Client> updateClients(List<Client> clients, List<Client> clientsGstin,
 			Map<Integer, List<ProductMerchantFee>> productsMap,
 			Map<Integer, List<CreditCardVendor>> vendorsMap, Map<Integer, List<Bank>> banksMap,
-			Map<Integer, Map<String, ClientPricing>> clientPricingMaps,
+			Map<Integer, Map<Integer, ClientPricing>> clientPricingMaps,
+			List<AirVariables> airVariables,
 			Map<Integer, List<TransactionFee>> transactionFeeByPNR,
 			Map<Integer, List<TransactionFee>> transactionFeeByCoupon,
 			Map<Integer, List<TransactionFee>> transactionFeeByTicket) {
 
+		
 		for (Client client : clients) {
 
 			if (productsMap.containsKey(client.getClientId()) 
@@ -377,21 +385,32 @@ public class MigrationService {
 			}
 			List<ClientPricing> clientPricings = new ArrayList<>();
 			if (clientPricingMaps.containsKey(client.getCmpid())) {
-				Map<String, ClientPricing> clientPricingMap = clientPricingMaps.get(client.getCmpid());
+				Map<Integer, ClientPricing> clientPricingMap = clientPricingMaps.get(client.getCmpid());
 
-				for (String tripType : clientPricingMap.keySet()) {
-					ClientPricing clientPricing = clientPricingMap.get(tripType);
-					String feeOption = clientPricing.getFeeOption();
-					if ("P".equals(feeOption)) {
-						clientPricing.setTransactionFees(transactionFeeByPNR.get(clientPricing.getGroup()));
+				for (ClientPricing clientPricing : clientPricingMap.values()) {
+					
+					for (AirVariables airVariable : airVariables) {
+						if (clientPricing.getFieldId().equals(airVariable.getFieldId())) {
+							clientPricing.setFeeName(airVariable.getFieldName());
+							break;
+						}
 					}
-					else if ("C".equals(feeOption)) {
-						clientPricing
-								.setTransactionFees(transactionFeeByCoupon.get(clientPricing.getGroup()));
-					}
-					else if ("T".equals(feeOption)) {
-						clientPricing
-								.setTransactionFees(transactionFeeByTicket.get(clientPricing.getGroup()));
+					
+					if (clientPricing.getFieldId() == 5) {
+						
+						String feeOption = clientPricing.getFeeOption();
+						if ("P".equals(feeOption)) {
+							clientPricing.setTransactionFees(
+									transactionFeeByPNR.get(clientPricing.getValue()));
+						}
+						else if ("C".equals(feeOption)) {
+							clientPricing.setTransactionFees(
+									transactionFeeByCoupon.get(clientPricing.getValue()));
+						}
+						else if ("T".equals(feeOption)) {
+							clientPricing.setTransactionFees(
+									transactionFeeByTicket.get(clientPricing.getValue()));
+						}
 					}
 					clientPricings.add(clientPricing);
 				}

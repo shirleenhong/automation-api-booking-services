@@ -6,12 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.cwt.bpg.cbt.exchange.order.model.*;
-import com.cwt.bpg.cbt.exchange.order.model.india.MerchantFeePercentInput;
-import com.cwt.bpg.cbt.exchange.order.model.india.MerchantFeePercentOutput;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
+import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.VisaFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.VisaFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsOutput;
 import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -79,19 +95,17 @@ public class OtherServiceFeesController {
 	}
 
 	@PostMapping(
-			path = "/merchant-fee-percent",
+			path = "/air-fees/in/default-values",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Returns merchant fee percent value for India product.")
-	public ResponseEntity<MerchantFeePercentOutput> getMerchantFeePercent(
-			@Valid @RequestBody @ApiParam(value = "Values needed for merchant fee percent identification") MerchantFeePercentInput input) {
+	@ApiOperation(value = "Returns default values for India Air product.")
+	public ResponseEntity<AirFeesDefaultsOutput> getAirFeesDefaults(
+			@Valid @RequestBody @ApiParam(value = "Values needed to get air fees defaults") AirFeesDefaultsInput input) {
 
-        Double merchantFeePercent = service.getMerchantFeePercent(input);
-        MerchantFeePercentOutput output = new MerchantFeePercentOutput();
-        output.setMerchantFeePercent(merchantFeePercent);
-        return new ResponseEntity<>(output, HttpStatus.OK);
+		return new ResponseEntity<>(service.getAirFeesDefaults(input), HttpStatus.OK);
 	}
+
 
 	@PostMapping(
 			path = "/visa-fees",

@@ -6,23 +6,14 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(value = { "cmpid" })
-public class ClientPricing implements Serializable {
+public class ClientPricing extends ClientFee implements Serializable {
 
 	private static final long serialVersionUID = -1193230937085830329L;
 	
-	private String tripType;
 	private String feeOption;
-	private Integer group;
 	private Integer cmpid;
+	private Integer fieldId;
 	private List<TransactionFee> transactionFees;
-
-	public String getTripType() {
-		return tripType;
-	}
-
-	public void setTripType(String tripType) {
-		this.tripType = tripType;
-	}
 
 	public String getFeeOption() {
 		return feeOption;
@@ -40,20 +31,20 @@ public class ClientPricing implements Serializable {
 		this.transactionFees = transactionFees;
 	}
 
-	public Integer getGroup() {
-		return group;
-	}
-
-	public void setGroup(Integer group) {
-		this.group = group;
-	}
-
 	public Integer getCmpid() {
 		return cmpid;
 	}
 
 	public void setCmpid(Integer cmpid) {
 		this.cmpid = cmpid;
+	}
+
+	public Integer getFieldId() {
+		return fieldId;
+	}
+
+	public void setFieldId(Integer fieldId) {
+		this.fieldId = fieldId;
 	}
 
 }
