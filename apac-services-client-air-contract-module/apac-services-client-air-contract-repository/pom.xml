@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
     	<groupId>com.cwt.bpg.cbt</groupId>
-    	<artifactId>apac-services-air-transaction-module</artifactId>
+    	<artifactId>apac-services-client-air-contract-module</artifactId>
     	<version>1.8.0-SNAPSHOT</version>
   	</parent>
 	<artifactId>apac-services-client-air-contract-repository</artifactId>
