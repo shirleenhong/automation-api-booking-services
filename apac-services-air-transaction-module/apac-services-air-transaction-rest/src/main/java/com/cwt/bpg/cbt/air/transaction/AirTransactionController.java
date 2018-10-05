@@ -30,6 +30,7 @@ public class AirTransactionController {
 	@ApiOperation(value = "Returns CWT (Non-Passthrough) or Airline (Full Passthrough) based on airline code, "
 			+ "booking class, ccvendor code, country code, and client number.")
 	public ResponseEntity<AirTransactionOutput> getAirTransaction(
+			@RequestParam("countryCode") String countryCode,
 			@RequestParam("airlineCode") String airlineCode,
 			@RequestParam("bookingClasses") List<String> bookingClasses,
 			@RequestParam("ccVendorCode") String ccVendorCode,
@@ -37,21 +38,22 @@ public class AirTransactionController {
 			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber)
 			throws AirTransactionNoContentException {
 
-		AirTransactionInput input = formAirTransactionInput(airlineCode, bookingClasses,
+		AirTransactionInput input = formAirTransactionInput(countryCode,airlineCode, bookingClasses,
 				ccVendorCode, ccType, clientAccountNumber);
 
 		return new ResponseEntity<>(airTransService.getAirTransaction(input), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/air-transactions/{airlineCode}", produces = {
+	@GetMapping(value = "/air-transactions/{countryCode}/{airlineCode}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "[Maintenance] Pulls air transactions based on airline code and client number.")
 	public ResponseEntity<List<AirTransaction>> getAirTransactions(
+			@PathVariable("countryCode") @ApiParam("2-character airline code") String countryCode,
 			@PathVariable("airlineCode") @ApiParam("2-character airline code") String airlineCode,
 			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber) {
 
-		AirTransactionInput input = formAirTransactionInput(airlineCode, null,
+		AirTransactionInput input = formAirTransactionInput(countryCode,airlineCode, null,
 				null, null, clientAccountNumber);
     
 		return new ResponseEntity<>(airTransService.getAirTransactionList(input),
@@ -75,7 +77,7 @@ public class AirTransactionController {
 		return new ResponseEntity<>(deleteResult, status);
 	}
 
-	private AirTransactionInput formAirTransactionInput(String airlineCode,
+	private AirTransactionInput formAirTransactionInput(String countryCode,String airlineCode,
 			List<String> bookingClasses, String ccVendorCode, String ccType,
 			String clientAccountNumber) {
 
@@ -85,6 +87,7 @@ public class AirTransactionController {
 		input.setCcVendorCode(ccVendorCode);
 		input.setCcType(ccType);
 		input.setClientAccountNumber(clientAccountNumber);
+		input.setCountryCode(countryCode);
 		return input;
 	}
 

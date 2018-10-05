@@ -16,6 +16,7 @@ import com.cwt.bpg.cbt.utils.*;
 public class AirTransactionRepository extends CommonRepository<AirTransaction, ObjectId>{
 
 	private static final String ID = "id";
+	private static final String COUNTRY_CODE = "countryCode";
 	private static final String AIRLINE_CODE = "airlineCode";
 	private static final String CC_VENDOR_CODE = "ccVendorCode";
 	private static final String CC_TYPE = "ccType";
@@ -29,6 +30,10 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 	public List<AirTransaction> getAirTransactions(AirTransactionInput params) {
 		
 		final Query<AirTransaction> query = morphia.getDatastore().createQuery(AirTransaction.class);
+		
+		if(StringUtils.isNotBlank(params.getCountryCode())) {
+			query.field(COUNTRY_CODE).equal(params.getCountryCode());
+		}
 		
 		if(StringUtils.isNotBlank(params.getAirlineCode())) {
 			query.field(AIRLINE_CODE).equal(params.getAirlineCode());

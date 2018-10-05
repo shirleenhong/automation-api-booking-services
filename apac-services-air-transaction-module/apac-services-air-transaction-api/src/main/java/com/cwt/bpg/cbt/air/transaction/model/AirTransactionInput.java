@@ -8,6 +8,8 @@ public class AirTransactionInput implements Serializable {
 	private static final long serialVersionUID = 5943172847055937530L;
 
 	private List<String> bookingClasses;
+	
+	private String countryCode;
 
 	private String airlineCode;
 
@@ -57,4 +59,13 @@ public class AirTransactionInput implements Serializable {
 	public void setCcType(String ccType) {
 		this.ccType = ccType;
 	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+	
 }
