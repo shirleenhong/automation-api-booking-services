@@ -49,10 +49,12 @@ public class FeeCalculator {
 				final IndiaAirProductInput product = input.getProduct();
 				final BigDecimal baseFarePlusYqTax = safeValue(input.getBaseFare())
 								.add(yqTax);
-				
-				gstAmount = calculatePercentage(baseFarePlusYqTax, product.getGstPercent())
-						.add(calculatePercentage(baseFarePlusYqTax, product.getOt1Percent()))
-						.add(calculatePercentage(baseFarePlusYqTax, product.getOt2Percent()));
+
+				gstAmount = round(
+						round(calculatePercentage(baseFarePlusYqTax, product.getGstPercent()), scale)
+						.add(round(calculatePercentage(baseFarePlusYqTax, product.getOt1Percent()), scale))
+						.add(round(calculatePercentage(baseFarePlusYqTax, product.getOt2Percent()), scale)),
+					scale);
 			}
 		}		
 				
@@ -85,7 +87,7 @@ public class FeeCalculator {
 									.add(safeValue(input.getOthTax2()))
 									.add(safeValue(input.getOthTax3())), scale));
 
-		breakdown.setTotalGst(round(gstAmount, scale));
+		breakdown.setTotalGst(gstAmount);
 		breakdown.setTotalSellFare(round(safeValue(input.getBaseFare()), scale));
 		breakdown.setBaseAmount(round(getTotalFee(input, breakdown, yqTax), scale));
 
