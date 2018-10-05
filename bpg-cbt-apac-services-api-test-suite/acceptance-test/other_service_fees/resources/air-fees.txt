@@ -168,7 +168,9 @@ Calculate Air Fees-IN Total Fee
     ...    ELSE    Set Test Variable    ${base_amount_amount}    ${base_fare_value}
 
 Calculate Air Fees-IN Total GST
-    ${calculated_value}    Evaluate    ((${base_fare_value}+${yq_tax_value})*(${products_gst_percentage_value}*0.01))+((${base_fare_value}+${yq_tax_value})*(${products_ot1_percentage_value}*0.01))+((${base_fare_value}+${yq_tax_value})*(${products_ot2_percentage_value}*0.01))
+    ${calculated_value}    Evaluate    round(((${base_fare_value}+${yq_tax_value})*(${products_gst_percentage_value}*0.01)),${decimal_place})
+    ${calculated_value}    Evaluate   ${calculated_value}+round(((${base_fare_value}+${yq_tax_value})*(${products_ot1_percentage_value}*0.01)),${decimal_place})
+    ${calculated_value}    Evaluate   ${calculated_value}+round(((${base_fare_value}+${yq_tax_value})*(${products_ot2_percentage_value}*0.01)),${decimal_place})
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
