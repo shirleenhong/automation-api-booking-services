@@ -25,7 +25,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.FopType;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
 import com.cwt.bpg.cbt.exchange.order.validator.AirlineOverheadCommissionValidator;
 import com.cwt.bpg.cbt.exchange.order.validator.FeeValidator;
 import com.cwt.bpg.cbt.exchange.order.validator.OthTaxValidator;
@@ -124,6 +126,28 @@ public class OtherServiceFeesControllerAirFeeTest {
                 .getResponse();
 
         verify(service, times(1)).calculateIndiaAirFees(any(IndiaAirFeesInput.class));
+    }
+    
+    @Test
+    public void shouldReturnAirFeesDefaults() throws Exception {
+        JSONObject jsonObj = new JSONObject();
+
+        jsonObj.put("fopType", FopType.CWT);
+        jsonObj.put("fopMode", 1);
+        jsonObj.put("productCode", "CX");
+        jsonObj.put("ccType", "CX");
+        jsonObj.put("fopNumber", "1234");
+        jsonObj.put("tripType", "I");
+        jsonObj.put("clientAccountNumber", "1234");
+        
+        mockMvc.perform(post("/other-service-fees/air-fees/in/default-values")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(jsonObj)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        verify(service, times(1)).getAirFeesDefaults(any(AirFeesDefaultsInput.class));
     }
 
 }

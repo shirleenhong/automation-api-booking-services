@@ -6,7 +6,9 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +25,8 @@ import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorF
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.tf.FeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsOutput;
 import com.cwt.bpg.cbt.exchange.order.model.india.MerchantFeePercentInput;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
@@ -198,5 +202,71 @@ public class OtherServiceFeesServiceTest {
 
         assertThat(merchantFeePercent, equalTo(0d));
     }
+    
+    @Test
+    public void shouldReturnAirFeesDefaults_noClientPricings() {
+    	AirFeesDefaultsOutput output = new AirFeesDefaultsOutput();
+    	List<ClientPricing> clientPricings = new ArrayList<>();
+    	
+    	Client client = new Client();
+        ProductMerchantFee mfProduct = new ProductMerchantFee();
+        String productCode = "PROD1";
+        mfProduct.setProductCode(productCode);
+        mfProduct.setSubjectToMf(true);
+        client.setMfProducts(Collections.singletonList(mfProduct));
+        
+		AirFeesDefaultsInput input = createAirFeesDefaults();
+		when(clientService.getClientPricings(input.getClientAccountNumber(),
+				input.getTripType())).thenReturn(clientPricings);
+		when(clientService.getClient(anyString())).thenReturn(client);
+		 
+		output = service.getAirFeesDefaults(input);
+		
+		assertNotNull(output);
+    	assertThat(output.getMerchantFeePercent(), equalTo(0d));
+    	
+    }
+    
+    @Test
+    public void shouldReturnAirFeesDefaults() {
+    	AirFeesDefaultsOutput output = new AirFeesDefaultsOutput();
+    	List<ClientPricing> clientPricings = new ArrayList<>();
+    	
+    	Client client = new Client();
+        ProductMerchantFee mfProduct = new ProductMerchantFee();
+        String productCode = "PROD1";
+        mfProduct.setProductCode(productCode);
+        mfProduct.setSubjectToMf(true);
+        client.setMfProducts(Collections.singletonList(mfProduct));
+        
+        ClientPricing clientPricing = new ClientPricing();
+        clientPricing.setCmpid(1);
+        clientPricings.add(clientPricing);
+        
+		AirFeesDefaultsInput input = createAirFeesDefaults();
+		when(clientService.getClientPricings(input.getClientAccountNumber(),
+				input.getTripType())).thenReturn(clientPricings);
+		when(clientService.getClient(anyString())).thenReturn(client);
+		 
+		output = service.getAirFeesDefaults(input);
+		
+		assertNotNull(output);
+    	assertThat(output.getMerchantFeePercent(), equalTo(0d));
+    	
+    }
+
+
+	private AirFeesDefaultsInput createAirFeesDefaults() {
+
+		AirFeesDefaultsInput input = new AirFeesDefaultsInput();
+		input.setCcType("VISA");
+		input.setClientAccountNumber("2078200002");
+		input.setFopMode(2);
+		input.setFopNumber("1234");
+		input.setFopType(FopType.CWT);
+		input.setProductCode("02");
+
+		return input;
+	}
 
 }
