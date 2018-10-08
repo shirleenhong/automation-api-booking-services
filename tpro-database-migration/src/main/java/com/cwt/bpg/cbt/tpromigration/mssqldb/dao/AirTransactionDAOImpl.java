@@ -27,28 +27,29 @@ public class AirTransactionDAOImpl {
 	public List<AirTransaction> getList(boolean isSP) {
 		List<AirTransaction> airTransactions = new ArrayList<>();
 		logger.info("setting up query");
-		String sql = "SELECT distinct a.AirlineCode,c.AirlineDescription, a.CCVendorCode, a.CCType, x.Countrycode, x.ClientNumber, "
-					+ "CASE a.CCVendorCode " + "WHEN 'TP' THEN 'Airplus' "
-					+ "WHEN 'DC' THEN 'Diners' " + "ELSE d.CCVendorName "
-					+ "END as CCVendorName, "
-					+ "CASE WHEN PassthroughType = 'FP' THEN 'Airline' "
-					+ "WHEN PassthroughType = 'NP' THEN 'CWT' "
-					+ "WHEN PassthroughType = 'SP' THEN "
-					+ "CASE  WHEN a.CCVendorCode = 'DC' OR a.CCVendorCode = 'TP' THEN 'CWT' "
-					+ "WHEN a.AirlineCode = 'SQ' THEN 'Airline' "
-					+ "WHEN a.AirlineCode = 'MI' THEN  "
-					+ "CASE WHEN a.CCVendorCode='CA' OR a.CCVendorCode='VI' THEN "
-					+ "'CWT' " + "WHEN a.CCVendorCode='AX' THEN " + "'Airline' " + "END "
-					+ "END " + "END as PassthroughType " + "FROM tblAirlineCC a  "
-					+ "left join CWTStandardData.dbo.tblAirlines c ON c.AirlineCode = a.AirlineCode "
-					+ "left join CWTStandardData.dbo.tblCCVendor d ON d.CCVendorCode = a.CCVendorCode  "
-					+ "left join (SELECT DISTINCT e.clientNumber,e.clientid,h.countrycode FROM tblClientMaster e "
-					+ "left join cwtstandarddata.dbo.tblcsp_linedefclientmapping g ON g.clientid = e.clientid  "
-					+ "left join cwtstandarddata.dbo.configinstances h ON h.keyId = g.configInstanceKeyId  "
-					+ "WHERE h.countryCode = 'IN') x ON x.clientid = a.clientid "
-					+ "WHERE a.passThroughType "+(isSP?"=":"<>") +" 'SP' ";
-
-
+		
+		String sql = 
+		 "SELECT DISTINCT a.AirlineCode,c.AirlineDescription, a.CCVendorCode, a.CCType, x.Countrycode, x.ClientNumber, "
+		+ "CASE a.CCVendorCode WHEN 'TP' THEN 'Airplus' "
+		+ "WHEN 'DC' THEN 'Diners' ELSE d.CCVendorName  "
+		+ "END as CCVendorName,  "
+		+ "CASE WHEN PassthroughType = 'FP' THEN 'Airline' " 
+		+ "WHEN PassthroughType = 'NP' THEN 'CWT' "
+		+ "WHEN PassthroughType = 'SP' THEN "
+		+ "CASE  WHEN a.CCVendorCode = 'DC' OR a.CCVendorCode = 'TP' THEN 'CWT' " 
+		+ "WHEN a.AirlineCode = 'SQ' THEN 'Airline' "
+		+ "WHEN a.AirlineCode = 'MI' THEN  "
+		+ "CASE WHEN a.CCVendorCode='CA' OR a.CCVendorCode='VI' THEN " 
+		+ "'CWT' WHEN a.CCVendorCode='AX' THEN 'Airline' END "
+		+ "END END as PassthroughType FROM tblAirlineCC a  "
+		+ "left join CWTStandardData.dbo.tblAirlines c ON c.AirlineCode = a.AirlineCode " 
+		+ "left join CWTStandardData.dbo.tblCCVendor d ON d.CCVendorCode = a.CCVendorCode "  
+		+ "left join (SELECT DISTINCT e.clientNumber,e.clientid,h.countrycode FROM tblClientMaster e " 
+			+ "left join cwtstandarddata.dbo.tblcsp_linedefclientmapping g ON g.clientid = e.clientid " 
+			+ "left join cwtstandarddata.dbo.configinstances h ON h.keyId = g.configInstanceKeyId "
+			+ ") x ON x.clientid = a.clientid "
+		+ "WHERE a.passThroughType "+(isSP?"=":"<>") +" 'SP' "
+		+ "AND x.countrycode IS NOT NULL ";
 		
 		Connection conn = null;
 

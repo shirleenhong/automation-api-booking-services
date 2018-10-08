@@ -403,6 +403,7 @@ public class ClientDAOImpl {
 			conn = dataSource.getConnection();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
+			System.out.println(rs.getFetchSize());
 			
 			while (rs.next()) {
 				ClientPricing clientPricing = new ClientPricing();
