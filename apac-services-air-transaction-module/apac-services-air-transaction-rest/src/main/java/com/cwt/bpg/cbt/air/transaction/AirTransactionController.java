@@ -38,7 +38,7 @@ public class AirTransactionController {
 			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber)
 			throws AirTransactionNoContentException {
 
-		AirTransactionInput input = formAirTransactionInput(countryCode,airlineCode, bookingClasses,
+		AirTransactionInput input = formAirTransactionInput(countryCode, airlineCode, bookingClasses,
 				ccVendorCode, ccType, clientAccountNumber);
 
 		return new ResponseEntity<>(airTransService.getAirTransaction(input), HttpStatus.OK);
@@ -49,11 +49,11 @@ public class AirTransactionController {
 	@ResponseBody
 	@ApiOperation(value = "[Maintenance] Pulls air transactions based on airline code and client number.")
 	public ResponseEntity<List<AirTransaction>> getAirTransactions(
-			@PathVariable("countryCode") @ApiParam("2-character airline code") String countryCode,
+			@PathVariable("countryCode") @ApiParam("2-character country code") String countryCode,
 			@PathVariable("airlineCode") @ApiParam("2-character airline code") String airlineCode,
 			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber) {
 
-		AirTransactionInput input = formAirTransactionInput(countryCode,airlineCode, null,
+		AirTransactionInput input = formAirTransactionInput(countryCode, airlineCode, null,
 				null, null, clientAccountNumber);
     
 		return new ResponseEntity<>(airTransService.getAirTransactionList(input),

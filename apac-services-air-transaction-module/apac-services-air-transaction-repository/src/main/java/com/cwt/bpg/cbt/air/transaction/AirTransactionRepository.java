@@ -32,7 +32,7 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 		final Query<AirTransaction> query = morphia.getDatastore().createQuery(AirTransaction.class);
 		
 		if(StringUtils.isNotBlank(params.getCountryCode())) {
-			query.field(COUNTRY_CODE).equal(params.getCountryCode());
+			query.field(COUNTRY_CODE).equalIgnoreCase(params.getCountryCode());
 		}
 		
 		if(StringUtils.isNotBlank(params.getAirlineCode())) {
