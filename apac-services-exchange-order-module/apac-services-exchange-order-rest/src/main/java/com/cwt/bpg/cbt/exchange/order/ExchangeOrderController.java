@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +9,31 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.CarVendor;
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
+import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.RoomType;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -234,6 +251,31 @@ public class ExchangeOrderController {
 	@ApiOperation(value = "Deletes Car Vendor data by code.")
 	public ResponseEntity<String> deleteCarVendor(@PathVariable @ApiParam(value = "Car Vendor Code") String code) {
 		String deleteResult = eoService.deleteCarVendor(code);
+		HttpStatus status = checkDeleteResult(deleteResult);
+		return new ResponseEntity<>(deleteResult, status);
+	}
+	
+	@GetMapping(path = "/exchange-order/air-misc-info/{clientAccountNumber}")
+	@ResponseBody
+	@ApiOperation(value = "Pulls all Air Misc Info by client account number.")
+	public ResponseEntity<List<AirMiscInfo>> getAirMiscInfos(@PathVariable String clientAccountNumber) {
+		return new ResponseEntity<>(eoService.getAirMiscInfos(clientAccountNumber), HttpStatus.OK);
+	}
+	
+	@Internal
+    @PutMapping(path = "/exchange-order/air-misc-info")
+    @ResponseBody
+    @ApiOperation(value = "[Maintenance] Save or update Air Misc Info.")
+    public ResponseEntity<AirMiscInfo> saveAirMiscInfo(@Valid @RequestBody AirMiscInfo airMiscInfo) {
+        return new ResponseEntity<>(eoService.saveAirMiscInfo(airMiscInfo), HttpStatus.OK);
+    }
+	
+	@Internal
+	@DeleteMapping(path = "/exchange-order/air-misc-info/{id}")
+	@ResponseBody
+	@ApiOperation(value = "[Maintenance] Deletes Air Misc Info by id.")
+	public ResponseEntity<String> deleteAirMiscInfo(@PathVariable String id) {
+		String deleteResult = eoService.deleteAirMiscInfo(id);
 		HttpStatus status = checkDeleteResult(deleteResult);
 		return new ResponseEntity<>(deleteResult, status);
 	}

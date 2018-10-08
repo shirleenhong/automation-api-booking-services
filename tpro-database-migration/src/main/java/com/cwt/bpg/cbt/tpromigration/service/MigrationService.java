@@ -31,6 +31,7 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.ProductMerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.Remark;
 import com.cwt.bpg.cbt.exchange.order.model.TransactionFee;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirContractDAOImpl;
@@ -57,6 +58,7 @@ public class MigrationService {
 	private static final String CLIENT_COLLECTION = "clients";
 	private static final String AIR_TRANSACTION_COLLECTION = "airTransactions";
 	private static final String AIR_CONTRACTS_COLLECTION = "airContracts";
+	private static final String AIR_MISC_INFO_COLLECTION = "airMiscInfo";
 
 	@Autowired
 	private MongoDbConnection mongoDbConnection;
@@ -456,6 +458,21 @@ public class MigrationService {
 		mongoDbConnection.getCollection(AIR_CONTRACTS_COLLECTION).insertMany(docs);
 
 		LOGGER.info("End of client air contracts migration...");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void migrateAirMiscInfo() throws JsonProcessingException {
+
+		LOGGER.info("Started air misc info migration...");
+		List<AirMiscInfo> airMiscInfoList = clientDAO.getAirMiscInfo();
+		List<Document> docs = new ArrayList<>();
+		for (AirMiscInfo airMiscInfo : airMiscInfoList) {
+			docs.add(dBObjectMapper.mapAsDbDocument(airMiscInfo));
+		}
+
+		mongoDbConnection.getCollection(AIR_MISC_INFO_COLLECTION).insertMany(docs);
+
+		LOGGER.info("End of air misc info migration...");
 	}
 
 	@SuppressWarnings({ "unchecked" })

@@ -20,6 +20,7 @@ import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirVariables;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
 
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 
 @Repository
 public class ClientDAOImpl {
@@ -612,5 +613,72 @@ public class ClientDAOImpl {
 		LOGGER.info("Size of transaction fees from mssqldb: {}", resultList.size());
 		return resultList;
 	}
+	
+	public List<AirMiscInfo> getAirMiscInfo() {
+		
+		List<AirMiscInfo> airMiscInfoList = new ArrayList<>();
+		
+		String sql = "select c.GDSFormat, a.Description, a.DataType, a.Min, a.Max, a.ReportingListID,  a.SampleValue, "
+				+ "a.FieldType, a.Mandatory, a.ClientID, d.ClientNumber, b.ReportingFieldTypeID, b.ReportingFieldType "
+				+ "from tblReportingList a "
+				+ "left join tblReportingFieldType b on b.ReportingFieldTypeID = a.FieldType "
+				+ "left join tblGDSMapping c on c.ReportingListID = a.ReportingListID "
+				+ "left join tblClientMaster d on d.ClientID = a.ClientID";
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
+		try {
+			LOGGER.info("Getting client misc info from mssqldb");
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				AirMiscInfo airMiscInfo = new AirMiscInfo();
+				airMiscInfo.setGdsFormat(rs.getString("GDSFormat"));
+				airMiscInfo.setDescription(rs.getString("Description"));
+				airMiscInfo.setDataType(rs.getString("DataType"));
+				airMiscInfo.setMin(rs.getString("Min"));
+				airMiscInfo.setMax(rs.getString("Max"));
+				airMiscInfo.setReportingListId(rs.getString("ReportingListID"));
+				airMiscInfo.setSample(rs.getString("SampleValue"));
+				airMiscInfo.setReportingFieldType(rs.getString("FieldType"));
+				airMiscInfo.setMandatory(rs.getString("Mandatory"));
+				airMiscInfo.setClientId(rs.getString("ClientID"));
+				airMiscInfo.setClientAccountNumber(rs.getString("ClientNumber"));
+				airMiscInfo.setReportingFieldTypeId(rs.getString("ReportingFieldTypeID"));
+				airMiscInfo.setReportingFieldType(rs.getString("ReportingFieldType"));
+				airMiscInfoList.add(airMiscInfo);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading air misc info from mssqldb middleware, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+				//
+			}
+		}
+
+		LOGGER.info("Size of air misc info from mssqldb : {}", airMiscInfoList.size());
+		return airMiscInfoList;
+		
+	}
 }

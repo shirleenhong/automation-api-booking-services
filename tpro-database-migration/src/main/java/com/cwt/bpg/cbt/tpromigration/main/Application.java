@@ -26,16 +26,19 @@ public class Application {
 				service.migrateAirlineRules();
 				service.migrateAirports();
 				service.migrateClients();
+				service.migrateAirMiscInfo();
 			}
 			else {
+				if ("HK".equalsIgnoreCase(countryCode)) {
+					service.migrateAirContracts();
+				}
 				service.migrateMerchantFees();
 				service.migrateRemarks();
 			}
 			
 			service.migrateProductList();
-			service.migratePassthroughs();
-			service.migrateAirContracts();
-			*/
+			service.migratePassthroughs();*/
+			
 		}
 	}
 
