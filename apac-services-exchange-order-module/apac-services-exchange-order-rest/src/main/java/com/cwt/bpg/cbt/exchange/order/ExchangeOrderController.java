@@ -258,8 +258,8 @@ public class ExchangeOrderController {
 	@GetMapping(path = "/exchange-order/air-misc-info/{clientAccountNumber}")
 	@ResponseBody
 	@ApiOperation(value = "Pulls all Air Misc Info by client account number.")
-	public ResponseEntity<List<AirMiscInfo>> getAirMiscInfo(@PathVariable String clientAccountNumber) {
-		return new ResponseEntity<>(eoService.getAirMiscInfo(clientAccountNumber), HttpStatus.OK);
+	public ResponseEntity<List<AirMiscInfo>> getAirMiscInfos(@PathVariable String clientAccountNumber) {
+		return new ResponseEntity<>(eoService.getAirMiscInfos(clientAccountNumber), HttpStatus.OK);
 	}
 	
 	@Internal

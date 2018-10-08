@@ -509,11 +509,11 @@ public class ExchangeOrderControllerTest {
 		List<AirMiscInfo> airMiscInfoList = new ArrayList<>();
 		String clientAccountNumber = "12345";
 		
-		when(eoService.getAirMiscInfo(clientAccountNumber)).thenReturn(airMiscInfoList);
+		when(eoService.getAirMiscInfos(clientAccountNumber)).thenReturn(airMiscInfoList);
 
 		mockMvc.perform(get(urlAirMiscInfo+"/"+clientAccountNumber)).andExpect(status().isOk());
 
-		verify(eoService, times(1)).getAirMiscInfo(clientAccountNumber);
+		verify(eoService, times(1)).getAirMiscInfos(clientAccountNumber);
 	}
 	
 	@Test

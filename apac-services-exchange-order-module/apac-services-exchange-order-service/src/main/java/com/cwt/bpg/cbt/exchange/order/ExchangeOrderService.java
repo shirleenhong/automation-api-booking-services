@@ -120,8 +120,8 @@ public class ExchangeOrderService {
 	}
     
     @Cacheable(cacheNames = "air-misc-info", key = "#clientAccountNumber")
-    public List<AirMiscInfo> getAirMiscInfo(String clientAccountNumber) {
-    	return airMiscInfoRepository.getAirMiscInfo(clientAccountNumber, FIELD_ID);
+    public List<AirMiscInfo> getAirMiscInfos(String clientAccountNumber) {
+    	return airMiscInfoRepository.getAirMiscInfos(clientAccountNumber, FIELD_ID);
     }
     
     @CacheEvict(cacheNames = "air-misc-info", allEntries = true)

@@ -175,8 +175,8 @@ public class ExchangeOrderServiceTest {
 		String clientAccountNumber = "12345";
 		String reportingFieldTypeId = "5";
 
-		service.getAirMiscInfo(clientAccountNumber);
-		verify(airMiscInfoRepository, times(1)).getAirMiscInfo(clientAccountNumber,
+		service.getAirMiscInfos(clientAccountNumber);
+		verify(airMiscInfoRepository, times(1)).getAirMiscInfos(clientAccountNumber,
 				reportingFieldTypeId);
 	}
 

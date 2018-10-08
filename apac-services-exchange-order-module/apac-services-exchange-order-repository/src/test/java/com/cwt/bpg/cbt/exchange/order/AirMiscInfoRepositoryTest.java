@@ -46,7 +46,7 @@ public class AirMiscInfoRepositoryTest {
 		Mockito.when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
 		Mockito.when(fieldEnd.equal(anyString())).thenReturn(query);
 
-		repository.getAirMiscInfo("12345", "5");
+		repository.getAirMiscInfos("12345", "5");
 
 		verify(morphia, times(1)).getDatastore();
 		verify(dataStore, times(1)).createQuery(AirMiscInfo.class);
