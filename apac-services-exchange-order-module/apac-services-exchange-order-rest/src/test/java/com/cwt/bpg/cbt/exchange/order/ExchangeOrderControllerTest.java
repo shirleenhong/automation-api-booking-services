@@ -34,6 +34,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaVendor;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
@@ -62,6 +63,7 @@ public class ExchangeOrderControllerTest {
 	private String pnr;
 	private String urlRoomTypes;
 	private String urlCarVendors;
+	private String urlAirMiscInfo;
 
 	@Before
 	public void setUp() {
@@ -75,6 +77,7 @@ public class ExchangeOrderControllerTest {
 		pnr = "U9L8VY";
 		urlRoomTypes = "/exchange-order/room-types";
 		urlCarVendors = "/exchange-order/car-vendors";
+		urlAirMiscInfo = "/exchange-order/air-misc-info";
 	}
 
 	private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -498,5 +501,59 @@ public class ExchangeOrderControllerTest {
                 .andReturn()
                 .getResponse();
         verify(eoService, times(1)).deleteCarVendor(anyString());
+    }
+	
+	@Test
+	public void shouldGetAirMiscInfo() throws Exception {
+
+		List<AirMiscInfo> airMiscInfoList = new ArrayList<>();
+		String clientAccountNumber = "12345";
+		
+		when(eoService.getAirMiscInfo(clientAccountNumber)).thenReturn(airMiscInfoList);
+
+		mockMvc.perform(get(urlAirMiscInfo+"/"+clientAccountNumber)).andExpect(status().isOk());
+
+		verify(eoService, times(1)).getAirMiscInfo(clientAccountNumber);
+	}
+	
+	@Test
+	public void shouldSaveAirMiscInfo() throws Exception {
+
+    	mockMvc.perform(put(urlAirMiscInfo)
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(new AirMiscInfo())))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+		verify(eoService, times(1)).saveAirMiscInfo(any(AirMiscInfo.class));
+	}
+	
+	@Test
+	public void shouldRemoveAirMiscInfo() throws Exception {
+
+		String id = "12345";
+		when(eoService.deleteAirMiscInfo(id)).thenReturn(id);
+
+        mockMvc.perform(delete(urlAirMiscInfo+"/"+ id)
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+        verify(eoService, times(1)).deleteAirMiscInfo(anyString());
+    }
+
+	@Test
+	public void shouldReturnAirMiscInfoNotFoundWhenRecordDoesNotExist() throws Exception {
+
+		String id = "12345";
+		when(eoService.deleteAirMiscInfo(id)).thenReturn("");
+
+        mockMvc.perform(delete(urlAirMiscInfo+"/"+ id)
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isNotFound())
+                .andReturn()
+                .getResponse();
+        verify(eoService, times(1)).deleteAirMiscInfo(anyString());
     }
 }

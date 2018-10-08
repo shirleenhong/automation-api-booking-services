@@ -1,8 +1,12 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -16,6 +20,7 @@ import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.RoomType;
 import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 
 public class ExchangeOrderServiceTest {
 
@@ -30,6 +35,9 @@ public class ExchangeOrderServiceTest {
     
     @Mock
     private VmpdReasonCodesRepository reasonCodeRepository;
+    
+    @Mock
+    private AirMiscInfoRepository airMiscInfoRepository;
     
     @Mock
     private CarVendorRepository carVendorRepository;
@@ -161,6 +169,33 @@ public class ExchangeOrderServiceTest {
         service.deleteCarVendor(code);
         verify(carVendorRepository, times(1)).remove(code);
     }
+    
+	@Test
+	public void shouldCallGetAirMiscInfo() {
+		String clientAccountNumber = "12345";
+		String reportingFieldTypeId = "5";
+
+		service.getAirMiscInfo(clientAccountNumber);
+		verify(airMiscInfoRepository, times(1)).getAirMiscInfo(clientAccountNumber,
+				reportingFieldTypeId);
+	}
+
+	@Test
+	public void shouldCallSaveAirMiscInfo() {
+		service.saveAirMiscInfo(new AirMiscInfo());
+		verify(airMiscInfoRepository, times(1)).put(Mockito.any(AirMiscInfo.class));
+	}
+
+	@Test
+	public void shouldCallDeleteAirMiscInfo() {
+		String id = new ObjectId().toString();
+		when(airMiscInfoRepository.remove(any(ObjectId.class))).thenReturn(id);
+
+		String result = service.deleteAirMiscInfo(id);
+
+		assertEquals(id, result);
+		verify(airMiscInfoRepository, times(1)).remove(any(ObjectId.class));
+	}
 
 }
 

@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 
 @Service
 public class ExchangeOrderService {
@@ -32,6 +34,10 @@ public class ExchangeOrderService {
 	@Autowired
 	private CarVendorRepository carVendorRepository;
 	
+	@Autowired
+	private AirMiscInfoRepository airMiscInfoRepository;
+	
+	private static final String FIELD_ID = "5";
 
 	public BaseExchangeOrder save(String countryCode, BaseExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
@@ -112,4 +118,20 @@ public class ExchangeOrderService {
 	public String deleteCarVendor(String code) {
 		return carVendorRepository.remove(code);
 	}
+    
+    @Cacheable(cacheNames = "air-misc-info", key = "#clientAccountNumber")
+    public List<AirMiscInfo> getAirMiscInfo(String clientAccountNumber) {
+    	return airMiscInfoRepository.getAirMiscInfo(clientAccountNumber, FIELD_ID);
+    }
+    
+    @CacheEvict(cacheNames = "air-misc-info", allEntries = true)
+	public AirMiscInfo saveAirMiscInfo(AirMiscInfo airMiscInfo) {
+		return airMiscInfoRepository.put(airMiscInfo);
+	}
+    
+    @CacheEvict(cacheNames = "air-misc-info", allEntries = true)
+	public String deleteAirMiscInfo(String id) {
+		return airMiscInfoRepository.remove(new ObjectId(id));
+	}
+
 }
