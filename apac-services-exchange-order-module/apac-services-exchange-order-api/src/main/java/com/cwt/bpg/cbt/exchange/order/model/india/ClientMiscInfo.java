@@ -2,10 +2,20 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
 
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Id;
+
+import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 public class ClientMiscInfo implements Serializable {
 
     private static final long serialVersionUID = -9097849686464242534L;
 
+	@Id
+	@JsonSerialize(using = ObjectIdSerializer.class)
+	private ObjectId id;
+	
     private String description;
 
     private String value;
@@ -18,7 +28,15 @@ public class ClientMiscInfo implements Serializable {
 
     private String gdsFormat;
 
-    public String getDescription() {
+    public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
         return description;
     }
 
