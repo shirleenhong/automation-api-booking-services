@@ -13,6 +13,8 @@ import org.mongodb.morphia.annotations.Indexes;
 import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity(value = "airTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("id")))
 public class AirTransaction implements Serializable {
@@ -21,6 +23,7 @@ public class AirTransaction implements Serializable {
 
 	@Id
 	@JsonSerialize(using = ObjectIdSerializer.class)
+	@ApiModelProperty(hidden = true)
 	private ObjectId id;
 
 	private String airlineDescription;

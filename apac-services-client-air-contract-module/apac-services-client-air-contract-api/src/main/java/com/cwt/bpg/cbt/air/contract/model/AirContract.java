@@ -18,6 +18,7 @@ public class AirContract implements Serializable {
 
 	@Id
 	@JsonSerialize(using = ObjectIdSerializer.class)
+	@ApiModelProperty(hidden = true)
 	private ObjectId id;
 
 	@ApiModelProperty(required = true)
