@@ -135,10 +135,7 @@ public class FeeCalculator {
             List<ClientPricing> clientPricings = Optional.ofNullable(client.getClientPricings())
                     .orElse(Collections.emptyList());
 
-			Optional<ClientPricing> pricing = clientPricings.stream()
-					.filter(i -> i.getFieldId() == FEE
-							&& i.getTripType().equals(input.getTripType()))
-					.findFirst();
+			Optional<ClientPricing> pricing = filterClientPricings(input, clientPricings);
 
 			if (pricing.isPresent()) {
 				final ClientPricing clientPricing = pricing.get();
@@ -171,6 +168,15 @@ public class FeeCalculator {
 		}
 		
 		return result;
+	}
+
+	private Optional<ClientPricing> filterClientPricings(IndiaAirFeesInput input,
+			List<ClientPricing> clientPricings) {
+		
+		return clientPricings.stream()
+				.filter(i -> i.getFieldId() == FEE
+				&& i.getTripType().equals(input.getTripType()))
+		.findFirst();
 	}
 
 	private BigDecimal getFeeByTicket(
