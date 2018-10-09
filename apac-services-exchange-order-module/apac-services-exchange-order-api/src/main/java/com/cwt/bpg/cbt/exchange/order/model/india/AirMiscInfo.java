@@ -12,6 +12,8 @@ import org.mongodb.morphia.annotations.Indexes;
 import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity("airMiscInfo")
 @Indexes(@Index(fields = @Field("id")))
 public class AirMiscInfo extends ClientMiscInfo implements Serializable {
@@ -20,6 +22,7 @@ public class AirMiscInfo extends ClientMiscInfo implements Serializable {
 
 	@Id
 	@JsonSerialize(using = ObjectIdSerializer.class)
+	@ApiModelProperty(hidden = true)
 	private ObjectId id;
 
 	private String min;
