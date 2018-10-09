@@ -14,7 +14,6 @@ public class AirContractRepository extends CommonRepository<AirContract, ObjectI
 	private static final String CLIENT_ACCOUNT_NUMBER = "clientAccountNumber";
 	private static final String COUNTRY_CODE = "countryCode";
 	private static final String AIRLINE_CODE = "airlineCode";
-	private static final String FOR_CODE = "fopCode";
 
 	public AirContractRepository() {
 		super(AirContract.class, ID);
