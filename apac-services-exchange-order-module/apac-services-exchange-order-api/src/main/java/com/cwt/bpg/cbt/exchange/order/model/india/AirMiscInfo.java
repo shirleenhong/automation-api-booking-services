@@ -2,28 +2,16 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 
 import java.io.Serializable;
 
-import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
-import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
-
-import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import io.swagger.annotations.ApiModelProperty;
 
 @Entity("airMiscInfo")
 @Indexes(@Index(fields = @Field("id")))
 public class AirMiscInfo extends ClientMiscInfo implements Serializable {
 
 	private static final long serialVersionUID = 3727784764930884517L;
-
-	@Id
-	@JsonSerialize(using = ObjectIdSerializer.class)
-	@ApiModelProperty(hidden = true)
-	private ObjectId id;
 
 	private String min;
 
@@ -42,14 +30,6 @@ public class AirMiscInfo extends ClientMiscInfo implements Serializable {
     private String reportingFieldType;
     
     
-	public ObjectId getId() {
-		return id;
-	}
-
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
-	
     public String getMin() {
 		return min;
 	}
