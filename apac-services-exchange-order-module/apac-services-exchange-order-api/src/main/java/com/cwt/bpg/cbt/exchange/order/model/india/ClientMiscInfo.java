@@ -22,11 +22,15 @@ public class ClientMiscInfo implements Serializable {
 
     private String sample;
 
-    private String length;
-
     private String dataType;
 
     private String gdsFormat;
+
+    private String min;
+
+    private String max;
+
+    private String mandatory;
 
     public ObjectId getId() {
 		return id;
@@ -60,14 +64,6 @@ public class ClientMiscInfo implements Serializable {
         this.sample = sample;
     }
 
-    public String getLength() {
-        return length;
-    }
-
-    public void setLength(String length) {
-        this.length = length;
-    }
-
     public String getDataType() {
         return dataType;
     }
@@ -82,5 +78,29 @@ public class ClientMiscInfo implements Serializable {
 
     public void setGdsFormat(String gdsFormat) {
         this.gdsFormat = gdsFormat;
+    }
+
+    public String getMin() {
+        return min;
+    }
+
+    public void setMin(String min) {
+        this.min = min;
+    }
+
+    public String getMax() {
+        return max;
+    }
+
+    public void setMax(String max) {
+        this.max = max;
+    }
+
+    public String getMandatory() {
+        return mandatory;
+    }
+
+    public void setMandatory(String mandatory) {
+        this.mandatory = mandatory;
     }
 }

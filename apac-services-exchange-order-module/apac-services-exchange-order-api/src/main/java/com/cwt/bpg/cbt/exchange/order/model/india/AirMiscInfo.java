@@ -13,13 +13,7 @@ public class AirMiscInfo extends ClientMiscInfo implements Serializable {
 
 	private static final long serialVersionUID = 3727784764930884517L;
 
-	private String min;
-
-	private String max;
-
     private String reportingListId;
-
-    private String mandatory;
 
     private String clientId;
     
@@ -29,37 +23,12 @@ public class AirMiscInfo extends ClientMiscInfo implements Serializable {
 
     private String reportingFieldType;
     
-    
-    public String getMin() {
-		return min;
-	}
-
-	public void setMin(String min) {
-		this.min = min;
-	}
-
-	public String getMax() {
-		return max;
-	}
-
-	public void setMax(String max) {
-		this.max = max;
-	}
-
 	public String getReportingListId() {
 		return reportingListId;
 	}
 
 	public void setReportingListId(String reportingListId) {
 		this.reportingListId = reportingListId;
-	}
-
-	public String getMandatory() {
-		return mandatory;
-	}
-
-	public void setMandatory(String mandatory) {
-		this.mandatory = mandatory;
 	}
 
 	public String getClientId() {
