@@ -353,6 +353,8 @@ Create Test Variables For Air Fees-HK
     \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
     Set Test Variable    ${fees_list}
     Set Test Variable    ${country}    ${country.lower()}
+    ${var_exist_flag}    Run Keyword And Return Status    Variable Should Exist    ${tax_3_value}         
+    Run Keyword If    "${var_exist_flag}"!="True"    Set Test Variable    ${tax_3_value}    0
     Set Test Variable    ${service_fee_name}    air-fees
 
 Generate Test Variables For Air Fees-HK
@@ -390,7 +392,7 @@ Generate Test Variables For Air Fees-HK Without Formula
 Generate Test Variables For Air Fees-IN
     [Arguments]    ${fees_list}    ${country}
     Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
-    Set Test Variable    ${tax_3_value}    0
+    #Set Test Variable    ${tax_3_value}    0
     Set Test Variable    ${air_pricing_id}    ${clients_dict["${client_account_number_value}.air_pricing_id"]}
     #${decimal_place}    Set Variable If    "${country.lower()}" == "hk"    0    2
     Set Test Variable    ${decimal_place}    0
