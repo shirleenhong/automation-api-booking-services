@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Repository;
@@ -21,14 +22,17 @@ public class AirMiscInfoRepository extends CommonRepository<AirMiscInfo, ObjectI
 	}
 
 	public List<AirMiscInfo> getAirMiscInfos(String clientAccountNumber,
-			String reportingFieldTypeId) {
+			List<String> reportingFieldTypeIds) {
 
 		final Query<AirMiscInfo> query = morphia.getDatastore()
 				.createQuery(AirMiscInfo.class);
 
 		query.field(CLIENT_ACCOUNT_NUMBER).equal(clientAccountNumber);
-		query.field(REPORTING_FIELD_TYPE_ID).equal(reportingFieldTypeId);
-
+		
+		if(CollectionUtils.isNotEmpty(reportingFieldTypeIds)){
+			query.field(REPORTING_FIELD_TYPE_ID).in(reportingFieldTypeIds);
+		}
+		
 		return query.asList();
 	}
 }

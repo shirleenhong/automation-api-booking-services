@@ -4,8 +4,14 @@ import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
@@ -13,7 +19,11 @@ import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +43,19 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.AdditionalInfo;
+import com.cwt.bpg.cbt.exchange.order.model.CarVendor;
+import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
+import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
+import com.cwt.bpg.cbt.exchange.order.model.EoAction;
+import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.FopType;
+import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
+import com.cwt.bpg.cbt.exchange.order.model.RoomType;
+import com.cwt.bpg.cbt.exchange.order.model.ServiceInfo;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaVendor;
@@ -508,12 +530,19 @@ public class ExchangeOrderControllerTest {
 
 		List<AirMiscInfo> airMiscInfoList = new ArrayList<>();
 		String clientAccountNumber = "12345";
-		
-		when(eoService.getAirMiscInfos(clientAccountNumber)).thenReturn(airMiscInfoList);
 
-		mockMvc.perform(get(urlAirMiscInfo+"/"+clientAccountNumber)).andExpect(status().isOk());
+		List<String> reportingFieldTypeIds = new ArrayList<>();
+		reportingFieldTypeIds.add("5");
 
-		verify(eoService, times(1)).getAirMiscInfos(clientAccountNumber);
+		when(eoService.getAirMiscInfos(clientAccountNumber, reportingFieldTypeIds))
+				.thenReturn(airMiscInfoList);
+
+		mockMvc.perform(get(
+				urlAirMiscInfo + "/" + clientAccountNumber + "?reportingFieldTypeIds=5"))
+				.andExpect(status().isOk());
+
+		verify(eoService, times(1)).getAirMiscInfos(clientAccountNumber,
+				reportingFieldTypeIds);
 	}
 	
 	@Test

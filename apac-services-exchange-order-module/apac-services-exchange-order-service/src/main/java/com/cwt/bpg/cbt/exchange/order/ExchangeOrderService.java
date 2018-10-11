@@ -37,7 +37,6 @@ public class ExchangeOrderService {
 	@Autowired
 	private AirMiscInfoRepository airMiscInfoRepository;
 	
-	private static final String FIELD_ID = "5";
 
 	public BaseExchangeOrder save(String countryCode, BaseExchangeOrder exchangeOrder)
 			throws ExchangeOrderNoContentException {
@@ -119,9 +118,9 @@ public class ExchangeOrderService {
 		return carVendorRepository.remove(code);
 	}
     
-    @Cacheable(cacheNames = "air-misc-info", key = "#clientAccountNumber")
-    public List<AirMiscInfo> getAirMiscInfos(String clientAccountNumber) {
-    	return airMiscInfoRepository.getAirMiscInfos(clientAccountNumber, FIELD_ID);
+    @Cacheable(cacheNames = "air-misc-info", key = "#clientAccountNumber + #reportingFieldTypeIds")
+    public List<AirMiscInfo> getAirMiscInfos(String clientAccountNumber, List<String> reportingFieldTypeIds) {
+    	return airMiscInfoRepository.getAirMiscInfos(clientAccountNumber, reportingFieldTypeIds);
     }
     
     @CacheEvict(cacheNames = "air-misc-info", allEntries = true)

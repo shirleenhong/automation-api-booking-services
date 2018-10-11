@@ -6,6 +6,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
@@ -173,11 +176,13 @@ public class ExchangeOrderServiceTest {
 	@Test
 	public void shouldCallGetAirMiscInfo() {
 		String clientAccountNumber = "12345";
-		String reportingFieldTypeId = "5";
 
-		service.getAirMiscInfos(clientAccountNumber);
+		List<String> reportingFieldTypeIds = new ArrayList<>();
+		reportingFieldTypeIds.add("5");
+
+		service.getAirMiscInfos(clientAccountNumber, reportingFieldTypeIds);
 		verify(airMiscInfoRepository, times(1)).getAirMiscInfos(clientAccountNumber,
-				reportingFieldTypeId);
+				reportingFieldTypeIds);
 	}
 
 	@Test
