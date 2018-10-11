@@ -254,13 +254,13 @@ public class ExchangeOrderController {
 		HttpStatus status = checkDeleteResult(deleteResult);
 		return new ResponseEntity<>(deleteResult, status);
 	}
-	
+
 	@GetMapping(path = "/exchange-order/air-misc-info/{clientAccountNumber}")
 	@ResponseBody
 	@ApiOperation(value = "Pulls all Air Misc Info by client account number.")
 	public ResponseEntity<List<AirMiscInfo>> getAirMiscInfos(
 			@PathVariable String clientAccountNumber,
-			@RequestParam(value = "reportingFieldTypeIds") List<String> reportingFieldTypeIds) {
+			@RequestParam(value = "reportingFieldTypeIds", required = false) List<String> reportingFieldTypeIds) {
 		return new ResponseEntity<>(
 				eoService.getAirMiscInfos(clientAccountNumber, reportingFieldTypeIds),
 				HttpStatus.OK);
