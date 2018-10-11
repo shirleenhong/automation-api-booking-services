@@ -1,19 +1,17 @@
 package com.cwt.bpg.cbt.air.contract;
 
-import com.cwt.bpg.cbt.air.contract.AirContractService;
-import com.cwt.bpg.cbt.air.contract.model.AirContract;
-import com.cwt.bpg.cbt.documentation.annotation.Internal;
+import javax.validation.Valid;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import com.cwt.bpg.cbt.air.contract.model.AirContract;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(tags = "Air Contract")
@@ -35,7 +33,6 @@ public class AirContractController {
 		return new ResponseEntity<>(airContractService.get(countryCode, airlineCode, clientAccountNumber), HttpStatus.OK);
 	}
 
-	@Internal
 	@GetMapping(value = "/air-contract/{id}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ApiOperation(value = "Returns Air Contract, which contains BCODE, based on country code, "
@@ -47,7 +44,6 @@ public class AirContractController {
 		return new ResponseEntity<>(airContractService.get(id), HttpStatus.OK);
 	}
 
-	@Internal
 	@PutMapping(path = "/air-contract")
 	@ApiOperation(value = "[Maintenance] Save or update Air Contract")
 	@ResponseBody
@@ -55,7 +51,6 @@ public class AirContractController {
 		return new ResponseEntity<>(airContractService.save(airContract), HttpStatus.OK);
 	}
 
-	@Internal
 	@DeleteMapping(path = "/air-contract/{id}")
 	@ResponseBody
 	@ApiOperation(value = "[Maintenance] Remove Air Contract")
