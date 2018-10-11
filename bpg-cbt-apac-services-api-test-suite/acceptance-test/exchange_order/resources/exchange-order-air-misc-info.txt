@@ -1,0 +1,151 @@
+*** Setting ***
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
+
+***Keywords***
+Create Test Variables For Air Misc Info
+    [Arguments]    ${air_misc_info_list}=${air_misc_info_list}
+    ${air_misc_info_list_data}    Split String    ${air_misc_info_list}    |
+    ${air_misc_info_list_data_length}    Get Length    ${air_misc_info_list_data}
+    Set Test Variable    ${air_misc_info_list_data}
+    Set Test Variable    ${air_misc_info_list_data_length}
+    ${index}    Set Variable    0
+    ${client_account_number_list}    Create List
+    : FOR    ${data}    IN    @{air_misc_info_list_data}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Set Test Variable    ${client_acct_no}    ${data_item[0]}    
+    \    Set Test Variable    ${client_acct_number_${index}_value}    ${data_item[0]}
+    \    Set Test Variable    ${description_${data_item[0]}_${data_item[4]}_value}    ${data_item[1]}
+    \    Set Test Variable    ${sample_${data_item[0]}_${data_item[4]}_value}    ${data_item[2]}
+    \    Set Test Variable    ${data_type_${data_item[0]}_${data_item[4]}_${data_item[9]}_value}    ${data_item[3]}
+    \    Set Test Variable    ${gds_format}    ${data_item[4]}
+    \    Set Test Variable    ${gds_format_${index}_value}    ${data_item[4]}   
+    \    Set Test Variable    ${gds_format_${data_item[0]}_${data_item[4]}_value}    ${data_item[4]}
+    \    Set Test Variable    ${min_${data_item[0]}_${data_item[4]}_value}    ${data_item[5]}
+    \    Set Test Variable    ${max_${data_item[0]}_${data_item[4]}_value}    ${data_item[6]}
+    \    Set Test Variable    ${reporting_list_id_${data_item[0]}_${data_item[4]}_value}    ${data_item[7]}
+    \    Set Test Variable    ${mandatory_${data_item[0]}_${data_item[4]}_${data_item[9]}_value}    ${data_item[8]}
+    \    Set Test Variable    ${client_id}    ${data_item[9]}
+    \    Set Test Variable    ${client_id_${data_item[0]}_${data_item[4]}_value}    ${data_item[9]}
+    \    Set Test Variable    ${reporting_field_type_id_${data_item[0]}_${data_item[4]}_value}    ${data_item[10]}
+    \    Set Test Variable    ${reporting_field_type_${data_item[0]}_${data_item[4]}_value}    ${data_item[11]}
+    \    Append To List    ${client_account_number_list}    ${data_item[0]}        
+    \    ${index}    Evaluate    ${index}+1
+    Log    ${client_account_number_list}
+    ${client_account_number_list}    Remove Duplicates    ${client_account_number_list}
+    ${client_account_number_list_length}    Get Length    ${client_account_number_list}
+    Log    ${client_account_number_list}
+    Set Test Variable    ${client_account_number_list}
+    Set Test Variable    ${client_account_number_list_length}      
+
+Create Put Request Body
+    ${air_misc_info_request_list}    Create List
+    Run Keyword If    "${client_acct_no}"!="null"    Append To List    ${air_misc_info_request_list}    "clientAccountNumber":"${client_acct_no}"
+    Run Keyword If    "${client_id_${client_acct_no}_${gds_format}_value}"!="null"    Append To List    ${air_misc_info_request_list}    "clientId":"${client_id_${client_acct_no}_${gds_format}_value}"
+    Run Keyword If    "${data_type_${client_acct_no}_${gds_format}_${client_id}_value}"!="null"    Append To List    ${air_misc_info_request_list}    "dataType":"${data_type_${client_acct_no}_${gds_format}_${client_id}_value}"
+    Run Keyword If    "${description_${client_acct_no}_${gds_format}_value}"!="null"    Append To List    ${air_misc_info_request_list}    "description":"${description_${client_acct_no}_${gds_format}_value}"
+    Run Keyword If    "${gds_format_${client_acct_no}_${gds_format}_value}"!="null"    Append To List    ${air_misc_info_request_list}    "gdsFormat":"${gds_format_${client_acct_no}_${gds_format}_value}"
+    Run Keyword If    "${mandatory_${client_acct_no}_${gds_format}_${client_id}_value}"!="null"    Append To List    ${air_misc_info_request_list}    "mandatory":"${mandatory_${client_acct_no}_${gds_format}_${client_id}_value}"
+    Run Keyword If    "${max_${client_acct_no}_${gds_format}_value}"!="null"    Append To List    ${air_misc_info_request_list}    "max":"${max_${client_acct_no}_${gds_format}_value}"
+    Run Keyword If    "${min_${client_acct_no}_${gds_format}_value}"!="null"    Append To List    ${air_misc_info_request_list}    "min":"${min_${client_acct_no}_${gds_format}_value}"
+    Run Keyword If    "${reporting_field_type_${client_acct_no}_${gds_format}_value}"!="null"    Append To List    ${air_misc_info_request_list}    "reportingFieldType":"${reporting_field_type_${client_acct_no}_${gds_format}_value}"
+    Run Keyword If    "${reporting_field_type_id_${client_acct_no}_${gds_format}_value}"!="null"    Append To List    ${air_misc_info_request_list}    "reportingFieldTypeId":"${reporting_field_type_id_${client_acct_no}_${gds_format}_value}"
+    Run Keyword If    "${sample_${client_acct_no}_${gds_format}_value}"!="null"    Append To List    ${air_misc_info_request_list}    "sample":"${sample_${client_acct_no}_${gds_format}_value}"
+    ${air_misc_info_data_list}    Set Variable    ${EMPTY}
+    ${air_misc_info_request_list_length}    Get Length    ${air_misc_info_request_list}
+    : FOR    ${i}    IN RANGE    0    ${air_misc_info_request_list_length}
+    \    ${air_misc_info_data_list}    Set Variable If    ${i}==0    ${EMPTY}    ${air_misc_info_data_list},
+    \    ${air_misc_info_data_list}    Set Variable    ${air_misc_info_data_list}${air_misc_info_request_list[${i}]}
+    ${air_misc_info_data_list}    Set Variable If    "${air_misc_info_request_list_length}"=="0"    ${EMPTY}    ${air_misc_info_data_list}
+    ${data}    Set Variable    {${air_misc_info_data_list}}
+    Set Test Variable    ${data}
+    Log    ${data}
+    
+Evict Air Misc Info Cache
+    [Arguments]    ${number}=2    ${token}=${default_token}
+    Create Session    air-misc-info    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    : FOR    ${index}    IN RANGE    0    ${number}
+    \    ${response}    Get Request    air-misc-info    /apac-services-rest/api/caches/evict/air-misc-info    headers=${headers}
+    \    Set Test Variable    ${response}
+    \    Verify Response Status Code Is Correct    200
+    \    Log    ${response.headers}
+    \    Log    ${response.content}
+    Set Test Variable    ${api_flag}    air-misc-info
+    
+Get Air Misc Info Id
+    ${air_misc_info_id}    Get Json Value As String    ${response.content}    $[0].id
+    Set Test Variable    ${air_misc_info_id}
+
+Send Air Misc Info Delete Request
+    [Arguments]    ${air_misc_info_id}=${air_misc_info_id}    ${token}=${default_token}
+    Create Session    air-misc-info    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Delete Request    air-misc-info    /apac-services-rest/api/exchange-order/air-misc-info/${air_misc_info_id}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    air-misc-info
+    
+Send Air Misc Info Get Request
+    [Arguments]    ${client_acct_number}    ${token}=${default_token}
+    Create Session    air-misc-info    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    air-misc-info    apac-services-rest/api/exchange-order/air-misc-info/${client_acct_number}?reportingFieldTypeIds=5    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    air-misc-info
+    
+Send Air Misc Info Put Request
+    [Arguments]    ${token}=${default_token}
+    Create Session    air-misc-info    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    Create Put Request Body 
+    ${response}    Put Request    air-misc-info    /apac-services-rest/api/exchange-order/air-misc-info    data=${data}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    air-misc-info
+    
+Verify Air Misc Info Is Retrieved Correctly
+    ${air_misc_info_record_length}    Get Json Array Length
+    : FOR    ${index}    IN RANGE    ${air_misc_info_record_length}
+    \    ${client_account_number}    Get Json Value As String    ${response.content}    $[${index}].clientAccountNumber
+    \    ${gds_format}    Get Json Value As String    ${response.content}    $[${index}].gdsFormat
+    \    ${client_id}    Get Json Value As String    ${response.content}    $[${index}].clientId     
+    \    #Verify Json Value Is Correct    $[${index}].clientAccountNumber    ${client_account_number}
+    \    #Verify Json Value Is Correct    $[${index}].clientId    ${client_id_${client_account_number}_${gds_format}_value}
+    \    Verify Json Value Is Correct    $[${index}].dataType    ${data_type_${client_account_number}_${gds_format}_${client_id}_value}
+    \    Verify Json Value Is Correct    $[${index}].description    ${description_${client_account_number}_${gds_format}_value}
+    \    #Verify Json Value Is Correct    $[${index}].gdsFormat    ${gds_format_${client_account_number}_${gds_format}_value}
+    \    Verify Json Value Is Correct    $[${index}].mandatory    ${mandatory_${client_account_number}_${gds_format}_${client_id}_value}
+    \    Run Keyword If    "${max_${client_account_number}_${gds_format}_value}"!="null"    Verify Json Value Is Correct    $[${index}].max    ${max_${client_account_number}_${gds_format}_value}    ELSE    Verify Json Element Does Not Exist    $[${index}].max
+    \    Run Keyword If    "${min_${client_account_number}_${gds_format}_value}"!="null"    Verify Json Value Is Correct    $[${index}].min    ${min_${client_account_number}_${gds_format}_value}    ELSE    Verify Json Element Does Not Exist    $[${index}].min
+    \    Verify Json Value Is Correct    $[${index}].reportingFieldType    ${reporting_field_type_${client_account_number}_${gds_format}_value}
+    \    Verify Json Value Is Correct    $[${index}].reportingFieldTypeId    ${reporting_field_type_id_${client_account_number}_${gds_format}_value}
+    \    Run Keyword If    "${sample_${client_account_number}_${gds_format}_value}"!="null"    Verify Json Value Is Correct    $[${index}].sample    ${sample_${client_account_number}_${gds_format}_value}    ELSE    Verify Json Element Does Not Exist    $[${index}].sample
+    
+Verify Air Misc Info Are Retrieved Correctly
+    : FOR    ${client_acct_no}    IN    @{client_account_number_list}
+    \    Send Air Misc Info Get Request    ${client_acct_no}
+    \    Verify Response Status Code Is Correct    200
+    \    Verify Air Misc Info Is Retrieved Correctly 
+    
+Verify Air Misc Info Record Is Not Retrieved
+    Verify String Does Not Contain Substring    ${response.text}    "clientAccountNumber"
+    Verify String Does Not Contain Substring    ${response.text}    "clientId"
+    Verify String Does Not Contain Substring    ${response.text}    "dataType"
+    Verify String Does Not Contain Substring    ${response.text}    "description"
+    Verify String Does Not Contain Substring    ${response.text}    "gdsFormat"
+    Verify String Does Not Contain Substring    ${response.text}    "mandatory"
+    Verify String Does Not Contain Substring    ${response.text}    "max"
+    Verify String Does Not Contain Substring    ${response.text}    "min"
+    Verify String Does Not Contain Substring    ${response.text}    "reportingFieldType"
+    Verify String Does Not Contain Substring    ${response.text}    "reportingFieldTypeId"
+    Verify String Does Not Contain Substring    ${response.text}    "sample"
