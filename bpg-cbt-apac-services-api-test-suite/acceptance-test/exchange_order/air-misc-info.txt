@@ -1,0 +1,95 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource    resources/exchange-order-air-misc-info.txt
+
+*** Test Cases ***
+Verify That Air Misc Info Are Correctly Retrieved
+    [Tags]    functional
+    Create Test Variables For Air Misc Info
+    Verify Air Misc Info Are Retrieved Correctly
+
+Verify That Air Misc Info Are Added Correctly After Put Request
+    [Tags]    functional
+    Create Test Variables For Air Misc Info    air_misc_info_list=9000000900,Employee code,12345678,numeric,FF20,1,8,108,Y,80,5,TEST
+    Send Air Misc Info Put Request
+    Verify Response Status Code Is Correct    200
+    Evict Air Misc Info Cache
+    Send Air Misc Info Get Request    client_acct_number=9000000900
+    Verify Response Status Code Is Correct    200
+    Get Air Misc Info Id
+    Send Air Misc Info Delete Request
+    Verify Response Status Code Is Correct    200
+    Evict Air Misc Info Cache
+    Send Air Misc Info Get Request    client_acct_number=9000000900
+    Verify Response Status Code Is Correct    200
+    Verify Air Misc Info Record Is Not Retrieved            
+    
+Verify That Error Is Encountered When Invalid Token Is Used
+    [Tags]    functional
+    Create Test Variables For Air Misc Info    air_misc_info_list=9000000900,Employee code,12345678,numeric,FF20,1,8,108,Y,80,5,TEST 
+    Send Air Misc Info Get Request    client_acct_number=00001063    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Air Misc Info Record Is Not Retrieved 
+    Send Air Misc Info Get Request    client_acct_number=00001063    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify Air Misc Info Record Is Not Retrieved 
+    Send Air Misc Info Get Request    client_acct_number=00001063    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    Verify Air Misc Info Record Is Not Retrieved 
+    
+Verify That Error Is Encountered When Empty Token Is Used
+    [Tags]    functional
+    Create Test Variables For Air Misc Info    air_misc_info_list=00001063,Employee code,12345678,numeric,FF20,1,8,108,Y,80,5,TEST 
+    Send Air Misc Info Get Request    client_acct_number=00001063    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Air Misc Info Record Is Not Retrieved 
+
+Verify That Error Is Encountered When Null Token Is Used
+    [Tags]    functional
+    Create Test Variables For Air Misc Info    air_misc_info_list=00001063,Employee code,12345678,numeric,FF20,1,8,108,Y,80,5,TEST 
+    Send Air Misc Info Get Request    client_acct_number=00001063    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Air Misc Info Record Is Not Retrieved 
+
+Verify That Error Is Encountered When No Token Is Used
+    [Tags]    functional
+    Create Test Variables For Air Misc Info    air_misc_info_list=00001063,Employee code,12345678,numeric,FF20,1,8,108,Y,80,5,TEST 
+    Send Air Misc Info Get Request    client_acct_number=00001063    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Air Misc Info Record Is Not Retrieved 
+    
+Verify That Error Is Encountered When Invalid Token Is Used For Maintenance Put Request
+    [Tags]    functional
+    Create Test Variables For Air Misc Info    air_misc_info_list=00001063,Employee code,12345678,numeric,FF20,1,8,108,Y,80,5,TEST
+    Send Air Misc Info Put Request    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Air Misc Info Record Is Not Retrieved 
+    Send Air Misc Info Put Request    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify Air Misc Info Record Is Not Retrieved
+    Send Air Misc Info Put Request    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    Verify Air Misc Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When Empty Token Is Used For Maintenance Put Request
+    [Tags]    functional
+    Create Test Variables For Air Misc Info    air_misc_info_list=9000000900,Employee code,12345678,numeric,FF20,1,8,108,Y,80,5,TEST 
+    Send Air Misc Info Put Request    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Air Misc Info Record Is Not Retrieved
+
+Verify That Error Is Encountered When Null Token Is Used For Maintenance Put Request
+    [Tags]    functional
+    Create Test Variables For Air Misc Info    air_misc_info_list=9000000900,Employee code,12345678,numeric,FF20,1,8,108,Y,80,5,TEST 
+    Send Air Misc Info Put Request    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Air Misc Info Record Is Not Retrieved
+
+Verify That Error Is Encountered When No Token Is Used For Maintenance Put Request
+    [Tags]    functional
+    Create Test Variables For Air Misc Info    air_misc_info_list=9000000900,Employee code,12345678,numeric,FF20,1,8,108,Y,80,5,TEST 
+    Send Air Misc Info Put Request    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Air Misc Info Record Is Not Retrieved

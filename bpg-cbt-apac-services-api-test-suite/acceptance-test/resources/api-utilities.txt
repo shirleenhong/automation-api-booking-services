@@ -38,6 +38,15 @@ Generate UUID
     ${epoch_datetime}    Convert Date    ${current_datetime}    epoch
     ${uuid}    Evaluate    str(${epoch_datetime}-1400000000).replace(".","${unique_key}")
     [Return]    ${uuid}
+    
+Get Json Array Length
+    [Arguments]    ${json_object}=${response.content}    ${split_item}=id
+    ${response_list}    To Json    ${json_object}
+    ${response_list}    Convert JSON To String    ${response_list}    
+    ${response_list}  Split String    ${response_list}  ${split_item}
+    ${item_count}    Get Length    ${response_list}
+    ${item_count}    Evaluate    ${item_count} - 1
+    [Return]    ${item_count}    
 
 Get Json Value As String
     [Arguments]    ${json_object}    ${json_path}
