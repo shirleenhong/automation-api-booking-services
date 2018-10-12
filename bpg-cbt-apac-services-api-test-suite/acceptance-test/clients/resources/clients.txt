@@ -114,7 +114,7 @@ Send Put Request For Client
     \    ${parameters_2}    Set Variable    ${parameters_2}${parameters_list_2[${i}]}
     : FOR    ${item}    IN    @{client_pricings_list}
     \    ${items}    Split String    ${item}    ,
-    \    ${details}    Set Variable    {"tripType":"${items[1]}","feeOption":"${items[3]}","group":${items[2]},"cmpid":${items[0]},"transactionFees":[{"feeId":${items[2]},"territoryCodes":["X"],"amount":${${items[2]}_tf_amount_value},"operator":"${${items[2]}_operator_value}","extraAmount":${${items[2]}_extra_amount_value},"perAmount":${${items[2]}_per_amount_value},"minAmount":${${items[2]}_min_amount_value},"maxAmount":${${items[2]}_max_amount_value},"startAmount":${${items[2]}_start_amount_value},"endAmount":${${items[2]}_end_amount_value}}]}
+    \    ${details}    Set Variable    {"tripType":"${items[1]}","feeOption":"${items[3]}","value":${items[2]},"cmpid":${items[0]},"transactionFees":[{"feeId":${items[2]},"territoryCodes":["X"],"amount":${${items[2]}_tf_amount_value},"operator":"${${items[2]}_operator_value}","extraAmount":${${items[2]}_extra_amount_value},"perAmount":${${items[2]}_per_amount_value},"minAmount":${${items[2]}_min_amount_value},"maxAmount":${${items[2]}_max_amount_value},"startAmount":${${items[2]}_start_amount_value},"endAmount":${${items[2]}_end_amount_value}}]}
     \    Append To List    ${parameters_list_3}    ${details}
     ${parameters_count_3}    Get Length    ${parameters_list_3}
     : FOR    ${i}    IN RANGE    0    ${parameters_count_3}
@@ -155,7 +155,7 @@ Verify Client Pricings Are Correctly Retrieved
     : FOR    ${index}    IN RANGE    ${client_pricings_list_length}
     \    ${item_trip_type}    Get Json Value As String    ${response.content}    $.clientPricings.[${index}].tripType
     \    #    ${item_client_id}    Get Json Value As String    ${response.content}    $.clientPricings.[${index}].clientId
-    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].group    ${${client_id}_${item_trip_type}_client_pricings_group__value}
+    \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].value    ${${client_id}_${item_trip_type}_client_pricings_group__value}
     \    Run Keyword And Continue On Failure    Verify Json Value Is Correct    $.clientPricings.[${index}].feeOption    ${${client_id}_${item_trip_type}_client_pricings_fee_option__value}
 
 Verify Client Pricings Transaction Fees Are Correctly Retrieved
