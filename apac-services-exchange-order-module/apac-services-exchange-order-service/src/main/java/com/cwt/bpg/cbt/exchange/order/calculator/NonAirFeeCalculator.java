@@ -55,6 +55,10 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 				.divide(BigDecimal.ONE.add(percentDecimal(input.getGstPercent())), 2, RoundingMode.HALF_UP),
 				scale);
 
+		if (!input.isGstAbsorb()) {
+			gstAmount = round(calculatePercentage(sellingPriceInDi, input.getGstPercent()), scale);
+		}
+
 		BigDecimal commission = round(BigDecimal.ZERO, scale);
 
 		if (sellingPriceInDi.compareTo(safeValue(input.getNettCost())) > 0) {
