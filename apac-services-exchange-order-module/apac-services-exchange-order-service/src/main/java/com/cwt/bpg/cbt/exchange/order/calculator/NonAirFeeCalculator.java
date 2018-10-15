@@ -59,13 +59,14 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 			gstAmount = round(calculatePercentage(sellingPriceInDi, input.getGstPercent()), scale);
 		}
 
-		BigDecimal commission = round(BigDecimal.ZERO, scale);
+        BigDecimal commission = round(BigDecimal.ZERO, scale);
+        if (sellingPriceInDi.compareTo(safeValue(input.getNettCost())) > 0) {
+            commission = round(sellingPriceInDi.subtract(safeValue(input.getNettCost())), scale);
+        }
 
-		if (sellingPriceInDi.compareTo(safeValue(input.getNettCost())) > 0) {
-			commission = round(sellingPriceInDi.subtract(safeValue(input.getNettCost())), scale);
-		}
+        sellingPriceInDi = round(sellingPriceInDi.add(safeValue(gstAmount)), scale);
 
-		result.setNettCostGst(nettCostGst);
+        result.setNettCostGst(nettCostGst);
 		result.setGstAmount(gstAmount);
 		result.setMerchantFee(merchantFeeAmount);
 		result.setTotalSellingPrice(sellingPriceInDi);
