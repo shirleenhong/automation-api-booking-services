@@ -53,8 +53,8 @@ public class ClientService {
 		List<ClientPricing> clientPricings = Optional
 				.ofNullable(client.getClientPricings()).orElse(Collections.emptyList());
 
-		return clientPricings.stream()
-				.filter(pricing -> pricing.getTripType().equals(tripType))
+		return clientPricings.stream().filter(
+				pricing -> tripType != null && pricing.getTripType().equals(tripType))
 				.collect(Collectors.toList());
 	}
 

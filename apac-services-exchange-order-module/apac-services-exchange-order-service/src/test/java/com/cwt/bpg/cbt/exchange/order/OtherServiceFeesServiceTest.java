@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.*;
@@ -254,6 +255,34 @@ public class OtherServiceFeesServiceTest {
     	assertThat(output.getMerchantFeePercent(), equalTo(0d));
     	
     }
+    
+    @Test
+    public void shouldReturnAirFeesDefaultsNullFields() {
+    	AirFeesDefaultsOutput output = new AirFeesDefaultsOutput();
+    	List<ClientPricing> clientPricings = new ArrayList<>();
+    	
+    	Client client = new Client();
+        ProductMerchantFee mfProduct = new ProductMerchantFee();
+        String productCode = "PROD1";
+        mfProduct.setProductCode(productCode);
+        mfProduct.setSubjectToMf(true);
+        client.setMfProducts(Collections.singletonList(mfProduct));
+        
+        ClientPricing clientPricing = new ClientPricing();
+        clientPricing.setCmpid(1);
+        clientPricings.add(clientPricing);
+        
+		AirFeesDefaultsInput input = createAirFeesDefaultsWithNull();
+		when(clientService.getClientPricings(input.getClientAccountNumber(),
+				input.getTripType())).thenReturn(clientPricings);
+		when(clientService.getClient(anyString())).thenReturn(client);
+		 
+		output = service.getAirFeesDefaults(input);
+		
+		assertNotNull(output);
+    	assertThat(output.getMerchantFeePercent(), nullValue());
+    	
+    }
 
 
 	private AirFeesDefaultsInput createAirFeesDefaults() {
@@ -265,6 +294,17 @@ public class OtherServiceFeesServiceTest {
 		input.setFopNumber("1234");
 		input.setFopType(FopType.CWT);
 		input.setProductCode("02");
+
+		return input;
+	}
+	
+	private AirFeesDefaultsInput createAirFeesDefaultsWithNull() {
+
+		AirFeesDefaultsInput input = new AirFeesDefaultsInput();
+		input.setClientAccountNumber("2078200002");
+		input.setFopMode(2);
+		input.setFopNumber("1234");
+		input.setFopType(FopType.CWT);
 
 		return input;
 	}

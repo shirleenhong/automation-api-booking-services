@@ -150,11 +150,26 @@ public class OtherServiceFeesService {
 		}
 		output.setClientFees(clientFees);
 		
-		Double merchantFeePercent = getMerchantFeePercent(formMerchantFeeInput(input));
-		output.setMerchantFeePercent(merchantFeePercent);
+		if (!isAnyFieldNull(input.getFopType(), input.getFopMode(), input.getFopNumber(),
+				input.getProductCode(), input.getCcType())) {
+
+			Double merchantFeePercent = getMerchantFeePercent(
+					formMerchantFeeInput(input));
+			output.setMerchantFeePercent(merchantFeePercent);
+		}
 
 		return output;
 	}
+    
+    private boolean isAnyFieldNull(Object... fields) {
+  
+        for (Object field: fields) {
+            if (field == null) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 	private MerchantFeePercentInput formMerchantFeeInput(AirFeesDefaultsInput input) {
 		

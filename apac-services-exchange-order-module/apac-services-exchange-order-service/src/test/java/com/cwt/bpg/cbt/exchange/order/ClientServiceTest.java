@@ -112,6 +112,25 @@ public class ClientServiceTest {
 	}
 	
 	@Test
+	public void shouldGetClientPricingsWithNullTripType() {
+		Client client = new Client();
+		List<ClientPricing> clientPricings = new ArrayList<>();
+		ClientPricing clientPricing = new ClientPricing();
+		String clientAccountNumber = "12345";
+		
+		clientPricing.setCmpid(1);
+		clientPricing.setTripType("D");
+		clientPricings.add(clientPricing);
+		client.setClientPricings(clientPricings);
+		
+		when(repository.getClient(clientAccountNumber)).thenReturn(client);
+		List<ClientPricing> result = service.getClientPricings(clientAccountNumber, null);
+		
+		assertTrue(result.isEmpty());
+		verify(repository, times(1)).getClient(clientAccountNumber);
+	}
+	
+	@Test
 	public void canGetDefaultClient() {
 		Client client = new Client();
 		final int id = -1;
