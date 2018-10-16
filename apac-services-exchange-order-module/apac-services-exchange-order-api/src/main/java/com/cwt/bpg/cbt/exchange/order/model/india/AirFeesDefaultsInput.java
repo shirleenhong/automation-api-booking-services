@@ -8,22 +8,17 @@ import io.swagger.annotations.ApiModelProperty;
 public class AirFeesDefaultsInput extends FeesInput {
 	private static final long serialVersionUID = 7271039286429340584L;
 
-	@ApiModelProperty(required = true, allowableValues = "CX,CC,INV")
+	@ApiModelProperty(allowableValues = "CX,CC,INV")
 	private FopType fopType;
 
-    @ApiModelProperty(required = true)
 	private int fopMode;
 
-	@ApiModelProperty(required = true)
 	private String productCode;
 
-	@ApiModelProperty(required = true)
 	private String ccType;
 
-	@ApiModelProperty(required = true)
 	private String fopNumber;
 
-	@ApiModelProperty(required = true)
 	private String tripType;
 
 
