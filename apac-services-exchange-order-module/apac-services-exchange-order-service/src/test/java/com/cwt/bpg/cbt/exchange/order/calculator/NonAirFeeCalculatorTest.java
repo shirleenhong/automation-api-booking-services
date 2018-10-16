@@ -60,7 +60,7 @@ public class NonAirFeeCalculatorTest {
 		assertEquals(round(new BigDecimal(63.63), 2), result.getGstAmount());
 		assertEquals(round(new BigDecimal(75.63), 2), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(76.4135), 2), result.getNettCostGst());
-		assertEquals(round(new BigDecimal(1272.53), 2), result.getTotalSellingPrice());
+		assertEquals(round(new BigDecimal(1336.16), 2), result.getTotalSellingPrice());
 	}
 	
 	@Test
@@ -79,7 +79,7 @@ public class NonAirFeeCalculatorTest {
 		assertEquals(round(new BigDecimal(79.5475)), result.getGstAmount());
 		assertEquals(round(new BigDecimal(94.5315)), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(61.4135)), result.getNettCostGst());
-		assertEquals(round(new BigDecimal(1590.95)), result.getTotalSellingPrice());
+		assertEquals(round(new BigDecimal(1671)), result.getTotalSellingPrice());
 	}
 
 	@Test
