@@ -42,14 +42,14 @@ public class ReportHeaderController {
         return new ResponseEntity<>(service.save(header), HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/report-headers/{countryCode}")
-    @ResponseBody
-    @ApiOperation(value = "Remove report header")
-    @Internal
-    public ResponseEntity<String> removeReportHeader(@PathVariable
-                                                @ApiParam(value = "Country Code") String countryCode) {
-        String deleteResult = service.delete(countryCode);
-        HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
-        return new ResponseEntity<>(deleteResult, status);
-    }
+	@DeleteMapping(path = "/report-headers/{countryCode}")
+	@ResponseBody
+	@ApiOperation(value = "Remove report header")
+	@Internal
+	public ResponseEntity<String> removeReportHeader(
+			@PathVariable @ApiParam(value = "Country Code") String countryCode) {
+		String deleteResult = service.delete(countryCode.toUpperCase());
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		return new ResponseEntity<>(deleteResult, status);
+	}
 }
