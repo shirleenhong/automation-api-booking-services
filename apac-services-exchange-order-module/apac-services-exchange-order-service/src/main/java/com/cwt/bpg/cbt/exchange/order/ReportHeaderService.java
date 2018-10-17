@@ -18,7 +18,7 @@ public class ReportHeaderService {
 		return repository.get(countryCode);
 	}
 
-	@CachePut(cacheNames = "report-headers", key = "#reportHeader.countryCode")
+	@CacheEvict(cacheNames = "report-headers", allEntries = true)
 	public ReportHeader save(ReportHeader reportHeader) {
 		return repository.put(reportHeader);
 	}
