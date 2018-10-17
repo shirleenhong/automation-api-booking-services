@@ -27,7 +27,7 @@ public class ReportHeaderController {
     public ResponseEntity<ReportHeader> getReportHeader(
             @PathVariable
             @ApiParam(value = "Country Code") String countryCode) {
-        return new ResponseEntity<>(service.getHeaderReport(countryCode), HttpStatus.OK);
+        return new ResponseEntity<>(service.getHeaderReport(countryCode.toUpperCase()), HttpStatus.OK);
     }
 
     @PutMapping(path = "/report-headers")
@@ -35,6 +35,10 @@ public class ReportHeaderController {
     @ApiOperation(value = "Add report header")
     @Internal
     public ResponseEntity<ReportHeader> putReportHeader(@Valid @RequestBody ReportHeader header) {
+    	
+    	String countryCode = header.getCountryCode();
+    	header.setCountryCode(countryCode.toUpperCase());
+    	
         return new ResponseEntity<>(service.save(header), HttpStatus.OK);
     }
 
