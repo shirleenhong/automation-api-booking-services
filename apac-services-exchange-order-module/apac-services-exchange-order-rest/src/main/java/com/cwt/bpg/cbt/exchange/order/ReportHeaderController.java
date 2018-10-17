@@ -27,7 +27,7 @@ public class ReportHeaderController {
     public ResponseEntity<ReportHeader> getReportHeader(
             @PathVariable
             @ApiParam(value = "Country Code") String countryCode) {
-        return new ResponseEntity<>(service.getHeaderReport(countryCode), HttpStatus.OK);
+        return new ResponseEntity<>(service.getHeaderReport(countryCode.toUpperCase()), HttpStatus.OK);
     }
 
     @PutMapping(path = "/report-headers")
@@ -35,17 +35,21 @@ public class ReportHeaderController {
     @ApiOperation(value = "Add report header")
     @Internal
     public ResponseEntity<ReportHeader> putReportHeader(@Valid @RequestBody ReportHeader header) {
+    	
+    	String countryCode = header.getCountryCode();
+    	header.setCountryCode(countryCode.toUpperCase());
+    	
         return new ResponseEntity<>(service.save(header), HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/report-headers/{countryCode}")
-    @ResponseBody
-    @ApiOperation(value = "Remove report header")
-    @Internal
-    public ResponseEntity<String> removeReportHeader(@PathVariable
-                                                @ApiParam(value = "Country Code") String countryCode) {
-        String deleteResult = service.delete(countryCode);
-        HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
-        return new ResponseEntity<>(deleteResult, status);
-    }
+	@DeleteMapping(path = "/report-headers/{countryCode}")
+	@ResponseBody
+	@ApiOperation(value = "Remove report header")
+	@Internal
+	public ResponseEntity<String> removeReportHeader(
+			@PathVariable @ApiParam(value = "Country Code") String countryCode) {
+		String deleteResult = service.delete(countryCode.toUpperCase());
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		return new ResponseEntity<>(deleteResult, status);
+	}
 }
