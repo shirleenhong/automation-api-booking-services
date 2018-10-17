@@ -894,7 +894,8 @@ Verify Exchange Order Information For PDF Is Retrieved Correctly
     #Verify String Contains Substring    ${pdf_response}    ${ai_description_${eo_index}_value}
     Verify String Contains Substring    ${pdf_response}    ${exchange_order_number_${eo_index}}
     Run Keyword If    "${gst_${eo_index}_value}"!="none" and ${gst_${eo_index}_value}>0    Verify String Contains Substring    ${pdf_response}    ${gst_amount_${eo_index}_value}
-    Verify String Contains Substring    ${pdf_response}    ${header_address_${eo_index}_value}
+    ${header_address_value}    Replace String    ${header_address_${eo_index}_value}    ^    ,        
+    Verify String Contains Substring    ${pdf_response}    ${header_address_value}
     Run Keyword If    "${header_fax_${eo_index}_value}"!="none"    Verify String Contains Substring    ${pdf_response}    ${header_fax_${eo_index}_value}
     ...    ELSE    Verify String Does Not Contain Substring    ${pdf_response}    ${header_fax_${eo_index}_value}
     Run Keyword If    "${header_telephone_${eo_index}_value}"!="none"    Verify String Contains Substring    ${pdf_response}    ${header_telephone_${eo_index}_value}
