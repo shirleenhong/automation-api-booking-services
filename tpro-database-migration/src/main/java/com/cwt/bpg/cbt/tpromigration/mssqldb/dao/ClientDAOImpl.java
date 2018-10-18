@@ -403,13 +403,18 @@ public class ClientDAOImpl {
 			conn = dataSource.getConnection();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-			System.out.println(rs.getFetchSize());
-			
+
 			while (rs.next()) {
 				ClientPricing clientPricing = new ClientPricing();
 				clientPricing.setFieldId(rs.getInt("fieldid"));
 				clientPricing.setCmpid(rs.getInt("cmpid"));
-				clientPricing.setValue(rs.getInt("value"));
+				
+				String value = rs.getString("value");
+				if (value != null) {
+					String valueString = value.split("%")[0].trim();
+					clientPricing.setValue(Integer.parseInt(valueString));
+				}
+				
 				clientPricing.setTripType(rs.getString("triptype"));
 				clientPricing.setFeeOption(rs.getString("valueoption"));
 				resultList.add(clientPricing);
