@@ -34,7 +34,8 @@ public class AirlineController {
 	@ApiOperation(value = "Returns Airline object given an airline code.")
 	public ResponseEntity<Airline> getAirline(
 			@PathVariable("airlineCode") @ApiParam("2-character IATA code") String airlineCode) {
-		return new ResponseEntity<>(airlineService.getAirline(airlineCode), HttpStatus.OK);
+        Airline airline = airlineService.getAirline(airlineCode);
+        return new ResponseEntity<>(airline, airline != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
 	}
 
 	@Internal

@@ -12,7 +12,7 @@ import com.cwt.bpg.cbt.repository.CommonRepository;
 @Repository
 public class AirlineRepository extends CommonRepository<Airline, String>{
 
-	private static final String IATA_CODE = "iataCode";
+	static final String IATA_CODE = "iataCode";
 
 	public AirlineRepository() {
 		super(Airline.class, IATA_CODE);
