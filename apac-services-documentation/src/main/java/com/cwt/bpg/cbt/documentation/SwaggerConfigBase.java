@@ -55,45 +55,45 @@ public class SwaggerConfigBase
 		return new ApiKey("Power Express Token", "Authorization", "header");
 	}
 
-	Tag merchantFee() {
-		return new Tag("Merchant Fee", "Services related to Merchant Fee");
-	}
+    Tag airContract() {
+        return new Tag("Air Contract", "Services related to Air Contract");
+    }
 
-    Tag serviceFees() {
-        return new Tag("Service Fees", "Services related to Service Fees");
+    Tag airTransaction() {
+        return new Tag("Air Transaction", "Services related to Air Transaction");
     }
-    
-    Tag otherServiceFees() {
-        return new Tag("Other Service Fees", "Services related to Other Service Fees");
-    }
-    
-    Tag products() {
-        return new Tag("Products", "Services related to Products");
-    }
-    
-    Tag insurance() {
-        return new Tag("Insurance", "Services related to Insurance");
+
+    Tag appInfo() {
+        return new Tag("App Info", "Services that display application info");
     }
 
     Tag exchangeOrder() {
         return new Tag("Exchange Order", "Services related to Exchange Order");
     }
-    
-    Tag airTransaction() {
-        return new Tag("Air Transaction", "Services related to Air Transaction");
+
+    Tag insurance() {
+        return new Tag("Insurance", "Services related to Insurance");
     }
-    
-    Tag airContract() {
-		return new Tag("Air Contract", "Services related to Air Contract");
-	}
-    
-	Tag obtList() {
-		return new Tag("OBT List", "Services related to OBT List");
+
+	Tag merchantFee() {
+		return new Tag("Merchant Fee", "Services related to Merchant Fee");
 	}
 
-	Tag appInfo() {
-		return new Tag("App Info", "Services that display application info");
-	}
+    Tag obtList() {
+        return new Tag("OBT List", "Services related to OBT List");
+    }
+
+    Tag otherServiceFees() {
+        return new Tag("Other Service Fees", "Services related to Other Service Fees");
+    }
+
+    Tag products() {
+        return new Tag("Products", "Services related to Products");
+    }
+
+    Tag serviceFees() {
+        return new Tag("Service Fees", "Services related to Service Fees");
+    }
 
 	ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("APAC Services API")

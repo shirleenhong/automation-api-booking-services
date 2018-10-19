@@ -30,6 +30,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.cwt.bpg.cbt</groupId>
+			<artifactId>apac-services-airline-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.cwt.bpg.cbt</groupId>
 			<artifactId>apac-services-fees-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
