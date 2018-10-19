@@ -33,7 +33,8 @@ public class CacheConfiguration {
             "reason-codes",
             "car-vendors",
             "air-contracts",
-            "air-misc-info"};
+            "air-misc-info",
+			"airlines"};
 
 	@Bean
 	public CacheManager cacheManager() {
@@ -56,7 +57,8 @@ public class CacheConfiguration {
                     "reason-codes",
                     "car-vendors",
                     "air-contracts",
-                    "air-miscinfo"})
+                    "air-miscinfo",
+					"airlines"})
 	
 	@Scheduled(cron = "0 0 0,12 * * *")
 	public void evictAllCache() {
