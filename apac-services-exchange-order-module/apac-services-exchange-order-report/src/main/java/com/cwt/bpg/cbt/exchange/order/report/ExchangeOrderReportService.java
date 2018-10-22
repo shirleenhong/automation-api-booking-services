@@ -291,7 +291,7 @@ public class ExchangeOrderReportService {
 	}
 	
 	private ReportHeader getReportHeader(String countryCode) {
-		return reportHeaderService.getHeaderReport(countryCode);
+		return reportHeaderService.getHeaderReport(countryCode.toUpperCase());
 	}
 
 	public EmailResponse emailPdf(String eoNumber) throws ApiServiceException {

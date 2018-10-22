@@ -57,6 +57,7 @@ public class EmailContentProcessorTest {
 		ExchangeOrder eo = new ExchangeOrder();
 		eo.setAgentName("agentName");
 		eo.setVendor(new Vendor());
+		eo.setCountryCode("SG");
 
 		ReportHeader reportHeader = createReportHeader();
 		when(reportHeaderService.getHeaderReport(anyString())).thenReturn(reportHeader);
