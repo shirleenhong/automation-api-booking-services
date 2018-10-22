@@ -1338,7 +1338,7 @@ Verify Response Status Code Is Correct For Multiple EO Request
 
 Verify Static Labels Is Retrieved Correctly
     [Arguments]    ${eo_index}=0
-    Verify String Contains Substring    ${pdf_response}    Carlson Wagonlit Travel
+    #Verify String Contains Substring    ${pdf_response}    Carlson Wagonlit Travel
     Verify String Contains Substring    ${pdf_response}    Tel:
     Verify String Contains Substring    ${pdf_response}    Fax:
     Verify String Contains Substring    ${pdf_response}    ATTN:
