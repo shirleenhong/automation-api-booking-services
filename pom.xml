@@ -467,6 +467,7 @@
 		<module>apac-services-fees-module</module>
 		<module>apac-services-exchange-order-module</module>
 		<module>apac-services-air-transaction-module</module>
+		<module>apac-services-airline-module</module>
 		<module>apac-services-client-air-contract-module</module>
 		<module>apac-services-obt-module</module>
 		<module>apac-services-security-module</module>
