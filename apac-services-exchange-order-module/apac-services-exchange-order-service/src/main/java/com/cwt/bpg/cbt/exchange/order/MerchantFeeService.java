@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -13,6 +15,11 @@ public class MerchantFeeService {
 
     @Autowired
     private MerchantFeeRepository merchantFeeRepo;
+    
+    @Cacheable(cacheNames = "merchant-fee", key = "{#countryCode, #clientAccountNumber}")
+    public List<MerchantFee> getAll(String countryCode) {
+        return merchantFeeRepo.getAll(countryCode);
+    }
 
     @Cacheable(cacheNames = "merchant-fee", key = "{#countryCode, #clientAccountNumber}")
     public MerchantFee getMerchantFee(String countryCode, String clientAccountNumber) {

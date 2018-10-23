@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -7,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 import io.swagger.annotations.Api;
@@ -18,6 +21,18 @@ public class MerchantFeeController {
 
 	@Autowired
 	private MerchantFeeService service;
+	
+	
+	
+	@Internal
+	@GetMapping(
+			path = "/merchant/{countryCode}",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Pulls merchant fees based on a [country code")
+	public ResponseEntity<List<MerchantFee>> getMerchantFees(@PathVariable String countryCode) {
+		return new ResponseEntity<>(service.getAll(countryCode), HttpStatus.OK);
+	}
 
 	@Internal
 	@GetMapping(

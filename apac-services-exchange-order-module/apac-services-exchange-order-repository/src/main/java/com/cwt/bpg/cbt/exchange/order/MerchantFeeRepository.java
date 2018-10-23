@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.apache.commons.lang.StringUtils.leftPad;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.mongodb.morphia.Datastore;
@@ -23,12 +24,22 @@ public class MerchantFeeRepository {
 	
 	@Autowired
 	private MorphiaComponent morphia;
+	
+	private static final String COUNTRY_CODE = "countryCode";
+	private static final String CLIENT_ACCOUNT_NUMBER = "clientAccountNumber";
+	
+	public List<MerchantFee> getAll(String countryCode) {
+		Query<MerchantFee> query = morphia.getDatastore().createQuery(MerchantFee.class)
+				.field(COUNTRY_CODE)
+				.equalIgnoreCase(countryCode);
+		return query.asList();
+	}
 
 	public MerchantFee getMerchantFee(String countryCode, String clientAccountNumber) {
 		Optional<MerchantFee> merchantFee = Optional.ofNullable(morphia.getDatastore().createQuery(MerchantFee.class)
-				.field("countryCode")
+				.field(COUNTRY_CODE)
 				.equalIgnoreCase(countryCode)
-				.field("clientAccountNumber")
+				.field(CLIENT_ACCOUNT_NUMBER)
 				.equalIgnoreCase(leftPadZeros(clientAccountNumber)).get());
 		return merchantFee.orElse(new MerchantFee());
 	}
@@ -48,8 +59,8 @@ public class MerchantFeeRepository {
 		final Datastore datastore = morphia.getDatastore();
 		
 		final Query<MerchantFee> clientMerchantFee = datastore.createQuery(MerchantFee.class)
-                .filter("countryCode", merchantFee.getCountryCode())
-                .filter("clientAccountNumber", merchantFee.getClientAccountNumber());
+                .filter(COUNTRY_CODE, merchantFee.getCountryCode())
+                .filter(CLIENT_ACCOUNT_NUMBER, merchantFee.getClientAccountNumber());
 		
 		WriteResult delete = datastore.delete(clientMerchantFee);
 		
