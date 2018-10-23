@@ -67,7 +67,7 @@ public class EmailContentProcessor {
 	}
 	
 	private ReportHeader getReportHeader(String countryCode) {
-		return reportHeaderService.getHeaderReport(countryCode);
+		return reportHeaderService.getHeaderReport(countryCode.toUpperCase());
 	}
 	
 	public String getEmailSubject(ExchangeOrder eo) {
