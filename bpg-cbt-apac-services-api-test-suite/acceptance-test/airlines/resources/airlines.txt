@@ -1,0 +1,121 @@
+*** Settings ***
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+
+*** Keywords ***
+Add New Airline To Airlines List
+    ${airlines_list_length}    Evaluate    ${airlines_list_length}+1
+    Set Test Variable    ${airlines_list_length}
+    ${index}    Evaluate    ${airlines_list_length}-1  
+    Set Test Variable    ${airline_code_${index}}    ${airline_code}
+    Set Test Variable    ${name_${index}}    ${name}
+    Set Test Variable    ${ticketing_code_${index}}    ${ticketing_code}
+
+Create Test Variables For Get All Airlines
+    [Arguments]    ${airlines_list}=${airlines_list}
+    ${airlines_list}    Split String    ${airlines_list}    |
+    ${airlines_list_length}    Get Length    ${airlines_list}
+    Set Test Variable    ${airlines_list_length}
+    Set Test Variable    ${airlines_list}
+    : FOR    ${index}    IN RANGE    0    ${airlines_list_length}
+    \    ${data_item}    Split String    ${airlines_list[${index}]}    ,
+    \    ${name}    Convert JSON To String    ${data_item[1]} 
+    \    ${name}    Replace String    ${name}    "    ${EMPTY}    
+    \    Set Test Variable    ${airline_code_${index}}    ${data_item[0]}
+    \    Set Test Variable    ${name_${index}}    ${name}
+    \    Set Test Variable    ${ticketing_code_${index}}    ${data_item[2]}
+
+Create Test Variables For Put Airlines
+    [Arguments]    ${airlines_list}=${airlines_list}    ${add_to_list}=false
+    ${data_item}    Split String    ${airlines_list}    ,
+    Set Test Variable    ${airline_code}    ${data_item[0]}
+    Set Test Variable    ${name}    ${data_item[1]}
+    Set Test Variable    ${ticketing_code}    ${data_item[2]}
+    Run Keyword If    "${add_to_list}"=="true"    Add New Airline To Airlines List
+
+Delete Created Airline Information And Evict Cache
+    [Arguments]    ${token}=${default_token}    ${airline_code}=${airline_code}    ${number}=2
+    Send Delete Request For Airlines    token=${token}    airline_code=${airline_code}
+    Evict Airlines Cache    token=${token}    number=${number}
+
+Evict Airlines Cache
+    [Arguments]    ${number}=2    ${token}=${default_token}
+    Create Session    airlines    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    : FOR    ${index}    IN RANGE    0    ${number}
+    \    ${response}    Get Request    airlines    /apac-services-rest/api/caches/evict/airlines   headers=${headers}
+    \    Set Test Variable    ${response}
+    \    Verify Response Status Code Is Correct    200
+    \    Log    ${response.headers}
+    \    Log    ${response.content}
+    Set Test Variable    ${api_flag}    airlines
+
+Send Delete Request For Airlines
+    [Arguments]    ${token}=${default_token}    ${airline_code}=${airline_code}
+    Create Session    airlines    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Delete Request    airlines    apac-services-rest/api/airlines/${airline_code}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    airlines
+
+Send Get Request For Airlines
+    [Arguments]    ${token}=${default_token}
+    Create Session    airlines    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    airlines    apac-services-rest/api/airlines    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    airlines
+
+Send Get Request For Specific Airline
+    [Arguments]    ${token}=${default_token}    ${airline_code}=${airline_code}
+    Create Session    airlines    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    airlines    apac-services-rest/api/airlines/${airline_code}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    airlines
+
+Send Put Request For Airlines
+    [Arguments]    ${token}=${default_token}    ${airline_code}=${airline_code}    ${name}=${name}    ${ticketing_code}=${ticketing_code}
+    Create Session    airlines    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${data}    Set Variable    {"iataCode":"${airline_code}","name":"${name}","ticketingCode":"${ticketing_code}"}
+    ${response}    Put Request    airlines    /apac-services-rest/api/airlines    data=${data}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    airlines
+
+Verify Airline List Is Correctly Retrieved
+    :FOR    ${index}    IN RANGE    0    ${airlines_list_length}
+    \    Verify Json Value Is Correct    $.[${index}].iataCode    ${airline_code_${index}}
+    \    Verify Json Value Is Correct    $.[${index}].name    ${name_${index}}
+    \    Verify Json Value Is Correct    $.[${index}].ticketingCode    ${ticketing_code_${index}}
+    ${index}    Evaluate    ${index}+1
+    Verify Json Element Does Not Exist    $.[${index}].iataCode
+    
+Verify Specific Airline Is Correctly Created/Updated
+    Verify Specific Airline Is Correctly Retrieved
+    
+Verify Specific Airline Is Correctly Retrieved
+    Verify Json Value Is Correct    $.iataCode    ${airline_code}
+    Verify Json Value Is Correct    $.name    ${name}
+    Verify Json Value Is Correct    $.ticketingCode    ${ticketing_code}
+    
+Verify Specific Airline Is Not Retrieved
+    Verify String Does Not Contain Substring    ${response.text}    "iataCode"
+    Verify String Does Not Contain Substring    ${response.text}    "name"
+    Verify String Does Not Contain Substring    ${response.text}    "ticketingCode"
+    
+Verify Airline List Is Not Retrieved
+    Verify Specific Airline Is Not Retrieved
