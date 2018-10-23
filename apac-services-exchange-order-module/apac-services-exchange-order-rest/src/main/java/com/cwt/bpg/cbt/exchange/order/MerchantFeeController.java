@@ -26,12 +26,12 @@ public class MerchantFeeController {
 	
 	@Internal
 	@GetMapping(
-			path = "/merchant/{countryCode}",
+			path = "/merchant/",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls merchant fees based on a [country code")
-	public ResponseEntity<List<MerchantFee>> getMerchantFees(@PathVariable String countryCode) {
-		return new ResponseEntity<>(service.getAll(countryCode), HttpStatus.OK);
+	public ResponseEntity<List<MerchantFee>> getMerchantFees() {
+		return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
 	}
 
 	@Internal
@@ -54,8 +54,9 @@ public class MerchantFeeController {
 	@ResponseBody
 	@ApiOperation(value = "Updates merchant fee configuration of a given market")
 	public ResponseEntity<MerchantFee> updateMerchantFee(@RequestBody MerchantFee merchantFee) {
-
-		return new ResponseEntity<>(service.putMerchantFee(merchantFee), HttpStatus.OK);
+		MerchantFee mf = service.putMerchantFee(merchantFee);
+		service.getAll();
+		return new ResponseEntity<>(mf, HttpStatus.OK);
 	}
 
 	@Internal
@@ -66,8 +67,9 @@ public class MerchantFeeController {
 	@ResponseBody
 	@ApiOperation(value = "remove merchant fee configuration of a given market")
 	public ResponseEntity<MerchantFee> removeMerchantFee(@RequestBody MerchantFee merchantFee) {
-
-		return new ResponseEntity<>(service.remove(merchantFee), HttpStatus.OK);
+		MerchantFee mf = service.remove(merchantFee);
+		service.getAll();
+		return new ResponseEntity<>(mf, HttpStatus.OK);
 	}
 
 }

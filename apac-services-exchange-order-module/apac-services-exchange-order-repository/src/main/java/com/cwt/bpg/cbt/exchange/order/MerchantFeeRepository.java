@@ -28,10 +28,8 @@ public class MerchantFeeRepository {
 	private static final String COUNTRY_CODE = "countryCode";
 	private static final String CLIENT_ACCOUNT_NUMBER = "clientAccountNumber";
 	
-	public List<MerchantFee> getAll(String countryCode) {
-		Query<MerchantFee> query = morphia.getDatastore().createQuery(MerchantFee.class)
-				.field(COUNTRY_CODE)
-				.equalIgnoreCase(countryCode);
+	public List<MerchantFee> getAll() {
+		Query<MerchantFee> query = morphia.getDatastore().createQuery(MerchantFee.class);
 		return query.asList();
 	}
 
