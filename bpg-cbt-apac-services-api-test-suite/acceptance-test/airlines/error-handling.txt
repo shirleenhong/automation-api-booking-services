@@ -1,0 +1,139 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource          resources/airlines.txt
+
+*** Test Cases ***
+Verify That Error Is Encountered When Invalid Token is Used For Get Request
+    [Tags]    functional
+    Send Get Request For Airlines    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    Send Get Request For Airlines    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    Send Get Request For Airlines    token=!@#$%^&*().!@#$%^&*().!@#$%^&*()
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When Empty Token Used For Get Request
+    [Tags]    functional
+    Send Get Request For Airlines    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When Null Token Used For Get Request
+    [Tags]    functional
+    Send Get Request For Airlines    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When No Token Used For Get Request
+    [Tags]    functional
+    Send Get Request For Airlines    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When Invalid Token is Used For Get Request (Maintenance)
+    [Tags]    functional
+    Send Get Request For Specific Airline    token=12345.12345.12345    airline_code=AA
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    Send Get Request For Specific Airline    token=abcde.abcde.abcde    airline_code=AA
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    Send Get Request For Specific Airline    token=!@#$%^&*().!@#$%^&*().!@#$%^&*()    airline_code=AA
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When Empty Token Used For Get Request (Maintenance)
+    [Tags]    functional
+    Send Get Request For Specific Airline    token=${EMPTY}    airline_code=AA
+    Verify Response Status Code Is Correct    400
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When Null Token Used For Get Request (Maintenance)
+    [Tags]    functional
+    Send Get Request For Specific Airline    token=null    airline_code=AA
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When No Token Used For Get Request (Maintenance)
+    [Tags]    functional
+    Send Get Request For Specific Airline    token=None    airline_code=AA
+    Verify Response Status Code Is Correct    400
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When Invalid Token Is Used For Put Request
+    [Tags]    functional
+    Send Put Request For Airlines    token=12345.12345.12345    airline_code=XX    name=TEST    ticketing_code=111
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    Send Put Request For Airlines    token=abcde.abcde.abcde    airline_code=XX    name=TEST    ticketing_code=111
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    Send Put Request For Airlines    token=!@#$%^&*().!@#$%^&*().!@#$%^&*()    airline_code=XX    name=TEST    ticketing_code=111
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When Empty Token Is Used For Put Request
+    [Tags]    functional
+    Send Put Request For Airlines    token=${EMPTY}    airline_code=XX    name=TEST    ticketing_code=111
+    Verify Response Status Code Is Correct    400
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When Null Token Is Used For Put Request
+    [Tags]    functional
+    Send Put Request For Airlines    token=null    airline_code=XX    name=TEST    ticketing_code=111
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When No Token Is Used For Put Request
+    [Tags]    functional    
+    Send Put Request For Airlines    token=None    airline_code=XX    name=TEST    ticketing_code=111
+    Verify Response Status Code Is Correct    400
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When Invalid Token Is Used For Delete Request
+    [Tags]    functional
+    Send Delete Request For Airlines    token=12345.12345.12345    airline_code=XX
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    Send Delete Request For Airlines    token=abcde.abcde.abcde    airline_code=XX
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    Send Delete Request For Airlines    token=!@#$%^&*().!@#$%^&*().!@#$%^&*()    airline_code=XX
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When Empty Token Is Used For Delete Request
+    [Tags]    functional
+    Send Delete Request For Airlines    token=${EMPTY}    airline_code=XX
+    Verify Response Status Code Is Correct    400
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When Null Token Is Used For Delete Request
+    [Tags]    functional
+    Send Delete Request For Airlines    token=null    airline_code=XX
+    Verify Response Status Code Is Correct    401
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When No Token Is Used For Delete Request
+    [Tags]    functional
+    Send Delete Request For Airlines    token=None    airline_code=XX
+    Verify Response Status Code Is Correct    400
+    Verify Airline List Is Not Retrieved
+    
+Verify That Error Is Encountered When Invalid Airline Code Is Used For Delete Request    
+    [Tags]    functional
+    Send Delete Request For Airlines    airline_code=XX
+    Verify Response Status Code Is Correct    404
+    Verify Airline List Is Not Retrieved    
+
+Verify That Error Is Encountered When Empty Airline Code Is Used For Delete Request
+    [Tags]    functional
+    Send Delete Request For Airlines    airline_code=${EMPTY}
+    Verify Response Status Code Is Correct    405
+    Verify Airline List Is Not Retrieved    
+    
