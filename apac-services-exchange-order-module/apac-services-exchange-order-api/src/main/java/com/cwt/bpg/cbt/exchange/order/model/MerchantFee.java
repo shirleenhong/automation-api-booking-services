@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity(value = "clientMerchantFee", noClassnameStored = true)
-@Indexes(@Index(fields = @Field("id")))
+@Indexes(@Index(fields = { @Field("countryCode"), @Field("clientAccountNumber") }))
 public class MerchantFee implements Serializable {
 
 	private static final long serialVersionUID = -1922100420586710851L;
