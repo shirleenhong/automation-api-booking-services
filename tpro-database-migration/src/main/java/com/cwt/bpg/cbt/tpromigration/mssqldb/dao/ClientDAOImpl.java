@@ -87,27 +87,20 @@ public class ClientDAOImpl {
 
 		List<Client> clients = new ArrayList<>();
 
-		String sql = "select " + 
-				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmaster.clientnumber, clientmasterpricing.pricingid, exempttax," + 
-				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank, clientmaster.merchantfee," + 
-				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply" + 
-				" from " + 
-				"	tblclientmaster clientmaster left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = clientmaster.clientid,  " + 
-				"	tblconfiguration config, " + 
-				"	tblAirPricingFormula airpricingformula," + 
-				"	cwtstandarddata.dbo.tblcsp_linedefclientmapping clientmapping, " + 
-				"	cwtstandarddata.dbo.configinstances configinstance  " + 
-				"where clientmaster.configurationid = config.configurationid " + 
-				"	and clientmaster.clientid = clientmapping.clientid " + 
-				"	and clientmasterpricing.clientid = clientmaster.clientid" + 
-				"	and configinstance.countrycode = 'IN'" + 
-				"	and clientmapping.configinstancekeyid=configinstance.keyid" + 
-				"	and airpricingformula.airpricingid=clientmasterpricing.pricingid" + 
-				" group by " + 
-				"    clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmasterpricing.pricingid, exempttax," + 
-				"	clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee," + 
-				"	airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply, clientmaster.clientnumber" + 
-				" order by clientmaster.clientid";
+		String sql = "select "+
+			"clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmaster.clientnumber, clientmasterpricing.pricingid, exempttax, "+
+			"clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank, clientmaster.merchantfee, "+
+			"airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply "+
+			"from "+
+			"tblclientmaster clientmaster left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = clientmaster.clientid, "+
+			"tblAirPricingFormula airpricingformula "+
+			"where clientmasterpricing.clientid = clientmaster.clientid "+
+			"and airpricingformula.airpricingid=clientmasterpricing.pricingid "+
+			"group by "+
+				"clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmasterpricing.pricingid, exempttax, "+
+				"clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee, "+
+				"airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply, clientmaster.clientnumber "+
+			"order by clientmaster.clientid ";
 
 		Connection conn = null;
 		PreparedStatement ps = null;
