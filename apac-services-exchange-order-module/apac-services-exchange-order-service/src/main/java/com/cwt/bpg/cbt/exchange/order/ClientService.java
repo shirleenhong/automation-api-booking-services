@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.model.Client;
@@ -20,17 +21,22 @@ public class ClientService {
 	@Autowired
 	private ClientRepository clientRepository;
 
+	public static final String KEY = "getAll";
+	
 	@Cacheable(cacheNames = "clients", key = "#root.methodName")
 	public List<Client> getAll() {
 		return clientRepository.getAll();
 	}
 
-	@CachePut(cacheNames = "clients", key = "#client.clientId")
+	@Caching(
+	    put = {@CachePut(cacheNames = "clients", key = "#client.clientId")},
+	    evict={@CacheEvict(cacheNames = "clients", key = "#root.target.KEY")
+	 })
 	public Client save(Client client) {
 		return clientRepository.put(client);
 	}
 
-	@CacheEvict(cacheNames = "clients", allEntries = true)
+	@CacheEvict(cacheNames = "clients", key = "#root.target.KEY")
 	public String delete(String keyValue) {
 		return clientRepository.remove(keyValue);
 	}

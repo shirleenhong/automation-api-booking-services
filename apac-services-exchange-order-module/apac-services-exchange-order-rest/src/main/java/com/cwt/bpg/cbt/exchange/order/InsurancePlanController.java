@@ -46,16 +46,20 @@ public class InsurancePlanController {
 	@ApiOperation(value = "Add/Updates insurance plan")
 	public ResponseEntity<InsurancePlan> updateInsurancePlan(@Valid @RequestBody InsurancePlan insurance) {
 
-		return new ResponseEntity<>(service.putInsurancePlan(insurance), HttpStatus.OK);
+		InsurancePlan updatedResult = service.putInsurancePlan(insurance);
+		service.getAll();
+		return new ResponseEntity<>(updatedResult, HttpStatus.OK);
 	}
 
 	@Internal
-	@DeleteMapping(path = "/insurance/{type}")
+	@DeleteMapping(path = "/insurance/{id}")
 	@ResponseBody
 	@ApiOperation(value = "Remove insurance plan")
-	public ResponseEntity<String> removeInsurancePlan(@PathVariable String type) {
+	public ResponseEntity<String> removeInsurancePlan(@PathVariable String id) {
 
-		return new ResponseEntity<>(service.remove(type), HttpStatus.OK);
+		String deleteResult = service.remove(id);
+		service.getAll();
+		return new ResponseEntity<>(deleteResult, HttpStatus.OK);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +33,10 @@ public class InsuranceControllerTest {
 	@Test
 	public void canPutInsurance() {
 		InsurancePlan Insurance = new InsurancePlan();
-		Mockito.when(service.putInsurancePlan(Insurance)).thenReturn(Insurance);
+		when(service.putInsurancePlan(Insurance)).thenReturn(Insurance);
+		
+		List<InsurancePlan> insuranceList = new ArrayList<>();
+		when(service.getAll()).thenReturn(insuranceList);
 		
 		ResponseEntity<InsurancePlan> result = controller.updateInsurancePlan(Insurance);
 
@@ -44,7 +47,7 @@ public class InsuranceControllerTest {
 	@Test
 	public void canGetInsuranceList() {
 		List<InsurancePlan> insuranceList = new ArrayList<>();
-		Mockito.when(service.getAll()).thenReturn(insuranceList);
+		when(service.getAll()).thenReturn(insuranceList);
 		
 		ResponseEntity<List<InsurancePlan>>result = controller.getInsurancePlanList();
 
@@ -56,7 +59,10 @@ public class InsuranceControllerTest {
 	@Test
 	public void canRemoveInsurance() {
 		final String type = "INV";
-		Mockito.when(service.remove(type)).thenReturn("Success");
+		when(service.remove(type)).thenReturn("Success");
+		
+		List<InsurancePlan> insuranceList = new ArrayList<>();
+		when(service.getAll()).thenReturn(insuranceList);
 		
 		ResponseEntity<String> result = controller.removeInsurancePlan(type);
 
