@@ -1,7 +1,12 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +21,7 @@ import com.cwt.bpg.cbt.exchange.order.model.Client;
 public class ClientControllerTest {
 
 	@Mock
-	private ClientService clientPricingService;
+	private ClientService clientService;
 	
 	@InjectMocks
 	private ClientController clientController;
@@ -28,38 +33,54 @@ public class ClientControllerTest {
 	
 	@Test
 	public void canGetClientById() {
-			final String clientAccountNumber = "123456";
-			ResponseEntity<?> client = clientController.getClient(clientAccountNumber);
-			verify(clientPricingService, times(1)).getClient(clientAccountNumber);
-			assertEquals(HttpStatus.OK,  client.getStatusCode());
+		final String clientAccountNumber = "123456";
+		ResponseEntity<?> client = clientController.getClient(clientAccountNumber);
+		verify(clientService, times(1)).getClient(clientAccountNumber);
+		assertEquals(HttpStatus.OK, client.getStatusCode());
 	}
 
 	@Test
 	public void canPutClientPricing() {
 		Client newClient = new Client();
+		List<Client> clientList = new ArrayList<>();
+		when(clientService.getAll()).thenReturn(clientList);
+
 		ResponseEntity<?> client = clientController.putClient(newClient);
-		verify(clientPricingService, times(1)).save(newClient);
+		verify(clientService, times(1)).save(newClient);
 		assertEquals(HttpStatus.OK, client.getStatusCode());
 	}
-	
+
 	@Test
 	public void canRemoveClientPricing() {
 		final String clientAccountNumber = "123456";
-		when(clientPricingService.delete(clientAccountNumber)).thenReturn(clientAccountNumber);
+		when(clientService.delete(clientAccountNumber)).thenReturn(clientAccountNumber);
+
+		List<Client> clientList = new ArrayList<>();
+		when(clientService.getAll()).thenReturn(clientList);
 
 		ResponseEntity<?> client = clientController.removeClient(clientAccountNumber);
-		verify(clientPricingService, times(1)).delete(clientAccountNumber);
+		verify(clientService, times(1)).delete(clientAccountNumber);
 		assertEquals(HttpStatus.OK, client.getStatusCode());
 	}
 
-    @Test
-    public void removeReturnsNotFoundWhenRecordDoesNotExist() {
-        final String clientAccountNumber = "123456";
-        when(clientPricingService.delete(clientAccountNumber)).thenReturn("");
+	@Test
+	public void removeReturnsNotFoundWhenRecordDoesNotExist() {
+		final String clientAccountNumber = "123456";
+		when(clientService.delete(clientAccountNumber)).thenReturn("");
 
-        ResponseEntity<?> client = clientController.removeClient(clientAccountNumber);
-        verify(clientPricingService, times(1)).delete(clientAccountNumber);
-        assertEquals(HttpStatus.NOT_FOUND, client.getStatusCode());
-    }
+		List<Client> clientList = new ArrayList<>();
+		when(clientService.getAll()).thenReturn(clientList);
 
+		ResponseEntity<?> client = clientController.removeClient(clientAccountNumber);
+		verify(clientService, times(1)).delete(clientAccountNumber);
+		assertEquals(HttpStatus.NOT_FOUND, client.getStatusCode());
+	}
+
+	@Test
+	public void canGetAllClients() {
+
+		ResponseEntity<?> client = clientController.getAllClients();
+		verify(clientService, times(1)).getAll();
+		assertEquals(HttpStatus.OK, client.getStatusCode());
+	}
 }

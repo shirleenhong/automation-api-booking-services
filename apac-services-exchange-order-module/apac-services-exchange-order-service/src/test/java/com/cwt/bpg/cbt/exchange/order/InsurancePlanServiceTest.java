@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -8,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -52,12 +54,13 @@ public class InsurancePlanServiceTest {
 	
 	@Test
 	public void canRemoveInsurance() {
-		final String removeObjectId = "Test";
-		when(insurancePlanRepository.remove(removeObjectId)).thenReturn(removeObjectId);
+        
+		final String removeObjectId = "5b2870d6284b8d1ac84300ad";
+		when(insurancePlanRepository.remove(any(ObjectId.class))).thenReturn(removeObjectId);
 		
 		service.remove(removeObjectId);
 		
-		verify(insurancePlanRepository, times(1)).remove(removeObjectId);
+		verify(insurancePlanRepository, times(1)).remove(any(ObjectId.class));
 	}
 
 }
