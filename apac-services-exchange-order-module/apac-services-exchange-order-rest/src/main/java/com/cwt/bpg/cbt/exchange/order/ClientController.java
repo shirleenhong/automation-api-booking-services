@@ -39,7 +39,7 @@ public class ClientController {
 
 	@PutMapping(path = "/clients", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Put client")
+	@ApiOperation(value = "Saves client")
 	public ResponseEntity<Client> putClient(@RequestBody Client client) {
 		Client updatedClient = clientService.save(client);
 		clientService.getAll();
