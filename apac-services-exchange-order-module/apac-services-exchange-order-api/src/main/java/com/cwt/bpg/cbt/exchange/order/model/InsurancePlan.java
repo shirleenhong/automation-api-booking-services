@@ -4,15 +4,29 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
 
+import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
+
+import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity(value = "insurance", noClassnameStored = true)
+@Indexes(@Index(fields = @Field("id")))
 public class InsurancePlan implements Serializable {
 
 	private static final long serialVersionUID = 5189419687629453470L;
+
+	@Id
+	@JsonSerialize(using = ObjectIdSerializer.class)
+	@ApiModelProperty(hidden = true)
+	private ObjectId id;
 
 	@NotEmpty
 	@ApiModelProperty(required = true)
@@ -21,6 +35,15 @@ public class InsurancePlan implements Serializable {
 	@NotNull
 	@ApiModelProperty(required = true)
 	private Float commission;
+	
+	
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 
 	public Float getCommission() {
 		return commission;
