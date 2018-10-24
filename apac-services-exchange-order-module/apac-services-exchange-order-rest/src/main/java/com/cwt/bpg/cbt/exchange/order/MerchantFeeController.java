@@ -26,7 +26,7 @@ public class MerchantFeeController {
 	
 	@Internal
 	@GetMapping(
-			path = "/merchant/",
+			path = "/merchant",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls merchant fees based on a [country code")
