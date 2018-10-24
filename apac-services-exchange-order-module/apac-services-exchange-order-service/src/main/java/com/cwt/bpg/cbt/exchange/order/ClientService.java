@@ -29,19 +29,21 @@ public class ClientService {
 	}
 
 	@Caching(
-	    put = {@CachePut(cacheNames = "clients", key = "#client.clientId")},
+	    put = {@CachePut(cacheNames = "clients", key = "#client.clientAccountNumber", condition="#client.clientAccountNumber != null")},
 	    evict={@CacheEvict(cacheNames = "clients", key = "#root.target.KEY")
 	 })
 	public Client save(Client client) {
 		return clientRepository.put(client);
 	}
 
-	@CacheEvict(cacheNames = "clients", key = "#root.target.KEY")
+	@Caching(
+		evict={@CacheEvict(cacheNames = "clients", key = "#root.target.KEY"),
+		       @CacheEvict(cacheNames = "clients", key = "#keyValue")
+	})
 	public String delete(String keyValue) {
 		return clientRepository.remove(keyValue);
 	}
 
-	@Cacheable(cacheNames = "clients", key = "#id")
 	public Client getClient(int id) {
 		return clientRepository.get(id);
 	}
