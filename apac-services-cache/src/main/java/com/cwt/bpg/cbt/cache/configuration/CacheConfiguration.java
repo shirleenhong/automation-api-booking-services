@@ -19,7 +19,7 @@ public class CacheConfiguration {
 	private static final Logger logger = LoggerFactory.getLogger(CacheConfiguration.class);
 
 	private static final String[] cacheNames = new String[] {"products",
-			"merchant-fee",
+			"merchant-fees",
 			"insurance-types",
 			"airline-rules",
 			"clients",
