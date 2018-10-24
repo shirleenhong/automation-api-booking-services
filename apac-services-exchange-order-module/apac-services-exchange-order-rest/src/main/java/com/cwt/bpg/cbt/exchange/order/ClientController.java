@@ -31,7 +31,7 @@ public class ClientController {
 	
 	@GetMapping(path = "/clients/{clientAccountNumber}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls all clients by client account number")
+	@ApiOperation(value = "Pull client by client account number")
 	public ResponseEntity<Client> getClient(@PathVariable String clientAccountNumber) {
 
 		return new ResponseEntity<>(clientService.getClient(clientAccountNumber), HttpStatus.OK);
