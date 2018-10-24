@@ -31,6 +31,7 @@ public class MerchantFeeControllerTest {
 	@Test
 	public void canPutMerchantFee() {
 		MerchantFee merchantFee = new MerchantFee();
+		merchantFee.setCountryCode("SG");
 		when(service.putMerchantFee(merchantFee)).thenReturn(merchantFee);
 		
 		ResponseEntity<MerchantFee> result = controller.updateMerchantFee(merchantFee);
@@ -52,10 +53,10 @@ public class MerchantFeeControllerTest {
 	
 	@Test
 	public void canRemoveMerchantFee() {
-		MerchantFee merchantFee = new MerchantFee();
-		when(service.remove(merchantFee)).thenReturn(merchantFee);
+		String id = "5b2870d6284b8d1ac84300ad";
+		when(service.remove(id)).thenReturn(id);
 		
-		ResponseEntity<MerchantFee> result = controller.removeMerchantFee(merchantFee);
+		ResponseEntity<String> result = controller.removeMerchantFee(id);
 
 		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());

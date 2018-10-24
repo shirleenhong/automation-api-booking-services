@@ -1,10 +1,19 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
@@ -18,41 +27,52 @@ public class MerchantFeeController {
 
 	@Autowired
 	private MerchantFeeService service;
+	
+	@Internal
+	@GetMapping(
+			path = "/merchant-fee",
+			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "Pulls merchant fees")
+	public ResponseEntity<List<MerchantFee>> getMerchantFees() {
+		return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
+	}
 
 	@Internal
 	@GetMapping(
-			path = "/merchant/{countryCode}/{clientAccountNumber}",
+			path = "/merchant-fee/{countryCode}/{clientAccountNumber}",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Pulls merchant fee based on a [country code | client account number] combination")
 	public ResponseEntity<MerchantFee> getMerchantFee(@PathVariable String countryCode,
 			@PathVariable String clientAccountNumber) {
 
-		return new ResponseEntity<>(service.getMerchantFee(countryCode, clientAccountNumber), HttpStatus.OK);
+		return new ResponseEntity<>(service.getMerchantFee(countryCode.toUpperCase(), clientAccountNumber), HttpStatus.OK);
 	}
 
 	@Internal
 	@PutMapping(
-			path = "/merchant",
+			path = "/merchant-fee",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Updates merchant fee configuration of a given market")
+	@ApiOperation(value = "Saves or updates merchant fee configuration of a given market")
 	public ResponseEntity<MerchantFee> updateMerchantFee(@RequestBody MerchantFee merchantFee) {
-
-		return new ResponseEntity<>(service.putMerchantFee(merchantFee), HttpStatus.OK);
+		merchantFee.setCountryCode(merchantFee.getCountryCode().toUpperCase());
+		
+		MerchantFee mf = service.putMerchantFee(merchantFee);
+		service.getAll();
+		return new ResponseEntity<>(mf, HttpStatus.OK);
 	}
 
 	@Internal
-	@DeleteMapping(
-			path = "/merchant",
-			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
-			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@DeleteMapping(path = "/merchant-fee")
 	@ResponseBody
-	@ApiOperation(value = "remove merchant fee configuration of a given market")
-	public ResponseEntity<MerchantFee> removeMerchantFee(@RequestBody MerchantFee merchantFee) {
-
-		return new ResponseEntity<>(service.remove(merchantFee), HttpStatus.OK);
+	@ApiOperation(value = "Remove merchant fee configuration by id")
+	public ResponseEntity<String> removeMerchantFee(@RequestParam("id") String id) {
+		String deleteResult = service.remove(id);
+		service.getAll();
+		return new ResponseEntity<>(deleteResult, HttpStatus.OK);
 	}
 
 }

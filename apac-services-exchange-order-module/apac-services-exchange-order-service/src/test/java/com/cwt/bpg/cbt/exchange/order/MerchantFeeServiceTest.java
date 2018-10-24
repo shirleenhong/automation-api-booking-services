@@ -1,8 +1,12 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -37,13 +41,17 @@ public class MerchantFeeServiceTest {
 	public void canPutMerchantFee() {
 		MerchantFee fee = new MerchantFee();
 		service.putMerchantFee(fee);
-		Mockito.verify(merchantFeeApi, Mockito.times(1)).putMerchantFee(fee);
+		Mockito.verify(merchantFeeApi, Mockito.times(1)).put(fee);
 	}
 	
 	@Test
 	public void canRemoveMerchantFee() {
-		MerchantFee fee = new MerchantFee();
-		service.remove(fee);
-		Mockito.verify(merchantFeeApi, Mockito.times(1)).removeMerchantFee(fee);
+		String id = "5b2870d6284b8d1ac84300ad";
+        when(merchantFeeApi.remove(any(ObjectId.class))).thenReturn(id);
+
+        String result = service.remove(id);
+
+        assertEquals(id, result);
+        verify(merchantFeeApi, times(1)).remove(any(ObjectId.class));
 	}
 }

@@ -2,10 +2,17 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
+
+import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity(value = "clientMerchantFee", noClassnameStored = true)
 @Indexes(@Index(fields = { @Field("countryCode"), @Field("clientAccountNumber") }))
@@ -13,6 +20,11 @@ public class MerchantFee implements Serializable {
 
 	private static final long serialVersionUID = -1922100420586710851L;
 
+	@Id
+	@JsonSerialize(using = ObjectIdSerializer.class)
+	@ApiModelProperty(hidden = true)
+	private ObjectId id;
+	
 	private boolean includeTransactionFee;
 
 	private Double merchantFeePercent;
@@ -29,6 +41,14 @@ public class MerchantFee implements Serializable {
 		merchantFeePercent = 0d;
 	}
 
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
+	
 	public boolean isIncludeTransactionFee() {
 		return includeTransactionFee;
 	}
