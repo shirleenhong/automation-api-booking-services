@@ -12,6 +12,7 @@ import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -53,7 +54,21 @@ public class ProductsController {
         getProducts(Country.INDIA.getCode());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    
+
+    @PutMapping(path = "/vendors/{countryCode:[a-zA-Z0-9]{2}}", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+    @ResponseBody
+    @ApiOperation(value = "Updates Vendor info.")
+    public ResponseEntity<String> saveVendor(
+            @PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
+            @RequestParam(required = false) String productCode,
+            @RequestParam(required = false) boolean insert,
+            @RequestBody Vendor vendor) {
+        String result = service.saveVendor(countryCode.toUpperCase(), productCode, vendor, insert);
+        getProducts(countryCode);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
 	@DeleteMapping(path = "/products/{countryCode:[a-zA-Z0-9]{2}}/{productCode}")
 	@ResponseBody
 	@ApiOperation(value = "Removes product by code")
@@ -64,7 +79,7 @@ public class ProductsController {
 		getProducts(countryCode);
 		return new ResponseEntity<>(deleteResult, status);
 	}
-	
+
 	@DeleteMapping(path = "/vendors/{countryCode:[a-zA-Z0-9]{2}}/{vendorCode}")
 	@ResponseBody
 	@ApiOperation(value = "Removes vendor by code")

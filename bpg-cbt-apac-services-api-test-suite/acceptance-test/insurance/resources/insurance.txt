@@ -16,7 +16,7 @@ Create Test Variables For Insurance Plans
 
 Delete Insurance Plans And Evict Insurance Type Cache
     [Arguments]    ${type}=New Trip Plan    ${number}=2    ${token}=${default_token}
-    Send Delete Request For Insurance Plans    ${type}    ${token}
+    Send Delete Request For Insurance Plans    ${insurance_id}    ${token}
     Evict Insurance Type Cache    ${number}    ${token}
 
 Evict Insurance Type Cache
@@ -31,13 +31,17 @@ Evict Insurance Type Cache
     \    Log    ${response.headers}
     \    Log    ${response.content}
     Set Test Variable    ${api_flag}    insurance
+    
+Get Insurance Id
+    ${insurance_id}    Get Json Value As String    ${response.content}    $.id
+    Set Test Variable    ${insurance_id} 
 
 Send Delete Request For Insurance Plans
-    [Arguments]    ${type}    ${token}=${default_token}
+    [Arguments]    ${insurance_id}=${insurance_id}    ${token}=${default_token}
     Create Session    insurance    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${response}    Delete Request    insurance    /apac-services-rest/api/insurance/${type}    headers=${headers}
+    ${response}    Delete Request    insurance    /apac-services-rest/api/insurance/${insurance_id}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
@@ -55,21 +59,22 @@ Send Get Request For Insurance Plans
     Set Test Variable    ${api_flag}    insurance
 
 Send Put Request For Insurance Plans
-    [Arguments]    ${type}=Single Trip Plan    ${commission}=35.0    ${token}=${default_token}
+    [Arguments]    ${type}=Single Trip Plan    ${commission}=35.0    ${insurance_id}=${EMPTY}    ${token}=${default_token}
     Create Session    insurance    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${data}    Set Variable    {"type":"${type}","commission":${commission}}
+    ${data}    Set Variable If    "${insurance_id}"!="${EMPTY}"    {"id":"${insurance_id}","type":"${type}","commission":${commission}}    {"type":"${type}","commission":${commission}}
     ${data}    Replace String    ${data}    "null"    null
     ${response}    Put Request    insurance    /apac-services-rest/api/insurance/    data=${data}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
+    Run Keyword If    "${response.status_code}"=="200"    Get Insurance Id
     Set Test Variable    ${api_flag}    insurance
 
 Update Insurance Plans To Original Value And Evict Insurance Type Cache
-    [Arguments]    ${type}=Single Trip Plan    ${commission}=35.0    ${number}=2    ${token}=${default_token}
-    Send Put Request For Insurance Plans    ${type}    ${commission}    ${token}
+    [Arguments]    ${type}=Single Trip Plan    ${commission}=35.0    ${insurance_id}=5bc7adf524aa9a000536c534    ${number}=2    ${token}=${default_token}
+    Send Put Request For Insurance Plans    ${type}    ${commission}    ${insurance_id}    ${token}
     Evict Insurance Type Cache    ${number}    ${token}
 
 Verify Insurance Plans Are Correctly Retrieved
@@ -87,7 +92,7 @@ Verify Insurance Plans Are Correctly Retrieved
     \    ${item}    Remove String    ${item}    }
     \    ${item}    Replace String    ${item}    :    ,
     \    ${items}    Split String    ${item}    ,
-    \    Verify Actual Numerical Value Matches Expected Numerical Value    ${items[3]}    ${${items[1]}_commission}
+    \    Verify Actual Numerical Value Matches Expected Numerical Value    ${items[5]}    ${${items[3]}_commission}
 
 Verify That Insurance Plans Are Not Retrieved
     Verify String Does Not Contain Substring    ${response.content}    "commission"

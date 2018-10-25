@@ -93,29 +93,29 @@ Verify That Error Is Encountered When No Commission Is Used During Put Request
     Verify Insurance Plans Are Correctly Retrieved
     [Teardown]    Evict Insurance Type Cache
 
-Verify That No Error Is Encountered When Invalid Type Is Used During Delete Request
+Verify That Error Is Encountered When Invalid Id Is Used During Delete Request
     [Tags]    migration
     [Setup]    Evict Insurance Type Cache
-    Send Delete Request For Insurance Plans    type=!@#$%^&*()
-    Verify Response Status Code Is Correct    200
+    Send Delete Request For Insurance Plans    insurance_id=!@#$%^&*()
+    Verify Response Status Code Is Correct    400
     Create Test Variables For Insurance Plans
     Send Get Request For Insurance Plans
     Verify Response Status Code Is Correct    200
     Verify Insurance Plans Are Correctly Retrieved
 
-Verify That No Error Is Encountered When Null Type Is Used During Delete Request
+Verify That Error Is Encountered When Null Id Is Used During Delete Request
     [Tags]    migration
-    Send Delete Request For Insurance Plans    type=null
-    Verify Response Status Code Is Correct    200
+    Send Delete Request For Insurance Plans    insurance_id=null
+    Verify Response Status Code Is Correct    400
     Create Test Variables For Insurance Plans
     Send Get Request For Insurance Plans
     Verify Response Status Code Is Correct    200
     Verify Insurance Plans Are Correctly Retrieved
     [Teardown]    Evict Insurance Type Cache
 
-Verify That Error Is Encountered When Empty Type Is Used During Delete Request
+Verify That Error Is Encountered When Empty Id Is Used During Delete Request
     [Tags]    migration
-    Send Delete Request For Insurance Plans    type=${EMPTY}
+    Send Delete Request For Insurance Plans    insurance_id=${EMPTY}
     Verify Response Status Code Is Correct    405
     Create Test Variables For Insurance Plans
     Send Get Request For Insurance Plans
@@ -123,10 +123,10 @@ Verify That Error Is Encountered When Empty Type Is Used During Delete Request
     Verify Insurance Plans Are Correctly Retrieved
     [Teardown]    Evict Insurance Type Cache
 
-Verify That No Error Is Encountered When No Type Is Used During Delete Request
+Verify That Error Is Encountered When No Type Is Used During Delete Request
     [Tags]    migration
-    Send Delete Request For Insurance Plans    type=None
-    Verify Response Status Code Is Correct    200
+    Send Delete Request For Insurance Plans    insurance_id=None
+    Verify Response Status Code Is Correct    400
     Create Test Variables For Insurance Plans
     Send Get Request For Insurance Plans
     Verify Response Status Code Is Correct    200
