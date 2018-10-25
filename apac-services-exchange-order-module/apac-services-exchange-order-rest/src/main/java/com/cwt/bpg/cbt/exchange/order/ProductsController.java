@@ -8,11 +8,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,7 +31,7 @@ public class ProductsController {
 		return new ResponseEntity<>(service.getProducts(countryCode.toUpperCase()), HttpStatus.OK);
 	}
 
-	@PutMapping(path = "/products/{countryCode:[a-zA-Z0-9]{2}}", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@PutMapping(path = "/products/{countryCode:^(?!in)[a-zA-Z0-9]{2}}", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
     @ApiOperation(value = "Updates product list for a country.")
     public ResponseEntity<String> saveProduct(
@@ -49,6 +49,8 @@ public class ProductsController {
     public ResponseEntity<String> saveIndiaProduct(
             @RequestParam(required = false) boolean insert,
             @RequestBody IndiaProduct product) {
-        return new ResponseEntity<>(service.saveIndiaProduct(product, insert), HttpStatus.OK);
+        String result = service.saveProduct(Country.INDIA.getCode().toUpperCase(), product, insert);
+        getProducts(Country.INDIA.getCode());
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

@@ -9,11 +9,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.ProductRepository;
 import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
-import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
-import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
 @Service
@@ -32,13 +29,8 @@ public class ProductService {
 	}
 
 	@CacheEvict(cacheNames = "products", key = "#countryCode")
-	public String saveProduct(String countryCode, Product product, boolean insertFlag) {
+	public String saveProduct(String countryCode, BaseProduct product, boolean insertFlag) {
 		return repository.saveProduct(countryCode, product, insertFlag);
-	}
-
-	@CacheEvict(cacheNames = "products", key = "IN")
-	public String saveIndiaProduct(IndiaProduct product, boolean insertFlag) {
-		return repository.saveProduct(Country.INDIA.getCode(), product, insertFlag);
 	}
 
 	@Cacheable(cacheNames="products", key="{#countryCode, #productCode}")
