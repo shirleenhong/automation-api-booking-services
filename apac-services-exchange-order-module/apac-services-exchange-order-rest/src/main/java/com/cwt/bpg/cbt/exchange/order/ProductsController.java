@@ -51,4 +51,26 @@ public class ProductsController {
             @RequestBody IndiaProduct product) {
         return new ResponseEntity<>(service.saveIndiaProduct(product, insert), HttpStatus.OK);
     }
+    
+	@DeleteMapping(path = "/products/{countryCode:[a-zA-Z0-9]{2}}/{productCode}")
+	@ResponseBody
+	@ApiOperation(value = "Removes product by code")
+	public ResponseEntity<String> removeProductByCode(@PathVariable String countryCode,
+			@PathVariable String productCode) {
+		String deleteResult = service.removeProduct(countryCode, productCode);
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		getProducts(countryCode);
+		return new ResponseEntity<>(deleteResult, status);
+	}
+	
+	@DeleteMapping(path = "/vendors/{countryCode:[a-zA-Z0-9]{2}}/{vendorCode}")
+	@ResponseBody
+	@ApiOperation(value = "Removes vendor by code")
+	public ResponseEntity<String> removeVendorByCode(@PathVariable String countryCode,
+			@PathVariable String vendorCode) {
+		String deleteResult = service.removeVendor(countryCode, vendorCode);
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		getProducts(countryCode);
+		return new ResponseEntity<>(deleteResult, status);
+	}
 }

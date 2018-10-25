@@ -66,4 +66,14 @@ public class ProductService {
 
 		return vendor.orElse(null);
 	}
+	
+	@CacheEvict(cacheNames = "products", allEntries = true)
+	public String removeProduct(String countryCode, String productCode) {
+		return repository.removeProduct(countryCode, productCode);
+	}
+	
+	@CacheEvict(cacheNames = "products", allEntries = true)
+	public String removeVendor(String countryCode, String vendorCode) {
+		return repository.removeVendor(countryCode, vendorCode);
+	}
 }
