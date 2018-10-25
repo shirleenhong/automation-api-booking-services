@@ -69,7 +69,7 @@ Send Put Request For Insurance Plans
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
-    Get Insurance Id
+    Run Keyword If    "${response.status_code}"=="200"    Get Insurance Id
     Set Test Variable    ${api_flag}    insurance
 
 Update Insurance Plans To Original Value And Evict Insurance Type Cache
