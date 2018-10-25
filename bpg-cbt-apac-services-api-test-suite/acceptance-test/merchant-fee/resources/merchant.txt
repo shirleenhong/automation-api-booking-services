@@ -68,7 +68,7 @@ Send Get Request For Merchant Fee Percentage
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
     : FOR    ${data}    IN    @{cn_list}
-    \    ${response}    Get Request    merchant    /apac-services-rest/api/merchant/${country}/${data}    headers=${headers}
+    \    ${response}    Get Request    merchant    /apac-services-rest/api/merchant-fee/${country}/${data}    headers=${headers}
     \    Set Test Variable    ${response_${data}}    ${response}
     \    Log    ${response_${data}.headers}
     \    Log    ${response_${data}.content}
