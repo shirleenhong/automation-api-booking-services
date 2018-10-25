@@ -20,7 +20,7 @@ Verify That Insurance Plans Are Updated Correctly After Put Request
     Send Get Request For Insurance Plans
     Verify Response Status Code Is Correct    200
     Verify Insurance Plans Are Correctly Retrieved
-    Send Put Request For Insurance Plans    type=Single Trip Plan    commission=40.0
+    Send Put Request For Insurance Plans    type=Single Trip Plan    commission=40.0    insurance_id=5bc7adf524aa9a000536c534
     Verify Response Status Code Is Correct    200
     Evict Insurance Type Cache    4
     Create Test Variables For Insurance Plans    Annual Plan,20.0|Single Trip Plan,40.0
@@ -57,7 +57,7 @@ Verify That Insurance Plans Are Deleted Correctly After Delete Request
     Send Get Request For Insurance Plans
     Verify Response Status Code Is Correct    200
     Verify Insurance Plans Are Correctly Retrieved
-    Send Delete Request For Insurance Plans    type=New Trip Plan
+    Send Delete Request For Insurance Plans
     Verify Response Status Code Is Correct    200
     Evict Insurance Type Cache    4
     Create Test Variables For Insurance Plans
