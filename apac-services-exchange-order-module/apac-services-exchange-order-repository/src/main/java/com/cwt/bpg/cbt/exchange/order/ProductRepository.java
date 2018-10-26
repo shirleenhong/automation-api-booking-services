@@ -29,6 +29,7 @@ public class ProductRepository {
     private static final String PRODUCTS_PRODUCTCODE = "products.productCode";
     private static final String PRODUCTS_VENDORS_CODE = "products.vendors.code";
     private static final String PRODUCTS_DOLLAR_VENDORS = "products.$.vendors";
+    private static final String NO_RESULT = "";
 
     public List<BaseProduct> getProducts(String countryCode) {
 
@@ -77,8 +78,7 @@ public class ProductRepository {
                     datastore.createUpdateOperations(InProductList.class)
                             .push(PRODUCTS, product)
             );
-            return String.valueOf(updateResults.getWriteResult().getN());
-
+            return updateResults.getWriteResult().getN() > 0 ? product.getProductCode() : NO_RESULT;
         }
         else {
             Datastore datastore = morphia.getDatastore();
@@ -88,7 +88,7 @@ public class ProductRepository {
                     datastore.createUpdateOperations(HkSgProductList.class)
                             .push(PRODUCTS, product)
             );
-            return String.valueOf(updateResults.getWriteResult().getN());
+            return updateResults.getWriteResult().getN() > 0 ? product.getProductCode() : NO_RESULT;
         }
     }
 
@@ -103,7 +103,7 @@ public class ProductRepository {
                     datastore.createUpdateOperations(InProductList.class)
                             .set("products.$", product)
             );
-            return String.valueOf(updateResults.getWriteResult().getN());
+            return updateResults.getWriteResult().getN() > 0 ? product.getProductCode() : NO_RESULT;
         }
         else {
             Datastore datastore = morphia.getDatastore();
@@ -114,7 +114,7 @@ public class ProductRepository {
                     datastore.createUpdateOperations(HkSgProductList.class)
                             .set("products.$", product)
             );
-            return String.valueOf(updateResults.getWriteResult().getN());
+            return updateResults.getWriteResult().getN() > 0 ? product.getProductCode() : NO_RESULT;
         }
     }
 
@@ -138,7 +138,7 @@ public class ProductRepository {
                     datastore.createUpdateOperations(InProductList.class)
                             .push(PRODUCTS_DOLLAR_VENDORS, vendor)
             );
-            return String.valueOf(updateResults.getWriteResult().getN());
+            return updateResults.getWriteResult().getN() > 0 ? vendor.getCode() : NO_RESULT;
         }
         else {
             Datastore datastore = morphia.getDatastore();
@@ -149,9 +149,8 @@ public class ProductRepository {
                     datastore.createUpdateOperations(HkSgProductList.class)
                             .push(PRODUCTS_DOLLAR_VENDORS, vendor)
             );
-            return String.valueOf(updateResults.getWriteResult().getN());
+            return updateResults.getWriteResult().getN() > 0 ? vendor.getCode() : NO_RESULT;
         }
-
     }
 
     private String updateVendor(String countryCode, Vendor vendor) {
@@ -194,7 +193,6 @@ public class ProductRepository {
             productsToUpdate.forEach(productCode -> insertVendor(countryCode, productCode, vendor));
 
             return vendor.getCode();
-
         }
 
     }
@@ -248,7 +246,6 @@ public class ProductRepository {
 
     public String removeVendor(String countryCode, String vendorCode) {
         Datastore datastore = morphia.getDatastore();
-        String noResult = "";
         int results = 0;
 
         if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
@@ -272,7 +269,7 @@ public class ProductRepository {
                 results += updateResults.getWriteResult().getN();
             }
 
-            return results > 0 ? vendorCode : noResult;
+            return results > 0 ? vendorCode : NO_RESULT;
         }
         else {
             Query<HkSgProductList> updateQuery = datastore
@@ -294,7 +291,7 @@ public class ProductRepository {
                 results += updateResults.getWriteResult().getN();
             }
 
-            return results > 0 ? vendorCode : noResult;
+            return results > 0 ? vendorCode : NO_RESULT;
         }
     }
 }
