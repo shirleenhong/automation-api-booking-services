@@ -1,16 +1,12 @@
 package com.cwt.bpg.cbt.exchange.order.products;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
-import static org.hamcrest.CoreMatchers.*;
 
 import java.util.Arrays;
 import java.util.List;
 
-import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -19,10 +15,11 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.ProductRepository;
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
-public class ProductsServiceTest {
+public class ProductServiceTest {
 
 	@Mock
 	private ProductRepository repo;
