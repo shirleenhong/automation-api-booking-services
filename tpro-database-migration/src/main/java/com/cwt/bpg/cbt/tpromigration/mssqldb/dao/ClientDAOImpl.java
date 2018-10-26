@@ -115,7 +115,7 @@ public class ClientDAOImpl {
 			while (rs.next()) {
 				Client client = new Client();
 				client.setClientId(rs.getInt("clientid"));
-				client.setClientAccountNumber(StringUtils.leftPad(rs.getString("clientnumber"), 10, '0'));
+				client.setClientAccountNumber(rs.getString("clientnumber"));
 				client.setName(rs.getString("name"));
 				client.setPricingId(rs.getInt("pricingid"));
 				client.setExemptTax(rs.getBoolean("exempttax"));

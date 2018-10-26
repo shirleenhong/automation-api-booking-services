@@ -24,7 +24,7 @@ public class AirContractRepository extends CommonRepository<AirContract, ObjectI
 		final Query<AirContract> query = morphia.getDatastore().createQuery(AirContract.class);
 		query.field(COUNTRY_CODE).equal(countryCode);
 		query.field(AIRLINE_CODE).equal(airlineCode);
-		query.field(CLIENT_ACCOUNT_NUMBER).equal(clientAccountNumber);
+		query.field(CLIENT_ACCOUNT_NUMBER).equal(Integer.valueOf(clientAccountNumber).toString());
 
 		return query.get();
 	}

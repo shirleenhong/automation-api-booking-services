@@ -27,7 +27,7 @@ public class AirMiscInfoRepository extends CommonRepository<AirMiscInfo, ObjectI
 		final Query<AirMiscInfo> query = morphia.getDatastore()
 				.createQuery(AirMiscInfo.class);
 
-		query.field(CLIENT_ACCOUNT_NUMBER).equal(clientAccountNumber);
+		query.field(CLIENT_ACCOUNT_NUMBER).equal(Integer.valueOf(clientAccountNumber).toString());
 		
 		if(CollectionUtils.isNotEmpty(reportingFieldTypeIds)){
 			query.field(REPORTING_FIELD_TYPE_ID).in(reportingFieldTypeIds);

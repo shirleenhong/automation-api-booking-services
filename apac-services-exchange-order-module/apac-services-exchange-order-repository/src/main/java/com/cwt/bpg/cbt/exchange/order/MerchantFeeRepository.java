@@ -1,7 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.apache.commons.lang.StringUtils.leftPad;
-
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
@@ -26,12 +24,8 @@ public class MerchantFeeRepository extends CommonRepository<MerchantFee, ObjectI
 				.field(COUNTRY_CODE)
 				.equalIgnoreCase(countryCode)
 				.field(CLIENT_ACCOUNT_NUMBER)
-				.equalIgnoreCase(leftPadZeros(clientAccountNumber)).get());
+				.equalIgnoreCase(Integer.valueOf(clientAccountNumber).toString()).get());
 		return merchantFee.orElse(new MerchantFee());
 	}
-
-    private String leftPadZeros(String value) {
-        return leftPad(value, 10, '0');
-    }
-
+    
 }
