@@ -1,7 +1,15 @@
 package com.cwt.bpg.cbt.exchange.order.products;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -36,7 +44,7 @@ public class ProductServiceTest {
 	public void shouldGetProducts() {
 
 		service.getProducts("HK");
-		Mockito.verify(repo, Mockito.times(1)).getProducts("HK");
+		verify(repo, Mockito.times(1)).getProducts("HK");
 	}
 
 	@Test
@@ -49,7 +57,7 @@ public class ProductServiceTest {
 		List<BaseProduct> baseProducts = service.getProducts(countryCode);
 		
 		assertEquals(1, baseProducts.size());
-		Mockito.verify(repo, Mockito.times(1)).getProducts(countryCode);
+		verify(repo, Mockito.times(1)).getProducts(countryCode);
 	}
 	
 	@Test
@@ -63,7 +71,7 @@ public class ProductServiceTest {
 		BaseProduct baseProduct = service.getProductByCode(countryCode, productCode);
 		assertNotNull(baseProduct);
 		
-		Mockito.verify(repo, Mockito.times(1)).getProducts(countryCode);
+		verify(repo, Mockito.times(1)).getProducts(countryCode);
 	}
 	
 	@Test
@@ -102,9 +110,63 @@ public class ProductServiceTest {
 		BaseProduct baseProduct = service.getProductByCode(countryCode, productCode);
 		assertNull(baseProduct);
 		
-		Mockito.verify(repo, Mockito.times(1)).getProducts(countryCode);
+		verify(repo, Mockito.times(1)).getProducts(countryCode);
 	}
 
+	@Test
+	public void shouldSaveUpdateProduct() {
+
+		final String productCode = "ProductCode";
+		when(repo.saveProduct(anyString(), any(BaseProduct.class), anyBoolean()))
+				.thenReturn(productCode);
+
+		String product = service.saveProduct(anyString(), any(BaseProduct.class),
+				anyBoolean());
+		assertThat(product, is(equalTo(productCode)));
+
+		verify(repo, Mockito.times(1)).saveProduct(anyString(), any(BaseProduct.class),
+				anyBoolean());
+	}
+	
+	@Test
+	public void shouldSaveUpdateVendor() {
+
+		final String vendorCode = "VendorCode";
+		when(repo.saveVendor(anyString(), anyString(), any(Vendor.class), anyBoolean()))
+				.thenReturn(vendorCode);
+
+		String vendor = service.saveVendor(anyString(), anyString(), any(Vendor.class),
+				anyBoolean());
+		assertThat(vendor, is(equalTo(vendorCode)));
+
+		verify(repo, Mockito.times(1)).saveVendor(anyString(), anyString(),
+				any(Vendor.class), anyBoolean());
+	}
+	
+	@Test
+	public void shouldRemoveProduct() {
+
+		final String productCode = "ProductCode";
+		when(repo.removeProduct(anyString(), anyString())).thenReturn(productCode);
+
+		String product = service.removeProduct(anyString(), anyString());
+		assertThat(product, is(equalTo(productCode)));
+
+		verify(repo, Mockito.times(1)).removeProduct(anyString(), anyString());
+	}
+
+	@Test
+	public void shouldRemoveVendor() {
+
+		final String vendorCode = "VendorCode";
+		when(repo.removeVendor(anyString(), anyString())).thenReturn(vendorCode);
+
+		String vendor = service.removeVendor(anyString(), anyString());
+		assertThat(vendor, is(equalTo(vendorCode)));
+
+		verify(repo, Mockito.times(1)).removeVendor(anyString(), anyString());
+	}
+	
 	private static List<BaseProduct> createListOfProducts() {
 		BaseProduct baseProduct1 = new Product();
 		String productCode = "ProductCode";
