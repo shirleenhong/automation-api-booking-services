@@ -96,6 +96,7 @@ public class ClientDAOImpl {
 			"tblAirPricingFormula airpricingformula "+
 			"where clientmasterpricing.clientid = clientmaster.clientid "+
 			"and airpricingformula.airpricingid=clientmasterpricing.pricingid "+
+			"and cast(clientnumber as bigint) <> 0 "+
 			"group by "+
 				"clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmasterpricing.pricingid, exempttax, "+
 				"clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee, "+
@@ -115,7 +116,7 @@ public class ClientDAOImpl {
 			while (rs.next()) {
 				Client client = new Client();
 				client.setClientId(rs.getInt("clientid"));
-				client.setClientAccountNumber(rs.getString("clientnumber"));
+				client.setClientAccountNumber(StringUtils.stripStart(rs.getString("clientnumber"),"0"));
 				client.setName(rs.getString("name"));
 				client.setPricingId(rs.getInt("pricingid"));
 				client.setExemptTax(rs.getBoolean("exempttax"));
