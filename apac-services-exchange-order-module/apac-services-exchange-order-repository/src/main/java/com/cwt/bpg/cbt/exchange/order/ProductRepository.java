@@ -20,7 +20,6 @@ import com.mongodb.BasicDBObject;
 @Repository
 public class ProductRepository {
 
-    public static final String PRODUCTS_$_VENDORS = "products.$.vendors";
     @Autowired
     private MorphiaComponent morphia;
 
@@ -29,6 +28,7 @@ public class ProductRepository {
     private static final String PRODUCT_CODE = "productCode";
     private static final String PRODUCTS_PRODUCTCODE = "products.productCode";
     private static final String PRODUCTS_VENDORS_CODE = "products.vendors.code";
+    private static final String PRODUCTS_DOLLAR_VENDORS = "products.$.vendors";
 
     public List<BaseProduct> getProducts(String countryCode) {
 
@@ -136,7 +136,7 @@ public class ProductRepository {
                             .filter(COUNTRY_CODE, countryCode)
                             .filter(PRODUCTS_PRODUCTCODE, productCode),
                     datastore.createUpdateOperations(InProductList.class)
-                            .push(PRODUCTS_$_VENDORS, vendor)
+                            .push(PRODUCTS_DOLLAR_VENDORS, vendor)
             );
             return String.valueOf(updateResults.getWriteResult().getN());
         }
@@ -147,7 +147,7 @@ public class ProductRepository {
                             .filter(COUNTRY_CODE, countryCode)
                             .filter(PRODUCTS_PRODUCTCODE, productCode),
                     datastore.createUpdateOperations(HkSgProductList.class)
-                            .push(PRODUCTS_$_VENDORS, vendor)
+                            .push(PRODUCTS_DOLLAR_VENDORS, vendor)
             );
             return String.valueOf(updateResults.getWriteResult().getN());
         }
@@ -266,7 +266,7 @@ public class ProductRepository {
 
                 UpdateOperations<InProductList> ops = datastore
                         .createUpdateOperations(InProductList.class).disableValidation()
-                        .removeAll(PRODUCTS_$_VENDORS, new BasicDBObject("code", vendorCode));
+                        .removeAll(PRODUCTS_DOLLAR_VENDORS, new BasicDBObject("code", vendorCode));
 
                 UpdateResults updateResults = datastore.update(updateQuery, ops);
                 results += updateResults.getWriteResult().getN();
@@ -288,7 +288,7 @@ public class ProductRepository {
 
                 UpdateOperations<HkSgProductList> ops = datastore
                         .createUpdateOperations(HkSgProductList.class).disableValidation()
-                        .removeAll(PRODUCTS_$_VENDORS, new BasicDBObject("code", vendorCode));
+                        .removeAll(PRODUCTS_DOLLAR_VENDORS, new BasicDBObject("code", vendorCode));
 
                 UpdateResults updateResults = datastore.update(updateQuery, ops);
                 results += updateResults.getWriteResult().getN();
