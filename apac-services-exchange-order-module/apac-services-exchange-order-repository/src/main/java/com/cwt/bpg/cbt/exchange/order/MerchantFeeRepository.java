@@ -24,7 +24,7 @@ public class MerchantFeeRepository extends CommonRepository<MerchantFee, ObjectI
 				.field(COUNTRY_CODE)
 				.equalIgnoreCase(countryCode)
 				.field(CLIENT_ACCOUNT_NUMBER)
-				.equalIgnoreCase(clientAccountNumber).get());
+				.equalIgnoreCase(Integer.valueOf(clientAccountNumber).toString()).get());
 		return merchantFee.orElse(new MerchantFee());
 	}
     

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
 import com.cwt.bpg.cbt.repository.CommonRepository;
-import com.cwt.bpg.cbt.utils.*;
 
 @Repository
 public class AirTransactionRepository extends CommonRepository<AirTransaction, ObjectId>{
@@ -47,7 +46,7 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 		}
 		
 		if(StringUtils.isNotBlank(params.getClientAccountNumber())) {
-			query.field(CLIENT_ACCT_NUM).equal(params.getClientAccountNumber());
+			query.field(CLIENT_ACCT_NUM).equal(Integer.valueOf(params.getClientAccountNumber()).toString());
 		}else {
 			query.field(CLIENT_ACCT_NUM).doesNotExist();
 		}
