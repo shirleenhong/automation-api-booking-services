@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.Optional;
 
+import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +25,7 @@ public class MerchantFeeRepository extends CommonRepository<MerchantFee, ObjectI
 				.field(COUNTRY_CODE)
 				.equalIgnoreCase(countryCode)
 				.field(CLIENT_ACCOUNT_NUMBER)
-				.equalIgnoreCase(Integer.valueOf(clientAccountNumber).toString()).get());
+				.equalIgnoreCase(StringUtils.stripStart(clientAccountNumber,"0")).get());
 		return merchantFee.orElse(new MerchantFee());
 	}
     

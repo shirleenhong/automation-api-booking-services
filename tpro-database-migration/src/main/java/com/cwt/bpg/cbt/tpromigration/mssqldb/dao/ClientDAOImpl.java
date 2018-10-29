@@ -50,7 +50,7 @@ public class ClientDAOImpl {
 			
 			while (rs.next()) {
 				Client client = new Client();
-				client.setClientAccountNumber(rs.getString("CNCode"));
+				client.setClientAccountNumber(StringUtils.stripStart(rs.getString("CNCode"),"0"));
 				client.setGstin(rs.getString("GSTIN"));
 				clients.add(client);
 			}
@@ -647,7 +647,7 @@ public class ClientDAOImpl {
 				airMiscInfo.setReportingFieldType(rs.getString("FieldType"));
 				airMiscInfo.setMandatory(rs.getString("Mandatory"));
 				airMiscInfo.setClientId(rs.getString("ClientID"));
-				airMiscInfo.setClientAccountNumber(rs.getString("ClientNumber"));
+				airMiscInfo.setClientAccountNumber(StringUtils.stripStart(rs.getString("ClientNumber"),"0"));
 				airMiscInfo.setReportingFieldTypeId(rs.getString("ReportingFieldTypeID"));
 				airMiscInfo.setReportingFieldType(rs.getString("ReportingFieldType"));
 				airMiscInfoList.add(airMiscInfo);
