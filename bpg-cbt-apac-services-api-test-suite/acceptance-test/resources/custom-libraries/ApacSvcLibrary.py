@@ -56,4 +56,23 @@ class ApacSvcLibrary:
         msg_ids = data[0]
         msg_id_list = msg_ids.split()
         return msg_id_list
+    
+    def round_to_nearest_dollar(self, amount, country, round_type=None):
+       """
+       If round type is not specified, it will be rounded according to standard
+       If country is SG, round value will return float else returns integer
+       | ${round_down_value}| round to nearest dollar | 123.34 | SG | down |
+       | ${round_up_value}  | round to nearest dollar | 123.34 | HK | up   |
+       | ${round_value}     | round to nearest dollar | 123.34 | IN |      |
+
+       >>
+       ${round_down_value} = 2334.00
+       ${round_up_value} = 2335.00
+       ${round_value} = 2334.00
+       """
+       round_type_dict= {'up':'ROUND_UP', 'down':'ROUND_DOWN'}
+       amount_in_decimal = Decimal(amount)
+       round_type = round_type_dict.get(str(round_type).lower(), 'ROUND_HALF_UP')
+       round_value =  amount_in_decimal.quantize(Decimal('1'), rounding=round_type).quantize(Decimal('0.01'))
+       return round_value if country.upper() == 'SG' else int(round_value)
         

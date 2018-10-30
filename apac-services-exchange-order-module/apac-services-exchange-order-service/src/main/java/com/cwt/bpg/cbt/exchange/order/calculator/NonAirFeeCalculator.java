@@ -46,7 +46,7 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 		if (!input.isMerchantFeeAbsorb() && FopType.CWT.equals(input.getFopType())
 				&& !input.isMerchantFeeWaive()) {
 
-			merchantFeeAmount = round(
+			merchantFeeAmount = roundUp(
 					calculatePercentage(
 							input.getSellingPrice()
 									.multiply(BigDecimal.ONE.add(percentDecimal(input.getGstPercent()))),
@@ -54,14 +54,10 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 					scale, roundingConfig.getRoundingMode("merchantFee", countryCode));
 		}
 
-		BigDecimal sellingPriceInDi = round(input.getSellingPrice().add(safeValue(gstAmount))
-				.add(safeValue(merchantFeeAmount))
-				.divide(BigDecimal.ONE.add(percentDecimal(input.getGstPercent())), 2, RoundingMode.HALF_UP),
-				scale);
+		BigDecimal sellingPriceInDi = (input.getSellingPrice().add(safeValue(gstAmount))
+				.add(safeValue(merchantFeeAmount)))
+				.divide(BigDecimal.ONE.add(percentDecimal(input.getGstPercent())), 2, RoundingMode.HALF_UP);
 
-		if (!input.isGstAbsorb()) {
-			gstAmount = round(calculatePercentage(sellingPriceInDi, input.getGstPercent()), scale);
-		}
 
         BigDecimal commission = round(BigDecimal.ZERO, scale);
         if (sellingPriceInDi.compareTo(safeValue(input.getNettCost())) > 0) {

@@ -5,15 +5,15 @@ Resource          ../../resources/api-variables.txt
 
 *** Keywords ***
 Create New Client Account Number List
-    [Arguments]    ${client_account_number}    ${cn_list}
+    [Arguments]    ${client_account_number_raw}    ${client_account_number}    ${cn_list}
     @{merchant_fee_list}    Create List
-    Set Test Variable    ${${client_account_number}_list}    ${merchant_fee_list}
-    Append To List    ${cn_list}    ${client_account_number}
+    Set Test Variable    ${${client_account_number_raw}_list}    ${merchant_fee_list}
+    Append To List    ${cn_list}    ${client_account_number_raw}
     Set Test Variable    ${cn_list}
 
 Create Test Variables For Merchant Fee Percentage
     [Arguments]    ${country}=sg    ${mfee_list}=${EMPTY}
-    Run Keyword If    "${mfee_list}"=="${EMPTY}"    Create Test Variables ForMerchant Fee With Matching Client Account Number    ${country}
+    Run Keyword If    "${mfee_list}"=="${EMPTY}"    Create Test Variables For Merchant Fee With Matching Client Account Number    ${country}
     ...    ELSE    Create Test Variables For Merchant Fee Without Matching Client Account Number    ${country}    ${mfee_list}
     Set Test Variable    ${mfee_list}
     ${country}    Get Substring    ${country}    \    2
@@ -25,9 +25,9 @@ Create Test Variables For Merchant Fee Without Matching Client Account Number
     ${data_item}    Split String    ${mfee_list}    ,
     ${index}    Set Variable    0
     Save Merchant Fee Values    ${data_item}    ${index}
-    Create New Client Account Number List    ${client_account_number_${index}}    ${cn_list}
+    Create New Client Account Number List    ${data_item[1]}    ${client_account_number_${index}}    ${cn_list}
 
-Create Test Variables ForMerchant Fee With Matching Client Account Number
+Create Test Variables For Merchant Fee With Matching Client Account Number
     [Arguments]    ${country}=sg
     @{merchant_fee_list}    Create List
     @{cn_list}    Create List
@@ -44,16 +44,26 @@ Create Test Variables ForMerchant Fee With Matching Client Account Number
     \    ${data_item}    Split String    ${data}    ,
     \    Save Merchant Fee Values    ${data_item}    ${index}
     \    ${is_list_created}    Run Keyword And Return Status    Variable Should Exist    ${${client_account_number_${index}}_list}
-    \    Run Keyword If    "${is_list_created}"=="False"    Create New Client Account Number List    ${client_account_number_${index}}    ${cn_list}
-    \    Append To List    ${${client_account_number_${index}}_list}    ${index}
-    \    Set Test Variable    ${${client_account_number_${index}}_list}
+    \    Run Keyword If    "${is_list_created}"=="False"    Create New Client Account Number List    ${data_item[1]}    ${client_account_number_${index}}    ${cn_list}
+    \    Append To List    ${${data_item[1]}_list}    ${index}
+    \    Set Test Variable    ${${data_item[1]}_list}
     \    ${index}    Evaluate    ${index}+1
+
+Convert Client Account Number To Integer
+    [Arguments]    ${client_account_number_raw}    ${index}
+    ${cn_substring}    Convert To Integer    ${client_account_number_raw}
+    Set Test Variable    ${client_account_number_${index}}    ${cn_substring}
+    
+Format Client Account Number
+    [Arguments]    ${client_account_number_raw}    ${index}
+    ${cn_substring}    Fetch From Right    ${client_account_number_raw}    0
+    Set Test Variable    ${client_account_number_${index}}    ${cn_substring}
 
 Save Merchant Fee Values
     [Arguments]    ${data_item}    ${index}
     Set Test Variable    ${client_name_${index}}    ${data_item[0]}
-    Set Test Variable    ${client_account_number_${index}}    ${data_item[1]}
-    Set Test Variable    ${${client_account_number_${index}}_index}    ${index}
+    Run Keyword If    "${data_item[1]}"!="0000000CWT"    Convert Client Account Number To Integer    ${data_item[1]}    ${index}    ELSE    Format Client Account Number    ${data_item[1]}    ${index}
+    Set Test Variable    ${${data_item[1]}_index}    ${index}
     Set Test Variable    ${client_type_${index}}    ${data_item[2]}
     ${value_with_decimal}    Run Keyword And Return Status    Should Contain    ${data_item[3]}    .
     ${merchant_fee_percent}    Run Keyword If    "${value_with_decimal}"=="True"    Set Variable    ${data_item[3]}

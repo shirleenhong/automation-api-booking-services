@@ -33,6 +33,10 @@ public final class CalculatorUtils {
 		return amount == null ? null : amount.setScale(scale, roundingMode);
 	}
 	
+	public static BigDecimal roundUp(BigDecimal amount, int scale) {
+		return amount == null ? null : amount.setScale(scale, RoundingMode.UP);
+	}
+	
 	public static BigDecimal scale(BigDecimal amount, int scale) {
 		return amount == null ? null : amount.setScale(scale, RoundingMode.DOWN);
 	}
