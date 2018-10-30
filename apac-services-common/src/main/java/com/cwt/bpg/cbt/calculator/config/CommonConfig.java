@@ -12,4 +12,9 @@ public class CommonConfig {
 	public ScaleConfig scaleConfig() {
 		return new ScaleConfig();
 	}
+	
+	@Bean(name="roundingConfig")
+	public RoundingConfig roundingConfig() {
+		return new RoundingConfig();
+	}
 }
