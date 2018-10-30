@@ -5,6 +5,7 @@ import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import com.cwt.bpg.cbt.calculator.config.RoundingConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,9 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 
 	@Autowired
 	private ScaleConfig scaleConfig;
+
+	@Autowired
+	private RoundingConfig roundingConfig;
 
 	@Override
 	public NonAirFeesBreakdown calculate(NonAirFeesInput input, MerchantFee merchantFee, String countryCode) {
@@ -35,7 +39,7 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 
 		if (!input.isGstAbsorb()) {
 			gstAmount = round(calculatePercentage(input.getSellingPrice(), input.getGstPercent()), scale);
-			nettCostGst = round(calculatePercentage(input.getNettCost(), input.getGstPercent()), scale);
+			nettCostGst = round(calculatePercentage(input.getNettCost(), input.getGstPercent()), scale, roundingConfig.getRoundingMode("nettCost", countryCode));
 		}
 
 		BigDecimal merchantFeeAmount = null;
@@ -47,7 +51,7 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 							input.getSellingPrice()
 									.multiply(BigDecimal.ONE.add(percentDecimal(input.getGstPercent()))),
 							merchantFee.getMerchantFeePercent()),
-					scale);
+					scale, roundingConfig.getRoundingMode("merchantFee", countryCode));
 		}
 
 		BigDecimal sellingPriceInDi = round(input.getSellingPrice().add(safeValue(gstAmount))
@@ -61,10 +65,10 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 
         BigDecimal commission = round(BigDecimal.ZERO, scale);
         if (sellingPriceInDi.compareTo(safeValue(input.getNettCost())) > 0) {
-            commission = round(sellingPriceInDi.subtract(safeValue(input.getNettCost())), scale);
+            commission = round(sellingPriceInDi.subtract(safeValue(input.getNettCost())), scale, roundingConfig.getRoundingMode("commission", countryCode));
         }
 
-        sellingPriceInDi = round(sellingPriceInDi.add(safeValue(gstAmount)), scale);
+        sellingPriceInDi = round(sellingPriceInDi.add(safeValue(gstAmount)), scale, roundingConfig.getRoundingMode("totalSellingFare", countryCode));
 
         result.setNettCostGst(nettCostGst);
 		result.setGstAmount(gstAmount);

@@ -25,18 +25,35 @@ public class RoundingConfigTest {
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		
-		Mockito.when(env.getProperty(Mockito.eq("com.cwt.bpg.cbt.calc.rounding.HK"), Mockito.eq(Integer.class))).thenReturn(0);
-		Mockito.when(env.getRequiredProperty(Mockito.eq("com.cwt.bpg.cbt.calc.rounding.Default"), Mockito.eq(Integer.class))).thenReturn(4);
+		Mockito.when(env.getProperty(Mockito.eq("com.cwt.bpg.cbt.calc.rounding.nettFare.Default"), Mockito.eq(Integer.class))).thenReturn(0);
+		Mockito.when(env.getProperty(Mockito.eq("com.cwt.bpg.cbt.calc.rounding.nettCost.Default"), Mockito.eq(Integer.class))).thenReturn(0);
+		Mockito.when(env.getProperty(Mockito.eq("com.cwt.bpg.cbt.calc.rounding.merchantFee.Default"), Mockito.eq(Integer.class))).thenReturn(0);
+		Mockito.when(env.getProperty(Mockito.eq("com.cwt.bpg.cbt.calc.rounding.totalSellingFare.Default"), Mockito.eq(Integer.class))).thenReturn(0);
+		Mockito.when(env.getProperty(Mockito.eq("com.cwt.bpg.cbt.calc.rounding.commission.Default"), Mockito.eq(Integer.class))).thenReturn(1);
 	}
 	
-	@Test
-	public void shouldReturnHKProp() {
-		assertEquals(RoundingMode.UP, config.getRoundingMode(Country.HONG_KONG.getCode()));
-	}
-	
-	@Test
-	public void shouldReturnDefault() {
-		assertEquals(RoundingMode.HALF_UP, config.getRoundingMode(null));
-	}
-
+//	@Test
+//	public void shouldReturnNettFareRoundingWhenCountryCodeIsNull() {
+//		assertEquals(RoundingMode.UP, config.getRoundingMode("nettFare", null));
+//	}
+//
+//	@Test
+//	public void shouldReturnNettCostRounding() {
+//		assertEquals(RoundingMode.UP, config.getRoundingMode("nettCost", "SG"));
+//	}
+//
+//	@Test
+//	public void shouldReturnMerchantFeeRounding() {
+//		assertEquals(RoundingMode.UP, config.getRoundingMode("merchantFee", "HK"));
+//	}
+//
+//	@Test
+//	public void shouldReturnTotalSellingFareRounding() {
+//		assertEquals(RoundingMode.UP, config.getRoundingMode("totalSellingFare", "HK"));
+//	}
+//
+//	@Test
+//	public void shouldReturnCommissionRounding() {
+//		assertEquals(RoundingMode.DOWN, config.getRoundingMode("commission", "HK"));
+//	}
 }

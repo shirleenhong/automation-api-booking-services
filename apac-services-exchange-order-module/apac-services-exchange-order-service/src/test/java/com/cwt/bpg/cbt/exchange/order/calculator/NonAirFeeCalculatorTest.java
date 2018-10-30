@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import com.cwt.bpg.cbt.calculator.config.RoundingConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -28,6 +29,9 @@ public class NonAirFeeCalculatorTest {
 	
 	@Mock
 	private ScaleConfig scaleConfig;
+
+	@Mock
+	private RoundingConfig roundingConfig;
 	
 	private MerchantFee merchantFee;
 	
@@ -39,6 +43,14 @@ public class NonAirFeeCalculatorTest {
 		Mockito.when(scaleConfig.getScale(Mockito.eq("HK"))).thenReturn(0);
 		
 		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
+
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("nettFare"), Mockito.anyString())).thenReturn(RoundingMode.UP);
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("nettCost"), Mockito.anyString())).thenReturn(RoundingMode.UP);
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("merchantFee"), Mockito.anyString())).thenReturn(RoundingMode.UP);
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("totalSellingFare"), Mockito.anyString())).thenReturn(RoundingMode.UP);
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("commission"), Mockito.anyString())).thenReturn(RoundingMode.DOWN);
+
+		ReflectionTestUtils.setField(calculator, "roundingConfig", roundingConfig);
 		
 		merchantFee = new MerchantFee();
 		merchantFee.setMerchantFeePercent(6D);
@@ -55,6 +67,12 @@ public class NonAirFeeCalculatorTest {
 		input.setNettCost(new BigDecimal(1528.27));
 
 		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "SG");
+
+		System.out.println("getCommission: "+ result.getCommission());
+		System.out.println("getGstAmount: "+ result.getGstAmount());
+		System.out.println("getMerchantFee: "+ result.getMerchantFee());
+		System.out.println("getNettCostGst: "+ result.getNettCostGst());
+		System.out.println("getTotalSellingPrice: "+ result.getTotalSellingPrice());
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(new BigDecimal(63.63), 2), result.getGstAmount());

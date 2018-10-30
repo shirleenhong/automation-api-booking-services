@@ -4,6 +4,7 @@ import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
 
 import java.math.BigDecimal;
 
+import com.cwt.bpg.cbt.calculator.config.RoundingConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,9 @@ public class VisaFeesCalculator implements Calculator<VisaFeesBreakdown, VisaFee
 
     @Autowired
     private ScaleConfig scaleConfig;
+
+    @Autowired
+    private RoundingConfig roundingConfig;
 
     @Override
     public VisaFeesBreakdown calculate(VisaFeesInput input, MerchantFee merchantFee, String countryCode) {
@@ -41,10 +45,11 @@ public class VisaFeesCalculator implements Calculator<VisaFeesBreakdown, VisaFee
             result.setCwtHandlingMerchantFee(mfCwtHandling);
         }
 
-        BigDecimal sellingPrice = nettCost.add(input.getVendorHandling())
-                .add(input.getCwtHandling()).add(mfNettCost).add(mfCwtHandling);
+        BigDecimal sellingPrice = round(nettCost.add(input.getVendorHandling())
+                    .add(input.getCwtHandling()).add(mfNettCost).add(mfCwtHandling),
+                scale, roundingConfig.getRoundingMode("totalSellingFare", countryCode));
 
-        BigDecimal commission = input.getCwtHandling().add(mfNettCost).add(mfCwtHandling);
+        BigDecimal commission = round(input.getCwtHandling().add(mfNettCost).add(mfCwtHandling), scale, roundingConfig.getRoundingMode("nettCost", countryCode));
 
         result.setCommission(commission);
         result.setSellingPrice(sellingPrice);
