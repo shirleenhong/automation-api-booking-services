@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class AirContractDAOImpl {
 			while (rs.next()) {
 				AirContract airContract = new AirContract();
 				airContract.setAirlineCode(rs.getString("Carrier"));
-				airContract.setClientAccountNumber(rs.getString("CN"));
+				airContract.setClientAccountNumber(StringUtils.stripStart(rs.getString("CN"),"0"));
 				airContract.setFopCode(rs.getString("FOPCode"));				
 				airContracts.add(airContract);
 			}

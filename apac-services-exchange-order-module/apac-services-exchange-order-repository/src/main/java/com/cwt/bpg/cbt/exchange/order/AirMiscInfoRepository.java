@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Repository;
@@ -27,7 +28,7 @@ public class AirMiscInfoRepository extends CommonRepository<AirMiscInfo, ObjectI
 		final Query<AirMiscInfo> query = morphia.getDatastore()
 				.createQuery(AirMiscInfo.class);
 
-		query.field(CLIENT_ACCOUNT_NUMBER).equal(Integer.valueOf(clientAccountNumber).toString());
+		query.field(CLIENT_ACCOUNT_NUMBER).equal(StringUtils.stripStart(clientAccountNumber,"0"));
 		
 		if(CollectionUtils.isNotEmpty(reportingFieldTypeIds)){
 			query.field(REPORTING_FIELD_TYPE_ID).in(reportingFieldTypeIds);

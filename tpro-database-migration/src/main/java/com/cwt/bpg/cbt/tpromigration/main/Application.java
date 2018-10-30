@@ -22,22 +22,22 @@ public class Application {
 			MigrationService service = context.getBean(MigrationService.class);
 			service.setCountryCode(countryCode);
 			
-			/*if ("IN".equalsIgnoreCase(countryCode)) {
-				service.migrateAirlineRules();
-				service.migrateAirports();
-				service.migrateClients();
-				service.migrateAirMiscInfo();
+			if ("IN".equalsIgnoreCase(countryCode)) {
+				//service.migrateAirlineRules();
+				//service.migrateAirports();
+				//service.migrateClients();
+				//service.migrateAirMiscInfo();
+				//service.migratePassthroughs();
 			}
 			else {
 				if ("HK".equalsIgnoreCase(countryCode)) {
-					service.migrateAirContracts();
+					//service.migrateAirContracts();
 				}
-				service.migrateMerchantFees();
-				service.migrateRemarks();
+				//service.migrateMerchantFees();
+				//service.migrateRemarks();
 			}
 			
-			service.migrateProductList();
-			service.migratePassthroughs();*/
+			//service.migrateProductList();
 			
 		}
 	}

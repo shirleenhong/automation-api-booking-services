@@ -46,7 +46,7 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 		}
 		
 		if(StringUtils.isNotBlank(params.getClientAccountNumber())) {
-			query.field(CLIENT_ACCT_NUM).equal(Integer.valueOf(params.getClientAccountNumber()).toString());
+			query.field(CLIENT_ACCT_NUM).equal(StringUtils.stripStart(params.getClientAccountNumber(),"0"));
 		}else {
 			query.field(CLIENT_ACCT_NUM).doesNotExist();
 		}

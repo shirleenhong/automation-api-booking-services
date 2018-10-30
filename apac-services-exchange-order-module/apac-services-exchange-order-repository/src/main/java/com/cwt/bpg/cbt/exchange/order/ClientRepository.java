@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import org.apache.commons.lang.StringUtils;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.slf4j.LoggerFactory;
@@ -21,12 +22,12 @@ public class ClientRepository extends CommonRepository<Client, Integer> {
 	public Client getClient(String clientAccountNumber) {
 		return morphia.getDatastore().createQuery(Client.class)
 			.field("clientAccountNumber")
-			.equal(Integer.valueOf(clientAccountNumber).toString()).get();
+			.equal(StringUtils.stripStart(clientAccountNumber,"0")).get();
 	}
 
     public String remove(String clientAccountNumber) {
         final Datastore datastore = morphia.getDatastore();
-        final Query<Client> query = datastore.createQuery(Client.class).field("clientAccountNumber").equal(Integer.valueOf(clientAccountNumber).toString());
+        final Query<Client> query = datastore.createQuery(Client.class).field("clientAccountNumber").equal(StringUtils.stripStart(clientAccountNumber,"0"));
 
         WriteResult deleteResult = datastore.delete(query);
 

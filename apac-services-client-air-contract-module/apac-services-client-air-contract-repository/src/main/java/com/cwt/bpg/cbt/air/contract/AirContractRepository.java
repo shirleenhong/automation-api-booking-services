@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.air.contract;
 
+import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Repository;
@@ -24,7 +25,7 @@ public class AirContractRepository extends CommonRepository<AirContract, ObjectI
 		final Query<AirContract> query = morphia.getDatastore().createQuery(AirContract.class);
 		query.field(COUNTRY_CODE).equal(countryCode);
 		query.field(AIRLINE_CODE).equal(airlineCode);
-		query.field(CLIENT_ACCOUNT_NUMBER).equal(Integer.valueOf(clientAccountNumber).toString());
+		query.field(CLIENT_ACCOUNT_NUMBER).equal(StringUtils.stripStart(clientAccountNumber,"0"));
 
 		return query.get();
 	}
