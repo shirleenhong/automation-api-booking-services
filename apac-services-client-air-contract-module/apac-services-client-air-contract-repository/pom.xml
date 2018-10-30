@@ -3,7 +3,7 @@
 	<parent>
     	<groupId>com.cwt.bpg.cbt</groupId>
     	<artifactId>apac-services-client-air-contract-module</artifactId>
-    	<version>1.11.0-SNAPSHOT</version>
+    	<version>1.12.0-SNAPSHOT</version>
   	</parent>
 	<artifactId>apac-services-client-air-contract-repository</artifactId>
 	<name>apac-services-client-air-contract-repository</name>
