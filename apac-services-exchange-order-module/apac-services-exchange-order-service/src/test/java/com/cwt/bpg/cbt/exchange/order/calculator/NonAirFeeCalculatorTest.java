@@ -3,19 +3,22 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import com.cwt.bpg.cbt.calculator.config.RoundingConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.cwt.bpg.cbt.calculator.CalculatorUtils;
+import com.cwt.bpg.cbt.calculator.config.RoundingConfig;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.FopType;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
@@ -25,7 +28,7 @@ import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
 public class NonAirFeeCalculatorTest {
 	
 	@InjectMocks
-	private NonAirFeeCalculator calculator = new NonAirFeeCalculator();
+	private NonAirFeeCalculator calculator;
 	
 	@Mock
 	private ScaleConfig scaleConfig;
@@ -39,16 +42,16 @@ public class NonAirFeeCalculatorTest {
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 				
-		Mockito.when(scaleConfig.getScale(Mockito.eq("SG"))).thenReturn(2);
-		Mockito.when(scaleConfig.getScale(Mockito.eq("HK"))).thenReturn(0);
+		when(scaleConfig.getScale(eq("SG"))).thenReturn(2);
+		when(scaleConfig.getScale(eq("HK"))).thenReturn(0);
 		
 		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
 
-		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("nettFare"), Mockito.anyString())).thenReturn(RoundingMode.UP);
-		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("nettCost"), Mockito.anyString())).thenReturn(RoundingMode.UP);
-		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("merchantFee"), Mockito.anyString())).thenReturn(RoundingMode.UP);
-		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("totalSellingFare"), Mockito.anyString())).thenReturn(RoundingMode.UP);
-		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("commission"), Mockito.anyString())).thenReturn(RoundingMode.DOWN);
+		when(roundingConfig.getRoundingMode(eq("nettFare"), anyString())).thenReturn(RoundingMode.HALF_UP);
+		when(roundingConfig.getRoundingMode(eq("nettCost"), anyString())).thenReturn(RoundingMode.HALF_UP);
+		when(roundingConfig.getRoundingMode(eq("merchantFee"), anyString())).thenReturn(RoundingMode.HALF_UP);
+		when(roundingConfig.getRoundingMode(eq("totalSellingFare"), anyString())).thenReturn(RoundingMode.HALF_UP);
+		when(roundingConfig.getRoundingMode(eq("commission"), anyString())).thenReturn(RoundingMode.HALF_UP);
 
 		ReflectionTestUtils.setField(calculator, "roundingConfig", roundingConfig);
 		
@@ -76,11 +79,11 @@ public class NonAirFeeCalculatorTest {
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(new BigDecimal(60.03), 2), result.getGstAmount());
-		assertEquals(roundUp(new BigDecimal(76), 0), result.getMerchantFee());
+		assertEquals(round(new BigDecimal(76), 0, "merchantFee"), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(76.4135), 2), result.getNettCostGst());
 		assertEquals(round(new BigDecimal(1272.89), 2), result.getTotalSellingPrice());
 	}
-	
+
 	@Test
 	public void shouldCalculateFees0DScale() {
 
@@ -95,9 +98,9 @@ public class NonAirFeeCalculatorTest {
 
 		assertEquals(round(new BigDecimal(362.68)), result.getCommission());
 		assertEquals(round(new BigDecimal(75)), result.getGstAmount());
-		assertEquals(roundUp(new BigDecimal(94.5315), 0), result.getMerchantFee());
+		assertEquals(round(new BigDecimal(94.5315), 0), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(61.4135)), result.getNettCostGst());
-		assertEquals(round(new BigDecimal(1590.95), 2), result.getTotalSellingPrice());
+		assertEquals(round(new BigDecimal(1590.95), 0, "totalSellingFare"), result.getTotalSellingPrice());
 	}
 
 	@Test
@@ -110,14 +113,14 @@ public class NonAirFeeCalculatorTest {
 		input.setGstAbsorb(true);
 		input.setMerchantFeeAbsorb(true);
 		input.setNettCost(new BigDecimal(1528.27));
-		
+
 		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "HK");
 
 		assertEquals(round(BigDecimal.ZERO), result.getCommission());
 		assertNull(result.getGstAmount());
 		assertNull(result.getMerchantFee());
 		assertNull(result.getNettCostGst());
-		assertEquals(round(new BigDecimal(1143.33), 2), result.getTotalSellingPrice());
+		assertEquals(round(new BigDecimal(1143.33), 0, "totalSellingFare"), result.getTotalSellingPrice());
 	}
 
 	@Test
@@ -159,8 +162,8 @@ public class NonAirFeeCalculatorTest {
 		return value.setScale(scale, RoundingMode.HALF_UP);
 	}
 
-	private BigDecimal roundUp(BigDecimal value, int scale) {
-		return value.setScale(scale, RoundingMode.UP);
+	private BigDecimal round(BigDecimal amount, int scale, String fieldName) {
+		return CalculatorUtils.round(amount, scale, roundingConfig.getRoundingMode(fieldName, "HK"));
 	}
 	
 	private BigDecimal round(BigDecimal value) {
