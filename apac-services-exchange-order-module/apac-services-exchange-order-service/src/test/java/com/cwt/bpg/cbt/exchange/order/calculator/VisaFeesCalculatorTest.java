@@ -4,7 +4,9 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
+import com.cwt.bpg.cbt.calculator.config.RoundingConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -25,10 +27,16 @@ public class VisaFeesCalculatorTest {
 	@Mock
 	private ScaleConfig scaleConfig;
 
+	@Mock
+	private RoundingConfig roundingConfig;
+
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		Mockito.when(scaleConfig.getScale(Mockito.anyString())).thenReturn(0);
+
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("totalSellingFare"), Mockito.anyString())).thenReturn(RoundingMode.UP);
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("commission"), Mockito.anyString())).thenReturn(RoundingMode.DOWN);
 	}
 
 	@Test
