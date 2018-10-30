@@ -51,20 +51,20 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 							input.getSellingPrice()
 									.multiply(BigDecimal.ONE.add(percentDecimal(input.getGstPercent()))),
 							merchantFee.getMerchantFeePercent()),
-					scale, roundingConfig.getRoundingMode("merchantFee", countryCode));
+					0, roundingConfig.getRoundingMode("merchantFee", countryCode));
 		}
 
-		BigDecimal sellingPriceInDi = (input.getSellingPrice().add(safeValue(gstAmount))
-				.add(safeValue(merchantFeeAmount)))
-				.divide(BigDecimal.ONE.add(percentDecimal(input.getGstPercent())), 2, RoundingMode.HALF_UP);
-
+		BigDecimal sellingPriceInDi = round(
+				(input.getSellingPrice().add(safeValue(gstAmount))
+						.add(safeValue(merchantFeeAmount))).divide(
+								BigDecimal.ONE.add(percentDecimal(input.getGstPercent())),
+								2, RoundingMode.HALF_UP),
+				scale, roundingConfig.getRoundingMode("totalSellingFare", countryCode));
 
         BigDecimal commission = round(BigDecimal.ZERO, scale);
         if (sellingPriceInDi.compareTo(safeValue(input.getNettCost())) > 0) {
             commission = round(sellingPriceInDi.subtract(safeValue(input.getNettCost())), scale, roundingConfig.getRoundingMode("commission", countryCode));
         }
-
-        sellingPriceInDi = round(sellingPriceInDi.add(safeValue(gstAmount)), scale, roundingConfig.getRoundingMode("totalSellingFare", countryCode));
 
         result.setNettCostGst(nettCostGst);
 		result.setGstAmount(gstAmount);

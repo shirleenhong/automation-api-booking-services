@@ -30,6 +30,12 @@ public class MerchantFeeServiceTest {
 	}
 	
 	@Test
+	public void canGetAllMerchantFee() {
+		service.getAll();
+		verify(merchantFeeApi, times(1)).getAll();
+	}
+	
+	@Test
 	public void canGetMerchantFee() {
 		String countryCode = "SG";
 		String clientAccountNumber = "1324";
