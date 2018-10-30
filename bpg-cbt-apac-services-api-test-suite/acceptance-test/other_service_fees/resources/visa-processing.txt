@@ -6,9 +6,10 @@ Resource          ../../resources/api-variables.txt
 *** keywords ***
 Calculate Visa Processing Commission
     ${calculated_value}    Evaluate    ${cwt_handling_value}+${nett_cost_merchant_fee_amount}+${cwt_handling_merchant_fee_amount}
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    #${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    down    
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    #${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${commission_amount}    ${calculated_value}
 
 Calculate Visa Processing Merchant Fee CWT Handling
@@ -29,9 +30,10 @@ Calculate Visa Processing Merchant Fee Nett Cost
 
 Calculate Visa Processing Selling Price For Visa Processing
     ${calculated_value}    Evaluate    ${nett_cost_value}+${vendor_handling_value}+${cwt_handling_value}+${nett_cost_merchant_fee_amount}+${cwt_handling_merchant_fee_amount}
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    #${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    up
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    #${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${selling_price_amount}    ${calculated_value}
     Set Test Variable    ${selling_price_in_di_amount}    ${calculated_value}
 
