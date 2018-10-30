@@ -13,10 +13,12 @@ Create Test Variables For Air Contract
     ${index}    Set Variable    0
     : FOR    ${data}    IN    @{air_contract_list_data}
     \    ${data_item}    Split String    ${data}    ,
-    \    Set Test Variable    ${client_acct_number_${index}_value}    ${data_item[0]}
+    \    Set Test Variable    ${client_acct_number_req_${index}_value}    ${data_item[0]}
+    \    ${cn_substring}    Convert To Integer    ${data_item[0]}   
+    \    Set Test Variable    ${client_acct_number_${index}_value}    ${cn_substring}
     \    Set Test Variable    ${country_code_${index}_value}    ${data_item[1]}
     \    Set Test Variable    ${airline_code_${index}_value}    ${data_item[2]}
-    \    Set Test Variable    ${fop_code_${data_item[0]}${data_item[1]}${data_item[2]}_value}    ${data_item[3]}
+    \    Set Test Variable    ${fop_code_${cn_substring}${data_item[1]}${data_item[2]}_value}    ${data_item[3]}
     \    ${index}    Evaluate    ${index}+1
 
 Create Put Request Body
@@ -97,7 +99,7 @@ Verify Air Contract Is Retrieved Correctly
     
 Verify Air Contracts Are Retrieved Correctly
     : FOR    ${index}    IN RANGE    ${air_contract_list_data_length}
-    \    Send Air Contract Get Request    country_code=${country_code_${index}_value}    airline_code=${airline_code_${index}_value}    client_acct_number=${client_acct_number_${index}_value}
+    \    Send Air Contract Get Request    country_code=${country_code_${index}_value}    airline_code=${airline_code_${index}_value}    client_acct_number=${client_acct_number_req_${index}_value}
     \    Verify Response Status Code Is Correct    200
     \    Verify Air Contract Is Retrieved Correctly    
     
