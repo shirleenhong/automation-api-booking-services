@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.anyString;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -40,16 +41,18 @@ public class HkAirCalculatorTest {
 		Mockito.when(scaleConfig.getScale(Mockito.eq("SG"))).thenReturn(2);
 		Mockito.when(scaleConfig.getScale(Mockito.eq(countryCode))).thenReturn(0);
 
-		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("merchantFee"),
-				Mockito.eq(countryCode))).thenReturn(RoundingMode.valueOf(0));
-		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("commission"),
-				Mockito.eq(countryCode))).thenReturn(RoundingMode.valueOf(1));
-		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("nettFare"),
-				Mockito.eq(countryCode))).thenReturn(RoundingMode.valueOf(0));
+		Mockito.when(
+				roundingConfig.getRoundingMode(Mockito.eq("merchantFee"), anyString()))
+				.thenReturn(RoundingMode.UP);
+		Mockito.when(
+				roundingConfig.getRoundingMode(Mockito.eq("commission"), anyString()))
+				.thenReturn(RoundingMode.DOWN);
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("nettFare"), anyString()))
+				.thenReturn(RoundingMode.UP);
 		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("totalSellingFare"),
-				Mockito.eq(countryCode))).thenReturn(RoundingMode.valueOf(0));
-		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("nettCost"),
-				Mockito.eq(countryCode))).thenReturn(RoundingMode.valueOf(0));
+				anyString())).thenReturn(RoundingMode.UP);
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("nettCost"), anyString()))
+				.thenReturn(RoundingMode.UP);
 
 		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
 		ReflectionTestUtils.setField(calculator, "roundingConfig", roundingConfig);
