@@ -4,7 +4,9 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
+import com.cwt.bpg.cbt.calculator.config.RoundingConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -25,6 +27,9 @@ public class SgAirCalculatorTest {
 	@Mock
 	private ScaleConfig scaleConfig;
 
+	@Mock
+	private RoundingConfig roundingConfig;
+
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
@@ -33,6 +38,14 @@ public class SgAirCalculatorTest {
 		Mockito.when(scaleConfig.getScale(Mockito.eq("HK"))).thenReturn(0);
 
 		ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
+
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("nettFare"), Mockito.anyString())).thenReturn(RoundingMode.UP);
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("nettCost"), Mockito.anyString())).thenReturn(RoundingMode.UP);
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("merchantFee"), Mockito.anyString())).thenReturn(RoundingMode.UP);
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("totalSellingFare"), Mockito.anyString())).thenReturn(RoundingMode.UP);
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("commission"), Mockito.anyString())).thenReturn(RoundingMode.DOWN);
+
+		ReflectionTestUtils.setField(calculator, "roundingConfig", roundingConfig);
 	}
 
 	@Test
