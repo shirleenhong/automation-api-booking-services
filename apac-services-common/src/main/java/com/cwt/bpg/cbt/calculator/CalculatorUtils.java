@@ -26,11 +26,11 @@ public final class CalculatorUtils {
 	}
 
 	public static BigDecimal round(BigDecimal amount, int scale) {
-		return amount == null ? null : amount.setScale(scale, RoundingMode.HALF_UP);
+		return round(amount, scale, RoundingMode.HALF_UP);
 	}
-	
-	public static BigDecimal roundUp(BigDecimal amount, int scale) {
-		return amount == null ? null : amount.setScale(scale, RoundingMode.UP);
+
+	public static BigDecimal round(BigDecimal amount, int scale, RoundingMode roundingMode) {
+		return amount == null ? null : amount.setScale(scale, roundingMode);
 	}
 	
 	public static BigDecimal scale(BigDecimal amount, int scale) {

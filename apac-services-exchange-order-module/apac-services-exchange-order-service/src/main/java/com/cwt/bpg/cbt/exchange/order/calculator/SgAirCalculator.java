@@ -3,7 +3,9 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
+import com.cwt.bpg.cbt.calculator.config.RoundingConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,9 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 
 	@Autowired
 	private ScaleConfig scaleConfig;
+
+	@Autowired
+	private RoundingConfig roundingConfig;
 
 	@Override
 	public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFeeObj, String countryCode) {
@@ -61,18 +66,18 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 						input.getTransactionFee(),
 						inClientType,
 						merchantFeeObj.isIncludeTransactionFee());
-				merchantFee = getMerchantFee(totalPlusTF, merchantFeeObj.getMerchantFeePercent(), scale);
+				merchantFee = getMerchantFee(totalPlusTF, merchantFeeObj.getMerchantFeePercent(), scale, roundingConfig.getRoundingMode("merchantFee", countryCode));
 				result.setMerchantFee(merchantFee);
 			}
 
 			totalSellingFare = totalNettFare.add(merchantFee);
 
-			result.setCommission(commission);
+			result.setCommission(round(commission, scale, roundingConfig.getRoundingMode("commission", countryCode)));
 			result.setDiscount(discount);
 		}
 
-		result.setNettCost(nettCost);
-		result.setTotalSellingFare(totalSellingFare);
+		result.setNettCost(round(nettCost, scale, roundingConfig.getRoundingMode("nettCost", countryCode)));
+		result.setTotalSellingFare(round(totalSellingFare, scale, roundingConfig.getRoundingMode("totalSellingFare", countryCode)));
 
 		return result;
 	}
@@ -135,8 +140,8 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 		return total;
 	}
 
-	private BigDecimal getMerchantFee(BigDecimal totalCharge, Double merchantFeePercent, int scale) {
+	private BigDecimal getMerchantFee(BigDecimal totalCharge, Double merchantFeePercent, int scale, RoundingMode roundingMode) {
 
-		return round(totalCharge.multiply(percentDecimal(merchantFeePercent)), scale);
+		return round(totalCharge.multiply(percentDecimal(merchantFeePercent)), scale, roundingMode);
 	}
 }

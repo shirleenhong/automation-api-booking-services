@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -46,6 +49,17 @@ public class MerchantFeeControllerTest {
 		when(service.getMerchantFee(Mockito.anyString(), Mockito.anyString())).thenReturn(merchantFee);
 		
 		ResponseEntity<MerchantFee> result = controller.getMerchantFee("SG", "product");
+
+		assertNotNull(result.getBody());
+		assertEquals(HttpStatus.OK, result.getStatusCode());
+	}
+	
+	@Test
+	public void canGetAllMerchantFees() {
+		List<MerchantFee> merchantFees = new ArrayList<>();
+		when(service.getAll()).thenReturn(merchantFees);
+
+		ResponseEntity<List<MerchantFee>> result = controller.getMerchantFees();
 
 		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());

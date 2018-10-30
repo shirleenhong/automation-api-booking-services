@@ -4,9 +4,11 @@ import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
 
+import com.cwt.bpg.cbt.calculator.config.RoundingConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,9 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 
 	@Autowired
 	private ScaleConfig scaleConfig;
+
+	@Autowired
+	private RoundingConfig roundingConfig;
 
 	private final List<String> clientsWithAdditionalSellPrice = Arrays.asList(ClientType.MG.getCode(),
 			ClientType.DB.getCode(),
@@ -63,7 +68,7 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 		else {
 			if (input.isCommissionByPercent()) {
 				if (!ClientType.TP.getCode().equals(input.getClientType())) {
-					commission = getCommission(input, scale, nettFare);
+					commission = getCommission(input, scale, roundingConfig.getRoundingMode("commission", countryCode), nettFare);
 				}
 
 				sellingPrice = nettFare.divide(
@@ -75,7 +80,7 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 				}
 			}
 			else {
-				commission = round(commission, scale);
+				commission = round(commission, scale, roundingConfig.getRoundingMode("commission", countryCode));
 				sellingPrice = nettFare.add(commission);
 			}
 
@@ -87,22 +92,22 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 			result.setDiscount(discount);
 
 			nettCost = nettFare;
-			nettFare = round(sellingPrice.add(tax1).add(tax2).subtract(discount), scale);
+			nettFare = round(sellingPrice.add(tax1).add(tax2).subtract(discount), scale, roundingConfig.getRoundingMode("nettFare", countryCode));
 			result.setNettFare(nettFare);
 
-			merchantFeeAmount = applyMerchantFee(merchantFee, input, scale, nettFare, tax1, tax2);
+			merchantFeeAmount = applyMerchantFee(merchantFee, input, scale, roundingConfig.getRoundingMode("merchantFee", countryCode), nettFare, tax1, tax2);
 			result.setMerchantFee(merchantFeeAmount);
 
 			totalSellingFare = nettFare.add(safeValue(merchantFeeAmount));
 		}
 
-		result.setTotalSellingFare(round(totalSellingFare, scale));
-		result.setNettCost(round(nettCost, scale));
+		result.setTotalSellingFare(round(totalSellingFare, scale, roundingConfig.getRoundingMode("totalSellingFare", countryCode)));
+		result.setNettCost(round(nettCost, scale, roundingConfig.getRoundingMode("nettCost", countryCode)));
 
 		return result;
 	}
 
-	private BigDecimal getCommission(AirFeesInput input, int scale, BigDecimal nettFare) {
+	private BigDecimal getCommission(AirFeesInput input, int scale, RoundingMode roundingMode, BigDecimal nettFare) {
 
 		BigDecimal commission = nettFare
 				.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPercent())),
@@ -113,10 +118,10 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 				&& ClientType.DU.getCode().equals(input.getClientType())) {
 			commission = commission.add(BigDecimal.TEN);
 		}
-		return round(commission, scale);
+		return round(commission, scale, roundingMode);
 	}
 
-	private BigDecimal applyMerchantFee(MerchantFee merchantFee, AirFeesInput input, int scale,
+	private BigDecimal applyMerchantFee(MerchantFee merchantFee, AirFeesInput input, int scale, RoundingMode roundingMode,
                                         BigDecimal nettFare, BigDecimal tax1, BigDecimal tax2) {
 
 		BigDecimal merchantFeeAmount = null;
@@ -142,7 +147,7 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
                     mFTotal = mFTotal.add(transactionFee);
                 }
             }
-			merchantFeeAmount = BigDecimal.ZERO.max(round(calculatePercentage(mFTotal, merchantFee.getMerchantFeePercent()), scale));
+			merchantFeeAmount = BigDecimal.ZERO.max(round(calculatePercentage(mFTotal, merchantFee.getMerchantFeePercent()), scale, roundingMode));
 		}
 
 		return merchantFeeAmount;
