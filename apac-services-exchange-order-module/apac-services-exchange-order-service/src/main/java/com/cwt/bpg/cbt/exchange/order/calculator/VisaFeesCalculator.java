@@ -49,7 +49,7 @@ public class VisaFeesCalculator implements Calculator<VisaFeesBreakdown, VisaFee
                     .add(input.getCwtHandling()).add(mfNettCost).add(mfCwtHandling),
                 scale, roundingConfig.getRoundingMode("totalSellingFare", countryCode));
 
-        BigDecimal commission = round(input.getCwtHandling().add(mfNettCost).add(mfCwtHandling), scale, roundingConfig.getRoundingMode("nettCost", countryCode));
+        BigDecimal commission = round(input.getCwtHandling().add(mfNettCost).add(mfCwtHandling), scale, roundingConfig.getRoundingMode("commission", countryCode));
 
         result.setCommission(commission);
         result.setSellingPrice(sellingPrice);
