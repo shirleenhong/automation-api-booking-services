@@ -35,6 +35,7 @@ public class VisaFeesCalculatorTest {
 		MockitoAnnotations.initMocks(this);
 		Mockito.when(scaleConfig.getScale(Mockito.anyString())).thenReturn(0);
 
+		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("merchantFee"), Mockito.anyString())).thenReturn(RoundingMode.UP);
 		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("totalSellingFare"), Mockito.anyString())).thenReturn(RoundingMode.UP);
 		Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("commission"), Mockito.anyString())).thenReturn(RoundingMode.DOWN);
 	}
