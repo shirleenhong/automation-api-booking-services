@@ -13,16 +13,18 @@ Calculate Visa Processing Commission
 
 Calculate Visa Processing Merchant Fee CWT Handling
     ${calculated_value}    Evaluate    (${cwt_handling_value}+${vendor_handling_value})*(${merchant_fee_percentage_value}*0.01)
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    #${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    up    
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    #${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${cwt_handling_merchant_fee_amount}    ${calculated_value}
 
 Calculate Visa Processing Merchant Fee Nett Cost
     ${calculated_value}    Evaluate    ${nett_cost_value}*(${merchant_fee_percentage_value}*0.01)
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    #${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
+    ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    up
     ${calculated_value}    Convert To String    ${calculated_value}
-    ${calculated_value}    Fix Decimal Places    ${calculated_value}
+    #${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${nett_cost_merchant_fee_amount}    ${calculated_value}
 
 Calculate Visa Processing Selling Price For Visa Processing

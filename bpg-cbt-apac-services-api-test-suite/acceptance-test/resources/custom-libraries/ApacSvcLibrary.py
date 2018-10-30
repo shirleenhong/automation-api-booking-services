@@ -2,6 +2,9 @@ import math
 import decimal
 import PyPDF2
 import imaplib
+from robot.libraries.String import String
+from robot.libraries.BuiltIn import BuiltIn
+from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_DOWN, ROUND_DOWN, ROUND_UP
 
 class ApacSvcLibrary:
     ROBOT_LIBRARY_SCOPE = 'TEST CASE'
@@ -74,5 +77,6 @@ class ApacSvcLibrary:
        amount_in_decimal = Decimal(amount)
        round_type = round_type_dict.get(str(round_type).lower(), 'ROUND_HALF_UP')
        round_value =  amount_in_decimal.quantize(Decimal('1'), rounding=round_type).quantize(Decimal('0.01'))
-       return round_value if country.upper() == 'SG' else int(round_value)
+       """return round_value if country == 'SG' else int(round_value)"""
+       return int(round_value)
         
