@@ -37,11 +37,17 @@ Append Fields For Non-Air Fees For India
     Set Test Variable    ${other_service_fees_request_list}
     Set Test Variable    ${product_request_list}
 
+Calculate Non-Air Fees-HK Commission
+    ${formula}    Set Variable If    "${country}"!="in"    ${total_selling_price_value}-${nett_cost_value}    (${cost_amount_value}*(${comm_percentage_value}*0.01))
+    ${calculated_value}    Evaluate    ${formula}
+    ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper}    down        
+    ${calculated_value}    Convert To String    ${calculated_value}
+    Set Test Variable    ${commission_value}    ${calculated_value}
+
 Calculate Non-Air Fees Commission
     ${formula}    Set Variable If    "${country}"!="in"    ${total_selling_price_value}-${nett_cost_value}    (${cost_amount_value}*(${comm_percentage_value}*0.01))
     ${calculated_value}    Evaluate    ${formula}
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    #${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper}    down        
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})      
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${commission_value}    ${calculated_value}
@@ -52,8 +58,18 @@ Calculate Non-Air Fees Discount
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${discount_value}    ${calculated_value}
+    
+Calculate Non-Air Fees For HK
+    Run Keyword If    "${gst_absorb_value}" == "false"    Run Keywords    Calculate Non-Air Fees GST
+    ...    AND    Calculate Non-Air Fees-HK Nett Cost GST
+    ...    ELSE    Set GST And Nett Cost GST
+    Run Keyword If    "${merchant_fee_absorb_value}" == "false" and "${cc_value.upper()}" == "CX" and "${merchant_fee_waive_value}" == "false"    Calculate Non-Air Fees-HK Merchant Fee
+    ...    ELSE    Set Merchant Fee
+    Calculate Non-Air Fees-HK Selling Price In DI
+    Run Keyword If    ${total_selling_price_value}>${nett_cost_value}    Calculate Non-Air Fees-HK Commission
+    ...    ELSE    Set Commission Value
 
-Calculate Non-Air Fees For HK/SG
+Calculate Non-Air Fees For SG
     Run Keyword If    "${gst_absorb_value}" == "false"    Run Keywords    Calculate Non-Air Fees GST
     ...    AND    Calculate Non-Air Fees Nett Cost GST
     ...    ELSE    Set GST And Nett Cost GST
@@ -91,13 +107,17 @@ Calculate Non-Air Fees Gross Sell Amount
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${gross_selling_price_value}    ${calculated_value}
+    
+Calculate Non-Air Fees-HK Merchant Fee
+    ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percentage_value}*0.01)
+    ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    up    
+    ${calculated_value}    Convert To String    ${calculated_value}
+    Set Test Variable    ${merchant_fee_value}    ${calculated_value}
 
 Calculate Non-Air Fees Merchant Fee
     ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percentage_value}*0.01)
-    #${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    up    
     ${calculated_value}    Convert To String    ${calculated_value}
-    #${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${merchant_fee_value}    ${calculated_value}
 
 Calculate Non-Air Fees Merchant Fee Percentage
@@ -110,14 +130,25 @@ Calculate Non-Air Fees Merchant Fee Percentage
     ...    ELSE    Set Test variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}
     ${merchant_fee_percentage_amount}    Evaluate    ${merchant_fee_percentage_amount}*0.01
     Set Test Variable    ${merchant_fee_percentage_amount}
+    
+Calculate Non-Air Fees-HK Nett Cost GST
+    ${calculated_value}    Evaluate    ${nett_cost_value}*(${gst_percent_value}*0.01)
+    ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper}    up    
+    ${calculated_value}    Convert To String    ${calculated_value}
+    Set Test Variable    ${nett_cost_gst_value}    ${calculated_value}
 
 Calculate Non-Air Fees Nett Cost GST
     ${calculated_value}    Evaluate    ${nett_cost_value}*(${gst_percent_value}*0.01)
-    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
-    #${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper}    up    
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})  
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${nett_cost_gst_value}    ${calculated_value}
+    
+Calculate Non-Air Fees-HK Selling Price In DI
+    ${calculated_value}    Evaluate    (${selling_price_value}+${gst_amount_value}+${merchant_fee_value})/(1+${gst_percent_value}*0.01)
+    ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    up
+    ${calculated_value}    Convert To String    ${calculated_value}
+    Set Test Variable    ${total_selling_price_value}    ${calculated_value}
 
 Calculate Non-Air Fees Selling Price In DI
     ${calculated_value}    Evaluate    (${selling_price_value}+${gst_amount_value}+${merchant_fee_value})/(1+${gst_percent_value}*0.01)
@@ -161,7 +192,7 @@ Generate Test Variables For Non-Air Fees
     Run Keyword If    "${country}"=="sg"    Set Test Variable    ${decimal_place}    2
     ...    ELSE    Set Test Variable    ${decimal_place}    0
     Run Keyword If    "${country}"=="in"    Calculate Non-Air Fees For IN
-    ...    ELSE    Calculate Non-Air Fees For HK/SG
+    ...    ELSE IF    "${country}"=="hk"    Calculate Non-Air Fees For HK    ELSE    Calculate Non-Air Fees For SG
     Remove Decimal Places
 
 Get Rounding Rules
