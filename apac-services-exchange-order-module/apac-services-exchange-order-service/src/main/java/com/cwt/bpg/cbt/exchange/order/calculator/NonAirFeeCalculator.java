@@ -46,7 +46,7 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 		if (!input.isMerchantFeeAbsorb() && FopType.CWT.equals(input.getFopType())
 				&& !input.isMerchantFeeWaive()) {
 
-			merchantFeeAmount = roundUp(
+			merchantFeeAmount = round(
 					calculatePercentage(
 							input.getSellingPrice()
 									.multiply(BigDecimal.ONE.add(percentDecimal(input.getGstPercent()))),
