@@ -57,10 +57,10 @@ public class NonAirFeeCalculatorTest {
 		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "SG");
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
-		assertEquals(round(new BigDecimal(63.63), 2), result.getGstAmount());
-		assertEquals(round(new BigDecimal(75.63), 2), result.getMerchantFee());
+		assertEquals(round(new BigDecimal(60.03), 2), result.getGstAmount());
+		assertEquals(roundUp(new BigDecimal(76), 0), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(76.4135), 2), result.getNettCostGst());
-		assertEquals(round(new BigDecimal(1336.16), 2), result.getTotalSellingPrice());
+		assertEquals(round(new BigDecimal(1272.89), 2), result.getTotalSellingPrice());
 	}
 	
 	@Test
@@ -76,10 +76,10 @@ public class NonAirFeeCalculatorTest {
 		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "HK");
 
 		assertEquals(round(new BigDecimal(362.68)), result.getCommission());
-		assertEquals(round(new BigDecimal(79.5475)), result.getGstAmount());
-		assertEquals(round(new BigDecimal(94.5315)), result.getMerchantFee());
+		assertEquals(round(new BigDecimal(75)), result.getGstAmount());
+		assertEquals(roundUp(new BigDecimal(94.5315), 0), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(61.4135)), result.getNettCostGst());
-		assertEquals(round(new BigDecimal(1671)), result.getTotalSellingPrice());
+		assertEquals(round(new BigDecimal(1590.95), 2), result.getTotalSellingPrice());
 	}
 
 	@Test
@@ -99,7 +99,7 @@ public class NonAirFeeCalculatorTest {
 		assertNull(result.getGstAmount());
 		assertNull(result.getMerchantFee());
 		assertNull(result.getNettCostGst());
-		assertEquals(round(new BigDecimal(1143.33)), result.getTotalSellingPrice());
+		assertEquals(round(new BigDecimal(1143.33), 2), result.getTotalSellingPrice());
 	}
 
 	@Test
@@ -141,6 +141,10 @@ public class NonAirFeeCalculatorTest {
 		return value.setScale(scale, RoundingMode.HALF_UP);
 	}
 
+	private BigDecimal roundUp(BigDecimal value, int scale) {
+		return value.setScale(scale, RoundingMode.UP);
+	}
+	
 	private BigDecimal round(BigDecimal value) {
 		return value.setScale(0, RoundingMode.HALF_UP);
 	}

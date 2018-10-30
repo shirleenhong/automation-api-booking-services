@@ -50,7 +50,7 @@ public class MerchantFeeRepositoryTest {
 		when(fieldEnd.equalIgnoreCase(anyString())).thenReturn(query);
 		when(query.get()).thenReturn(new MerchantFee());
 		
-		impl.getMerchantFee(countryCode, "ALCATEL SG");
+		impl.getMerchantFee(countryCode, "12345");
 
 		verify(query, times(2)).field(anyString());
         verify(dataStore, times(1)).createQuery(MerchantFee.class);
