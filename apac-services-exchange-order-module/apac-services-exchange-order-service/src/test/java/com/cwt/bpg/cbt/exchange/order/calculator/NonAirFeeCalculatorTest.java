@@ -71,12 +71,6 @@ public class NonAirFeeCalculatorTest {
 
 		NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "SG");
 
-		System.out.println("getCommission: "+ result.getCommission());
-		System.out.println("getGstAmount: "+ result.getGstAmount());
-		System.out.println("getMerchantFee: "+ result.getMerchantFee());
-		System.out.println("getNettCostGst: "+ result.getNettCostGst());
-		System.out.println("getTotalSellingPrice: "+ result.getTotalSellingPrice());
-
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(new BigDecimal(60.03), 2), result.getGstAmount());
 		assertEquals(round(new BigDecimal(76), 0, "merchantFee"), result.getMerchantFee());
