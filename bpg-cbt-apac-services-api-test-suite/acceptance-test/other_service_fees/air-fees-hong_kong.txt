@@ -1010,7 +1010,7 @@ Verify That Air Fees Merchant Fee Is Calculated Correctly With FOPType CX, And U
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000006710|cwt_absorb,false|product_type,BT|uatp_flag,true    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.5|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000006710|cwt_absorb,false|product_type,BT|uatp_flag,true    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
