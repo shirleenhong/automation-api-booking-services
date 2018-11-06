@@ -143,7 +143,7 @@ public class ProductServiceTest {
 				any(Vendor.class), anyBoolean());
 	}
 	
-	@Test
+	/*@Test
 	public void shouldRemoveProduct() {
 
 		final String productCode = "ProductCode";
@@ -153,9 +153,9 @@ public class ProductServiceTest {
 		assertThat(product, is(equalTo(productCode)));
 
 		verify(repo, Mockito.times(1)).removeProduct(anyString(), anyString());
-	}
+	}*/
 
-	@Test
+	/*@Test
 	public void shouldRemoveVendor() {
 
 		final String vendorCode = "VendorCode";
@@ -165,7 +165,7 @@ public class ProductServiceTest {
 		assertThat(vendor, is(equalTo(vendorCode)));
 
 		verify(repo, Mockito.times(1)).removeVendor(anyString(), anyString());
-	}
+	}*/
 	
 	private static List<BaseProduct> createListOfProducts() {
 		BaseProduct baseProduct1 = new Product();

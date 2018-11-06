@@ -7,15 +7,18 @@ import java.util.List;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.HkSgProductList;
+import com.cwt.bpg.cbt.exchange.order.model.InProductList;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
+import com.cwt.bpg.cbt.exchange.order.model.Product;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
-import com.mongodb.BasicDBObject;
 
 @Repository
 public class ProductRepository {
@@ -168,8 +171,8 @@ public class ProductRepository {
                     productsToUpdate.add(product.getProductCode());
                 }
             }));
-
-            removeVendor(countryCode, vendor.getCode());
+			// TODO: call factory
+			// removeVendor(countryCode, vendor.getCode());
             productsToUpdate.forEach(productCode -> insertVendor(countryCode, productCode, vendor));
 
             return vendor.getCode();
@@ -188,8 +191,8 @@ public class ProductRepository {
                     productsToUpdate.add(product.getProductCode());
                 }
             }));
-
-            removeVendor(countryCode, vendor.getCode());
+			// TODO: call factory
+			// removeVendor(countryCode, vendor.getCode());
             productsToUpdate.forEach(productCode -> insertVendor(countryCode, productCode, vendor));
 
             return vendor.getCode();
@@ -206,92 +209,5 @@ public class ProductRepository {
             }
         }
         baseProducts.sort(Comparator.comparing(BaseProduct::getDescription, String.CASE_INSENSITIVE_ORDER));
-    }
-
-
-    public String removeProduct(String countryCode, String productCode) {
-        Datastore datastore = morphia.getDatastore();
-        String noResult = "";
-
-        if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
-            final Query<InProductList> updateQuery = datastore
-                    .createQuery(InProductList.class)
-                    .filter(COUNTRY_CODE, countryCode)
-                    .filter(PRODUCTS_PRODUCTCODE, productCode);
-
-            UpdateOperations<InProductList> ops = datastore
-                    .createUpdateOperations(InProductList.class).disableValidation()
-                    .removeAll(PRODUCTS, new BasicDBObject(PRODUCT_CODE, productCode));
-
-            UpdateResults updateResults = datastore.update(updateQuery, ops);
-
-            return updateResults.getWriteResult().getN() > 0 ? productCode : noResult;
-        }
-        else {
-            final Query<HkSgProductList> updateQuery = datastore
-                    .createQuery(HkSgProductList.class)
-                    .filter(COUNTRY_CODE, countryCode)
-                    .filter(PRODUCTS_PRODUCTCODE, productCode);
-
-            UpdateOperations<HkSgProductList> ops = datastore
-                    .createUpdateOperations(HkSgProductList.class).disableValidation()
-                    .removeAll(PRODUCTS, new BasicDBObject(PRODUCT_CODE, productCode));
-
-            UpdateResults updateResults = datastore.update(updateQuery, ops);
-
-            return updateResults.getWriteResult().getN() > 0 ? productCode : noResult;
-        }
-    }
-
-
-    public String removeVendor(String countryCode, String vendorCode) {
-        Datastore datastore = morphia.getDatastore();
-        int results = 0;
-
-        if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
-            Query<InProductList> updateQuery = datastore
-                    .createQuery(InProductList.class)
-                    .filter(COUNTRY_CODE, countryCode);
-
-            List<InProductList> productList = updateQuery.asList();
-
-
-            for (IndiaProduct product : productList.get(0).getProducts()) {
-                updateQuery = datastore.createQuery(InProductList.class)
-                        .filter(COUNTRY_CODE, countryCode)
-                        .filter(PRODUCTS_PRODUCTCODE, product.getProductCode());
-
-                UpdateOperations<InProductList> ops = datastore
-                        .createUpdateOperations(InProductList.class).disableValidation()
-                        .removeAll(PRODUCTS_DOLLAR_VENDORS, new BasicDBObject("code", vendorCode));
-
-                UpdateResults updateResults = datastore.update(updateQuery, ops);
-                results += updateResults.getWriteResult().getN();
-            }
-
-            return results > 0 ? vendorCode : NO_RESULT;
-        }
-        else {
-            Query<HkSgProductList> updateQuery = datastore
-                    .createQuery(HkSgProductList.class)
-                    .filter(COUNTRY_CODE, countryCode);
-
-            List<HkSgProductList> productList = updateQuery.asList();
-
-            for (Product product : productList.get(0).getProducts()) {
-                updateQuery = datastore.createQuery(HkSgProductList.class)
-                        .filter(COUNTRY_CODE, countryCode)
-                        .filter(PRODUCTS_PRODUCTCODE, product.getProductCode());
-
-                UpdateOperations<HkSgProductList> ops = datastore
-                        .createUpdateOperations(HkSgProductList.class).disableValidation()
-                        .removeAll(PRODUCTS_DOLLAR_VENDORS, new BasicDBObject("code", vendorCode));
-
-                UpdateResults updateResults = datastore.update(updateQuery, ops);
-                results += updateResults.getWriteResult().getN();
-            }
-
-            return results > 0 ? vendorCode : NO_RESULT;
-        }
     }
 }
