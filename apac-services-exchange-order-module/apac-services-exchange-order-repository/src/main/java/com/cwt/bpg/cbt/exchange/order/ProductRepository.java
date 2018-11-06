@@ -19,7 +19,7 @@ import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.BasicDBObject;
 
 @Repository
-public class ProductRepository<T> implements ProductDao {
+public class ProductRepository<T extends ProductList> implements ProductDao {
 
     @Autowired
     private MorphiaComponent morphia;
@@ -201,31 +201,15 @@ public class ProductRepository<T> implements ProductDao {
         Class className = getCurrentClass(countryCode);
         Datastore datastore = morphia.getDatastore();
 
-        Query<T> updateQuery = datastore
-                .createQuery(className)
+        Query<T> updateQuery = datastore.createQuery(className)
                 .filter(COUNTRY_CODE, countryCode);
 
         List<T> queryList = updateQuery.asList();
-        List<IndiaProduct> indiaProductList;
-        List<Product> hkSgProductList;
         int results = 0;
 
-        for (Object obj : queryList) {
-            if (obj instanceof InProductList) {
-                InProductList indiaProduct = (InProductList) obj;
-                indiaProductList = indiaProduct.getProducts();
-
-                for (IndiaProduct product : indiaProductList) {
-                    results += removeQuery(countryCode, vendorCode, product.getProductCode());
-                }
-            }
-            else {
-                HkSgProductList productList = (HkSgProductList) obj;
-                hkSgProductList = productList.getProducts();
-
-                for (Product product : hkSgProductList) {
-                    results += removeQuery(countryCode, vendorCode, product.getProductCode());
-                }
+        for (T obj : queryList) {
+            for (Object product : obj.getProducts()) {
+                results += removeQuery(countryCode, vendorCode, ((BaseProduct) product).getProductCode());
             }
         }
         return results > 0 ? vendorCode : NO_RESULT;
