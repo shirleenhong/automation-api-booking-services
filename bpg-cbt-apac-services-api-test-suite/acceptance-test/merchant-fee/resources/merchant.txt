@@ -120,12 +120,13 @@ Verify Merchant Fee Percentage Is Correctly Retrieved
     \    ...    ELSE    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account    ${data}
 
 Verify Merchant Fee Percentages Are Not Returned
-    Verify String Does Not Contain Substring    ${response.content}    "countryCode"
-    Verify String Does Not Contain Substring    ${response.content}    "clientName"
-    Verify String Does Not Contain Substring    ${response.content}    "clientAccountNumber"
-    Verify String Does Not Contain Substring    ${response.content}    "clientType"
-    Verify String Does Not Contain Substring    ${response.content}    "merchantFeePercent"
-    Verify String Does Not Contain Substring    ${response.content}    "includeTransactionFee"
+    ${response_string}    Convert To String    ${response.content}
+    Verify String Does Not Contain Substring    ${response_string}    "countryCode"
+    Verify String Does Not Contain Substring    ${response_string}    "clientName"
+    Verify String Does Not Contain Substring    ${response_string}    "clientAccountNumber"
+    Verify String Does Not Contain Substring    ${response_string}    "clientType"
+    Verify String Does Not Contain Substring    ${response_string}    "merchantFeePercent"
+    Verify String Does Not Contain Substring    ${response_string}    "includeTransactionFee"
 
 Verify Response Status Code Is Correct For Merchant Fee Percentage
     [Arguments]    ${status_code}
