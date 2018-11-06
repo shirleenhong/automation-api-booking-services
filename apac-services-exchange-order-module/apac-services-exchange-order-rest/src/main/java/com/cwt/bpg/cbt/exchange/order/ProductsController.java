@@ -34,10 +34,10 @@ public class ProductsController {
 
 	@PutMapping(path = "/products/{countryCode:^(?!in)[a-zA-Z0-9]{2}}", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
-    @ApiOperation(value = "Updates product list for a country.")
+    @ApiOperation(value = "Inserts/Updates product list of a market (non-India).")
     public ResponseEntity<String> saveProduct(
             @PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
-            @RequestParam(required = false) boolean insert,
+            @RequestParam(required = false) @ApiParam(value = "_true_ when inserting a new Product. _false_ when updating existing one.") boolean insert,
             @RequestBody Product product) {
         String result = service.saveProduct(countryCode.toUpperCase(), product, insert);
         getProducts(countryCode);
@@ -46,9 +46,9 @@ public class ProductsController {
 
     @PutMapping(path = "/products/in", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
-    @ApiOperation(value = "Updates product list for a country.")
+    @ApiOperation(value = "Inserts/Updates product list of India.")
     public ResponseEntity<String> saveIndiaProduct(
-            @RequestParam(required = false) boolean insert,
+            @RequestParam(required = false) @ApiParam(value = "_true_ when inserting a new Product. _false_ when updating existing one.") boolean insert,
             @RequestBody IndiaProduct product) {
         String result = service.saveProduct(Country.INDIA.getCode().toUpperCase(), product, insert);
         getProducts(Country.INDIA.getCode());
@@ -57,11 +57,11 @@ public class ProductsController {
 
     @PutMapping(path = "/vendors/{countryCode:[a-zA-Z0-9]{2}}", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
-    @ApiOperation(value = "Updates Vendor info.")
+    @ApiOperation(value = "Inserts/Updates Vendor info of a market.")
     public ResponseEntity<String> saveVendor(
             @PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
-            @RequestParam(required = false) String productCode,
-            @RequestParam(required = false) boolean insert,
+            @RequestParam(required = false) @ApiParam(value = "Required when _insert_ flag is true.") String productCode,
+            @RequestParam(required = false) @ApiParam(value = "_true_ when inserting a new Vendor. _false_ when updating existing one.") boolean insert,
             @RequestBody Vendor vendor) {
         String result = service.saveVendor(countryCode.toUpperCase(), productCode, vendor, insert);
         getProducts(countryCode);
@@ -71,8 +71,9 @@ public class ProductsController {
 
 	@DeleteMapping(path = "/products/{countryCode:[a-zA-Z0-9]{2}}/{productCode}")
 	@ResponseBody
-	@ApiOperation(value = "Removes product by code")
-	public ResponseEntity<String> removeProductByCode(@PathVariable String countryCode,
+	@ApiOperation(value = "Removes Product by code.")
+	public ResponseEntity<String> removeProductByCode(
+			@PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
 			@PathVariable String productCode) {
 		String deleteResult = service.removeProduct(countryCode, productCode);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
@@ -82,8 +83,9 @@ public class ProductsController {
 
 	@DeleteMapping(path = "/vendors/{countryCode:[a-zA-Z0-9]{2}}/{vendorCode}")
 	@ResponseBody
-	@ApiOperation(value = "Removes vendor by code")
-	public ResponseEntity<String> removeVendorByCode(@PathVariable String countryCode,
+	@ApiOperation(value = "Removes Vendor by code. Disassociates given Vendor from all products.")
+	public ResponseEntity<String> removeVendorByCode(
+	        @PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
 			@PathVariable String vendorCode) {
 		String deleteResult = service.removeVendor(countryCode, vendorCode);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
