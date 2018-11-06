@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -13,12 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
-import com.cwt.bpg.cbt.exchange.order.model.HkSgProductList;
-import com.cwt.bpg.cbt.exchange.order.model.InProductList;
-import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
-import com.cwt.bpg.cbt.exchange.order.model.Product;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.BasicDBObject;
 
@@ -75,30 +71,19 @@ public class ProductRepository<T> implements ProductDao {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private String insertProduct(String countryCode, BaseProduct product) {
-        if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
-            Datastore datastore = morphia.getDatastore();
-            UpdateResults updateResults = datastore.update(
-                    datastore.createQuery(InProductList.class)
-                            .filter(COUNTRY_CODE, countryCode),
-                    datastore.createUpdateOperations(InProductList.class)
-                            .push(PRODUCTS, product)
-            );
-            return updateResults.getWriteResult().getN() > 0 ? product.getProductCode() : NO_RESULT;
-        }
-        else {
-            Datastore datastore = morphia.getDatastore();
-            UpdateResults updateResults = datastore.update(
-                    datastore.createQuery(HkSgProductList.class)
-                            .filter(COUNTRY_CODE, countryCode),
-                    datastore.createUpdateOperations(HkSgProductList.class)
-                            .push(PRODUCTS, product)
-            );
-            return updateResults.getWriteResult().getN() > 0 ? product.getProductCode() : NO_RESULT;
-        }
+        Datastore datastore = morphia.getDatastore();
+        Query<T> query = datastore.createQuery(getCurrentClass(countryCode))
+                .filter(COUNTRY_CODE, countryCode);
+        UpdateOperations<T> updateOperations = datastore.createUpdateOperations(getCurrentClass(countryCode))
+                .push(PRODUCTS, product);
+
+        UpdateResults updateResults = datastore.update(query, updateOperations);
+
+        return updateResults.getWriteResult().getN() > 0 ? product.getProductCode() : NO_RESULT;
     }
 
-    //TODO: remove duplicate code
     private String updateProduct(String countryCode, BaseProduct product) {
         if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
             Datastore datastore = morphia.getDatastore();
@@ -134,29 +119,18 @@ public class ProductRepository<T> implements ProductDao {
 
     }
 
+    @SuppressWarnings("unchecked")
     private String insertVendor(String countryCode, String productCode, Vendor vendor) {
-        if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
-            Datastore datastore = morphia.getDatastore();
-            UpdateResults updateResults = datastore.update(
-                    datastore.createQuery(InProductList.class)
-                            .filter(COUNTRY_CODE, countryCode)
-                            .filter(PRODUCTS_PRODUCTCODE, productCode),
-                    datastore.createUpdateOperations(InProductList.class)
-                            .push(PRODUCTS_DOLLAR_VENDORS, vendor)
-            );
-            return updateResults.getWriteResult().getN() > 0 ? vendor.getCode() : NO_RESULT;
-        }
-        else {
-            Datastore datastore = morphia.getDatastore();
-            UpdateResults updateResults = datastore.update(
-                    datastore.createQuery(HkSgProductList.class)
-                            .filter(COUNTRY_CODE, countryCode)
-                            .filter(PRODUCTS_PRODUCTCODE, productCode),
-                    datastore.createUpdateOperations(HkSgProductList.class)
-                            .push(PRODUCTS_DOLLAR_VENDORS, vendor)
-            );
-            return updateResults.getWriteResult().getN() > 0 ? vendor.getCode() : NO_RESULT;
-        }
+        Datastore datastore = morphia.getDatastore();
+        Query<T> query = datastore.createQuery(getCurrentClass(countryCode))
+                .filter(COUNTRY_CODE, countryCode)
+                .filter(PRODUCTS_PRODUCTCODE, productCode);
+        UpdateOperations<T> updateOperations = datastore.createUpdateOperations(getCurrentClass(countryCode))
+                .push(PRODUCTS_DOLLAR_VENDORS, vendor);
+
+        UpdateResults updateResults = datastore.update(query, updateOperations);
+
+        return updateResults.getWriteResult().getN() > 0 ? vendor.getCode() : NO_RESULT;
     }
 
     private String updateVendor(String countryCode, Vendor vendor) {
@@ -213,79 +187,73 @@ public class ProductRepository<T> implements ProductDao {
         }
         baseProducts.sort(Comparator.comparing(BaseProduct::getDescription, String.CASE_INSENSITIVE_ORDER));
     }
-    
+
     public String removeProduct(String countryCode, String productCode) {
 
-		int results = 0;
-		results = removeQuery(countryCode, null, results, getCurrentClass(countryCode),
-				productCode, true);
-		return results > 0 ? productCode : NO_RESULT;
-	}
+        int results = 0;
+        results += removeQuery(countryCode, null, productCode);
+        return results > 0 ? productCode : NO_RESULT;
+    }
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public String removeVendor(String countryCode, String vendorCode) {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public String removeVendor(String countryCode, String vendorCode) {
 
-		Class className = getCurrentClass(countryCode);
-		Datastore datastore = morphia.getDatastore();
-		
-		Query<T> updateQuery = datastore
-		        .createQuery(className)
-		        .filter(COUNTRY_CODE, countryCode);
+        Class className = getCurrentClass(countryCode);
+        Datastore datastore = morphia.getDatastore();
 
-		List<T> queryList = updateQuery.asList();
-		List<IndiaProduct> indiaProductList;
-		List<Product> hkSgProductList;
-		int results = 0;
-		
-		for(Object obj : queryList) {
-			if(obj instanceof InProductList) {
-				InProductList indiaProduct = (InProductList) obj;
-				indiaProductList= indiaProduct.getProducts();
-				
-				for (IndiaProduct product : indiaProductList) {
-				    results = removeQuery(countryCode, vendorCode, results, className,
-				    		product.getProductCode(), false);
-				}
-			}else {
-				HkSgProductList productList = (HkSgProductList) obj;
-				hkSgProductList = productList.getProducts();
-				
-				for (Product product : hkSgProductList) {
-				    results = removeQuery(countryCode, vendorCode, results, className,
-				    		product.getProductCode(), false);
-				}
-			}
-		}
-		return results > 0 ? vendorCode : NO_RESULT;
-	}
+        Query<T> updateQuery = datastore
+                .createQuery(className)
+                .filter(COUNTRY_CODE, countryCode);
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private int removeQuery(String countryCode, String vendorCode,
-			int results, Class className, String productCode, boolean isProductLevel) {
-		
-		Datastore datastore = morphia.getDatastore();
-		
-		Query<T> updateQuery = datastore.createQuery(className)
-		        .filter(COUNTRY_CODE, countryCode)
-		        .filter(PRODUCTS_PRODUCTCODE,  productCode);
+        List<T> queryList = updateQuery.asList();
+        List<IndiaProduct> indiaProductList;
+        List<Product> hkSgProductList;
+        int results = 0;
 
-		UpdateOperations<T> ops = datastore.createUpdateOperations(className)
-				.disableValidation()
-				.removeAll(isProductLevel ? PRODUCTS : PRODUCTS_DOLLAR_VENDORS,
-						new BasicDBObject(isProductLevel ? PRODUCT_CODE : VENDOR_CODE,
-								isProductLevel ? productCode : vendorCode));
+        for (Object obj : queryList) {
+            if (obj instanceof InProductList) {
+                InProductList indiaProduct = (InProductList) obj;
+                indiaProductList = indiaProduct.getProducts();
 
-		UpdateResults updateResults = datastore.update(updateQuery, ops);
-		results += updateResults.getWriteResult().getN();
-		return results;
-	}	
+                for (IndiaProduct product : indiaProductList) {
+                    results += removeQuery(countryCode, vendorCode, product.getProductCode());
+                }
+            }
+            else {
+                HkSgProductList productList = (HkSgProductList) obj;
+                hkSgProductList = productList.getProducts();
 
-	@SuppressWarnings("rawtypes")
-	private Class getCurrentClass(String countryCode) {
+                for (Product product : hkSgProductList) {
+                    results += removeQuery(countryCode, vendorCode, product.getProductCode());
+                }
+            }
+        }
+        return results > 0 ? vendorCode : NO_RESULT;
+    }
 
-		if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
-			return InProductList.class;
-		}
-		return HkSgProductList.class;
-	}
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private int removeQuery(String countryCode, String vendorCode, String productCode) {
+
+        Class className = getCurrentClass(countryCode);
+        Datastore datastore = morphia.getDatastore();
+
+        Query<T> updateQuery = datastore.createQuery(className)
+                .filter(COUNTRY_CODE, countryCode)
+                .filter(PRODUCTS_PRODUCTCODE, productCode);
+
+        boolean isProductLevel = StringUtils.isEmpty(vendorCode);
+        UpdateOperations<T> ops = datastore.createUpdateOperations(className)
+                .disableValidation()
+                .removeAll(isProductLevel ? PRODUCTS : PRODUCTS_DOLLAR_VENDORS,
+                        new BasicDBObject(isProductLevel ? PRODUCT_CODE : VENDOR_CODE,
+                                isProductLevel ? productCode : vendorCode));
+
+        UpdateResults updateResults = datastore.update(updateQuery, ops);
+        return updateResults.getWriteResult().getN();
+    }
+
+    @SuppressWarnings("rawtypes")
+    private Class getCurrentClass(String countryCode) {
+        return Country.INDIA.getCode().equalsIgnoreCase(countryCode) ? InProductList.class : HkSgProductList.class;
+    }
 }
