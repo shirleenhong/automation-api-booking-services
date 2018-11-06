@@ -11,10 +11,10 @@ import com.cwt.bpg.cbt.exchange.order.model.InProductList;
 public class ProductFactory {
 
     @Autowired
-    private CommonProductRepository<InProductList> indiaRepository;
+    private ProductRepository<InProductList> indiaRepository;
 
     @Autowired
-    private CommonProductRepository<HkSgProductList> hkSgRepository;
+    private ProductRepository<HkSgProductList> hkSgRepository;
 
     
 	public ProductDao getProductRepository(String countryCode) {

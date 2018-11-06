@@ -17,12 +17,14 @@ import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 @Service
 public class ProductService {
 
+	@SuppressWarnings("rawtypes")
 	@Autowired
 	private ProductRepository repository;
 	
 	@Autowired
 	private ProductFactory productFactory;
 
+	@SuppressWarnings("unchecked")
 	@Cacheable(cacheNames = "products", key = "#countryCode")
 	public List<BaseProduct> getProducts(String countryCode) {
 
@@ -70,14 +72,12 @@ public class ProductService {
 	
 	@CacheEvict(cacheNames = "products", allEntries = true)
 	public String removeProduct(String countryCode, String productCode) {
-		
 		return productFactory.getProductRepository(countryCode).removeProduct(countryCode,
 				productCode);
 	}
 	
 	@CacheEvict(cacheNames = "products", allEntries = true)
 	public String removeVendor(String countryCode, String vendorCode) {
-		
 		return productFactory.getProductRepository(countryCode).removeVendor(countryCode,
 				vendorCode);
 	}
