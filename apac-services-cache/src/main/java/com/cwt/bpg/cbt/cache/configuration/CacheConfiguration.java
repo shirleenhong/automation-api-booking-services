@@ -43,7 +43,7 @@ public class CacheConfiguration {
 
 	@CacheEvict(allEntries = true,
 			cacheNames = {"products",
-					"merchant-fee",
+					"merchant-fees",
 					"insurance-types",
 					"airline-rules",
 					"clients",
@@ -57,7 +57,7 @@ public class CacheConfiguration {
                     "reason-codes",
                     "car-vendors",
                     "air-contracts",
-                    "air-miscinfo",
+                    "air-misc-info",
 					"airlines"})
 	
 	@Scheduled(cron = "0 0 0,12 * * *")
