@@ -13,5 +13,6 @@ public abstract class ProductList {
         this.countryCode = countryCode;
     }
 
-    public abstract List getProducts();
+    @SuppressWarnings("rawtypes")
+	public abstract List getProducts();
 }

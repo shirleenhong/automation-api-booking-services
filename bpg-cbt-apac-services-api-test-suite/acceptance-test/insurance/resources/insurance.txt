@@ -95,6 +95,7 @@ Verify Insurance Plans Are Correctly Retrieved
     \    Verify Actual Numerical Value Matches Expected Numerical Value    ${items[5]}    ${${items[3]}_commission}
 
 Verify That Insurance Plans Are Not Retrieved
-    Verify String Does Not Contain Substring    ${response.content}    "commission"
-    Verify String Does Not Contain Substring    ${response.content}    "type"
-    Verify String Does Not Contain Substring    ${response.content}    "id"
+    ${response_string}    Convert To String    ${response.content}
+    Verify String Does Not Contain Substring    ${response_string}    "commission"
+    Verify String Does Not Contain Substring    ${response_string}    "type"
+    Verify String Does Not Contain Substring    ${response_string}    "id"
