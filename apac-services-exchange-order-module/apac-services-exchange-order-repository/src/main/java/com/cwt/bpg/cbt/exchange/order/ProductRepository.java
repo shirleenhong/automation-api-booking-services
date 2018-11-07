@@ -9,12 +9,17 @@ import org.apache.commons.lang.StringUtils;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
-import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.HkSgProductList;
+import com.cwt.bpg.cbt.exchange.order.model.InProductList;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
+import com.cwt.bpg.cbt.exchange.order.model.Product;
+import com.cwt.bpg.cbt.exchange.order.model.ProductList;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.BasicDBObject;
 
@@ -79,7 +84,7 @@ public class ProductRepository<T extends ProductList> {
             return insertProduct(countryCode, product);
         }
 		else {
-			return checkIfProductExists(countryCode, product.getProductCode()) ? NO_RESULT
+			return checkIfExists(countryCode, product.getProductCode(), null) ? NO_RESULT
 					: updateProduct(countryCode, product);
 		}
     }
@@ -94,10 +99,9 @@ public class ProductRepository<T extends ProductList> {
 				.createUpdateOperations(getCurrentClass(countryCode))
 				.push(PRODUCTS, product);
 
-		UpdateResults updateResults = datastore.update(query, updateOperations);
+		datastore.update(query, updateOperations);
 
-		return updateResults.getWriteResult().getN() > 0 ? product.getProductCode()
-				: NO_RESULT;
+		return product.getProductCode();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -112,10 +116,9 @@ public class ProductRepository<T extends ProductList> {
 				.createUpdateOperations(getCurrentClass(countryCode))
 				.set(PRODUCTS_DOLLAR, product);
 
-		UpdateResults updateResults = datastore.update(query, updateOperations);
+		datastore.update(query, updateOperations);
 
-		return updateResults.getWriteResult().getN() > 0 ? product.getProductCode()
-				: NO_RESULT;
+		return product.getProductCode();
 	}
 
 	public String saveVendor(String countryCode, String productCode, Vendor vendor, boolean insertFlag) {
@@ -123,7 +126,7 @@ public class ProductRepository<T extends ProductList> {
 			return insertVendor(countryCode, productCode, vendor);
 		}
 		else {
-			return checkIfVendorExists(countryCode, vendor.getCode()) ? NO_RESULT
+			return checkIfExists(countryCode, null, vendor.getCode()) ? NO_RESULT
 					: updateVendor(countryCode, vendor);
 		}
 	}
@@ -139,9 +142,9 @@ public class ProductRepository<T extends ProductList> {
 				.createUpdateOperations(getCurrentClass(countryCode))
 				.push(PRODUCTS_DOLLAR_VENDORS, vendor);
 
-		UpdateResults updateResults = datastore.update(query, updateOperations);
+		datastore.update(query, updateOperations);
 
-		return updateResults.getWriteResult().getN() > 0 ? vendor.getCode() : NO_RESULT;
+		return vendor.getCode();
 	}
 
     @SuppressWarnings("unchecked")
@@ -171,7 +174,7 @@ public class ProductRepository<T extends ProductList> {
 
 	public String removeProduct(String countryCode, String productCode) {
 
-		if(checkIfProductExists(countryCode, productCode)) {
+		if(checkIfExists(countryCode, productCode, null)) {
 			return NO_RESULT;
 		}
 		
@@ -182,7 +185,7 @@ public class ProductRepository<T extends ProductList> {
 	@SuppressWarnings({ "unchecked" })
 	public String removeVendor(String countryCode, String vendorCode) {
 
-		if(checkIfVendorExists(countryCode, vendorCode)) {
+		if(checkIfExists(countryCode, null, vendorCode)) {
 			return NO_RESULT;
 		}
 		
@@ -203,7 +206,7 @@ public class ProductRepository<T extends ProductList> {
 	}
 
 	@SuppressWarnings({ "unchecked" })
-	private int removeQuery(String countryCode, String vendorCode, String productCode) {
+	private void removeQuery(String countryCode, String vendorCode, String productCode) {
 
 		Datastore datastore = morphia.getDatastore();
 
@@ -218,29 +221,23 @@ public class ProductRepository<T extends ProductList> {
 						new BasicDBObject(isProductLevel ? PRODUCT_CODE : VENDOR_CODE,
 								isProductLevel ? productCode : vendorCode));
 
-		UpdateResults updateResults = datastore.update(updateQuery, ops);
-		return updateResults.getWriteResult().getN();
+		datastore.update(updateQuery, ops);
 	}
 	
-	@SuppressWarnings("unchecked")
-	private boolean checkIfVendorExists(String countryCode, String vendorCode) {
-		Datastore datastore = morphia.getDatastore();
-
-		Query<T> query = datastore.createQuery(getCurrentClass(countryCode))
-				.filter(COUNTRY_CODE, countryCode)
-				.filter(PRODUCTS_VENDORS_CODE, vendorCode);
-		
-		return query.asList().isEmpty();
-	}
 	
 	@SuppressWarnings("unchecked")
-	private boolean checkIfProductExists(String countryCode, String productCode) {
+	private boolean checkIfExists(String countryCode, String productCode, String vendorCode) {
+		
 		Datastore datastore = morphia.getDatastore();
 
+		boolean isProductLevel = StringUtils.isEmpty(vendorCode)
+				&& StringUtils.isNotEmpty(productCode);
+		
 		Query<T> query = datastore.createQuery(getCurrentClass(countryCode))
 				.filter(COUNTRY_CODE, countryCode)
-				.filter(PRODUCTS_PRODUCTCODE, productCode);
-		
+				.filter(isProductLevel ? PRODUCTS_PRODUCTCODE : PRODUCTS_VENDORS_CODE,
+						isProductLevel ? productCode : vendorCode);
+
 		return query.asList().isEmpty();
 	}
 
