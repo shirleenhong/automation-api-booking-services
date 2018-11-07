@@ -9,7 +9,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.cwt.bpg.cbt.exchange.order.ProductFactory;
+import com.cwt.bpg.cbt.exchange.order.ProductRepositoryFactory;
 import com.cwt.bpg.cbt.exchange.order.ProductRepository;
 import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
@@ -22,7 +22,7 @@ public class ProductService {
 	private ProductRepository repository;
 	
 	@Autowired
-	private ProductFactory productFactory;
+	private ProductRepositoryFactory productFactory;
 
 	@SuppressWarnings("unchecked")
 	@Cacheable(cacheNames = "products", key = "#countryCode")

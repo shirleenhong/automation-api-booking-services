@@ -23,9 +23,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.ProductDao;
-import com.cwt.bpg.cbt.exchange.order.ProductFactory;
 import com.cwt.bpg.cbt.exchange.order.ProductRepository;
+import com.cwt.bpg.cbt.exchange.order.ProductRepositoryFactory;
 import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
@@ -37,10 +36,7 @@ public class ProductServiceTest {
 	private ProductRepository repo;
 	
 	@Mock
-	private ProductFactory productFactory;
-	
-	@Mock
-	private ProductDao productDao;
+	private ProductRepositoryFactory productFactory;
 
 	@InjectMocks
 	private ProductService service;
@@ -127,7 +123,7 @@ public class ProductServiceTest {
 	public void shouldSaveUpdateProduct() {
 
 		final String productCode = "ProductCode";
-		when(productFactory.getProductRepository(anyString())).thenReturn(productDao);
+		when(productFactory.getProductRepository(anyString())).thenReturn(repo);
 
 		when(productFactory.getProductRepository(anyString()).saveProduct(anyString(),
 				any(BaseProduct.class), anyBoolean())).thenReturn(productCode);
@@ -146,7 +142,7 @@ public class ProductServiceTest {
 		final String vendorCode = "VendorCode";
 		final String productCode = "ProductCode";
 
-		when(productFactory.getProductRepository(anyString())).thenReturn(productDao);
+		when(productFactory.getProductRepository(anyString())).thenReturn(repo);
 
 		when(productFactory.getProductRepository(anyString()).saveVendor(anyString(),
 				anyString(), any(Vendor.class), anyBoolean())).thenReturn(vendorCode);
@@ -164,7 +160,7 @@ public class ProductServiceTest {
 
 		final String productCode = "ProductCode";
 
-		when(productFactory.getProductRepository(anyString())).thenReturn(productDao);
+		when(productFactory.getProductRepository(anyString())).thenReturn(repo);
 		
 		when(productFactory.getProductRepository(anyString()).removeProduct(anyString(),
 				anyString())).thenReturn(productCode);
@@ -175,7 +171,7 @@ public class ProductServiceTest {
 		verify(productFactory, Mockito.times(1))
 				.getProductRepository(Country.HONG_KONG.getCode());
 
-		verify(productDao, Mockito.times(1)).removeProduct(Country.HONG_KONG.getCode(),
+		verify(repo, Mockito.times(1)).removeProduct(Country.HONG_KONG.getCode(),
 				productCode);
 	}
 
@@ -184,7 +180,7 @@ public class ProductServiceTest {
 
 		final String vendorCode = "VendorCode";
 
-		when(productFactory.getProductRepository(anyString())).thenReturn(productDao);
+		when(productFactory.getProductRepository(anyString())).thenReturn(repo);
 
 		when(productFactory.getProductRepository(anyString()).removeVendor(anyString(),
 				anyString())).thenReturn(vendorCode);

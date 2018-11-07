@@ -8,7 +8,7 @@ import com.cwt.bpg.cbt.exchange.order.model.HkSgProductList;
 import com.cwt.bpg.cbt.exchange.order.model.InProductList;
 
 @Component
-public class ProductFactory {
+public class ProductRepositoryFactory {
 
     @Autowired
     private ProductRepository<InProductList> indiaRepository;
@@ -17,7 +17,8 @@ public class ProductFactory {
     private ProductRepository<HkSgProductList> hkSgRepository;
 
     
-	public ProductDao getProductRepository(String countryCode) {
+	@SuppressWarnings("rawtypes")
+	public ProductRepository getProductRepository(String countryCode) {
 		return Country.INDIA.getCode().equalsIgnoreCase(countryCode) ? indiaRepository
 				: hkSgRepository;
 	}

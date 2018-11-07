@@ -19,7 +19,7 @@ import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.BasicDBObject;
 
 @Repository
-public class ProductRepository<T extends ProductList> implements ProductDao {
+public class ProductRepository<T extends ProductList> {
 
     @Autowired
     private MorphiaComponent morphia;
