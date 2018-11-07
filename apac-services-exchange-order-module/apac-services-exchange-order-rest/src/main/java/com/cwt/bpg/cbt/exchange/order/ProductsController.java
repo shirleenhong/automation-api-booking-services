@@ -40,8 +40,9 @@ public class ProductsController {
             @RequestParam(required = false) @ApiParam(value = "_true_ when inserting a new Product. _false_ when updating existing one.") boolean insert,
             @RequestBody Product product) {
         String result = service.saveProduct(countryCode.toUpperCase(), product, insert);
+        HttpStatus status = result.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         getProducts(countryCode);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, status);
     }
 
     @PutMapping(path = "/products/in", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -51,8 +52,9 @@ public class ProductsController {
             @RequestParam(required = false) @ApiParam(value = "_true_ when inserting a new Product. _false_ when updating existing one.") boolean insert,
             @RequestBody IndiaProduct product) {
         String result = service.saveProduct(Country.INDIA.getCode().toUpperCase(), product, insert);
+        HttpStatus status = result.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         getProducts(Country.INDIA.getCode());
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, status);
     }
 
     @PutMapping(path = "/vendors/{countryCode:[a-zA-Z0-9]{2}}", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -64,8 +66,9 @@ public class ProductsController {
             @RequestParam(required = false) @ApiParam(value = "_true_ when inserting a new Vendor. _false_ when updating existing one.") boolean insert,
             @RequestBody Vendor vendor) {
         String result = service.saveVendor(countryCode.toUpperCase(), productCode, vendor, insert);
+        HttpStatus status = result.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         getProducts(countryCode);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, status);
     }
 
 
@@ -76,7 +79,7 @@ public class ProductsController {
 			@PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
 			@PathVariable String productCode) {
 		String deleteResult = service.removeProduct(countryCode, productCode);
-		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 		getProducts(countryCode);
 		return new ResponseEntity<>(deleteResult, status);
 	}
@@ -88,7 +91,7 @@ public class ProductsController {
 	        @PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
 			@PathVariable String vendorCode) {
 		String deleteResult = service.removeVendor(countryCode, vendorCode);
-		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 		getProducts(countryCode);
 		return new ResponseEntity<>(deleteResult, status);
 	}

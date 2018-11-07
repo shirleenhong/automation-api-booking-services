@@ -78,9 +78,10 @@ public class ProductRepository<T extends ProductList> {
         if (insertFlag) {
             return insertProduct(countryCode, product);
         }
-        else {
-            return updateProduct(countryCode, product);
-        }
+		else {
+			return checkIfProductExists(countryCode, product.getProductCode()) ? NO_RESULT
+					: updateProduct(countryCode, product);
+		}
     }
 
 	@SuppressWarnings("unchecked")
@@ -122,7 +123,8 @@ public class ProductRepository<T extends ProductList> {
 			return insertVendor(countryCode, productCode, vendor);
 		}
 		else {
-			return updateVendor(countryCode, vendor);
+			return checkIfVendorExists(countryCode, vendor.getCode()) ? NO_RESULT
+					: updateVendor(countryCode, vendor);
 		}
 	}
 
@@ -169,29 +171,35 @@ public class ProductRepository<T extends ProductList> {
 
 	public String removeProduct(String countryCode, String productCode) {
 
-		int results = 0;
-		results += removeQuery(countryCode, null, productCode);
-		return results > 0 ? productCode : NO_RESULT;
+		if(checkIfProductExists(countryCode, productCode)) {
+			return NO_RESULT;
+		}
+		
+		removeQuery(countryCode, null, productCode);
+		return productCode;
 	}
 
 	@SuppressWarnings({ "unchecked" })
 	public String removeVendor(String countryCode, String vendorCode) {
 
+		if(checkIfVendorExists(countryCode, vendorCode)) {
+			return NO_RESULT;
+		}
+		
 		Datastore datastore = morphia.getDatastore();
 
 		Query<T> updateQuery = datastore.createQuery(getCurrentClass(countryCode))
 				.filter(COUNTRY_CODE, countryCode);
 
 		List<T> queryList = updateQuery.asList();
-		int results = 0;
 
 		for (T obj : queryList) {
 			for (Object product : obj.getProducts()) {
-				results += removeQuery(countryCode, vendorCode,
+				removeQuery(countryCode, vendorCode,
 						((BaseProduct) product).getProductCode());
 			}
 		}
-		return results > 0 ? vendorCode : NO_RESULT;
+		return vendorCode;
 	}
 
 	@SuppressWarnings({ "unchecked" })
@@ -212,6 +220,28 @@ public class ProductRepository<T extends ProductList> {
 
 		UpdateResults updateResults = datastore.update(updateQuery, ops);
 		return updateResults.getWriteResult().getN();
+	}
+	
+	@SuppressWarnings("unchecked")
+	private boolean checkIfVendorExists(String countryCode, String vendorCode) {
+		Datastore datastore = morphia.getDatastore();
+
+		Query<T> query = datastore.createQuery(getCurrentClass(countryCode))
+				.filter(COUNTRY_CODE, countryCode)
+				.filter(PRODUCTS_VENDORS_CODE, vendorCode);
+		
+		return query.asList().isEmpty();
+	}
+	
+	@SuppressWarnings("unchecked")
+	private boolean checkIfProductExists(String countryCode, String productCode) {
+		Datastore datastore = morphia.getDatastore();
+
+		Query<T> query = datastore.createQuery(getCurrentClass(countryCode))
+				.filter(COUNTRY_CODE, countryCode)
+				.filter(PRODUCTS_PRODUCTCODE, productCode);
+		
+		return query.asList().isEmpty();
 	}
 
 	@SuppressWarnings("rawtypes")
