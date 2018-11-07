@@ -35,13 +35,17 @@ public class ProductService {
 	}
 
 	@CacheEvict(cacheNames = "products", key = "#countryCode")
-	public String saveProduct(String countryCode, BaseProduct product, boolean insertFlag) {
-		return repository.saveProduct(countryCode, product, insertFlag);
+	public String saveProduct(String countryCode, BaseProduct product,
+			boolean insertFlag) {
+		return productFactory.getProductRepository(countryCode).saveProduct(countryCode,
+				product, insertFlag);
 	}
 
 	@CacheEvict(cacheNames = "products", key = "#countryCode")
-	public String saveVendor(String countryCode, String productCode, Vendor vendor, boolean insertFlag) {
-		return repository.saveVendor(countryCode, productCode, vendor, insertFlag);
+	public String saveVendor(String countryCode, String productCode, Vendor vendor,
+			boolean insertFlag) {
+		return productFactory.getProductRepository(countryCode).saveVendor(countryCode,
+				productCode, vendor, insertFlag);
 	}
 
 	@Cacheable(cacheNames="products", key="{#countryCode, #productCode}")

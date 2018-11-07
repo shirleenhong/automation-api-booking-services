@@ -18,10 +18,7 @@ public class ProductFactory {
 
     
 	public ProductDao getProductRepository(String countryCode) {
-
-		if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
-			return indiaRepository;
-		}
-		return hkSgRepository;
+		return Country.INDIA.getCode().equalsIgnoreCase(countryCode) ? indiaRepository
+				: hkSgRepository;
 	}
 }

@@ -22,6 +22,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
+import com.cwt.bpg.cbt.exchange.order.ProductDao;
+import com.cwt.bpg.cbt.exchange.order.ProductFactory;
 import com.cwt.bpg.cbt.exchange.order.ProductRepository;
 import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import com.cwt.bpg.cbt.exchange.order.model.Product;
@@ -29,8 +32,15 @@ import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
 public class ProductServiceTest {
 
+	@SuppressWarnings("rawtypes")
 	@Mock
 	private ProductRepository repo;
+	
+	@Mock
+	private ProductFactory productFactory;
+	
+	@Mock
+	private ProductDao productDao;
 
 	@InjectMocks
 	private ProductService service;
@@ -117,56 +127,75 @@ public class ProductServiceTest {
 	public void shouldSaveUpdateProduct() {
 
 		final String productCode = "ProductCode";
-		when(repo.saveProduct(anyString(), any(BaseProduct.class), anyBoolean()))
-				.thenReturn(productCode);
+		when(productFactory.getProductRepository(anyString())).thenReturn(productDao);
 
-		String product = service.saveProduct(anyString(), any(BaseProduct.class),
-				anyBoolean());
+		when(productFactory.getProductRepository(anyString()).saveProduct(anyString(),
+				any(BaseProduct.class), anyBoolean())).thenReturn(productCode);
+
+		String product = service.saveProduct(Country.HONG_KONG.getCode(),
+				Mockito.mock(BaseProduct.class), true);
 		assertThat(product, is(equalTo(productCode)));
 
-		verify(repo, Mockito.times(1)).saveProduct(anyString(), any(BaseProduct.class),
-				anyBoolean());
+		verify(productFactory, Mockito.times(1))
+				.getProductRepository(Country.HONG_KONG.getCode());
 	}
 	
 	@Test
 	public void shouldSaveUpdateVendor() {
 
 		final String vendorCode = "VendorCode";
-		when(repo.saveVendor(anyString(), anyString(), any(Vendor.class), anyBoolean()))
-				.thenReturn(vendorCode);
+		final String productCode = "ProductCode";
 
-		String vendor = service.saveVendor(anyString(), anyString(), any(Vendor.class),
-				anyBoolean());
+		when(productFactory.getProductRepository(anyString())).thenReturn(productDao);
+
+		when(productFactory.getProductRepository(anyString()).saveVendor(anyString(),
+				anyString(), any(Vendor.class), anyBoolean())).thenReturn(vendorCode);
+
+		String vendor = service.saveVendor(Country.HONG_KONG.getCode(), productCode,
+				Mockito.mock(Vendor.class), true);
 		assertThat(vendor, is(equalTo(vendorCode)));
 
-		verify(repo, Mockito.times(1)).saveVendor(anyString(), anyString(),
-				any(Vendor.class), anyBoolean());
+		verify(productFactory, Mockito.times(1))
+				.getProductRepository(Country.HONG_KONG.getCode());
 	}
-	
-	/*@Test
+
+	@Test
 	public void shouldRemoveProduct() {
 
 		final String productCode = "ProductCode";
-		when(repo.removeProduct(anyString(), anyString())).thenReturn(productCode);
 
-		String product = service.removeProduct(anyString(), anyString());
+		when(productFactory.getProductRepository(anyString())).thenReturn(productDao);
+		
+		when(productFactory.getProductRepository(anyString()).removeProduct(anyString(),
+				anyString())).thenReturn(productCode);
+
+		String product = service.removeProduct(Country.HONG_KONG.getCode(), productCode);
 		assertThat(product, is(equalTo(productCode)));
 
-		verify(repo, Mockito.times(1)).removeProduct(anyString(), anyString());
-	}*/
+		verify(productFactory, Mockito.times(1))
+				.getProductRepository(Country.HONG_KONG.getCode());
 
-	/*@Test
+		verify(productDao, Mockito.times(1)).removeProduct(Country.HONG_KONG.getCode(),
+				productCode);
+	}
+
+	@Test
 	public void shouldRemoveVendor() {
 
 		final String vendorCode = "VendorCode";
-		when(repo.removeVendor(anyString(), anyString())).thenReturn(vendorCode);
 
-		String vendor = service.removeVendor(anyString(), anyString());
+		when(productFactory.getProductRepository(anyString())).thenReturn(productDao);
+
+		when(productFactory.getProductRepository(anyString()).removeVendor(anyString(),
+				anyString())).thenReturn(vendorCode);
+
+		String vendor = service.removeVendor(Country.HONG_KONG.getCode(), vendorCode);
 		assertThat(vendor, is(equalTo(vendorCode)));
 
-		verify(repo, Mockito.times(1)).removeVendor(anyString(), anyString());
-	}*/
-	
+		verify(productFactory, Mockito.times(1))
+				.getProductRepository(Country.HONG_KONG.getCode());
+	}
+
 	private static List<BaseProduct> createListOfProducts() {
 		BaseProduct baseProduct1 = new Product();
 		String productCode = "ProductCode";
