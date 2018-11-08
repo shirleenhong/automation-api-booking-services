@@ -13,13 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
-import com.cwt.bpg.cbt.exchange.order.model.HkSgProductList;
-import com.cwt.bpg.cbt.exchange.order.model.InProductList;
-import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
-import com.cwt.bpg.cbt.exchange.order.model.Product;
-import com.cwt.bpg.cbt.exchange.order.model.ProductList;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.BasicDBObject;
 
@@ -29,15 +23,15 @@ public class ProductRepository<T extends ProductList> {
     @Autowired
     private MorphiaComponent morphia;
 
-    private static final String COUNTRY_CODE = "countryCode";
-    private static final String PRODUCTS = "products";
+    static final String COUNTRY_CODE = "countryCode";
+    static final String PRODUCTS = "products";
     private static final String PRODUCT_CODE = "productCode";
     private static final String VENDOR_CODE = "code";
     private static final String PRODUCTS_PRODUCTCODE = "products.productCode";
     private static final String PRODUCTS_VENDORS_CODE = "products.vendors.code";
     private static final String PRODUCTS_DOLLAR_VENDORS = "products.$.vendors";
     private static final String PRODUCTS_DOLLAR = "products.$";
-    private static final String NO_RESULT = "";
+    static final String NO_RESULT = "";
 
     public List<BaseProduct> getProducts(String countryCode) {
 
