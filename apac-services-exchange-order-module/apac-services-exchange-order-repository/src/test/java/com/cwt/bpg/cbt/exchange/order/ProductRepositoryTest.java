@@ -311,4 +311,104 @@ public class ProductRepositoryTest
 		
 		assertEquals(vendorCode, result);
 	}
+	
+	@Test
+	public void shouldUpdateProductNoResult() {
+		
+		String productCode = "01";
+		IndiaProduct inProduct = new IndiaProduct();
+		inProduct.setProductCode(productCode);
+		
+		Query query = mock(Query.class);
+		
+		when(dataStore.createQuery(InProductList.class)).thenReturn(query);
+		when(query.filter(anyString(), anyObject())).thenReturn(query);
+		
+		when(dataStore.createUpdateOperations(InProductList.class)).thenReturn(ops);
+		when(ops.disableValidation()).thenReturn(ops);
+		
+		String result = repository.saveProduct(Country.INDIA.getCode(), inProduct, false);
+		assertEquals("", result);
+	}
+	
+	@Test
+	public void shouldUpdateProduct() {
+		
+		String productCode = "01";
+		IndiaProduct inProduct = new IndiaProduct();
+		inProduct.setProductCode(productCode);
+		
+		InProductList inProductList = new InProductList();
+		inProductList.setCountryCode(Country.INDIA.getCode());
+		
+		List<InProductList> queryList = new ArrayList<>();
+		queryList.add(inProductList);
+		Query query = mock(Query.class);
+		
+		when(dataStore.createQuery(InProductList.class)).thenReturn(query);
+		when(query.filter(anyString(), anyObject())).thenReturn(query);
+		when(query.asList()).thenReturn(queryList);
+		
+		when(dataStore.createUpdateOperations(InProductList.class)).thenReturn(ops);
+		when(ops.disableValidation()).thenReturn(ops);
+		
+		String result = repository.saveProduct(Country.INDIA.getCode(), inProduct, false);
+		assertEquals(productCode, result);
+	}
+	
+	@Test
+	public void shouldUpdateVendorResult() {
+		
+		String productCode = "01";
+		
+		Vendor vendor = new Vendor();
+		vendor.setCode("01");
+		
+		Query query = mock(Query.class);
+		
+		when(dataStore.createQuery(InProductList.class)).thenReturn(query);
+		when(query.filter(anyString(), anyObject())).thenReturn(query);
+		
+		when(dataStore.createUpdateOperations(InProductList.class)).thenReturn(ops);
+		when(ops.disableValidation()).thenReturn(ops);
+		
+		String result = repository.saveVendor(Country.INDIA.getCode(), productCode, vendor, false);
+		assertEquals("", result);
+	}
+	
+	@Test
+	public void shouldUpdateVendor() {
+		
+		String productCode = "01";
+		
+		Vendor vendor = new Vendor();
+		vendor.setCode("01");
+		
+		List<Vendor> vendors = new ArrayList<>();
+		vendors.add(vendor);
+		
+		IndiaProduct indiaProduct = new IndiaProduct();
+		indiaProduct.setVendors(vendors);
+		
+		List<IndiaProduct> indiaProducts = new ArrayList<>();
+		indiaProducts.add(indiaProduct);
+		
+		InProductList inProductList = new InProductList();
+		inProductList.setCountryCode(Country.INDIA.getCode());
+		inProductList.setProducts(indiaProducts);
+		
+		List<InProductList> queryList = new ArrayList<>();
+		queryList.add(inProductList);
+		Query query = mock(Query.class);
+		
+		when(dataStore.createQuery(InProductList.class)).thenReturn(query);
+		when(query.filter(anyString(), anyObject())).thenReturn(query);
+		when(query.asList()).thenReturn(queryList);
+		
+		when(dataStore.createUpdateOperations(InProductList.class)).thenReturn(ops);
+		when(ops.disableValidation()).thenReturn(ops);
+		
+		String result = repository.saveVendor(Country.INDIA.getCode(), productCode, vendor, false);
+		assertEquals(vendor.getCode(), result);
+	}
 }
