@@ -27,9 +27,9 @@ public class ProductRepository<T extends ProductList> {
     static final String PRODUCTS = "products";
     private static final String PRODUCT_CODE = "productCode";
     private static final String VENDOR_CODE = "code";
-    private static final String PRODUCTS_PRODUCTCODE = "products.productCode";
-    private static final String PRODUCTS_VENDORS_CODE = "products.vendors.code";
-    private static final String PRODUCTS_DOLLAR_VENDORS = "products.$.vendors";
+    static final String PRODUCTS_PRODUCTCODE = "products.productCode";
+    static final String PRODUCTS_VENDORS_CODE = "products.vendors.code";
+    static final String PRODUCTS_DOLLAR_VENDORS = "products.$.vendors";
     private static final String PRODUCTS_DOLLAR = "products.$";
     static final String NO_RESULT = "";
 

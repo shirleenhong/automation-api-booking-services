@@ -47,13 +47,13 @@ public class ProductRepositoryTest
 	private UpdateOperations<HkSgProductList> hkSgUpdateOps;
 
     @Mock
-    private Query hkSgQuery;
+    private Query<HkSgProductList> hkSgQuery;
 
     @Mock
-    private Query inQuery;
+    private Query<InProductList> inQuery;
 
     @Mock
-    private final UpdateResults updateResults = mock(UpdateResults.class);
+    private UpdateResults updateResults;
 
     @Mock
     private FieldEnd fieldEnd;
@@ -343,11 +343,20 @@ public class ProductRepositoryTest
         queryList.add(inProductList);
 
         when(inQuery.asList()).thenReturn(queryList);
+        when(inUpdateOps.push(PRODUCTS_DOLLAR_VENDORS, vendor)).thenReturn(inUpdateOps);
         when(inUpdateOps.disableValidation()).thenReturn(inUpdateOps);
 
         String result = repository.saveVendor(Country.INDIA.getCode(), productCode, vendor, true);
 
         assertEquals(vendor.getCode(), result);
+        InOrder inOrder = inOrder(morphia, dataStore, inQuery, inUpdateOps);
+        inOrder.verify(morphia).getDatastore();
+        inOrder.verify(dataStore).createQuery(any());
+        inOrder.verify(inQuery).filter(COUNTRY_CODE, Country.INDIA.getCode());
+        inOrder.verify(inQuery).filter(PRODUCTS_PRODUCTCODE, productCode);
+        inOrder.verify(dataStore).createUpdateOperations(InProductList.class);
+        inOrder.verify(inUpdateOps).push(PRODUCTS_DOLLAR_VENDORS, vendor);
+        inOrder.verify(dataStore).update(inQuery, inUpdateOps);
     }
 
     @Test
@@ -378,10 +387,15 @@ public class ProductRepositoryTest
         String result = repository.saveVendor(Country.INDIA.getCode(), productCode, vendor, false);
 
         assertEquals(vendor.getCode(), result);
+        InOrder inOrder = inOrder(morphia, dataStore, inQuery, inUpdateOps);
+        inOrder.verify(morphia).getDatastore();
+        inOrder.verify(dataStore).createQuery(any());
+        inOrder.verify(inQuery).filter(COUNTRY_CODE, Country.INDIA.getCode());inOrder.verify(dataStore).createQuery(any());
+        inOrder.verify(inQuery).filter(PRODUCTS_VENDORS_CODE, productCode);
     }
 
     @Test
-    public void shouldInsertHkProduct() {
+    public void shouldInsertProduct() {
         Product product = new Product();
         String expected = "00";
         product.setProductCode(expected);
