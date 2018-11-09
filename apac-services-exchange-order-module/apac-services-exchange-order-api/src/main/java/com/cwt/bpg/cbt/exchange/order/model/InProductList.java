@@ -9,18 +9,11 @@ import org.mongodb.morphia.annotations.Indexes;
 
 @Entity("productList")
 @Indexes(@Index(fields = @Field("countryCode")))
-public class InProductList {
-	private String countryCode;
+public class InProductList extends ProductList {
+
 	private List<IndiaProduct> products;
 
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
-
+	@Override
 	public List<IndiaProduct> getProducts() {
 		return products;
 	}
