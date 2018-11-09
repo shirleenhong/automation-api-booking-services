@@ -28,6 +28,7 @@ import org.mongodb.morphia.query.UpdateResults;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
+import com.mongodb.BasicDBObject;
 import com.mongodb.WriteResult;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -188,13 +189,12 @@ public class ProductRepositoryTest
 	@Test
 	public void shouldRemoveProductNoResult() {
 		String productCode = "91";
-
-        when(inUpdateOps.set(anyString(), anyObject())).thenReturn(inUpdateOps);
-        when(inUpdateOps.removeAll(anyString(), anyObject())).thenReturn(inUpdateOps);
-
+		
 		String result = repository.removeProduct(Country.INDIA.getCode(), productCode);
-
-		assertEquals("", result);
+		assertEquals(NO_RESULT, result);
+		
+		InOrder inOrder = checkIfExistsVerification(Country.INDIA.getCode());
+        inOrder.verify(inQuery).filter(PRODUCTS_PRODUCTCODE, productCode);
 	}
 
 	@Test
@@ -208,11 +208,15 @@ public class ProductRepositoryTest
 
 		when(inQuery.asList()).thenReturn(queryList);
 		when(inUpdateOps.disableValidation()).thenReturn(inUpdateOps);
-        when(inUpdateOps.removeAll(anyString(), anyObject())).thenReturn(inUpdateOps);
+        when(inUpdateOps.removeAll(anyString(), any(BasicDBObject.class))).thenReturn(inUpdateOps);
 
 		String result = repository.removeProduct(Country.INDIA.getCode(), productCode);
 
 		assertEquals(productCode, result);
+		
+		InOrder inOrder = checkIfExistsVerification(Country.INDIA.getCode());
+		inOrder.verify(inQuery).filter(PRODUCTS_PRODUCTCODE, productCode);
+        removeQueryVerification(inOrder, Country.INDIA.getCode());
 	}
 
 	@Test
@@ -227,11 +231,15 @@ public class ProductRepositoryTest
 
 		when(hkSgQuery.asList()).thenReturn(queryList);
 		when(hkSgUpdateOps.disableValidation()).thenReturn(hkSgUpdateOps);
-        when(hkSgUpdateOps.removeAll(anyString(), anyObject())).thenReturn(hkSgUpdateOps);
+        when(hkSgUpdateOps.removeAll(anyString(), any(BasicDBObject.class))).thenReturn(hkSgUpdateOps);
 
 		String result = repository.removeProduct(Country.HONG_KONG.getCode(), productCode);
 
 		assertEquals(productCode, result);
+		
+		InOrder inOrder = checkIfExistsVerification(Country.HONG_KONG.getCode()); 
+		inOrder.verify(hkSgQuery).filter(PRODUCTS_PRODUCTCODE, productCode);
+        removeQueryVerification(inOrder, Country.HONG_KONG.getCode());
 	}
 
 	@Test
@@ -255,11 +263,15 @@ public class ProductRepositoryTest
 
 		when(inQuery.asList()).thenReturn(queryList);
 		when(inUpdateOps.disableValidation()).thenReturn(inUpdateOps);
-        when(inUpdateOps.removeAll(anyString(), anyObject())).thenReturn(inUpdateOps);
+        when(inUpdateOps.removeAll(anyString(), any(BasicDBObject.class))).thenReturn(inUpdateOps);
 
 		String result = repository.removeVendor(Country.INDIA.getCode(), vendorCode);
 
 		assertEquals(vendorCode, result);
+		
+		InOrder inOrder = checkIfExistsVerification(Country.INDIA.getCode());
+		inOrder.verify(inQuery).filter(PRODUCTS_VENDORS_CODE, vendorCode);
+		removeQueryVerification(inOrder, Country.INDIA.getCode());
 	}
 
     @Test
@@ -267,11 +279,14 @@ public class ProductRepositoryTest
         String vendorCode = "01";
         when(inQuery.asList()).thenReturn(Collections.emptyList());
         when(inUpdateOps.disableValidation()).thenReturn(inUpdateOps);
-        when(inUpdateOps.removeAll(anyString(), anyObject())).thenReturn(inUpdateOps);
+        when(inUpdateOps.removeAll(anyString(), any(BasicDBObject.class))).thenReturn(inUpdateOps);
 
         String result = repository.removeVendor(Country.INDIA.getCode(), vendorCode);
 
         assertEquals(NO_RESULT, result);
+        
+        InOrder inOrder = checkIfExistsVerification(Country.INDIA.getCode());
+        inOrder.verify(inQuery).filter(PRODUCTS_VENDORS_CODE, vendorCode);
     }
 
     @Test
@@ -284,7 +299,7 @@ public class ProductRepositoryTest
 
         String result = repository.saveProduct(Country.INDIA.getCode(), inProduct, false);
 
-        assertEquals("", result);
+        assertEquals(NO_RESULT, result);
     }
 
     @Test
@@ -415,4 +430,36 @@ public class ProductRepositoryTest
         inOrder.verify(hkSgUpdateOps).push(PRODUCTS, product);
         inOrder.verify(dataStore).update(hkSgQuery, hkSgUpdateOps);
     }
+    
+	private InOrder checkIfExistsVerification(String countryCode) {
+		
+		boolean isIndia = Country.INDIA.getCode().equalsIgnoreCase(countryCode);
+		
+		InOrder inOrder = inOrder(morphia, dataStore, inQuery, hkSgQuery, hkSgUpdateOps,
+				inUpdateOps);
+
+		inOrder.verify(morphia).getDatastore();
+		inOrder.verify(dataStore).createQuery(any());
+		inOrder.verify(isIndia ? inQuery
+				: hkSgQuery).filter(COUNTRY_CODE, countryCode);
+		
+		return inOrder;
+	}
+	
+
+	private void removeQueryVerification(InOrder inOrder, String countryCode) {
+		
+		boolean isIndia = Country.INDIA.getCode().equalsIgnoreCase(countryCode);
+		
+		inOrder.verify(dataStore).createUpdateOperations(any());
+        inOrder.verify(isIndia ? inUpdateOps
+				: hkSgUpdateOps).disableValidation();
+        inOrder.verify(isIndia ? inUpdateOps
+				: hkSgUpdateOps).removeAll(anyString(), any(BasicDBObject.class));
+        if(isIndia) {
+        	inOrder.verify(dataStore).update(inQuery, inUpdateOps);
+        }else {
+        	inOrder.verify(dataStore).update(hkSgQuery, hkSgUpdateOps);
+        }
+	}
 }
