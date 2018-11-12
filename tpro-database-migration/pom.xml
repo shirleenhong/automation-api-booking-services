@@ -11,7 +11,7 @@
 
 	<groupId>com.cwt.bpg.cbt</groupId>
 	<artifactId>tpro-database-migration</artifactId>
-	<version>1.10.0-SNAPSHOT</version>
+	<version>1.12.0-SNAPSHOT</version>
 	<name>tpro-database-migration</name>
 	<description>tpro-database-migration</description>
 

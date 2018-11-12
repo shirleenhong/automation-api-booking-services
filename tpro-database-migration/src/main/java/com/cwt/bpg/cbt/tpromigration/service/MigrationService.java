@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,7 @@ import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.RemarkDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAOFactory;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirVariables;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.NoMerchantFee;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -59,6 +61,7 @@ public class MigrationService {
 	private static final String AIR_TRANSACTION_COLLECTION = "airTransactions";
 	private static final String AIR_CONTRACTS_COLLECTION = "airContracts";
 	private static final String AIR_MISC_INFO_COLLECTION = "airMiscInfo";
+	private static final String PRODUCTS_COLLECTION = "productList";
 
 	@Autowired
 	private MongoDbConnection mongoDbConnection;
@@ -112,6 +115,7 @@ public class MigrationService {
 		List<ContactInfo> contactInfoList = vendorDAOFactory.getVendorDAO(countryCode).listVendorContactInfo();
 		List<Vendor> vendorList = vendorDAOFactory.getVendorDAO(countryCode).listVendors();
 		List<BaseProduct> products = productDAOFactory.getProductCodeDAO(countryCode).listProductCodes();
+		List<NoMerchantFee> noMerchantFeeList = vendorDAOFactory.getVendorDAO(countryCode).listNoMerchantFee();
 		
 		Map<String, BaseProduct> productsMap = products.stream()
 				.collect(Collectors.toMap(BaseProduct::getProductCode, product -> product));
@@ -122,6 +126,14 @@ public class MigrationService {
 			LOGGER.info("vendor:{}", vendor);
 			LOGGER.info("vendor.getProductCodes():" + productCodes);
 
+			if (CollectionUtils.isNotEmpty(noMerchantFeeList)) {
+				noMerchantFeeList.forEach(mf -> {
+					if (vendor.getCode().equals(mf.getVendorNumber())
+							&& vendor.getProductCodes().contains(mf.getProductCode())) {
+						vendor.setMerchantFeeAbsorb(true);
+					}
+				});
+			}
 			if (!ObjectUtils.isEmpty(contactInfoList)) {
 			
 				List<ContactInfo> contactList = new ArrayList<>();
@@ -172,7 +184,7 @@ public class MigrationService {
 		productList.setCountryCode(countryCode);
 		productList.setProducts(new ArrayList<>(productsMap.values()));
 
-		mongoDbConnection.getCollection("productList")
+		mongoDbConnection.getCollection(PRODUCTS_COLLECTION)
 				.insertOne(dBObjectMapper.mapAsDbDocument(productList.getCountryCode(), productList));
 	}
 
