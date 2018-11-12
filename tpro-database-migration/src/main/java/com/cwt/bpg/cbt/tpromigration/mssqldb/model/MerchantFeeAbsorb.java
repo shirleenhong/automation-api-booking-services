@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.model;
 
-public class NoMerchantFee {
+public class MerchantFeeAbsorb {
 
 	private String productCode;
 	

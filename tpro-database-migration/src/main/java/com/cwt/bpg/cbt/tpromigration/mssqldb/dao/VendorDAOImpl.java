@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.NoMerchantFee;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.MerchantFeeAbsorb;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
 
 
@@ -30,9 +30,9 @@ public class VendorDAOImpl implements VendorDAO {
     private DataSource dataSource;
 
     @Override
-    public List<NoMerchantFee> listNoMerchantFee() {
-    	List<NoMerchantFee> listNoMerchantFee = new ArrayList<>();
-    	String sql = "SELECt * FROM tblOSNoMF";
+    public List<MerchantFeeAbsorb> listNoMerchantFee() {
+    	List<MerchantFeeAbsorb> listNoMerchantFee = new ArrayList<>();
+    	String sql = "SELECT * FROM tblOSNoMF";
     	
     	Connection conn = null;
     	
@@ -42,7 +42,7 @@ public class VendorDAOImpl implements VendorDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-            	NoMerchantFee mf = new NoMerchantFee();
+            	MerchantFeeAbsorb mf = new MerchantFeeAbsorb();
             	mf.setProductCode(rs.getString("ProductCode"));
             	mf.setVendorNumber(rs.getString("VendorNumber"));
              
