@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.MerchantFeeAbsorb;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
 
 
@@ -28,6 +29,41 @@ public class VendorDAOImpl implements VendorDAO {
     @Autowired
     private DataSource dataSource;
 
+    @Override
+    public List<MerchantFeeAbsorb> listNoMerchantFee() {
+    	List<MerchantFeeAbsorb> listNoMerchantFee = new ArrayList<>();
+    	String sql = "SELECT * FROM tblOSNoMF";
+    	
+    	Connection conn = null;
+    	
+    	try {
+            logger.info("getting tblOSNoMF from mssqldb");
+            conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+            	MerchantFeeAbsorb mf = new MerchantFeeAbsorb();
+            	mf.setProductCode(rs.getString("ProductCode"));
+            	mf.setVendorNumber(rs.getString("VendorNumber"));
+             
+            	listNoMerchantFee.add(mf);
+            }
+            rs.close();
+            ps.close();		
+    	} catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                }
+            }
+        }
+        logger.info("size of tblOSNoMF from mssqldb: {}", listNoMerchantFee.size());
+        return listNoMerchantFee;
+    	
+    }
     @Override
     public List<Vendor> listVendors() {
     	
