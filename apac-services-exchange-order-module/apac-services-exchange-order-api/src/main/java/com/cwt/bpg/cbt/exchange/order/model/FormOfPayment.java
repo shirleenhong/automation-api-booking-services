@@ -10,7 +10,7 @@ public class FormOfPayment implements Serializable {
 
     private static final long serialVersionUID = 1850641277169808339L;
 
-	@ApiModelProperty(allowableValues = "CX, INV, BTC")
+    @ApiModelProperty(allowableValues = "CX, CC, INV, BTC")
 	private FopType fopType;
 
 	public FopType getFopType() {
