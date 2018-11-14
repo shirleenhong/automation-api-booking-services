@@ -45,7 +45,6 @@ import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.AdditionalInfo;
 import com.cwt.bpg.cbt.exchange.order.model.CarVendor;
-import com.cwt.bpg.cbt.exchange.order.model.CreditCard;
 import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
 import com.cwt.bpg.cbt.exchange.order.model.EoAction;
 import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
@@ -193,25 +192,6 @@ public class ExchangeOrderControllerTest {
         verify(eoService, times(1)).update(any(ExchangeOrder.class));
     }
 
-    @Test(expected = NestedServletException.class)
-	public void shouldReturnBadRequestWhenFopTypeCXAndCreditCardNull() throws Exception {
-
-		ExchangeOrder order = createExchangeOrder();
-		order.getServiceInfo().setCommission(BigDecimal.ZERO);
-		order.getServiceInfo().setGst(BigDecimal.ZERO);
-		order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-		order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
-		order.setEoNumber(null);
-		order.getServiceInfo().getFormOfPayment().setCreditCard(null);
-
-        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
-                .andExpect(status().isBadRequest())
-                .andReturn()
-                .getResponse();
-
-		verifyZeroInteractions(eoService);
-	}
-
 	@Test(expected = NestedServletException.class)
 	public void shouldHandleExchangeOrderNotFoundException() throws Exception {
 
@@ -314,12 +294,6 @@ public class ExchangeOrderControllerTest {
 
 		order.getServiceInfo().setSellingPrice(new BigDecimal(0));
 		order.getServiceInfo().setTotalSellingPrice(new BigDecimal(0));
-
-		CreditCard creditCard = new CreditCard();
-		creditCard.setCcNumber("1234");
-		creditCard.setCcType("AX");
-		creditCard.setExpiryDate("11/2020");
-		order.getServiceInfo().getFormOfPayment().setCreditCard(creditCard);
 
 		order.setEoNumber("1807200001");
 
