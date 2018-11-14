@@ -3,11 +3,9 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
-import com.cwt.bpg.cbt.exchange.order.model.validator.CcNotNullOnFopType;
 
 import io.swagger.annotations.ApiModelProperty;
 
-@CcNotNullOnFopType(fopTypes ={"CC","CX"})
 public class FormOfPayment implements Serializable {
 
     private static final long serialVersionUID = 1850641277169808339L;
