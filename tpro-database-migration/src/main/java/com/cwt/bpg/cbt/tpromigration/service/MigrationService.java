@@ -164,7 +164,6 @@ public class MigrationService {
 			vendor.setFaxNumber(null);
 			vendor.setContactNo(null);
 			
-			
 			productCodes.forEach(productCode -> {
 				if (productsMap.get(productCode) != null) {
 					Vendor vendorClone = traverseNoMerchantFeeList(noMerchantFeeList,
@@ -189,16 +188,17 @@ public class MigrationService {
 			Vendor vendor, String productCode) {
 		
 		Vendor vendorClone = new Vendor();
+		try {
+			BeanUtils.copyProperties(vendorClone, vendor);
+		}
+		catch (IllegalAccessException e) {
+			LOGGER.error("IllegalAccessException", e);
+		}
+		catch (InvocationTargetException e) {
+			LOGGER.error("InvocationTargetException", e);
+		}
+		
 		for (MerchantFeeAbsorb mf : noMerchantFeeList) {
-			try {
-				BeanUtils.copyProperties(vendorClone, vendor);
-			}
-			catch (IllegalAccessException e) {
-				e.printStackTrace();
-			}
-			catch (InvocationTargetException e) {
-				e.printStackTrace();
-			}
 			if (productCode.equals(mf.getProductCode())
 					&& vendorClone.getCode().equals(mf.getVendorNumber())) {
 				vendorClone.setMerchantFeeAbsorb(true);
