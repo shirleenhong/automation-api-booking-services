@@ -60,9 +60,9 @@ Append Exchange Order Form Of Payment Request Fields
     [Arguments]    ${eo_index}    ${field_name}=value
     ${exchange_order_form_of_payment_request_list}    Create List
     Run Keyword If    "${fop_type_${eo_index}_${field_name}}"!="none"    Append To List    ${exchange_order_form_of_payment_request_list}    "fopType":"${fop_type_${eo_index}_value}"
-    Run Keyword If    "${fop_type_${eo_index}_${field_name}}"=="CC" or "${fop_type_${eo_index}_${field_name}}"=="CX"    Append Exchange Order Credit Card Request Fields    ${eo_index}
-    ...    ELSE    Run Keywords    Set Test Variable    ${exchange_order_cc_request_list}    ${EMPTY}
-    ...    AND    Set Test Variable    ${cc_list}    ${EMPTY}
+    #Run Keyword If    "${fop_type_${eo_index}_${field_name}}"=="CC" or "${fop_type_${eo_index}_${field_name}}"=="CX"    Append Exchange Order Credit Card Request Fields    ${eo_index}
+    #...    ELSE    Run Keywords    Set Test Variable    ${exchange_order_cc_request_list}    ${EMPTY}
+    #...    AND    Set Test Variable    ${cc_list}    ${EMPTY}
     Set Test Variable    ${exchange_order_form_of_payment_request_list}
 
 Append Exchange Order Insurance Request Fields
@@ -426,12 +426,12 @@ Create Exchange Order Service Information Request
     \    ${eo_fop_list}    Set Variable    ${eo_fop_list}${exchange_order_form_of_payment_request_list[${i}]}
     ${eo_fop_list}    Set Variable If    "${eo_fop_count}"=="0"    ${EMPTY}    ${eo_fop_list}
     ${eo_fop_list_count}    Get Length    ${eo_fop_list}
-    ${eo_cc_count}    Get Length    ${exchange_order_cc_request_list}
-    : FOR    ${i}    IN RANGE    0    ${eo_cc_count}
-    \    ${eo_cc_list}    Set Variable If    ${i}==0    ${EMPTY}    ${eo_cc_list},
-    \    ${eo_cc_list}    Set Variable    ${eo_cc_list}${exchange_order_cc_request_list[${i}]}
-    ${eo_cc_list}    Set Variable If    "${eo_cc_count}"=="0"    ${EMPTY}    ${eo_cc_list}
-    ${eo_cc_list_count}    Get Length    ${eo_cc_list}
+    #${eo_cc_count}    Get Length    ${exchange_order_cc_request_list}
+    #: FOR    ${i}    IN RANGE    0    ${eo_cc_count}
+    #\    ${eo_cc_list}    Set Variable If    ${i}==0    ${EMPTY}    ${eo_cc_list},
+    #\    ${eo_cc_list}    Set Variable    ${eo_cc_list}${exchange_order_cc_request_list[${i}]}
+    #${eo_cc_list}    Set Variable If    "${eo_cc_count}"=="0"    ${EMPTY}    ${eo_cc_list}
+    #${eo_cc_list_count}    Get Length    ${eo_cc_list}
     ${eo_ticket_count}    Get Length    ${exchange_order_ticket_list}
     : FOR    ${i}    IN RANGE    0    ${eo_ticket_count}
     \    ${eo_ticket_list}    Set Variable If    ${i}==0    ${EMPTY}    ${eo_ticket_list},
@@ -445,8 +445,7 @@ Create Exchange Order Service Information Request
     ${data_service_info}    Set Variable If    ${eo_depart_list_count}>0    ${data_service_info},"departRoute": {${eo_depart_list}}    ${data_service_info}
     ${data_service_info}    Set Variable If    ${eo_departure_list_count}>0    ${data_service_info},"departure": {${eo_departure_list}}    ${data_service_info}
     ${data_service_info}    Set Variable If    ${eo_return_list_count}>0    ${data_service_info},"returnRoute": {${eo_return_list}}    ${data_service_info}
-    ${data_service_info}    Set Variable If    ${eo_fop_list_count}>0 and ${eo_cc_list_count}>0    ${data_service_info},"formOfPayment": {"creditCard": {${eo_cc_list}},${eo_fop_list}}    ${eo_fop_list_count}==0 and ${eo_cc_list_count}>0    ${data_service_info},"formOfPayment": {"creditCard": {${eo_cc_list}}}    ${eo_fop_list_count}>0 and ${eo_cc_list_count}==0
-    ...    ${data_service_info},"formOfPayment": {${eo_fop_list}}    ${data_service_info}
+    ${data_service_info}    Set Variable If    ${eo_fop_list_count}>0    ${data_service_info},"formOfPayment": {${eo_fop_list}}    ${data_service_info}
     ${data_service_info}    Set Variable If    ${eo_ticket_list_count}>0    ${data_service_info},"ticket": {${eo_ticket_list}}}    ${data_service_info}}
     Set Test Variable    ${data_service_info}
 
@@ -1230,12 +1229,12 @@ Verify Exchange Order Service Information Is Saved Correctly
     ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.departure.dateAndTime
     Run Keyword If    "${fop_type_${eo_index}_${field_name}}"!="null" and "${fop_type_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.formOfPayment.fopType    ${fop_type_${eo_index}_${field_name}}
     ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.formOfPayment.fopType
-    Run Keyword If    "${cc_type_${eo_index}_${field_name}}"!="null" and "${cc_type_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.formOfPayment.creditCard.ccType    ${cc_type_${eo_index}_${field_name}}
-    ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.formOfPayment.creditCard.ccType
-    Run Keyword If    "${cc_number_${eo_index}_${field_name}}"!="null" and "${cc_number_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.formOfPayment.creditCard.ccNumber    ${cc_number_${eo_index}_${field_name}}
-    ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.formOfPayment.creditCard.ccNumber
-    Run Keyword If    "${expiry_date_${eo_index}_${field_name}}"!="null" and "${expiry_date_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.formOfPayment.creditCard.expiryDate    ${expiry_date_${eo_index}_${field_name}}
-    ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.formOfPayment.creditCard.expiryDate
+    #Run Keyword If    "${cc_type_${eo_index}_${field_name}}"!="null" and "${cc_type_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.formOfPayment.creditCard.ccType    ${cc_type_${eo_index}_${field_name}}
+    #...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.formOfPayment.creditCard.ccType
+    #Run Keyword If    "${cc_number_${eo_index}_${field_name}}"!="null" and "${cc_number_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.formOfPayment.creditCard.ccNumber    ${cc_number_${eo_index}_${field_name}}
+    #...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.formOfPayment.creditCard.ccNumber
+    #Run Keyword If    "${expiry_date_${eo_index}_${field_name}}"!="null" and "${expiry_date_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.formOfPayment.creditCard.expiryDate    ${expiry_date_${eo_index}_${field_name}}
+    #...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.formOfPayment.creditCard.expiryDate
     Run Keyword If    "${rr_origin_${eo_index}_${field_name}}"!="null" and "${rr_origin_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.returnRoute.origin    ${rr_origin_${eo_index}_${field_name}}
     ...    ELSE    Verify Json Element Does Not Exist    $..serviceInfo.returnRoute.origin
     Run Keyword If    "${rr_destination_${eo_index}_${field_name}}"!="null" and "${rr_destination_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $..serviceInfo.returnRoute.destination    ${rr_destination_${eo_index}_${field_name}}
