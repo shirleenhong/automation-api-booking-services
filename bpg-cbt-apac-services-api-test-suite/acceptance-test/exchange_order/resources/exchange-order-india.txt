@@ -7,7 +7,7 @@ Resource          ../../resources/api-variables.txt
 Append Exchange Order Air Charges Tab Fields For India
     ${exchange_order_air_charges_list}    Create List
     ${exchange_order_air_charges_fop_list}    Create List
-    ${exchange_order_air_charges_cc_list}    Create List
+    #${exchange_order_air_charges_cc_list}    Create List
     ${exchange_order_air_charges_oth_tax_1_list}    Create List
     ${exchange_order_air_charges_oth_tax_2_list}    Create List
     ${exchange_order_air_charges_oth_tax_3_list}    Create List
@@ -19,10 +19,10 @@ Append Exchange Order Air Charges Tab Fields For India
     Run Keyword If    "${cwt_ref_no_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "cwtRefNo":"${cwt_ref_no_${eo_index}_value}"
     Run Keyword If    "${final_destination_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "finalDestination":"${final_destination_${eo_index}_value}"
     Run Keyword If    "${fop_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_fop_list}    "fopType":"${fop_type_${eo_index}_value}"
-    Run Keyword If    "${cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_cc_list}    "ccNumber":"${cc_number_${eo_index}_value}"
-    Run Keyword If    "${cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_cc_list}    "ccType":"${cc_type_${eo_index}_value}"
-    Run Keyword If    "${expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_cc_list}    "expiryDate":"${expiry_date_${eo_index}_value}"
-    Run Keyword If    "${preference_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_cc_list}    "preference":"${preference_${eo_index}_value}"
+    #Run Keyword If    "${cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_cc_list}    "ccNumber":"${cc_number_${eo_index}_value}"
+    #Run Keyword If    "${cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_cc_list}    "ccType":"${cc_type_${eo_index}_value}"
+    #Run Keyword If    "${expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_cc_list}    "expiryDate":"${expiry_date_${eo_index}_value}"
+    #Run Keyword If    "${preference_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_cc_list}    "preference":"${preference_${eo_index}_value}"
     Run Keyword If    "${iata_commission_percent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "iataCommissionPercent":${iata_commission_percent_${eo_index}_value}
     Run Keyword If    "${issue_in_exchange_for_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "issueInExchangeFor":"${issue_in_exchange_for_${eo_index}_value}"
     Run Keyword If    "${markup_percent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "markUpPercent":${markup_percent_${eo_index}_value}
@@ -56,7 +56,7 @@ Append Exchange Order Air Charges Tab Fields For India
     Run Keyword If    "${yq_tax_${eo_index}_value}"!="none"    Append To List    ${exchange_order_air_charges_list}    "yqTax":${yq_tax_${eo_index}_value}
     Set Test Variable    ${exchange_order_air_charges_list}
     Set Test Variable    ${exchange_order_air_charges_fop_list}
-    Set Test Variable    ${exchange_order_air_charges_cc_list}
+    #Set Test Variable    ${exchange_order_air_charges_cc_list}
     Set Test Variable    ${exchange_order_air_charges_oth_tax_1_list}
     Set Test Variable    ${exchange_order_air_charges_oth_tax_2_list}
     Set Test Variable    ${exchange_order_air_charges_oth_tax_3_list}
@@ -83,9 +83,9 @@ Append Exchange Order Associated Tab Fields For India
     \    Run Keyword If    "${assoc_product_${eo_index}_${assoc_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "productCode":"${assoc_product_${eo_index}_${assoc_index}_value}"
     \    Run Keyword If    "${assoc_vendor_${eo_index}_${assoc_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "vendorCode":"${assoc_vendor_${eo_index}_${assoc_index}_value}"
     \    Run Keyword If    "${assoc_fop_${eo_index}_${assoc_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fop_list}    "fopType":"${assoc_fop_${eo_index}_${assoc_index}_value}"
-    \    Run Keyword If    "${assoc_cc_type_${eo_index}_${assoc_index}_value}"!="none"    Append To List    ${exchange_order_assoc_cc_list}    "ccType":"${assoc_cc_type_${eo_index}_${assoc_index}_value}"
-    \    Run Keyword If    "${assoc_cc_number_${eo_index}_${assoc_index}_value}"!="none"    Append To List    ${exchange_order_assoc_cc_list}    "ccNumber":"${assoc_cc_number_${eo_index}_${assoc_index}_value}"
-    \    Run Keyword If    "${assoc_expiry_date_${eo_index}_${assoc_index}_value}"!="none"    Append To List    ${exchange_order_assoc_cc_list}    "expiryDate":"${assoc_expiry_date_${eo_index}_${assoc_index}_value}"
+    \    #Run Keyword If    "${assoc_cc_type_${eo_index}_${assoc_index}_value}"!="none"    Append To List    ${exchange_order_assoc_cc_list}    "ccType":"${assoc_cc_type_${eo_index}_${assoc_index}_value}"
+    \    #Run Keyword If    "${assoc_cc_number_${eo_index}_${assoc_index}_value}"!="none"    Append To List    ${exchange_order_assoc_cc_list}    "ccNumber":"${assoc_cc_number_${eo_index}_${assoc_index}_value}"
+    \    #Run Keyword If    "${assoc_expiry_date_${eo_index}_${assoc_index}_value}"!="none"    Append To List    ${exchange_order_assoc_cc_list}    "expiryDate":"${assoc_expiry_date_${eo_index}_${assoc_index}_value}"
     \    Run Keyword If    "${assoc_nett_cost_${eo_index}_${assoc_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "nettCost":${assoc_nett_cost_${eo_index}_${assoc_index}_value}
     \    Run Keyword If    "${assoc_commission_${eo_index}_${assoc_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "commission":${assoc_commission_${eo_index}_${assoc_index}_value}
     \    Run Keyword If    "${assoc_discount_${eo_index}_${assoc_index}_value}"!="none"    Append To List    ${exchange_order_assoc_fields_list}    "discount":${assoc_discount_${eo_index}_${assoc_index}_value}
@@ -154,9 +154,9 @@ Append Exchange Order Service Information Tab Fields For India
     Run Keyword If    "${service_processing_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "processingType":"${service_processing_${eo_index}_value}"
     Run Keyword If    "${service_description_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "classCabin":"${service_description_${eo_index}_value}"
     Run Keyword If    "${service_fop_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_fop_list}    "fopType":"${service_fop_type_${eo_index}_value}"
-    Run Keyword If    "${service_cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_cc_list}    "ccType":"${service_cc_type_${eo_index}_value}"
-    Run Keyword If    "${service_cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_cc_list}    "ccNumber":"${service_cc_number_${eo_index}_value}"
-    Run Keyword If    "${service_expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_cc_list}    "expiryDate":"${service_expiry_date_${eo_index}_value}"
+    #Run Keyword If    "${service_cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_cc_list}    "ccType":"${service_cc_type_${eo_index}_value}"
+    #Run Keyword If    "${service_cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_cc_list}    "ccNumber":"${service_cc_number_${eo_index}_value}"
+    #Run Keyword If    "${service_expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_cc_list}    "expiryDate":"${service_expiry_date_${eo_index}_value}"
     Run Keyword If    "${service_prod_desc_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "description":"${service_prod_desc_${eo_index}_value}"
     Run Keyword If    "${service_cwt_ref_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "cwtRefNo":"${service_cwt_ref_${eo_index}_value}"
     Run Keyword If    "${service_vendor_ref_${eo_index}_value}"!="none"    Append To List    ${exchange_order_service_info_list}    "vendorRefNo":"${service_vendor_ref_${eo_index}_value}"
@@ -212,9 +212,9 @@ Append Exchange Order Request Tab Air Fields
     Run Keyword If    "${vmpd_headline_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "headlineCurrency":"${vmpd_headline_${eo_index}_value}"
     Run Keyword If    "${vmpd_equivalent_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "equivalentAmountPaid":${vmpd_equivalent_${eo_index}_value}
     Run Keyword If    "${vmpd_fop_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_fop_list}    "fopType":"${vmpd_fop_${eo_index}_value}"
-    Run Keyword If    "${vmpd_cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_cc_list}    "ccType":"${vmpd_cc_type_${eo_index}_value}"
-    Run Keyword If    "${vmpd_cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_cc_list}    "ccNumber":"${vmpd_cc_number_${eo_index}_value}"
-    Run Keyword If    "${vmpd_expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_cc_list}    "expiryDate":"${vmpd_expiry_date_${eo_index}_value}"
+    #Run Keyword If    "${vmpd_cc_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_cc_list}    "ccType":"${vmpd_cc_type_${eo_index}_value}"
+    #Run Keyword If    "${vmpd_cc_number_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_cc_list}    "ccNumber":"${vmpd_cc_number_${eo_index}_value}"
+    #Run Keyword If    "${vmpd_expiry_date_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_cc_list}    "expiryDate":"${vmpd_expiry_date_${eo_index}_value}"
     Run Keyword If    "${vmpd_issue_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "issueInExchangeFor":"${vmpd_issue_${eo_index}_value}"
     Run Keyword If    "${vmpd_conjunction_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "inConjuctionWith":"${vmpd_conjunction_${eo_index}_value}"
     Run Keyword If    "${vmpd_original_place_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "origPlaceOfIssue":"${vmpd_original_place_${eo_index}_value}"
@@ -444,7 +444,7 @@ Create Exchange Order Request
 	Create Exchange Order Request Body    data=${exchange_order_other_info_list}    tab_name=other_info
 	Create Exchange Order Request Body    data=${exchange_order_air_charges_list}    tab_name=air_charges
 	Create Exchange Order Request Body    data=${exchange_order_air_charges_fop_list}    tab_name=air_charges_fop
-	Create Exchange Order Request Body    data=${exchange_order_air_charges_cc_list}    tab_name=air_charges_cc
+	#Create Exchange Order Request Body    data=${exchange_order_air_charges_cc_list}    tab_name=air_charges_cc
 	Create Exchange Order Request Body    data=${exchange_order_air_charges_oth_tax_1_list}    tab_name=air_charges_oth_tax1
 	Create Exchange Order Request Body    data=${exchange_order_air_charges_oth_tax_2_list}    tab_name=air_charges_oth_tax2
 	Create Exchange Order Request Body    data=${exchange_order_air_charges_oth_tax_3_list}    tab_name=air_charges_oth_tax3
@@ -480,7 +480,7 @@ Create Exchange Order Request
     Create Exchange Order Request Body    data=${exchange_order_request_train_trans_list}    tab_name=request_train_trans
     Create Exchange Order Request Body    data=${exchange_order_request_visa_list}    tab_name=request_visa
     Create Exchange Order Request Body    data=${exchange_order_request_visa_custom_list}    tab_name=request_visa_custom
-    ${data}    Set Variable If    "${amend_eo}"=="false"    {${other_info_list},"associatedChargesList":[${assoc_info_list}],"miscInfo":{${misc_info_list}}, "airCharges":{${air_charges_list},"formOfPayment":{"creditCard":{${air_charges_cc_list}},${air_charges_fop_list}},"othTax1":{${air_charges_oth_tax1_list}},"othTax2":{${air_charges_oth_tax2_list}},"othTax3":{${air_charges_oth_tax3_list}}},"nonAirCharges":{${service_info_list},"formOfPayment":{${service_fop_list},"creditCard":{${service_cc_list}}}},"vendor":{${vendor_info_list},"contactInfo":[${vendor_contact_list}]},"request":{${request_intenal_remark_list},"air":{${request_air_list},"airCustomFields":{${request_air_custom_list}},"consolInfo":{${request_consol_list}},"airSegments":[${request_air_segments_list}],"vmpd":{${request_vmpd_list},"formOfPayment":{${request_vmpd_fop_list},"creditCard":{${request_vmpd_cc_list}}}}},"car":{${request_car_list},"cancellationPolicy":{${request_car_cancellation_list}},"guarantor":{${request_car_fop_list},"creditCard":{${request_car_cc_list}}}},"forex":{${request_forex_list},"docCheckList":{${request_document_list}},"requestAmount":{${request_amount_list}}},"hotel":{${request_hotel_list},"cancellationPolicy":{${request_hotel_cancellation_list}},"guarantor":{${request_hotel_fop_list},"creditCard":{${request_hotel_cc_list}}}},"insurance":{${request_insurance_list},"indiaInsuranceCustomFields":{${request_insurance_custom_list}}},"meeting":{${request_meeting_list}},"tour":{${request_tour_list}},"train":{"domCustomFields":{${request_train_custom_list}},"segments":[${request_train_segments_list}],"transChargesCustomFields":{${request_train_trans_list}}},"visa":{${request_visa_list},"customFields":{${request_visa_custom_list}}}}}    {"eoNumber":"${exchange_order_number}",${other_info_list},"associatedChargesList":[${assoc_info_list}],"miscInfo":{${misc_info_list}},"airCharges":{${air_charges_list},"formOfPayment":{"creditCard": {${air_charges_cc_list}},${air_charges_fop_list}},"othTax1":{${air_charges_oth_tax1_list}},"othTax2":{${air_charges_oth_tax2_list}},"othTax3":{${air_charges_oth_tax3_list}}},"nonAirCharges":{${service_info_list},"formOfPayment":{${service_fop_list},"creditCard":{${service_cc_list}}}},"vendor":{${vendor_info_list},"contactInfo":[${vendor_contact_list}]},"request":{${request_intenal_remark_list},"air":{${request_air_list},"airCustomFields":{${request_air_custom_list}},"consolInfo":{${request_consol_list}},"airSegments":[${request_air_segments_list}],"vmpd":{${request_vmpd_list},"formOfPayment":{${request_vmpd_fop_list},"creditCard":{${request_vmpd_cc_list}}}}},"car":{${request_car_list},"cancellationPolicy":{${request_car_cancellation_list}},"guarantor":{${request_car_fop_list},"creditCard":{${request_car_cc_list}}}},"forex":{${request_forex_list},"docCheckList":{${request_document_list}},"requestAmount":{${request_amount_list}}},"hotel":{${request_hotel_list},"cancellationPolicy":{${request_hotel_cancellation_list}},"guarantor":{${request_hotel_fop_list},"creditCard":{${request_hotel_cc_list}}}},"insurance":{${request_insurance_list},"indiaInsuranceCustomFields":{${request_insurance_custom_list}}},"meeting":{${request_meeting_list}},"tour":{${request_tour_list}},"train":{"domCustomFields":{${request_train_custom_list}},"segments":[${request_train_segments_list}],"transChargesCustomFields":{${request_train_trans_list}}},"visa":{${request_visa_list},"customFields":{${request_visa_custom_list}}}}}
+    ${data}    Set Variable If    "${amend_eo}"=="false"    {${other_info_list},"associatedChargesList":[${assoc_info_list}],"miscInfo":{${misc_info_list}}, "airCharges":{${air_charges_list},"formOfPayment":{${air_charges_fop_list}},"othTax1":{${air_charges_oth_tax1_list}},"othTax2":{${air_charges_oth_tax2_list}},"othTax3":{${air_charges_oth_tax3_list}}},"nonAirCharges":{${service_info_list},"formOfPayment":{${service_fop_list},"creditCard":{${service_cc_list}}}},"vendor":{${vendor_info_list},"contactInfo":[${vendor_contact_list}]},"request":{${request_intenal_remark_list},"air":{${request_air_list},"airCustomFields":{${request_air_custom_list}},"consolInfo":{${request_consol_list}},"airSegments":[${request_air_segments_list}],"vmpd":{${request_vmpd_list},"formOfPayment":{${request_vmpd_fop_list},"creditCard":{${request_vmpd_cc_list}}}}},"car":{${request_car_list},"cancellationPolicy":{${request_car_cancellation_list}},"guarantor":{${request_car_fop_list},"creditCard":{${request_car_cc_list}}}},"forex":{${request_forex_list},"docCheckList":{${request_document_list}},"requestAmount":{${request_amount_list}}},"hotel":{${request_hotel_list},"cancellationPolicy":{${request_hotel_cancellation_list}},"guarantor":{${request_hotel_fop_list},"creditCard":{${request_hotel_cc_list}}}},"insurance":{${request_insurance_list},"indiaInsuranceCustomFields":{${request_insurance_custom_list}}},"meeting":{${request_meeting_list}},"tour":{${request_tour_list}},"train":{"domCustomFields":{${request_train_custom_list}},"segments":[${request_train_segments_list}],"transChargesCustomFields":{${request_train_trans_list}}},"visa":{${request_visa_list},"customFields":{${request_visa_custom_list}}}}}    {"eoNumber":"${exchange_order_number}",${other_info_list},"associatedChargesList":[${assoc_info_list}],"miscInfo":{${misc_info_list}},"airCharges":{${air_charges_list},"formOfPayment":{${air_charges_fop_list}},"othTax1":{${air_charges_oth_tax1_list}},"othTax2":{${air_charges_oth_tax2_list}},"othTax3":{${air_charges_oth_tax3_list}}},"nonAirCharges":{${service_info_list},"formOfPayment":{${service_fop_list},"creditCard":{${service_cc_list}}}},"vendor":{${vendor_info_list},"contactInfo":[${vendor_contact_list}]},"request":{${request_intenal_remark_list},"air":{${request_air_list},"airCustomFields":{${request_air_custom_list}},"consolInfo":{${request_consol_list}},"airSegments":[${request_air_segments_list}],"vmpd":{${request_vmpd_list},"formOfPayment":{${request_vmpd_fop_list},"creditCard":{${request_vmpd_cc_list}}}}},"car":{${request_car_list},"cancellationPolicy":{${request_car_cancellation_list}},"guarantor":{${request_car_fop_list},"creditCard":{${request_car_cc_list}}}},"forex":{${request_forex_list},"docCheckList":{${request_document_list}},"requestAmount":{${request_amount_list}}},"hotel":{${request_hotel_list},"cancellationPolicy":{${request_hotel_cancellation_list}},"guarantor":{${request_hotel_fop_list},"creditCard":{${request_hotel_cc_list}}}},"insurance":{${request_insurance_list},"indiaInsuranceCustomFields":{${request_insurance_custom_list}}},"meeting":{${request_meeting_list}},"tour":{${request_tour_list}},"train":{"domCustomFields":{${request_train_custom_list}},"segments":[${request_train_segments_list}],"transChargesCustomFields":{${request_train_trans_list}}},"visa":{${request_visa_list},"customFields":{${request_visa_custom_list}}}}}
     ${data}    Sanitize Exchange Order Body    ${data}    eo_index=${eo_index}
     Set Test Variable    ${data}
     Log    ${data}
@@ -504,8 +504,8 @@ Create Exchange Order Body List
     :FOR    ${index}    IN RANGE    0    ${assoc_info_number}
     \    Create Exchange Order Body    data=${exchange_order_assoc_fields_list_${index}}    tab_name=assoc_fields
     \    Create Exchange Order Body    data=${exchange_order_assoc_fop_list_${index}}    tab_name=assoc_fop
-    \    Create Exchange Order Body    data=${exchange_order_assoc_cc_list_${index}}    tab_name=assoc_cc
-    \    ${data}    Set Variable    {${assoc_fields_list},"formOfPayment":{${assoc_fop_list},"creditCard":{${assoc_cc_list}}}}
+    \    #Create Exchange Order Body    data=${exchange_order_assoc_cc_list_${index}}    tab_name=assoc_cc
+    \    ${data}    Set Variable    {${assoc_fields_list},"formOfPayment":{${assoc_fop_list}}}
     \    Append To List    ${assoc_info_list}    ${data}
     \    Log    ${assoc_info_list}
     Set Test Variable    ${assoc_info_list}
@@ -835,7 +835,7 @@ Send Exchange Order Post Request For India
 Set Exchange Order Air Charges List To Default Value
     Set Test Variable    ${exchange_order_air_charges_list}    ${EMPTY}
     Set Test Variable    ${exchange_order_air_charges_fop_list}    ${EMPTY}
-    Set Test Variable    ${exchange_order_air_charges_cc_list}    ${EMPTY}
+    #Set Test Variable    ${exchange_order_air_charges_cc_list}    ${EMPTY}
     Set Test Variable    ${exchange_order_air_charges_oth_tax_1_list}    ${EMPTY}
     Set Test Variable    ${exchange_order_air_charges_oth_tax_2_list}    ${EMPTY}
     Set Test Variable    ${exchange_order_air_charges_oth_tax_3_list}    ${EMPTY}
@@ -1020,12 +1020,12 @@ Verify Exchange Order Associated Information Tab Is Saved Correctly
     \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].vendorCode
     \    Run Keyword If    "${assoc_fop_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_fop_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].formOfPayment.fopType    ${assoc_fop_${eo_index}_${assoc_index}_value}
     \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].formOfPayment.fopType
-    \    Run Keyword If    "${assoc_cc_type_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_cc_type_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.ccType    ${assoc_cc_type_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.ccType
-    \    Run Keyword If    "${assoc_cc_number_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_cc_number_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.ccNumber    ${assoc_cc_number_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.ccNumber
-    \    Run Keyword If    "${assoc_expiry_date_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_expiry_date_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.expiryDate    ${assoc_expiry_date_${eo_index}_${assoc_index}_value}
-    \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.expiryDate
+    \    #Run Keyword If    "${assoc_cc_type_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_cc_type_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.ccType    ${assoc_cc_type_${eo_index}_${assoc_index}_value}
+    \    #...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.ccType
+    \    #Run Keyword If    "${assoc_cc_number_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_cc_number_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.ccNumber    ${assoc_cc_number_${eo_index}_${assoc_index}_value}
+    \    #...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.ccNumber
+    \    #Run Keyword If    "${assoc_expiry_date_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_expiry_date_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.expiryDate    ${assoc_expiry_date_${eo_index}_${assoc_index}_value}
+    \    #...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].formOfPayment.creditCard.expiryDate
     \    Run Keyword If    "${assoc_nett_cost_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_nett_cost_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].nettCost    ${assoc_nett_cost_${eo_index}_${assoc_index}_value}
     \    ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList.[${assoc_index}].nettCost
     \    Run Keyword If    "${assoc_commission_${eo_index}_${assoc_index}_value}"!="null" and "${assoc_commission_${eo_index}_${assoc_index}_value}"!="none"    Verify Json Value Is Correct    $.associatedChargesList.[${assoc_index}].commission    ${assoc_commission_${eo_index}_${assoc_index}_value}
@@ -1165,14 +1165,14 @@ Verify Exchange Order Air Charges Is Saved Correctly
     ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.vendorRefNo
 	Run Keyword If    "${yq_tax_${eo_index}_value}"!="null" and "${yq_tax_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.yqTax    ${yq_tax_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.yqTax
-	Run Keyword If    "${cc_number_${eo_index}_value}"!="null" and "${cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.ccNumber    ${cc_number_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.creditCard.ccNumber
-	Run Keyword If    "${cc_type_${eo_index}_value}"!="null" and "${cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.ccType    ${cc_type_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.creditCard.ccType
-	Run Keyword If    "${expiry_date_${eo_index}_value}"!="null" and "${expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.expiryDate    ${expiry_date_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.creditCard.expiryDate
-	Run Keyword If    "${preference_${eo_index}_value}"!="null" and "${preference_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.preference    ${preference_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.creditCard.preference
+	#Run Keyword If    "${cc_number_${eo_index}_value}"!="null" and "${cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.ccNumber    ${cc_number_${eo_index}_value}
+    #...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.creditCard.ccNumber
+	#Run Keyword If    "${cc_type_${eo_index}_value}"!="null" and "${cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.ccType    ${cc_type_${eo_index}_value}
+    #...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.creditCard.ccType
+	#Run Keyword If    "${expiry_date_${eo_index}_value}"!="null" and "${expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.expiryDate    ${expiry_date_${eo_index}_value}
+    #...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.creditCard.expiryDate
+	#Run Keyword If    "${preference_${eo_index}_value}"!="null" and "${preference_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.creditCard.preference    ${preference_${eo_index}_value}
+    #...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.creditCard.preference
 	Run Keyword If    "${fop_type_${eo_index}_value}"!="null" and "${fop_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.formOfPayment.fopType    ${fop_type_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.airCharges.formOfPayment.fopType
 	Run Keyword If    "${oth_tax_1_code_${eo_index}_value}"!="null" and "${oth_tax_1_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.airCharges.othTax1.code    ${oth_tax_1_code_${eo_index}_value}
@@ -1224,12 +1224,12 @@ Verify Exchange Order Service Information Is Saved Correctly
     ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.classOrCabin
     Run Keyword If    "${service_fop_type_${eo_index}_value}"!="null" and "${service_fop_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.formOfPayment.fopType    ${service_fop_type_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.formOfPayment.fopType
-    Run Keyword If    "${service_cc_type_${eo_index}_value}"!="null" and "${service_cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.formOfPayment.creditCard.ccType    ${service_cc_type_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.formOfPayment.creditCard.ccType
-    Run Keyword If    "${service_cc_number_${eo_index}_value}"!="null" and "${service_cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.formOfPayment.creditCard.ccNumber    ${service_cc_number_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.formOfPayment.creditCard.ccNumber
-    Run Keyword If    "${service_expiry_date_${eo_index}_value}"!="null" and "${service_expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.formOfPayment.creditCard.expiryDate    ${service_expiry_date_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.formOfPayment.creditCard.expiryDate
+    #Run Keyword If    "${service_cc_type_${eo_index}_value}"!="null" and "${service_cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.formOfPayment.creditCard.ccType    ${service_cc_type_${eo_index}_value}
+    #...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.formOfPayment.creditCard.ccType
+    #Run Keyword If    "${service_cc_number_${eo_index}_value}"!="null" and "${service_cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.formOfPayment.creditCard.ccNumber    ${service_cc_number_${eo_index}_value}
+    #...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.formOfPayment.creditCard.ccNumber
+    #Run Keyword If    "${service_expiry_date_${eo_index}_value}"!="null" and "${service_expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.formOfPayment.creditCard.expiryDate    ${service_expiry_date_${eo_index}_value}
+    #...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.formOfPayment.creditCard.expiryDate
     Run Keyword If    "${service_prod_desc_${eo_index}_value}"!="null" and "${service_prod_desc_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.description    ${service_prod_desc_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.nonAirCharges.description
     Run Keyword If    "${service_cwt_ref_${eo_index}_value}"!="null" and "${service_cwt_ref_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.nonAirCharges.cwtRefNo    ${service_cwt_ref_${eo_index}_value}
@@ -1293,12 +1293,12 @@ Verify Exchange Order Request Information Air Fields
     ...    ELSE    Verify Json Element Does Not Exist    $.request.air.vmpd.equivalentAmountPaid
     Run Keyword If    "${vmpd_fop_${eo_index}_value}"!="null" and "${vmpd_fop_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.vmpd.formOfPayment.fopType   ${vmpd_fop_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.request.air.vmpd.formOfPayment.fopType
-    Run Keyword If    "${vmpd_cc_type_${eo_index}_value}"!="null" and "${vmpd_cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.vmpd.formOfPayment.creditCard.ccType    ${vmpd_cc_type_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.request.air.vmpd.formOfPayment.creditCard.ccType
-    Run Keyword If    "${vmpd_cc_number_${eo_index}_value}"!="null" and "${vmpd_cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.vmpd.formOfPayment.creditCard.ccNumber    ${vmpd_cc_number_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.request.air.vmpd.formOfPayment.creditCard.ccNumber
-    Run Keyword If    "${vmpd_expiry_date_${eo_index}_value}"!="null" and "${vmpd_expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.vmpd.formOfPayment.creditCard.expiryDate    ${vmpd_expiry_date_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.request.air.vmpd.formOfPayment.creditCard.expiryDate
+    #Run Keyword If    "${vmpd_cc_type_${eo_index}_value}"!="null" and "${vmpd_cc_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.vmpd.formOfPayment.creditCard.ccType    ${vmpd_cc_type_${eo_index}_value}
+    #...    ELSE    Verify Json Element Does Not Exist    $.request.air.vmpd.formOfPayment.creditCard.ccType
+    #Run Keyword If    "${vmpd_cc_number_${eo_index}_value}"!="null" and "${vmpd_cc_number_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.vmpd.formOfPayment.creditCard.ccNumber    ${vmpd_cc_number_${eo_index}_value}
+    #...    ELSE    Verify Json Element Does Not Exist    $.request.air.vmpd.formOfPayment.creditCard.ccNumber
+    #Run Keyword If    "${vmpd_expiry_date_${eo_index}_value}"!="null" and "${vmpd_expiry_date_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.vmpd.formOfPayment.creditCard.expiryDate    ${vmpd_expiry_date_${eo_index}_value}
+    #...    ELSE    Verify Json Element Does Not Exist    $.request.air.vmpd.formOfPayment.creditCard.expiryDate
     Run Keyword If    "${vmpd_issue_${eo_index}_value}"!="null" and "${vmpd_issue_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.vmpd.issueInExchangeFor    ${vmpd_issue_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.request.air.vmpd.issueInExchangeFor
     Run Keyword If    "${vmpd_conjunction_${eo_index}_value}"!="null" and "${vmpd_conjunction_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.vmpd.inConjuctionWith    ${vmpd_conjunction_${eo_index}_value}
