@@ -60,7 +60,7 @@ public class CacheConfiguration {
                     "air-misc-info",
 					"airlines"})
 	
-	@Scheduled(cron = "0 0 0,12 * * *")
+	@Scheduled(cron = "${com.cwt.cache.cron.expression}")
 	public void evictAllCache() {
 		logger.info("Cache Evicted!");
 	}
