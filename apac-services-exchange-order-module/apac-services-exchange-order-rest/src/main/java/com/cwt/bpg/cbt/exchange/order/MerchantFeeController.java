@@ -59,9 +59,7 @@ public class MerchantFeeController {
 	@ApiOperation(value = "Saves or updates merchant fee configuration of a given market")
 	public ResponseEntity<MerchantFee> updateMerchantFee(@RequestBody MerchantFee merchantFee) {
 		merchantFee.setCountryCode(merchantFee.getCountryCode().toUpperCase());
-		
 		MerchantFee mf = service.putMerchantFee(merchantFee);
-		service.getAll();
 		return new ResponseEntity<>(mf, HttpStatus.OK);
 	}
 
@@ -71,7 +69,6 @@ public class MerchantFeeController {
 	@ApiOperation(value = "Remove merchant fee configuration by id")
 	public ResponseEntity<String> removeMerchantFee(@RequestParam("id") String id) {
 		String deleteResult = service.remove(id);
-		service.getAll();
 		return new ResponseEntity<>(deleteResult, HttpStatus.OK);
 	}
 

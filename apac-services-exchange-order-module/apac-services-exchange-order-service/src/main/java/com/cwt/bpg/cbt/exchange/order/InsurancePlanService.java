@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +22,11 @@ public class InsurancePlanService {
 		return insurancePlanRepository.getAll();
 	}
 	
-	@CacheEvict(cacheNames = "insurance-types", key="#root.target.KEY")
 	public InsurancePlan putInsurancePlan(InsurancePlan insurancePlan) {
 		return insurancePlanRepository.put(insurancePlan);
 	}
 	
-	@CacheEvict(cacheNames = "insurance-types", key="#root.target.KEY")
-	public String remove(String id) {		
+	public String remove(String id) {
 		return insurancePlanRepository.remove(new ObjectId(id));
 	}
 }

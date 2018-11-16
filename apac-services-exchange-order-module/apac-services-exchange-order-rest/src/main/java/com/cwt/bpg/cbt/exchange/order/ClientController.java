@@ -42,8 +42,6 @@ public class ClientController {
 	@ApiOperation(value = "Saves client")
 	public ResponseEntity<Client> putClient(@RequestBody Client client) {
 		Client updatedClient = clientService.save(client);
-		clientService.getAll();
-		
 		return new ResponseEntity<>(updatedClient, HttpStatus.OK);
 	}
 
@@ -53,8 +51,6 @@ public class ClientController {
 	public ResponseEntity<String> removeClient(@PathVariable String clientAccountNumber) {
 		String deleteResult = clientService.delete(clientAccountNumber);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
-		clientService.getAll();
-		
 		return new ResponseEntity<>(deleteResult, status);
 	}
 
