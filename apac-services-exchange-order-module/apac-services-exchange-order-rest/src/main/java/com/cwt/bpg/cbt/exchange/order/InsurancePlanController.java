@@ -47,7 +47,6 @@ public class InsurancePlanController {
 	public ResponseEntity<InsurancePlan> updateInsurancePlan(@Valid @RequestBody InsurancePlan insurance) {
 
 		InsurancePlan updatedResult = service.putInsurancePlan(insurance);
-		service.getAll();
 		return new ResponseEntity<>(updatedResult, HttpStatus.OK);
 	}
 
@@ -58,7 +57,6 @@ public class InsurancePlanController {
 	public ResponseEntity<String> removeInsurancePlan(@PathVariable String id) {
 
 		String deleteResult = service.remove(id);
-		service.getAll();
 		return new ResponseEntity<>(deleteResult, HttpStatus.OK);
 	}
 

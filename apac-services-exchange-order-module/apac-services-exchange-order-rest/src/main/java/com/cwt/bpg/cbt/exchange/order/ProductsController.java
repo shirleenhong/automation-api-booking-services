@@ -41,7 +41,6 @@ public class ProductsController {
             @RequestBody Product product) {
         String result = service.saveProduct(countryCode.toUpperCase(), product, insert);
         HttpStatus status = result.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
-        getProducts(countryCode);
         return new ResponseEntity<>(result, status);
     }
 
@@ -53,7 +52,6 @@ public class ProductsController {
             @RequestBody IndiaProduct product) {
         String result = service.saveProduct(Country.INDIA.getCode().toUpperCase(), product, insert);
         HttpStatus status = result.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
-        getProducts(Country.INDIA.getCode());
         return new ResponseEntity<>(result, status);
     }
 
@@ -67,7 +65,6 @@ public class ProductsController {
             @RequestBody Vendor vendor) {
         String result = service.saveVendor(countryCode.toUpperCase(), productCode, vendor, insert);
         HttpStatus status = result.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
-        getProducts(countryCode);
         return new ResponseEntity<>(result, status);
     }
 
@@ -80,7 +77,6 @@ public class ProductsController {
 			@PathVariable String productCode) {
 		String deleteResult = service.removeProduct(countryCode, productCode);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
-		getProducts(countryCode);
 		return new ResponseEntity<>(deleteResult, status);
 	}
 
@@ -92,7 +88,6 @@ public class ProductsController {
 			@PathVariable String vendorCode) {
 		String deleteResult = service.removeVendor(countryCode, vendorCode);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
-		getProducts(countryCode);
 		return new ResponseEntity<>(deleteResult, status);
 	}
 }
