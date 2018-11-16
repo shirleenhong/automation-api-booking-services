@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.tpromigration.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,14 +127,6 @@ public class MigrationService {
 			LOGGER.info("vendor:{}", vendor);
 			LOGGER.info("vendor.getProductCodes():" + productCodes);
 
-			if (CollectionUtils.isNotEmpty(noMerchantFeeList)) {
-				noMerchantFeeList.forEach(mf -> {
-					if (vendor.getCode().equals(mf.getVendorNumber())
-							&& vendor.getProductCodes().contains(mf.getProductCode())) {
-						vendor.setMerchantFeeAbsorb(true);
-					}
-				});
-			}
 			if (!ObjectUtils.isEmpty(contactInfoList)) {
 			
 				List<ContactInfo> contactList = new ArrayList<>();
@@ -172,13 +165,16 @@ public class MigrationService {
 			vendor.setContactNo(null);
 			
 			productCodes.forEach(productCode -> {
-				if (productsMap.get(productCode) != null)
-					productsMap.get(productCode).getVendors().add(vendor);
+				if (productsMap.get(productCode) != null) {
+					Vendor vendorClone = traverseNoMerchantFeeList(noMerchantFeeList,
+							vendor, productCode);
+					vendorClone.setProductCodes(null);
+					productsMap.get(productCode).getVendors().add(vendorClone);
+				}
 			});
 			
-			vendor.setProductCodes(null);
 		});
-
+		
 		@SuppressWarnings("rawtypes")
 		ProductList productList = new ProductList();
 		productList.setCountryCode(countryCode);
@@ -186,6 +182,30 @@ public class MigrationService {
 
 		mongoDbConnection.getCollection(PRODUCTS_COLLECTION)
 				.insertOne(dBObjectMapper.mapAsDbDocument(productList.getCountryCode(), productList));
+	}
+
+	private Vendor traverseNoMerchantFeeList(List<MerchantFeeAbsorb> noMerchantFeeList,
+			Vendor vendor, String productCode) {
+		
+		Vendor vendorClone = new Vendor();
+		try {
+			BeanUtils.copyProperties(vendorClone, vendor);
+		}
+		catch (IllegalAccessException e) {
+			LOGGER.error("IllegalAccessException", e);
+		}
+		catch (InvocationTargetException e) {
+			LOGGER.error("InvocationTargetException", e);
+		}
+		
+		for (MerchantFeeAbsorb mf : noMerchantFeeList) {
+			if (productCode.equals(mf.getProductCode())
+					&& vendorClone.getCode().equals(mf.getVendorNumber())) {
+				vendorClone.setMerchantFeeAbsorb(true);
+				break;
+			}
+		}
+		return vendorClone;
 	}
 
 	private void setMigratedContactInfo(List<ContactInfo> contactList,
