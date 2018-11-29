@@ -2,9 +2,7 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.CarVendor;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
-import com.cwt.bpg.cbt.exchange.order.model.RoomType;
-import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 
 public class ExchangeOrderServiceTest {
@@ -59,8 +53,10 @@ public class ExchangeOrderServiceTest {
     @Test
     public void shouldCallInsertWhenEoNumberIsNull() throws ExchangeOrderNoContentException {
         ExchangeOrder eo = new ExchangeOrder();
+        List<ExchangeOrder> eos = new ArrayList<>();
+        eos.add(eo);
 
-        service.save("sg",eo);
+        service.save("sg", eos);
 
         verify(insertService, times(1)).insert(eo);
     }
@@ -69,8 +65,10 @@ public class ExchangeOrderServiceTest {
     public void shouldCallUpdateWhenEoNumberIsNotNull() throws ExchangeOrderNoContentException {
         ExchangeOrder eo = new ExchangeOrder();
         eo.setEoNumber("1234567890");
+        List<ExchangeOrder> eos = new ArrayList<>();
+        eos.add(eo);
 
-        service.save("sg",eo);
+        service.save("sg",eos);
 
         verify(updateService, times(1)).update(eo);
     }

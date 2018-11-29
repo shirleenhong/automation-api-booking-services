@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,32 +8,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.CarVendor;
-import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
-import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
-import com.cwt.bpg.cbt.exchange.order.model.RoomType;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
-import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -54,13 +37,11 @@ public class ExchangeOrderController {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Saves new or updates existing exchange order.")
-	public ResponseEntity<ExchangeOrder> saveExchangeOrder(
+	public ResponseEntity<List<ExchangeOrder>> saveExchangeOrder(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
-			@Valid @RequestBody @ApiParam(value = "Exchange order to save") ExchangeOrder input)
+			@Valid @RequestBody @ApiParam(value = "Exchange order to save") List<ExchangeOrder> input)
 			throws ExchangeOrderNoContentException {
-		boolean isSave = input.getEoNumber() == null;
-		return new ResponseEntity<>((ExchangeOrder) eoService.save(countryCode, input),
-				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
+		return new ResponseEntity(eoService.save(countryCode, input), HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{eoNumber:^[0-9]{10}$}", produces = {
@@ -92,12 +73,10 @@ public class ExchangeOrderController {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "Saves new or updates existing India exchange order.")
-	public ResponseEntity<IndiaExchangeOrder> saveIndiaExchangeOrder(
-			@Valid @RequestBody @ApiParam(value = "Exchange order to save") IndiaExchangeOrder input)
+	public ResponseEntity<List<IndiaExchangeOrder>> saveIndiaExchangeOrder(
+			@Valid @RequestBody @ApiParam(value = "Exchange order to save") List<IndiaExchangeOrder> input)
 			throws ExchangeOrderNoContentException {
-		boolean isSave = input.getEoNumber() == null;
-		return new ResponseEntity<>((IndiaExchangeOrder) eoService.save(Country.INDIA.getCode(), input),
-				(isSave ? HttpStatus.CREATED : HttpStatus.OK));
+		return new ResponseEntity(eoService.save(Country.INDIA.getCode(), input), HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/exchange-order/in/{eoNumber:^[0-9]{10}$}", produces = {
