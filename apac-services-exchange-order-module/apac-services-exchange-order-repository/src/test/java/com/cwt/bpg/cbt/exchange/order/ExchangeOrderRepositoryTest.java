@@ -5,7 +5,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -21,11 +24,20 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
-import org.mongodb.morphia.query.*;
+import org.mongodb.morphia.query.FieldEnd;
+import org.mongodb.morphia.query.FindOptions;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
+import org.mongodb.morphia.query.UpdateResults;
 
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
+import com.mongodb.WriteResult;
 
 public class ExchangeOrderRepositoryTest {
 	
@@ -338,6 +350,20 @@ public class ExchangeOrderRepositoryTest {
         callback.verify(query, fieldEnd);
 	}
 	
+	@Test
+	public void shouldDeleteExchangeOrderWithNoRecordLocator() {
+
+		ExchangeOrder exchangeOrder = new ExchangeOrder();
+		exchangeOrder.setEoNumber("123098");
+		
+		WriteResult writeResult = mock(WriteResult.class);
+		when(dataStore.delete(exchangeOrder)).thenReturn(writeResult);
+
+        repository.remove(exchangeOrder);
+
+        verify(morphia, times(1)).getDatastore();
+        verify(dataStore, times(1)).delete(exchangeOrder);
+	}
 }
 
 @FunctionalInterface
