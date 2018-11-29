@@ -1,17 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
@@ -19,11 +11,7 @@ import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,18 +31,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.AdditionalInfo;
-import com.cwt.bpg.cbt.exchange.order.model.CarVendor;
-import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
-import com.cwt.bpg.cbt.exchange.order.model.EoAction;
-import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
-import com.cwt.bpg.cbt.exchange.order.model.FopType;
-import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
-import com.cwt.bpg.cbt.exchange.order.model.RoomType;
-import com.cwt.bpg.cbt.exchange.order.model.ServiceInfo;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaVendor;
@@ -112,15 +89,16 @@ public class ExchangeOrderControllerTest {
 		order.getServiceInfo().setGst(BigDecimal.ZERO);
 		order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
 		order.setEoNumber("1122334455");
+		List<BaseExchangeOrder> orders = Arrays.asList(order);
 
-		when(eoService.save(anyString(), any(ExchangeOrder.class))).thenReturn(order);
+		when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
 
-        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(1)).save(anyString(), any(ExchangeOrder.class));
+		verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
 	}
 
 	@Test
@@ -131,15 +109,16 @@ public class ExchangeOrderControllerTest {
 		order.getServiceInfo().setGst(BigDecimal.ZERO);
 		order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
 		order.setEoNumber(null);
+		List<BaseExchangeOrder> orders = Arrays.asList(order);
 
-		when(eoService.save(anyString(), any(ExchangeOrder.class))).thenReturn(order);
+		when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
 
-        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
-                .andExpect(status().isCreated())
+        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
+                .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(1)).save(anyString(), any(ExchangeOrder.class));
+		verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
 	}
 
 	@Test
@@ -152,15 +131,16 @@ public class ExchangeOrderControllerTest {
 		IndiaVendor vendor = new IndiaVendor();
 		vendor.setCode("VEN090909");
 		order.setVendor(vendor);
+		List<BaseExchangeOrder> orders = Arrays.asList(order);
 
-		when(eoService.save(anyString(), any(ExchangeOrder.class))).thenReturn(order);
+		when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
 
-        mockMvc.perform(post(urlIn).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
-                .andExpect(status().isCreated())
+        mockMvc.perform(post(urlIn).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
+                .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(1)).save(anyString(), any(IndiaExchangeOrder.class));
+		verify(eoService, times(1)).save(anyString(), anyListOf(IndiaExchangeOrder.class));
 	}
 
 	@Test
@@ -172,13 +152,14 @@ public class ExchangeOrderControllerTest {
 		order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
 		order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
 		order.setEoNumber("1122334455");
+		List<ExchangeOrder> orders = Arrays.asList(order);
 
-        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(1)).save(anyString(), any(ExchangeOrder.class));
+		verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
 	}
 
     @Test
@@ -199,10 +180,11 @@ public class ExchangeOrderControllerTest {
 		order.getServiceInfo().setCommission(BigDecimal.ZERO);
 		order.getServiceInfo().setGst(BigDecimal.ZERO);
 		order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-		when(eoService.save(anyString(), any(ExchangeOrder.class)))
+		List<ExchangeOrder> orders = Arrays.asList(order);
+		when(eoService.save(anyString(), anyListOf(ExchangeOrder.class)))
 				.thenThrow(new ExchangeOrderNoContentException("eo number not found"));
 
-        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
+        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
                 .andExpect(status().isNoContent())
                 .andReturn()
                 .getResponse();
@@ -256,15 +238,16 @@ public class ExchangeOrderControllerTest {
 	public void shouldNotReturnExchangeOrder() throws Exception {
 
 		ExchangeOrder order = new ExchangeOrder();
+		List<BaseExchangeOrder> orders = Arrays.asList(order);
 
-		when(eoService.save("sg", order)).thenReturn(order);
+		when(eoService.save("sg", orders)).thenReturn(orders);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isBadRequest())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(0)).save(anyString(), any(ExchangeOrder.class));
+		verify(eoService, times(0)).save(anyString(), anyListOf(ExchangeOrder.class));
 	}
 
 	private ExchangeOrder createExchangeOrder() {

@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -38,16 +39,25 @@ public class ExchangeOrderService {
 	private AirMiscInfoRepository airMiscInfoRepository;
 	
 
-	public BaseExchangeOrder save(String countryCode, BaseExchangeOrder exchangeOrder)
+	public List<BaseExchangeOrder> save(String countryCode, List<? extends BaseExchangeOrder> exchangeOrders)
 			throws ExchangeOrderNoContentException {
 
-		String eoNumber = exchangeOrder.getEoNumber();
-		exchangeOrder.setCountryCode(countryCode);
-		if (eoNumber == null) {
-			return eoInsertService.insert(exchangeOrder);
-		} else {
-			return eoUpdateService.update(exchangeOrder);
+		List<BaseExchangeOrder> savedExchangeOrders = new ArrayList<>();
+		for (BaseExchangeOrder exchangeOrder : exchangeOrders) {
+			exchangeOrder.setCountryCode(countryCode.toUpperCase());
+			if (exchangeOrder.getEoNumber() == null) {
+				BaseExchangeOrder insertResult = eoInsertService.insert(exchangeOrder);
+				if (insertResult != null) {
+					savedExchangeOrders.add(insertResult);
+				}
+			} else {
+				BaseExchangeOrder updateResult = eoUpdateService.update(exchangeOrder);
+				if (updateResult != null) {
+					savedExchangeOrders.add(updateResult);
+				}
+			}
 		}
+		return savedExchangeOrders;
 	}
 
 	public ExchangeOrder get(String eoNumber) {
