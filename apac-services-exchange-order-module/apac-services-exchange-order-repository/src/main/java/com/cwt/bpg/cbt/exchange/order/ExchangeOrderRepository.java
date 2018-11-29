@@ -5,8 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang.StringUtils;
+import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
-import org.mongodb.morphia.query.*;
+import org.mongodb.morphia.query.FindOptions;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.Sort;
+import org.mongodb.morphia.query.UpdateOperations;
+import org.mongodb.morphia.query.UpdateResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +23,7 @@ import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
+import com.mongodb.WriteResult;
 
 @Repository
 public class ExchangeOrderRepository {
@@ -84,6 +90,22 @@ public class ExchangeOrderRepository {
                 .order(Sort.descending(CREATE_DATETIME))
                 .asList();
     }
+    
+    public List<ExchangeOrder> getExchangeOrderNoRecordLocator() {
+        return morphia.getDatastore().createQuery(ExchangeOrder.class)
+        		.field(RECORD_LOCATOR).doesNotExist().asList();
+    }
+    
+	public String remove(ExchangeOrder exchangeOrder) {
+		final Datastore datastore = morphia.getDatastore();
+
+		WriteResult deleteResult = datastore.delete(exchangeOrder);
+
+		LoggerFactory.getLogger(ExchangeOrderRepository.class).info("Delete Result: {}",
+				deleteResult);
+
+		return deleteResult.getN() > 0 ? exchangeOrder.getEoNumber() : "";
+	}
 
 	public List<ExchangeOrder> search(final ExchangeOrderSearchParam param)
     {
