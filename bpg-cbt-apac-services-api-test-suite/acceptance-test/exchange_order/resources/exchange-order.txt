@@ -377,7 +377,7 @@ Create Exchange Order Request
     Create Exchange Order Miscellaneous Information Request
     Create Exchange Order Service Information Request
     Create Exchange Order Vendor Request
-    ${data}    Set Variable    {${data_main},${data_insurance},${data_mco},${data_misc_info},${data_service_info},${data_vendor}}
+    ${data}    Set Variable    [{${data_main},${data_insurance},${data_mco},${data_misc_info},${data_service_info},${data_vendor}}]
     ${data}    Replace String    ${data}    {},    ${EMPTY}
     ${data}    Replace String    ${data}    ,{}    ${EMPTY}
     Set Test Variable    ${data}
@@ -831,7 +831,7 @@ Verify Exchange Order Email Is Generated Successfully
     ${email_flag}    Wait For Email    sender=${sender}    subject=${subject}    timeout=${timeout}
     Verify Actual Numerical Value Matches Expected Numerical Value    ${email_flag}    1
 
-Verify Exchange Order For Record Locator Is Retrieved Correctly
+Verify Exchange Order List Is Retrieved Correctly
     [Arguments]    ${field_name}=value
     ${eo_index}    Evaluate    ${number_of_eo}-1
     Set Test Variable    ${original_response_value}    ${response.text}
@@ -849,7 +849,7 @@ Verify Exchange Order For Record Locator Is Retrieved Correctly
     \    ...    ELSE    Verify Json Element Does Not Exist    $.agentId
     \    Run Keyword If    "${agent_name_${eo_index}_${field_name}}"!="null" and "${agent_name_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.agentName    ${agent_name_${eo_index}_${field_name}}
     \    ...    ELSE    Verify Json Element Does Not Exist    $.agentName
-    \    Run Keyword If    "${country_code_${eo_index}_${field_name}}"!="null" and "${country_code_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.countryCode    ${country_code_${eo_index}_${field_name}}
+    \    Run Keyword If    "${country_code_${eo_index}_${field_name}}"!="null" and "${country_code_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.countryCode    ${country_code_${eo_index}_${field_name}.upper()}
     \    ...    ELSE    Verify Json Element Does Not Exist    $.countryCode
     \    Run Keyword If    "${eo_action_${eo_index}_${field_name}}"!="null" and "${eo_action_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.eoAction    ${eo_action_${eo_index}_${field_name}}
     \    ...    ELSE    Verify Json Element Does Not Exist    $.eoAction
@@ -982,7 +982,7 @@ Verify Exchange Order Is Saved Correctly
     ...    ELSE    Verify Json Element Does Not Exist    $.agentId
     Run Keyword If    "${agent_name_${eo_index}_${field_name}}"!="null" and "${agent_name_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.agentName    ${agent_name_${eo_index}_${field_name}}
     ...    ELSE    Verify Json Element Does Not Exist    $.agentName
-    Run Keyword If    "${country_code_${eo_index}_${field_name}}"!="null" and "${country_code_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.countryCode    ${country_code_${eo_index}_${field_name}}
+    Run Keyword If    "${country_code_${eo_index}_${field_name}}"!="null" and "${country_code_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.countryCode    ${country_code_${eo_index}_${field_name}.upper()}
     ...    ELSE    Verify Json Element Does Not Exist    $.countryCode
     Run Keyword If    "${eo_action_${eo_index}_${field_name}}"!="null" and "${eo_action_${eo_index}_${field_name}}"!="none"    Verify Json Value Is Correct With Given Response    $.eoAction    ${eo_action_${eo_index}_${field_name}}
     ...    ELSE    Verify Json Element Does Not Exist    $.eoAction
@@ -1091,6 +1091,18 @@ Verify Exchange Order Number Is Returned Correctly
     Verify String Matches Pattern    ${eo_sequence}    ^[0-9_]*$
     Set Test Variable    ${exchange_order_number_${eo_index}}    ${exchange_order_number}
     Set Test Variable    ${exchange_order_number}
+    
+Verify Exchange Order Number Is Returned From A List Correctly
+    [Arguments]    ${field_name}=value
+    ${eo_index}    Evaluate    ${number_of_eo}-1
+    Set Test Variable    ${original_response_value}    ${response.text}
+    : FOR    ${index}    IN RANGE    0    ${number_of_eo}
+    \    ${response_value}    Get Json Content    ${original_response_value}    $[${index}]
+    \    Set Test Variable    ${response_value}
+    \    Log    ${response_value}
+    \    Set Test Variable    ${json_index}    ${index}
+    \    Verify Exchange Order Number Is Returned Correctly    eo_index=${eo_index}    field_name=amend
+    \    ${eo_index}    Evaluate    ${eo_index}-1
 
 Verify Exchange Order Remark Is Retrieved Correctly
     [Arguments]    ${index}=0    ${eo_index}=0

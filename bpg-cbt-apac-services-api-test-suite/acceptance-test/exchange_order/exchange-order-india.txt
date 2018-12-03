@@ -8,43 +8,44 @@ Resource          resources/exchange-order-india-variables.txt
 
 *** Test Cases ***
 Verify That Exchange Order Is Created And Saved Successfully When Fields Are Complete
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    assoc_info_number=2    train_info_number=3    air_segments_number=2 
     Send Exchange Order Post Request For India
-    Verify Exchange Order Is Saved Correctly
+    #Verify Exchange Order Is Saved Correctly
+    Verify Exchange Order List Is Retrieved Correctly
     
 Verify That Exchange Order Is Created And Saved Successfully When Fields Are Incomplete For All Tabs
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=misc_reference_fare,none|misc_low_fare,333.99|misc_class_of_service,none|misc_low_fare_carrier,Test Low Fare Carrier|misc_booking_action,Test Booking Action|misc_realised_savings_code,Test RSC|misc_missed_savings_code,none|misc_declined_airline_1,Test Declined Airline 1|misc_declined_fare_1,none|misc_declined_airline_2,Test Declined Airline 2|misc_declined_fare_2,none    service_info_data=service_nett_cost,none|service_selling_price,140.99|service_commission,none|service_discount,200.99|service_gst_amount,800.99|service_gst_absorb,true|service_merchant_fee,none|service_merchant_fee_absorb,none|service_total_selling_price,none|service_country,none|service_type,Test Type|service_entries,none|service_validity_length,20|service_validity_type,none|service_processing,Test Processing|service_description,none|service_fop_type,CC|service_cc_type,AX|service_cc_number,1234|service_expiry_date,11/30|service_prod_desc,Test Service Prod Descrption|service_cwt_ref,none|service_vendor_ref,Test Service Vendor Reference|service_other_related,none    request_info_data=internal_remark;Test Internal Remark|other_request;mag_date_time,2018-08-01T07:27:54.427Z^mag_city,Test Meeting City^mag_location,Test Meeting Location^tour_start_date,2018-08-01T07:27:54.427Z^tour_end_date,2018-08-01T07:27:54.427Z^tour_city,Test City^tour_package_name,Test Package Name^tour_details,Test Details^tour_passenger,Test Tour Passenger    request_info_tab_data=meeting,tour    assoc_info_data=assoc_details,none|assoc_product,Test Product|assoc_vendor,Test Vendor|assoc_fop,none|assoc_cc_type,none|assoc_cc_number,none|assoc_expiry_date,none|assoc_nett_cost,none|assoc_commission,300.99|assoc_discount,none|assoc_selling_price,none|assoc_total_selling_price,500.99|assoc_vat,600.99|assoc_merchant_fee,none|assoc_prod_desc,none|assoc_cwt_ref,Test CWT Reference|assoc_vendor_ref,Test Vendor Reference|assoc_other_related,none|assoc_client_exempt,none|assoc_no_merchant_fee,true    assoc_info_number=1
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
     
 Verify That Exchange Order Is Created And Saved Successfully When Only Associated Information Tab Fields Are Entered
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    service_info_data=null    request_info_data=null    request_info_tab_data=null    assoc_info_number=1
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
 
 Verify That Exchange Order Is Created And Saved Successfully When Only Miscellaneous Information Tab Fields Are Entered
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    service_info_data=null    request_info_data=null    request_info_tab_data=null	assoc_info_data=null
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
     
 Verify That Exchange Order Is Created And Saved Successfully When Only Other Information Fields Are Entered
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    service_info_data=null    request_info_data=null    request_info_tab_data=null	assoc_info_data=null
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
     
 Verify That Exchange Order Is Created And Saved Successfully When Only Request Information Tab Fields Are Entered
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    assoc_info_data=null    service_info_data=null    train_info_number=3
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
     
 Verify That Exchange Order Is Created And Saved Successfully When Only Air Charges Tab Fields Are Entered
-    [Tags]    functional    
+    [Tags]    not-ready    
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    request_info_data=null    service_info_data=null    request_info_tab_data=null    assoc_info_data=null
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -56,13 +57,13 @@ Verify That Exchange Order Is Created And Saved Successfully When Only Service I
     Verify Exchange Order Is Saved Correctly
 
 Verify That Exchange Order Is Created And Saved Successfully When Only Vendor Information Tab Fields Are Entered
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    misc_info_data=null    request_info_data=null    request_info_tab_data=null	assoc_info_data=null    service_info_data=null
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
     
 Verify That Exchange Order Is Updated And Saved Successfully When All Fields Are Edited
-    [Tags]    functional
+    [Tags]    not-ready
     #Update To Single Associated Info List, Train Segment and Air Segment
     Create Test Variables For Exchange Order India    assoc_info_number=1    train_info_number=1    air_segments_number=1 
     Send Exchange Order Post Request For India
@@ -79,7 +80,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When All Fields Are
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Associated Information Tab Fields Are Edited
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    service_info_data=null    request_info_data=null    request_info_tab_data=null    assoc_info_number=1
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -88,7 +89,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Associated Inf
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Miscellaneous Information Tab Fields Are Edited
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    service_info_data=null    request_info_data=null    request_info_tab_data=null	assoc_info_data=null
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -97,7 +98,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Miscellaneous 
     Verify Exchange Order Is Saved Correctly    amend_eo=true
 
 Verify That Exchange Order Is Updated And Saved Successfully When Other Information Tab Fields Are Edited
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    service_info_data=null    request_info_data=null    request_info_tab_data=null    assoc_info_data=null
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -106,7 +107,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Other Informat
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Request Information Tab Fields Are Edited
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    assoc_info_data=null    service_info_data=null    train_info_number=3    air_segments_number=3
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -115,7 +116,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Request Inform
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Air Charges Tab Fields Are Edited
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    service_info_data=null    misc_info_data=null    request_info_data=null    request_info_tab_data=null    assoc_info_data=null
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -124,7 +125,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Air Charges Ta
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Service Information Tab Fields Are Edited
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    request_info_data=null    request_info_tab_data=null    assoc_info_data=null
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -133,7 +134,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Service Inform
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Vendor Information Tab Fields Are Edited
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    request_info_data=null    request_info_tab_data=null    misc_info_data=null    assoc_info_data=null    service_info_data=null
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -142,7 +143,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Vendor Informa
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Some Fields Are Removed For All Tabs
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    assoc_info_number=1    train_info_number=1    air_segments_number=1 
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -151,7 +152,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Some Fields Ar
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Only Associated Information Tab Fields Are Removed
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    assoc_info_number=1    train_info_number=1    air_segments_number=1 
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -160,7 +161,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Only Associate
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Only Miscellaneous Information Tab Fields Are Removed
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    assoc_info_number=1    train_info_number=1    air_segments_number=1 
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -169,7 +170,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Only Miscellan
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Only Other Information Fields Are Removed
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    assoc_info_number=1    train_info_number=1    air_segments_number=1 
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -178,7 +179,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Only Other Inf
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Only Request Information Tab Fields Are Removed
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    assoc_info_number=1    train_info_number=1    air_segments_number=1 
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -187,7 +188,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Only Request I
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Only Air Charges Tab Fields Are Removed
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    assoc_info_number=1    train_info_number=1    air_segments_number=1 
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -196,7 +197,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Only Air Charg
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Only Service Information Tab Fields Are Removed
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    assoc_info_number=1    train_info_number=1    air_segments_number=1 
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -205,7 +206,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Only Service I
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Only Vendor Information Tab Fields Are Removed
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    assoc_info_number=1    train_info_number=1    air_segments_number=1 
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -214,7 +215,7 @@ Verify That Exchange Order Is Updated And Saved Successfully When Only Vendor In
     Verify Exchange Order Is Saved Correctly    amend_eo=true
     
 Verify That Exchange Order Is Updated And Saved Successfully When Form Of Payment Is Edited Or Removed
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    assoc_info_number=1    train_info_number=1    air_segments_number=1
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -229,21 +230,21 @@ Verify That Exchange Order Is Updated And Saved Successfully When Form Of Paymen
     Verify Exchange Order Is Saved Correctly    amend_eo=true    
     
 Verify That Exchange Order Is Retrieved Successfully When Record Locator Is Used
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    assoc_info_number=1    train_info_number=1    air_segments_number=1    total_eo=3    generate_pnr=true
     Send Exchange Order Post Request For India
     Send Exchange Order Get Request    via=pnr
     Verify Exchange Order List Is Retrieved Correctly
     
 Verify That Exchange Order Is Retrieved Successfully When Exchange Order Number Is Used
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    assoc_info_number=1    train_info_number=1    air_segments_number=1
     Send Exchange Order Post Request For India
     Send Exchange Order Get Request
     Verify Exchange Order Is Saved Correctly
     
 Verify That Exchange Order Is Created And Saved Successfully For Valid Exchange Order Action Values
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    service_info_data=null    request_info_data=null    request_info_tab_data=null	assoc_info_data=null
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -255,7 +256,7 @@ Verify That Exchange Order Is Created And Saved Successfully For Valid Exchange 
     Verify Exchange Order Is Saved Correctly
     
 Verify That Exchange Order Is Created And Saved Successfully For Valid Exchange Order Status Values
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    service_info_data=null    request_info_data=null    request_info_tab_data=null	assoc_info_data=null
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -267,7 +268,7 @@ Verify That Exchange Order Is Created And Saved Successfully For Valid Exchange 
     Verify Exchange Order Is Saved Correctly
     
 Verify That Exchange Order Is Created And Saved Successfully For Valid Cancellation Type Values
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    assoc_info_data=null    service_info_data=null    train_info_number=3
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
@@ -279,7 +280,7 @@ Verify That Exchange Order Is Created And Saved Successfully For Valid Cancellat
     Verify Exchange Order Is Saved Correctly
     
 Verify That Exchange Order Is Created And Saved Successfully For Valid Cancellation Unit Values
-    [Tags]    functional
+    [Tags]    not-ready
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    assoc_info_data=null    service_info_data=null    train_info_number=3
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
