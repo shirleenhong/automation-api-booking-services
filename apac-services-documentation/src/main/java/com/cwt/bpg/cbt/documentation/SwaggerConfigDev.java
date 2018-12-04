@@ -27,9 +27,10 @@ public class SwaggerConfigDev extends SwaggerConfigBase {
                 .build()
                 .groupName("apac-services")
                 .apiInfo(apiInfo())
-                .tags(appInfo(), airTransaction(), airline(), airlineRules(), airport(), airContract(),
-                        exchangeOrder(), merchantFee(), serviceFees(), otherServiceFees(), products(),
-                        insurance(), obtList())
+				.tags(appInfo(), airTransaction(), airline(), airlineRules(), airport(),
+						airContract(), client(), exchangeOrder(), merchantFee(),
+						serviceFees(), otherServiceFees(), products(), insurance(),
+						obtList())
                 .securitySchemes(Lists.newArrayList(securityScheme()))
                 .securityContexts(Lists.newArrayList(securityContext()));
     }

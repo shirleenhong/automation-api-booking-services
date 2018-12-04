@@ -23,7 +23,7 @@ public class ClientController {
 	
 	@GetMapping(path = "/clients", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls all clients")
+	@ApiOperation(value = "[Maintenance] Returns all clients.")
 	public ResponseEntity<List<Client>> getAllClients() {
 
 		return new ResponseEntity<>(clientService.getAll(), HttpStatus.OK);
@@ -31,7 +31,7 @@ public class ClientController {
 	
 	@GetMapping(path = "/clients/{clientAccountNumber}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pull client by client account number")
+	@ApiOperation(value = "Returns client by client account number.")
 	public ResponseEntity<Client> getClient(@PathVariable String clientAccountNumber) {
 
 		return new ResponseEntity<>(clientService.getClient(clientAccountNumber), HttpStatus.OK);
@@ -39,7 +39,7 @@ public class ClientController {
 
 	@PutMapping(path = "/clients", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Saves client")
+	@ApiOperation(value = "[Maintenance] Saves (inserts/updates) client.")
 	public ResponseEntity<Client> putClient(@RequestBody Client client) {
 		Client updatedClient = clientService.save(client);
 		return new ResponseEntity<>(updatedClient, HttpStatus.OK);
@@ -47,7 +47,7 @@ public class ClientController {
 
 	@DeleteMapping(path = "/clients/{clientAccountNumber}")
 	@ResponseBody
-	@ApiOperation(value = "Remove client by clientAccountNumber")
+	@ApiOperation(value = "[Maintenance] Removes client by client account number.")
 	public ResponseEntity<String> removeClient(@PathVariable String clientAccountNumber) {
 		String deleteResult = clientService.delete(clientAccountNumber);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;

@@ -78,6 +78,10 @@ public class SwaggerConfigBase {
     Tag appInfo() {
         return new Tag("App Info", "Health-check endpoint.");
     }
+    
+    Tag client() {
+        return new Tag("Clients", "Services related to Clients.\nImportant field: **clientAccountNumber**");
+    }
 
     Tag exchangeOrder() {
         return new Tag("Exchange Order", "Services related to Exchange Order.");
