@@ -51,7 +51,7 @@ Verify That Exchange Order Is Created And Saved Successfully When Only Air Charg
     Verify Exchange Order Is Saved Correctly
     
 Verify That Exchange Order Is Created And Saved Successfully When Only Service Information Tab Fields Are Entered
-    [Tags]    functional    
+    [Tags]    not-ready    
     Create Test Variables For Exchange Order India    other_info_data=eo_action,none|status,none|agent_id,none|agent_name,none|country_code,IN|pcc,none|product_code,0|vendor_code,00900032|record_locator,none|total,none    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    request_info_data=null    request_info_tab_data=null    assoc_info_data=null
     Send Exchange Order Post Request For India
     Verify Exchange Order Is Saved Correctly
