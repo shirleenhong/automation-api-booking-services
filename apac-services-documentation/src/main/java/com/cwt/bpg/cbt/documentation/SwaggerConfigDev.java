@@ -15,12 +15,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 @Profile("dev")
-public class SwaggerConfigDev extends SwaggerConfigBase
-{
+public class SwaggerConfigDev extends SwaggerConfigBase {
     @SuppressWarnings("unchecked")
-	@Bean
-    public Docket swaggerForDev()
-    {
+    @Bean
+    public Docket swaggerForDev() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
@@ -29,7 +27,9 @@ public class SwaggerConfigDev extends SwaggerConfigBase
                 .build()
                 .groupName("apac-services")
                 .apiInfo(apiInfo())
-                .tags(appInfo(), exchangeOrder(), merchantFee(), serviceFees(), otherServiceFees(), products(), insurance(), airTransaction(), obtList(), airContract())
+                .tags(appInfo(), airTransaction(), airline(), airlineRules(), airport(), airContract(),
+                        exchangeOrder(), merchantFee(), serviceFees(), otherServiceFees(), products(),
+                        insurance(), obtList())
                 .securitySchemes(Lists.newArrayList(securityScheme()))
                 .securityContexts(Lists.newArrayList(securityContext()));
     }
