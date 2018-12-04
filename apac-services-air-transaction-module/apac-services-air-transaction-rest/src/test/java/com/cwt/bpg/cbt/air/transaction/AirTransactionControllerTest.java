@@ -1,8 +1,6 @@
 package com.cwt.bpg.cbt.air.transaction;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -106,7 +104,7 @@ public class AirTransactionControllerTest {
         String id = "ID";
         when(service.delete(id)).thenReturn(id);
 
-        mockMvc.perform(delete("/air-transactions?id=" + id)
+        mockMvc.perform(delete("/air-transactions/" + id)
                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -120,7 +118,7 @@ public class AirTransactionControllerTest {
         String id = "ID";
         when(service.delete(id)).thenReturn("");
 
-        mockMvc.perform(delete("/air-transactions?id=" + id)
+        mockMvc.perform(delete("/air-transactions/" + id)
                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound())
                 .andReturn()

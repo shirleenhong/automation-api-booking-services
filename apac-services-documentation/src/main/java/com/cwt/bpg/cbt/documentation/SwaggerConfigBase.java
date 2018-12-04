@@ -78,13 +78,29 @@ public class SwaggerConfigBase {
     Tag appInfo() {
         return new Tag("App Info", "Health-check endpoint.");
     }
-    
+
     Tag client() {
         return new Tag("Clients", "Services related to Clients.\nImportant field: **clientAccountNumber**");
     }
 
     Tag exchangeOrder() {
         return new Tag("Exchange Order", "Services related to Exchange Order.");
+    }
+
+    Tag carVendors() {
+        return new Tag("Exchange Order - Car Vendor", "Maintenance of EO car vendors.");
+    }
+
+    Tag hotelRoomTypes() {
+        return new Tag("Exchange Order - Hotel Room Types", "Maintenance of EO hotel room types.");
+    }
+
+    Tag vmpdReasonCodes() {
+        return new Tag("Exchange Order - VMPD Reason Codes", "Maintenance of EO VMPD reasons for issue.");
+    }
+
+    Tag airMiscInfo() {
+        return new Tag("Exchange Order - Air Misc Info", "Maintenance of Air Misc Info.");
     }
 
     Tag insurance() {
