@@ -153,7 +153,7 @@ public class ExchangeOrderController {
 		final boolean result = eoService.update(exchangeOrder);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(path = "/exchange-order/room-types", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
@@ -163,7 +163,7 @@ public class ExchangeOrderController {
 		return new ResponseEntity<>((List<RoomType>)
 				eoService.getAll(), HttpStatus.OK);
 	}
-	
+
 	@Internal
 	@PutMapping(path = "/exchange-order/room-types")
 	@ApiOperation(tags = "Exchange Order - Hotel Room Types", value = "Saves (inserts/updates) hotel room type.")
@@ -180,7 +180,7 @@ public class ExchangeOrderController {
 		String deleteResult = eoService.delete(code);
 		HttpStatus status = checkDeleteResult(deleteResult);
 		return new ResponseEntity<>(deleteResult, status);
-		
+
 	}
 
 	@GetMapping(path = "/exchange-order/vmpd")
@@ -189,7 +189,7 @@ public class ExchangeOrderController {
 	public ResponseEntity<List<VmpdReasonCode>> getVmpdReasonCodes() {
 		return new ResponseEntity<>(eoService.getAllVmpdReasonCodes(), HttpStatus.OK);
 	}
-	
+
 	@Internal
     @PutMapping(path = "/exchange-order/vmpd")
     @ResponseBody
@@ -197,7 +197,7 @@ public class ExchangeOrderController {
     public ResponseEntity<VmpdReasonCode> saveVmpdReasonCode(@Valid @RequestBody VmpdReasonCode reasonCode) {
         return new ResponseEntity<>(eoService.saveVmpdReasonCode(reasonCode), HttpStatus.OK);
     }
-	
+
 	@Internal
 	@DeleteMapping(path = "/exchange-order/vmpd/{code}")
 	@ResponseBody
@@ -207,14 +207,14 @@ public class ExchangeOrderController {
 		HttpStatus status = checkDeleteResult(deleteResult);
 		return new ResponseEntity<>(deleteResult, status);
 	}
-	
+
 	@GetMapping(path = "/exchange-order/car-vendors")
 	@ResponseBody
 	@ApiOperation(tags = "Exchange Order - Car Vendor", value = "Returns all car vendors.")
 	public ResponseEntity<List<CarVendor>> getCarVendors() {
 		return new ResponseEntity<>(eoService.getAllCarVendors(), HttpStatus.OK);
 	}
-	
+
 	@Internal
     @PutMapping(path = "/exchange-order/car-vendors")
     @ResponseBody
@@ -222,7 +222,7 @@ public class ExchangeOrderController {
     public ResponseEntity<CarVendor> saveCarVendor(@Valid @RequestBody CarVendor carVendor) {
         return new ResponseEntity<>(eoService.saveCarVendor(carVendor), HttpStatus.OK);
     }
-	
+
 	@Internal
 	@DeleteMapping(path = "/exchange-order/car-vendors/{code}")
 	@ResponseBody
@@ -243,7 +243,7 @@ public class ExchangeOrderController {
 				eoService.getAirMiscInfos(clientAccountNumber, reportingFieldTypeIds),
 				HttpStatus.OK);
 	}
-	
+
 	@Internal
     @PutMapping(path = "/exchange-order/air-misc-info")
     @ResponseBody
@@ -251,7 +251,7 @@ public class ExchangeOrderController {
     public ResponseEntity<AirMiscInfo> saveAirMiscInfo(@Valid @RequestBody AirMiscInfo airMiscInfo) {
         return new ResponseEntity<>(eoService.saveAirMiscInfo(airMiscInfo), HttpStatus.OK);
     }
-	
+
 	@Internal
 	@DeleteMapping(path = "/exchange-order/air-misc-info/{id}")
 	@ResponseBody

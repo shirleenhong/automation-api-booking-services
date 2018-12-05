@@ -123,6 +123,10 @@ public class SwaggerConfigBase {
         return new Tag("Products", "Services related to Products.");
     }
 
+    Tag remarks() {
+        return new Tag("Remarks", "Services related to Remarks.");
+    }
+
     Tag serviceFees() {
         return new Tag("Service Fees", "Services related to Service Fees");
     }
