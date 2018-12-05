@@ -80,7 +80,7 @@ public class SwaggerConfigBase {
     }
 
     Tag client() {
-        return new Tag("Clients", "Services related to Clients.\nImportant field: **clientAccountNumber**");
+        return new Tag("Clients", "Services related to Clients.");
     }
 
     Tag exchangeOrder() {
