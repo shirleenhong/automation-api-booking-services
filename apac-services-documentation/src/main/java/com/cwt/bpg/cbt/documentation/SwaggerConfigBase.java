@@ -116,7 +116,7 @@ public class SwaggerConfigBase {
     }
 
     Tag otherServiceFees() {
-        return new Tag("Other Service Fees", "Services related to Other Service Fees");
+        return new Tag("Other Service Fees", "Services related to computation of EO service fees.");
     }
 
     Tag products() {
