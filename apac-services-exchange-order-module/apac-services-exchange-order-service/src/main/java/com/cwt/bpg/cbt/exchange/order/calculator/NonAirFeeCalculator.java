@@ -39,7 +39,7 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 
 		if (!input.isGstAbsorb()) {
 			gstAmount = round(calculatePercentage(input.getSellingPrice(), input.getGstPercent()), scale);
-			nettCostGst = round(calculatePercentage(input.getNettCost(), input.getGstPercent()), scale, roundingConfig.getRoundingMode("nettCost", countryCode));
+			nettCostGst = round(calculatePercentage(input.getNettCost(), input.getGstPercent()), scale, getRoundingMode("nettCost", countryCode));
 		}
 
 		BigDecimal merchantFeeAmount = null;
@@ -51,7 +51,7 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 							input.getSellingPrice()
 									.multiply(BigDecimal.ONE.add(percentDecimal(input.getGstPercent()))),
 							merchantFee.getMerchantFeePercent()),
-					0, roundingConfig.getRoundingMode("merchantFee", countryCode));
+					0, getRoundingMode("merchantFee", countryCode));
 		}
 
 		BigDecimal sellingPriceInDi = round(
@@ -59,11 +59,11 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 						.add(safeValue(merchantFeeAmount))).divide(
 								BigDecimal.ONE.add(percentDecimal(input.getGstPercent())),
 								2, RoundingMode.HALF_UP),
-				scale, roundingConfig.getRoundingMode("totalSellingFare", countryCode));
+				scale, getRoundingMode("totalSellingFare", countryCode));
 
         BigDecimal commission = round(BigDecimal.ZERO, scale);
         if (sellingPriceInDi.compareTo(safeValue(input.getNettCost())) > 0) {
-            commission = round(sellingPriceInDi.subtract(safeValue(input.getNettCost())), scale, roundingConfig.getRoundingMode("commission", countryCode));
+            commission = round(sellingPriceInDi.subtract(safeValue(input.getNettCost())), scale, getRoundingMode("commission", countryCode));
         }
 
         result.setNettCostGst(nettCostGst);
@@ -73,5 +73,9 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 		result.setCommission(commission);
 
 		return result;
+	}
+
+	private RoundingMode getRoundingMode(String field, String countryCode) {
+		return roundingConfig.getRoundingMode(field, countryCode);
 	}
 }

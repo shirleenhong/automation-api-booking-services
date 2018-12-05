@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order.calculator;
 import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import com.cwt.bpg.cbt.calculator.config.RoundingConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,26 +35,30 @@ public class VisaFeesCalculator implements Calculator<VisaFeesBreakdown, VisaFee
         BigDecimal nettCost = safeValue(input.getNettCost());
 
         if (input.isNettCostMerchantFeeChecked()) {
-            mfNettCost = round(calculatePercentage(nettCost, merchantFeePercent), scale, roundingConfig.getRoundingMode("merchantFee", countryCode));
+            mfNettCost = round(calculatePercentage(nettCost, merchantFeePercent), scale, getRoundingMode("merchantFee", countryCode));
             result.setNettCostMerchantFee(mfNettCost);
         }
 
         BigDecimal mfCwtHandling = BigDecimal.ZERO;
         if (input.isCwtHandlingMerchantFeeChecked()) {
             mfCwtHandling = round(calculatePercentage(
-                    input.getCwtHandling().add(input.getVendorHandling()), merchantFeePercent), scale, roundingConfig.getRoundingMode("merchantFee", countryCode));
+                    input.getCwtHandling().add(input.getVendorHandling()), merchantFeePercent), scale, getRoundingMode("merchantFee", countryCode));
             result.setCwtHandlingMerchantFee(mfCwtHandling);
         }
 
         BigDecimal sellingPrice = round(nettCost.add(input.getVendorHandling())
                     .add(input.getCwtHandling()).add(mfNettCost).add(mfCwtHandling),
-                scale, roundingConfig.getRoundingMode("totalSellingFare", countryCode));
+                scale, getRoundingMode("totalSellingFare", countryCode));
 
-        BigDecimal commission = round(input.getCwtHandling().add(mfNettCost).add(mfCwtHandling), scale, roundingConfig.getRoundingMode("commission", countryCode));
+        BigDecimal commission = round(input.getCwtHandling().add(mfNettCost).add(mfCwtHandling), scale, getRoundingMode("commission", countryCode));
 
         result.setCommission(commission);
         result.setSellingPrice(sellingPrice);
         result.setSellingPriceInDi(sellingPrice);
         return result;
     }
+
+	private RoundingMode getRoundingMode(String field, String countryCode) {
+		return roundingConfig.getRoundingMode(field, countryCode);
+	}
 }
