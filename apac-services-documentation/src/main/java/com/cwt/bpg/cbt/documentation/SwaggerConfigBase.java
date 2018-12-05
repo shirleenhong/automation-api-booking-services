@@ -126,6 +126,10 @@ public class SwaggerConfigBase {
     Tag serviceFees() {
         return new Tag("Service Fees", "Services related to Service Fees");
     }
+    
+    Tag reportHeaders() {
+        return new Tag("Report Header", "Maintenance of Report Headers.");
+    }
 
     ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("APAC Services API")

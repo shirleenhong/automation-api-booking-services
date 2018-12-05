@@ -29,7 +29,7 @@ public class SwaggerConfigDev extends SwaggerConfigBase {
                 .apiInfo(apiInfo())
 				.tags(appInfo(), airTransaction(), airline(), airlineRules(), airport(), airContract(), airMiscInfo(),
                         carVendors(), client(), exchangeOrder(), hotelRoomTypes(), insurance(), merchantFee(),
-						obtList(), otherServiceFees(), products(), serviceFees(), vmpdReasonCodes())
+						obtList(), otherServiceFees(), products(), serviceFees(), vmpdReasonCodes(), reportHeaders())
                 .securitySchemes(Lists.newArrayList(securityScheme()))
                 .securityContexts(Lists.newArrayList(securityContext()));
     }
