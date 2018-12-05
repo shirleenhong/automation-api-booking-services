@@ -47,7 +47,7 @@ public class ClientController {
 
 	@DeleteMapping(path = "/clients/{clientAccountNumber}")
 	@ResponseBody
-	@ApiOperation(value = "[Maintenance] Removes client by client account number.")
+	@ApiOperation(value = "[Maintenance] Deletes client by client account number.")
 	public ResponseEntity<String> removeClient(@PathVariable String clientAccountNumber) {
 		String deleteResult = clientService.delete(clientAccountNumber);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;

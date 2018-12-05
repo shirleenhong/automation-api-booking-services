@@ -23,7 +23,7 @@ public class ObtListController {
 
     @GetMapping(path = "/obt-list/{countryCode}")
     @ResponseBody
-    @ApiOperation(value = "Pulls OBT List for a specific country")
+    @ApiOperation(value = "Returns OBT List for a specific country.")
     public ResponseEntity<ObtList> getObtList(
             @PathVariable
             @ApiParam(value = "Country Code") String countryCode) {
@@ -32,7 +32,7 @@ public class ObtListController {
 
     @PutMapping(path = "/obt-list")
     @ResponseBody
-    @ApiOperation(value = "Save OBT List for a specific country")
+    @ApiOperation(value = "Saves (inserts/updates) OBT List for a specific country.")
     @Internal
     public ResponseEntity<ObtList> putObtList(@Valid @RequestBody ObtList obtList) {
         return new ResponseEntity<>(service.save(obtList), HttpStatus.OK);
@@ -40,7 +40,7 @@ public class ObtListController {
 
     @DeleteMapping(path = "/obt-list/{countryCode}")
     @ResponseBody
-    @ApiOperation(value = "Remove OBT List of a specific country")
+    @ApiOperation(value = "Deletes OBT List of a specific country.")
     @Internal
     public ResponseEntity<String> removeObtList(@PathVariable
                                                 @ApiParam(value = "Country Code") String countryCode) {

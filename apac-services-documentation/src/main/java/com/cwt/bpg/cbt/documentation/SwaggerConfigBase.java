@@ -108,11 +108,11 @@ public class SwaggerConfigBase {
     }
 
     Tag merchantFee() {
-        return new Tag("Merchant Fee", "Services related to Merchant Fee");
+        return new Tag("Merchant Fee", "Maintenance of Merchant Fee.");
     }
 
     Tag obtList() {
-        return new Tag("OBT List", "Services related to OBT List");
+        return new Tag("OBT List", "Maintenance of OBT List.");
     }
 
     Tag otherServiceFees() {
@@ -120,7 +120,7 @@ public class SwaggerConfigBase {
     }
 
     Tag products() {
-        return new Tag("Products", "Services related to Products");
+        return new Tag("Products", "Services related to Products.");
     }
 
     Tag serviceFees() {

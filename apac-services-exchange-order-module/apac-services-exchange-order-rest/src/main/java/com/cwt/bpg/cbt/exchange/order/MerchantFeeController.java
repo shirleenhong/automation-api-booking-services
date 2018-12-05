@@ -33,7 +33,7 @@ public class MerchantFeeController {
 			path = "/merchant-fee",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls merchant fees")
+	@ApiOperation(value = "Returns all merchant fees.")
 	public ResponseEntity<List<MerchantFee>> getMerchantFees() {
 		return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
 	}
@@ -43,7 +43,7 @@ public class MerchantFeeController {
 			path = "/merchant-fee/{countryCode}/{clientAccountNumber}",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls merchant fee based on a [country code | client account number] combination")
+	@ApiOperation(value = "Returns merchant fee based on a [country code | client account number] combination.")
 	public ResponseEntity<MerchantFee> getMerchantFee(@PathVariable String countryCode,
 			@PathVariable String clientAccountNumber) {
 
@@ -56,7 +56,7 @@ public class MerchantFeeController {
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Saves or updates merchant fee configuration of a given market")
+	@ApiOperation(value = "Saves (inserts/updates) merchant fee configuration of a given market.")
 	public ResponseEntity<MerchantFee> updateMerchantFee(@RequestBody MerchantFee merchantFee) {
 		merchantFee.setCountryCode(merchantFee.getCountryCode().toUpperCase());
 		MerchantFee mf = service.putMerchantFee(merchantFee);
@@ -66,7 +66,7 @@ public class MerchantFeeController {
 	@Internal
 	@DeleteMapping(path = "/merchant-fee")
 	@ResponseBody
-	@ApiOperation(value = "Remove merchant fee configuration by id")
+	@ApiOperation(value = "Deletes merchant fee configuration by id.")
 	public ResponseEntity<String> removeMerchantFee(@RequestParam("id") String id) {
 		String deleteResult = service.remove(id);
 		return new ResponseEntity<>(deleteResult, HttpStatus.OK);
