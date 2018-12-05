@@ -100,11 +100,11 @@ public class SwaggerConfigBase {
     }
 
     Tag airMiscInfo() {
-        return new Tag("Exchange Order - Air Misc Info", "Maintenance of Air Misc Info.");
+        return new Tag("Exchange Order - Air Misc Info", "Maintenance of Air Misc Infos.");
     }
 
     Tag insurance() {
-        return new Tag("Insurance", "Services related to Insurance");
+        return new Tag("Insurance", "Maintenance of Insurance Plans.");
     }
 
     Tag merchantFee() {
@@ -116,7 +116,7 @@ public class SwaggerConfigBase {
     }
 
     Tag otherServiceFees() {
-        return new Tag("Other Service Fees", "Services related to Other Service Fees");
+        return new Tag("Other Service Fees", "Services related to computation of EO service fees.");
     }
 
     Tag products() {
