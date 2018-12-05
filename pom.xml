@@ -45,7 +45,7 @@
 		<connection>scm:git:${scm.repo.url}</connection>
 		<developerConnection>scm:git:${scm.repo.url}</developerConnection>
 		<url>${scm.repo.url}</url>
-		<tag>HEAD</tag>
+		<tag>1.13.x</tag>
 	</scm>
 
 	<distributionManagement>
