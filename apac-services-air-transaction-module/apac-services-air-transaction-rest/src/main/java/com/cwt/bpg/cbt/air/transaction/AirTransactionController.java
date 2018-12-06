@@ -27,14 +27,14 @@ public class AirTransactionController {
 	@GetMapping(value = "/air-transactions", produces = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Returns CWT (Non-Passthrough) or Airline (Full Passthrough) based on airline code, "
-			+ "booking class, ccvendor code, country code, and client number.")
+	@ApiOperation(value = "Returns passthroughType value: CWT (Non-Passthrough) or Airline (Full Passthrough) based on "
+			+ "country code, airline code, booking class(es), ccvendor code, cc type. Client Account Number is optional.")
 	public ResponseEntity<AirTransactionOutput> getAirTransaction(
-			@RequestParam("countryCode") String countryCode,
-			@RequestParam("airlineCode") String airlineCode,
+			@RequestParam("countryCode") @ApiParam("2-character country code") String countryCode,
+			@RequestParam("airlineCode") @ApiParam("2-character airline code") String airlineCode,
 			@RequestParam("bookingClasses") List<String> bookingClasses,
-			@RequestParam("ccVendorCode") String ccVendorCode,
-			@RequestParam("ccType") String ccType,
+			@RequestParam("ccVendorCode") @ApiParam("e.g. Mastercard, VISA") String ccVendorCode,
+			@RequestParam("ccType") @ApiParam("e.g. UATP, NRCC")  String ccType,
 			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber)
 			throws AirTransactionNoContentException {
 
@@ -47,7 +47,7 @@ public class AirTransactionController {
 	@GetMapping(value = "/air-transactions/{countryCode}/{airlineCode}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "[Maintenance] Pulls air transactions based on airline code and client number.")
+	@ApiOperation(value = "[Maintenance] Pulls air transactions based on country code, airline code and client account number.")
 	public ResponseEntity<List<AirTransaction>> getAirTransactions(
 			@PathVariable("countryCode") @ApiParam("2-character country code") String countryCode,
 			@PathVariable("airlineCode") @ApiParam("2-character airline code") String airlineCode,
@@ -61,17 +61,17 @@ public class AirTransactionController {
 	}
 
 	@PutMapping(path = "/air-transactions")
-	@ApiOperation(value = "[Maintenance] Save or update Air Transaction")
+	@ApiOperation(value = "[Maintenance] Saves (inserts/updates) Air Transaction.")
 	@ResponseBody
 	public ResponseEntity<AirTransaction> putAirTransaction(@Valid @RequestBody AirTransaction airTransaction) {
 		return new ResponseEntity<>(airTransService.save(airTransaction), HttpStatus.OK);
 	}
 
-	@DeleteMapping(path = "/air-transactions")
+	@DeleteMapping(path = "/air-transactions/{id}")
 	@ResponseBody
-	@ApiOperation(value = "[Maintenance] Remove air transaction")
+	@ApiOperation(value = "[Maintenance] Deletes Air Transaction.")
 	public ResponseEntity<String> removeAirTransaction(
-			@RequestParam("id") String id) {
+			@PathVariable("id") String id) {
 		String deleteResult = airTransService.delete(id);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
 		return new ResponseEntity<>(deleteResult, status);

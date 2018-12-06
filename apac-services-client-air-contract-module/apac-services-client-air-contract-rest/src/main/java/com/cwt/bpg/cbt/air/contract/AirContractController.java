@@ -22,7 +22,7 @@ public class AirContractController {
 
 	@GetMapping(value = "/air-contract/{countryCode}/{airlineCode}/{clientAccountNumber}", produces = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
-	@ApiOperation(value = "Returns Air Contract, which contains BCODE, based on country code, "
+	@ApiOperation(value = "Returns Air Contract, with BCODE, given country code, "
 			+ "airline code, and client account number.")
 	@ResponseBody
 	public ResponseEntity<AirContract> getAirContract(
@@ -35,17 +35,16 @@ public class AirContractController {
 
 	@GetMapping(value = "/air-contract/{id}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	@ApiOperation(value = "Returns Air Contract, which contains BCODE, based on country code, "
-			+ "airline code, and client account number.")
+	@ApiOperation(value = "[Maintenance] Returns Air Contract record given an id.")
 	@ResponseBody
 	public ResponseEntity<AirContract> getAirContract(
-			@PathVariable("id") @ApiParam("System generated Air Contract ID") String id) {
+			@PathVariable("id") @ApiParam("Air Contract ID") String id) {
 
 		return new ResponseEntity<>(airContractService.get(id), HttpStatus.OK);
 	}
 
 	@PutMapping(path = "/air-contract")
-	@ApiOperation(value = "[Maintenance] Save or update Air Contract")
+	@ApiOperation(value = "[Maintenance] Saves (inserts/updates) Air Contract record.")
 	@ResponseBody
 	public ResponseEntity<AirContract> putAirContract(@Valid @RequestBody AirContract airContract) {
 		return new ResponseEntity<>(airContractService.save(airContract), HttpStatus.OK);
@@ -53,9 +52,9 @@ public class AirContractController {
 
 	@DeleteMapping(path = "/air-contract/{id}")
 	@ResponseBody
-	@ApiOperation(value = "[Maintenance] Remove Air Contract")
+	@ApiOperation(value = "[Maintenance] Deletes Air Contract record given an id.")
 	public ResponseEntity<String> removeAirContract(
-			@PathVariable("id") String id) {
+			@PathVariable("id") @ApiParam("Air Contract ID") String id) {
 		String deleteResult = airContractService.delete(id);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
 		return new ResponseEntity<>(deleteResult, status);

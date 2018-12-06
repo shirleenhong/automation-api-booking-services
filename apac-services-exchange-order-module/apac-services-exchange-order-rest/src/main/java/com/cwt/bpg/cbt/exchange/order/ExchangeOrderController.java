@@ -18,12 +18,10 @@ import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@Api(tags = "Exchange Order")
 public class ExchangeOrderController {
 
 	@Autowired
@@ -36,10 +34,11 @@ public class ExchangeOrderController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Saves new or updates existing exchange order.")
+	@ApiOperation(tags = "Exchange Order", value = "[HK/SG only] Saves new and updates existing exchange orders. EO objects without "
+		+ "eoNumber are created. Those with eoNumber are updated.")
 	public ResponseEntity<List<ExchangeOrder>> saveExchangeOrder(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
-			@Valid @RequestBody @ApiParam(value = "Exchange order to save") List<ExchangeOrder> input)
+			@Valid @RequestBody @ApiParam(value = "List of exchange orders to save") List<ExchangeOrder> input)
 			throws ExchangeOrderNoContentException {
 		return new ResponseEntity(eoService.save(countryCode, input), HttpStatus.OK);
 	}
@@ -47,10 +46,10 @@ public class ExchangeOrderController {
 	@GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{eoNumber:^[0-9]{10}$}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls exchange order transaction based on exchange order number (10 digit numeric string).")
+	@ApiOperation(tags = "Exchange Order", value = "[HK/SG only] Returns exchange order given an exchange order number.")
 	public ResponseEntity<ExchangeOrder> getExchangeOrder(
-			@PathVariable @ApiParam("2-character country code") String countryCode,
-			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
+			@PathVariable @ApiParam("2-character country code (lowercase)") String countryCode,
+			@PathVariable @ApiParam(value = "10-digit Exchange order number") String eoNumber) {
 
 		return new ResponseEntity<>((ExchangeOrder) eoService.get(countryCode, eoNumber),
 				HttpStatus.OK);
@@ -59,10 +58,10 @@ public class ExchangeOrderController {
 	@GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls exchange order transaction based on Record Locator (6 digit alphanumeric string).")
+	@ApiOperation(tags = "Exchange Order", value = "[HK/SG only] Returns exchange order given a PNR record locator.")
 	public ResponseEntity<List<ExchangeOrder>> getExchangeOrderByRecordLocator(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
-			@PathVariable @ApiParam(value = "Record Locator") String recordLocator) {
+			@PathVariable @ApiParam(value = "6-character PNR record locator") String recordLocator) {
 
 		return new ResponseEntity<>((List<ExchangeOrder>)
 				eoService.getExchangeOrderByRecordLocator(countryCode, recordLocator), HttpStatus.OK);
@@ -72,7 +71,8 @@ public class ExchangeOrderController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Saves new or updates existing India exchange order.")
+	@ApiOperation(tags = "Exchange Order", value = "[India only] Saves new and updates existing exchange orders. EO objects without "
+			+ "eoNumber are created. Those with eoNumber are updated.")
 	public ResponseEntity<List<IndiaExchangeOrder>> saveIndiaExchangeOrder(
 			@Valid @RequestBody @ApiParam(value = "Exchange order to save") List<IndiaExchangeOrder> input)
 			throws ExchangeOrderNoContentException {
@@ -82,7 +82,7 @@ public class ExchangeOrderController {
 	@GetMapping(path = "/exchange-order/in/{eoNumber:^[0-9]{10}$}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls India exchange order transaction based on exchange order number (10 digit numeric string).")
+	@ApiOperation(tags = "Exchange Order", value = "[India only] Returns exchange order given an exchange order number.")
 	public ResponseEntity<IndiaExchangeOrder> getIndiaExchangeOrder(
 			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
 
@@ -93,18 +93,18 @@ public class ExchangeOrderController {
 	@GetMapping(path = "/exchange-order/in/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls India exchange order transaction based on Record Locator (6 digit alphanumeric string).")
+	@ApiOperation(tags = "Exchange Order", value = "[India only] Returns exchange order given a PNR record locator.")
 	public ResponseEntity<List<IndiaExchangeOrder>> getIndiaExchangeOrderByRecordLocator(
-			@PathVariable @ApiParam(value = "Record Locator") String recordLocator) {
+			@PathVariable @ApiParam(value = "6-character PNR record locator") String recordLocator) {
 		return new ResponseEntity<>((List<IndiaExchangeOrder>)
 				eoService.getExchangeOrderByRecordLocator(Country.INDIA.getCode(), recordLocator), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/exchange-order/pdf/{eoNumber}", produces = {
 			MediaType.APPLICATION_PDF_VALUE })
-	@ApiOperation(value = "Generates exchange order pdf.")
+	@ApiOperation(tags = "Exchange Order", value = "Generates exchange order pdf.")
 	public ResponseEntity<byte[]> generatePdf(
-			@PathVariable @ApiParam(value = "Exchange order number") String eoNumber)
+			@PathVariable @ApiParam(value = "10-digit Exchange order number") String eoNumber)
 			throws ExchangeOrderNoContentException, ApiServiceException {
 
 		final String filename = eoNumber + ".pdf";
@@ -117,9 +117,9 @@ public class ExchangeOrderController {
 
 	@GetMapping(path = "/exchange-order/email/{eoNumber}")
 	@ResponseBody
-	@ApiOperation(value = "Emails exchange order pdf of the specified eoNumber")
+	@ApiOperation(tags = "Exchange Order", value = "Emails exchange order pdf.")
 	public ResponseEntity<EmailResponse> email(
-			@RequestBody @ApiParam(value = "EoNumber of the exchange order to email") @PathVariable String eoNumber)
+			@RequestBody @ApiParam(value = "10-digit Exchange order number") @PathVariable String eoNumber)
 			throws ApiServiceException {
 
 		return new ResponseEntity<>(eoReportService.emailPdf(eoNumber), HttpStatus.OK);
@@ -127,7 +127,7 @@ public class ExchangeOrderController {
 
 	@GetMapping(value = "/exchange-orders", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	@ApiOperation(value = "Search for exchange orders.")
+	@ApiOperation(tags = "Exchange Order", value = "Search for exchange orders.")
 	public List<ExchangeOrder> search(final ExchangeOrderSearchDTO p) {
 		final ExchangeOrderSearchParam param = new ExchangeOrderSearchParam();
 		param.setEoNumber(p.getEoNumber());
@@ -147,26 +147,26 @@ public class ExchangeOrderController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Updates status and/or raise cheque of exchange order record.")
+	@ApiOperation(tags = "Exchange Order", value = "Updates status and/or raise cheque of exchange order.")
 	public ResponseEntity<Boolean> update(
 			@RequestBody @ApiParam(value = "Exchange order to update") ExchangeOrder exchangeOrder) {
 		final boolean result = eoService.update(exchangeOrder);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(path = "/exchange-order/room-types", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Return all room types")
+	@ApiOperation(tags = "Exchange Order - Hotel Room Types", value = "Returns all hotel room types.")
 	public ResponseEntity<List<RoomType>> getAll() {
 
 		return new ResponseEntity<>((List<RoomType>)
 				eoService.getAll(), HttpStatus.OK);
 	}
-	
+
 	@Internal
 	@PutMapping(path = "/exchange-order/room-types")
-	@ApiOperation(value = "Save or update room type")
+	@ApiOperation(tags = "Exchange Order - Hotel Room Types", value = "Saves (inserts/updates) hotel room type.")
 	@ResponseBody
 	public ResponseEntity<RoomType> putRoomType(@Valid @RequestBody RoomType roomType) {
 		return new ResponseEntity<>(eoService.save(roomType), HttpStatus.OK);
@@ -175,59 +175,58 @@ public class ExchangeOrderController {
 	@Internal
 	@DeleteMapping(path = "/exchange-order/room-types/{code}")
 	@ResponseBody
-	@ApiOperation(value = "Remove room type")
+	@ApiOperation(tags = "Exchange Order - Hotel Room Types", value = "Deletes hotel room type given room type code.")
 	public ResponseEntity<String> removeRoomType(@PathVariable String code) {
-		
 		String deleteResult = eoService.delete(code);
 		HttpStatus status = checkDeleteResult(deleteResult);
 		return new ResponseEntity<>(deleteResult, status);
-		
+
 	}
 
 	@GetMapping(path = "/exchange-order/vmpd")
 	@ResponseBody
-	@ApiOperation(value = "Pulls all Reason for Issue.")
+	@ApiOperation(tags = "Exchange Order - VMPD Reason Codes", value = "Returns all Reasons for Issue.")
 	public ResponseEntity<List<VmpdReasonCode>> getVmpdReasonCodes() {
 		return new ResponseEntity<>(eoService.getAllVmpdReasonCodes(), HttpStatus.OK);
 	}
-	
+
 	@Internal
     @PutMapping(path = "/exchange-order/vmpd")
     @ResponseBody
-    @ApiOperation(value = "Save or update Reason for Issue.")
+    @ApiOperation(tags = "Exchange Order - VMPD Reason Codes", value = "Saves (inserts/updates) a 'Reason for Issue'.")
     public ResponseEntity<VmpdReasonCode> saveVmpdReasonCode(@Valid @RequestBody VmpdReasonCode reasonCode) {
         return new ResponseEntity<>(eoService.saveVmpdReasonCode(reasonCode), HttpStatus.OK);
     }
-	
+
 	@Internal
 	@DeleteMapping(path = "/exchange-order/vmpd/{code}")
 	@ResponseBody
-	@ApiOperation(value = "Deletes Reason for Issue data by vmpd code.")
+	@ApiOperation(tags = "Exchange Order - VMPD Reason Codes", value = "Deletes 'Reason for Issue' given a vmpd code.")
 	public ResponseEntity<String> deleteVmpdReasonCode(@PathVariable @ApiParam(value = "VMPD Code") String code) {
 		String deleteResult = eoService.deleteVmpdReasonCode(code);
 		HttpStatus status = checkDeleteResult(deleteResult);
 		return new ResponseEntity<>(deleteResult, status);
 	}
-	
+
 	@GetMapping(path = "/exchange-order/car-vendors")
 	@ResponseBody
-	@ApiOperation(value = "Pulls all Car Vendors.")
+	@ApiOperation(tags = "Exchange Order - Car Vendor", value = "Returns all car vendors.")
 	public ResponseEntity<List<CarVendor>> getCarVendors() {
 		return new ResponseEntity<>(eoService.getAllCarVendors(), HttpStatus.OK);
 	}
-	
+
 	@Internal
     @PutMapping(path = "/exchange-order/car-vendors")
     @ResponseBody
-    @ApiOperation(value = "Save or update Car Vendor.")
+    @ApiOperation(tags = "Exchange Order - Car Vendor", value = "Saves (inserts/updates) car vendor.")
     public ResponseEntity<CarVendor> saveCarVendor(@Valid @RequestBody CarVendor carVendor) {
         return new ResponseEntity<>(eoService.saveCarVendor(carVendor), HttpStatus.OK);
     }
-	
+
 	@Internal
 	@DeleteMapping(path = "/exchange-order/car-vendors/{code}")
 	@ResponseBody
-	@ApiOperation(value = "Deletes Car Vendor data by code.")
+	@ApiOperation(tags = "Exchange Order - Car Vendor", value = "Deletes car vendor given vendor code.")
 	public ResponseEntity<String> deleteCarVendor(@PathVariable @ApiParam(value = "Car Vendor Code") String code) {
 		String deleteResult = eoService.deleteCarVendor(code);
 		HttpStatus status = checkDeleteResult(deleteResult);
@@ -236,7 +235,7 @@ public class ExchangeOrderController {
 
 	@GetMapping(path = "/exchange-order/air-misc-info/{clientAccountNumber}")
 	@ResponseBody
-	@ApiOperation(value = "Pulls all Air Misc Info by client account number.")
+	@ApiOperation(tags = "Exchange Order - Air Misc Info", value = "Returns all Air Misc Info for a given client.")
 	public ResponseEntity<List<AirMiscInfo>> getAirMiscInfos(
 			@PathVariable String clientAccountNumber,
 			@RequestParam(value = "reportingFieldTypeIds", required = false) List<String> reportingFieldTypeIds) {
@@ -244,19 +243,19 @@ public class ExchangeOrderController {
 				eoService.getAirMiscInfos(clientAccountNumber, reportingFieldTypeIds),
 				HttpStatus.OK);
 	}
-	
+
 	@Internal
     @PutMapping(path = "/exchange-order/air-misc-info")
     @ResponseBody
-    @ApiOperation(value = "[Maintenance] Save or update Air Misc Info.")
+    @ApiOperation(tags = "Exchange Order - Air Misc Info", value = "Saves (inserts/updates) Air Misc Info.")
     public ResponseEntity<AirMiscInfo> saveAirMiscInfo(@Valid @RequestBody AirMiscInfo airMiscInfo) {
         return new ResponseEntity<>(eoService.saveAirMiscInfo(airMiscInfo), HttpStatus.OK);
     }
-	
+
 	@Internal
 	@DeleteMapping(path = "/exchange-order/air-misc-info/{id}")
 	@ResponseBody
-	@ApiOperation(value = "[Maintenance] Deletes Air Misc Info by id.")
+	@ApiOperation(tags = "Exchange Order - Air Misc Info", value = "Deletes Air Misc Info given an id.")
 	public ResponseEntity<String> deleteAirMiscInfo(@PathVariable String id) {
 		String deleteResult = eoService.deleteAirMiscInfo(id);
 		HttpStatus status = checkDeleteResult(deleteResult);

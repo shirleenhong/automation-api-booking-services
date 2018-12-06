@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@Api(tags = "ReportHeader")
+@Api(tags = "Report Header")
 public class ReportHeaderController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class ReportHeaderController {
 
     @GetMapping(path = "/report-headers/{countryCode}")
     @ResponseBody
-    @ApiOperation(value = "Pulls report header for a specific country code")
+    @ApiOperation(value = "Returns report header for a specific country.")
     public ResponseEntity<ReportHeader> getReportHeader(
             @PathVariable
             @ApiParam(value = "Country Code") String countryCode) {
@@ -32,7 +32,7 @@ public class ReportHeaderController {
 
     @PutMapping(path = "/report-headers")
     @ResponseBody
-    @ApiOperation(value = "Add report header")
+    @ApiOperation(value = "Saves (inserts/updates) report header.")
     @Internal
     public ResponseEntity<ReportHeader> putReportHeader(@Valid @RequestBody ReportHeader header) {
     	
@@ -44,7 +44,7 @@ public class ReportHeaderController {
 
 	@DeleteMapping(path = "/report-headers/{countryCode}")
 	@ResponseBody
-	@ApiOperation(value = "Remove report header")
+	@ApiOperation(value = "Deletes report header of a specific country.")
 	@Internal
 	public ResponseEntity<String> removeReportHeader(
 			@PathVariable @ApiParam(value = "Country Code") String countryCode) {
