@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,12 +91,21 @@ public class ExchangeOrderRepository {
                 .order(Sort.descending(CREATE_DATETIME))
                 .asList();
     }
-    
-    public List<ExchangeOrder> getExchangeOrderNoRecordLocator() {
-        return morphia.getDatastore().createQuery(ExchangeOrder.class)
-        		.field(RECORD_LOCATOR).doesNotExist().asList();
-    }
-    
+
+	public List<ExchangeOrder> getExchangeOrderNoRecordLocator() {
+
+		Query<ExchangeOrder> query = morphia.getDatastore()
+				.createQuery(ExchangeOrder.class);
+
+		Instant today = Instant.now();
+		Instant yesterday = today.minus(1, ChronoUnit.DAYS);
+		
+		query.field(CREATE_DATETIME).lessThanOrEq(yesterday);
+		query.field(RECORD_LOCATOR).doesNotExist();
+
+		return query.asList();
+	}
+
 	public String remove(ExchangeOrder exchangeOrder) {
 		final Datastore datastore = morphia.getDatastore();
 
