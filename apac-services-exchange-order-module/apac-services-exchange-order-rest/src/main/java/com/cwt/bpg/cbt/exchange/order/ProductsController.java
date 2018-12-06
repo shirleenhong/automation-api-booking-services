@@ -26,7 +26,7 @@ public class ProductsController {
 
 	@GetMapping(path = "/products/{countryCode}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Pulls list of products and vendors for a specific market")
+	@ApiOperation(value = "Returns list of products and vendors for a specific market.")
 	public ResponseEntity<List<BaseProduct>> getProducts(
 			@PathVariable @ApiParam(value = "Country code of the requested market") String countryCode) {
 		return new ResponseEntity<>(service.getProducts(countryCode.toUpperCase()), HttpStatus.OK);
@@ -34,7 +34,7 @@ public class ProductsController {
 
 	@PutMapping(path = "/products/{countryCode:^(?!in)[a-zA-Z0-9]{2}}", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
-    @ApiOperation(value = "Inserts/Updates product list of a market (non-India).")
+    @ApiOperation(value = "Saves (inserts/updates) product list of a market (non-India).")
     public ResponseEntity<String> saveProduct(
             @PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
             @RequestParam(required = false) @ApiParam(value = "_true_ when inserting a new Product. _false_ when updating existing one.") boolean insert,
@@ -46,7 +46,7 @@ public class ProductsController {
 
     @PutMapping(path = "/products/in", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
-    @ApiOperation(value = "Inserts/Updates product list of India.")
+    @ApiOperation(value = "Saves (inserts/updates) product list of India.")
     public ResponseEntity<String> saveIndiaProduct(
             @RequestParam(required = false) @ApiParam(value = "_true_ when inserting a new Product. _false_ when updating existing one.") boolean insert,
             @RequestBody IndiaProduct product) {
@@ -57,7 +57,7 @@ public class ProductsController {
 
     @PutMapping(path = "/vendors/{countryCode:[a-zA-Z0-9]{2}}", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
-    @ApiOperation(value = "Inserts/Updates Vendor info of a market.")
+    @ApiOperation(value = "Saves (inserts/updates) vendor info of a market.")
     public ResponseEntity<String> saveVendor(
             @PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
             @RequestParam(required = false) @ApiParam(value = "Required when _insert_ flag is true.") String productCode,
@@ -71,7 +71,7 @@ public class ProductsController {
 
 	@DeleteMapping(path = "/products/{countryCode:[a-zA-Z0-9]{2}}/{productCode}")
 	@ResponseBody
-	@ApiOperation(value = "Removes Product by code.")
+	@ApiOperation(value = "Deletes product by code.")
 	public ResponseEntity<String> removeProductByCode(
 			@PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
 			@PathVariable String productCode) {
@@ -82,7 +82,7 @@ public class ProductsController {
 
 	@DeleteMapping(path = "/vendors/{countryCode:[a-zA-Z0-9]{2}}/{vendorCode}")
 	@ResponseBody
-	@ApiOperation(value = "Removes Vendor by code. Disassociates given Vendor from all products.")
+	@ApiOperation(value = "Deletes vendor by code. Disassociates given Vendor from all products.")
 	public ResponseEntity<String> removeVendorByCode(
 	        @PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
 			@PathVariable String vendorCode) {

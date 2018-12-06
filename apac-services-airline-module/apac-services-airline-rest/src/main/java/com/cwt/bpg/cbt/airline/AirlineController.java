@@ -31,7 +31,7 @@ public class AirlineController {
 
 	@GetMapping(value = "/airlines/{airlineCode}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Returns Airline object given an airline code.")
+	@ApiOperation(value = "Returns Airline given an airline code.")
 	public ResponseEntity<Airline> getAirline(
 			@PathVariable("airlineCode") @ApiParam("2-character IATA code") String airlineCode) {
         Airline airline = airlineService.getAirline(airlineCode);
@@ -40,7 +40,7 @@ public class AirlineController {
 
 	@Internal
 	@PutMapping(path = "/airlines")
-	@ApiOperation(value = "[Maintenance] Saves or updates Airline.")
+	@ApiOperation(value = "[Maintenance] Saves (inserts/updates) Airline.")
 	@ResponseBody
 	public ResponseEntity<Airline> putAirline(@Valid @RequestBody Airline airline) {
 		return new ResponseEntity<>(airlineService.save(airline), HttpStatus.OK);
@@ -49,7 +49,7 @@ public class AirlineController {
 	@Internal
 	@DeleteMapping(path = "/airlines/{airlineCode}")
 	@ResponseBody
-	@ApiOperation(value = "[Maintenance] Removes Airline.")
+	@ApiOperation(value = "[Maintenance] Deletes Airline given an airline code.")
 	public ResponseEntity<String> removeAirline(
 			@PathVariable("airlineCode") @ApiParam("2-character IATA code") String airlineCode) {
 		String deleteResult = airlineService.delete(airlineCode);

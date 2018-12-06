@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -24,14 +22,14 @@ public class AirlineRulesController {
 
 	@GetMapping(path = "/airline-rules")
 	@ResponseBody
-	@ApiOperation(value = "Pulls airline rules")
+	@ApiOperation(value = "Return all airline rules.")
 	public ResponseEntity<List<AirlineRule>> getAirlineRules() {
 		return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
 	}
 
 	@PutMapping(path = "/airline-rules")
 	@ResponseBody
-	@ApiOperation(value = "Pulls airline rules")
+	@ApiOperation(value = "Saves (inserts/updates) existing airline rule.")
 	@Internal
 	public ResponseEntity<AirlineRule> putAirlineRules(@Valid @RequestBody AirlineRule airlineRule) {
 		return new ResponseEntity<>(service.save(airlineRule), HttpStatus.OK);
@@ -39,7 +37,7 @@ public class AirlineRulesController {
 
 	@DeleteMapping(path = "/airline-rules/{airlineCode}")
 	@ResponseBody
-	@ApiOperation(value = "Remove airline rules")
+	@ApiOperation(value = "Deletes airline rule given an airline code.")
 	@Internal
 	public ResponseEntity<String> removeAirlineRules(@PathVariable String airlineCode) {
 		String deleteResult = service.delete(airlineCode);
