@@ -43,14 +43,6 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 @Service
 public class ExchangeOrderReportService {
 
-	private static final String EMAIL_ERROR_MESSAGE = "Email cannot be empty.";
-	
-	private static final String EMAIL_ERROR_MESSAGE_INDIA = "Email not supported in India.";
-
-	private static final String ERROR_MESSAGE = "Error encountered while sending email.";
-
-	private static final String DATE_PATTERN = "dd-MMM-yyyy";
-
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
 
@@ -73,7 +65,16 @@ public class ExchangeOrderReportService {
 	private String eoMailRecipient;
 
 	private static final String TEMPLATE = "jasper/exchange-order.jasper";
+	
 	private static final String IMAGE_PATH = "jasper/cwt-logo.png";
+	
+	private static final String EMAIL_ERROR_MESSAGE = "Email cannot be empty.";
+	
+	private static final String EMAIL_ERROR_MESSAGE_INDIA = "Email not supported in India.";
+
+	private static final String ERROR_MESSAGE = "Error encountered while sending email.";
+
+	private static final String DATE_PATTERN = "dd-MMM-yyyy";
 	
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ExchangeOrderReportService.class);
@@ -106,9 +107,10 @@ public class ExchangeOrderReportService {
 
 	private void checkCountryCode(String eoNumber, String countryCode)
 			throws ExchangeOrderNoContentException {
-		if(Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
+		if (Country.INDIA.getCode().equalsIgnoreCase(countryCode)) {
 			throw new ExchangeOrderNoContentException(
-					"Generate pdf for India Exchange order number: [ " + eoNumber + " ] not supported."); 
+					"Generate pdf for India Exchange order number: [ " + eoNumber
+							+ " ] not supported.");
 		}
 	}
 
@@ -271,19 +273,18 @@ public class ExchangeOrderReportService {
 	}
 
 	private String formatAmount(String countryCode, BigDecimal amount) {
-		if (amount != null) {
-			int scale = scaleConfig.getScale(countryCode);
-			DecimalFormat formatter = new DecimalFormat("$#,##0.00");
-			formatter.setMinimumFractionDigits(scale);
-			formatter.setMaximumFractionDigits(scale);
-			formatter.setRoundingMode(RoundingMode.DOWN);
 
-			return formatter.format(amount);
-		}
-		else {
+		if (amount == null) {
 			return "";
 		}
-
+		
+		int scale = scaleConfig.getScale(countryCode);
+		DecimalFormat formatter = new DecimalFormat("$#,##0.00");
+		formatter.setMinimumFractionDigits(scale);
+		formatter.setMaximumFractionDigits(scale);
+		formatter.setRoundingMode(RoundingMode.DOWN);
+		
+		return formatter.format(amount);
 	}
 
 	private ExchangeOrder getExchangeOrder(String eoNumber) {

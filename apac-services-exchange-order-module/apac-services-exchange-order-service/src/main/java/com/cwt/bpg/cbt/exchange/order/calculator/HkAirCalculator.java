@@ -68,7 +68,7 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 		else {
 			if (input.isCommissionByPercent()) {
 				if (!ClientType.TP.getCode().equals(input.getClientType())) {
-					commission = getCommission(input, scale, roundingConfig.getRoundingMode("commission", countryCode), nettFare);
+					commission = getCommission(input, scale, getRoundingMode("commission", countryCode), nettFare);
 				}
 
 				sellingPrice = nettFare.divide(
@@ -80,7 +80,7 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 				}
 			}
 			else {
-				commission = round(commission, scale, roundingConfig.getRoundingMode("commission", countryCode));
+				commission = round(commission, scale, getRoundingMode("commission", countryCode));
 				sellingPrice = nettFare.add(commission);
 			}
 
@@ -92,17 +92,17 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 			result.setDiscount(discount);
 
 			nettCost = nettFare;
-			nettFare = round(sellingPrice.add(tax1).add(tax2).subtract(discount), scale, roundingConfig.getRoundingMode("nettFare", countryCode));
+			nettFare = round(sellingPrice.add(tax1).add(tax2).subtract(discount), scale, getRoundingMode("nettFare", countryCode));
 			result.setNettFare(nettFare);
 
-			merchantFeeAmount = applyMerchantFee(merchantFee, input, scale, roundingConfig.getRoundingMode("merchantFee", countryCode), nettFare, tax1, tax2);
+			merchantFeeAmount = applyMerchantFee(merchantFee, input, scale, getRoundingMode("merchantFee", countryCode), nettFare, tax1, tax2);
 			result.setMerchantFee(merchantFeeAmount);
 
 			totalSellingFare = nettFare.add(safeValue(merchantFeeAmount));
 		}
 
-		result.setTotalSellingFare(round(totalSellingFare, scale, roundingConfig.getRoundingMode("totalSellingFare", countryCode)));
-		result.setNettCost(round(nettCost, scale, roundingConfig.getRoundingMode("nettCost", countryCode)));
+		result.setTotalSellingFare(round(totalSellingFare, scale, getRoundingMode("totalSellingFare", countryCode)));
+		result.setNettCost(round(nettCost, scale, getRoundingMode("nettCost", countryCode)));
 
 		return result;
 	}
@@ -171,5 +171,9 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 		}
 
 		return result;
+	}
+	
+	private RoundingMode getRoundingMode(String field, String countryCode) {
+		return roundingConfig.getRoundingMode(field, countryCode);
 	}
 }

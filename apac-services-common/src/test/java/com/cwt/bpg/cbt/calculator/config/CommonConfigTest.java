@@ -12,4 +12,9 @@ public class CommonConfigTest {
 	public void testScaleConfig() {
 		assertNotNull(config.scaleConfig());
 	}
+	
+	@Test
+	public void testRoundingConfig() {
+		assertNotNull(config.roundingConfig());
+	}
 }

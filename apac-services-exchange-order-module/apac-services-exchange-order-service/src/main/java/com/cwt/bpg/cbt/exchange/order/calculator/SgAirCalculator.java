@@ -66,18 +66,18 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 						input.getTransactionFee(),
 						inClientType,
 						merchantFeeObj.isIncludeTransactionFee());
-				merchantFee = getMerchantFee(totalPlusTF, merchantFeeObj.getMerchantFeePercent(), 0, roundingConfig.getRoundingMode("merchantFee", countryCode));
+				merchantFee = getMerchantFee(totalPlusTF, merchantFeeObj.getMerchantFeePercent(), 0, getRoundingMode("merchantFee", countryCode));
 				result.setMerchantFee(merchantFee);
 			}
 
 			totalSellingFare = totalNettFare.add(merchantFee);
 
-			result.setCommission(round(commission, scale, roundingConfig.getRoundingMode("commission", countryCode)));
+			result.setCommission(round(commission, scale, getRoundingMode("commission", countryCode)));
 			result.setDiscount(discount);
 		}
 
-		result.setNettCost(round(nettCost, scale, roundingConfig.getRoundingMode("nettCost", countryCode)));
-		result.setTotalSellingFare(round(totalSellingFare, scale, roundingConfig.getRoundingMode("totalSellingFare", countryCode)));
+		result.setNettCost(round(nettCost, scale, getRoundingMode("nettCost", countryCode)));
+		result.setTotalSellingFare(round(totalSellingFare, scale, getRoundingMode("totalSellingFare", countryCode)));
 
 		return result;
 	}
@@ -140,8 +140,14 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 		return total;
 	}
 
-	private BigDecimal getMerchantFee(BigDecimal totalCharge, Double merchantFeePercent, int scale, RoundingMode roundingMode) {
+	private BigDecimal getMerchantFee(BigDecimal totalCharge, Double merchantFeePercent,
+			int scale, RoundingMode roundingMode) {
 
-		return round(totalCharge.multiply(percentDecimal(merchantFeePercent)), scale, roundingMode);
+		return round(totalCharge.multiply(percentDecimal(merchantFeePercent)), scale,
+				roundingMode);
+	}
+
+	private RoundingMode getRoundingMode(String field, String countryCode) {
+		return roundingConfig.getRoundingMode(field, countryCode);
 	}
 }
