@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -364,6 +365,30 @@ public class ExchangeOrderRepositoryTest {
         verify(morphia, times(1)).getDatastore();
         verify(dataStore, times(1)).delete(exchangeOrder);
 	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
+    public void shoulGetExchangeOrderNoRecordLocator() {
+		List<ExchangeOrder> list = new ArrayList<>();
+		
+		ExchangeOrder exchangeOrder = new ExchangeOrder();
+		exchangeOrder.setEoNumber("123098");
+		list.add(exchangeOrder);
+		
+		FieldEnd fieldEnd = mock(FieldEnd.class);
+		
+		when(dataStore.createQuery(ExchangeOrder.class)).thenReturn(query);
+		when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equal("createDateTime")).thenReturn(query);
+		when(fieldEnd.equal("recordLocator")).thenReturn(query);
+	
+		when(query.asList()).thenReturn(list);
+	
+		List<ExchangeOrder> result = repository.getExchangeOrderNoRecordLocator();
+		
+		verify(dataStore, times(1)).createQuery(ExchangeOrder.class);		
+		assertEquals(result, list);
+    }
 }
 
 @FunctionalInterface
