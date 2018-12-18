@@ -50,6 +50,8 @@ public abstract class BaseExchangeOrder implements Serializable {
 	private List<String> eoRemarks;
 
 	private List<String> itineraryRemarks;
+	
+	private String uniqueId;
 
 	public void setEoNumber(String eoNumber) {
 		this.eoNumber = eoNumber;
@@ -137,6 +139,14 @@ public abstract class BaseExchangeOrder implements Serializable {
 
 	public void setItineraryRemarks(List<String> itineraryRemarks) {
 		this.itineraryRemarks = itineraryRemarks;
+	}
+	
+	public String getUniqueId() {
+		return uniqueId;
+	}
+
+	public void setUniqueId(String uniqueId) {
+		this.uniqueId = uniqueId;
 	}
 
 	public abstract BaseVendor getVendor();
