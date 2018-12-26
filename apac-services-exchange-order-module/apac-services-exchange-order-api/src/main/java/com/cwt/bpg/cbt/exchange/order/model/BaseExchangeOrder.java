@@ -52,6 +52,8 @@ public abstract class BaseExchangeOrder implements Serializable {
 	private List<String> itineraryRemarks;
 	
 	private String uniqueId;
+	
+	private String creditCardNumber;
 
 	public void setEoNumber(String eoNumber) {
 		this.eoNumber = eoNumber;
@@ -147,6 +149,14 @@ public abstract class BaseExchangeOrder implements Serializable {
 
 	public void setUniqueId(String uniqueId) {
 		this.uniqueId = uniqueId;
+	}
+	
+	public String getCreditCardNumber() {
+		return creditCardNumber;
+	}
+
+	public void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
 	}
 
 	public abstract BaseVendor getVendor();
