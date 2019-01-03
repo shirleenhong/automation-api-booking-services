@@ -12,6 +12,8 @@ public class FormOfPayment implements Serializable {
 
     @ApiModelProperty(allowableValues = "CX, CC, INV, BTC")
 	private FopType fopType;
+    
+    private String creditCardNumber;
 
 	public FopType getFopType() {
 		return fopType;
@@ -21,4 +23,11 @@ public class FormOfPayment implements Serializable {
 		this.fopType = fopType;
 	}
 
+	public String getCreditCardNumber() {
+		return creditCardNumber;
+	}
+
+	public void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
+	}
 }
