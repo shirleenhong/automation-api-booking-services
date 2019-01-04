@@ -6,8 +6,11 @@ public enum FopType {
 
 	CWT("CX"),
 	CREDIT_CARD("CC"), 
-	INVOICE("INV"),
-	BTC("BTC");
+	INV("INV"),
+	BTC("BTC"),
+	CASH("CASH"),
+	NONREF("NONREF"),
+	INVOICE("INVOICE");
 
 	@JsonValue
 	private final String code;
