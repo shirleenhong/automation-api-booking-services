@@ -149,7 +149,7 @@ Send Air Transaction Delete Request (Maintenance)
     Create Session    air-transactions    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${response}    Delete Request    air-transactions    /apac-services-rest/api/air-transactions?id=${id}    headers=${headers}
+    ${response}    Delete Request    air-transactions    /apac-services-rest/api/air-transactions/${id}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
