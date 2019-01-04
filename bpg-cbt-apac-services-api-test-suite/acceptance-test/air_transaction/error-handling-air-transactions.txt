@@ -190,7 +190,7 @@ Verify That Error Is Encountered When Invalid ID Is Used For Maintenance Delete 
 Verify That Error Is Encountered When Empty ID Is Used For Maintenance Delete Request
     [Tags]    functional
     Send Air Transaction Delete Request (Maintenance)    id=${EMPTY}
-    Verify Response Status Code Is Correct    400
+    Verify Response Status Code Is Correct    405
     Verify Air Transaction Record Is Not Retrieved
 
 Verify That Error Is Encountered When Null ID Is Used For Maintenance Delete Request
