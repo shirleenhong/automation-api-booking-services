@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,11 @@ public class ExchangeOrderService {
 		List<BaseExchangeOrder> savedExchangeOrders = new ArrayList<>();
 		for (BaseExchangeOrder exchangeOrder : exchangeOrders) {
 			exchangeOrder.setCountryCode(countryCode.toUpperCase());
+			
+			if(exchangeOrder.getStatus().equals(EoStatus.COMPLETED)) {
+				exchangeOrder.setCompleteDateTime(Instant.now());
+			}
+			
 			if (exchangeOrder.getEoNumber() == null) {
 				BaseExchangeOrder insertResult = eoInsertService.insert(exchangeOrder);
 				if (insertResult != null) {

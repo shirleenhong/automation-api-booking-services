@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
@@ -184,6 +185,10 @@ public class ExchangeOrderRepository {
 
         if (param.getRaiseCheque() != null) {
             ops.set("raiseCheque", param.getRaiseCheque());
+        }
+        
+        if(EoStatus.COMPLETED.equals(param.getStatus())) {
+        	ops.set("completeDateTime", Instant.now());
         }
 
 		final UpdateResults result = morphia.getDatastore().update(query, ops);
