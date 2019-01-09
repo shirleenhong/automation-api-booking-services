@@ -31,6 +31,11 @@ public abstract class BaseExchangeOrder implements Serializable {
     @JsonDeserialize(using = DateDeserializer.class)
 	private Instant updateDateTime;
 	
+	@ApiModelProperty(hidden = true, value = "Date in UTC", example = "2008-05-29T14:09:000Z")
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
+	private Instant completeDateTime;
+	
 	private String countryCode;
 	
 	private String recordLocator;
@@ -53,7 +58,6 @@ public abstract class BaseExchangeOrder implements Serializable {
 	
 	private String uniqueId;
 	
-
 	public void setEoNumber(String eoNumber) {
 		this.eoNumber = eoNumber;
 	}
@@ -92,6 +96,14 @@ public abstract class BaseExchangeOrder implements Serializable {
 
 	public void setUpdateDateTime(Instant updateDateTime) {
 		this.updateDateTime = updateDateTime;
+	}
+	
+	public Instant getCompleteDateTime() {
+		return completeDateTime;
+	}
+
+	public void setCompleteDateTime(Instant completeDateTime) {
+		this.completeDateTime = completeDateTime;
 	}
 
 	public String getCountryCode() {
