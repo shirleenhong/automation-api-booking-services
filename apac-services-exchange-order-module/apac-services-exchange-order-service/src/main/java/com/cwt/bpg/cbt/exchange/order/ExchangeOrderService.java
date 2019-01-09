@@ -47,7 +47,7 @@ public class ExchangeOrderService {
 		for (BaseExchangeOrder exchangeOrder : exchangeOrders) {
 			exchangeOrder.setCountryCode(countryCode.toUpperCase());
 			
-			if(exchangeOrder.getStatus().equals(EoStatus.COMPLETED)) {
+			if(EoStatus.COMPLETED.equals(exchangeOrder.getStatus())) {
 				exchangeOrder.setCompleteDateTime(Instant.now());
 			}
 			
