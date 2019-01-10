@@ -187,7 +187,7 @@ public class ExchangeOrderRepository {
             ops.set("raiseCheque", param.getRaiseCheque());
         }
         
-        if(EoStatus.COMPLETED.equals(param.getStatus())) {
+        if(EoStatus.COMPLETED.equals(param.getStatus()) && param.getCompleteDateTime() == null) {
         	ops.set("completeDateTime", Instant.now());
         }
 
