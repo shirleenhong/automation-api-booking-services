@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 
 @Service
 public class ExchangeOrderUpdateService
@@ -33,7 +34,11 @@ public class ExchangeOrderUpdateService
 
         exchangeOrder.setCreateDateTime(existingExchangeOrder.getCreateDateTime());
         exchangeOrder.setUpdateDateTime(Instant.now());
-
+        
+        if(EoStatus.COMPLETED.equals(exchangeOrder.getStatus()) && exchangeOrder.getCompleteDateTime() == null) {
+			exchangeOrder.setCompleteDateTime(Instant.now());
+		}
+        
         String updatedEoNumber = exchangeOrderRepo.save(exchangeOrder);
         
         return exchangeOrderRepo.getExchangeOrder(existingExchangeOrder.getCountryCode(), updatedEoNumber);

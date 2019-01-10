@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
+import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
@@ -33,6 +34,10 @@ public class ExchangeOrderInsertService {
 	BaseExchangeOrder insert(BaseExchangeOrder exchangeOrder) {
 		exchangeOrder.setCreateDateTime(Instant.now());
 		exchangeOrder.setEoNumber(constructEoNumber(exchangeOrder.getCountryCode()));
+		
+		if(EoStatus.COMPLETED.equals(exchangeOrder.getStatus())) {
+			exchangeOrder.setCompleteDateTime(Instant.now());
+		}
 
 		Optional<BaseProduct> isProductExist = Optional.ofNullable(
 				productService.getProductByCode(exchangeOrder.getCountryCode(),

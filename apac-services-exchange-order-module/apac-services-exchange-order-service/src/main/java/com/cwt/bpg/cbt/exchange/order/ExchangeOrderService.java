@@ -1,6 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,12 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.CarVendor;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.RoomType;
+import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 
 @Service
@@ -46,10 +50,6 @@ public class ExchangeOrderService {
 		List<BaseExchangeOrder> savedExchangeOrders = new ArrayList<>();
 		for (BaseExchangeOrder exchangeOrder : exchangeOrders) {
 			exchangeOrder.setCountryCode(countryCode.toUpperCase());
-			
-			if(EoStatus.COMPLETED.equals(exchangeOrder.getStatus()) && exchangeOrder.getCompleteDateTime() == null) {
-				exchangeOrder.setCompleteDateTime(Instant.now());
-			}
 			
 			if (exchangeOrder.getEoNumber() == null) {
 				BaseExchangeOrder insertResult = eoInsertService.insert(exchangeOrder);
