@@ -34,6 +34,7 @@ public class ExchangeOrderUpdateService
 
         exchangeOrder.setCreateDateTime(existingExchangeOrder.getCreateDateTime());
         exchangeOrder.setUpdateDateTime(Instant.now());
+        exchangeOrder.setCompleteDateTime(existingExchangeOrder.getCompleteDateTime());
         
         if(EoStatus.COMPLETED.equals(exchangeOrder.getStatus()) && exchangeOrder.getCompleteDateTime() == null) {
 			exchangeOrder.setCompleteDateTime(Instant.now());
