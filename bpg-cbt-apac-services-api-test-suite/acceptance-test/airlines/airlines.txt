@@ -15,20 +15,20 @@ Verify That Airline List Is Correctly Retrieved
 Verify That Airline Detail Is Correctly Added And Retrieved After Put Request
     [Tags]    functional
     Create Test Variables For Put Airlines    airlines_list=XX,Test Airline,123
-    Send Put Request For Airlines    
+    Send Put Request For Airlines
     Verify Response Status Code Is Correct    200
     Verify Specific Airline Is Correctly Created/Updated
-    Evict Airlines Cache    
-    Send Get Request For Specific Airline    
+    Evict Airlines Cache
+    Send Get Request For Specific Airline
     Verify Response Status Code Is Correct    200
     Verify Specific Airline Is Correctly Retrieved
     [Teardown]     Delete Created Airline Information And Evict Cache
     
 Verify That Airline Detail Is Correctly Added To Airline List After Put Request
     [Tags]    functional
-    Create Test Variables For Get All Airlines
-    Create Test Variables For Put Airlines    airlines_list=X1,Test Airline 1,111    add_to_list=true
-    Send Put Request For Airlines    
+    Create Test Variables For Get All Airlines    airlines_list=${airlines_list2}
+    Create Test Variables For Put Airlines    airlines_list=X1,Test Airline 1,111
+    Send Put Request For Airlines
     Verify Response Status Code Is Correct    200
     Verify Specific Airline Is Correctly Created/Updated
     Evict Airlines Cache
@@ -40,13 +40,13 @@ Verify That Airline Detail Is Correctly Added To Airline List After Put Request
 Verify That Airline Detail Is Removed After Delete Request
     [Tags]    functional
     Create Test Variables For Put Airlines    airlines_list=XX,Test Airline 1,001
-    Send Put Request For Airlines    
+    Send Put Request For Airlines
     Verify Response Status Code Is Correct    200
     Verify Specific Airline Is Correctly Created/Updated
-    Evict Airlines Cache    
+    Evict Airlines Cache
     Send Delete Request For Airlines
     Verify Response Status Code Is Correct    200
     Evict Airlines Cache
-    Send Get Request For Specific Airline    
+    Send Get Request For Specific Airline
     Verify Response Status Code Is Correct    204
     Verify Specific Airline Is Not Retrieved
