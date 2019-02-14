@@ -7,7 +7,6 @@
 		<version>1.17.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.cwt.bpg.cbt</groupId>
 	<artifactId>apac-services-rest</artifactId>
 	<packaging>jar</packaging>
 
@@ -36,6 +35,11 @@
 		<dependency>
 			<groupId>com.cwt.bpg.cbt</groupId>
 			<artifactId>apac-services-fees-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.cwt.bpg.cbt</groupId>
+			<artifactId>apac-services-finance-rest</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
