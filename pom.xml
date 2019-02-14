@@ -265,10 +265,10 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
 				<version>1.4</version>
+				<inherited>false</inherited>
 				<configuration>
 					<doCheck>false</doCheck>
 					<doUpdate>false</doUpdate>
-					<inherited>false</inherited>
 					<revisionOnScmFailure>unavailable</revisionOnScmFailure>
 					<getRevisionOnlyOnce>true</getRevisionOnlyOnce>
 					<useLastCommittedRevision>true</useLastCommittedRevision>
@@ -465,6 +465,7 @@
 
 	<modules>
 		<module>apac-services-fees-module</module>
+		<module>apac-services-finance-module</module>
 		<module>apac-services-exchange-order-module</module>
 		<module>apac-services-air-transaction-module</module>
 		<module>apac-services-airline-module</module>
