@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.cwt.bpg.cbt</groupId>
 		<artifactId>apac-services-exchange-order-module</artifactId>
-		<version>1.17.0-SNAPSHOT</version>
+		<version>1.18.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>apac-services-exchange-order-repository</artifactId>
 	<name>apac-services-exchange-order-repository</name>
