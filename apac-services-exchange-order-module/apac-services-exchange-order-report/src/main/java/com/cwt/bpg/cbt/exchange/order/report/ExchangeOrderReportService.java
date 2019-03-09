@@ -111,7 +111,7 @@ public class ExchangeOrderReportService {
 			final BigDecimal total = exchangeOrder.getTotal();
 
 			if ((gst != null && gst.compareTo(BigDecimal.ZERO) > 0) && nettCost != null && total != null) {
-				final BigDecimal modifiedGst = CalculatorUtils.scale(CalculatorUtils.calculatePercentage(nettCost, 7d), 2);
+				final BigDecimal modifiedGst = CalculatorUtils.round(CalculatorUtils.calculatePercentage(nettCost, 7d), 2);
 				final BigDecimal delta = gst.subtract(modifiedGst);
 				final BigDecimal modifiedTotal = total.subtract(delta);
 
