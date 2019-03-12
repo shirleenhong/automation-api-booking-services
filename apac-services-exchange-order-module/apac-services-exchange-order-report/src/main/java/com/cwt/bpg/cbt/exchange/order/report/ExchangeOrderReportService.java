@@ -344,10 +344,11 @@ public class ExchangeOrderReportService {
 			}
 			List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
 			List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
-			String email = setEmailRecipient(contactInfoList);
+			String senderEmail = exchangeOrder.getAgentEmail();
+			String receiverEmail = setEmailRecipient(contactInfoList);
 
-			String emailRecipient = getEmail(email);
-			if (StringUtils.isEmpty(emailRecipient)) {
+			String emailRecipient = getEmail(receiverEmail);
+			if (StringUtils.isEmpty(emailRecipient) || StringUtils.isEmpty(senderEmail)) {
 				LOGGER.error(EMAIL_ERROR_MESSAGE);
 				response.setMessage(EMAIL_ERROR_MESSAGE);
 				response.setSuccess(false);
@@ -361,7 +362,7 @@ public class ExchangeOrderReportService {
 			MimeMessageHelper helper = new MimeMessageHelper(message, (pdf != null), StandardCharsets.UTF_8.name());
 
 			helper.setTo(InternetAddress.parse(emailRecipient));
-			helper.setFrom(eoMailSender);
+			helper.setFrom(senderEmail);
 			helper.setSubject(emailContentProcessor.getEmailSubject(exchangeOrder));
 			helper.setText(emailContentProcessor.getEmailBody(exchangeOrder), true);
 			helper.addAttachment(eoNumber + ".pdf", new ByteArrayResource(pdf));
