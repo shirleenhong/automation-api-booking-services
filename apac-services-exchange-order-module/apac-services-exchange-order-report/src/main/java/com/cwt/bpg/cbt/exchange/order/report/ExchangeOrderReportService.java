@@ -45,6 +45,8 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 @Service
 public class ExchangeOrderReportService {
 
+	private static final List<String> AIR_PRODUCT_TYPES = Arrays.asList("CT", "BT");
+
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
 
@@ -204,9 +206,7 @@ public class ExchangeOrderReportService {
 	private BigDecimal getCorrespondingNettCost(ExchangeOrder exchangeOrder) {
 		BigDecimal nettCost = exchangeOrder.getServiceInfo().getNettCost();
 		BaseProduct product = productService.getProductByCode(exchangeOrder.getCountryCode(), exchangeOrder.getProductCode());
-		if (product != null && (
-				"CT".equalsIgnoreCase(product.getType()) ||
-				"BT".equalsIgnoreCase(product.getType()))) {
+		if (product != null && AIR_PRODUCT_TYPES.contains(product.getType().toUpperCase())) {
 			nettCost = exchangeOrder.getServiceInfo().getNettCostInEo();
 		}
 		return nettCost;
