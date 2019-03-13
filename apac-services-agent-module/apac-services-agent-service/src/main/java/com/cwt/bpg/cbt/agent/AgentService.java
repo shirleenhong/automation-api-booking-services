@@ -30,12 +30,12 @@ public class AgentService {
         return agentRepository.getAll();
     }
 
-	@CachePut(cacheNames = "agent", key = "#agent.uid")
+	@CachePut(cacheNames = "agent", key = "#uid", condition="#uid != null")
 	public AgentInfo save(AgentInfo agentInfo) {
 		return agentRepository.put(agentInfo);
 	}
 
-	@CacheEvict(cacheNames = "agent", key = "#agent.uid")
+	@CacheEvict(cacheNames = "agent", key = "#uid", condition="#uid != null")
 	public String delete(String uid) {
 		return agentRepository.remove(uid);
 	}

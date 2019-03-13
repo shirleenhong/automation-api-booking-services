@@ -2,8 +2,12 @@ package com.cwt.bpg.cbt.agent.model;
 
 import java.io.Serializable;
 
+import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.*;
+
+import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -13,6 +17,11 @@ public class AgentInfo implements Serializable {
 
 	private static final long serialVersionUID = 5943172847055937530L;
 
+	@Id
+	@JsonSerialize(using = ObjectIdSerializer.class)
+	@ApiModelProperty(hidden = true)
+	private ObjectId id;
+	
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String uid;

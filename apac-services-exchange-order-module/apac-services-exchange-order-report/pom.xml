@@ -20,6 +20,11 @@
 			<artifactId>apac-services-exchange-order-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.cwt.bpg.cbt</groupId>
+			<artifactId>apac-services-agent-service</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency> 
 			<groupId>org.freemarker</groupId> 
 			<artifactId>freemarker</artifactId> 
