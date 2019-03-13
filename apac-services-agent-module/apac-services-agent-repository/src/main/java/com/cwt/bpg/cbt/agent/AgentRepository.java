@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.agent;
 
+import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -21,4 +22,15 @@ public class AgentRepository extends CommonRepository<AgentInfo, String> {
 		query.field(UID_COLUMN).equal(uid);
 		return query.get();
 	}
+	
+	@Override
+    public String remove(String uid) {
+        final Datastore datastore = morphia.getDatastore();
+        final Query<AgentInfo> query =  datastore.createQuery(AgentInfo.class)
+                .field(UID_COLUMN)
+                .equalIgnoreCase(uid);
+
+        datastore.delete(query);
+        return uid;
+    }
 }
