@@ -26,6 +26,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.cwt.bpg.cbt.agent.AgentService;
+import com.cwt.bpg.cbt.agent.model.AgentInfo;
 import com.cwt.bpg.cbt.calculator.CalculatorUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
@@ -46,6 +48,9 @@ public class ExchangeOrderReportService {
 
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
+	
+	@Autowired
+	private AgentService agentService;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -177,7 +182,9 @@ public class ExchangeOrderReportService {
 		List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
 		List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
 		putContactInfoParameters(contactInfoList, parameters);
-
+		replaceVendorPhoneWithAgentPhone(exchangeOrder, parameters);
+		
+		
 		parameters.put("HEADER_ADDRESS", reportHeader.getAddress());
 		parameters.put("HEADER_FAX", reportHeader.getFaxNumber());
 		parameters.put("HEADER_PHONE", reportHeader.getPhoneNumber());
@@ -195,6 +202,17 @@ public class ExchangeOrderReportService {
 		}
 
 		return parameters;
+	}
+
+	private void replaceVendorPhoneWithAgentPhone(final ExchangeOrder exchangeOrder, Map<String, Object> parameters) {
+		AgentInfo agent = agentService.getAgent(exchangeOrder.getAgentId());
+		if(agent!=null) {
+			parameters.put(ContactInfoType.PHONE.toString(), agent.getPhone());
+		}
+		else {
+			LOGGER.info("agentInfo:{}", agent);
+			parameters.put(ContactInfoType.PHONE.toString(), "");
+		}
 	}
 
 	private void formatAdditionalSgContent(Map<String, Object> parameters, String taxCode1, String taxCode2,
