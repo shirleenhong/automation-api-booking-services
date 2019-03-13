@@ -472,6 +472,7 @@
 		<module>apac-services-client-air-contract-module</module>
 		<module>apac-services-obt-module</module>
 		<module>apac-services-security-module</module>
+		<module>apac-services-agent-module</module>
 		<module>apac-services-rest</module>
 		<module>apac-services-main</module>
 		<module>apac-services-mongodb</module>
