@@ -99,6 +99,7 @@ public class ExchangeOrderReportService {
 
 		try {
 			final ExchangeOrder modifiedExchangeOrder = recalculateGSTForVendor(exchangeOrder);
+			recalculateForAirFees(modifiedExchangeOrder);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
 					prepareParameters(modifiedExchangeOrder, reportHeader),
 					new JRBeanArrayDataSource(new Object[] { modifiedExchangeOrder }));
@@ -108,11 +109,21 @@ public class ExchangeOrderReportService {
 		}
 	}
 
+	private void recalculateForAirFees(ExchangeOrder exchangeOrder) {
+		BigDecimal total = new BigDecimal("0");
+		BaseProduct product = productService.getProductByCode(exchangeOrder.getCountryCode(), exchangeOrder.getProductCode());
+		if (product != null && AIR_PRODUCT_TYPES.contains(product.getType().toUpperCase())) {
+			total = total.add(exchangeOrder.getServiceInfo().getTax1()).add(exchangeOrder.getServiceInfo().getTax2())
+				 .add(exchangeOrder.getServiceInfo().getNettCostInEo());
+			exchangeOrder.setTotal(total);
+		}
+	}
+
 	private ExchangeOrder recalculateGSTForVendor(ExchangeOrder exchangeOrder) {
 
 		if (Country.SINGAPORE.getCode().equalsIgnoreCase(exchangeOrder.getCountryCode())) {
 
-			final BigDecimal nettCost = exchangeOrder.getServiceInfo().getNettCost();
+			final BigDecimal nettCost = getCorrespondingNettCost(exchangeOrder);
 			final BigDecimal gst = exchangeOrder.getServiceInfo().getGst();
 			final BigDecimal total = exchangeOrder.getTotal();
 
