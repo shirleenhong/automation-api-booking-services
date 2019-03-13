@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.airline.model;
+package com.cwt.bpg.cbt.agent.model;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import org.mongodb.morphia.annotations.*;
 
 import io.swagger.annotations.ApiModelProperty;
 
-@Entity(value = "agentIfo", noClassnameStored = true)
+@Entity(value = "agentInfo", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("uid")))
 public class AgentInfo implements Serializable {
 
