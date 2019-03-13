@@ -34,7 +34,8 @@ public class CacheConfiguration {
             "car-vendors",
             "air-contracts",
             "air-misc-info",
-			"airlines"};
+			"airlines",
+			"agent"};
 
 	@Bean
 	public CacheManager cacheManager() {
