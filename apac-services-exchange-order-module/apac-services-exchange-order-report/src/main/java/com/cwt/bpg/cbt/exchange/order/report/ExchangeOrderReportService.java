@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,8 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 @Service
 public class ExchangeOrderReportService {
 
+	private static final List<String> AIR_PRODUCT_TYPES = Arrays.asList("CT", "BT");
+
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
 
@@ -58,6 +61,9 @@ public class ExchangeOrderReportService {
 
 	@Autowired
 	private ReportHeaderService reportHeaderService;
+
+	@Autowired
+	private ProductService productService;
 
 	@Value("${exchange.order.mail.sender}")
 	private String eoMailSender;
@@ -186,7 +192,7 @@ public class ExchangeOrderReportService {
 		parameters.put("TAX2",
 				displayServiceInfo ? formatAmount(countryCode, exchangeOrder.getServiceInfo().getTax2()) : null);
 		parameters.put("NETT_COST",
-				displayServiceInfo ? formatAmount(countryCode, exchangeOrder.getServiceInfo().getNettCost()) : null);
+				displayServiceInfo ? formatAmount(countryCode, getCorrespondingNettCost(exchangeOrder)) : null);
 
 		if (Country.HONG_KONG.getCode().equalsIgnoreCase(countryCode)) {
 			formatAdditionalHkContent(parameters, vendorHandling, productCode, countryCode);
@@ -195,6 +201,15 @@ public class ExchangeOrderReportService {
 		}
 
 		return parameters;
+	}
+
+	private BigDecimal getCorrespondingNettCost(ExchangeOrder exchangeOrder) {
+		BigDecimal nettCost = exchangeOrder.getServiceInfo().getNettCost();
+		BaseProduct product = productService.getProductByCode(exchangeOrder.getCountryCode(), exchangeOrder.getProductCode());
+		if (product != null && AIR_PRODUCT_TYPES.contains(product.getType().toUpperCase())) {
+			nettCost = exchangeOrder.getServiceInfo().getNettCostInEo();
+		}
+		return nettCost;
 	}
 
 	private void formatAdditionalSgContent(Map<String, Object> parameters, String taxCode1, String taxCode2,
