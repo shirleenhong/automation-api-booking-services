@@ -98,8 +98,8 @@ public class ExchangeOrderReportService {
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
 
 		try {
+			recalculateForAirFees(exchangeOrder);
 			final ExchangeOrder modifiedExchangeOrder = recalculateGSTForVendor(exchangeOrder);
-			recalculateForAirFees(modifiedExchangeOrder);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
 					prepareParameters(modifiedExchangeOrder, reportHeader),
 					new JRBeanArrayDataSource(new Object[] { modifiedExchangeOrder }));
