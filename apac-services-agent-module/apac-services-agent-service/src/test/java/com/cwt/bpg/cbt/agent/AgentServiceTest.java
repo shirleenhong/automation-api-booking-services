@@ -22,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.agent.model.AgentInfo;
+import org.springframework.cache.CacheManager;
 
 
 public class AgentServiceTest {
@@ -31,6 +32,9 @@ public class AgentServiceTest {
 	
 	@Mock
 	private AgentRepository repository;
+
+    @Mock
+    private CacheManager cacheManager;
 	
 	@Before
     public void setUp() throws Exception {
