@@ -16,6 +16,7 @@ import java.util.Properties;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
+import com.cwt.bpg.cbt.agent.AgentService;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,6 +54,9 @@ public class ExchangeOrderReportServiceTest {
 	
 	@Mock
 	private ReportHeaderService reportHeaderService;
+
+	@Mock
+	private AgentService agentService;
 
 	@InjectMocks
 	private ExchangeOrderReportService eoReportService;
@@ -381,6 +385,7 @@ public class ExchangeOrderReportServiceTest {
 		exchangeOrder.getServiceInfo().setTaxCode1("X1");
 		exchangeOrder.getServiceInfo().setTaxCode2("XR");
 		exchangeOrder.getServiceInfo().setVendorHandling(new BigDecimal(100));
+		exchangeOrder.setAgentId("U00AAA");
 
 		List<ContactInfo> contactInfoList = new ArrayList<>();
 		if (hasEmail) {
