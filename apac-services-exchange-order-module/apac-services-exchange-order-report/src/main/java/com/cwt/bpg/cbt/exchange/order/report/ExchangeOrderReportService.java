@@ -59,6 +59,9 @@ public class ExchangeOrderReportService {
 	@Autowired
 	private ReportHeaderService reportHeaderService;
 
+	@Value("${exchange.order.mail.sender}")
+	private String eoMailSender;
+
 	@Value("${exchange.order.email.test.recipient}")
 	private String eoMailRecipient;
 
@@ -300,11 +303,12 @@ public class ExchangeOrderReportService {
 			}
 			List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
 			List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
-			String senderEmail = exchangeOrder.getAgentEmail();
+			String eoSupportEmail = exchangeOrder.getSupportEmail();
 			String receiverEmail = setEmailRecipient(contactInfoList);
 
+			String emailSender = getSenderEmail(eoSupportEmail);
 			String emailRecipient = getEmail(receiverEmail);
-			if (StringUtils.isEmpty(emailRecipient) || StringUtils.isEmpty(senderEmail)) {
+			if (StringUtils.isEmpty(emailRecipient)) {
 				LOGGER.error(EMAIL_ERROR_MESSAGE);
 				response.setMessage(EMAIL_ERROR_MESSAGE);
 				response.setSuccess(false);
@@ -318,7 +322,7 @@ public class ExchangeOrderReportService {
 			MimeMessageHelper helper = new MimeMessageHelper(message, (pdf != null), StandardCharsets.UTF_8.name());
 
 			helper.setTo(InternetAddress.parse(emailRecipient));
-			helper.setFrom(senderEmail);
+			helper.setFrom(emailSender);
 			helper.setSubject(emailContentProcessor.getEmailSubject(exchangeOrder));
 			helper.setText(emailContentProcessor.getEmailBody(exchangeOrder), true);
 			helper.addAttachment(eoNumber + ".pdf", new ByteArrayResource(pdf));
@@ -364,6 +368,11 @@ public class ExchangeOrderReportService {
 
 	private String getEmail(String email) {
 		return !StringUtils.isEmpty(eoMailRecipient) ? eoMailRecipient : email;
+	}
+	
+	private String getSenderEmail(final String eoSupportEmail) {
+		// Use "no-reply" if support email is not available.
+		return !StringUtils.isEmpty(eoSupportEmail) ? eoSupportEmail : eoMailSender;
 	}
 
 }
