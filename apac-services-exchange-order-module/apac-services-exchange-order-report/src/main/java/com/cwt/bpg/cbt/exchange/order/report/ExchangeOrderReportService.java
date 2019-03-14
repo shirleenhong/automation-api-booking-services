@@ -303,7 +303,7 @@ public class ExchangeOrderReportService {
 			}
 			List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
 			List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
-			String eoSupportEmail = exchangeOrder.getSupportEmail();
+			String eoSupportEmail = exchangeOrder.getVendor().getSupportEmail();
 			String receiverEmail = setEmailRecipient(contactInfoList);
 
 			String emailSender = getSenderEmail(eoSupportEmail);

@@ -21,6 +21,8 @@ public class Vendor extends BaseVendor implements Serializable {
 
 	private String contactPerson;
 	
+	private String supportEmail;
+	
 	private Boolean merchantFeeAbsorb;
 
 	public String getCountryCode() {
@@ -71,6 +73,14 @@ public class Vendor extends BaseVendor implements Serializable {
 		this.contactPerson = contactPerson;
 	}
 
+	public String getSupportEmail() {
+		return supportEmail;
+	}
+
+	public void setSupportEmail(String supportEmail) {
+		this.supportEmail = supportEmail;
+	}
+	
 	public Boolean getMerchantFeeAbsorb() {
 		return merchantFeeAbsorb;
 	}
