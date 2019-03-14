@@ -5,8 +5,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -15,17 +13,14 @@ import com.cwt.bpg.cbt.agent.model.AgentInfo;
 
 @Service
 public class AgentService {
-	
+
 	@Resource
 	private AgentService proxy;
-	
+
 	@Autowired
 	private AgentRepository agentRepository;
 
-	@Autowired
-	private CacheManager cacheManager;
-	
-	@Cacheable(cacheNames = "agent", key="#uid", condition="#uid != null")
+	@Cacheable(cacheNames = "agent", key="#uid + \"-\" + #countryCode", condition="#uid != null && #countryCode != null")
 	public AgentInfo getAgent(String uid, String countryCode) {
 		return agentRepository.get(uid, countryCode);
 	}
@@ -34,25 +29,17 @@ public class AgentService {
         return agentRepository.getAll();
     }
 
-    @CacheEvict(cacheNames = "agent", key = "#uid", condition="#uid != null")
+    @CacheEvict(
+    		cacheNames = "agent",
+			key="#agentInfo.uid + \"-\" + #agentInfo.countryCode",
+			condition="#agentInfo != null && #agentInfo.uid != null && #agentInfo.countryCode != null")
 	public AgentInfo save(AgentInfo agentInfo) {
-		AgentInfo savedAgentInfo = agentRepository.put(agentInfo);
-		clearCache();
-		return savedAgentInfo;
+		return agentRepository.put(agentInfo);
 	}
 
-	@CacheEvict(cacheNames = "agent", key = "#uid", condition="#uid != null")
+	@CacheEvict(cacheNames = "agent", key="#uid + \"-\" + #countryCode", condition="#uid != null && #countryCode != null")
 	public String delete(String uid, String countryCode) {
-		String agentId = agentRepository.remove(uid, countryCode);
-		clearCache();
-		return agentId;
-	}
-
-	private void clearCache() {
-		Cache cache = cacheManager.getCache("agent");
-		if (cache != null) {
-			cache.clear();
-		}
+		return agentRepository.remove(uid, countryCode);
 	}
 
 }
