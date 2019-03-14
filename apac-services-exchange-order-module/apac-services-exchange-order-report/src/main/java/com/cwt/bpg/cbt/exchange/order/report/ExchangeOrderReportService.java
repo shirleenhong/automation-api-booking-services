@@ -27,6 +27,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.cwt.bpg.cbt.agent.AgentService;
+import com.cwt.bpg.cbt.agent.model.AgentInfo;
 import com.cwt.bpg.cbt.calculator.CalculatorUtils;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
@@ -49,6 +51,9 @@ public class ExchangeOrderReportService {
 
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
+	
+	@Autowired
+	private AgentService agentService;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -98,8 +103,7 @@ public class ExchangeOrderReportService {
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
 
 		try {
-			recalculateForAirFees(exchangeOrder);
-			final ExchangeOrder modifiedExchangeOrder = recalculateGSTForVendor(exchangeOrder);
+			final ExchangeOrder modifiedExchangeOrder = recalculateTotalForPDFGeneration(exchangeOrder);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
 					prepareParameters(modifiedExchangeOrder, reportHeader),
 					new JRBeanArrayDataSource(new Object[] { modifiedExchangeOrder }));
@@ -109,17 +113,15 @@ public class ExchangeOrderReportService {
 		}
 	}
 
-	private void recalculateForAirFees(ExchangeOrder exchangeOrder) {
-		BigDecimal total = new BigDecimal("0");
+	private ExchangeOrder recalculateTotalForPDFGeneration(ExchangeOrder exchangeOrder) {
 		BaseProduct product = productService.getProductByCode(exchangeOrder.getCountryCode(), exchangeOrder.getProductCode());
 		if (product != null && AIR_PRODUCT_TYPES.contains(product.getType().toUpperCase())) {
-			total = total.add(exchangeOrder.getServiceInfo().getTax1()).add(exchangeOrder.getServiceInfo().getTax2())
-				 .add(exchangeOrder.getServiceInfo().getNettCostInEo());
+			BigDecimal total = new BigDecimal(0);
+			total = total.add(exchangeOrder.getServiceInfo().getTax1())
+					.add(exchangeOrder.getServiceInfo().getTax2())
+					.add(exchangeOrder.getServiceInfo().getNettCostInEo());
 			exchangeOrder.setTotal(total);
 		}
-	}
-
-	private ExchangeOrder recalculateGSTForVendor(ExchangeOrder exchangeOrder) {
 
 		if (Country.SINGAPORE.getCode().equalsIgnoreCase(exchangeOrder.getCountryCode())) {
 
@@ -194,7 +196,9 @@ public class ExchangeOrderReportService {
 		List<ContactInfo> contactInfo = exchangeOrder.getVendor().getContactInfo();
 		List<ContactInfo> contactInfoList = checkNullContactInfoList(contactInfo);
 		putContactInfoParameters(contactInfoList, parameters);
-
+		replaceVendorPhoneWithAgentPhone(exchangeOrder, parameters);
+		
+		
 		parameters.put("HEADER_ADDRESS", reportHeader.getAddress());
 		parameters.put("HEADER_FAX", reportHeader.getFaxNumber());
 		parameters.put("HEADER_PHONE", reportHeader.getPhoneNumber());
@@ -221,6 +225,17 @@ public class ExchangeOrderReportService {
 			nettCost = exchangeOrder.getServiceInfo().getNettCostInEo();
 		}
 		return nettCost;
+	}
+
+	private void replaceVendorPhoneWithAgentPhone(final ExchangeOrder exchangeOrder, Map<String, Object> parameters) {
+		AgentInfo agent = agentService.getAgent(exchangeOrder.getAgentId());
+		if(agent!=null) {
+			parameters.put(ContactInfoType.PHONE.toString(), agent.getPhone());
+		}
+		else {
+			LOGGER.info("agentInfo:{}", agent);
+			parameters.put(ContactInfoType.PHONE.toString(), "");
+		}
 	}
 
 	private void formatAdditionalSgContent(Map<String, Object> parameters, String taxCode1, String taxCode2,

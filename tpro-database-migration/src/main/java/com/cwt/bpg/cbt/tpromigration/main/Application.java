@@ -13,7 +13,7 @@ public class Application {
 
 	public static void main(String[] args) throws Exception {
 		
-		System.setProperty("spring.profiles.default","dev");
+		System.setProperty("spring.profiles.default","int");
 		
 		String countryCode = doCountryCodeSelection();
 		
@@ -38,6 +38,7 @@ public class Application {
 			}
 			
 			//service.migrateProductList();
+			service.migrateAgentContacts();
 			
 		}
 	}
