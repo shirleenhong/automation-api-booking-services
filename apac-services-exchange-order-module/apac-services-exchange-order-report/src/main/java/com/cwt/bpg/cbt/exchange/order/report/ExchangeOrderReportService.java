@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,8 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 @Service
 public class ExchangeOrderReportService {
 
+	private static final List<String> AIR_PRODUCT_TYPES = Arrays.asList("CT", "BT");
+
 	@Autowired
 	private ExchangeOrderService exchangeOrderService;
 	
@@ -63,6 +66,9 @@ public class ExchangeOrderReportService {
 
 	@Autowired
 	private ReportHeaderService reportHeaderService;
+
+	@Autowired
+	private ProductService productService;
 
 	@Value("${exchange.order.mail.sender}")
 	private String eoMailSender;
@@ -97,7 +103,7 @@ public class ExchangeOrderReportService {
 		final ClassPathResource resource = new ClassPathResource(TEMPLATE);
 
 		try {
-			final ExchangeOrder modifiedExchangeOrder = recalculateGSTForVendor(exchangeOrder);
+			final ExchangeOrder modifiedExchangeOrder = recalculateTotalForPDFGeneration(exchangeOrder);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(),
 					prepareParameters(modifiedExchangeOrder, reportHeader),
 					new JRBeanArrayDataSource(new Object[] { modifiedExchangeOrder }));
@@ -107,11 +113,19 @@ public class ExchangeOrderReportService {
 		}
 	}
 
-	private ExchangeOrder recalculateGSTForVendor(ExchangeOrder exchangeOrder) {
+	private ExchangeOrder recalculateTotalForPDFGeneration(ExchangeOrder exchangeOrder) {
+		BaseProduct product = productService.getProductByCode(exchangeOrder.getCountryCode(), exchangeOrder.getProductCode());
+		if (product != null && AIR_PRODUCT_TYPES.contains(product.getType().toUpperCase())) {
+			BigDecimal total = new BigDecimal(0);
+			total = total.add(exchangeOrder.getServiceInfo().getTax1())
+					.add(exchangeOrder.getServiceInfo().getTax2())
+					.add(exchangeOrder.getServiceInfo().getNettCostInEo());
+			exchangeOrder.setTotal(total);
+		}
 
 		if (Country.SINGAPORE.getCode().equalsIgnoreCase(exchangeOrder.getCountryCode())) {
 
-			final BigDecimal nettCost = exchangeOrder.getServiceInfo().getNettCost();
+			final BigDecimal nettCost = getCorrespondingNettCost(exchangeOrder);
 			final BigDecimal gst = exchangeOrder.getServiceInfo().getGst();
 			final BigDecimal total = exchangeOrder.getTotal();
 
@@ -193,7 +207,7 @@ public class ExchangeOrderReportService {
 		parameters.put("TAX2",
 				displayServiceInfo ? formatAmount(countryCode, exchangeOrder.getServiceInfo().getTax2()) : null);
 		parameters.put("NETT_COST",
-				displayServiceInfo ? formatAmount(countryCode, exchangeOrder.getServiceInfo().getNettCost()) : null);
+				displayServiceInfo ? formatAmount(countryCode, getCorrespondingNettCost(exchangeOrder)) : null);
 
 		if (Country.HONG_KONG.getCode().equalsIgnoreCase(countryCode)) {
 			formatAdditionalHkContent(parameters, vendorHandling, productCode, countryCode);
@@ -202,6 +216,15 @@ public class ExchangeOrderReportService {
 		}
 
 		return parameters;
+	}
+
+	private BigDecimal getCorrespondingNettCost(ExchangeOrder exchangeOrder) {
+		BigDecimal nettCost = exchangeOrder.getServiceInfo().getNettCost();
+		BaseProduct product = productService.getProductByCode(exchangeOrder.getCountryCode(), exchangeOrder.getProductCode());
+		if (product != null && AIR_PRODUCT_TYPES.contains(product.getType().toUpperCase())) {
+			nettCost = exchangeOrder.getServiceInfo().getNettCostInEo();
+		}
+		return nettCost;
 	}
 
 	private void replaceVendorPhoneWithAgentPhone(final ExchangeOrder exchangeOrder, Map<String, Object> parameters) {
