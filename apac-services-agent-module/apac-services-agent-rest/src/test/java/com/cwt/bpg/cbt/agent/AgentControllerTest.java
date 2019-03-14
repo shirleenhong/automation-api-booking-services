@@ -63,7 +63,7 @@ public class AgentControllerTest {
 	@Test
     public void getAgentReturns200WhenAgentExists() throws Exception {
         AgentInfo agent = new AgentInfo();
-        when(service.getAgent("ABC123")).thenReturn(agent);
+        when(service.getAgent("ABC123", "sg")).thenReturn(agent);
 
         mockMvc.perform(get("/agent/ABC123")
                 .contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(agent)))
@@ -71,12 +71,12 @@ public class AgentControllerTest {
                 .andReturn()
                 .getResponse();
 
-        verify(service).getAgent("ABC123");
+        verify(service).getAgent("ABC123", "sg");
     }
 	
 	@Test
     public void getAgentReturns204WhenAgentDoesNotExist() throws Exception {
-        when(service.getAgent("CBA321")).thenReturn(null);
+        when(service.getAgent("CBA321", "sg")).thenReturn(null);
 
         mockMvc.perform(get("/agent/CBA321")
                 .contentType(APPLICATION_JSON_UTF8))
@@ -84,7 +84,7 @@ public class AgentControllerTest {
                 .andReturn()
                 .getResponse();
 
-        verify(service).getAgent("CBA321");
+        verify(service).getAgent("CBA321", "sg");
     }
 	
 	
@@ -108,7 +108,7 @@ public class AgentControllerTest {
 
     @Test
     public void removeAgentReturns200UponSuccessfulDeletion() throws Exception {
-        when(service.delete("ABC123")).thenReturn("ABC123");
+        when(service.delete("ABC123", "sg")).thenReturn("ABC123");
 
         mockMvc.perform(delete("/agent/ABC123")
                 .contentType(APPLICATION_JSON_UTF8).content("ABC123"))
@@ -116,12 +116,12 @@ public class AgentControllerTest {
                 .andReturn()
                 .getResponse();
 
-        verify(service).delete("ABC123");
+        verify(service).delete("ABC123", "sg");
     }
 
     @Test
     public void removeAgentReturns404WhenThereIsNoRecordToDelete() throws Exception {
-        when(service.delete("ABC123")).thenReturn("");
+        when(service.delete("ABC123", "sg")).thenReturn("");
 
         mockMvc.perform(delete("/agent/ABC123")
                 .contentType(APPLICATION_JSON_UTF8).content(""))
@@ -129,7 +129,7 @@ public class AgentControllerTest {
                 .andReturn()
                 .getResponse();
 
-        verify(service).delete("ABC123");
+        verify(service).delete("ABC123", "sg");
     }
 	
 	private static byte[] convertObjectToJsonBytes(Object object) throws IOException {
