@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class AgentService {
 	
 	@Autowired
 	private AgentRepository agentRepository;
+
+	@Autowired
+	private CacheManager cacheManager;
 	
 	@Cacheable(cacheNames = "agent", key="#uid", condition="#uid != null")
 	public AgentInfo getAgent(String uid, String countryCode) {
@@ -31,12 +36,23 @@ public class AgentService {
 
     @CacheEvict(cacheNames = "agent", key = "#uid", condition="#uid != null")
 	public AgentInfo save(AgentInfo agentInfo) {
-		return agentRepository.put(agentInfo);
+		AgentInfo savedAgentInfo = agentRepository.put(agentInfo);
+		clearCache();
+		return savedAgentInfo;
 	}
 
 	@CacheEvict(cacheNames = "agent", key = "#uid", condition="#uid != null")
 	public String delete(String uid, String countryCode) {
-		return agentRepository.remove(uid, countryCode);
+		String agentId = agentRepository.remove(uid, countryCode);
+		clearCache();
+		return agentId;
+	}
+
+	private void clearCache() {
+		Cache cache = cacheManager.getCache("agent");
+		if (cache != null) {
+			cache.clear();
+		}
 	}
 
 }
