@@ -15,6 +15,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cwt.bpg.cbt.agent.model.AgentInfoKey;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -33,9 +34,6 @@ public class AgentServiceTest {
 	@Mock
 	private AgentRepository repository;
 
-    @Mock
-    private CacheManager cacheManager;
-	
 	@Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -55,7 +53,7 @@ public class AgentServiceTest {
     @Test
     public void shouldReturnNullWhenAgentDoesNotExist() {
         AgentInfo expected = null;
-        when(repository.get(anyString())).thenReturn(expected);
+        when(repository.get(new AgentInfoKey("", ""))).thenReturn(expected);
 
         AgentInfo actual = service.getAgent("ABC123", "sg");
 

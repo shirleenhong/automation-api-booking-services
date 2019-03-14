@@ -73,7 +73,7 @@ public class CommonRepository<T, D> {
 	}
 
 	@SuppressWarnings("unchecked")
-	private D getKeyValue(T object) {
+	protected D getKeyValue(T object) {
 		D keyValue = null;
 		try {
 			Field keyField = typeClass.getDeclaredField(keyColumn);

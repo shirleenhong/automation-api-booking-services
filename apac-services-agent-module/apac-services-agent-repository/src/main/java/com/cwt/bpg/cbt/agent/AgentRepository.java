@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.agent;
 
+import com.cwt.bpg.cbt.agent.model.AgentInfoKey;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Repository;
@@ -8,7 +9,7 @@ import com.cwt.bpg.cbt.agent.model.AgentInfo;
 import com.cwt.bpg.cbt.repository.CommonRepository;
 
 @Repository
-public class AgentRepository extends CommonRepository<AgentInfo, String> {
+public class AgentRepository extends CommonRepository<AgentInfo, AgentInfoKey> {
 
 	private static final String ID_COLUMN = "id";
 	private static final String UID_COLUMN = "uid";
@@ -24,7 +25,12 @@ public class AgentRepository extends CommonRepository<AgentInfo, String> {
 		query.field(COUNTRY_CODE_COLUMN).equalIgnoreCase(countryCode);
 		return query.get();
 	}
-	
+
+    @Override
+    public String remove(AgentInfoKey keyValue) {
+        return remove(keyValue.getUid(), keyValue.getCountryCode());
+    }
+
     public String remove(String uid, String countryCode) {
         final Datastore datastore = morphia.getDatastore();
         final Query<AgentInfo> query =  datastore.createQuery(AgentInfo.class)
@@ -32,5 +38,10 @@ public class AgentRepository extends CommonRepository<AgentInfo, String> {
                 .field(COUNTRY_CODE_COLUMN).equalIgnoreCase(countryCode);
         datastore.delete(query);
         return uid;
+    }
+
+    @Override
+    protected AgentInfoKey getKeyValue(AgentInfo agentInfo) {
+        return new AgentInfoKey(agentInfo.getUid(), agentInfo.getCountryCode());
     }
 }
