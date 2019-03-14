@@ -15,7 +15,7 @@ public class AgentRepository extends CommonRepository<AgentInfo, String> {
 	private static final String COUNTRY_CODE_COLUMN = "countryCode";
 
 	public AgentRepository() {
-		super(AgentInfo.class, ID_COLUMN);
+		super(AgentInfo.class, UID_COLUMN);
 	}
 
 	public AgentInfo get(String uid, String countryCode) {
