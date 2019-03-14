@@ -40,11 +40,11 @@ public class AgentServiceTest {
 	@Test
     public void shouldReturnExistingAgent() {
         AgentInfo expected = new AgentInfo();
-        when(repository.get(anyString())).thenReturn(expected);
+        when(repository.get(anyString(), anyString())).thenReturn(expected);
 
-        AgentInfo actual = service.getAgent("ABC123");
+        AgentInfo actual = service.getAgent("ABC123", "sg");
 
-        verify(repository).get("ABC123");
+        verify(repository).get("ABC123", "sg");
         assertNotNull(actual);
     }
 
@@ -53,9 +53,9 @@ public class AgentServiceTest {
         AgentInfo expected = null;
         when(repository.get(anyString())).thenReturn(expected);
 
-        AgentInfo actual = service.getAgent("ABC123");
+        AgentInfo actual = service.getAgent("ABC123", "sg");
 
-        verify(repository).get("ABC123");
+        verify(repository).get("ABC123", "sg");
         assertNull(actual);
     }
 
@@ -84,11 +84,11 @@ public class AgentServiceTest {
     @Test
     public void shouldDelete() {
         String expected = "ABC123";
-        when(repository.remove(anyString())).thenReturn(expected);
+        when(repository.remove(anyString(), anyString())).thenReturn(expected);
 
-        String actual = service.delete(expected);
+        String actual = service.delete(expected, "sg");
 
-        verify(repository).remove(expected);
+        verify(repository).remove(expected, "sg");
         assertThat(actual, is(equalTo(expected)));
     }
 }

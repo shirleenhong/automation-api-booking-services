@@ -37,11 +37,11 @@ public class AgentController {
 		return new ResponseEntity<>(agentService.getAgents(), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/agent/{uid}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(value = "/agent/{uid}/{countryCode}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Returns Agent given an uid.")
-	public ResponseEntity<AgentInfo> getAgent(@PathVariable @ApiParam("agent uid") String uid) {
-        AgentInfo agent = agentService.getAgent(uid);
+	@ApiOperation(value = "[HK/SG only] Returns Agent given an uid and country code.")
+	public ResponseEntity<AgentInfo> getAgent(@PathVariable("uid") @ApiParam("agent uid") String uid, @PathVariable("countryCode") @ApiParam("agent country code") String countryCode) {
+        AgentInfo agent = agentService.getAgent(uid, countryCode);
         return new ResponseEntity<>(agent, agent != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
 	}
 
@@ -54,11 +54,11 @@ public class AgentController {
     }
 
 	@Internal
-	@DeleteMapping(path = "/agent/{uid}")
+	@DeleteMapping(path = "/agent/{uid}/{countryCode}")
 	@ResponseBody
-	@ApiOperation(value = "[Maintenance] Deletes Agent given an uid.")
-	public ResponseEntity<String> removeAgent(@PathVariable @ApiParam("agent uid") String uid) {
-		String deleteResult = agentService.delete(uid);
+	@ApiOperation(value = "[HK/SG only] [Maintenance] Deletes Agent given an uid and country code.")
+	public ResponseEntity<String> removeAgent(@PathVariable("uid") @ApiParam("agent uid") String uid, @PathVariable("countryCode") @ApiParam("country code") String countryCode) {
+		String deleteResult = agentService.delete(uid, countryCode);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
 		return new ResponseEntity<>(deleteResult, status);
     }

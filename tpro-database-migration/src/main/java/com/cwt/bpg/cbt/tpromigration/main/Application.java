@@ -13,7 +13,7 @@ public class Application {
 
 	public static void main(String[] args) throws Exception {
 		
-		System.setProperty("spring.profiles.default","int");
+		System.setProperty("spring.profiles.default","dev");
 		
 		String countryCode = doCountryCodeSelection();
 		

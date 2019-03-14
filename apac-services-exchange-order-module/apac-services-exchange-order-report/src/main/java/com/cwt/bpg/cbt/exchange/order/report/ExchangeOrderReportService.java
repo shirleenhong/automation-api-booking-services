@@ -205,7 +205,7 @@ public class ExchangeOrderReportService {
 	}
 
 	private void replaceVendorPhoneWithAgentPhone(final ExchangeOrder exchangeOrder, Map<String, Object> parameters) {
-		AgentInfo agent = agentService.getAgent(exchangeOrder.getAgentId());
+		AgentInfo agent = agentService.getAgent(exchangeOrder.getAgentId(), exchangeOrder.getCountryCode());
 		if(agent!=null) {
 			parameters.put(ContactInfoType.PHONE.toString(), agent.getPhone());
 		}

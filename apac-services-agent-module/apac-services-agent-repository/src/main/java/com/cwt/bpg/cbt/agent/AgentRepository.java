@@ -12,24 +12,24 @@ public class AgentRepository extends CommonRepository<AgentInfo, String> {
 
 	private static final String ID_COLUMN = "id";
 	private static final String UID_COLUMN = "uid";
+	private static final String COUNTRY_CODE_COLUMN = "countryCode";
 
 	public AgentRepository() {
 		super(AgentInfo.class, ID_COLUMN);
 	}
 
-	public AgentInfo get(String uid) {
+	public AgentInfo get(String uid, String countryCode) {
 		final Query<AgentInfo> query = morphia.getDatastore().createQuery(AgentInfo.class);
-		query.field(UID_COLUMN).equal(uid);
+		query.field(UID_COLUMN).equalIgnoreCase(uid);
+		query.field(COUNTRY_CODE_COLUMN).equalIgnoreCase(countryCode);
 		return query.get();
 	}
 	
-	@Override
-    public String remove(String uid) {
+    public String remove(String uid, String countryCode) {
         final Datastore datastore = morphia.getDatastore();
         final Query<AgentInfo> query =  datastore.createQuery(AgentInfo.class)
-                .field(UID_COLUMN)
-                .equalIgnoreCase(uid);
-
+                .field(UID_COLUMN).equalIgnoreCase(uid)
+                .field(COUNTRY_CODE_COLUMN).equalIgnoreCase(countryCode);
         datastore.delete(query);
         return uid;
     }
