@@ -41,8 +41,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	@ApiModelProperty(required = true)
 	private String agentName;
-	
-	private String supportEmail;
 
 	private String raiseCheque;
 
@@ -94,14 +92,6 @@ public class ExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	public void setAgentName(String agentName) {
 		this.agentName = agentName;
-	}
-	
-	public String getSupportEmail() {
-		return supportEmail;
-	}
-
-	public void setSupportEmail(String supportEmail) {
-		this.supportEmail = supportEmail;
 	}
 
 	public String getRaiseCheque() {
