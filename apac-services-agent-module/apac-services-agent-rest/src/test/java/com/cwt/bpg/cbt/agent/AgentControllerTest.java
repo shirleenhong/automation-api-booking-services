@@ -65,7 +65,7 @@ public class AgentControllerTest {
         AgentInfo agent = new AgentInfo();
         when(service.getAgent("ABC123", "sg")).thenReturn(agent);
 
-        mockMvc.perform(get("/agent/ABC123")
+        mockMvc.perform(get("/agent/ABC123/sg")
                 .contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(agent)))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -78,7 +78,7 @@ public class AgentControllerTest {
     public void getAgentReturns204WhenAgentDoesNotExist() throws Exception {
         when(service.getAgent("CBA321", "sg")).thenReturn(null);
 
-        mockMvc.perform(get("/agent/CBA321")
+        mockMvc.perform(get("/agent/CBA321/sg")
                 .contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isNoContent())
                 .andReturn()
@@ -110,7 +110,7 @@ public class AgentControllerTest {
     public void removeAgentReturns200UponSuccessfulDeletion() throws Exception {
         when(service.delete("ABC123", "sg")).thenReturn("ABC123");
 
-        mockMvc.perform(delete("/agent/ABC123")
+        mockMvc.perform(delete("/agent/ABC123/sg")
                 .contentType(APPLICATION_JSON_UTF8).content("ABC123"))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -123,7 +123,7 @@ public class AgentControllerTest {
     public void removeAgentReturns404WhenThereIsNoRecordToDelete() throws Exception {
         when(service.delete("ABC123", "sg")).thenReturn("");
 
-        mockMvc.perform(delete("/agent/ABC123")
+        mockMvc.perform(delete("/agent/ABC123/sg")
                 .contentType(APPLICATION_JSON_UTF8).content(""))
                 .andExpect(status().isNotFound())
                 .andReturn()
