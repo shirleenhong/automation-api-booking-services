@@ -535,6 +535,9 @@ public class MigrationService {
 		final List<TblAgentConfig> agentConfigs = agentDAOImpl.getAgentConfigList();
 		final LdapTemplate template = new LdapTemplate(ldapContextSource);
 		final List<AgentInfo> agentInfos = new ArrayList<AgentInfo>();
+		
+		final List<String> NoLDAPAccount = new ArrayList<String>();
+		final List<String> WithLDAPAccount = new ArrayList<String>();
 
 		agents.stream().forEach(a -> {
 			agentConfigs.stream().filter(c -> c.getDivision().equalsIgnoreCase(a.getDivision())).forEach(c -> {
@@ -545,21 +548,28 @@ public class MigrationService {
 
 				AgentInfo agentInfo = new AgentInfo();
 
-				template.search(LdapUtils.emptyLdapName(), searchFilter.encode(), new AttributesMapper<AgentInfo>() {
+		        final List<AgentInfo> users = template.search(LdapUtils.emptyLdapName(), searchFilter.encode(), new AttributesMapper<AgentInfo>() {
 					@Override
 					public AgentInfo mapFromAttributes(Attributes attributes) throws NamingException {
 						String uid = (String) attributes.get("sAMAccountName").get();
 						if (!StringUtils.isEmpty(uid)) {
-							agentInfo.setUid((String) attributes.get("sAMAccountName").get());
+							agentInfo.setUid(uid);
 							agentInfo.setPhone(c.getPhone());
 							agentInfo.setCountryCode(c.getCountryCode());
 							agentInfos.add(agentInfo);
+							
+							String name = a.getLastName() + ", " + a.getFirstName() + " - " + c.getCountryCode();
+							WithLDAPAccount.add(name);
 						}
-
 						return null;
 					}
-
 				});
+		        
+		        
+		        if(users ==null && users.size() ==0) {
+		        	String name = a.getLastName() + ", " + a.getFirstName() + " - " + c.getCountryCode();;
+					NoLDAPAccount.add(name);
+		        }
 			});
 		});
 
@@ -570,6 +580,17 @@ public class MigrationService {
 		}
 
 		mongoDbConnection.getCollection(AGENT_COLLECTION).insertMany(docs);
+		
+		System.out.println("WITH LDAP ACCOUNT");
+		for(String name : WithLDAPAccount) {
+			System.out.println(name);
+		}
+		
+		
+		System.out.println("WITHOUT LDAP ACCOUNT");
+		for(String name : NoLDAPAccount) {
+			System.out.println(name);
+		}
 
 	}
 
