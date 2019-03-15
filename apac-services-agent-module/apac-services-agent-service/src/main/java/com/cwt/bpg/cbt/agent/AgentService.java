@@ -21,7 +21,7 @@ public class AgentService {
 	@Autowired
 	private AgentRepository agentRepository;
 	
-	@Cacheable(cacheNames = "agent", key="{#uid, #countryCode}", condition="#uid != null && #countryCode != null")
+	@Cacheable(cacheNames = "agent", key="{#uid.toUpperCase(), #countryCode.toUpperCase()}", condition="#uid != null && #countryCode != null")
 	public AgentInfo getAgent(String uid, String countryCode) {
 		return agentRepository.getAgent(uid, countryCode);
 	}
@@ -44,7 +44,7 @@ public class AgentService {
 		return agentRepository.remove(new ObjectId(id));
 	}
 	
-	@CacheEvict(cacheNames = "agent", key="{#uid, #countryCode}", condition="#uid != null && #countryCode != null")
+	@CacheEvict(cacheNames = "agent", key="{#uid.toUpperCase(), #countryCode.toUpperCase()}", condition="#uid != null && #countryCode != null")
 	public String remove(String uid, String countryCode) {
 		return agentRepository.removeAgent(uid, countryCode);
 	}
