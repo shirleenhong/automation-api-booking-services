@@ -108,28 +108,28 @@ public class AgentControllerTest {
 
     @Test
     public void removeAgentReturns200UponSuccessfulDeletion() throws Exception {
-        when(service.delete("ABC123", "sg")).thenReturn("ABC123");
+        when(service.remove("5b2870d6284b8d1ac84300ad")).thenReturn("5b2870d6284b8d1ac84300ad");
 
-        mockMvc.perform(delete("/agent/ABC123/sg")
+        mockMvc.perform(delete("/agent/5b2870d6284b8d1ac84300ad")
                 .contentType(APPLICATION_JSON_UTF8).content("ABC123"))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        verify(service).delete("ABC123", "sg");
+        verify(service).remove("5b2870d6284b8d1ac84300ad");
     }
 
     @Test
     public void removeAgentReturns404WhenThereIsNoRecordToDelete() throws Exception {
-        when(service.delete("ABC123", "sg")).thenReturn("");
+        when(service.remove("5b2870d6284b8d1ac84300ad")).thenReturn("");
 
-        mockMvc.perform(delete("/agent/ABC123/sg")
+        mockMvc.perform(delete("/agent/5b2870d6284b8d1ac84300ad")
                 .contentType(APPLICATION_JSON_UTF8).content(""))
                 .andExpect(status().isNotFound())
                 .andReturn()
                 .getResponse();
 
-        verify(service).delete("ABC123", "sg");
+        verify(service).remove("5b2870d6284b8d1ac84300ad");
     }
 	
 	private static byte[] convertObjectToJsonBytes(Object object) throws IOException {

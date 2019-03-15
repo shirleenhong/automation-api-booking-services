@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cwt.bpg.cbt.agent.model.AgentInfoKey;
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -23,7 +23,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.agent.model.AgentInfo;
-import org.springframework.cache.CacheManager;
 
 
 public class AgentServiceTest {
@@ -42,22 +41,22 @@ public class AgentServiceTest {
 	@Test
     public void shouldReturnExistingAgent() {
         AgentInfo expected = new AgentInfo();
-        when(repository.get(anyString(), anyString())).thenReturn(expected);
+        when(repository.getAgent(anyString(), anyString())).thenReturn(expected);
 
         AgentInfo actual = service.getAgent("ABC123", "sg");
 
-        verify(repository).get("ABC123", "sg");
+        verify(repository).getAgent("ABC123", "sg");
         assertNotNull(actual);
     }
 
     @Test
     public void shouldReturnNullWhenAgentDoesNotExist() {
         AgentInfo expected = null;
-        when(repository.get(new AgentInfoKey("", ""))).thenReturn(expected);
+        when(repository.getAgent(anyString(), anyString())).thenReturn(expected);
 
         AgentInfo actual = service.getAgent("ABC123", "sg");
 
-        verify(repository).get("ABC123", "sg");
+        verify(repository).getAgent("ABC123", "sg");
         assertNull(actual);
     }
 
@@ -85,12 +84,12 @@ public class AgentServiceTest {
 
     @Test
     public void shouldDelete() {
-        String expected = "ABC123";
-        when(repository.remove(anyString(), anyString())).thenReturn(expected);
+        String expected = "5b2870d6284b8d1ac84300ad";
+        when(repository.remove(new ObjectId(expected))).thenReturn(expected);
 
-        String actual = service.delete(expected, "sg");
+        String actual = service.remove(expected);
 
-        verify(repository).remove(expected, "sg");
+        verify(repository).remove(new ObjectId(expected));
         assertThat(actual, is(equalTo(expected)));
     }
 }

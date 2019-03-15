@@ -30,6 +30,14 @@ public class AgentInfo implements Serializable {
 
 	private String countryCode;
 
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
+	
 	public String getUid() {
 		return uid;
 	}
