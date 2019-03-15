@@ -1,14 +1,13 @@
 package com.cwt.bpg.cbt.agent;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -42,37 +41,15 @@ public class AgentRepositoryTest {
 	}
 
 	@Test
-	public void shouldReturnResultWhenAgentUIDIsNotNull() {
-//		AgentInfo expected = new AgentInfo();
-//        when(query.get()).thenReturn(expected);
-//        when(query.field(anyString())).thenReturn(mock(FieldEnd.class));
-//
-//        AgentInfo actual = repository.get("ABC123", "sg");
-//
-//        InOrder inOrder = inOrder(morphia, datastore, query);
-//        inOrder.verify(morphia).getDatastore();
-//        inOrder.verify(datastore).createQuery(AgentInfo.class);
-//        inOrder.verify(query).field(anyString());
-//        inOrder.verify(query).field(anyString());
-//        
-//		assertEquals(expected, actual);
-	}
+	public void shouldReturnResultWhenUidAndCountryCodeAreNotNull() {
+		FieldEnd fieldEnd = mock(FieldEnd.class);
+		when(query.field(anyString())).thenReturn(fieldEnd);
+		when(fieldEnd.equalIgnoreCase(anyString())).thenReturn(query);
+		when(query.get()).thenReturn(new AgentInfo());
+		
+		repository.getAgent("123","SG");
 
-	@Test
-	public void shouldReturnResultWhenAgentUIDIsNull() {
-//		AgentInfo expected = new AgentInfo();
-//		when(query.get()).thenReturn(expected);
-//		when(query.field(anyString())).thenReturn(mock(FieldEnd.class));
-//
-//		AgentInfo actual = repository.get("");
-//
-//		InOrder inOrder = inOrder(morphia, datastore, query);
-//		inOrder.verify(morphia).getDatastore();
-//		inOrder.verify(datastore).createQuery(AgentInfo.class);
-//		inOrder.verify(query).field(anyString());
-//		inOrder.verify(query).field(anyString());
-//
-//		assertEquals(expected, actual);
+		verify(query, times(2)).field(anyString());
+        verify(morphia, times(1)).getDatastore();
 	}
-
 }

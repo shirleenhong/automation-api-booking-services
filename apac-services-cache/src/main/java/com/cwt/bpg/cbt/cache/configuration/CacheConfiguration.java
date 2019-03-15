@@ -59,7 +59,8 @@ public class CacheConfiguration {
                     "car-vendors",
                     "air-contracts",
                     "air-misc-info",
-					"airlines"})
+					"airlines",
+					"agent"})
 	
 	@Scheduled(cron = "${com.cwt.cache.cron.expression}")
 	public void evictAllCache() {
