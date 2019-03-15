@@ -5,10 +5,12 @@ import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.agent.model.AgentInfo;
 import com.cwt.bpg.cbt.repository.CommonRepository;
 
+@Repository
 public class AgentRepository extends CommonRepository<AgentInfo, ObjectId> {
 	
 	private static final String ID_COLUMN = "id";
