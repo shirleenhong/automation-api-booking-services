@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.cwt.bpg.cbt</groupId>
 		<artifactId>apac-services-finance-module</artifactId>
-		<version>1.21.0-SNAPSHOT</version>
+		<version>1.22.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>apac-services-finance-service</artifactId>
 	<name>apac-services-finance-service</name>

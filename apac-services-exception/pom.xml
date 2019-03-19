@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.cwt.bpg.cbt</groupId>
 		<artifactId>apac-services</artifactId>
-		<version>1.21.0-SNAPSHOT</version>
+		<version>1.22.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>com.cwt.bpg.cbt</groupId>

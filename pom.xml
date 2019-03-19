@@ -9,7 +9,7 @@
 
 	<groupId>com.cwt.bpg.cbt</groupId>
 	<artifactId>apac-services</artifactId>
-	<version>1.21.0-SNAPSHOT</version>
+	<version>1.22.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>apac-services</name>
@@ -45,7 +45,7 @@
 		<connection>scm:git:${scm.repo.url}</connection>
 		<developerConnection>scm:git:${scm.repo.url}</developerConnection>
 		<url>${scm.repo.url}</url>
-		<tag>1.21.x</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<distributionManagement>
