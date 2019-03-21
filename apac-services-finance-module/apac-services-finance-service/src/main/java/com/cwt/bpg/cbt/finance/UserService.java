@@ -1,6 +1,9 @@
 package com.cwt.bpg.cbt.finance;
 
 import io.swagger.annotations.Api;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,4 +25,10 @@ public class UserService {
     public String deleteUser(String uid) {
         return repository.remove(uid);
     }
+    
+    public List<User> getAll()
+    {
+        return repository.getAll();
+    }
+    
 }
