@@ -541,10 +541,14 @@ public class MigrationService {
 
 		agents.stream().forEach(a -> {
 			agentConfigs.stream().filter(c -> c.getDivision().equalsIgnoreCase(a.getDivision())).forEach(c -> {
-
+				
+				String lastName = a.getLastName()==null ? "" : a.getLastName().trim();
+				String firstName = a.getFirstName()==null ? "" : a.getFirstName().trim();
+						
 				final AndFilter searchFilter = new AndFilter();
-				searchFilter.and(new EqualsFilter("objectclass", "user")).and(new EqualsFilter("sn", a.getLastName()))
-						.and(new EqualsFilter("givenName", a.getFirstName()));
+				searchFilter.and(new EqualsFilter("objectclass", "user"))
+							.and(new EqualsFilter("sn", lastName))
+							.and(new EqualsFilter("givenName", firstName));
 
 				AgentInfo agentInfo = new AgentInfo();
 
@@ -564,12 +568,7 @@ public class MigrationService {
 						return null;
 					}
 				});
-		        
-		        
-		        if(users ==null && users.size() ==0) {
-		        	String name = a.getLastName() + ", " + a.getFirstName() + " - " + c.getCountryCode();;
-					NoLDAPAccount.add(name);
-		        }
+
 			});
 		});
 
@@ -580,18 +579,6 @@ public class MigrationService {
 		}
 
 		mongoDbConnection.getCollection(AGENT_COLLECTION).insertMany(docs);
-		
-		System.out.println("WITH LDAP ACCOUNT");
-		for(String name : WithLDAPAccount) {
-			System.out.println(name);
-		}
-		
-		
-		System.out.println("WITHOUT LDAP ACCOUNT");
-		for(String name : NoLDAPAccount) {
-			System.out.println(name);
-		}
-
 	}
 
 	private Map<String, Object> mapBookingClasses() {
