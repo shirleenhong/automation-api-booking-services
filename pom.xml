@@ -482,6 +482,7 @@
 		<module>apac-services-exception-handler</module>
 		<module>apac-services-exception</module>
 		<module>apac-services-cache</module>
+		<module>apac-services-smart-flow-module</module>
 	</modules>
 
 </project>

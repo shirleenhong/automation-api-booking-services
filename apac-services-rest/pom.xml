@@ -59,6 +59,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.cwt.bpg.cbt</groupId>
+			<artifactId>apac-services-smart-flow-rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.cwt.bpg.cbt</groupId>
 			<artifactId>apac-services-security-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>

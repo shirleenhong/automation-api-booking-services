@@ -35,7 +35,8 @@ public class CacheConfiguration {
             "air-contracts",
             "air-misc-info",
 			"airlines",
-			"agent"};
+			"agent",
+			"codif"};
 
 	@Bean
 	public CacheManager cacheManager() {
@@ -60,7 +61,8 @@ public class CacheConfiguration {
                     "air-contracts",
                     "air-misc-info",
 					"airlines",
-					"agent"})
+					"agent",
+					"codif"})
 	
 	@Scheduled(cron = "${com.cwt.cache.cron.expression}")
 	public void evictAllCache() {
