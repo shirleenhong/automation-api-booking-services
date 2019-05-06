@@ -9,6 +9,8 @@ import org.mongodb.morphia.annotations.*;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Size;
+
 @Entity(value = "codif", noClassnameStored = true)
 @Indexes(@Index(fields = { @Field("harpNo"), @Field("keyType"), @Field("gdsPropId") }))
 public class Codif implements Serializable {
@@ -20,6 +22,7 @@ public class Codif implements Serializable {
     @ApiModelProperty(hidden = true)
     private ObjectId id;
 
+    @Size(max = 6, min = 1, message = "{user.name.invalid}")
     @NotEmpty
     private String harpNo;
 

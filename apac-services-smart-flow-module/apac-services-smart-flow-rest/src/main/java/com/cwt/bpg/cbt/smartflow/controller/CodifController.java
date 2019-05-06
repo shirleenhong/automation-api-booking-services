@@ -23,8 +23,8 @@ public class CodifController {
             produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     @ResponseBody
     @ApiOperation(value = "Returns list of all Codif harp numbers")
-    public ResponseEntity<List<String>> getHarpNos(@PathVariable("gdsPropId") @ApiParam("GDSPropId") String gdsPropId,
-                                                 @PathVariable("keyType") @ApiParam("Key Type") String keyType) {
+    public ResponseEntity<List<String>> getHarpNos(@PathVariable("gdsPropId") @ApiParam(value="GDSPropId", required=true) String gdsPropId,
+                                                   @PathVariable("keyType") @ApiParam(value="Key Type", required=true) String keyType) {
         final List<String> harpList = new ArrayList<>();
         codifService.getCodifsByGdsPropIdAndKeyType(gdsPropId, keyType).forEach(codif -> {
             harpList.add(String.format("%6s", codif.getHarpNo()).replace(' ', '0'));
@@ -37,8 +37,8 @@ public class CodifController {
             produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     @ResponseBody
     @ApiOperation(value = "Returns Codif based on a [gdsPropId | keyType] combination.", hidden = true)
-    public ResponseEntity<Codif> getCodif(@PathVariable("gdsPropId") @ApiParam("GDSPropId") String gdsPropId,
-                                          @PathVariable("keyType") @ApiParam("Key Type") String keyType) {
+    public ResponseEntity<Codif> getCodif(@PathVariable("gdsPropId") @ApiParam(value="GDSPropId", required=true) String gdsPropId,
+                                          @PathVariable("keyType") @ApiParam(value="Key Type", required=true) String keyType) {
         Codif codif = codifService.getCodif(gdsPropId, keyType);
         return new ResponseEntity<>(codif, codif != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
     }
@@ -55,7 +55,7 @@ public class CodifController {
             path = "/codif/{id}")
     @ResponseBody
     @ApiOperation(value = "[Maintenance] Delete Codif by id.")
-    public ResponseEntity<String> removeCodif(@PathVariable("id") @ApiParam("id") String id) {
+    public ResponseEntity<String> removeCodif(@PathVariable("id") @ApiParam(value="id",required=true) String id) {
         String deleteResult = codifService.remove(id);
         HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
         return new ResponseEntity<>(deleteResult, status);
@@ -65,8 +65,8 @@ public class CodifController {
             path = "/codif/{gdsPropId}/{keyType}")
     @ResponseBody
     @ApiOperation(value = "[Maintenance] Delete Codif by gdsPropId and keyType.")
-    public ResponseEntity<String> removeCodif(@PathVariable("gdsPropId") @ApiParam("GDSPropId") String gdsPropId,
-                                              @PathVariable("keyType") @ApiParam("Key Type") String keyType) {
+    public ResponseEntity<String> removeCodif(@PathVariable("gdsPropId") @ApiParam(value="GDSPropId",required=true) String gdsPropId,
+                                              @PathVariable("keyType") @ApiParam(value="Key Type",required=true) String keyType) {
         String deleteResult = codifService.remove(gdsPropId, keyType);
         HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
         return new ResponseEntity<>(deleteResult, status);

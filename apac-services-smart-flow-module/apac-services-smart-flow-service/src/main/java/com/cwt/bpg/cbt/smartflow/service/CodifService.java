@@ -38,9 +38,9 @@ public class CodifService {
     public String remove(String id) {
         Codif codif = codifRepository.get(new ObjectId(id));
         if (codif != null) {
-            remove(codif.getGdsPropId(), codif.getKeyType());
+            return remove(codif.getGdsPropId(), codif.getKeyType());
         }
-        return codifRepository.remove(new ObjectId(id));
+        return null;
     }
 
     @CacheEvict(cacheNames = "codif", allEntries = true)
