@@ -1,12 +1,8 @@
 package com.cwt.bpg.cbt.exchange.order.report;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,13 +19,8 @@ import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
 import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
 import com.cwt.bpg.cbt.exchange.order.model.Vendor;
-
 import freemarker.core.ParseException;
-import freemarker.template.Configuration;
-import freemarker.template.MalformedTemplateNameException;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
+import freemarker.template.*;
 
 public class EmailContentProcessorTest {
 

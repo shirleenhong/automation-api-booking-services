@@ -1,8 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,12 +33,12 @@ public class CarVendorRepositoryTest {
         when(morphia.getDatastore()).thenReturn(dataStore);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	@Test
-    public void shouldReturnVmpdReasonCodes(){
-    	Query query = Mockito.mock(Query.class);
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Test
+    public void shouldReturnVmpdReasonCodes() {
+        Query query = Mockito.mock(Query.class);
         when(dataStore.createQuery(CarVendor.class)).thenReturn(query);
-        when(query.order(Sort.ascending(Mockito.anyString()))).thenReturn(query);
+        when(query.order(any(Sort.class))).thenReturn(query);
 
         repository.getAll();
 

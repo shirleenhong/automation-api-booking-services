@@ -3,12 +3,11 @@ package com.cwt.bpg.cbt.repository;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +23,6 @@ import org.mongodb.morphia.query.Query;
 import com.cwt.bpg.cbt.calculator.model.AirTransactionMock;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.mongodb.WriteResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings({ "unchecked" })
 public class CommonRepositoryTest {

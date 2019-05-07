@@ -11,5 +11,12 @@
 		<sonar.skip>true</sonar.skip>
 		<sonar.coverage.exclusions>**/*PropertyConfig.java</sonar.coverage.exclusions>
 	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+	</dependencies>
 	
 </project>

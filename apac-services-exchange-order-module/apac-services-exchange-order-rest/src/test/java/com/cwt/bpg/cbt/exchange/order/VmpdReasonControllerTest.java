@@ -1,13 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
@@ -36,79 +32,79 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @WebAppConfiguration
 public class VmpdReasonControllerTest {
 
-	private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-	@Mock
-	private ExchangeOrderService eoService;
+    @Mock
+    private ExchangeOrderService eoService;
 
-	@Mock
-	private ExchangeOrderReportService eoReportService;
+    @Mock
+    private ExchangeOrderReportService eoReportService;
 
-	@InjectMocks
-	private VmpdReasonController controller;
+    @InjectMocks
+    private VmpdReasonController controller;
 
-	private String urlVmpdReason;
+    private String urlVmpdReason;
 
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
-		urlVmpdReason = "/exchange-order/vmpd";
-	}
+        urlVmpdReason = "/exchange-order/vmpd";
+    }
 
-	private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(
-			MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(),
-			Charset.forName("utf8"));
+    private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(
+            MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(),
+            Charset.forName("utf8"));
 
-	@Test
-	public void shouldGetVmpdReason() throws Exception {
+    @Test
+    public void shouldGetVmpdReason() throws Exception {
 
-		List<VmpdReasonCode> vmpdReasonCodes = new ArrayList<>();
-		when(eoService.getAllVmpdReasonCodes()).thenReturn(vmpdReasonCodes);
+        List<VmpdReasonCode> vmpdReasonCodes = new ArrayList<>();
+        when(eoService.getAllVmpdReasonCodes()).thenReturn(vmpdReasonCodes);
 
-		mockMvc.perform(get(urlVmpdReason)).andExpect(status().isOk());
+        mockMvc.perform(get(urlVmpdReason)).andExpect(status().isOk());
 
-		verify(eoService, times(1)).getAllVmpdReasonCodes();
-	}
+        verify(eoService, times(1)).getAllVmpdReasonCodes();
+    }
 
-	@Test
-	public void shouldSaveVmpdReason() throws Exception {
+    @Test
+    public void shouldSaveVmpdReason() throws Exception {
 
-		mockMvc.perform(put(urlVmpdReason).contentType(APPLICATION_JSON_UTF8)
-				.content(convertObjectToJsonBytes(new VmpdReasonCode())))
-				.andExpect(status().isOk()).andReturn().getResponse();
+        mockMvc.perform(put(urlVmpdReason).contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(new VmpdReasonCode())))
+                .andExpect(status().isOk()).andReturn().getResponse();
 
-		verify(eoService, times(1)).saveVmpdReasonCode(any(VmpdReasonCode.class));
-	}
+        verify(eoService, times(1)).saveVmpdReasonCode(any(VmpdReasonCode.class));
+    }
 
-	@Test
-	public void shouldRemoveVmpdReason() throws Exception {
+    @Test
+    public void shouldRemoveVmpdReason() throws Exception {
 
-		String code = "12345";
-		when(eoService.deleteVmpdReasonCode(code)).thenReturn(code);
+        String code = "12345";
+        when(eoService.deleteVmpdReasonCode(code)).thenReturn(code);
 
-		mockMvc.perform(
-				delete(urlVmpdReason + "/" + code).contentType(APPLICATION_JSON_UTF8))
-				.andExpect(status().isOk()).andReturn().getResponse();
-		verify(eoService, times(1)).deleteVmpdReasonCode(anyString());
-	}
+        mockMvc.perform(
+                delete(urlVmpdReason + "/" + code).contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk()).andReturn().getResponse();
+        verify(eoService, times(1)).deleteVmpdReasonCode(anyString());
+    }
 
-	@Test
-	public void shouldReturnVmpdReasonNotFoundWhenRecordDoesNotExist() throws Exception {
+    @Test
+    public void shouldReturnVmpdReasonNotFoundWhenRecordDoesNotExist() throws Exception {
 
-		String code = "12345";
-		when(eoService.deleteVmpdReasonCode(code)).thenReturn("");
+        String code = "12345";
+        when(eoService.deleteVmpdReasonCode(code)).thenReturn("");
 
-		mockMvc.perform(
-				delete(urlVmpdReason + "/" + code).contentType(APPLICATION_JSON_UTF8))
-				.andExpect(status().isNotFound()).andReturn().getResponse();
-		verify(eoService, times(1)).deleteVmpdReasonCode(anyString());
-	}
+        mockMvc.perform(
+                delete(urlVmpdReason + "/" + code).contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isNotFound()).andReturn().getResponse();
+        verify(eoService, times(1)).deleteVmpdReasonCode(anyString());
+    }
 
-	private static byte[] convertObjectToJsonBytes(Object object) throws IOException {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-		return mapper.writeValueAsBytes(object);
-	}
+    private static byte[] convertObjectToJsonBytes(Object object) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        return mapper.writeValueAsBytes(object);
+    }
 }

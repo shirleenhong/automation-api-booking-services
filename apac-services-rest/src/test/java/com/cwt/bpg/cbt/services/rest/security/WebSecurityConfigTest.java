@@ -6,7 +6,6 @@ import static org.mockito.Mockito.mock;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.Filter;
 
 import org.junit.Test;
@@ -23,67 +22,63 @@ import com.cwt.bpg.cbt.services.rest.security.WebSecurityConfig.TokenSecurityCon
 
 
 public class WebSecurityConfigTest {
-	
-	
-	private ApiWebSecurityConfigurationAdapter wsc = new ApiWebSecurityConfigurationAdapter();
-	private WebSecurityConfig webConfig = new WebSecurityConfig();
-	
 
-	@SuppressWarnings("unchecked")
-	@Test
-	public void canConfigureWebSecurity() throws Exception {
-		ObjectPostProcessor<Object> objectPostProcessor = mock(ObjectPostProcessor.class);
-		ApplicationContext applicationContext = mock(ApplicationContext.class);
-		WebSecurity ws = new WebSecurity(objectPostProcessor);
-		ws.setApplicationContext(applicationContext);
-		
-		wsc.configure(ws);
-		
-		List<RequestMatcher> field = (List<RequestMatcher>)ReflectionTestUtils.getField(ws, "ignoredRequests");
-		assertTrue(field.size() > 0);
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void canConfigureGlobalWebSecurity() throws Exception {		
-		AuthenticationManagerBuilder authenticationBuilder = mock(AuthenticationManagerBuilder.class);
-		ObjectPostProcessor<Object> objectPostProcessor = mock(ObjectPostProcessor.class);
-		authenticationBuilder = new AuthenticationManagerBuilder(objectPostProcessor);
+    private ApiWebSecurityConfigurationAdapter wsc = new ApiWebSecurityConfigurationAdapter();
+    private WebSecurityConfig webConfig = new WebSecurityConfig();
 
-		webConfig.configureGlobal(authenticationBuilder);
-		assertNotNull(authenticationBuilder.getSharedObjects());
-	
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void canConfigureWebHttpSecurity() throws Exception {
-		ObjectPostProcessor<Object> objectPostProcessor = mock(ObjectPostProcessor.class);
-		Map<Class<? extends Object>, Object> sharedObjects = mock(Map.class);
-		AuthenticationManagerBuilder authenticationBuilder = mock(AuthenticationManagerBuilder.class);
-		
-		HttpSecurity http = new HttpSecurity(objectPostProcessor, authenticationBuilder, sharedObjects);
-		
-		wsc.configure(http);
-		
-		List<Filter> field = (List<Filter>)ReflectionTestUtils.getField(http, "filters");
-		assertNotNull(field);
-	}
 
-	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void canConfigureHttpSecurity() throws Exception {
-		ObjectPostProcessor<Object> objectPostProcessor = mock(ObjectPostProcessor.class);
-		Map<Class<? extends Object>, Object> sharedObjects = mock(Map.class);
-		AuthenticationManagerBuilder authenticationBuilder = mock(AuthenticationManagerBuilder.class);
-		
-		HttpSecurity http = new HttpSecurity(objectPostProcessor, authenticationBuilder, sharedObjects);
+    @SuppressWarnings("unchecked")
+    @Test
+    public void canConfigureWebSecurity() throws Exception {
+        ObjectPostProcessor<Object> objectPostProcessor = mock(ObjectPostProcessor.class);
+        ApplicationContext applicationContext = mock(ApplicationContext.class);
+        WebSecurity ws = new WebSecurity(objectPostProcessor);
+        ws.setApplicationContext(applicationContext);
 
-		TokenSecurityConfigurerAdapter tsca =  new TokenSecurityConfigurerAdapter();
-		tsca.configure(http);
-		
-		List<Filter> field = (List<Filter>)ReflectionTestUtils.getField(http, "filters");
-		assertTrue(field.size() > 0);
-	}
+        wsc.configure(ws);
+
+        List<RequestMatcher> field = (List<RequestMatcher>) ReflectionTestUtils.getField(ws, "ignoredRequests");
+        assertTrue(field.size() > 0);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void canConfigureGlobalWebSecurity() throws Exception {
+        ObjectPostProcessor<Object> objectPostProcessor = mock(ObjectPostProcessor.class);
+        AuthenticationManagerBuilder authenticationBuilder = new AuthenticationManagerBuilder(objectPostProcessor);
+
+        webConfig.configureGlobal(authenticationBuilder);
+        assertNotNull(authenticationBuilder.getSharedObjects());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void canConfigureWebHttpSecurity() throws Exception {
+        ObjectPostProcessor<Object> objectPostProcessor = mock(ObjectPostProcessor.class);
+        Map<Class<? extends Object>, Object> sharedObjects = mock(Map.class);
+        AuthenticationManagerBuilder authenticationBuilder = mock(AuthenticationManagerBuilder.class);
+
+        HttpSecurity http = new HttpSecurity(objectPostProcessor, authenticationBuilder, sharedObjects);
+
+        wsc.configure(http);
+
+        List<Filter> field = (List<Filter>) ReflectionTestUtils.getField(http, "filters");
+        assertNotNull(field);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void canConfigureHttpSecurity() throws Exception {
+        ObjectPostProcessor<Object> objectPostProcessor = mock(ObjectPostProcessor.class);
+        Map<Class<? extends Object>, Object> sharedObjects = mock(Map.class);
+        AuthenticationManagerBuilder authenticationBuilder = mock(AuthenticationManagerBuilder.class);
+
+        HttpSecurity http = new HttpSecurity(objectPostProcessor, authenticationBuilder, sharedObjects);
+
+        TokenSecurityConfigurerAdapter tsca = new TokenSecurityConfigurerAdapter();
+        tsca.configure(http);
+
+        List<Filter> field = (List<Filter>) ReflectionTestUtils.getField(http, "filters");
+        assertTrue(field.size() > 0);
+    }
 }

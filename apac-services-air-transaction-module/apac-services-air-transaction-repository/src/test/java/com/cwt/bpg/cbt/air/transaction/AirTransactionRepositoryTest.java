@@ -1,8 +1,11 @@
 package com.cwt.bpg.cbt.air.transaction;
 
-import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
-import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
-import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -13,11 +16,9 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
+import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
 public class AirTransactionRepositoryTest {
 

@@ -2,7 +2,7 @@ package com.cwt.bpg.cbt.airline;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Repository;
 

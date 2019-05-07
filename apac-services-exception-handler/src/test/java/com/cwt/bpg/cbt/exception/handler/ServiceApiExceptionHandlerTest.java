@@ -1,14 +1,9 @@
 package com.cwt.bpg.cbt.exception.handler;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import com.cwt.bpg.cbt.exceptions.ApiServiceException;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import java.io.IOException;
+
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
@@ -20,7 +15,11 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.io.IOException;
+import com.cwt.bpg.cbt.exceptions.ApiServiceException;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 public class ServiceApiExceptionHandlerTest {
 
@@ -99,8 +98,8 @@ public class ServiceApiExceptionHandlerTest {
 	@Test
 	public void canHandleArgumentMisMatch() {
 
-		Object value = new String("test");
-		MethodParameter param = new MethodParameter(DummyType.class.getMethods()[0], 1);
+		Object value = "test";
+		MethodParameter param = new MethodParameter(DummyType.class.getMethods()[0], -1);
 		Throwable cause = new Throwable("Invalid argument");
 		MethodArgumentTypeMismatchException ex = new MethodArgumentTypeMismatchException(value,
 				DummyType.class, "myrequired", param, cause);

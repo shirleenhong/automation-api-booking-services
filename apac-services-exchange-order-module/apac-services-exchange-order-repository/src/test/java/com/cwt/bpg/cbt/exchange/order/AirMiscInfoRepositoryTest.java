@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -10,12 +9,10 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
@@ -23,7 +20,6 @@ import org.mongodb.morphia.query.Query;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 
-@RunWith(MockitoJUnitRunner.class)
 public class AirMiscInfoRepositoryTest {
 	
 	@Mock

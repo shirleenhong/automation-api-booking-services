@@ -1,10 +1,13 @@
 package com.cwt.bpg.cbt.air.transaction;
 
-import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
-import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
-import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
-import com.cwt.bpg.cbt.air.transaction.model.AirTransactionOutput;
-import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,13 +15,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
+import com.cwt.bpg.cbt.air.transaction.model.AirTransactionOutput;
+import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
 
 public class AirTransactionServiceTest {
 

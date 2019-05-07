@@ -3,7 +3,7 @@ package com.cwt.bpg.cbt.exchange.order.report;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.io.InputStream;
@@ -12,11 +12,9 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
-import com.cwt.bpg.cbt.agent.AgentService;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +24,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.cwt.bpg.cbt.agent.AgentService;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;

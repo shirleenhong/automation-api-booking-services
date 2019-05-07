@@ -1,24 +1,22 @@
 package com.cwt.bpg.cbt.obt;
 
-import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
-import com.cwt.bpg.cbt.obt.model.ObtList;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
+import com.cwt.bpg.cbt.obt.model.ObtList;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ObtListRepositoryTest {
 	
 	@Mock
