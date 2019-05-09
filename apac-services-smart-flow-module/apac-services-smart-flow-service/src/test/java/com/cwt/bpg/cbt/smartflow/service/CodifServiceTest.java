@@ -10,6 +10,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -83,11 +84,14 @@ public class CodifServiceTest {
     @Test
     public void shouldDelete() {
         String expected = "5b2870d6284b8d1ac84300ad";
-        when(repository.remove(new ObjectId(expected))).thenReturn(expected);
+        Codif codif = new Codif();
+        ObjectId objectId = new ObjectId(expected);
+        when(repository.get(objectId)).thenReturn(codif);
+        when(repository.removeCodif(anyString(), anyString())).thenReturn(expected);
 
         String actual = service.remove(expected);
 
-        verify(repository).remove(new ObjectId(expected));
+        verify(repository, times(1)).removeCodif(anyString(), anyString());
         assertThat(actual, is(equalTo(expected)));
     }
 }
