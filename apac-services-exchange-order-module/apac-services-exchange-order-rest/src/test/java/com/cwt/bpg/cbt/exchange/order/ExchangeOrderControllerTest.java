@@ -1,17 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyListOf;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
@@ -42,17 +34,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.AdditionalInfo;
-import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.EmailResponse;
-import com.cwt.bpg.cbt.exchange.order.model.EoAction;
-import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
-import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
-import com.cwt.bpg.cbt.exchange.order.model.FopType;
-import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
-import com.cwt.bpg.cbt.exchange.order.model.ServiceInfo;
-import com.cwt.bpg.cbt.exchange.order.model.Vendor;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.india.IndiaVendor;
 import com.cwt.bpg.cbt.exchange.order.report.ExchangeOrderReportService;
@@ -63,118 +45,118 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @WebAppConfiguration
 public class ExchangeOrderControllerTest {
 
-	private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-	@Mock
-	private ExchangeOrderService eoService;
+    @Mock
+    private ExchangeOrderService eoService;
 
-	@Mock
-	private ExchangeOrderReportService eoReportService;
+    @Mock
+    private ExchangeOrderReportService eoReportService;
 
-	@InjectMocks
-	private ExchangeOrderController controller;
+    @InjectMocks
+    private ExchangeOrderController controller;
 
-	private String url;
-	private String urlSg;
-	private String urlIn;
-	private String eoNumber;
-	private String pnr;
+    private String url;
+    private String urlSg;
+    private String urlIn;
+    private String eoNumber;
+    private String pnr;
 
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
-		url = "/exchange-order";
-		urlSg = "/exchange-order/sg";
-		urlIn = "/exchange-order/in";
-		eoNumber = "1806100005";
-		pnr = "U9L8VY";
-	}
+        url = "/exchange-order";
+        urlSg = "/exchange-order/sg";
+        urlIn = "/exchange-order/in";
+        eoNumber = "1806100005";
+        pnr = "U9L8VY";
+    }
 
-	private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
-			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+    private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
+            MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
-	@Test
-	public void shouldReturnExchangeOrderNumber() throws Exception {
+    @Test
+    public void shouldReturnExchangeOrderNumber() throws Exception {
 
-		ExchangeOrder order = createExchangeOrder();
-		order.getServiceInfo().setCommission(BigDecimal.ZERO);
-		order.getServiceInfo().setGst(BigDecimal.ZERO);
-		order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-		order.setEoNumber("1122334455");
-		List<BaseExchangeOrder> orders = Arrays.asList(order);
+        ExchangeOrder order = createExchangeOrder();
+        order.getServiceInfo().setCommission(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
+        order.setEoNumber("1122334455");
+        List<BaseExchangeOrder> orders = Arrays.asList(order);
 
-		when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
-
-        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse();
-
-		verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
-	}
-
-	@Test
-	public void shouldCreateExchangeOrder() throws Exception {
-
-		ExchangeOrder order = createExchangeOrder();
-		order.getServiceInfo().setCommission(BigDecimal.ZERO);
-		order.getServiceInfo().setGst(BigDecimal.ZERO);
-		order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-		order.setEoNumber(null);
-		List<BaseExchangeOrder> orders = Arrays.asList(order);
-
-		when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
+        when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
-	}
+        verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
+    }
 
-	@Test
-	public void shouldCreateIndiaExchangeOrder() throws Exception {
+    @Test
+    public void shouldCreateExchangeOrder() throws Exception {
 
-		IndiaExchangeOrder order = new IndiaExchangeOrder();
-		order.setEoNumber(null);
-		order.setCountryCode("IN");
-		order.setProductCode("PR01");
-		IndiaVendor vendor = new IndiaVendor();
-		vendor.setCode("VEN090909");
-		order.setVendor(vendor);
-		List<BaseExchangeOrder> orders = Arrays.asList(order);
+        ExchangeOrder order = createExchangeOrder();
+        order.getServiceInfo().setCommission(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
+        order.setEoNumber(null);
+        List<BaseExchangeOrder> orders = Arrays.asList(order);
 
-		when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
+        when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
+
+        mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
+    }
+
+    @Test
+    public void shouldCreateIndiaExchangeOrder() throws Exception {
+
+        IndiaExchangeOrder order = new IndiaExchangeOrder();
+        order.setEoNumber(null);
+        order.setCountryCode("IN");
+        order.setProductCode("PR01");
+        IndiaVendor vendor = new IndiaVendor();
+        vendor.setCode("VEN090909");
+        order.setVendor(vendor);
+        List<BaseExchangeOrder> orders = Arrays.asList(order);
+
+        when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
 
         mockMvc.perform(post(urlIn).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(1)).save(anyString(), anyListOf(IndiaExchangeOrder.class));
-	}
+        verify(eoService, times(1)).save(anyString(), anyListOf(IndiaExchangeOrder.class));
+    }
 
-	@Test
-	public void shouldUpdateExchangeOrder() throws Exception {
+    @Test
+    public void shouldUpdateExchangeOrder() throws Exception {
 
-		ExchangeOrder order = createExchangeOrder();
-		order.getServiceInfo().setCommission(BigDecimal.ZERO);
-		order.getServiceInfo().setGst(BigDecimal.ZERO);
-		order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-		order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
-		order.setEoNumber("1122334455");
-		List<ExchangeOrder> orders = Arrays.asList(order);
+        ExchangeOrder order = createExchangeOrder();
+        order.getServiceInfo().setCommission(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
+        order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
+        order.setEoNumber("1122334455");
+        List<ExchangeOrder> orders = Arrays.asList(order);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
-	}
+        verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
+    }
 
     @Test
     public void shouldUpdateFinanceFields() throws Exception {
@@ -187,145 +169,145 @@ public class ExchangeOrderControllerTest {
         verify(eoService, times(1)).update(any(ExchangeOrder.class));
     }
 
-	@Test(expected = NestedServletException.class)
-	public void shouldHandleExchangeOrderNotFoundException() throws Exception {
+    @Test(expected = NestedServletException.class)
+    public void shouldHandleExchangeOrderNotFoundException() throws Exception {
 
-		ExchangeOrder order = createExchangeOrder();
-		order.getServiceInfo().setCommission(BigDecimal.ZERO);
-		order.getServiceInfo().setGst(BigDecimal.ZERO);
-		order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-		List<ExchangeOrder> orders = Arrays.asList(order);
-		when(eoService.save(anyString(), anyListOf(ExchangeOrder.class)))
-				.thenThrow(new ExchangeOrderNoContentException("eo number not found"));
+        ExchangeOrder order = createExchangeOrder();
+        order.getServiceInfo().setCommission(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
+        List<ExchangeOrder> orders = Arrays.asList(order);
+        when(eoService.save(anyString(), anyListOf(ExchangeOrder.class)))
+                .thenThrow(new ExchangeOrderNoContentException("eo number not found"));
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
                 .andExpect(status().isNoContent())
                 .andReturn()
                 .getResponse();
 
-		verifyZeroInteractions(eoService);
-	}
+        verifyZeroInteractions(eoService);
+    }
 
-	@Test
-	public void shouldGetExchangeOrderByExchangeOrderNumber() throws Exception {
+    @Test
+    public void shouldGetExchangeOrderByExchangeOrderNumber() throws Exception {
 
-		ExchangeOrder order = new ExchangeOrder();
-		when(eoService.get(eoNumber)).thenReturn(order);
+        ExchangeOrder order = new ExchangeOrder();
+        when(eoService.get(eoNumber)).thenReturn(order);
 
-		mockMvc.perform(get(urlSg + "/" + eoNumber)).andExpect(status().isOk());
+        mockMvc.perform(get(urlSg + "/" + eoNumber)).andExpect(status().isOk());
 
-		verify(eoService, times(1)).get("sg", eoNumber);
-	}
+        verify(eoService, times(1)).get("sg", eoNumber);
+    }
 
-	@Test
-	public void shouldGetExchangeOrderByPNR() throws Exception {
-		List orders = Arrays.asList(new ExchangeOrder());
-		when(eoService.getExchangeOrderByRecordLocator("IN", pnr)).thenReturn(orders);
+    @Test
+    public void shouldGetExchangeOrderByPNR() throws Exception {
+        List orders = Arrays.asList(new ExchangeOrder());
+        when(eoService.getExchangeOrderByRecordLocator("IN", pnr)).thenReturn(orders);
 
-		mockMvc.perform(get(urlSg + "/" + pnr)).andExpect(status().isOk());
+        mockMvc.perform(get(urlSg + "/" + pnr)).andExpect(status().isOk());
 
-		verify(eoService, times(1)).getExchangeOrderByRecordLocator("sg", pnr);
-	}
+        verify(eoService, times(1)).getExchangeOrderByRecordLocator("sg", pnr);
+    }
 
-	@Test
-	public void shouldGetIndiaExchangeOrderByExchangeOrderNumber() throws Exception {
+    @Test
+    public void shouldGetIndiaExchangeOrderByExchangeOrderNumber() throws Exception {
 
-		ExchangeOrder order = new ExchangeOrder();
-		when(eoService.get(eoNumber)).thenReturn(order);
+        ExchangeOrder order = new ExchangeOrder();
+        when(eoService.get(eoNumber)).thenReturn(order);
 
-		mockMvc.perform(get(urlIn + "/" + eoNumber)).andExpect(status().isOk());
+        mockMvc.perform(get(urlIn + "/" + eoNumber)).andExpect(status().isOk());
 
-		verify(eoService, times(1)).get("IN", eoNumber);
-	}
+        verify(eoService, times(1)).get("IN", eoNumber);
+    }
 
-	@Test
-	public void shouldGetIndiaExchangeOrderByPNR() throws Exception {
-		List orders = Arrays.asList(new ExchangeOrder());
-		when(eoService.getExchangeOrderByRecordLocator("IN", pnr)).thenReturn(orders);
+    @Test
+    public void shouldGetIndiaExchangeOrderByPNR() throws Exception {
+        List orders = Arrays.asList(new ExchangeOrder());
+        when(eoService.getExchangeOrderByRecordLocator("IN", pnr)).thenReturn(orders);
 
-		mockMvc.perform(get(urlIn + "/" + pnr)).andExpect(status().isOk());
+        mockMvc.perform(get(urlIn + "/" + pnr)).andExpect(status().isOk());
 
-		verify(eoService, times(1)).getExchangeOrderByRecordLocator("IN", pnr);
-	}
+        verify(eoService, times(1)).getExchangeOrderByRecordLocator("IN", pnr);
+    }
 
-	@Test
-	public void shouldNotReturnExchangeOrder() throws Exception {
+    @Test
+    public void shouldNotReturnExchangeOrder() throws Exception {
 
-		ExchangeOrder order = new ExchangeOrder();
-		List<BaseExchangeOrder> orders = Arrays.asList(order);
+        ExchangeOrder order = new ExchangeOrder();
+        List<BaseExchangeOrder> orders = Arrays.asList(order);
 
-		when(eoService.save("sg", orders)).thenReturn(orders);
+        when(eoService.save("sg", orders)).thenReturn(orders);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(order)))
                 .andExpect(status().isBadRequest())
                 .andReturn()
                 .getResponse();
 
-		verify(eoService, times(0)).save(anyString(), anyListOf(ExchangeOrder.class));
-	}
+        verify(eoService, times(0)).save(anyString(), anyListOf(ExchangeOrder.class));
+    }
 
-	private ExchangeOrder createExchangeOrder() {
+    private ExchangeOrder createExchangeOrder() {
 
-		ExchangeOrder order = new ExchangeOrder();
-		order.setServiceInfo(new ServiceInfo());
-		order.getServiceInfo().setFormOfPayment(new FormOfPayment());
-		order.getServiceInfo().setAdditionalInfo(new AdditionalInfo());
-		order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
-		order.getServiceInfo().getAdditionalInfo().setDescription("test_description");
-		order.getServiceInfo().getAdditionalInfo().setDate(Instant.now());
-		order.setProductCode("PR01");
-		Vendor vendor = new Vendor();
-		vendor.setCode("VEN090909");
-		order.setVendor(vendor);
-		order.setAccountNumber("987654321");
-		order.setPassengerName("Passenger");
-		order.setAgentId("U001XXX");
-		order.setPcc("SIN1234");
-		order.setAgentName("Agent Name");
-		order.setRecordLocator("PNR1234");
-		order.getServiceInfo().setNettCost(new BigDecimal(0));
-		order.setTotal(new BigDecimal(0));
-		order.setEoAction(EoAction.EMAIL);
-		order.setStatus(EoStatus.COMPLETED);
-		order.setRaiseCheque("Raise Cheque");
+        ExchangeOrder order = new ExchangeOrder();
+        order.setServiceInfo(new ServiceInfo());
+        order.getServiceInfo().setFormOfPayment(new FormOfPayment());
+        order.getServiceInfo().setAdditionalInfo(new AdditionalInfo());
+        order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
+        order.getServiceInfo().getAdditionalInfo().setDescription("test_description");
+        order.getServiceInfo().getAdditionalInfo().setDate(Instant.now());
+        order.setProductCode("PR01");
+        Vendor vendor = new Vendor();
+        vendor.setCode("VEN090909");
+        order.setVendor(vendor);
+        order.setAccountNumber("987654321");
+        order.setPassengerName("Passenger");
+        order.setAgentId("U001XXX");
+        order.setPcc("SIN1234");
+        order.setAgentName("Agent Name");
+        order.setRecordLocator("PNR1234");
+        order.getServiceInfo().setNettCost(new BigDecimal(0));
+        order.setTotal(new BigDecimal(0));
+        order.setEoAction(EoAction.EMAIL);
+        order.setStatus(EoStatus.COMPLETED);
+        order.setRaiseCheque("Raise Cheque");
 
-		order.getServiceInfo().setSellingPrice(new BigDecimal(0));
-		order.getServiceInfo().setTotalSellingPrice(new BigDecimal(0));
+        order.getServiceInfo().setSellingPrice(new BigDecimal(0));
+        order.getServiceInfo().setTotalSellingPrice(new BigDecimal(0));
 
-		order.setEoNumber("1807200001");
+        order.setEoNumber("1807200001");
 
-		return order;
-	}
+        return order;
+    }
 
-	private static byte[] convertObjectToJsonBytes(Object object) throws IOException {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-		return mapper.writeValueAsBytes(object);
-	}
+    private static byte[] convertObjectToJsonBytes(Object object) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        return mapper.writeValueAsBytes(object);
+    }
 
-	@Test
-	public void shouldGeneratePdf() throws Exception {
+    @Test
+    public void shouldGeneratePdf() throws Exception {
 
-		String exampleString = "example";
-		byte[] pdfByte = exampleString.getBytes(StandardCharsets.UTF_8);
-		when(eoReportService.generatePdf(anyString())).thenReturn(pdfByte);
+        String exampleString = "example";
+        byte[] pdfByte = exampleString.getBytes(StandardCharsets.UTF_8);
+        when(eoReportService.generatePdf(anyString())).thenReturn(pdfByte);
 
         MvcResult result = mockMvc.perform(get(url + "/pdf/" + eoNumber))
                 .andExpect(status().isOk())
                 .andReturn();
 
-		String actualPdfName = result.getResponse().getHeaderValue("Content-Disposition").toString();
+        String actualPdfName = result.getResponse().getHeaderValue("Content-Disposition").toString();
 
-		assertTrue(actualPdfName.contains(eoNumber + ".pdf"));
-		verify(eoReportService, times(1)).generatePdf(anyString());
-	}
+        assertTrue(actualPdfName.contains(eoNumber + ".pdf"));
+        verify(eoReportService, times(1)).generatePdf(anyString());
+    }
 
-	@Test
-	public void shouldEmailPdf() throws Exception {
+    @Test
+    public void shouldEmailPdf() throws Exception {
 
-		ExchangeOrder order = createExchangeOrder();
+        ExchangeOrder order = createExchangeOrder();
 
-		when(eoReportService.emailPdf(order.getEoNumber())).thenReturn(new EmailResponse());
+        when(eoReportService.emailPdf(order.getEoNumber())).thenReturn(new EmailResponse());
 
         mockMvc.perform(get(url + "/email/" + order.getEoNumber())
                 .contentType(APPLICATION_JSON_UTF8)
@@ -334,51 +316,51 @@ public class ExchangeOrderControllerTest {
                 .andReturn()
                 .getResponse();
 
-		verify(eoReportService, times(1)).emailPdf(eq(order.getEoNumber()));
-	}
+        verify(eoReportService, times(1)).emailPdf(eq(order.getEoNumber()));
+    }
 
-	@SuppressWarnings("unchecked")
-	@Test(expected = NestedServletException.class)
-	public void shouldGeneratePdfCheckedException() throws Exception {
+    @SuppressWarnings("unchecked")
+    @Test(expected = NestedServletException.class)
+    public void shouldGeneratePdfCheckedException() throws Exception {
 
-		when(eoReportService.generatePdf(anyString())).thenThrow(ApiServiceException.class);
+        when(eoReportService.generatePdf(anyString())).thenThrow(ApiServiceException.class);
 
         mockMvc.perform(get(url + "/pdf/" + eoNumber))
                 .andExpect(status().isNoContent())
                 .andReturn();
 
-		verifyZeroInteractions(eoService);
-	}
+        verifyZeroInteractions(eoService);
+    }
 
-	@SuppressWarnings("unchecked")
-	@Test(expected = NestedServletException.class)
-	public void shouldGeneratePdfUnCheckedException() throws Exception {
+    @SuppressWarnings("unchecked")
+    @Test(expected = NestedServletException.class)
+    public void shouldGeneratePdfUnCheckedException() throws Exception {
 
-		when(eoReportService.generatePdf(anyString())).thenThrow(Exception.class);
+        when(eoReportService.generatePdf(anyString())).thenThrow(Exception.class);
 
         mockMvc.perform(get(url + "/pdf/" + eoNumber))
                 .andExpect(status().isInternalServerError())
                 .andReturn();
 
-		verifyZeroInteractions(eoService);
-	}
+        verifyZeroInteractions(eoService);
+    }
 
-	@Test
-	public void shouldInvokeSearch() throws Exception {
-		when(eoService.search(Mockito.any(ExchangeOrderSearchParam.class))).thenReturn(Collections.emptyList());
+    @Test
+    public void shouldInvokeSearch() throws Exception {
+        when(eoService.search(Mockito.any(ExchangeOrderSearchParam.class))).thenReturn(Collections.emptyList());
 
-		final String uri = UriComponentsBuilder.newInstance().path("/exchange-orders")
-				.queryParam("eoNumber", UUID.randomUUID().toString())
-				.queryParam("vendorCode", UUID.randomUUID().toString())
-				.queryParam("countryCode", UUID.randomUUID().toString())
-				.queryParam("raiseType", UUID.randomUUID().toString()).queryParam("status", EoStatus.NEW)
-				.queryParam("recordLocator", UUID.randomUUID().toString())
-				.queryParam("startCreationDate", "2008-05-29T00:00:00.000Z")
-				.queryParam("endCreationDate", "2008-05-29T00:00:00.000Z").build().toUriString();
+        final String uri = UriComponentsBuilder.newInstance().path("/exchange-orders")
+                .queryParam("eoNumber", UUID.randomUUID().toString())
+                .queryParam("vendorCode", UUID.randomUUID().toString())
+                .queryParam("countryCode", UUID.randomUUID().toString())
+                .queryParam("raiseType", UUID.randomUUID().toString()).queryParam("status", EoStatus.NEW)
+                .queryParam("recordLocator", UUID.randomUUID().toString())
+                .queryParam("startCreationDate", "2008-05-29T00:00:00.000Z")
+                .queryParam("endCreationDate", "2008-05-29T00:00:00.000Z").build().toUriString();
 
-		mockMvc.perform(get(uri)).andExpect(status().isOk());
+        mockMvc.perform(get(uri)).andExpect(status().isOk());
 
-		verify(eoService, times(1)).search(Mockito.any(ExchangeOrderSearchParam.class));
-	}
+        verify(eoService, times(1)).search(Mockito.any(ExchangeOrderSearchParam.class));
+    }
 
 }

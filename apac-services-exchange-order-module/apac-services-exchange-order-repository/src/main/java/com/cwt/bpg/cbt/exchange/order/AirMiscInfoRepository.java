@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.Query;
@@ -14,26 +13,26 @@ import com.cwt.bpg.cbt.repository.CommonRepository;
 @Repository
 public class AirMiscInfoRepository extends CommonRepository<AirMiscInfo, ObjectId> {
 
-	private static final String ID = "id";
-	private static final String CLIENT_ACCOUNT_NUMBER = "clientAccountNumber";
-	private static final String REPORTING_FIELD_TYPE_ID = "reportingFieldTypeId";
+    private static final String ID = "id";
+    private static final String CLIENT_ACCOUNT_NUMBER = "clientAccountNumber";
+    private static final String REPORTING_FIELD_TYPE_ID = "reportingFieldTypeId";
 
-	public AirMiscInfoRepository() {
-		super(AirMiscInfo.class, ID);
-	}
+    public AirMiscInfoRepository() {
+        super(AirMiscInfo.class, ID);
+    }
 
-	public List<AirMiscInfo> getAirMiscInfos(String clientAccountNumber,
-			List<String> reportingFieldTypeIds) {
+    public List<AirMiscInfo> getAirMiscInfos(String clientAccountNumber,
+                                             List<String> reportingFieldTypeIds) {
 
-		final Query<AirMiscInfo> query = morphia.getDatastore()
-				.createQuery(AirMiscInfo.class);
+        final Query<AirMiscInfo> query = morphia.getDatastore()
+                .createQuery(AirMiscInfo.class);
 
-		query.field(CLIENT_ACCOUNT_NUMBER).equal(StringUtils.stripStart(clientAccountNumber,"0"));
-		
-		if(CollectionUtils.isNotEmpty(reportingFieldTypeIds)){
-			query.field(REPORTING_FIELD_TYPE_ID).in(reportingFieldTypeIds);
-		}
-		
-		return query.asList();
-	}
+        query.field(CLIENT_ACCOUNT_NUMBER).equal(StringUtils.stripStart(clientAccountNumber, "0"));
+
+        if (reportingFieldTypeIds != null && !reportingFieldTypeIds.isEmpty()) {
+            query.field(REPORTING_FIELD_TYPE_ID).in(reportingFieldTypeIds);
+        }
+
+        return query.asList();
+    }
 }
