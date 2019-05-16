@@ -1,6 +1,5 @@
 package com.cwt.bpg.cbt.exchange.order.model.serializer;
 
-import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -34,7 +33,7 @@ public class DateSerializerTest {
 
         serializer.serialize(null, generator, null);
 
-        verify(generator, times(1)).writeString(nullable(String.class));
+        verify(generator, times(1)).writeString((String) null);
     }
 
     @Test

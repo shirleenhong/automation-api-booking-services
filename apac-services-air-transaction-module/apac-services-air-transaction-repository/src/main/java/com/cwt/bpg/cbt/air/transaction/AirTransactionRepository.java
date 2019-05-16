@@ -2,7 +2,7 @@ package com.cwt.bpg.cbt.air.transaction;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.smartflow.repository;
 
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
