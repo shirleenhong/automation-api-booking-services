@@ -153,7 +153,6 @@
     </resources>
 
     <plugins>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-eclipse-plugin</artifactId>
@@ -333,13 +332,11 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
   </build>
 
   <reporting>
     <plugins>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -374,7 +371,6 @@
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
-
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

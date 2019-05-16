@@ -1,10 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 
@@ -13,7 +10,10 @@ import org.junit.Test;
 import org.mockito.*;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.FormOfPayment;
+import com.cwt.bpg.cbt.exchange.order.model.ServiceInfo;
+import com.cwt.bpg.cbt.exchange.order.model.Vendor;
 
 public class ExchangeOrderUpdateServiceTest
 {
@@ -25,7 +25,7 @@ public class ExchangeOrderUpdateServiceTest
     private ExchangeOrderRepository repository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
@@ -41,11 +41,12 @@ public class ExchangeOrderUpdateServiceTest
         when(repository.getExchangeOrder(exchangeOrder.getCountryCode(), eoNumber)).thenReturn(existingExchangeOrder);
         when(repository.save(exchangeOrder)).thenReturn(eoNumber);
 
-        ExchangeOrder updatedExchangeOrder = (ExchangeOrder) service.update(exchangeOrder);
+        service.update(exchangeOrder);
 
         InOrder inOrder = Mockito.inOrder(repository);
         inOrder.verify(repository, times(1)).getExchangeOrder(exchangeOrder.getCountryCode(),eoNumber);
         inOrder.verify(repository, times(1)).save(exchangeOrder);
+        inOrder.verify(repository, times(1)).getExchangeOrder(exchangeOrder.getCountryCode(),eoNumber);
     }
 
     @Test(expected = ExchangeOrderNoContentException.class)

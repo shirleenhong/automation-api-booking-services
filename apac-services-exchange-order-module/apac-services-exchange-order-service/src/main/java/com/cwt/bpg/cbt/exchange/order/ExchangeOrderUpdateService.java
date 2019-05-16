@@ -13,8 +13,7 @@ import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 import com.cwt.bpg.cbt.exchange.order.model.EoStatus;
 
 @Service
-public class ExchangeOrderUpdateService
-{
+public class ExchangeOrderUpdateService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeOrderService.class);
 
     @Autowired
@@ -35,13 +34,13 @@ public class ExchangeOrderUpdateService
         exchangeOrder.setCreateDateTime(existingExchangeOrder.getCreateDateTime());
         exchangeOrder.setUpdateDateTime(Instant.now());
         exchangeOrder.setCompleteDateTime(existingExchangeOrder.getCompleteDateTime());
-        
-        if(EoStatus.COMPLETED.equals(exchangeOrder.getStatus()) && exchangeOrder.getCompleteDateTime() == null) {
-			exchangeOrder.setCompleteDateTime(Instant.now());
-		}
-        
+
+        if (EoStatus.COMPLETED.equals(exchangeOrder.getStatus()) && exchangeOrder.getCompleteDateTime() == null) {
+            exchangeOrder.setCompleteDateTime(Instant.now());
+        }
+
         String updatedEoNumber = exchangeOrderRepo.save(exchangeOrder);
-        
+
         return exchangeOrderRepo.getExchangeOrder(existingExchangeOrder.getCountryCode(), updatedEoNumber);
     }
 }

@@ -3,10 +3,9 @@ package com.cwt.bpg.cbt.exchange.order;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-import com.mongodb.WriteResult;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +21,7 @@ import org.mongodb.morphia.query.Query;
 
 import com.cwt.bpg.cbt.exchange.order.model.ReportHeader;
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
+import com.mongodb.WriteResult;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReportHeaderRepositoryTest {

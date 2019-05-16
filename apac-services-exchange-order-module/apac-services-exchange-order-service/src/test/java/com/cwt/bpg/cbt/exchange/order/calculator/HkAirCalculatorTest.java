@@ -1,9 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.anyString;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyString;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

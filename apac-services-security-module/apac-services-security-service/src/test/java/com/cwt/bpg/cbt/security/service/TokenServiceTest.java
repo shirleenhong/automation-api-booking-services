@@ -2,22 +2,19 @@ package com.cwt.bpg.cbt.security.service;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.security.api.model.Token;
 import com.cwt.bpg.cbt.security.repository.TokenRepository;
 
-@RunWith(MockitoJUnitRunner.class)
 public class TokenServiceTest {
 
 	@InjectMocks

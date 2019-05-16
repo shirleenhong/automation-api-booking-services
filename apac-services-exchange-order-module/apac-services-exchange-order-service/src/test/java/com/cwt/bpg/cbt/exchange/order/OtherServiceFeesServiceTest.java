@@ -4,9 +4,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,143 +34,180 @@ import com.cwt.bpg.cbt.exchange.order.products.ProductService;
 
 public class OtherServiceFeesServiceTest {
 
-	@Mock
-	private OtherServiceCalculatorFactory factory;
-	
-	@Mock
-	private TransactionFeeCalculatorFactory tfFactory;
-	
-	@Mock
-	private Calculator<NonAirFeesBreakdown, NonAirFeesInput> nonAirFeeCalculator;
+    @Mock
+    private OtherServiceCalculatorFactory factory;
 
-	@Mock
-	private Calculator<AirFeesBreakdown, AirFeesInput> hkCalculator;
+    @Mock
+    private TransactionFeeCalculatorFactory tfFactory;
 
-	@Mock
-	private FeeCalculator tfCalculator;
+    @Mock
+    private Calculator<NonAirFeesBreakdown, NonAirFeesInput> nonAirFeeCalculator;
 
-	@Mock
-	private NettCostCalculator nettCostCalculator;
+    @Mock
+    private Calculator<AirFeesBreakdown, AirFeesInput> hkCalculator;
 
-	@Mock
-	private MerchantFeeService orderService;
+    @Mock
+    private FeeCalculator tfCalculator;
 
-	@Mock
-	private ClientService clientService;
+    @Mock
+    private NettCostCalculator nettCostCalculator;
 
-	@Mock
-	private AirlineRuleService airlineRuleService;
+    @Mock
+    private MerchantFeeService merchantFeeService;
 
-	@Mock
-	private AirportService airportService;
+    @Mock
+    private ClientService clientService;
 
-	@Mock
-	private VisaFeesCalculator visaFeesCalculator;
+    @Mock
+    private AirlineRuleService airlineRuleService;
 
-	@Mock
-	private IndiaNonAirFeeCalculator indiaNonAirFeeCalculator;
+    @Mock
+    private AirportService airportService;
 
-	@Mock
-	private ProductService productService;
-	
-	@InjectMocks
-	private OtherServiceFeesService service;
+    @Mock
+    private VisaFeesCalculator visaFeesCalculator;
 
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-	}
+    @Mock
+    private IndiaNonAirFeeCalculator indiaNonAirFeeCalculator;
 
-	@Test
-	public void shouldReturnFeesBreakdown() {
+    @Mock
+    private ProductService productService;
 
-		when(nonAirFeeCalculator.calculate(anyObject(), anyObject(), anyString()))
-			.thenReturn(new NonAirFeesBreakdown());
-		assertNotNull(service.calculateNonAirFees(new NonAirFeesInput(), null));
-	}
+    @InjectMocks
+    private OtherServiceFeesService service;
 
-	@Test
-	public void shouldReturnAirFeesBreakdown() {
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
 
-		when(factory.getCalculator(anyString()))
-			.thenReturn(hkCalculator);
+        when(merchantFeeService.getMerchantFee(anyString(), anyString())).thenReturn(new MerchantFee());
+    }
 
-		when(hkCalculator.calculate(anyObject(), anyObject(), anyString()))
-			.thenReturn(new AirFeesBreakdown());
+    @Test
+    public void shouldReturnFeesBreakdown() {
 
-		assertNotNull(service.calculateAirFees(new AirFeesInput(), "HK"));
-	}
+        when(nonAirFeeCalculator.calculate(any(NonAirFeesInput.class), any(MerchantFee.class), anyString()))
+                .thenReturn(new NonAirFeesBreakdown());
 
-	@Test
-	public void shouldReturnNettCost() {
+        NonAirFeesInput input = new NonAirFeesInput();
+        input.setClientAccountNumber("12345");
 
-		when(nettCostCalculator.calculateFee(anyObject(), anyObject()))
-			.thenReturn(new AirFeesBreakdown());
-		assertNotNull(service.calculateNettCost(new NettCostInput()));
-	}
+        assertNotNull(service.calculateNonAirFees(input, "ZZ"));
+    }
 
-	@Test
-	public void shouldReturnIndiaAirFeesBreakdown() {
+    @Test
+    public void shouldReturnAirFeesBreakdown() {
 
-		when(tfFactory.getCalculator(anyInt()))
-			.thenReturn(tfCalculator);
+        when(factory.getCalculator(anyString()))
+                .thenReturn(hkCalculator);
 
-		when(tfCalculator.calculate(anyObject(), anyObject(), anyObject(),
-				anyObject(), anyObject()))
-			.thenReturn(new IndiaAirFeesBreakdown());
+        when(hkCalculator.calculate(any(AirFeesInput.class), any(MerchantFee.class), anyString()))
+                .thenReturn(new AirFeesBreakdown());
 
-		when(airlineRuleService.getAirlineRule(anyString())).thenReturn(new AirlineRule());
-		when(airportService.getAirport(anyString())).thenReturn(new Airport());
+        AirFeesInput input = new AirFeesInput();
+        input.setClientAccountNumber("12345");
 
-		Client client = new Client();
-		client.setPricingId(20);
-		when(clientService.getClient(anyString()))
-				.thenReturn(client);
+        assertNotNull(service.calculateAirFees(input, "HK"));
+    }
 
-		IndiaAirFeesInput input = new IndiaAirFeesInput();
+    @Test
+    public void shouldReturnNettCost() {
 
-		assertNotNull(service.calculateIndiaAirFees(input));
-	}
+        when(nettCostCalculator.calculateFee(any(BigDecimal.class), any(Double.class)))
+                .thenReturn(new AirFeesBreakdown());
 
-	@Test
-	public void shouldReturnVisaFees() {
-		when(visaFeesCalculator.calculate(anyObject(), anyObject(), anyString())).thenReturn(new VisaFeesBreakdown());
+        NettCostInput input = new NettCostInput();
+        input.setCommissionPct(0d);
+        input.setSellingPrice(BigDecimal.TEN);
 
-		VisaFeesInput input = new VisaFeesInput();
-		input.setCountryCode(Country.HONG_KONG.getCode());
+        assertNotNull(service.calculateNettCost(input));
+    }
 
-		assertNotNull(service.calculateVisaFees(input));
+    @Test
+    public void shouldReturnIndiaAirFeesBreakdown() {
 
-	}
+        when(tfFactory.getCalculator(anyInt())).thenReturn(tfCalculator);
 
-	@Test
-	public void shouldReturnNonAirFeeIndia() {
-		when(indiaNonAirFeeCalculator.calculate(anyObject(), anyObject(), anyDouble())).thenReturn(new IndiaNonAirFeesBreakdown());
+        when(tfCalculator.
+                calculate(
+                        any(IndiaAirFeesInput.class),
+                        any(AirlineRule.class),
+                        any(Client.class),
+                        any(Airport.class),
+                        any(BaseProduct.class)))
+                .thenReturn(new IndiaAirFeesBreakdown());
 
-		Client client = new Client();
-		client.setPricingId(20);
-		client.setStandardMfProduct(false);
-		when(clientService.getClient(anyString())).thenReturn(client);
+        when(airlineRuleService.getAirlineRule(anyString())).thenReturn(new AirlineRule());
+        when(airportService.getAirport(anyString())).thenReturn(new Airport());
+        when(productService.getProductByCode(anyString(), anyString())).thenReturn(new IndiaProduct());
 
-		IndiaNonAirFeesInput input = new IndiaNonAirFeesInput();
-		input.setProduct(new IndiaNonAirProductInput());
+        Client client = new Client();
+        client.setPricingId(20);
+        when(clientService.getClient(anyString())).thenReturn(client);
 
-		assertNotNull(service.calculateIndiaNonAirFees(input));
-	}
+        IndiaAirFeesInput input = new IndiaAirFeesInput();
+        input.setClientAccountNumber("123456");
+        input.setCityCode("GGN");
+        input.setPlatCarrier("AA");
 
-	@Test
-	public void shouldReturnNonAirFeeHkSg() {
-		when(nonAirFeeCalculator.calculate(anyObject(), anyObject(), anyString())).thenReturn(new NonAirFeesBreakdown());
-		
-		Client client = new Client();
-		client.setPricingId(20);
-		client.setStandardMfProduct(false);
-		when(clientService.getClient(anyString())).thenReturn(client);
+        assertNotNull(service.calculateIndiaAirFees(input));
+    }
 
-		NonAirFeesInput input = new NonAirFeesInput();
-		
-		assertNotNull(service.calculateNonAirFees(input, "HK"));
-	}
+    @Test
+    public void shouldReturnVisaFees() {
+        when(visaFeesCalculator
+                .calculate(
+                        any(VisaFeesInput.class),
+                        any(MerchantFee.class),
+                        anyString()))
+                .thenReturn(new VisaFeesBreakdown());
+
+        VisaFeesInput input = new VisaFeesInput();
+        input.setCountryCode(Country.HONG_KONG.getCode());
+        input.setClientAccountNumber("12345");
+
+        assertNotNull(service.calculateVisaFees(input));
+
+    }
+
+    @Test
+    public void shouldReturnNonAirFeeIndia() {
+        when(indiaNonAirFeeCalculator
+                .calculate(
+                        any(IndiaNonAirFeesInput.class),
+                        any(Client.class),
+                        anyDouble()))
+                .thenReturn(new IndiaNonAirFeesBreakdown());
+
+        Client client = new Client();
+        client.setPricingId(20);
+        client.setStandardMfProduct(false);
+        when(clientService.getClient(anyString())).thenReturn(client);
+
+        IndiaNonAirFeesInput input = new IndiaNonAirFeesInput();
+        input.setProduct(new IndiaNonAirProductInput());
+        input.setClientAccountNumber("12345");
+        input.setCcType("VI");
+        input.setFopNumber("4111111111111111");
+        input.setFopType(FopType.CREDIT_CARD);
+
+        assertNotNull(service.calculateIndiaNonAirFees(input));
+    }
+
+    @Test
+    public void shouldReturnNonAirFeeHkSg() {
+        when(nonAirFeeCalculator
+                .calculate(
+                        any(NonAirFeesInput.class),
+                        any(MerchantFee.class),
+                        anyString()))
+                .thenReturn(new NonAirFeesBreakdown());
+
+        NonAirFeesInput input = new NonAirFeesInput();
+        input.setClientAccountNumber("12345");
+
+        assertNotNull(service.calculateNonAirFees(input, "HK"));
+    }
 
     @Test
     public void shouldReturnZeroMerchantFeePercentWhenFopModeIsBTC() {
@@ -198,115 +236,111 @@ public class OtherServiceFeesServiceTest {
         MerchantFeePercentInput input = new MerchantFeePercentInput();
         input.setFopMode(2);
         input.setProductCode(productCode);
+        input.setClientAccountNumber("12345");
 
         Double merchantFeePercent = service.getMerchantFeePercent(input);
 
         assertThat(merchantFeePercent, equalTo(0d));
     }
-    
+
     @Test
     public void shouldReturnAirFeesDefaults_noClientPricings() {
-    	AirFeesDefaultsOutput output = new AirFeesDefaultsOutput();
-    	List<ClientPricing> clientPricings = new ArrayList<>();
-    	
-    	Client client = new Client();
+        Client client = new Client();
         ProductMerchantFee mfProduct = new ProductMerchantFee();
         String productCode = "PROD1";
         mfProduct.setProductCode(productCode);
         mfProduct.setSubjectToMf(true);
         client.setMfProducts(Collections.singletonList(mfProduct));
-        
-		AirFeesDefaultsInput input = createAirFeesDefaults();
-		when(clientService.getClientPricings(input.getClientAccountNumber(),
-				input.getTripType())).thenReturn(clientPricings);
-		when(clientService.getClient(anyString())).thenReturn(client);
-		 
-		output = service.getAirFeesDefaults(input);
-		
-		assertNotNull(output);
-    	assertThat(output.getMerchantFeePercent(), equalTo(0d));
-    	
+
+        List<ClientPricing> clientPricings = new ArrayList<>();
+        AirFeesDefaultsInput input = createAirFeesDefaults();
+        when(clientService.getClientPricings(input.getClientAccountNumber(),
+                input.getTripType())).thenReturn(clientPricings);
+        when(clientService.getClient(anyString())).thenReturn(client);
+
+        AirFeesDefaultsOutput output = service.getAirFeesDefaults(input);
+
+        assertNotNull(output);
+        assertThat(output.getMerchantFeePercent(), equalTo(0d));
+
     }
-    
+
     @Test
     public void shouldReturnAirFeesDefaults() {
-    	AirFeesDefaultsOutput output = new AirFeesDefaultsOutput();
-    	List<ClientPricing> clientPricings = new ArrayList<>();
-    	
-    	Client client = new Client();
+        List<ClientPricing> clientPricings = new ArrayList<>();
+
+        Client client = new Client();
         ProductMerchantFee mfProduct = new ProductMerchantFee();
         String productCode = "PROD1";
         mfProduct.setProductCode(productCode);
         mfProduct.setSubjectToMf(true);
         client.setMfProducts(Collections.singletonList(mfProduct));
-        
+
         ClientPricing clientPricing = new ClientPricing();
         clientPricing.setCmpid(1);
         clientPricings.add(clientPricing);
-        
-		AirFeesDefaultsInput input = createAirFeesDefaults();
-		when(clientService.getClientPricings(input.getClientAccountNumber(),
-				input.getTripType())).thenReturn(clientPricings);
-		when(clientService.getClient(anyString())).thenReturn(client);
-		 
-		output = service.getAirFeesDefaults(input);
-		
-		assertNotNull(output);
-    	assertThat(output.getMerchantFeePercent(), equalTo(0d));
-    	
+
+        AirFeesDefaultsInput input = createAirFeesDefaults();
+        when(clientService.getClientPricings(input.getClientAccountNumber(),
+                input.getTripType())).thenReturn(clientPricings);
+        when(clientService.getClient(anyString())).thenReturn(client);
+
+        AirFeesDefaultsOutput output = service.getAirFeesDefaults(input);
+
+        assertNotNull(output);
+        assertThat(output.getMerchantFeePercent(), equalTo(0d));
+
     }
-    
+
     @Test
     public void shouldReturnAirFeesDefaultsNullFields() {
-    	AirFeesDefaultsOutput output = new AirFeesDefaultsOutput();
-    	List<ClientPricing> clientPricings = new ArrayList<>();
-    	
-    	Client client = new Client();
+        List<ClientPricing> clientPricings = new ArrayList<>();
+
+        Client client = new Client();
         ProductMerchantFee mfProduct = new ProductMerchantFee();
         String productCode = "PROD1";
         mfProduct.setProductCode(productCode);
         mfProduct.setSubjectToMf(true);
         client.setMfProducts(Collections.singletonList(mfProduct));
-        
+
         ClientPricing clientPricing = new ClientPricing();
         clientPricing.setCmpid(1);
         clientPricings.add(clientPricing);
-        
-		AirFeesDefaultsInput input = createAirFeesDefaultsWithNull();
-		when(clientService.getClientPricings(input.getClientAccountNumber(),
-				input.getTripType())).thenReturn(clientPricings);
-		when(clientService.getClient(anyString())).thenReturn(client);
-		 
-		output = service.getAirFeesDefaults(input);
-		
-		assertNotNull(output);
-    	assertThat(output.getMerchantFeePercent(), nullValue());
-    	
+
+        AirFeesDefaultsInput input = createAirFeesDefaultsWithNull();
+        when(clientService.getClientPricings(input.getClientAccountNumber(),
+                input.getTripType())).thenReturn(clientPricings);
+        when(clientService.getClient(anyString())).thenReturn(client);
+
+        AirFeesDefaultsOutput output = service.getAirFeesDefaults(input);
+
+        assertNotNull(output);
+        assertThat(output.getMerchantFeePercent(), nullValue());
+
     }
 
 
-	private AirFeesDefaultsInput createAirFeesDefaults() {
+    private AirFeesDefaultsInput createAirFeesDefaults() {
 
-		AirFeesDefaultsInput input = new AirFeesDefaultsInput();
-		input.setCcType("VISA");
-		input.setClientAccountNumber("2078200002");
-		input.setFopMode(2);
-		input.setFopNumber("1234");
-		input.setFopType(FopType.CWT);
-		input.setProductCode("02");
+        AirFeesDefaultsInput input = new AirFeesDefaultsInput();
+        input.setCcType("VISA");
+        input.setClientAccountNumber("2078200002");
+        input.setFopMode(2);
+        input.setFopNumber("1234");
+        input.setFopType(FopType.CWT);
+        input.setProductCode("02");
 
-		return input;
-	}
-	
-	private AirFeesDefaultsInput createAirFeesDefaultsWithNull() {
+        return input;
+    }
 
-		AirFeesDefaultsInput input = new AirFeesDefaultsInput();
-		input.setClientAccountNumber("2078200002");
-		input.setFopMode(2);
-		input.setFopNumber("1234");
-		input.setFopType(FopType.CWT);
+    private AirFeesDefaultsInput createAirFeesDefaultsWithNull() {
 
-		return input;
-	}
+        AirFeesDefaultsInput input = new AirFeesDefaultsInput();
+        input.setClientAccountNumber("2078200002");
+        input.setFopMode(2);
+        input.setFopNumber("1234");
+        input.setFopType(FopType.CWT);
 
+        return input;
+    }
 }

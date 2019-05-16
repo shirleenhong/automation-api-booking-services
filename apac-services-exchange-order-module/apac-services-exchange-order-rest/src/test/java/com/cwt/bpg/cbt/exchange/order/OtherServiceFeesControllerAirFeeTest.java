@@ -1,17 +1,14 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerNonAirFeeTest.convertObjectToJsonBytes;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.Charset;
 
-import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,10 +25,7 @@ import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.FopType;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
-import com.cwt.bpg.cbt.exchange.order.validator.AirlineOverheadCommissionValidator;
-import com.cwt.bpg.cbt.exchange.order.validator.FeeValidator;
-import com.cwt.bpg.cbt.exchange.order.validator.OthTaxValidator;
-
+import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
 import net.minidev.json.JSONObject;
 
 @RunWith(SpringJUnit4ClassRunner.class)

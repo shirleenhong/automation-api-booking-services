@@ -1,7 +1,7 @@
 package com.cwt.bpg.cbt.airline;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -9,7 +9,10 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InOrder;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;

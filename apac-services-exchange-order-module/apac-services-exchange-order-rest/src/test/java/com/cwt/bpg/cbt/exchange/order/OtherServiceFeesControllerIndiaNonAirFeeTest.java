@@ -1,16 +1,13 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static com.cwt.bpg.cbt.exchange.order.OtherServiceFeesControllerNonAirFeeTest.convertObjectToJsonBytes;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.Charset;
 
-import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirProductInput;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,8 +22,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirProductInput;
 import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
-
 import net.minidev.json.JSONObject;
 
 @RunWith(SpringJUnit4ClassRunner.class)
