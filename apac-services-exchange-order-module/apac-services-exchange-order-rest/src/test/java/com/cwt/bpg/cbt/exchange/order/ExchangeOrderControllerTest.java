@@ -1,7 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -87,14 +87,14 @@ public class ExchangeOrderControllerTest {
         order.setEoNumber("1122334455");
         List<BaseExchangeOrder> orders = Arrays.asList(order);
 
-        when(eoService.save(anyString(), anyList())).thenReturn(orders);
+        when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        verify(eoService, times(1)).save(anyString(), anyList());
+        verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
     }
 
     @Test
@@ -107,14 +107,14 @@ public class ExchangeOrderControllerTest {
         order.setEoNumber(null);
         List<BaseExchangeOrder> orders = Arrays.asList(order);
 
-        when(eoService.save(anyString(), anyList())).thenReturn(orders);
+        when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        verify(eoService, times(1)).save(anyString(), anyList());
+        verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
     }
 
     @Test
@@ -129,14 +129,14 @@ public class ExchangeOrderControllerTest {
         order.setVendor(vendor);
         List<BaseExchangeOrder> orders = Arrays.asList(order);
 
-        when(eoService.save(anyString(), anyList())).thenReturn(orders);
+        when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
 
         mockMvc.perform(post(urlIn).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        verify(eoService, times(1)).save(anyString(), anyList());
+        verify(eoService, times(1)).save(anyString(), anyListOf(IndiaExchangeOrder.class));
     }
 
     @Test
@@ -155,7 +155,7 @@ public class ExchangeOrderControllerTest {
                 .andReturn()
                 .getResponse();
 
-        verify(eoService, times(1)).save(anyString(), anyList());
+        verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
     }
 
     @Test
@@ -177,7 +177,7 @@ public class ExchangeOrderControllerTest {
         order.getServiceInfo().setGst(BigDecimal.ZERO);
         order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
         List<ExchangeOrder> orders = Arrays.asList(order);
-        when(eoService.save(anyString(), anyList()))
+        when(eoService.save(anyString(), anyListOf(ExchangeOrder.class)))
                 .thenThrow(new ExchangeOrderNoContentException("eo number not found"));
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
@@ -243,7 +243,7 @@ public class ExchangeOrderControllerTest {
                 .andReturn()
                 .getResponse();
 
-        verify(eoService, times(0)).save(anyString(), anyList());
+        verify(eoService, times(0)).save(anyString(), anyListOf(ExchangeOrder.class));
     }
 
     private ExchangeOrder createExchangeOrder() {
@@ -319,6 +319,7 @@ public class ExchangeOrderControllerTest {
         verify(eoReportService, times(1)).emailPdf(eq(order.getEoNumber()));
     }
 
+    @SuppressWarnings("unchecked")
     @Test(expected = NestedServletException.class)
     public void shouldGeneratePdfCheckedException() throws Exception {
 
@@ -331,7 +332,8 @@ public class ExchangeOrderControllerTest {
         verifyZeroInteractions(eoService);
     }
 
-    @Test(expected = Exception.class)
+    @SuppressWarnings("unchecked")
+    @Test(expected = NestedServletException.class)
     public void shouldGeneratePdfUnCheckedException() throws Exception {
 
         when(eoReportService.generatePdf(anyString())).thenThrow(Exception.class);

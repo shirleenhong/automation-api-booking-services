@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.air.transaction;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

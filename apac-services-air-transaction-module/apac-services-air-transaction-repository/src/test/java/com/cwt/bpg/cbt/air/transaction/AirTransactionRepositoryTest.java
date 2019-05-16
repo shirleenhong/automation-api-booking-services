@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.air.transaction;
 
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
