@@ -6,7 +6,7 @@ import org.mongodb.morphia.annotations.*;
 
 @Entity(value = "clientGstInfo", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("gstin")))
-public class ClientGst {
+public class ClientGstInfo {
 
     @Id
     @NotEmpty
