@@ -65,6 +65,11 @@
     </dependency>
     <dependency>
       <groupId>com.cwt.bpg.cbt</groupId>
+      <artifactId>apac-services-client-gst-rest</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.cwt.bpg.cbt</groupId>
       <artifactId>apac-services-security-service</artifactId>
       <version>${project.version}</version>
     </dependency>

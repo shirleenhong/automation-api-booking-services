@@ -23,6 +23,7 @@ public class CacheConfiguration {
 			"insurance-types",
 			"airline-rules",
 			"clients",
+			"client-gst-info",
 			"airports",
 			"remarks",
 			"exchange-orders",
