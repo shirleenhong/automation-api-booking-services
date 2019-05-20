@@ -12,6 +12,7 @@ public class ClientGstInfo {
     @NotEmpty
     @ApiModelProperty(required = true)
     private String gstin;
+    private String client;
     private String clientEntityName;
     private String businessPhoneNumber;
     private String businessEmailAddress;
@@ -27,6 +28,14 @@ public class ClientGstInfo {
 
     public void setGstin(String gstin) {
         this.gstin = gstin;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
     }
 
     public String getClientEntityName() {
