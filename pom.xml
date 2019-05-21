@@ -408,6 +408,7 @@
     <module>apac-services-exception</module>
     <module>apac-services-cache</module>
     <module>apac-services-smart-flow-module</module>
+    <module>apac-services-client-gst-module</module>
   </modules>
 
 </project>
