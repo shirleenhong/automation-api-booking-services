@@ -1,9 +1,11 @@
 package com.cwt.bpg.cbt.client.gst.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.*;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity(value = "clientGstInfo", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("gstin")))
 public class ClientGstInfo {

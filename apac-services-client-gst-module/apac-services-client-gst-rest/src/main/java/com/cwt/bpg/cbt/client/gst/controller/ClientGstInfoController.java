@@ -14,12 +14,13 @@ import javax.validation.Valid;
 
 @RestController
 @Api(tags = "Client GST Info")
+@RequestMapping(path = "client-gst-info")
 public class ClientGstInfoController {
 
     @Autowired
     private ClientGstInfoService clientGstInfoService;
 
-    @GetMapping(path = "client-gst-info/{gstin}")
+    @GetMapping(path = "{gstin}")
     @ResponseBody
     @ApiOperation("Get client GST information given a GSTIN")
     public ResponseEntity<ClientGstInfo> getClientGstInfo(
@@ -32,7 +33,7 @@ public class ClientGstInfoController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(path = "client-gst-info")
+    @PutMapping
     @ResponseBody
     @ApiOperation("[Maintenance] Saves client GST information")
     public ResponseEntity<ClientGstInfo> putClientGstInfo(@Valid @RequestBody ClientGstInfo clientGstInfo) {
