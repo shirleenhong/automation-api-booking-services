@@ -4,23 +4,21 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 public class BsonDateDeserializer extends StdDeserializer<Date>
 {
-
-//    private static final Logger LOGGER = LoggerFactory.getLogger(BsonDateDeserializer.class);
     private static final long serialVersionUID = 1L;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BsonDateDeserializer.class);
 
     public BsonDateDeserializer()
     {
@@ -28,7 +26,7 @@ public class BsonDateDeserializer extends StdDeserializer<Date>
     }
 
     @Override
-    public Date deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException
+    public Date deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException
     {
         Date date = null;
         if (jp.getCurrentToken() == JsonToken.VALUE_STRING)
@@ -55,7 +53,7 @@ public class BsonDateDeserializer extends StdDeserializer<Date>
             }
             catch (Exception e)
             {
-//                LOGGER.error("Incorrect datetime format. {}", e);
+                LOGGER.error("Incorrect datetime format. {}", e);
             }
         }
 
