@@ -38,17 +38,17 @@ public class ClientGstInfoRepository extends CommonRepository<ClientGstInfo, Str
     public List<ClientGstInfo> putAll(List<ClientGstInfo> objects) {
         DBCollection collection = morphia.getDatastore().getCollection(ClientGstInfo.class);
         BulkWriteOperation writeOperation = collection.initializeUnorderedBulkOperation();
-        for(ClientGstInfo t: objects) {
-            mapAndInsertToWriteOperation(t, writeOperation);
+        for(ClientGstInfo clientGstInfo: objects) {
+            mapAndInsertToWriteOperation(clientGstInfo, writeOperation);
         }
         BulkWriteResult result = writeOperation.execute();
         LOGGER.info("Save Result: {} records inserted", result.getInsertedCount());
         return objects;
     }
 
-    private void mapAndInsertToWriteOperation(ClientGstInfo info, BulkWriteOperation writeOperation) {
+    private void mapAndInsertToWriteOperation(ClientGstInfo clientGstInfo, BulkWriteOperation writeOperation) {
         try {
-            BasicDBObject document = DBObjectMapper.mapAsBasicDBObject(info.getGstin(), info);
+            BasicDBObject document = DBObjectMapper.mapAsBasicDBObject(clientGstInfo.getGstin(), clientGstInfo);
             writeOperation.insert(document);
         } catch (JsonProcessingException e) {
             LOGGER.info("An error occurred while converting object to BasicDBObject", e);

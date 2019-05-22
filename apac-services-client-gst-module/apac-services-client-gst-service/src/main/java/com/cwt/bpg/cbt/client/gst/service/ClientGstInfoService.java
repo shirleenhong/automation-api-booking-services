@@ -40,6 +40,7 @@ public class ClientGstInfoService {
     private static final String NON_ALPHANUMERIC_REGEX = "[^0-9a-zA-Z]";
     private static final String LINE_BREAK_REGEX = "\\r\\n|\\r|\\n";
     private static final String EMPTY_STRING = "";
+    private static final String SPACE = " ";
 
     @Autowired
     private ClientGstInfoRepository clientGstInfoRepository;
@@ -61,7 +62,7 @@ public class ClientGstInfoService {
             long start = System.currentTimeMillis();
             clientGstInfoRepository.backupCollection();
             clientGstInfoRepository.putAll(clientGstInfo);
-            LOGGER.info("saving to db took {} ms", System.currentTimeMillis() - start);
+            LOGGER.info("Saving to db took {} ms", System.currentTimeMillis() - start);
         }
     }
 
@@ -70,27 +71,14 @@ public class ClientGstInfoService {
         long start = System.currentTimeMillis();
         try {
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
-            LOGGER.info("loaded excel in {} ms", System.currentTimeMillis() - start);
+            LOGGER.info("Loaded excel in {} ms", System.currentTimeMillis() - start);
             XSSFSheet sheet = workbook.getSheetAt(GST_DATA_SHEET_INDEX);
             int rowIteration = 0;
             for(Row row: sheet) {
                 if(++rowIteration <= ROWS_TO_SKIP) {
                     continue;
                 }
-                ClientGstInfo info = new ClientGstInfo();
-                info.setClient(getValue(row, CLIENT_INDEX));
-                info.setGstin(getValue(row, GSTIN_INDEX));
-                if(info.getGstin() != null) {
-                    info.setGstin(info.getGstin().replaceAll(NON_ALPHANUMERIC_REGEX, EMPTY_STRING));
-                }
-                info.setClientEntityName(getValue(row, ENTITY_NAME_INDEX));
-                info.setBusinessPhoneNumber(getValue(row, BUSINESS_PHONE_INDEX));
-                info.setBusinessEmailAddress(getValue(row, EMAIL_ADDRESS_INDEX));
-                info.setEntityAddressLine1(getValue(row, ADDRESS_LINE_1_INDEX));
-                info.setEntityAddressLine2(getValue(row, ADDRESS_LINE2_INDEX));
-                info.setPostalCode(getValue(row, POSTAL_CODE_INDEX));
-                info.setCity(getValue(row, CITY_INDEX));
-                info.setState(getValue(row, STATE_INDEX));
+                ClientGstInfo info = extractFromRow(row);
                 if (info.allValuesNull()) {
                     break; //stop reading excel if no values can be extracted
                 } else if (!StringUtils.isEmpty(info.getGstin())) {
@@ -98,11 +86,11 @@ public class ClientGstInfoService {
                 }
             }
         } catch (IOException e) {
-            LOGGER.error("An error occured while reading excel file", e);
+            LOGGER.error("An error occurred while reading excel file", e);
         } finally {
             closeStream(fileInputStream);
         }
-        LOGGER.info("reading from excel took {} ms", System.currentTimeMillis() - start);
+        LOGGER.info("Reading from excel took {} ms", System.currentTimeMillis() - start);
         return clientGstInfo;
     }
 
@@ -116,6 +104,24 @@ public class ClientGstInfoService {
         }
     }
 
+    private static ClientGstInfo extractFromRow(Row row) {
+        ClientGstInfo info = new ClientGstInfo();
+        info.setClient(getValue(row, CLIENT_INDEX));
+        info.setGstin(getValue(row, GSTIN_INDEX));
+        if(info.getGstin() != null) {
+            info.setGstin(info.getGstin().replaceAll(NON_ALPHANUMERIC_REGEX, EMPTY_STRING));
+        }
+        info.setClientEntityName(getValue(row, ENTITY_NAME_INDEX));
+        info.setBusinessPhoneNumber(getValue(row, BUSINESS_PHONE_INDEX));
+        info.setBusinessEmailAddress(getValue(row, EMAIL_ADDRESS_INDEX));
+        info.setEntityAddressLine1(getValue(row, ADDRESS_LINE_1_INDEX));
+        info.setEntityAddressLine2(getValue(row, ADDRESS_LINE2_INDEX));
+        info.setPostalCode(getValue(row, POSTAL_CODE_INDEX));
+        info.setCity(getValue(row, CITY_INDEX));
+        info.setState(getValue(row, STATE_INDEX));
+        return info;
+    }
+
     private static String getValue(Row row, int index){
         Cell cell = row.getCell(index);
         if(cell == null) {
@@ -123,7 +129,7 @@ public class ClientGstInfoService {
         }
         if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
             return cell.getStringCellValue().trim()
-                    .replaceAll(LINE_BREAK_REGEX, EMPTY_STRING);
+                    .replaceAll(LINE_BREAK_REGEX, SPACE);
         } else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
             return String.format("%.0f", cell.getNumericCellValue());
         }
