@@ -95,7 +95,7 @@ public class OtherServiceFeesController {
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "Computes visa processing fees. Not be used for visa cost and handling fee.")
+	@ApiOperation(value = "[SG only] Computes visa processing fees. Not be used for visa cost and handling fee.")
 	public ResponseEntity<VisaFeesBreakdown> computeVisaFees(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") VisaFeesInput input) {
 
