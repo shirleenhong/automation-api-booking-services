@@ -197,7 +197,6 @@ public class OtherServiceFeesService {
         Double mfPercent;
 
         if (input.getFopMode() == BILL_TO_COMPANY
-                || isProductSubjectToMF(client, input.getProductCode())
                 || isProductSubjectToMF(client.isStandardMfProduct() ? defaultClient : client,
                 input.getProductCode())) {
             mfPercent = 0D;
@@ -233,7 +232,8 @@ public class OtherServiceFeesService {
         Optional<CreditCardVendor> vendor = Optional.empty();
         if (client.getMfCcs() != null) {
             vendor = client.getMfCcs().stream()
-                    .filter(item -> item.getVendorName().equals(acctType) && item.isStandard() == isStandard).findFirst();
+                    .filter(item -> item.getVendorName().equals(acctType) 
+                    	 && item.isStandard() == isStandard).findFirst();
         }
         return vendor.orElse(null);
     }
@@ -242,7 +242,9 @@ public class OtherServiceFeesService {
         Optional<Bank> bank = Optional.empty();
         if (client.getMfBanks() != null) {
             bank = client.getMfBanks().stream()
-                    .filter(item -> fopNumber.startsWith(item.getCcNumberPrefix()) && item.isStandard() == isStandard).findFirst();
+                    .filter(item -> fopNumber.startsWith(item.getCcNumberPrefix()) 
+                    	 && item.isStandard() == isStandard)
+                    		.findFirst();
         }
         return bank.orElse(null);
     }
