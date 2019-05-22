@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.exchange.order;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
@@ -240,7 +241,7 @@ public class OtherServiceFeesServiceTest {
 
         Double merchantFeePercent = service.getMerchantFeePercent(input);
 
-        assertThat(merchantFeePercent, equalTo(0d));
+        assertNull(merchantFeePercent);
     }
 
     @Test
