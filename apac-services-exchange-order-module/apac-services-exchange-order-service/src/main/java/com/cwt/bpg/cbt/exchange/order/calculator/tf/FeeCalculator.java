@@ -230,7 +230,7 @@ public class FeeCalculator {
 		BigDecimal tfAmount = BigDecimal.ZERO;
 		int segmentCount = input.getAirSegmentCount();
 
-		if (segmentCount <= 0) 
+		if (segmentCount == 0) 
 		{
 			return tfAmount;
 		}

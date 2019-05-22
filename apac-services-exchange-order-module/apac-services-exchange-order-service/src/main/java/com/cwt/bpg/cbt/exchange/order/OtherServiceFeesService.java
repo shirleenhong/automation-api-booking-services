@@ -197,7 +197,7 @@ public class OtherServiceFeesService {
         Double mfPercent;
 
         if (input.getFopMode() == BILL_TO_COMPANY
-                || isProductSubjectToMF(client.isStandardMfProduct() ? defaultClient : client,
+                || !isProductSubjectToMF(client.isStandardMfProduct() ? defaultClient : client,
                 input.getProductCode())) {
             mfPercent = 0D;
         }
