@@ -246,7 +246,7 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getTotalSellingFare().doubleValue(), is(486.69d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(60d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(586.69d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(566.69d));
         assertThat(breakdown.getFee(), is(nullValue()));
 
         assertThat(breakdown.getCommission(), is(nullValue()));
@@ -280,7 +280,7 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getTotalSellingFare().doubleValue(), is(486.69d));
         assertThat(breakdown.getTotalTaxes().doubleValue(), is(60d));
         assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(586.69d));
+        assertThat(breakdown.getTotalCharge().doubleValue(), is(566.69d));
         assertThat(breakdown.getFee(), is(nullValue()));
 
         assertThat(breakdown.getCommission(), is(nullValue()));
