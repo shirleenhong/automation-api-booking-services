@@ -38,6 +38,7 @@ public class IndiaAirFeesBreakdown extends FeesBreakdown
 	private BigDecimal totalTaxes;
 	private BigDecimal merchantFeeOnTf;
 	private BigDecimal totalCharge;
+	private BigDecimal referenceFare;
 	
 	@ApiModelProperty(hidden = true, notes = "For transaction fee computation")
 	private BigDecimal fee;
@@ -192,5 +193,13 @@ public class IndiaAirFeesBreakdown extends FeesBreakdown
 
 	public void setFee(BigDecimal fee) {
 		this.fee = fee;
+	}
+
+	public BigDecimal getReferenceFare() {
+		return referenceFare;
+	}
+
+	public void setReferenceFare(BigDecimal referenceFare) {
+		this.referenceFare = referenceFare;
 	}
 }

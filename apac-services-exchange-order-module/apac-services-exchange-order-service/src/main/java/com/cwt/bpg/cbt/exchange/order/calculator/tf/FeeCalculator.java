@@ -103,6 +103,8 @@ public class FeeCalculator {
 		breakdown.setTotalCharge(round(getTotalCharge(breakdown), scale));
 
 		breakdown.setFee(null);
+		
+		breakdown.setReferenceFare(round(safeValue(input.getBaseFare()).add(breakdown.getTotalTaxes()), scale));
 
 		return breakdown;
 	}
@@ -206,7 +208,7 @@ public class FeeCalculator {
 			else if ("D".equals(tf.getOperator())) {
 				result = baseAmount
 						.divide(percentDecimal(BigDecimal.valueOf(100)
-								.subtract(BigDecimal.valueOf(safeValue(tf.getPerAmount())))),MathContext.DECIMAL128)
+								.subtract(BigDecimal.valueOf(safeValue(tf.getPerAmount())))), MathContext.DECIMAL128)
 						.add(safeValue(tf.getExtraAmount()))
 						.subtract(safeValue(baseAmount));
 			}
@@ -215,8 +217,7 @@ public class FeeCalculator {
 					&& result.compareTo(safeValue(tf.getMaxAmount())) > 0) {
 				result = tf.getMaxAmount();
 			}
-
-			if (result.compareTo(safeValue(tf.getMinAmount())) < 0) {
+			else if (result.compareTo(safeValue(tf.getMinAmount())) < 0) {
 				result = safeValue(tf.getMinAmount());
 			}
 		}
@@ -229,6 +230,11 @@ public class FeeCalculator {
 		BigDecimal tfAmount = BigDecimal.ZERO;
 		int segmentCount = input.getAirSegmentCount();
 
+		if (segmentCount <= 0) 
+		{
+			return tfAmount;
+		}
+		
 		for (TransactionFee tf : pricing.getTransactionFees()) {
 
 			if (SOLO.equalsIgnoreCase(tf.getType())) {
@@ -241,12 +247,9 @@ public class FeeCalculator {
 			}
 			else if (GROUP.equalsIgnoreCase(tf.getType())) {
 
-				for (int i = 0; i < segmentCount; i++) {
+				if (tf.getStartCoupon() <= segmentCount) {
 
-					if (tf.getStartCoupon() <= segmentCount) {
-
-						tfAmount = tfAmount.add(safeValue(tf.getAmount()));
-					}
+					tfAmount = tfAmount.add(safeValue(tf.getAmount()));
 				}
 			}
 		}
