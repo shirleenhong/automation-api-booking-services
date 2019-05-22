@@ -1,14 +1,20 @@
 package com.cwt.bpg.cbt.client.gst.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.*;
 
+import java.beans.Transient;
+import java.io.Serializable;
+
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity(value = "clientGstInfo", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("gstin")))
-public class ClientGstInfo {
+public class ClientGstInfo implements Serializable {
+
+    private static final long serialVersionUID = 1600168082099452654L;
 
     @Id
     @NotEmpty
@@ -102,5 +108,20 @@ public class ClientGstInfo {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    @Transient
+    @JsonIgnore
+    public boolean allValuesNull() {
+        return gstin == null &&
+                client == null &&
+                clientEntityName == null &&
+                businessPhoneNumber == null &&
+                businessEmailAddress == null &&
+                entityAddressLine1 == null &&
+                entityAddressLine2 == null &&
+                postalCode == null &&
+                city == null &&
+                state == null;
     }
 }
