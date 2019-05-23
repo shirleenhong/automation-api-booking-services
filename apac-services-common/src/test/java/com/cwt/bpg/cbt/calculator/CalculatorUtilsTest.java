@@ -2,7 +2,7 @@ package com.cwt.bpg.cbt.calculator;
 
 import static com.cwt.bpg.cbt.calculator.CalculatorUtils.safeValue;
 import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.emptyString;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -39,7 +39,7 @@ public class CalculatorUtilsTest
 	public void shouldReturnSafeString() {
 		String input = null;
 		String safeValue = safeValue(input);
-		assertThat(safeValue, isEmptyString());
+		assertThat(safeValue, emptyString());
 
 		input = "abc";
 		safeValue = safeValue(input);
