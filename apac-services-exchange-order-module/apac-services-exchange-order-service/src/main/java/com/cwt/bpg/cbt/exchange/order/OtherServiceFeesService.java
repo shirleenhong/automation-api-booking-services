@@ -204,17 +204,29 @@ public class OtherServiceFeesService {
         else {
             mfPercent = client.getMerchantFee();
 
-            Bank bank = getBank(client, input.getFopNumber(), client.isApplyMfBank());
+            Bank bank = getBank(getClient(client, defaultClient, client.isApplyMfBank()), 
+                                input.getFopNumber(), 
+                                client.isApplyMfBank());
+            
             if (bank != null && !StringUtils.isEmpty(bank.getCcNumberPrefix())) {
                 mfPercent = bank.getPercentage();
             }
             else if (!StringUtils.isEmpty(input.getFopType())) {
-                CreditCardVendor vendor = getCreditCard(client, input.getCcType(), client.isApplyMfCc());
+                CreditCardVendor vendor = getCreditCard(
+                                                    getClient(client, defaultClient, client.isApplyMfCc()), 
+                                                    input.getCcType(), 
+                                                    client.isApplyMfCc());
+
                 mfPercent = vendor != null ? vendor.getPercentage() : 0D;
             }
         }
 
         return mfPercent;
+    }
+
+    private Client getClient(Client client, Client defaultClient, boolean isStandard)
+    {
+        return isStandard ? defaultClient : client;
     }
 
     private boolean isProductSubjectToMF(Client client, String productCode) {
