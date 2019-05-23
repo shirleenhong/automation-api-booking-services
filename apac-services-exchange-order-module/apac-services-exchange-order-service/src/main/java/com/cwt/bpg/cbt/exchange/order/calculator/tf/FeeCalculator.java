@@ -38,8 +38,6 @@ public class FeeCalculator {
 
 		BigDecimal gstAmount = null;
 
-		BigDecimal yqTax = getYqTax(airlineRule, input.getYqTax());
-
 		IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
 
 		int scale = scaleConfig.getScale(Country.INDIA.getCode());
@@ -49,6 +47,8 @@ public class FeeCalculator {
 			gstAmount = BigDecimal.ZERO;
 			
 			if(!client.isExemptTax()) {
+			    
+			    final BigDecimal yqTax = getYqTax(airlineRule, input.getYqTax());
 				final IndiaAirProductInput product = input.getProduct();
 				final BigDecimal baseFarePlusYqTax = safeValue(input.getBaseFare())
 								.add(yqTax);
