@@ -37,6 +37,7 @@ public class FeeCalculator {
 										   BaseProduct airProduct) {
 
 		BigDecimal gstAmount = null;
+
 		BigDecimal yqTax = getYqTax(airlineRule, input.getYqTax());
 
 		IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
@@ -44,6 +45,7 @@ public class FeeCalculator {
 		int scale = scaleConfig.getScale(Country.INDIA.getCode());
 
 		if (input.isGstEnabled()) {
+
 			gstAmount = BigDecimal.ZERO;
 			
 			if(!client.isExemptTax()) {
@@ -60,7 +62,7 @@ public class FeeCalculator {
 		}		
 				
 		if(input.isCommissionEnabled()) {
-			breakdown.setTotalAirlineCommission(round(getTotalAirlineCommission(input, yqTax), scale));
+			breakdown.setTotalAirlineCommission(round(getTotalAirlineCommission(input, BigDecimal.ZERO), scale));
 		}
 
 		if (input.isOverheadCommissionEnabled()) {
@@ -83,14 +85,14 @@ public class FeeCalculator {
 			breakdown.setTotalDiscount(round(getTotalDiscount(input, breakdown), scale));
 		}
 
-		breakdown.setTotalTaxes(round(safeValue(yqTax)
+		breakdown.setTotalTaxes(round(safeValue(input.getYqTax())
 									.add(safeValue(input.getOthTax1()))
 									.add(safeValue(input.getOthTax2()))
 									.add(safeValue(input.getOthTax3())), scale));
 
 		breakdown.setTotalGst(gstAmount);
 		breakdown.setTotalSellFare(round(safeValue(input.getBaseFare()), scale));
-		breakdown.setBaseAmount(round(getTotalFee(input, breakdown, yqTax), scale));
+		breakdown.setBaseAmount(round(getTotalFee(input, breakdown, input.getYqTax()), scale));
 
 		breakdown.setFee(round(getTransactionFee(client, input, airport, breakdown.getBaseAmount()), scale));
 
