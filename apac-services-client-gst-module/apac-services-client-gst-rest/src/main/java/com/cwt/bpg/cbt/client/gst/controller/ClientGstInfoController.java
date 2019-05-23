@@ -18,7 +18,8 @@ import java.util.Map;
 @RestController
 @Api(tags = "Client GST Info")
 @RequestMapping(path = "client-gst-info")
-public class ClientGstInfoController {
+public class ClientGstInfoController
+{
 
     private static final String EXCEL_WORKBOOK = ".xlsx";
     private static final String MACRO_ENABLED_WORKBOOK = ".xlsm";
@@ -32,26 +33,30 @@ public class ClientGstInfoController {
     public ResponseEntity<ClientGstInfo> getClientGstInfo(
             @PathVariable
             @ApiParam(value = "GST Identification Number")
-                    String gstin) {
+                    String gstin)
+    {
         ClientGstInfo clientGstInfo = clientGstInfoService.getClientGstInfo(gstin);
-        return (clientGstInfo != null)?
-                new ResponseEntity<>(clientGstInfo, HttpStatus.OK):
+        return (clientGstInfo != null) ?
+                new ResponseEntity<>(clientGstInfo, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping
     @ResponseBody
     @ApiOperation("[Maintenance] Saves client GST information")
-    public ResponseEntity<ClientGstInfo> putClientGstInfo(@Valid @RequestBody ClientGstInfo clientGstInfo) {
+    public ResponseEntity<ClientGstInfo> putClientGstInfo(@Valid @RequestBody ClientGstInfo clientGstInfo)
+    {
         return new ResponseEntity<>(clientGstInfoService.save(clientGstInfo), HttpStatus.OK);
     }
 
     @PostMapping
     @ResponseBody
     public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file)
-            throws Exception{
+            throws Exception
+    {
         if (!(file.getOriginalFilename().endsWith(EXCEL_WORKBOOK) ||
-                file.getOriginalFilename().endsWith(MACRO_ENABLED_WORKBOOK))) {
+                file.getOriginalFilename().endsWith(MACRO_ENABLED_WORKBOOK)))
+        {
             throw new IllegalArgumentException("File must be in excel format");
         }
         clientGstInfoService.saveFromExcelFile(file.getInputStream());

@@ -10,9 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -21,7 +21,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Service
-public class ClientGstInfoService {
+public class ClientGstInfoService
+{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientGstInfoService.class);
 
@@ -46,19 +47,23 @@ public class ClientGstInfoService {
     private ClientGstInfoRepository clientGstInfoRepository;
 
     @Cacheable(cacheNames = "client-gst-info")
-    public ClientGstInfo getClientGstInfo(String gstin) {
+    public ClientGstInfo getClientGstInfo(String gstin)
+    {
         return clientGstInfoRepository.get(gstin);
     }
 
-    public ClientGstInfo save(ClientGstInfo clientGstInfo) {
+    public ClientGstInfo save(ClientGstInfo clientGstInfo)
+    {
         return clientGstInfoRepository.put(clientGstInfo);
     }
 
     @Async
     @CacheEvict(cacheNames = "client-gst-info", allEntries = true)
-    public void saveFromExcelFile(InputStream inputStream) {
+    public void saveFromExcelFile(InputStream inputStream)
+    {
         List<ClientGstInfo> clientGstInfo = extractFromExcelFile(inputStream);
-        if(!clientGstInfo.isEmpty()) {
+        if (!clientGstInfo.isEmpty())
+        {
             long start = System.currentTimeMillis();
             clientGstInfoRepository.backupCollection();
             clientGstInfoRepository.putAll(clientGstInfo);
@@ -66,49 +71,67 @@ public class ClientGstInfoService {
         }
     }
 
-    private static List<ClientGstInfo> extractFromExcelFile(InputStream fileInputStream) {
+    private static List<ClientGstInfo> extractFromExcelFile(InputStream fileInputStream)
+    {
         List<ClientGstInfo> clientGstInfo = new LinkedList<>();
         long start = System.currentTimeMillis();
-        try {
+        try
+        {
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             LOGGER.info("Loaded excel in {} ms", System.currentTimeMillis() - start);
             XSSFSheet sheet = workbook.getSheetAt(GST_DATA_SHEET_INDEX);
             int rowIteration = 0;
-            for(Row row: sheet) {
-                if(++rowIteration <= ROWS_TO_SKIP) {
+            for (Row row : sheet)
+            {
+                if (++rowIteration <= ROWS_TO_SKIP)
+                {
                     continue;
                 }
                 ClientGstInfo info = extractFromRow(row);
-                if (info.allValuesNull()) {
+                if (info.allValuesNull())
+                {
                     break; //stop reading excel if no values can be extracted
-                } else if (!StringUtils.isEmpty(info.getGstin())) {
+                }
+                else if (!StringUtils.isEmpty(info.getGstin()))
+                {
                     clientGstInfo.add(info);
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             LOGGER.error("An error occurred while reading excel file", e);
-        } finally {
+        }
+        finally
+        {
             closeStream(fileInputStream);
         }
         LOGGER.info("Reading from excel took {} ms", System.currentTimeMillis() - start);
         return clientGstInfo;
     }
 
-    private static void closeStream(InputStream inputStream) {
-        try {
-            if (inputStream != null) {
+    private static void closeStream(InputStream inputStream)
+    {
+        try
+        {
+            if (inputStream != null)
+            {
                 inputStream.close();
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             LOGGER.error("An error occurred while closing input stream", e);
         }
     }
 
-    private static ClientGstInfo extractFromRow(Row row) {
+    private static ClientGstInfo extractFromRow(Row row)
+    {
         ClientGstInfo info = new ClientGstInfo();
         info.setClient(getValue(row, CLIENT_INDEX));
         info.setGstin(getValue(row, GSTIN_INDEX));
-        if(info.getGstin() != null) {
+        if (info.getGstin() != null)
+        {
             info.setGstin(info.getGstin().replaceAll(NON_ALPHANUMERIC_REGEX, EMPTY_STRING));
         }
         info.setClientEntityName(getValue(row, ENTITY_NAME_INDEX));
@@ -122,15 +145,20 @@ public class ClientGstInfoService {
         return info;
     }
 
-    private static String getValue(Row row, int index){
+    private static String getValue(Row row, int index)
+    {
         Cell cell = row.getCell(index);
-        if(cell == null) {
+        if (cell == null)
+        {
             return null;
         }
-        if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
+        if (cell.getCellType() == Cell.CELL_TYPE_STRING)
+        {
             return cell.getStringCellValue().trim()
                     .replaceAll(LINE_BREAK_REGEX, SPACE);
-        } else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+        }
+        else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+        {
             return String.format("%.0f", cell.getNumericCellValue());
         }
         return null;
