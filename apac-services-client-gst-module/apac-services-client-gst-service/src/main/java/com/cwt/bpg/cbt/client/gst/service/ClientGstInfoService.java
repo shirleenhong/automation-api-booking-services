@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
@@ -11,6 +12,13 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
+import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
+
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -18,8 +26,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
-import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
+
 
 @Service
 public class ClientGstInfoService
@@ -50,7 +57,7 @@ public class ClientGstInfoService
     @Cacheable(cacheNames = "merchant-fees", key="#root.methodName")
     public List<ClientGstInfo> getAll() 
     {
-        return clientGstInfoRepository.getAll();
+    	return clientGstInfoRepository.getAll();
     }
 
     @Cacheable(cacheNames = "client-gst-info", key = "#gstin")
