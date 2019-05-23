@@ -29,6 +29,7 @@ import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
 import com.cwt.bpg.cbt.client.gst.repository.GstAirlineRepository;
 
 
+
 @Service
 public class ClientGstInfoService {
 
@@ -64,7 +65,7 @@ public class ClientGstInfoService {
     @Cacheable(cacheNames = "merchant-fees", key="#root.methodName")
     public List<ClientGstInfo> getAll() 
     {
-        return clientGstInfoRepository.getAll();
+    	return clientGstInfoRepository.getAll();
     }
 
     public ClientGstInfoResponse getClientGstInfo(String gstin, List<String> airlineCodes) {
