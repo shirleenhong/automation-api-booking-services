@@ -27,6 +27,13 @@ public class ClientGstInfoController {
 
     @Autowired
     private ClientGstInfoService clientGstInfoService;
+    
+    @GetMapping
+    @ResponseBody
+    @ApiOperation("Get all client GST information")
+    public ResponseEntity<List<ClientGstInfo>> getAllClientGstInfo() {
+    	return new ResponseEntity<>(clientGstInfoService.getAll(), HttpStatus.OK);
+    }
 
     @GetMapping(path = "{gstin}")
     @ResponseBody
@@ -52,6 +59,14 @@ public class ClientGstInfoController {
     @ApiOperation("[Maintenance] Saves client GST information")
     public ResponseEntity<ClientGstInfo> putClientGstInfo(@Valid @RequestBody ClientGstInfo clientGstInfo) {
         return new ResponseEntity<>(clientGstInfoService.save(clientGstInfo), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "{gstin}")
+    @ResponseBody
+    @ApiOperation("[Maintenance] Delete client GST information given a GSTIN")
+    public ResponseEntity<String> removeClientGstInfo( @PathVariable @ApiParam(value = "GST Identification Number") String gstin) 
+    {
+        return new ResponseEntity<>(clientGstInfoService.remove(gstin), HttpStatus.OK);
     }
 
     @PostMapping

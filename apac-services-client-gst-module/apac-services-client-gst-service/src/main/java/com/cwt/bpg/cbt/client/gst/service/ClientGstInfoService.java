@@ -1,11 +1,13 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
-import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
-import com.cwt.bpg.cbt.client.gst.model.ClientGstInfoResponse;
-import com.cwt.bpg.cbt.client.gst.model.GstAirline;
-import com.cwt.bpg.cbt.client.gst.model.GstLookup;
-import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
-import com.cwt.bpg.cbt.client.gst.repository.GstAirlineRepository;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -19,12 +21,13 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfoResponse;
+import com.cwt.bpg.cbt.client.gst.model.GstAirline;
+import com.cwt.bpg.cbt.client.gst.model.GstLookup;
+import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
+import com.cwt.bpg.cbt.client.gst.repository.GstAirlineRepository;
+
 
 @Service
 public class ClientGstInfoService {
@@ -58,6 +61,12 @@ public class ClientGstInfoService {
     @Autowired
     private GstAirlineRepository gstAirlineRepository;
 
+    @Cacheable(cacheNames = "merchant-fees", key="#root.methodName")
+    public List<ClientGstInfo> getAll() 
+    {
+        return clientGstInfoRepository.getAll();
+    }
+
     public ClientGstInfoResponse getClientGstInfo(String gstin, List<String> airlineCodes) {
         ClientGstInfo clientGstInfo = getClientGstInfo(gstin);
         if(clientGstInfo == null) {
@@ -86,13 +95,19 @@ public class ClientGstInfoService {
         return gstAirlineSet;
     }
 
-    @Cacheable(cacheNames = "client-gst-info")
-    public ClientGstInfo getClientGstInfo(String gstin) {
+    @Cacheable(cacheNames = "client-gst-info", key = "#gstin")
+    public ClientGstInfo getClientGstInfo(String gstin) 
+    {
         return clientGstInfoRepository.get(gstin);
     }
 
     public ClientGstInfo save(ClientGstInfo clientGstInfo) {
         return clientGstInfoRepository.put(clientGstInfo);
+    }
+    
+    @CacheEvict(cacheNames = "client-gst-info", key = "#gstin")
+    public String remove(String gstin) {
+    	 return clientGstInfoRepository.remove(gstin);
     }
 
     @Async
@@ -211,5 +226,5 @@ public class ClientGstInfoService {
             return String.format("%.0f", cell.getNumericCellValue());
         }
         return null;
-    }
+      }
 }
