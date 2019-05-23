@@ -1,7 +1,9 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
@@ -15,8 +17,13 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
-import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
+import com.cwt.bpg.cbt.exchange.order.model.Client;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirProductInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaProduct;
 
 public class BaseAndYqCalculatorTest {
 
@@ -73,7 +80,7 @@ public class BaseAndYqCalculatorTest {
 		IndiaAirFeesBreakdown result = calculator.calculate(input, rule, client, new Airport(), new IndiaProduct());
 		
 		assertThat(result.getCommission(), is(nullValue()));
-		assertThat(result.getBaseAmount().doubleValue(), is(equalTo(600d)));
+		assertThat(result.getBaseAmount().doubleValue(), is(equalTo(610d)));
 		assertThat(result.getGstPercent(), is(nullValue()));
 		assertThat(result.getMerchantFeeOnTf().doubleValue(), is(equalTo(0d)));
 		assertThat(result.getMerchantFeePercent(), is(nullValue()));
@@ -81,14 +88,14 @@ public class BaseAndYqCalculatorTest {
 		assertThat(result.getOt2Percent(), is(nullValue()));
 		assertThat(result.getOverheadPercent(), is(nullValue()));
 		assertThat(result.getSubMerchantFeePercent(), is(nullValue()));
-		assertThat(result.getTotalCharge().doubleValue(), is(equalTo(641.5d)));
+		assertThat(result.getTotalCharge().doubleValue(), is(equalTo(651.7d)));
 		assertThat(result.getTotalDiscount().doubleValue(), is(equalTo(1.08d)));
 		assertThat(result.getTotalGst().doubleValue(), is(equalTo(30d)));
 		assertThat(result.getTotalMarkup(), is(nullValue()));
 		assertThat(result.getTotalOverheadCommission().doubleValue(), is(equalTo(0d)));
 		assertThat(result.getTotalSellFare().doubleValue(), is(equalTo(600d)));
-		assertThat(result.getTotalSellingFare().doubleValue(), is(equalTo(641.50d)));
-		assertThat(result.getTotalTaxes().doubleValue(), is(equalTo(0d)));
+		assertThat(result.getTotalSellingFare().doubleValue(), is(equalTo(641.7d)));
+		assertThat(result.getTotalTaxes().doubleValue(), is(equalTo(10d)));
 	}
 }
 
