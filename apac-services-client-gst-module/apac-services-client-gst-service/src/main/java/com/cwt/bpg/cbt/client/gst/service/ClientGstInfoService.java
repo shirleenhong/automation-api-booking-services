@@ -30,6 +30,7 @@ import com.cwt.bpg.cbt.client.gst.repository.GstAirlineRepository;
 
 
 
+
 @Service
 public class ClientGstInfoService {
 
@@ -58,10 +59,10 @@ public class ClientGstInfoService {
 
     @Autowired
     private ClientGstInfoRepository clientGstInfoRepository;
-
+    
     @Autowired
     private GstAirlineRepository gstAirlineRepository;
-
+    
     @Cacheable(cacheNames = "merchant-fees", key="#root.methodName")
     public List<ClientGstInfo> getAll() 
     {
