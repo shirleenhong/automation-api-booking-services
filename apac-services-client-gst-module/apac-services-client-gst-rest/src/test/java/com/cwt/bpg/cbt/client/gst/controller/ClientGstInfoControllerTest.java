@@ -28,9 +28,8 @@ import com.cwt.bpg.cbt.client.gst.service.ClientGstInfoService;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 public class ClientGstInfoControllerTest {
-	
+
 	private MockMvc mockMvc;
 
 	@Mock
@@ -48,82 +47,45 @@ public class ClientGstInfoControllerTest {
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 	}
 
-	
 	@Test
-    public void getAllClientGstInfoReturns200() throws Exception {
-        List<ClientGstInfo> clientGstInfos = new ArrayList<>();
-        when(service.getAll()).thenReturn(Arrays.asList(new ClientGstInfo()));
+	public void getAllClientGstInfoReturns200() throws Exception {
+		List<ClientGstInfo> clientGstInfos = new ArrayList<>();
+		when(service.getAll()).thenReturn(Arrays.asList(new ClientGstInfo()));
 
-        mockMvc.perform(get("/client-gst-info")
-            .contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(clientGstInfos)))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse();
+		mockMvc.perform(get("/client-gst-info").contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(clientGstInfos))).andExpect(status().isOk()).andReturn()
+				.getResponse();
 
-        verify(service).getAll();
-    }
-	
+		verify(service).getAll();
+	}
+
 	@Test
-    public void getClientGstInfoReturns200WhenAgentExists() throws Exception {
-        ClientGstInfo clientGstInfo = new ClientGstInfo();
-        when(service.getClientGstInfo("ABC123")).thenReturn(clientGstInfo);
-
-        mockMvc.perform(get("/client-gst-info/ABC123")
-                .contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(clientGstInfo)))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse();
-
-        verify(service).getClientGstInfo("ABC123");
-    }
-	
-	@Test
-    public void getClientGstInfoReturns404WhenAgentDoesNotExist() throws Exception {
-		when(service.getClientGstInfo("ABC123")).thenReturn(null);
-
-        mockMvc.perform(get("/client-gst-info/ABC123")
-                .contentType(APPLICATION_JSON_UTF8))
-                .andExpect(status().isNotFound())
-                .andReturn()
-                .getResponse();
-
-        verify(service).getClientGstInfo("ABC123");
-    }
-	
-	
-	@Test
-    public void putClientGstInfoReturns200() throws Exception {
+	public void putClientGstInfoReturns200() throws Exception {
 		ClientGstInfo clientGstInfo = new ClientGstInfo();
 		clientGstInfo.setGstin("ABC123");
-        
-        when(service.save(any(ClientGstInfo.class))).thenReturn(clientGstInfo);
 
-        mockMvc.perform(put("/client-gst-info")
-                .contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(clientGstInfo)))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse();
+		when(service.save(any(ClientGstInfo.class))).thenReturn(clientGstInfo);
 
-        verify(service).save(any(ClientGstInfo.class));
-    }
+		mockMvc.perform(put("/client-gst-info").contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(clientGstInfo))).andExpect(status().isOk()).andReturn().getResponse();
 
-    @Test
-    public void removeClientGstInfoReturns200UponSuccessfulDeletion() throws Exception {
-        when(service.remove("ABC123")).thenReturn("ABC123");
+		verify(service).save(any(ClientGstInfo.class));
+	}
 
-        mockMvc.perform(delete("/client-gst-info/ABC123")
-                .contentType(APPLICATION_JSON_UTF8).content("ABC123"))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse();
+	@Test
+	public void removeClientGstInfoReturns200UponSuccessfulDeletion() throws Exception {
+		when(service.remove("ABC123")).thenReturn("ABC123");
 
-        verify(service).remove("ABC123");
-    }
-	
+		mockMvc.perform(delete("/client-gst-info/ABC123").contentType(APPLICATION_JSON_UTF8).content("ABC123"))
+				.andExpect(status().isOk()).andReturn().getResponse();
+
+		verify(service).remove("ABC123");
+	}
+
 	private static byte[] convertObjectToJsonBytes(Object object) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return mapper.writeValueAsBytes(object);
-    }
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		return mapper.writeValueAsBytes(object);
+	}
 
 }
