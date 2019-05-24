@@ -1,11 +1,11 @@
 package com.cwt.bpg.cbt.client.gst.model;
 
-import java.util.List;
+import java.util.Set;
 
 public class ClientGstInfoResponse {
 
     private ClientGstInfo clientGstInfo;
-    private List<String> airlineCodes;
+    private Set<String> airlineCodes;
 
     public ClientGstInfo getClientGstInfo() {
         return clientGstInfo;
@@ -15,11 +15,11 @@ public class ClientGstInfoResponse {
         this.clientGstInfo = clientGstInfo;
     }
 
-    public List<String> getAirlineCodes() {
+    public Set<String> getAirlineCodes() {
         return airlineCodes;
     }
 
-    public void setAirlineCodes(List<String> airlineCodes) {
+    public void setAirlineCodes(Set<String> airlineCodes) {
         this.airlineCodes = airlineCodes;
     }
 }

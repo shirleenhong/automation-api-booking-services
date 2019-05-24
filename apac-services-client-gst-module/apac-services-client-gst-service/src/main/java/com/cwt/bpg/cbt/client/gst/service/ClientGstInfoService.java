@@ -64,7 +64,7 @@ public class ClientGstInfoService {
             return null;
         }
         ClientGstInfoResponse response = new ClientGstInfoResponse();
-        List<String> validAirlineCodes = new LinkedList<>();
+        Set<String> validAirlineCodes = new HashSet<>();
         Set<String> gstAirlines = getGstAirlines();
         for(String airlineCode: airlineCodes) {
             if(gstAirlines.contains(airlineCode)){
