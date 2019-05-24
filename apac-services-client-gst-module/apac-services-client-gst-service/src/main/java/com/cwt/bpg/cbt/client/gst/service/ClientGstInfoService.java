@@ -63,7 +63,7 @@ public class ClientGstInfoService {
     @Autowired
     private GstAirlineRepository gstAirlineRepository;
     
-    @Cacheable(cacheNames = "merchant-fees", key="#root.methodName")
+    @Cacheable(cacheNames = "gst-airlines", key="#root.methodName")
     public List<ClientGstInfo> getAll() 
     {
     	return clientGstInfoRepository.getAll();
