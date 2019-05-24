@@ -64,8 +64,7 @@ public class ClientGstInfoService {
     private GstAirlineRepository gstAirlineRepository;
     
     @Cacheable(cacheNames = "gst-airlines", key="#root.methodName")
-    public List<ClientGstInfo> getAll() 
-    {
+    public List<ClientGstInfo> getAll() {
     	return clientGstInfoRepository.getAll();
     }
 
@@ -98,8 +97,7 @@ public class ClientGstInfoService {
     }
 
     @Cacheable(cacheNames = "client-gst-info", key = "#gstin")
-    public ClientGstInfo getClientGstInfo(String gstin) 
-    {
+    public ClientGstInfo getClientGstInfo(String gstin) {
         return clientGstInfoRepository.get(gstin);
     }
 
