@@ -24,6 +24,7 @@ public class CacheConfiguration {
 			"airline-rules",
 			"clients",
 			"client-gst-info",
+			"gst-airlines",
 			"airports",
 			"remarks",
 			"exchange-orders",

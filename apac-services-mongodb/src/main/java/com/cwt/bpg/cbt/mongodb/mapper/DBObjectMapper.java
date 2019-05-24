@@ -74,7 +74,7 @@ public class DBObjectMapper
         return dbObject != null ? new Document(dbObject.toMap()) : null;
     }
 
-    public static BasicDBObject mapAsBasicDBObject(String id, Object object) throws JsonProcessingException
+    public static BasicDBObject mapAsBasicDBObject(Object id, Object object) throws JsonProcessingException
     {
         final BasicDBObject dbObject = BasicDBObject.parse(MAPPER.writeValueAsString(object));
         dbObject.put("_id", id);
