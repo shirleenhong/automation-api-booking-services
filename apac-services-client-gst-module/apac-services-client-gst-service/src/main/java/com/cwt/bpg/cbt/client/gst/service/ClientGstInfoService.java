@@ -63,8 +63,8 @@ public class ClientGstInfoService {
     @Autowired
     private GstAirlineRepository gstAirlineRepository;
     
-    @Cacheable(cacheNames = "gst-airlines", key="#root.methodName")
-    public List<ClientGstInfo> getAll() {
+    @Cacheable(cacheNames = "client-gst-info", key="#root.methodName")
+    public List<ClientGstInfo> getAllGstInfo() {
     	return clientGstInfoRepository.getAll();
     }
 
@@ -101,11 +101,12 @@ public class ClientGstInfoService {
         return clientGstInfoRepository.get(gstin);
     }
 
+    @CacheEvict(cacheNames = "client-gst-info", allEntries = true)
     public ClientGstInfo save(ClientGstInfo clientGstInfo) {
         return clientGstInfoRepository.put(clientGstInfo);
     }
     
-    @CacheEvict(cacheNames = "client-gst-info", key = "#gstin")
+    @CacheEvict(cacheNames = "client-gst-info", allEntries = true)
     public String remove(String gstin) {
     	 return clientGstInfoRepository.remove(gstin);
     }

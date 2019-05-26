@@ -50,13 +50,13 @@ public class ClientGstInfoControllerTest {
 	@Test
 	public void getAllClientGstInfoReturns200() throws Exception {
 		List<ClientGstInfo> clientGstInfos = new ArrayList<>();
-		when(service.getAll()).thenReturn(Arrays.asList(new ClientGstInfo()));
+		when(service.getAllGstInfo()).thenReturn(Arrays.asList(new ClientGstInfo()));
 
 		mockMvc.perform(get("/client-gst-info").contentType(APPLICATION_JSON_UTF8)
 				.content(convertObjectToJsonBytes(clientGstInfos))).andExpect(status().isOk()).andReturn()
 				.getResponse();
 
-		verify(service).getAll();
+		verify(service).getAllGstInfo();
 	}
 
 	@Test
