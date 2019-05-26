@@ -64,7 +64,7 @@ public class ClientGstInfoService {
     private GstAirlineRepository gstAirlineRepository;
     
     @Cacheable(cacheNames = "client-gst-info", key="#root.methodName")
-    public List<ClientGstInfo> getAllGstInfo() {
+    public List<ClientGstInfo> getAllClientGstInfo() {
     	return clientGstInfoRepository.getAll();
     }
 

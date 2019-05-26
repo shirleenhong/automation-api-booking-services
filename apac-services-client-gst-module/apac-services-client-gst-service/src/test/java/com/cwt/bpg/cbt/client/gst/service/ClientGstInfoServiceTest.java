@@ -41,7 +41,7 @@ public class ClientGstInfoServiceTest {
 	@Test
 	public void shouldReturnAllGstInfoByGstIn() {	
 		when(respository.getAll()).thenReturn(Arrays.asList(new ClientGstInfo(), new ClientGstInfo()));
-		List<ClientGstInfo> response = service.getAllGstInfo();
+		List<ClientGstInfo> response = service.getAllClientGstInfo();
 		
 		assertNotNull(response);
 	}
