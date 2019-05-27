@@ -48,7 +48,7 @@ public class ClientGstInfoController {
     @ResponseBody
     @ApiOperation("[Maintenance] Get all client GST information")
     public ResponseEntity<List<ClientGstInfo>> getAllClientGstInfo() {
-    	return new ResponseEntity<>(clientGstInfoService.getAll(), HttpStatus.OK);
+    	return new ResponseEntity<>(clientGstInfoService.getAllClientGstInfo(), HttpStatus.OK);
     }
 
     @GetMapping(path = "{gstin}")
