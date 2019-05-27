@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.client.gst.controller;
 
 
 
+import java.io.BufferedInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class ClientGstInfoController {
     
     @GetMapping
     @ResponseBody
-    @ApiOperation("Get all client GST information")
+    @ApiOperation("[Maintenance] Get all client GST information")
     public ResponseEntity<List<ClientGstInfo>> getAllClientGstInfo() {
     	return new ResponseEntity<>(clientGstInfoService.getAll(), HttpStatus.OK);
     }
@@ -79,8 +80,7 @@ public class ClientGstInfoController {
     @DeleteMapping(path = "{gstin}")
     @ResponseBody
     @ApiOperation("[Maintenance] Delete client GST information given a GSTIN")
-    public ResponseEntity<String> removeClientGstInfo( @PathVariable @ApiParam(value = "GST Identification Number") String gstin) 
-    {
+    public ResponseEntity<String> removeClientGstInfo( @PathVariable @ApiParam(value = "GST Identification Number") String gstin) {
         return new ResponseEntity<>(clientGstInfoService.remove(gstin), HttpStatus.OK);
     }
 
@@ -94,7 +94,7 @@ public class ClientGstInfoController {
                 .endsWith(MACRO_ENABLED_WORKBOOK))) {
             throw new IllegalArgumentException("File must be in excel format");
         }
-        clientGstInfoService.saveFromExcelFile(file.getInputStream(), includeGstAirlines);
+        clientGstInfoService.saveFromExcelFile(new BufferedInputStream(file.getInputStream()), includeGstAirlines);
         Map<String, String> response = new HashMap<>();
         response.put("message", "saving in progress");
         return new ResponseEntity<>(response, HttpStatus.OK);
