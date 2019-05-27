@@ -54,9 +54,9 @@ public class FeeCalculator {
 								.add(yqTax);
 
 				gstAmount = round(
-						round(calculatePercentage(baseFarePlusYqTax, product.getGstPercent()), scale)
-						.add(round(calculatePercentage(baseFarePlusYqTax, product.getOt1Percent()), scale))
-						.add(round(calculatePercentage(baseFarePlusYqTax, product.getOt2Percent()), scale)),
+						round(calculatePercentage(baseFarePlusYqTax, product.getGstPercent()), 2)
+						.add(round(calculatePercentage(baseFarePlusYqTax, product.getOt1Percent()), 2))
+						.add(round(calculatePercentage(baseFarePlusYqTax, product.getOt2Percent()), 2)),
 					scale);
 			}
 		}		
