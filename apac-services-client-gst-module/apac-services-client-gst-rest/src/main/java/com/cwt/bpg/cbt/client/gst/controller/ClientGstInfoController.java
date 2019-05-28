@@ -56,7 +56,7 @@ public class ClientGstInfoController {
     @ApiOperation("Get client GST information given a GSTIN")
     public ResponseEntity<ClientGstInfoResponse> getClientGstInfo(
             @PathVariable @ApiParam(value = "GST Identification Number") String gstin,
-            @RequestParam @ApiParam("Airline code") List<String> airlineCodes) {
+            @RequestParam @ApiParam(value= "Airline code", required = true) List<String> airlineCodes) {
         if(airlineCodes == null || airlineCodes.isEmpty()) {
             throw new IllegalArgumentException("airlineCode is required");
         }
