@@ -17,7 +17,7 @@ public class ClientGstInfo implements Serializable {
     private static final long serialVersionUID = 1600168082099452654L;
 
     @Id
-    @NotEmpty
+    @NotEmpty(message = "gstin is required")
     @ApiModelProperty(required = true)
     private String gstin;
 
