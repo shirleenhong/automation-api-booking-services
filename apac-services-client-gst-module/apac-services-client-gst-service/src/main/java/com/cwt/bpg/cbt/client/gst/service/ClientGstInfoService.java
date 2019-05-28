@@ -28,7 +28,6 @@ public class ClientGstInfoService {
     @Autowired
     private ClientGstInfoExcelReaderService clientGstInfoExcelReaderService;
     
-    @Cacheable(cacheNames = "client-gst-info", key="#root.methodName")
     public List<ClientGstInfo> getAllClientGstInfo() {
     	return clientGstInfoRepository.getAll();
     }
