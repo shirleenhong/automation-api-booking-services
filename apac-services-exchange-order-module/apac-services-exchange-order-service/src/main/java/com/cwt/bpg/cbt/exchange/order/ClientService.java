@@ -35,6 +35,7 @@ public class ClientService {
 		return clientRepository.get(id);
 	}
 
+	@Deprecated
 	@Cacheable(cacheNames="clients", key="#clientAccountNumber", condition="#clientAccountNumber != null")
 	public Client getClient(String clientAccountNumber) {
 		return clientRepository.getClient(clientAccountNumber);
