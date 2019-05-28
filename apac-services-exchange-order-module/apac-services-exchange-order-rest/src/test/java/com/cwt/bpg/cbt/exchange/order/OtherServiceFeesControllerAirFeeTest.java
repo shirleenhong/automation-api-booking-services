@@ -105,6 +105,7 @@ public class OtherServiceFeesControllerAirFeeTest {
         jsonObj.put("countryCode", "IN");
         jsonObj.put("clientType", "Z");
         jsonObj.put("clientAccountNumber", "testName");
+        jsonObj.put("clientId", 123);
         jsonObj.put("fopType", "Z");
         jsonObj.put("applyFormula", 111);
         jsonObj.put("commissionByPercent", 111);

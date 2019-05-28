@@ -144,10 +144,11 @@ public class OtherServiceFeesServiceTest {
 
         Client client = new Client();
         client.setPricingId(20);
-        when(clientService.getClient(anyString())).thenReturn(client);
+        when(clientService.getClient(0)).thenReturn(client);
 
         IndiaAirFeesInput input = new IndiaAirFeesInput();
         input.setClientAccountNumber("123456");
+        input.setClientId(0);
         input.setCityCode("GGN");
         input.setPlatCarrier("AA");
 

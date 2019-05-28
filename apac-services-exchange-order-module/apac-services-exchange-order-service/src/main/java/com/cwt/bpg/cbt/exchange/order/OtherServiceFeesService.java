@@ -110,11 +110,11 @@ public class OtherServiceFeesService {
 
     public IndiaAirFeesBreakdown calculateIndiaAirFees(IndiaAirFeesInput input) {
 
-        Optional<Client> isClientExist = Optional.ofNullable(clientService.getClient(input.getClientAccountNumber()));
+        Optional<Client> isClientExist = Optional.ofNullable(clientService.getClient(input.getClientId()));
 
         Client client = isClientExist
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "Client [ " + input.getClientAccountNumber() + " ] not found."));
+                        "Client [ " + input.getClientId() + " ] not found."));
 
         final int pricingId = client.getPricingId();
         final AirlineRule airlineRule = airlineRuleService.getAirlineRule(input.getPlatCarrier());

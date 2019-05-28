@@ -39,6 +39,11 @@ public class ClientService {
 	public Client getClient(String clientAccountNumber) {
 		return clientRepository.getClient(clientAccountNumber);
 	}
+
+	@Cacheable(cacheNames="clients", key="#clientId", condition="#clientId != null")
+	public Client getClient(Integer clientId) {
+		return clientRepository.get(clientId);
+	}
 	
 	public List<ClientPricing> getClientPricings(String clientAccountNumber,
 			String tripType) {
