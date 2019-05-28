@@ -9,11 +9,11 @@ public class FeesInput implements Serializable {
 
 	private static final long serialVersionUID = -5237125856544162255L;
 
-    @ApiModelProperty(required = true)
+	@ApiModelProperty(required = true)
 	@NotEmpty
 	private String clientAccountNumber;
 
-    @ApiModelProperty(required = false)
+	@ApiModelProperty(required = false)
 	private int clientId;
 
 	public String getClientAccountNumber() {
