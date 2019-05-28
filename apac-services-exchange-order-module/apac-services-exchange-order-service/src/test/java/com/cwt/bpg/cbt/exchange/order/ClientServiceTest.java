@@ -76,7 +76,7 @@ public class ClientServiceTest {
 		Client client = new Client();
 		List<ClientPricing> clientPricings = new ArrayList<>();
 		ClientPricing clientPricing = new ClientPricing();
-		String clientAccountNumber = "12345";
+		int clientId = 12345;
 		String tripType = "I";
 		
 		clientPricing.setCmpid(1);
@@ -84,11 +84,11 @@ public class ClientServiceTest {
 		clientPricings.add(clientPricing);
 		client.setClientPricings(clientPricings);
 		
-		when(repository.getClient(clientAccountNumber)).thenReturn(client);
-		List<ClientPricing> result = service.getClientPricings(clientAccountNumber, tripType);
+		when(repository.get(clientId)).thenReturn(client);
+		List<ClientPricing> result = service.getClientPricings(clientId, tripType);
 		
 		assertFalse(result.isEmpty());
-		verify(repository, times(1)).getClient(clientAccountNumber);
+		verify(repository, times(1)).get(clientId);
 	}
 	
 	@Test
@@ -96,7 +96,7 @@ public class ClientServiceTest {
 		Client client = new Client();
 		List<ClientPricing> clientPricings = new ArrayList<>();
 		ClientPricing clientPricing = new ClientPricing();
-		String clientAccountNumber = "12345";
+		int clientId = 12345;
 		String tripType = "I";
 		
 		clientPricing.setCmpid(1);
@@ -104,11 +104,11 @@ public class ClientServiceTest {
 		clientPricings.add(clientPricing);
 		client.setClientPricings(clientPricings);
 		
-		when(repository.getClient(clientAccountNumber)).thenReturn(client);
-		List<ClientPricing> result = service.getClientPricings(clientAccountNumber, tripType);
+		when(repository.get(clientId)).thenReturn(client);
+		List<ClientPricing> result = service.getClientPricings(clientId, tripType);
 		
 		assertTrue(result.isEmpty());
-		verify(repository, times(1)).getClient(clientAccountNumber);
+		verify(repository, times(1)).get(clientId);
 	}
 	
 	@Test
@@ -116,18 +116,18 @@ public class ClientServiceTest {
 		Client client = new Client();
 		List<ClientPricing> clientPricings = new ArrayList<>();
 		ClientPricing clientPricing = new ClientPricing();
-		String clientAccountNumber = "12345";
+		int clientId = 12345;
 		
 		clientPricing.setCmpid(1);
 		clientPricing.setTripType("D");
 		clientPricings.add(clientPricing);
 		client.setClientPricings(clientPricings);
 		
-		when(repository.getClient(clientAccountNumber)).thenReturn(client);
-		List<ClientPricing> result = service.getClientPricings(clientAccountNumber, null);
+		when(repository.get(clientId)).thenReturn(client);
+		List<ClientPricing> result = service.getClientPricings(clientId, null);
 		
 		assertTrue(result.isEmpty());
-		verify(repository, times(1)).getClient(clientAccountNumber);
+		verify(repository, times(1)).get(clientId);
 	}
 	
 	@Test

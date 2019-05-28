@@ -44,17 +44,15 @@ public class ClientService {
 	public Client getClient(Integer clientId) {
 		return clientRepository.get(clientId);
 	}
-	
-	public List<ClientPricing> getClientPricings(String clientAccountNumber,
-			String tripType) {
 
-		Client client = getClient(clientAccountNumber);
+	public List<ClientPricing> getClientPricings(int clientId, String tripType) {
 
-		List<ClientPricing> clientPricings = Optional
-				.ofNullable(client.getClientPricings()).orElse(Collections.emptyList());
+		Client client = getClient(clientId);
 
-		return clientPricings.stream().filter(
-				pricing -> pricing.getTripType().equals(tripType))
+		List<ClientPricing> clientPricings = Optional.ofNullable(client.getClientPricings())
+				.orElse(Collections.emptyList());
+
+		return clientPricings.stream().filter(pricing -> pricing.getTripType().equals(tripType))
 				.collect(Collectors.toList());
 	}
 

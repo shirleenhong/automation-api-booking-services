@@ -96,7 +96,7 @@ public class OtherServiceFeesService {
 
     public IndiaNonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
 
-        final Client client = clientService.getClient(input.getClientAccountNumber());
+        final Client client = clientService.getClient(input.getClientId());
         final Client defaultClient = clientService.getDefaultClient();
         final Double merchantFeePercent = getMerchantFeePercent(convertToMFPercentInput(input), client, defaultClient);
 
@@ -137,7 +137,7 @@ public class OtherServiceFeesService {
     	List<ClientFee> clientFees = new ArrayList<>();
     	
 		List<ClientPricing> clientPricings = clientService
-				.getClientPricings(input.getClientAccountNumber(), input.getTripType());
+				.getClientPricings(input.getClientId(), input.getTripType());
 		
 		if (!ObjectUtils.isEmpty(clientPricings)) {
 			for(ClientPricing pricing : clientPricings) {
@@ -186,7 +186,7 @@ public class OtherServiceFeesService {
 	}
 
     public Double getMerchantFeePercent(MerchantFeePercentInput input) {
-        final Client client = clientService.getClient(input.getClientAccountNumber());
+        final Client client = clientService.getClient(input.getClientId());
         final Client defaultClient = clientService.getDefaultClient();
 
         return getMerchantFeePercent(input, client, defaultClient);

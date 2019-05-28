@@ -182,9 +182,10 @@ public class OtherServiceFeesServiceTest {
                 .thenReturn(new IndiaNonAirFeesBreakdown());
 
         Client client = new Client();
+        client.setClientId(0);
         client.setPricingId(20);
         client.setStandardMfProduct(false);
-        when(clientService.getClient(anyString())).thenReturn(client);
+        when(clientService.getClient(0)).thenReturn(client);
 
         IndiaNonAirFeesInput input = new IndiaNonAirFeesInput();
         input.setProduct(new IndiaNonAirProductInput());
@@ -228,12 +229,13 @@ public class OtherServiceFeesServiceTest {
         final String productCode = "PROD1";
 
         Client client = new Client();
+        client.setClientId(0);
         ProductMerchantFee mfProduct = new ProductMerchantFee();
         mfProduct.setProductCode(productCode);
         mfProduct.setSubjectToMf(true);
         client.setMfProducts(Collections.singletonList(mfProduct));
 
-        when(clientService.getClient(anyString())).thenReturn(client);
+        when(clientService.getClient(0)).thenReturn(client);
 
         MerchantFeePercentInput input = new MerchantFeePercentInput();
         input.setFopMode(2);
@@ -248,6 +250,7 @@ public class OtherServiceFeesServiceTest {
     @Test
     public void shouldReturnAirFeesDefaults_noClientPricings() {
         Client client = new Client();
+        client.setClientId(0);
         ProductMerchantFee mfProduct = new ProductMerchantFee();
         String productCode = "PROD1";
         mfProduct.setProductCode(productCode);
@@ -256,9 +259,9 @@ public class OtherServiceFeesServiceTest {
 
         List<ClientPricing> clientPricings = new ArrayList<>();
         AirFeesDefaultsInput input = createAirFeesDefaults();
-        when(clientService.getClientPricings(input.getClientAccountNumber(),
+        when(clientService.getClientPricings(input.getClientId(),
                 input.getTripType())).thenReturn(clientPricings);
-        when(clientService.getClient(anyString())).thenReturn(client);
+        when(clientService.getClient(0)).thenReturn(client);
 
         AirFeesDefaultsOutput output = service.getAirFeesDefaults(input);
 
@@ -272,6 +275,7 @@ public class OtherServiceFeesServiceTest {
         List<ClientPricing> clientPricings = new ArrayList<>();
 
         Client client = new Client();
+        client.setClientId(0);
         ProductMerchantFee mfProduct = new ProductMerchantFee();
         String productCode = "PROD1";
         mfProduct.setProductCode(productCode);
@@ -283,9 +287,9 @@ public class OtherServiceFeesServiceTest {
         clientPricings.add(clientPricing);
 
         AirFeesDefaultsInput input = createAirFeesDefaults();
-        when(clientService.getClientPricings(input.getClientAccountNumber(),
+        when(clientService.getClientPricings(input.getClientId(),
                 input.getTripType())).thenReturn(clientPricings);
-        when(clientService.getClient(anyString())).thenReturn(client);
+        when(clientService.getClient(0)).thenReturn(client);
 
         AirFeesDefaultsOutput output = service.getAirFeesDefaults(input);
 
@@ -299,6 +303,7 @@ public class OtherServiceFeesServiceTest {
         List<ClientPricing> clientPricings = new ArrayList<>();
 
         Client client = new Client();
+        client.setClientId(0);
         ProductMerchantFee mfProduct = new ProductMerchantFee();
         String productCode = "PROD1";
         mfProduct.setProductCode(productCode);
@@ -310,9 +315,9 @@ public class OtherServiceFeesServiceTest {
         clientPricings.add(clientPricing);
 
         AirFeesDefaultsInput input = createAirFeesDefaultsWithNull();
-        when(clientService.getClientPricings(input.getClientAccountNumber(),
+        when(clientService.getClientPricings(input.getClientId(),
                 input.getTripType())).thenReturn(clientPricings);
-        when(clientService.getClient(anyString())).thenReturn(client);
+        when(clientService.getClient(0)).thenReturn(client);
 
         AirFeesDefaultsOutput output = service.getAirFeesDefaults(input);
 
