@@ -1,0 +1,142 @@
+*** Settings ***
+Resource          ../resources/api-variables.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-imports.txt
+Resource    resources/client-gst-info.txt
+
+*** Test Cases ***
+Verify That Error Is Encountered When Invalid Token Is Used For Get Request
+    [Tags]    functional
+    Create Test Variables For Client GST Info    item=single_record 
+    Send Get Request For Client GST Info    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Client GST Info Record Is Not Retrieved
+    Send Get Request For Client GST Info    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify Client GST Info Record Is Not Retrieved
+    Send Get Request For Client GST Info    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When Null Token Is Used For Get Request
+    [Tags]    functional
+    Create Test Variables For Client GST Info    item=single_record
+    Send Get Request For Client GST Info    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When Empty Token Is Used For Get Request
+    [Tags]    functional
+    Create Test Variables For Client GST Info    item=single_record
+    Send Get Request For Client GST Info    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When No Token Is Used For Get Request
+    [Tags]    functional
+    Create Test Variables For Client GST Info    item=single_record
+    Send Get Request For Client GST Info    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When GSTIN Is Not Found
+    [Tags]    functional
+    Create Test Variables For Client GST Info    item=invalid
+    Send Get Request For Client GST Info
+    Verify Response Status Code Is Correct    404
+    Verify Client GST Info Record Is Not Retrieved
+    
+ Verify That Error Is Encountered When GSTIN Is Null
+    [Tags]    functional
+    Create Test Variables For Client GST Info    item=single_record
+    Send Get Request For Client GST Info    gstin=null      
+    Verify Response Status Code Is Correct    404
+    Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When Airline Code Is Empty
+    [Tags]    functional
+    Create Test Variables For Client GST Info    item=single_record    airline_codes=${EMPTY}
+    Send Get Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When Invalid Token Is Used For Put Request
+    [Tags]    not-ready
+    Create Test Variables For Put Client GST Info    item=single_record 
+    Send Put Request For Client GST Info    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Client GST Info Record Is Not Retrieved
+    Send Put Request For Client GST Info    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify Client GST Info Record Is Not Retrieved
+    Send Put Request For Client GST Info    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When Null Token Is Used For Put Request
+    [Tags]    not-ready
+    Create Test Variables For Put Client GST Info    item=single_record
+    Send Put Request For Client GST Info    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When Empty Token Is Used For Put Request
+    [Tags]    not-ready
+    Create Test Variables For Put Client GST Info    item=single_record
+    Send Put Request For Client GST Info    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When No Token Is Used For Put Request
+    [Tags]    not-ready
+    Create Test Variables For Put Client GST Info    item=single_record
+    Send Put Request For Client GST Info    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+
+Verify That Error Is Encountered When Mandatory Field Is Missing For Put Request
+    [Tags]    not-ready
+    Create Test Variables For Put Client GST Info    item=empty_required_field
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    gstin_info=empty_gstin
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved   
+
+Verify That Error Is Encountered When Invalid Token Is Used For Delete Request
+    [Tags]    not-ready
+    Send Delete Request For Client GST Info    gstin=43LARVMP42AR4OW    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Verify Client GST Info Record Is Not Retrieved
+    Send Delete Request For Client GST Info    gstin=43LARVMP42AR4OW    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Verify Client GST Info Record Is Not Retrieved
+    Send Delete Request For Client GST Info    gstin=43LARVMP42AR4OW    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When Null Token Is Used For Delete Request
+    [Tags]    not-ready
+    Send Delete Request For Client GST Info    gstin=43LARVMP42AR4OW    token=null
+    Verify Response Status Code Is Correct    401
+    Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When Empty Token Is Used For Delete Request
+    [Tags]    not-ready
+    Send Delete Request For Client GST Info    gstin=43LARVMP42AR4OW    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When No Token Is Used For Delete Request
+    [Tags]    not-ready
+    Send Delete Request For Client GST Info    gstin=43LARVMP42AR4OW    token=None
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    
+ Verify That Error Is Encountered When GSTIN Is Empty For Delete Request
+    [Tags]    not-ready
+    Send Delete Request For Client GST Info    gstin=${EMPTY}
+    Verify Response Status Code Is Correct    405
+    Verify Client GST Info Record Is Not Retrieved

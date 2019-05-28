@@ -57,6 +57,15 @@ Get Json Value As String
     ${actual_value}    Remove String    ${actual_value}    [    "    ]
     [Return]    ${actual_value}
 
+Get Value As String
+    [Arguments]    ${json_object}    ${json_path}
+    ${res_content}=    To Json    ${json_object}      
+    ${actual_value}    Get Value From Json    ${res_content}    ${json_path}
+    ${actual_value}    Convert To String    ${actual_value}  
+    ${actual_value}    Replace String    ${actual_value}    "   ^    
+    ${actual_value}    Run Keyword If    "^" in "${actual_value}"     Remove String    ${actual_value}    [    ^    ]    ELSE    Remove String    ${actual_value}    [    '    ]
+    [Return]    ${actual_value}
+               
 Verify Actual Numerical Value Matches Expected Numerical Value
     [Arguments]    ${actual_value}    ${expected_value}
     Log    Actual Value: ${actual_value}
@@ -96,7 +105,7 @@ Verify Json Element Exists
     Run Keyword And Continue On Failure    Should Not Be Empty    ${json_value}
 
 Verify Json Value Is Correct
-    [Arguments]    ${json_path}    ${expected_value}    ${data_type}=string    ${handle_null}=true
+    [Arguments]    ${json_path}    ${expected_value}    ${data_type}=string    ${handle_null}=true    ${key}=Json Value
     Log    Json Object: ${json_path}
     Log    Expected Value: ${expected_value}
     ${expected_value}    Set Variable If    "${data_type}" == "array"    [${expected_value}]    ${expected_value}
@@ -105,7 +114,7 @@ Verify Json Value Is Correct
     ...    ELSE    Set Variable    ${expected_value}
     ${expected_value}    Run Keyword If    "${handle_null}" == "true"    Replace String    ${expected_value}    [null]    null
     ...    ELSE    Set Variable    ${expected_value}
-    ${actual_value}    Get Json Value As String    ${response.content}    ${json_path}
+    ${actual_value}    Run Keyword    Get ${key} As String    ${response.content}    ${json_path}
     Run Keyword And Continue On Failure    Should Be Equal As Strings    ${actual_value.rstrip()}    ${expected_value.rstrip()}
 
 Verify Json Value Matches Pattern
