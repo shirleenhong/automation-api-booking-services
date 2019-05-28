@@ -17,17 +17,34 @@ public class ClientGstInfo implements Serializable {
     private static final long serialVersionUID = 1600168082099452654L;
 
     @Id
-    @NotEmpty
+    @NotEmpty(message = "gstin is required")
     @ApiModelProperty(required = true)
     private String gstin;
+
+    @NotEmpty(message = "client is required")
     private String client;
+
+    @NotEmpty(message = "clientEntityName is required")
     private String clientEntityName;
+
+    @NotEmpty(message = "businessPhoneNumber is required")
     private String businessPhoneNumber;
+
+    @NotEmpty(message = "businessEmailAddress is required")
     private String businessEmailAddress;
+
+    @NotEmpty(message = "entityAddressLine1 is required")
     private String entityAddressLine1;
+
     private String entityAddressLine2;
+
+    @NotEmpty(message = "postalCode is required")
     private String postalCode;
+
+    @NotEmpty(message = "city is required")
     private String city;
+
+    @NotEmpty(message = "state is required")
     private String state;
 
     public String getGstin() {

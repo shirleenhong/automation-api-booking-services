@@ -4,7 +4,11 @@ import java.util.*;
 
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedCaseInsensitiveMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -73,6 +77,14 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
 	}
 
+	@Override
+	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Invalid Input");
+		apiError.setErrors(getMessages(ex.getBindingResult()));
+		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
+	}
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleInternalServerError(Exception ex) {
 		logger.error("Server caught an exception: {}", ex);
@@ -96,5 +108,16 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
 		
 		return new ResponseEntity<>(apiError, apiError.getStatus());
+	}
+
+	private List<String> getMessages(BindingResult bindingResult) {
+		Set<String> errors = new HashSet<>();
+		if(CollectionUtils.isEmpty(bindingResult.getAllErrors())) {
+			return Collections.emptyList();
+		}
+		for (ObjectError objectError : bindingResult.getAllErrors()) {
+			errors.add(objectError.getDefaultMessage());
+		}
+		return new ArrayList<>(errors);
 	}
 }
