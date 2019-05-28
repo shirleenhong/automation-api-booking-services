@@ -33,6 +33,29 @@ Create Test Variables For Client GST Info
     \    ${expected_value}   Set Variable If    "${airline_codes}"=="one_valid" and "${index}"<"${airline_codes_list_length}"   ${airline_codes_list[${index}]}    "${airline_codes}"=="one_valid"    ${airline_codes_list[0]}    "${airline_codes}"=="all"    ${airline_code_list}    ${airline_codes}
     \    Set Test Variable    ${airline_code_${index}}    ${expected_value}    
 
+Create Test Variables For Put Client GST Info
+    [Arguments]    ${with_address2}=true    ${gstin_info}=new    ${item}=new_record    
+    ${client_gst_request_list}    Set Variable    {    
+    ${client_gst_list}    Split String    ${client_gst_list_${item}}    ;
+    ${gstin}    Run Keyword If    "${gstin_info}"=="new"    Generate Random String    15    [NUMBERS][UPPER]    
+    ...    ELSE IF    "${gstin_info}"=="empty_gstin"    Set Variable    ${EMPTY}
+    ...    ELSE    Set Variable    ${gstin}
+    Set Test Variable    ${gstin}
+    ${client_gst_request_list}    Catenate    ${client_gst_request_list}    "businessEmailAddress": "${client_gst_list[3]}"
+    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "businessPhoneNumber": "${client_gst_list[2]}"
+    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "city": "${client_gst_list[7]}"
+    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "client": "${client_gst_list[1]}"
+    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "clientEntityName": "${client_gst_list[0]}"
+    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "entityAddressLine1": "${client_gst_list[4]}"
+    ${client_gst_request_list}    Run Keyword If    "${with_address2}"=="true"	Catenate    SEPARATOR=,    ${client_gst_request_list}    "entityAddressLine2": "${client_gst_list[5]}"    ELSE    Set Variable    ${client_gst_request_list}
+    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "gstin": "${gstin}"
+    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "postalCode": "${client_gst_list[6]}" 
+    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "state": "${client_gst_list[8]}"
+    ${client_gst_request_list}    Catenate    ${client_gst_request_list}    }     
+    Set Test Variable   ${data}    ${client_gst_request_list}   
+    Set Test Variable    ${client_gst_list}   
+    log    ${data}
+            
 Verify Client GST Info Are Retrieved Correctly
     : FOR    ${index}    IN RANGE    ${client_gst_list_length}
     \    Send Get Request For Client GST Info    gstin=${gstin_${index}}    airline_codes=${airline_code_${index}}
@@ -44,12 +67,47 @@ Send Get Request For Client GST Info
     Create Session    client-gst-info    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json;charset=UTF-8    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${response}    Get Request    client-gst-info    apac-services-rest/api/client-gst-info/${gstin}?airlineCodes=${airline_codes}  headers=${headers}
+    ${uri}    Set Variable If    "${gstin}"!="${EMPTY}"    apac-services-rest/api/client-gst-info/${gstin}    apac-services-rest/api/client-gst-info        
+    ${response}    Get Request    client-gst-info    ${uri}    params=airlineCodes=${airline_codes}  headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
     Set Test Variable    ${api_flag}    client-gst-info  
-    
+
+Send Put Request For Client GST Info
+    [Arguments]    ${token}=${default_token}
+    Create Session    client-gst-info    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Put Request    client-gst-info    apac-services-rest/api/client-gst-info    data=${data}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    client-gst-info
+
+Send Post Request For Client GST Info
+    [Arguments]    ${filename}    ${token}=${default_token}
+    Create Session    client-gst-info    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=multipart/form-data    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${xml_file_object}    Get File    ${CURDIR}${/}add_gst_file.xlsx    encoding=iso-8859-1    encoding_errors=strict
+    ${response}    Post Request    client-gst-info    apac-services-rest/api/client-gst-info    data=${xml_file_object}    params=includeGstAirlines=false   headers=${headers}  
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    client-gst-info
+        
+Send Delete Request For Client GST Info
+    [Arguments]    ${gstin}=${gstin}    ${token}=${default_token}
+    Create Session    client-gst-info    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json;charset=UTF-8    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Delete Request    client-gst-info    apac-services-rest/api/client-gst-info/${gstin}  headers=${headers}
+    Set Test Variable    ${response}       
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    client-gst-info
+           
 Verify Client GST Info Is Correctly Retrieved
     [Arguments]    ${index}=0     ${airline_codes}=one_valid
     Verify Json Value Is Correct    $..clientGstInfo.gstin    ${gstin_${index}}    gst_client=true
@@ -64,12 +122,34 @@ Verify Client GST Info Is Correctly Retrieved
     Verify Json Value Is Correct    $..clientGstInfo.state    ${state_${index}}    gst_client=true
     Run Keyword If	"${airline_codes}"=="one_valid"    Verify Json Value Is Correct    $..airlineCodes[0]    ${airline_code_${index}}	ELSE IF   "${airline_codes}"=="all"    Verify Airline Codes    ${airline_code_list}    ELSE    Verify Airline Codes    ${airline_codes}
 
+Verify Client GST Info Is Added And Retrieved
+    [Arguments]    ${with_address2}=true    ${get_request}=false
+    ${path}    Set Variable If    "${get_request}"=="true"    clientGstInfo.    ${EMPTY}            
+    Verify Json Value Is Correct    $..${path}gstin    ${gstin}     gst_client=true
+    Verify Json Value Is Correct    $..${path}clientEntityName    ${client_gst_list[0]}    gst_client=true
+    Verify Json Value Is Correct    $..${path}client    ${client_gst_list[1]}     gst_client=true
+    Verify Json Value Is Correct    $..${path}businessPhoneNumber    ${client_gst_list[2]} 
+    Verify Json Value Is Correct    $..${path}businessEmailAddress    ${client_gst_list[3]} 
+    Verify Json Value Is Correct    $..${path}entityAddressLine1    ${client_gst_list[4]}     gst_client=true
+    Run Keyword If    "${with_address2}"=="true"    Verify Json Value Is Correct    $..${path}entityAddressLine2    ${client_gst_list[5]}     gst_client=true
+    Verify Json Value Is Correct    $..${path}postalCode    ${client_gst_list[6]} 
+    Verify Json Value Is Correct    $..${path}city    ${client_gst_list[7]}     gst_client=true
+    Verify Json Value Is Correct    $..${path}state    ${client_gst_list[8]}     gst_client=true   
+        
 Verify Airline Codes
     [Arguments]    ${airline_codes}
     ${airline_codes}    Split String    ${airline_codes}    ,
     ${airline_codes_length}    Get Length    ${airline_codes} 
     : FOR    ${index}    IN RANGE    0    ${airline_codes_length}
     \    Verify Json Value Is Correct    $..airlineCodes[${index}]    ${airline_codes[${index}]}
+    
+Verify The Number Of Records Is Correct
+    [Arguments]    ${expected_record}
+    ${expected_count}    Convert To Integer    ${expected_record}    
+    ${actual_response}    To Json    ${response.content}    
+    ${actual_count}    Get Length    ${actual_response}
+    Log    ${actual_count}
+    Should Be Equal    ${expected_count}    ${actual_count}    
                   
 Verify Client GST Info Record Is Not Retrieved
     Verify String Does Not Contain Substring    ${response.text}    "gstin"
@@ -82,7 +162,8 @@ Verify Client GST Info Record Is Not Retrieved
     Verify String Does Not Contain Substring    ${response.text}    "postalCode"
     Verify String Does Not Contain Substring    ${response.text}    "city"
     Verify String Does Not Contain Substring    ${response.text}    "state"
-
+    Verify String Does Not Contain Substring    ${response.text}    "airlineCodes"
+    
 Evict Client GST Info Cache
     [Arguments]    ${number}=2    ${token}=${default_token}
     Create Session    client-gst-info   ${${env}_base_url}    verify=True
@@ -95,4 +176,3 @@ Evict Client GST Info Cache
     \    Log    ${response.headers}
     \    Log    ${response.content}
     Set Test Variable    ${api_flag}    client-gst-info
-    

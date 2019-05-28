@@ -3,20 +3,26 @@ Resource          ../resources/api-variables.txt
 Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-imports.txt
 Resource    resources/client-gst-info.txt
+Test Teardown    Evict Client GST Info Cache
 
 *** Test Cases ***
+Verify That All Client GST Info Are Correctly Retrieved
+    [Tags]    functional
+    Send Get Request For Client GST Info    gstin=${EMPTY}    airline_codes=${EMPTY} 
+    Verify Response Status Code Is Correct    200
+    Verify The Number Of Records Is Correct    expected_record=1369
+    
 Verify That Client GST Info Is Correctly Retrieved
     [Tags]    functional
 	Create Test Variables For Client GST Info    item=4
 	Verify Client GST Info Are Retrieved Correctly
-	Evict Client GST Info Cache
  
  Verify That Client GST Info Is Correctly Retrieved When Atleast 1 Valid Airline Code Is Available
     [Tags]    functional
-	Create Test Variables For Client GST Info    item=single_record    airline_codes=9W,AD,BB,AI
+	Create Test Variables For Client GST Info    item=single_record    airline_codes=JL,AD,BB,AI
     Send Get Request For Client GST Info  
     Verify Response Status Code Is Correct    200
-    Verify Client GST Info Is Correctly Retrieved    airline_codes=9W,AI
+    Verify Client GST Info Is Correctly Retrieved    airline_codes=JL,AI
     
  Verify That Client GST Info Is Correctly Retrieved When All Airline Codes Are Available In Request
     [Tags]    functional
@@ -26,11 +32,11 @@ Verify That Client GST Info Is Correctly Retrieved
     Verify Client GST Info Is Correctly Retrieved    airline_codes=all
  
 Verify That Client GST Info Is Correctly Retrieved When There Is Duplicated Airline Codes
-    [Tags]    not-ready
-	Create Test Variables For Client GST Info    item=single_record    airline_codes=9W,AI,9W,BA,BA,CX
+    [Tags]    functional
+	Create Test Variables For Client GST Info    item=single_record    airline_codes=JL,QF,JL,MU,MU,QF
     Send Get Request For Client GST Info
     Verify Response Status Code Is Correct    200
-    Verify Client GST Info Is Correctly Retrieved    airline_codes=9W,AI,BA,CX
+    Verify Client GST Info Is Correctly Retrieved    airline_codes=JL,QF,MU
        
  Verify That Client GST Info Is No Data Content When No Airline Code Is Valid 
     [Tags]    functional
@@ -42,3 +48,59 @@ Verify That Client GST Info Is Correctly Retrieved When There Is Duplicated Airl
     Send Get Request For Client GST Info
     Verify Response Status Code Is Correct    204
     Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Client GST Info Is Added After Put Request-Complete Info
+    [Tags]    not-ready
+    Create Test Variables For Put Client GST Info
+	Send Put Request For Client GST Info     
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved
+    Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved    get_request=true
+    Send Delete Request For Client GST Info
+    
+Verify That Client GST Info Is Added After Put Request-Blank Address Line2 
+    [Tags]    not-ready
+    Create Test Variables For Put Client GST Info    with_address2=false   
+	Send Put Request For Client GST Info      
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved    with_address2=false
+    Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved    with_address2=false    get_request=true
+    Send Delete Request For Client GST Info
+    
+Verify That Client GST Info Is Updated After Put Request
+    [Tags]    not-ready
+    Create Test Variables For Put Client GST Info            
+    Send Put Request For Client GST Info      
+    Verify Response Status Code Is Correct    200
+    Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
+    Verify Client GST Info Is Added And Retrieved    get_request=true
+    Create Test Variables For Put Client GST Info    with_address2=false    gstin_info=existing
+    Send Put Request For Client GST Info      
+    Verify Response Status Code Is Correct    200    
+    Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
+    Verify Client GST Info Is Added And Retrieved    with_address2=false    get_request=true
+
+Verify That Client GST Info Can Be Saved From Excel File
+    [Tags]    not-ready
+    Send Post Request For Client GST Info    filename=add_gst_file.xlsx 
+    
+Verify That Client GST Info Is Deleted After Delete Request
+    [Tags]    not-ready
+    Create Test Variables For Put Client GST Info 
+	Send Put Request For Client GST Info     
+    Verify Response Status Code Is Correct    200
+    Evict Client GST Info Cache
+    Send Delete Request For Client GST Info
+    Verify Response Status Code Is Correct    200
+    Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
+    Verify Response Status Code Is Correct    404
+    Verify Client GST Info Record Is Not Retrieved
+    
