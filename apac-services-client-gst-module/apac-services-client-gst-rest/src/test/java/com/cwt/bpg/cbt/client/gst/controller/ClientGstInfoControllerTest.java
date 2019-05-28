@@ -61,19 +61,6 @@ public class ClientGstInfoControllerTest {
 	}
 
 	@Test
-	public void putClientGstInfoReturns200() throws Exception {
-		ClientGstInfo clientGstInfo = new ClientGstInfo();
-		clientGstInfo.setGstin("ABC123");
-
-		when(service.save(any(ClientGstInfo.class))).thenReturn(clientGstInfo);
-
-		mockMvc.perform(put("/client-gst-info").contentType(APPLICATION_JSON_UTF8)
-				.content(convertObjectToJsonBytes(clientGstInfo))).andExpect(status().isOk()).andReturn().getResponse();
-
-		verify(service).save(any(ClientGstInfo.class));
-	}
-
-	@Test
 	public void removeClientGstInfoReturns200UponSuccessfulDeletion() throws Exception {
 		when(service.remove("ABC123")).thenReturn("ABC123");
 
