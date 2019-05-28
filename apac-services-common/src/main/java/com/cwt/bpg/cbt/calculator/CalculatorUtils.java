@@ -40,6 +40,14 @@ public final class CalculatorUtils {
 	public static BigDecimal calculatePercentage(BigDecimal input, Double percent) {
 		return safeValue(input).multiply(percentDecimal(percent));
 	}
+	
+	public static BigDecimal calculatePercentage(Double input, Double percent) {
+		return new BigDecimal(safeValue(input) * percentDouble(percent));
+	}
+
+	public static Double percentDouble(Double value) {
+		return safeValue(value) * 0.01;
+	}
 
 	public static BigDecimal percentDecimal(Double value) {
 		return BigDecimal.valueOf(safeValue(value) * 0.01);

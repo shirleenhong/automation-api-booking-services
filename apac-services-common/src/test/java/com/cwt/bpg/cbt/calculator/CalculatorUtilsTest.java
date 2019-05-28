@@ -115,7 +115,8 @@ public class CalculatorUtilsTest
 
 	@Test
 	public void calculatePercentageShouldReturnZeroWhenInputIsNullOrPercentIsNull() {
-		BigDecimal decimal = CalculatorUtils.calculatePercentage(null, 2d);
+		BigDecimal fare = null;
+		BigDecimal decimal = CalculatorUtils.calculatePercentage(fare, 2d);
 		assertThat(decimal.doubleValue(), is(equalTo(0d)));
 
 		decimal = CalculatorUtils.calculatePercentage(new BigDecimal(20), null);

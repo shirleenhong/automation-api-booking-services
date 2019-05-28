@@ -18,7 +18,6 @@ import com.cwt.bpg.cbt.exchange.order.model.*;
 @Component("tfCalculator")
 public class FeeCalculator {
 
-	private static final int DEFAULT_SCALE = 2;
 	static final String PNR = "P";
 	static final String COUPON = "C";
 	static final String TICKET = "T";
@@ -53,11 +52,11 @@ public class FeeCalculator {
 				final IndiaAirProductInput product = input.getProduct();
 				final BigDecimal baseFarePlusYqTax = safeValue(input.getBaseFare())
 								.add(yqTax);
-
+				
 				gstAmount = round(
-						round(calculatePercentage(baseFarePlusYqTax, product.getGstPercent()), DEFAULT_SCALE)
-						.add(round(calculatePercentage(baseFarePlusYqTax, product.getOt1Percent()), DEFAULT_SCALE))
-						.add(round(calculatePercentage(baseFarePlusYqTax, product.getOt2Percent()), DEFAULT_SCALE)),
+						round(calculatePercentage(baseFarePlusYqTax.doubleValue(), product.getGstPercent()), scale)
+						.add(round(calculatePercentage(baseFarePlusYqTax.doubleValue(), product.getOt1Percent()), scale))
+						.add(round(calculatePercentage(baseFarePlusYqTax.doubleValue(), product.getOt2Percent()), scale)),
 					scale);
 			}
 		}		
