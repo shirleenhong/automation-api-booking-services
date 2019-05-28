@@ -1,11 +1,9 @@
 package com.cwt.bpg.cbt.client.gst.controller;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
@@ -58,19 +56,6 @@ public class ClientGstInfoControllerTest {
 				.getResponse();
 
 		verify(service).getAllClientGstInfo();
-	}
-
-	@Test
-	public void putClientGstInfoReturns200() throws Exception {
-		ClientGstInfo clientGstInfo = new ClientGstInfo();
-		clientGstInfo.setGstin("ABC123");
-
-		when(service.save(any(ClientGstInfo.class))).thenReturn(clientGstInfo);
-
-		mockMvc.perform(put("/client-gst-info").contentType(APPLICATION_JSON_UTF8)
-				.content(convertObjectToJsonBytes(clientGstInfo))).andExpect(status().isOk()).andReturn().getResponse();
-
-		verify(service).save(any(ClientGstInfo.class));
 	}
 
 	@Test
