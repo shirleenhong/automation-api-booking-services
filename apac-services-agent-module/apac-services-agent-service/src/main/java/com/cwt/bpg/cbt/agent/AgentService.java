@@ -2,8 +2,6 @@ package com.cwt.bpg.cbt.agent;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -14,9 +12,6 @@ import com.cwt.bpg.cbt.agent.model.AgentInfo;
 
 @Service
 public class AgentService {
-
-    @Resource
-    private AgentService proxy;
 
     @Autowired
     private AgentRepository agentRepository;
