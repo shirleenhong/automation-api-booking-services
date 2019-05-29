@@ -90,10 +90,10 @@ public class ClientGstInfoController {
     public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file,
             @RequestParam(required = false, defaultValue = "false") boolean includeGstAirlines)
             throws Exception {
-//        if (!(file.getOriginalFilename().endsWith(EXCEL_WORKBOOK) || file.getOriginalFilename()
-//                .endsWith(MACRO_ENABLED_WORKBOOK))) {
-//            throw new IllegalArgumentException("File must be in excel format");
-//        }
+        if (!(file.getOriginalFilename().endsWith(EXCEL_WORKBOOK) || file.getOriginalFilename()
+                .endsWith(MACRO_ENABLED_WORKBOOK))) {
+            throw new IllegalArgumentException("File must be in excel format");
+        }
         clientGstInfoService.saveFromExcelFile(new BufferedInputStream(file.getInputStream()), includeGstAirlines);
         Map<String, String> response = new HashMap<>();
         response.put("message", "saving in progress");
