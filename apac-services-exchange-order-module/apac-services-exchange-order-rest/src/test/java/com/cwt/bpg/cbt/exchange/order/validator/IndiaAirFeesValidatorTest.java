@@ -19,10 +19,11 @@ public class IndiaAirFeesValidatorTest
 
         List<Validator> validators = validator.getValidators();
 
-        assertThat(validators, hasSize(3));
+        assertThat(validators, hasSize(4));
         assertThat(validators, hasItems(
                 instanceOf(AirlineOverheadCommissionValidator.class),
                 instanceOf(FeeValidator.class),
-                instanceOf(OthTaxValidator.class)));
+                instanceOf(OthTaxValidator.class),
+                instanceOf(ClientIdValidator.class)));
     }
 }

@@ -74,7 +74,8 @@ public class OtherServiceFeesControllerIndiaNonAirFeeTest {
         jsonObj.put("clientAccountNumber", "caNumber");
         jsonObj.put("countryCode", Country.INDIA.getCode());
         jsonObj.put("clientType", "Z");
-
+        jsonObj.put("clientId", 123);
+        
         mockMvc.perform(post("/other-service-fees/non-air-fees/in")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(jsonObj)))
