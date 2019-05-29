@@ -17,7 +17,7 @@ public final class CalculatorUtils {
 		return value == null ? BigDecimal.ZERO : value;
 	}
 
-	public static double safeValue(Double value) {
+	public static Double safeValue(Double value) {
 		return value == null ? 0D : value;
 	}
 
@@ -42,7 +42,7 @@ public final class CalculatorUtils {
 	}
 	
 	public static BigDecimal calculatePercentage(Double input, Double percent) {
-		return new BigDecimal(safeValue(input) * percentDouble(percent));
+		return BigDecimal.valueOf(percentDouble(safeValue(input) * percent));
 	}
 
 	public static Double percentDouble(Double value) {
