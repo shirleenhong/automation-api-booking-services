@@ -26,9 +26,10 @@ public class CodifController {
     public ResponseEntity<List<String>> getHarpNos(@PathVariable("gdsPropId") @ApiParam(value="GDSPropId", required=true) String gdsPropId,
                                                    @PathVariable("keyType") @ApiParam(value="Key Type", required=true) String keyType) {
         final List<String> harpList = new ArrayList<>();
-        codifService.getCodifsByGdsPropIdAndKeyType(gdsPropId, keyType).forEach(codif -> {
-            harpList.add(String.format("%6s", codif.getHarpNo()).replace(' ', '0'));
-        });
+        codifService.getCodifsByGdsPropIdAndKeyType(gdsPropId, keyType)
+                .forEach(codif ->
+                        harpList.add(String.format("%6s", codif.getHarpNo()).replace(' ', '0'))
+                        );
         return new ResponseEntity<>(harpList, HttpStatus.OK);
     }
 
