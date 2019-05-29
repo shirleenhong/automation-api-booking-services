@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
+
 public class IndiaAirFeesValidatorTest
 {
 
@@ -17,13 +19,12 @@ public class IndiaAirFeesValidatorTest
     @Test
     public void shouldInvokeAllValidators() {
 
-        List<Validator> validators = validator.getValidators();
+        List<Validator<IndiaAirFeesInput>> validators = validator.getValidators();
 
-        assertThat(validators, hasSize(4));
+        assertThat(validators, hasSize(3));
         assertThat(validators, hasItems(
                 instanceOf(AirlineOverheadCommissionValidator.class),
                 instanceOf(FeeValidator.class),
-                instanceOf(OthTaxValidator.class),
-                instanceOf(ClientIdValidator.class)));
+                instanceOf(OthTaxValidator.class)));
     }
 }

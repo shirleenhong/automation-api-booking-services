@@ -28,6 +28,12 @@ public class OtherServiceFeesController {
 	@Autowired
 	private IndiaAirFeesValidator indiaAirFeesValidator;
 
+	/**
+	 * Temporary validator, applies to India market only at the moment, FeesInput shall be
+	 * annotated with @NotEmpty for all market
+	 */
+	private ClientIdValidator clientIdValidator = new ClientIdValidator();
+
 	@PostMapping(
 			path = "/non-air-fees/in",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
@@ -37,7 +43,7 @@ public class OtherServiceFeesController {
 	public ResponseEntity<IndiaNonAirFeesBreakdown> computeNonAirFees(@Valid @RequestBody @ApiParam(
 			value = "Values needed for calculation") IndiaNonAirFeesInput input) {
 
-		new ClientIdValidator().validate(input);
+		clientIdValidator.validate(input);
 		return new ResponseEntity<>(service.calculateIndiaNonAirFees(input), HttpStatus.OK);
 	}
 
@@ -63,6 +69,7 @@ public class OtherServiceFeesController {
 	public ResponseEntity<IndiaAirFeesBreakdown> computeIndiaAirFees(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") IndiaAirFeesInput input) {
 
+		clientIdValidator.validate(input);
 		indiaAirFeesValidator.validate(input);
 		return new ResponseEntity<>(service.calculateIndiaAirFees(input), HttpStatus.OK);
 	}

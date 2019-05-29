@@ -3,28 +3,24 @@ package com.cwt.bpg.cbt.exchange.order.validator;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+public class CompositeValidator<V extends Validator<A>, A> implements Validator<A> {
 
-@Component
-public class CompositeValidator implements Validator<Object> {
+	private List<V> validators = new ArrayList<>();
 
-	private List<Validator> validators = new ArrayList<>();
-
-    public List<Validator> getValidators() {
+    public List<V> getValidators() {
         return validators;
     }
 
-    public void setValidators(List<Validator> validators) {
+    public void setValidators(List<V> validators) {
         this.validators = validators;
     }
 
-    public void addValidator(Validator validator) {
+    public void addValidator(V validator) {
         validators.add(validator);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-	public void validate(Object obj) {
+	public void validate(A obj) {
 		validators.forEach(validator -> validator.validate(obj));
 	}
 }
