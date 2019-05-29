@@ -92,9 +92,9 @@ Send Post Request For Client GST Info
     ...    ELSE    Create Dictionary    Content-Type=application/json
     ${data}    Create Dictionary    name=file    filename=add_gst_file.xls
     ${file_object}    Get File    ${CURDIR}${/}add_client_gst__info.xlsx    encoding=iso-8859-1    encoding_errors=strict
-    ${files}    Create Dictionary    file=${file_object};type=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+    ${files}    Create Dictionary    file=@${file_object};type=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
     log   ${files} 
-    ${response}    Post Request    client-gst-info    apac-services-rest/api/client-gst-info    files={'file'='${file_object};type=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}     params=includeGstAirlines=false   headers=${headers}  
+    ${response}    Post Request    client-gst-info    apac-services-rest/api/client-gst-info    files=${files}     params=includeGstAirlines=false   headers=${headers}  
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
