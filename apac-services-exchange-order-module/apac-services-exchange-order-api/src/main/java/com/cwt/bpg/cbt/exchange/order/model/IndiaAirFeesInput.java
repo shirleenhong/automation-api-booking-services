@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class IndiaAirFeesInput extends FeesInput {
 
 	private static final long serialVersionUID = 8399565390820971940L;
@@ -41,6 +43,9 @@ public class IndiaAirFeesInput extends FeesInput {
 	private boolean feeOverride;
 
 	private String cityCode;
+
+	@ApiModelProperty(required = false)
+	private int clientId;
 
 	public String getCityCode() {
 		return cityCode;
@@ -233,4 +238,13 @@ public class IndiaAirFeesInput extends FeesInput {
 	public void setAirlineOverheadCommissionByPercent(boolean airlineOverheadCommissionByPercent) {
 		this.airlineOverheadCommissionByPercent = airlineOverheadCommissionByPercent;
 	}
+
+	public int getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
+	}
+
 }
