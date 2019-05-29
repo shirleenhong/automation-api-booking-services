@@ -103,10 +103,7 @@ public class FeeCalculator {
 						scale));
 		breakdown.setTotalSellingFare(round(getTotalSellingFare(breakdown), scale));
 		breakdown.setTotalCharge(round(getTotalCharge(breakdown), scale));
-
-		// Show this temporarily
-		//breakdown.setFee(null);
-		
+	
 		breakdown.setReferenceFare(round(safeValue(input.getBaseFare()).add(breakdown.getTotalTaxes()), scale));
 
 		return breakdown;
