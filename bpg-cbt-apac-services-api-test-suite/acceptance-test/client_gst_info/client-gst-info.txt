@@ -50,7 +50,7 @@ Verify That Client GST Info Is Correctly Retrieved When There Is Duplicated Airl
     Verify Client GST Info Record Is Not Retrieved
     
 Verify That Client GST Info Is Added After Put Request-Complete Info
-    [Tags]    not-ready
+    [Tags]    functional
     Create Test Variables For Put Client GST Info
 	Send Put Request For Client GST Info     
     Verify Response Status Code Is Correct    200
@@ -62,7 +62,7 @@ Verify That Client GST Info Is Added After Put Request-Complete Info
     Send Delete Request For Client GST Info
     
 Verify That Client GST Info Is Added After Put Request-Blank Address Line2 
-    [Tags]    not-ready
+    [Tags]    functional
     Create Test Variables For Put Client GST Info    with_address2=false   
 	Send Put Request For Client GST Info      
     Verify Response Status Code Is Correct    200
@@ -74,7 +74,7 @@ Verify That Client GST Info Is Added After Put Request-Blank Address Line2
     Send Delete Request For Client GST Info
     
 Verify That Client GST Info Is Updated After Put Request
-    [Tags]    not-ready
+    [Tags]    functional
     Create Test Variables For Put Client GST Info            
     Send Put Request For Client GST Info      
     Verify Response Status Code Is Correct    200
@@ -92,7 +92,7 @@ Verify That Client GST Info Can Be Saved From Excel File
     Send Post Request For Client GST Info    filename=add_gst_file.xlsx 
     
 Verify That Client GST Info Is Deleted After Delete Request
-    [Tags]    not-ready
+    [Tags]    functional
     Create Test Variables For Put Client GST Info 
 	Send Put Request For Client GST Info     
     Verify Response Status Code Is Correct    200
