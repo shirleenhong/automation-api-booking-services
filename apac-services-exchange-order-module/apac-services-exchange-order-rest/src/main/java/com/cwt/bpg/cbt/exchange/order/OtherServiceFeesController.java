@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsOutput;
+import com.cwt.bpg.cbt.exchange.order.validator.ClientIdValidator;
 import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +37,7 @@ public class OtherServiceFeesController {
 	public ResponseEntity<IndiaNonAirFeesBreakdown> computeNonAirFees(@Valid @RequestBody @ApiParam(
 			value = "Values needed for calculation") IndiaNonAirFeesInput input) {
 
+		new ClientIdValidator().validate(input);
 		return new ResponseEntity<>(service.calculateIndiaNonAirFees(input), HttpStatus.OK);
 	}
 

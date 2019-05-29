@@ -11,6 +11,7 @@ public class IndiaAirFeesValidator extends CompositeValidator {
         setValidators(Arrays.asList(
                 new AirlineOverheadCommissionValidator(),
                 new FeeValidator(),
-                new OthTaxValidator()));
+                new OthTaxValidator(),
+                new ClientIdValidator()));
     }
 }
