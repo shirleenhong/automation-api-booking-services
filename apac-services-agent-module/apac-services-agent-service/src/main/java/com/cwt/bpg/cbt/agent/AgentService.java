@@ -15,37 +15,36 @@ import com.cwt.bpg.cbt.agent.model.AgentInfo;
 @Service
 public class AgentService {
 
-	@Resource
-	private AgentService proxy;
+    @Resource
+    private AgentService proxy;
 
-	@Autowired
-	private AgentRepository agentRepository;
-	
-	@Cacheable(cacheNames = "agent", key="{#uid.toUpperCase(), #countryCode.toUpperCase()}", condition="#uid != null && #countryCode != null")
-	public AgentInfo getAgent(String uid, String countryCode) {
-		return agentRepository.getAgent(uid, countryCode);
-	}
+    @Autowired
+    private AgentRepository agentRepository;
+    
+    @Cacheable(cacheNames = "agent", key="{#uid.toUpperCase(), #countryCode.toUpperCase()}", condition="#uid != null && #countryCode != null")
+    public AgentInfo getAgent(String uid, String countryCode) {
+        return agentRepository.getAgent(uid, countryCode);
+    }
 
     public List<AgentInfo> getAgents() {
         return agentRepository.getAll();
     }
 
     @CacheEvict(cacheNames = "agent", allEntries=true)
-	public AgentInfo save(AgentInfo agentInfo) {
-		AgentInfo savedAgentInfo = agentRepository.put(agentInfo);
-		return savedAgentInfo;
-	}
+    public AgentInfo save(AgentInfo agentInfo) {
+        return agentRepository.put(agentInfo);
+    }
 
-	public String remove(String id) {
-		AgentInfo agentInfo = agentRepository.get(new ObjectId(id));
-		if(agentInfo!=null) {
-			remove(agentInfo.getUid(), agentInfo.getCountryCode());
-		}
-		return agentRepository.remove(new ObjectId(id));
-	}
-	
-	@CacheEvict(cacheNames = "agent", key="{#uid.toUpperCase(), #countryCode.toUpperCase()}", condition="#uid != null && #countryCode != null")
-	public String remove(String uid, String countryCode) {
-		return agentRepository.removeAgent(uid, countryCode);
-	}
+    public String remove(String id) {
+        AgentInfo agentInfo = agentRepository.get(new ObjectId(id));
+        if(agentInfo!=null) {
+            remove(agentInfo.getUid(), agentInfo.getCountryCode());
+        }
+        return agentRepository.remove(new ObjectId(id));
+    }
+    
+    @CacheEvict(cacheNames = "agent", key="{#uid.toUpperCase(), #countryCode.toUpperCase()}", condition="#uid != null && #countryCode != null")
+    public String remove(String uid, String countryCode) {
+        return agentRepository.removeAgent(uid, countryCode);
+    }
 }
