@@ -13,6 +13,9 @@ public class FeesInput implements Serializable {
 	@NotEmpty
 	private String clientAccountNumber;
 
+	@ApiModelProperty(required = false)
+	private int clientId;
+
 	public String getClientAccountNumber() {
 		return clientAccountNumber;
 	}
@@ -20,4 +23,13 @@ public class FeesInput implements Serializable {
 	public void setClientAccountNumber(String clientAccountNumber) {
 		this.clientAccountNumber = clientAccountNumber;
 	}
+
+	public int getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
+	}
+
 }
