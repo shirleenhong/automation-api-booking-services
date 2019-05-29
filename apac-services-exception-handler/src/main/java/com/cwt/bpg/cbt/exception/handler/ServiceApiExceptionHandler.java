@@ -22,7 +22,9 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 @ControllerAdvice
 public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler({ MethodArgumentTypeMismatchException.class })
+	private static final String INVALID_INPUT = "Invalid Input";
+
+    @ExceptionHandler({ MethodArgumentTypeMismatchException.class })
 	public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
 			MethodArgumentTypeMismatchException ex) {
 
@@ -68,10 +70,10 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError apiError;
 		
 		if (error.length() > 0) {
-			apiError = new ApiError(HttpStatus.BAD_REQUEST, "Invalid Input", error.toString());
+			apiError = new ApiError(HttpStatus.BAD_REQUEST, INVALID_INPUT, error.toString());
 		}
 		else {
-			apiError = new ApiError(HttpStatus.BAD_REQUEST, "Invalid Input");
+			apiError = new ApiError(HttpStatus.BAD_REQUEST, INVALID_INPUT);
 		}
 
 		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
@@ -80,7 +82,7 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Invalid Input");
+		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, INVALID_INPUT);
 		apiError.setErrors(getMessages(ex.getBindingResult()));
 		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
 	}
