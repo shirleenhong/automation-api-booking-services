@@ -17,6 +17,8 @@ import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.ClientPricing;
+import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
 
 public class ClientServiceTest {
 	
@@ -84,8 +86,11 @@ public class ClientServiceTest {
 		clientPricings.add(clientPricing);
 		client.setClientPricings(clientPricings);
 		
+		AirFeesDefaultsInput input = new AirFeesDefaultsInput();
+		input.setClientId(clientId);
+		input.setTripType(tripType);
 		when(repository.get(clientId)).thenReturn(client);
-		List<ClientPricing> result = service.getClientPricings(clientId, tripType);
+		List<ClientPricing> result = service.getClientPricings(input);
 		
 		assertFalse(result.isEmpty());
 		verify(repository, times(1)).get(clientId);
@@ -104,8 +109,10 @@ public class ClientServiceTest {
 		clientPricings.add(clientPricing);
 		client.setClientPricings(clientPricings);
 		
+		AirFeesDefaultsInput input = new AirFeesDefaultsInput();
+		input.setClientId(clientId);
 		when(repository.get(clientId)).thenReturn(client);
-		List<ClientPricing> result = service.getClientPricings(clientId, tripType);
+		List<ClientPricing> result = service.getClientPricings(input);
 		
 		assertTrue(result.isEmpty());
 		verify(repository, times(1)).get(clientId);
@@ -123,8 +130,10 @@ public class ClientServiceTest {
 		clientPricings.add(clientPricing);
 		client.setClientPricings(clientPricings);
 		
+		AirFeesDefaultsInput input = new AirFeesDefaultsInput();
+		input.setClientId(clientId);
 		when(repository.get(clientId)).thenReturn(client);
-		List<ClientPricing> result = service.getClientPricings(clientId, null);
+		List<ClientPricing> result = service.getClientPricings(input);
 		
 		assertTrue(result.isEmpty());
 		verify(repository, times(1)).get(clientId);

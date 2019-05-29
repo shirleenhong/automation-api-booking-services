@@ -96,7 +96,7 @@ public class OtherServiceFeesService {
 
     public IndiaNonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
 
-        final Client client = clientService.getClient(input.getClientId());
+        final Client client = clientService.getClient(input);
         final Client defaultClient = clientService.getDefaultClient();
         final Double merchantFeePercent = getMerchantFeePercent(convertToMFPercentInput(input), client, defaultClient);
 
@@ -110,11 +110,11 @@ public class OtherServiceFeesService {
 
     public IndiaAirFeesBreakdown calculateIndiaAirFees(IndiaAirFeesInput input) {
 
-        Optional<Client> isClientExist = Optional.ofNullable(clientService.getClient(input.getClientId()));
+        Optional<Client> isClientExist = Optional.ofNullable(clientService.getClient(input));
 
         Client client = isClientExist
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "Client [ " + input.getClientId() + " ] not found."));
+                        "Client [ client id: " + input.getClientId() + " or client account number: " + input.getClientAccountNumber() + " ] not found."));
 
         final int pricingId = client.getPricingId();
         final AirlineRule airlineRule = airlineRuleService.getAirlineRule(input.getPlatCarrier());
@@ -137,7 +137,7 @@ public class OtherServiceFeesService {
     	List<ClientFee> clientFees = new ArrayList<>();
     	
 		List<ClientPricing> clientPricings = clientService
-				.getClientPricings(input.getClientId(), input.getTripType());
+				.getClientPricings(input);
 		
 		if (!ObjectUtils.isEmpty(clientPricings)) {
 			for(ClientPricing pricing : clientPricings) {
@@ -186,7 +186,7 @@ public class OtherServiceFeesService {
 	}
 
     public Double getMerchantFeePercent(MerchantFeePercentInput input) {
-        final Client client = clientService.getClient(input.getClientId());
+        final Client client = clientService.getClient(input);
         final Client defaultClient = clientService.getDefaultClient();
 
         return getMerchantFeePercent(input, client, defaultClient);

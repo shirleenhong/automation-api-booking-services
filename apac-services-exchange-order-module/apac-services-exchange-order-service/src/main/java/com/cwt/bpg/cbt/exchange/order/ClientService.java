@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.ClientPricing;
+import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
 
 @Service
 public class ClientService {
@@ -30,12 +32,7 @@ public class ClientService {
 	public String delete(String keyValue) {
 		return clientRepository.remove(keyValue);
 	}
-
-	public Client getClient(int id) {
-		return clientRepository.get(id);
-	}
-
-	@Deprecated
+	
 	@Cacheable(cacheNames="clients", key="#clientAccountNumber", condition="#clientAccountNumber != null")
 	public Client getClient(String clientAccountNumber) {
 		return clientRepository.getClient(clientAccountNumber);
@@ -46,19 +43,27 @@ public class ClientService {
 		return clientRepository.get(clientId);
 	}
 
-	public List<ClientPricing> getClientPricings(int clientId, String tripType) {
+	public List<ClientPricing> getClientPricings(AirFeesDefaultsInput input) {
 
-		Client client = getClient(clientId);
+		Client client = getClient(input);
 
 		List<ClientPricing> clientPricings = Optional.ofNullable(client.getClientPricings())
 				.orElse(Collections.emptyList());
 
-		return clientPricings.stream().filter(pricing -> pricing.getTripType().equals(tripType))
+		return clientPricings.stream().filter(pricing -> pricing.getTripType().equals(input.getTripType()))
 				.collect(Collectors.toList());
 	}
 
 	public Client getDefaultClient() {
 		return getClient(-1);		
+	}
+
+	public Client getClient(FeesInput input) {
+		if (input.getClientId() != 0) {
+			return getClient(input.getClientId());
+		} else {
+			return getClient(input.getClientAccountNumber());
+		}
 	}
 
 }

@@ -6,13 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.IndiaNonAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.NettCostInput;
+import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
+import com.cwt.bpg.cbt.exchange.order.model.VisaFeesBreakdown;
+import com.cwt.bpg.cbt.exchange.order.model.VisaFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsOutput;
-import com.cwt.bpg.cbt.exchange.order.validator.ClientIdValidator;
 import com.cwt.bpg.cbt.exchange.order.validator.IndiaAirFeesValidator;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -28,12 +43,6 @@ public class OtherServiceFeesController {
 	@Autowired
 	private IndiaAirFeesValidator indiaAirFeesValidator;
 
-	/**
-	 * Temporary validator, applies to India market only at the moment, FeesInput shall be
-	 * annotated with @NotEmpty for all market
-	 */
-	private ClientIdValidator clientIdValidator = new ClientIdValidator();
-
 	@PostMapping(
 			path = "/non-air-fees/in",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
@@ -43,7 +52,6 @@ public class OtherServiceFeesController {
 	public ResponseEntity<IndiaNonAirFeesBreakdown> computeNonAirFees(@Valid @RequestBody @ApiParam(
 			value = "Values needed for calculation") IndiaNonAirFeesInput input) {
 
-		clientIdValidator.validate(input);
 		return new ResponseEntity<>(service.calculateIndiaNonAirFees(input), HttpStatus.OK);
 	}
 
@@ -69,7 +77,6 @@ public class OtherServiceFeesController {
 	public ResponseEntity<IndiaAirFeesBreakdown> computeIndiaAirFees(
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") IndiaAirFeesInput input) {
 
-		clientIdValidator.validate(input);
 		indiaAirFeesValidator.validate(input);
 		return new ResponseEntity<>(service.calculateIndiaAirFees(input), HttpStatus.OK);
 	}
