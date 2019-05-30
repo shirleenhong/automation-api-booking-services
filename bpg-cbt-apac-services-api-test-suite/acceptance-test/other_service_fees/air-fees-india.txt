@@ -6,7 +6,7 @@ Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-variables.txt
 
 *** Test Cases ***
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee Air Pricing And Transaction Fee By PNR
+Verify That Air Fees Are Calculated Correctly Using Account Number, Transaction Fee Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -20,9 +20,25 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee Air Pricing 
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+  
+Verify That Air Fees Are Calculated Correctly Using Client ID , Transaction Fee Air Pricing And Transaction Fee By PNR
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,1910|client_account_number,2003100001|air_segment_count,1|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|tf_by_pnr_amount,1040|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,1910|client_account_number,2003100001|air_segment_count,1|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,1910|client_account_number,2003100001|air_segment_count,1|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee Air Pricing And Transaction Fee By Coupon
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,3098300014|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,9|client_overhead_commission_percentage,8|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,12|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,8|products_ot2_percentage,8    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -37,7 +53,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee Air Pricing 
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee Air Pricing And Transaction Fee By Ticket
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000008|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,11|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,12|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -51,7 +67,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee Air Pricing 
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Full Fare Air Pricing And Transaction Fee By PNR
+Verify That Air Fees Are Calculated Correctly Using Client Account Number, Transaction Fee On Full Fare Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000010|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -65,9 +81,25 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Full Fare
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+   
+Verify That Air Fees Are Calculated Correctly Using Client ID, Transaction Fee On Full Fare Air Pricing And Transaction Fee By PNR
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,142|client_account_number,3084300001|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,1250|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,142|client_account_number,3084300001|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,150|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,142|client_account_number,3084300001|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,3|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,150|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    
 
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Full Fare Air Pricing And Transaction Fee By Coupon
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000007|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,18|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,30|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -82,7 +114,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Full Fare
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Full Fare Air Pricing And Transaction Fee By Ticket
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000011|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,22|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,5|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -96,7 +128,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Full Fare
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Net Fare Air Pricing And Transaction Fee By PNR
+Verify That Air Fees Are Calculated Correctly Using Client Account Number, Transaction Fee On Net Fare Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000012|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -111,8 +143,8 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Net Fare 
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Net Fare Air Pricing And Transaction Fee By Coupon
-    [Tags]    functional    india
+Verify That Air Fees Are Calculated Correctly Using Client ID, Transaction Fee On Net Fare Air Pricing And Transaction Fee By Coupon
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000013|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,8|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,35|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -127,7 +159,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Net Fare 
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Net Fare Air Pricing And Transaction Fee By Ticket
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000014|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -141,7 +173,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Net Fare 
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Gross Fare Air Pricing And Transaction Fee By PNR
+Verify That Air Fees Are Calculated Correctly Using Client Account Number, Transaction Fee On Gross Fare Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000015|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -155,9 +187,25 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Gross Far
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+
+Verify That Air Fees Are Calculated Correctly Using Client ID, Transaction Fee On Gross Fare Air Pricing And Transaction Fee By PNR
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2015|client_account_number,9000000015|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2015|client_account_number,9000000015|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2015|client_account_number,9000000015|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Gross Fare Air Pricing And Transaction Fee By Coupon
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000016|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,8|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,35|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -172,7 +220,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Gross Far
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Gross Fare Air Pricing And Transaction Fee By Ticket
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000017|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -186,7 +234,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Gross Far
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Fare Less IATA Air Pricing And Transaction Fee By PNR
+Verify That Air Fees Are Calculated Correctly Using Client Number, Transaction Fee On Fare Less IATA Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000018|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -201,8 +249,24 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Fare Less
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Fare Less IATA Air Pricing And Transaction Fee By Coupon
+    
+Verify That Air Fees Are Calculated Correctly Using Client ID, Transaction Fee On Fare Less IATA Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2018|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2018|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2018|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Fare Less IATA Air Pricing And Transaction Fee By Coupon
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000019|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,8|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,35|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -217,7 +281,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Fare Less
     Verify Calculated Air Fees Are Returned Correctly
  
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Fare Less IATA Air Pricing And Transaction Fee By Ticket
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000020|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -231,7 +295,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Fare Less
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Basic Air Pricing And Transaction Fee By PNR
+Verify That Air Fees Are Calculated Correctly Using Client Number, Transaction Fee On Basic Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000021|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -246,8 +310,23 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Basic Air
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
+Verify That Air Fees Are Calculated Correctly Using Client ID, Transaction Fee On Basic Air Pricing And Transaction Fee By PNR
+    [Tags]    functional    india    
+    Generate Test Variables For Air Fees-IN    client_id,2021|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2021|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2021|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Basic Air Pricing And Transaction Fee By Coupon
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000022|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,8|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,35|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -262,7 +341,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Basic Air
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Basic Air Pricing And Transaction Fee By Ticket
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000023|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -276,7 +355,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Basic Air
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using No Fee Air Pricing And Transaction Fee By PNR
+Verify That Air Fees Are Calculated Correctly Using Client Number, No Fee Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000024|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1089|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -291,8 +370,23 @@ Verify That Air Fees Are Calculated Correctly Using No Fee Air Pricing And Trans
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using No Fee Air Pricing And Transaction Fee By Coupon
+Verify That Air Fees Are Calculated Correctly Using Client ID, No Fee Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2024|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1089|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2024|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1299|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2024|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1350.89|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    
+Verify That Air Fees Are Calculated Correctly Using No Fee Air Pricing And Transaction Fee By Coupon
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000025|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,8|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,35|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -307,7 +401,7 @@ Verify That Air Fees Are Calculated Correctly Using No Fee Air Pricing And Trans
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using No Fee Air Pricing And Transaction Fee By Ticket
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000026|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -321,7 +415,7 @@ Verify That Air Fees Are Calculated Correctly Using No Fee Air Pricing And Trans
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee Plus VAT(ts) Air Pricing And Transaction Fee By PNR
+Verify That Air Fees Are Calculated Correctly Using Client Number, Transaction Fee Plus VAT(ts) Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000027|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -336,8 +430,24 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee Plus VAT(ts)
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee Plus VAT(ts) Air Pricing And Transaction Fee By Coupon
+Verify That Air Fees Are Calculated Correctly Using Client ID, Transaction Fee Plus VAT(ts) Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2027|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2027|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2027|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+
+
+Verify That Air Fees Are Calculated Correctly Using Transaction Fee Plus VAT(ts) Air Pricing And Transaction Fee By Coupon
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000028|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,8|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,35|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -352,7 +462,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee Plus VAT(ts)
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee Plus VAT(ts) Air Pricing And Transaction Fee By Ticket
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000029|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -366,7 +476,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee Plus VAT(ts)
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee Rebate Air Pricing And Transaction Fee By PNR
+Verify That Air Fees Are Calculated Correctly Using Client Number, Transaction Fee Rebate Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000030|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -380,9 +490,24 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee Rebate Air P
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+
+Verify That Air Fees Are Calculated Correctly Using Client ID, Transaction Fee Rebate Air Pricing And Transaction Fee By PNR
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2030|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2030|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2030|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee Rebate Air Pricing And Transaction Fee By Coupon
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000031|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,8|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,35|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -397,7 +522,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee Rebate Air P
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee Rebate Air Pricing And Transaction Fee By Ticket
-    [Tags]    functional
+    [Tags]    functional    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000032|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -411,7 +536,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee Rebate Air P
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using No Fee With Discount Air Pricing And Transaction Fee By PNR
+Verify That Air Fees Are Calculated Correctly Using Client Number, No Fee With Discount Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000033|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -425,9 +550,24 @@ Verify That Air Fees Are Calculated Correctly Using No Fee With Discount Air Pri
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+ 
+Verify That Air Fees Are Calculated Correctly Using Client ID, No Fee With Discount Air Pricing And Transaction Fee By PNR
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2033|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2033|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2033|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using No Fee With Discount Air Pricing And Transaction Fee By Coupon
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000034|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,8|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,35|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -442,7 +582,7 @@ Verify That Air Fees Are Calculated Correctly Using No Fee With Discount Air Pri
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using No Fee With Discount Air Pricing And Transaction Fee By Ticket
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000035|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -456,7 +596,7 @@ Verify That Air Fees Are Calculated Correctly Using No Fee With Discount Air Pri
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Base & YQ Air Pricing And Transaction Fee By PNR
+Verify That Air Fees Are Calculated Correctly Using Client Number, Transaction Fee On Base & YQ Air Pricing And Transaction Fee By PNR
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000036|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -470,9 +610,25 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Base & YQ
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+
+Verify That Air Fees Are Calculated Correctly Using Client ID, Transaction Fee On Base & YQ Air Pricing And Transaction Fee By PNR
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2036|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2036|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2036|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Base & YQ Air Pricing And Transaction Fee By Coupon
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000048|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,8|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,35|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -487,7 +643,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Base & YQ
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Base & YQ Air Pricing And Transaction Fee By Ticket
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000049|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -501,7 +657,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee On Base & YQ
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Client Exempt Tax Only (YQ Comm Not Used)
+Verify That Air Fees Are Calculated Correctly Using Client Number, Client Exempt Tax Only (YQ Comm Not Used)
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000063|include_yq_comm,false|exempt_tax,true|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -515,8 +671,23 @@ Verify That Air Fees Are Calculated Correctly Using Client Exempt Tax Only (YQ C
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    
-Verify That Air Fees Are Calculated Correctly Using YQ Comm Only (Client Exempt Tax Not Used)
+
+Verify That Air Fees Are Calculated Correctly Using Client ID, Client Exempt Tax Only (YQ Comm Not Used)
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_ID,2063|client_account_number,0|include_yq_comm,false|exempt_tax,true|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_ID,2063|client_account_number,0|include_yq_comm,false|exempt_tax,true|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_ID,2063|client_account_number,0|include_yq_comm,false|exempt_tax,true|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+
+Verify That Air Fees Are Calculated Correctly Using Client Number, YQ Comm Only (Client Exempt Tax Not Used)
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000064|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,AI|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -530,8 +701,23 @@ Verify That Air Fees Are Calculated Correctly Using YQ Comm Only (Client Exempt 
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+
+Verify That Air Fees Are Calculated Correctly Using Client ID, YQ Comm Only (Client Exempt Tax Not Used)
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2064|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,AI|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2064|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,AI|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2064|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,AI|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Client Exempt Tax and YQ Comm
+Verify That Air Fees Are Calculated Correctly Using Client Number, Client Exempt Tax and YQ Comm
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000063|include_yq_comm,true|exempt_tax,true|city_code,CCU|plat_carrier,AI|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -546,7 +732,22 @@ Verify That Air Fees Are Calculated Correctly Using Client Exempt Tax and YQ Com
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Fee Override
+Verify That Air Fees Are Calculated Correctly Using Client ID, Client Exempt Tax and YQ Comm
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2063|client_account_number,0|include_yq_comm,true|exempt_tax,true|city_code,CCU|plat_carrier,AI|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2063|client_account_number,0|include_yq_comm,true|exempt_tax,true|city_code,CCU|plat_carrier,AI|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2063|client_account_number,0|include_yq_comm,true|exempt_tax,true|city_code,CCU|plat_carrier,AI|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    
+Verify That Air Fees Are Calculated Correctly Using Client Number and Fee Override
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,true|transaction_fee,20|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -560,8 +761,23 @@ Verify That Air Fees Are Calculated Correctly Using Fee Override
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+
+Verify That Air Fees Are Calculated Correctly Using Client ID and Fee Override
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2009|client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,true|transaction_fee,20|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2009|client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,true|transaction_fee,20|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2009|client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,true|transaction_fee,20|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using No Apply Fee
+Verify That Air Fees Are Calculated Correctly Using Client Number and No Apply Fee
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000037|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|transaction_fee,0|apply_fee,NA|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -571,8 +787,19 @@ Verify That Air Fees Are Calculated Correctly Using No Apply Fee
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee By PNR With City Territory Code
+
+Verify That Air Fees Are Calculated Correctly Using Client ID and No Apply Fee
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2037|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|transaction_fee,0|apply_fee,NA|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2038|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,2|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|transaction_fee,0|apply_fee,NA|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+        
+Verify That Air Fees Are Calculated Correctly Using Client Number, Transaction Fee By PNR With City Territory Code
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000040|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,50|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -587,7 +814,22 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By PNR With 
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee By PNR With Country Territory Code
+Verify That Air Fees Are Calculated Correctly Using Client ID, Transaction Fee By PNR With City Territory Code
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2040|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,50|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2039|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,50|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2041|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,50|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    
+Verify That Air Fees Are Calculated Correctly Using Client Number, Transaction Fee By PNR With Country Territory Code
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000042|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -601,8 +843,23 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By PNR With 
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+
+Verify That Air Fees Are Calculated Correctly Using Client ID, Transaction Fee By PNR With Country Territory Code
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2042|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2043|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2044|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly Using Transaction Fee By PNR With Region Territory Code
+Verify That Air Fees Are Calculated Correctly Using Client Number, Transaction Fee By PNR With Region Territory Code
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000045|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -616,9 +873,24 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By PNR With 
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+ 
+Verify That Air Fees Are Calculated Correctly Using Client ID, Transaction Fee By PNR With Region Territory Code
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2045|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2046|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,150|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2047|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,100|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,15|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,150|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon With No Air Segments
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000007|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,18|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,30|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,0|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -633,7 +905,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon Wi
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon With GROUP Type Coupon
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000050|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,8|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,35|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,GROUP|tf_by_coupon_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -644,14 +916,14 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon Wi
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon With SOLO And GROUP Type Coupon
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000052|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,8|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,35|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO|tf_by_coupon_amount,30|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon With Air Segments Outside The Start And End Coupon
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000065|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1500|commission_enabled,true|airline_commission,15|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,81|airline_overhead_commission_percentage,8|client_overhead_commission_percentage,7|discount_enabled,true|discount_percentage,6|yq_tax,35|tax_1,52|tax_2,42|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,GROUP|tf_by_coupon_amount,30|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,6|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -666,7 +938,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Coupon Wi
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With Operator F
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000053|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,F|extra_amount,2|per_amount,5|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -681,7 +953,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket Wi
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With Operator M
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000054|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,4|per_amount,5|min_amount,4.5|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -696,7 +968,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket Wi
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With Operator D
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000055|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,D|extra_amount,6|per_amount,5|min_amount,4|max_amount,7.5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -711,7 +983,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket Wi
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With Zero MaxAmount
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000056|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,F|extra_amount,6|per_amount,5|min_amount,4|max_amount,0|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -726,7 +998,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket Wi
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With Non-Zero MaxAmount And MaxAmount Greater Than Transaction Fee
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000057|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,F|extra_amount,6|per_amount,5|min_amount,4|max_amount,9|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -741,7 +1013,7 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket Wi
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With MinAmount Greater Than Transaction Fee
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000058|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,F|extra_amount,1.5|per_amount,5|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -756,28 +1028,28 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket Wi
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With City Territory Code
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000059|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,F|extra_amount,5|per_amount,6|min_amount,4|max_amount,7.5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With Country Territory Code
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000060|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,7.5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With Region Territory Code
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000061|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,1|airline_overhead_commission_percentage,2|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,D|extra_amount,7|per_amount,6|min_amount,4|max_amount,7.5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket With Amount Not Within The StartAmount And EndAmount
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000062|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,11|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,12|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,0|tf_by_tkt_operator,M|extra_amount,0|per_amount,0|min_amount,0|max_amount,0|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -787,14 +1059,21 @@ Verify That Air Fees Are Calculated Correctly Using Transaction Fee By Ticket Wi
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly When GST Is Not Enabled
-    [Tags]    functional    india
+Verify That Air Fees Are Calculated Correctly Using Client Number and When GST Is Not Enabled
+    [Tags]    functional    india    
     Generate Test Variables For Air Fees-IN    client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,false|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+ 
+Verify That Air Fees Are Calculated Correctly Using Client ID and When GST Is Not Enabled
+    [Tags]    functional    india    
+    Generate Test Variables For Air Fees-IN    client_id,2009|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,false|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
     
-Verify That Air Fees Are Calculated Correctly When Discount Is Not Enabled
+Verify That Air Fees Are Calculated Correctly Using Client Number and When Discount Is Not Enabled
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1095|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,false|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -811,8 +1090,26 @@ Verify That Air Fees Are Calculated Correctly When Discount Is Not Enabled
     Verify Response Contains Calculated Fee    element=totalSellFare
     Verify Response Contains Calculated Fee    element=totalSellingFare
     Verify Response Contains Calculated Fee    element=totalTaxes
+ 
+Verify That Air Fees Are Calculated Correctly Using Client ID When Discount Is Not Enabled
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2009|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1095|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,false|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Verify Response Does Not Contain Calculated Fee    element=baseAmount
+    Verify Response Does Not Contain Calculated Fee    element=totalDiscount
+    Verify Response Contains Calculated Fee    element=merchantFeeOnTf
+    Verify Response Contains Calculated Fee    element=totalAirlineCommission
+    Verify Response Contains Calculated Fee    element=totalCharge
+    Verify Response Contains Calculated Fee    element=totalGst
+    Verify Response Contains Calculated Fee    element=totalMerchantFee
+    Verify Response Contains Calculated Fee    element=totalOverheadCommission
+    Verify Response Contains Calculated Fee    element=totalSellFare
+    Verify Response Contains Calculated Fee    element=totalSellingFare
+    Verify Response Contains Calculated Fee    element=totalTaxes
     
-Verify That Air Fees Are Calculated Correctly When Commission Is Not Enabled
+Verify That Air Fees Are Calculated Correctly Using Client Number and When Commission Is Not Enabled
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,false|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -829,8 +1126,26 @@ Verify That Air Fees Are Calculated Correctly When Commission Is Not Enabled
     Verify Response Contains Calculated Fee    element=totalSellFare
     Verify Response Contains Calculated Fee    element=totalSellingFare
     Verify Response Contains Calculated Fee    element=totalTaxes
+ 
+Verify That Air Fees Are Calculated Correctly Using Client ID and When Commission Is Not Enabled
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2009|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,false|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Verify Response Does Not Contain Calculated Fee    element=baseAmount
+    Verify Response Does Not Contain Calculated Fee    element=totalAirlineCommission
+    Verify Response Contains Calculated Fee    element=merchantFeeOnTf
+    Verify Response Contains Calculated Fee    element=totalDiscount
+    Verify Response Contains Calculated Fee    element=totalCharge
+    Verify Response Contains Calculated Fee    element=totalGst
+    Verify Response Contains Calculated Fee    element=totalMerchantFee
+    Verify Response Contains Calculated Fee    element=totalOverheadCommission
+    Verify Response Contains Calculated Fee    element=totalSellFare
+    Verify Response Contains Calculated Fee    element=totalSellingFare
+    Verify Response Contains Calculated Fee    element=totalTaxes
     
-Verify That Air Fees Are Calculated Correctly When Overhead Commission Is Not Enabled
+Verify That Air Fees Are Calculated Correctly Using Client Number and When Overhead Commission Is Not Enabled
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,false|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -847,8 +1162,26 @@ Verify That Air Fees Are Calculated Correctly When Overhead Commission Is Not En
     Verify Response Contains Calculated Fee    element=totalSellFare
     Verify Response Contains Calculated Fee    element=totalSellingFare
     Verify Response Contains Calculated Fee    element=totalTaxes
+ 
+Verify That Air Fees Are Calculated Correctly Using Client ID and When Overhead Commission Is Not Enabled
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2009|client_account_number,2009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,false|airline_overhead_commission_by_percent,true|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Verify Response Does Not Contain Calculated Fee    element=baseAmount
+    Verify Response Does Not Contain Calculated Fee    element=totalOverheadCommission
+    Verify Response Contains Calculated Fee    element=merchantFeeOnTf
+    Verify Response Contains Calculated Fee    element=totalAirlineCommission
+    Verify Response Contains Calculated Fee    element=totalDiscount
+    Verify Response Contains Calculated Fee    element=totalCharge
+    Verify Response Contains Calculated Fee    element=totalGst
+    Verify Response Contains Calculated Fee    element=totalMerchantFee
+    Verify Response Contains Calculated Fee    element=totalSellFare
+    Verify Response Contains Calculated Fee    element=totalSellingFare
+    Verify Response Contains Calculated Fee    element=totalTaxes
     
-Verify That Air Fees Are Calculated Correctly Using Airline Overhead Commission Amount And Transaction Fee By PNR
+Verify That Air Fees Are Calculated Correctly Using Client Number, Airline Overhead Commission Amount And Transaction Fee By PNR
     [Tags]    functional    india
     Generate Test Variables For Air Fees-IN    client_account_number,9000000009|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,false|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
     Send Other Service Fees For Air Fees IN Post Request
@@ -862,9 +1195,24 @@ Verify That Air Fees Are Calculated Correctly Using Airline Overhead Commission 
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
+ 
+Verify That Air Fees Are Calculated Correctly Using Client ID, Airline Overhead Commission Amount And Transaction Fee By PNR
+    [Tags]    functional    india
+    Generate Test Variables For Air Fees-IN    client_id,2009|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,11|overhead_commission_enabled,true|airline_overhead_commission_by_percent,false|airline_overhead_commission,10|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,10|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,3|products_ot1_percentage,1|products_ot2_percentage,3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2009|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,D|base_fare,1200|commission_enabled,true|airline_commission,12|overhead_commission_enabled,true|airline_overhead_commission_by_percent,false|airline_overhead_commission,2|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,2|discount_enabled,true|discount_percentage,10|yq_tax,100|tax_1,2|tax_2,50|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,4|gst_enabled,true|products_override_pc,false|products_gst_percentage,4|products_ot1_percentage,2|products_ot2_percentage,6    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
+    Generate Test Variables For Air Fees-IN    client_id,2009|client_account_number,0|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,L|base_fare,1300|commission_enabled,true|airline_commission,13|overhead_commission_enabled,true|airline_overhead_commission_by_percent,false|airline_overhead_commission,33.1|airline_overhead_commission_percentage,23.1|client_overhead_commission_percentage,3|discount_enabled,true|discount_percentage,1|yq_tax,33.2|tax_1,28|tax_2,13.2|fee_override,false|apply_fee,1|fee_option,P|air_segment_count,null|tf_by_pnr_amount,100|markup_enabled,true|merchant_fee_percentage,3.3|gst_enabled,true|products_override_pc,false|products_gst_percentage,3.3|products_ot1_percentage,3.3|products_ot2_percentage,3.3    country=in
+    Send Other Service Fees For Air Fees IN Post Request
+    Verify Response Status Code Is Correct    200
+    Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Airline Overhead Commission Amount And Transaction Fee By Coupon
-    [Tags]    functional    india
+    [Tags]    functional    india not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,3098300014|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,1000|commission_enabled,true|airline_commission,10|overhead_commission_enabled,true|airline_overhead_commission_by_percent,false|airline_overhead_commission,10|airline_overhead_commission_percentage,9|client_overhead_commission_percentage,8|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,C|air_segment_count,1|tf_by_coupon_list,SOLO;SOLO|tf_by_coupon_amount,500|markup_enabled,true|merchant_fee_percentage,12|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,8|products_ot2_percentage,8    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
@@ -879,7 +1227,7 @@ Verify That Air Fees Are Calculated Correctly Using Airline Overhead Commission 
     Verify Calculated Air Fees Are Returned Correctly
     
 Verify That Air Fees Are Calculated Correctly Using Airline Overhead Commission Amount And Transaction Fee By Ticket
-    [Tags]    functional    india
+    [Tags]    functional    india    not-ready
     Generate Test Variables For Air Fees-IN    client_account_number,9000000008|include_yq_comm,true|exempt_tax,false|city_code,CCU|plat_carrier,EY|trip_type,I|base_fare,100|commission_enabled,true|airline_commission,5|overhead_commission_enabled,true|airline_overhead_commission_by_percent,false|airline_overhead_commission,11|airline_overhead_commission_percentage,12|client_overhead_commission_percentage,12|discount_enabled,true|discount_percentage,1|yq_tax,10|tax_1,2|tax_2,2|fee_override,false|apply_fee,1|fee_option,T|air_segment_count,null|tf_by_tkt_amount,2.25|tf_by_tkt_operator,M|extra_amount,5|per_amount,4|min_amount,4|max_amount,5|markup_enabled,true|merchant_fee_percentage,2|gst_enabled,true|products_override_pc,false|products_gst_percentage,1|products_ot1_percentage,1|products_ot2_percentage,1    country=in
     Send Other Service Fees For Air Fees IN Post Request
     Verify Response Status Code Is Correct    200
