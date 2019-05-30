@@ -2,8 +2,9 @@ package com.cwt.bpg.cbt.client.gst.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.anyString;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -16,31 +17,27 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfoResponse;
+import com.cwt.bpg.cbt.client.gst.model.GstAirline;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
+import com.cwt.bpg.cbt.client.gst.repository.GstAirlineRepository;
 
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClientGstInfoServiceTest {
 	 
 	@Mock
-	private ClientGstInfoRepository respository;
+	private ClientGstInfoRepository clientGstInfoRepository;
+	
+	@Mock
+	private GstAirlineRepository gstAirlineRepository;
 	
 	@InjectMocks
 	private ClientGstInfoService service;
 	
 	@Test
-	public void shouldReturnGstInfoByGstIn() {
-		final String givenGstIn = "123456";
-		
-		when(respository.get(anyString())).thenReturn(new ClientGstInfo());
-		ClientGstInfo response = respository.get(givenGstIn);
-		
-		assertNotNull(response);
-	}
-	
-	@Test
 	public void shouldReturnAllGstInfoByGstIn() {	
-		when(respository.getAll()).thenReturn(Arrays.asList(new ClientGstInfo(), new ClientGstInfo()));
+		when(clientGstInfoRepository.getAll()).thenReturn(Arrays.asList(new ClientGstInfo(), new ClientGstInfo()));
     
 		List<ClientGstInfo> response = service.getAllClientGstInfo();
 		
@@ -48,13 +45,51 @@ public class ClientGstInfoServiceTest {
 	}
 	
 	@Test
-	public void shouldSaveGstInfo() {	
+	public void shouldReturnGstInfoByGstInWithAirlines() {
+		final String givenGstIn = "123456";
+				
+		final GstAirline xsAirline = new GstAirline();
+		xsAirline.setCode("XS");
 		
+		final GstAirline cxAirline = new GstAirline();
+		cxAirline.setCode("CX");
+
+		when(gstAirlineRepository.getAll()).thenReturn(Arrays.asList(xsAirline, cxAirline));
+		when(clientGstInfoRepository.get(anyString())).thenReturn(new ClientGstInfo());
+				
+		final ClientGstInfoResponse response = service.getClientGstInfo(givenGstIn, Arrays.asList("XS", "CX", "LH"));
+		
+		assertNotNull(response.getAirlineCodes());
+		assertNotNull(response.getClientGstInfo());
+		
+	}
+	
+	@Test
+	public void shouldHandleNullGstInfo() {
+		final String givenGstIn = "123456";
+				
+		final GstAirline xsAirline = new GstAirline();
+		xsAirline.setCode("XS");
+		
+		final GstAirline cxAirline = new GstAirline();
+		cxAirline.setCode("CX");
+
+		when(gstAirlineRepository.getAll()).thenReturn(Arrays.asList(xsAirline, cxAirline));
+		when(clientGstInfoRepository.get(anyString())).thenReturn(null);
+				
+		final ClientGstInfoResponse response = service.getClientGstInfo(givenGstIn, Arrays.asList("XS", "CX", "LH"));
+		
+		assertNull(response);
+	}
+	
+	@Test
+	public void shouldSaveGstInfo() {	
 		final ClientGstInfo givenInfo = new ClientGstInfo();
 		givenInfo.setGstin("12345");
 		
-		when(respository.put(anyObject())).thenReturn(givenInfo);
-		ClientGstInfo response = service.save(givenInfo);
+		when(clientGstInfoRepository.put(anyObject())).thenReturn(givenInfo);
+		final ClientGstInfo response = service.save(givenInfo);
+		
 		assertEquals(givenInfo.getGstin(), response.getGstin());
 	}
 	
@@ -62,8 +97,9 @@ public class ClientGstInfoServiceTest {
 	public void shouldRemoveGstInfo() {	
 		final String givenGstIn = "123456";
 		
-		when(respository.remove(anyString())).thenReturn(givenGstIn);
-		String response = service.remove(givenGstIn);
+		when(clientGstInfoRepository.remove(anyString())).thenReturn(givenGstIn);
+		final String response = service.remove(givenGstIn);
+		
 		assertEquals(givenGstIn, response);
 	}
 
