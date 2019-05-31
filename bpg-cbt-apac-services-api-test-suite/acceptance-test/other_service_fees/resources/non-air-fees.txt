@@ -19,6 +19,7 @@ Append Fields For Non-Air Fees For HK/SG
 Append Fields For Non-Air Fees For India
     [Arguments]    ${other_service_fees_request_list}    ${product_request_list}
     Run Keyword If    "${cc_value}"!="null"    Append To List    ${other_service_fees_request_list}    "fopType":"${cc_value}"
+    Run Keyword If    "${client_id_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientId":"${client_id_value}"
     Run Keyword If    "${client_account_number_value}"!="null"    Append To List    ${other_service_fees_request_list}    "clientAccountNumber":"${client_account_number_value}"
     Run Keyword If    "${acct_type_value}"!="null"    Append To List    ${other_service_fees_request_list}    "ccType":"${acct_type_value}"
     Run Keyword If    "${cost_amount_value}"!="null"    Append To List    ${other_service_fees_request_list}    "costAmount":${cost_amount_value}
@@ -80,8 +81,15 @@ Calculate Non-Air Fees For SG
     ...    ELSE    Set Commission Value
 
 Calculate Non-Air Fees For IN
-    Run Keyword If    "${fop_mode_value}" != "3"    Calculate Non-Air Fees Merchant Fee Percentage
-    ...    ELSE    Set Test Variable    ${merchant_fee_percentage_amount}    0
+    ${client_id_value}    Get Variable Value    ${client_id_value}    null
+    Set Test Variable    ${client_id_value}
+    
+    Run Keyword If    ${fop_mode_value} != 3    Calculate Non-Air Fees Merchant Fee Percentage
+    ...    ELSE IF    ("${subject_to_mf_value}" == "false" or "${subject_to_mf_value}" == "null")   Set Test Variable    ${merchant_fee_percentage_amount}    0
+    ...    ELSE    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}            
+    ${merchant_fee_percentage_amount}    Evaluate    ${merchant_fee_percentage_amount}*0.01
+    Set Test Variable    ${merchant_fee_percentage_amount}
+    
     Run Keyword If    "${comm_by_percent_value}" == "true"    Calculate Non-Air Fees Commission
     ...    ELSE    Set Test Variable    ${commission_value}    ${commission_amt_value}
     Run Keyword If    "${discount_by_percent_value}" == "true"    Calculate Non-Air Fees Discount
@@ -122,14 +130,14 @@ Calculate Non-Air Fees Merchant Fee
 
 Calculate Non-Air Fees Merchant Fee Percentage
     ${fop_cc_number_value}    Run Keyword And Return Status    Verify String Contains Substring    ${fop_number_value}    ${cc_number_value}
-    Run Keyword If    "${subject_to_mf_value}" == "true"    Set Test Variable    ${merchant_fee_percentage_amount}    0
-    ...    ELSE IF    ("${apply_mf_bank_value}" == "NULL" or "${apply_mf_bank_value}" == "false") and "${merchant_fee_percentage_value}" != "0" and "${cc_number_value}" != "${EMPTY}" and "${fop_cc_number_value}" == "True"    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}
-    ...    ELSE IF    "${apply_mf_bank_value}" == "true" and "${merchant_fee_percentage_value}" != "0" and "${cc_number_value}" != "${EMPTY}" and "${fop_cc_number_value}" == "True"    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}
-    ...    ELSE IF    ("${apply_mf_cc_value}" == "NULL" or "${apply_mf_cc_value}" == "false") and "${merchant_fee_percentage_value}" != "0" and "${cc_value}" != "${EMPTY}"    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}
-    ...    ELSE IF    "${apply_mf_cc_value}" == "true" and "${merchant_fee_percentage_value}" != "0" and "${cc_value}" != "${EMPTY}"    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}
+    Run Keyword If    ("${subject_to_mf_value}" == "false" or "${subject_to_mf_value}" == "null")    Set Test Variable    ${merchant_fee_percentage_amount}    0
+    ...    ELSE IF    ("${apply_mf_bank_value}" == "NULL" or "${apply_mf_bank_value}" == "false") and "${merchant_fee_percentage_value}" != "0" and "${cc_number_value}" != "${EMPTY}" and "${fop_cc_number_value}" == "True"    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}    #Credit Card
+    ...    ELSE IF    ("${apply_mf_bank_value}" == "true" and "${merchant_fee_percentage_value}" != "0" and "${cc_number_value}" != "${EMPTY}" and "${fop_cc_number_value}" == "True")    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}    #Bank and Credit Card
+    ...    ELSE IF    ("${apply_mf_cc_value}" == "NULL" or "${apply_mf_cc_value}" == "false") and "${merchant_fee_percentage_value}" != "0" and "${cc_value}" != "${EMPTY}"    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}    #Credit Card
+    ...    ELSE IF    ("${apply_mf_cc_value}" == "true" and "${merchant_fee_percentage_value}" != "0" and "${cc_value}" != "${EMPTY}")    Set Test Variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}    #Credit Card
     ...    ELSE    Set Test variable    ${merchant_fee_percentage_amount}    ${merchant_fee_percentage_value}
-    ${merchant_fee_percentage_amount}    Evaluate    ${merchant_fee_percentage_amount}*0.01
     Set Test Variable    ${merchant_fee_percentage_amount}
+        
     
 Calculate Non-Air Fees-HK Nett Cost GST
     ${calculated_value}    Evaluate    ${nett_cost_value}*(${gst_percent_value}*0.01)
