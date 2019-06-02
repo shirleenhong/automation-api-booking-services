@@ -106,7 +106,7 @@ Verify That Error Is Encountered When Mandatory Field Is Missing For Put Request
     Verify Client GST Info Record Is Not Retrieved   
 
 Verify That Error Is Encountered When Invalid Token Is Used For Delete Request
-    [[Tags]    functional
+    [Tags]    functional
     Send Delete Request For Client GST Info    gstin=43LARVMP42AR4OW    token=12345.12345.12345
     Verify Response Status Code Is Correct    401
     Verify Client GST Info Record Is Not Retrieved
