@@ -28,6 +28,8 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
 			MethodArgumentTypeMismatchException ex) {
 
+		logger.error("Server caught an exception: {}", ex);
+
 		String error = ex.getName() + " should be of type "
 				+ ex.getRequiredType().getName();
 
@@ -42,6 +44,8 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> handleIllegalArgument(
 			IllegalArgumentException ex) {
 
+		logger.error("Server caught an exception: {}", ex);
+
 		String error = ex.getMessage();
 
 		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),
@@ -55,11 +59,13 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
+		logger.error("Server caught an exception: {}", ex);
+
 		Throwable mostSpecificCause = ex.getMostSpecificCause();
 		StringBuilder error = new StringBuilder();
 
 		if (mostSpecificCause instanceof JsonParseException) {
-			error.append("Invalid JSON");
+			error.append(((JsonParseException)mostSpecificCause).getMessage());
 		}
 		else if (mostSpecificCause instanceof InvalidFormatException) {
 			InvalidFormatException x = (InvalidFormatException) mostSpecificCause;
@@ -82,6 +88,7 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		logger.error("Server caught an exception: {}", ex);
 		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, INVALID_INPUT);
 		apiError.setErrors(getMessages(ex.getBindingResult()));
 		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
@@ -90,13 +97,13 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleInternalServerError(Exception ex) {
 		logger.error("Server caught an exception: {}", ex);
-		
+
 		if (ex instanceof ServiceException) {
 			ServiceException internalException = ((ServiceException) ex);
 			Optional<Map<String, List<String>>> optionalHeaders = Optional.ofNullable(internalException.getHeaders());
 			HttpHeaders headers = new HttpHeaders();
 			headers.putAll(optionalHeaders.orElse(new LinkedCaseInsensitiveMap<List<String>>(8, Locale.ENGLISH)));
-			
+
 			ApiError apiError = new ApiError(HttpStatus.valueOf(internalException.getStatusCode()), "There were exception found during the process.");
 			return new ResponseEntity<>(apiError, headers, apiError.getStatus());
 		}
@@ -106,9 +113,9 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 			ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, error,error);
 			return new ResponseEntity<>(apiError, new HttpHeaders(),apiError.getStatus());
 		}
-		
+
 		ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
-		
+
 		return new ResponseEntity<>(apiError, apiError.getStatus());
 	}
 
