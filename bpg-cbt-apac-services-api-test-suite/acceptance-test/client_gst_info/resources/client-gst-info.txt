@@ -87,19 +87,9 @@ Send Put Request For Client GST Info
 
 Send Post Request For Client GST Info
     [Arguments]    ${filename}    ${token}=${default_token}
-    Create Session    client-gst-info    ${${env}_base_url}    verify=True
-    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Authorization=Bearer ${token}
-    ...    ELSE    Create Dictionary    Content-Type=application/json
-    ${data}    Create Dictionary    name=file    filename=add_gst_file.xls
-    ${file_object}    Get File    ${CURDIR}${/}add_client_gst__info.xlsx    encoding=iso-8859-1    encoding_errors=strict
-    ${files}    Create Dictionary    file=@${file_object};type=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-    log   ${files} 
-    ${response}    Post Request    client-gst-info    apac-services-rest/api/client-gst-info    files=${files}     params=includeGstAirlines=false   headers=${headers}  
-    Set Test Variable    ${response}
-    Log    ${response.headers}
-    Log    ${response.content}
-    Set Test Variable    ${api_flag}    client-gst-info
-        
+    ${response.status_code}    Post Request File    ${CURDIR}${/}${filename}    ${token}    ${${env}_base_url}/apac-services-rest/api/client-gst-info
+    Set Test Variable    ${response.status_code}
+                       
 Send Delete Request For Client GST Info
     [Arguments]    ${gstin}=${gstin}    ${token}=${default_token}
     Create Session    client-gst-info    ${${env}_base_url}    verify=True
