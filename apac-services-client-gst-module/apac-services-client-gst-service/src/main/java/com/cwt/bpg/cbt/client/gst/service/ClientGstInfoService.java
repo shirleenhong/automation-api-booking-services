@@ -104,6 +104,7 @@ public class ClientGstInfoService {
         if(size == null || size == 0) {
             return; //size will be null if collection doesn't exist
         }
+        clientGstInfoBackupRepository.dropCollection();
         Instant currentDateTime = Instant.now();
         int batches = (int)Math.ceil(size/(double)BATCH_SIZE);
         int currentBatch = 0;
