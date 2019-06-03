@@ -125,7 +125,6 @@ public class ClientGstInfoService {
         List<ClientGstInfoBackup> backups = new LinkedList<>();
         for(ClientGstInfo clientGstInfo: toBackup) {
             ClientGstInfoBackup backup = new ClientGstInfoBackup();
-            backup.setId(UUID.randomUUID().toString());
             backup.setDateCreated(dateTime);
             backup.setClientGstInfo(clientGstInfo);
             backups.add(backup);
