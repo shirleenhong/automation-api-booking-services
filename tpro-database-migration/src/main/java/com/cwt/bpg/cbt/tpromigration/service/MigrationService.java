@@ -1,6 +1,5 @@
 package com.cwt.bpg.cbt.tpromigration.service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,11 +11,11 @@ import java.util.stream.Collectors;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ldap.core.AttributesMapper;
@@ -53,6 +52,7 @@ import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirlineRuleDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirportDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientMerchantFeeDAO;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.LineDefinitionClientMappingDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductDAOFactory;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.RemarkDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAOFactory;
@@ -114,6 +114,9 @@ public class MigrationService {
 
 	@Autowired
 	private AgentDAOImpl agentDAOImpl;
+	
+	@Autowired
+	private LineDefinitionClientMappingDAO lineDefs;
 
 	@Autowired
 	private AirContractDAOImpl airContractDAOImpl;
@@ -128,6 +131,10 @@ public class MigrationService {
 	private String dbName;
 
 	private String countryCode;
+	
+	public void getAllLineDefs() {
+		lineDefs.getLineDefinitionClientMapping();
+	}
 
 	@SuppressWarnings("unchecked")
 	public void migrateProductList() throws JsonProcessingException {
@@ -203,13 +210,7 @@ public class MigrationService {
 			String productCode) {
 
 		Vendor vendorClone = new Vendor();
-		try {
-			BeanUtils.copyProperties(vendorClone, vendor);
-		} catch (IllegalAccessException e) {
-			LOGGER.error("IllegalAccessException", e);
-		} catch (InvocationTargetException e) {
-			LOGGER.error("InvocationTargetException", e);
-		}
+		BeanUtils.copyProperties(vendorClone, vendor);
 
 		for (MerchantFeeAbsorb mf : noMerchantFeeList) {
 			if (productCode.equals(mf.getProductCode()) && vendorClone.getCode().equals(mf.getVendorNumber())) {
