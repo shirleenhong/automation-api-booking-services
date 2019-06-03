@@ -12,10 +12,4 @@ public class GstAirlineRepository extends CommonRepository<GstAirline, String> {
     public GstAirlineRepository() {
         super(GstAirline.class, KEY_COLUMN);
     }
-
-    public void dropCollection() {
-        if(collectionExists()) {
-            morphia.getDatastore().getCollection(GstAirline.class).drop();
-        }
-    }
 }

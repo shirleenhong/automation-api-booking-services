@@ -94,7 +94,7 @@ public class ClientGstInfoController {
                 .endsWith(MACRO_ENABLED_WORKBOOK))) {
             throw new IllegalArgumentException("File must be in excel format");
         }
-        clientGstInfoService.saveFromExcelFile(new BufferedInputStream(file.getInputStream()), includeGstAirlines);
+        clientGstInfoService.saveFromExcelFile(file.getInputStream(), includeGstAirlines);
         Map<String, String> response = new HashMap<>();
         response.put("message", "saving in progress");
         return new ResponseEntity<>(response, HttpStatus.OK);

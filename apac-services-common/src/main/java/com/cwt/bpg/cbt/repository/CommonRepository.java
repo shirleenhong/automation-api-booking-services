@@ -7,6 +7,7 @@ import com.mongodb.*;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.query.FindOptions;
 import org.mongodb.morphia.query.Query;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,10 @@ public class CommonRepository<T, D> {
 
     public List<T> getAll() {
         return morphia.getDatastore().createQuery(typeClass).asList();
+    }
+
+    public List<T> getAll(FindOptions options) {
+        return morphia.getDatastore().createQuery(typeClass).asList(options);
     }
 
     /**
@@ -89,6 +94,16 @@ public class CommonRepository<T, D> {
 
     public boolean collectionExists() {
         return morphia.getDatastore().getDB().collectionExists(collectionName);
+    }
+
+    public CommandResult getStats() {
+        return morphia.getDatastore().getCollection(typeClass).getStats();
+    }
+
+    public void dropCollection() {
+        if(collectionExists()) {
+            morphia.getDatastore().getCollection(typeClass).drop();
+        }
     }
 
     @SuppressWarnings("unchecked")
