@@ -116,13 +116,12 @@ public class ClientGstInfoControllerTest {
 	@Test
 	public void putClientGstInfoReturns200() throws Exception {
 		ClientGstInfo clientGstInfo = new ClientGstInfo();
-		clientGstInfo.setGstin("gstin");
+		clientGstInfo.setGstin("1234567890ABCDE");
 		clientGstInfo.setClient("client");
 		clientGstInfo.setClientEntityName("clientEntityName");
-		clientGstInfo.setBusinessPhoneNumber("businessPhoneNumber");
-		clientGstInfo.setBusinessEmailAddress("businessEmailAddress");
+		clientGstInfo.setBusinessPhoneNumber("2211996");
+		clientGstInfo.setBusinessEmailAddress("sample@gmail.com");
 		clientGstInfo.setEntityAddressLine1("entityAddressLine1");
-		clientGstInfo.setBusinessPhoneNumber("businessPhoneNumber");
 		clientGstInfo.setPostalCode("postalCode");
 		clientGstInfo.setCity("city");
 		clientGstInfo.setState("state");
