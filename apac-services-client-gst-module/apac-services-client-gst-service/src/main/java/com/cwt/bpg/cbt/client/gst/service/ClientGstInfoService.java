@@ -74,6 +74,8 @@ public class ClientGstInfoService {
 
     @CacheEvict(cacheNames = "client-gst-info", allEntries = true)
     public ClientGstInfo save(ClientGstInfo clientGstInfo) {
+        String formattedGstin = clientGstInfo.getGstin().toUpperCase().trim();
+        clientGstInfo.setGstin(formattedGstin);
         return clientGstInfoRepository.put(clientGstInfo);
     }
     

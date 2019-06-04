@@ -43,7 +43,7 @@ public class ClientGstInfoExcelReaderService {
     private static final String SPACE = " ";
     private static final String TRAIN = "train";
 
-    public GstLookup readExcelFile(InputStream inputStream, boolean includeGstAirlines) {
+    public GstLookup readExcelFile(InputStream inputStream, Boolean includeGstAirlines) {
         GstLookup gstLookup = new GstLookup();
         try(InputStream is = new BufferedInputStream(inputStream)) {
             Workbook workbook = StreamingReader.builder()
@@ -107,6 +107,7 @@ public class ClientGstInfoExcelReaderService {
         info.setGstin(getValue(row, GSTIN_INDEX));
         if (info.getGstin() != null) {
             info.setGstin(info.getGstin().replaceAll(NON_ALPHANUMERIC_REGEX, EMPTY_STRING));
+            info.setGstin(info.getGstin().toUpperCase());
         }
         info.setClientEntityName(getValue(row, ENTITY_NAME_INDEX));
         info.setBusinessPhoneNumber(getValue(row, BUSINESS_PHONE_INDEX));
