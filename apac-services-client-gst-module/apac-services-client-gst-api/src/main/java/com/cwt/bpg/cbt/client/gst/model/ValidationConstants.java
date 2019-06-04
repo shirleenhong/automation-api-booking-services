@@ -22,8 +22,9 @@ class ValidationConstants {
 
     static final String BUSINESS_EMAIL_EMPTY_ERROR_MSG = "businessEmailAddress is required";
     static final String BUSINESS_EMAIL_FORMAT_ERROR_MSG = "businessEmailAddress format is invalid";
-    static final String BUSINESS_EMAIL_LENGTH_ERROR_MSG = "businessEmailAddress should be at most 35 characters";
-    static final int BUSINESS_EMAIL_ADDRESS_MAX_LENGTH = 35;
+    static final String BUSINESS_EMAIL_LENGTH_ERROR_MSG = "businessEmailAddress should be at most 40 characters";
+    static final String BUSINESS_EMAIL_REGEX = "^[@\\-_.a-zA-Z0-9]*$";
+    static final int BUSINESS_EMAIL_ADDRESS_MAX_LENGTH = 40;
 
     static final String ADDRESS_LINE1_EMPTY_ERROR_MSG = "entityAddressLine1 is required";
     static final String ADDRESS_LINE1_LENGTH_ERROR_MSG = "entityAddressLine1 should be at most 35 characters";
