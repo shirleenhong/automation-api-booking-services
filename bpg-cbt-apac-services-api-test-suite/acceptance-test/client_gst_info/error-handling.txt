@@ -140,3 +140,32 @@ Verify That Error Is Encountered When No Token Is Used For Delete Request
     Send Delete Request For Client GST Info    gstin=${EMPTY}
     Verify Response Status Code Is Correct    405
     Verify Client GST Info Record Is Not Retrieved
+    
+Verify That Error Is Encountered When Invalid Token Is Used For Post Request
+    [Tags]    functional
+    Send Post Request For Client GST Info    filename=add_client_gst__info.xlsx    token=12345.12345.12345
+    Verify Response Status Code Is Correct    401
+    Send Post Request For Client GST Info    filename=add_client_gst__info.xlsx    token=abcde.abcde.abcde
+    Verify Response Status Code Is Correct    401
+    Send Post Request For Client GST Info    filename=add_client_gst__info.xlsx    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
+    Verify Response Status Code Is Correct    401
+    
+Verify That Error Is Encountered When Null Token Is Used For Post Request
+    [Tags]    functional
+    Send Post Request For Client GST Info    filename=add_client_gst__info.xlsx    token=null
+    Verify Response Status Code Is Correct    401
+    
+Verify That Error Is Encountered When Empty Token Is Used For Post Request
+    [Tags]    functional
+    Send Post Request For Client GST Info    filename=add_client_gst__info.xlsx    token=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    
+Verify That Error Is Encountered When No Token Is Used For Post Request
+    [Tags]    functional
+    Send Post Request For Client GST Info    filename=add_client_gst__info.xlsx    token=None
+    Verify Response Status Code Is Correct    401
+    
+ Verify That Error Is Encountered When File Is not Excel File For Post Request
+    [Tags]    functional
+    Send Post Request For Client GST Info    filename=client-gst-info-list.txt
+    Verify Response Status Code Is Correct    400

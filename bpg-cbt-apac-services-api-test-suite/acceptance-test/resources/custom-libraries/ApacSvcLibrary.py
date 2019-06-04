@@ -1,10 +1,12 @@
 import math
 import decimal
 import PyPDF2
+import requests
 import imaplib
 from robot.libraries.String import String
 from robot.libraries.BuiltIn import BuiltIn
 from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_DOWN, ROUND_DOWN, ROUND_UP
+from _sqlite3 import connect
 
 class ApacSvcLibrary:
     ROBOT_LIBRARY_SCOPE = 'TEST CASE'
@@ -79,4 +81,20 @@ class ApacSvcLibrary:
        round_value =  amount_in_decimal.quantize(Decimal('1'), rounding=round_type).quantize(Decimal('0.01'))
        """return round_value if country == 'SG' else int(round_value)"""
        return int(round_value)
-        
+   
+    def post_request_file(self, file_dir, token, environment):
+       files = {'file': open(file_dir, 'rb')}
+       url = environment
+       querystring = {"includeGstAirlines":"false"}       
+       headers = {
+           'Authorization': "Bearer "+token,
+           'Accept': "*/*",
+           'Cache-Control': "no-cache",
+           'accept-encoding': "gzip, deflate",
+           'content-length': "5676932",
+           'Connection': "keep-alive",
+           'cache-control': "no-cache"
+        }
+       response = requests.post(url, files=files, headers=headers, params=querystring)
+       return response.status_code
+
