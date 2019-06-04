@@ -11,10 +11,14 @@ class ValidationConstants {
     static final String CLIENT_EMPTY_ERROR_MSG = "client is required";
 
     static final String CLIENT_ENTITY_NAME_EMPTY_ERROR_MSG = "clientEntityName is required";
+    static final String CLIENT_ENTITY_NAME_LENGTH_ERROR_MSG = "clientEntityName should be at most 35 characters";
+    static final int CLIENT_ENTITY_NAME_MAX_LENGTH = 35;
 
     static final String BUSINESS_PHONE_NUM_EMPTY_ERROR_MSG = "businessPhoneNumber is required";
     static final String BUSINESS_PHONE_NUM_REGEX = "^[0-9]*$";
     static final String BUSINESS_PHONE_NUM_FORMAT_ERROR_MSG = "businessPhoneNumber should be numeric";
+    static final String BUSINESS_PHONE_NUM_LENGTH_ERROR_MSG = "businessPhoneNumber should be at most 15 characters";
+    static final int BUSINESS_PHONE_NUM_MAX_LENGTH = 15;
 
     static final String BUSINESS_EMAIL_EMPTY_ERROR_MSG = "businessEmailAddress is required";
     static final String BUSINESS_EMAIL_FORMAT_ERROR_MSG = "businessEmailAddress format is invalid";

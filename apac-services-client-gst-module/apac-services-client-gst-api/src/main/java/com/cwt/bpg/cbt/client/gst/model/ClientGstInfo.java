@@ -32,9 +32,11 @@ public class ClientGstInfo implements Serializable {
     private String client;
 
     @NotEmpty(message = CLIENT_ENTITY_NAME_EMPTY_ERROR_MSG)
+    @Size(max = CLIENT_ENTITY_NAME_MAX_LENGTH, message = CLIENT_ENTITY_NAME_LENGTH_ERROR_MSG)
     private String clientEntityName;
 
     @NotEmpty(message = BUSINESS_PHONE_NUM_EMPTY_ERROR_MSG)
+    @Size(max = BUSINESS_PHONE_NUM_MAX_LENGTH, message = BUSINESS_PHONE_NUM_LENGTH_ERROR_MSG)
     @Pattern(regexp = BUSINESS_PHONE_NUM_REGEX, message = BUSINESS_PHONE_NUM_FORMAT_ERROR_MSG)
     private String businessPhoneNumber;
 
