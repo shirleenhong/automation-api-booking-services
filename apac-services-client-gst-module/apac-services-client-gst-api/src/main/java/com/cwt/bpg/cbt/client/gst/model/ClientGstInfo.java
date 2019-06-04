@@ -3,11 +3,16 @@ package com.cwt.bpg.cbt.client.gst.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.*;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.beans.Transient;
 import java.io.Serializable;
+
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.*;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity(value = "clientGstInfo", noClassnameStored = true)
@@ -17,34 +22,44 @@ public class ClientGstInfo implements Serializable {
     private static final long serialVersionUID = 1600168082099452654L;
 
     @Id
-    @NotEmpty(message = "gstin is required")
+    @NotEmpty(message = GSTIN_EMPTY_ERROR_MSG)
+    @Pattern(regexp = GSTIN_REGEX, message = GSTIN_FORMAT_ERROR_MSG)
+    @Size(min = GSTIN_LENGTH, max = GSTIN_LENGTH, message = GSTIN_LENGTH_ERROR_MSG)
     @ApiModelProperty(required = true)
     private String gstin;
 
-    @NotEmpty(message = "client is required")
+    @NotEmpty(message = CLIENT_EMPTY_ERROR_MSG)
     private String client;
 
-    @NotEmpty(message = "clientEntityName is required")
+    @NotEmpty(message = CLIENT_ENTITY_NAME_EMPTY_ERROR_MSG)
     private String clientEntityName;
 
-    @NotEmpty(message = "businessPhoneNumber is required")
+    @NotEmpty(message = BUSINESS_PHONE_NUM_EMPTY_ERROR_MSG)
+    @Pattern(regexp = BUSINESS_PHONE_NUM_REGEX, message = BUSINESS_PHONE_NUM_FORMAT_ERROR_MSG)
     private String businessPhoneNumber;
 
-    @NotEmpty(message = "businessEmailAddress is required")
+    @NotEmpty(message = BUSINESS_EMAIL_EMPTY_ERROR_MSG)
+    @Email(message = BUSINESS_EMAIL_FORMAT_ERROR_MSG)
+    @Size(max = BUSINESS_EMAIL_ADDRESS_MAX_LENGTH, message = BUSINESS_EMAIL_LENGTH_ERROR_MSG)
     private String businessEmailAddress;
 
-    @NotEmpty(message = "entityAddressLine1 is required")
+    @NotEmpty(message = ADDRESS_LINE1_EMPTY_ERROR_MSG)
+    @Size(max = ADDRESS_LINE1_MAX_LENGTH, message = ADDRESS_LINE1_LENGTH_ERROR_MSG)
     private String entityAddressLine1;
 
+    @Size(max = ADDRESS_LINE2_MAX_LENGTH, message = ADDRESS_LINE2_LENGTH_ERROR_MSG)
     private String entityAddressLine2;
 
-    @NotEmpty(message = "postalCode is required")
+    @NotEmpty(message = POSTAL_CODE_EMPTY_ERROR_MSG)
+    @Size(max = POSTAL_CODE_MAX_LENGTH, message = POSTAL_CODE_LENGTH_ERROR_MSG)
     private String postalCode;
 
-    @NotEmpty(message = "city is required")
+    @NotEmpty(message = CITY_EMPTY_ERROR_MSG)
+    @Size(max = CITY_MAX_LENGTH, message = CITY_LENGTH_ERROR_MSG)
     private String city;
 
-    @NotEmpty(message = "state is required")
+    @NotEmpty(message = STATE_EMPTY_ERROR_MSG)
+    @Size(max = STATE_MAX_LENGTH, message = STATE_LENGTH_ERROR_MSG)
     private String state;
 
     public String getGstin() {
