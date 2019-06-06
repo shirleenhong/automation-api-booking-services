@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -84,18 +85,16 @@ public class AirTransactionControllerTest {
 
     @Test
     public void putAirTransactionShouldSaveAndReturnSavedAirTransaction() throws Exception {
-		AirTransaction airTransaction = new AirTransaction();
-
-		when(service.save(any(AirTransaction.class))).thenReturn(airTransaction);
+    	when(service.save(any())).thenReturn(Arrays.asList(new AirTransaction()));
 
         mockMvc.perform(put("/air-transactions")
                 .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(airTransaction)))
+                .content(convertObjectToJsonBytes(Arrays.asList(new AirTransaction()))))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        verify(service, times(1)).save(any(AirTransaction.class));
+        verify(service, times(1)).save(any());
     }
 
     @Test

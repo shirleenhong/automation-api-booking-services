@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.air.transaction;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,8 +59,10 @@ public class AirTransactionService {
 		return airTransactionRepo.getAirTransactions(input);
 	}
 
-	public AirTransaction save(AirTransaction airTrans) {
-		return airTransactionRepo.put(airTrans);
+	public List<AirTransaction> save(List<AirTransaction> airTrans) {
+		List<AirTransaction> savedAirTransactions = new ArrayList<>();
+		airTrans.forEach(a -> savedAirTransactions.add(airTransactionRepo.put(a)));
+		return savedAirTransactions;
 	}
 	
 	public String delete(String id) {
