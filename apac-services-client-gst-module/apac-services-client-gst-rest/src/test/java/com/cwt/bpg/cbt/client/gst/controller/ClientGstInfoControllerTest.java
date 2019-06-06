@@ -122,7 +122,7 @@ public class ClientGstInfoControllerTest {
 		clientGstInfo.setBusinessPhoneNumber("2211996");
 		clientGstInfo.setBusinessEmailAddress("sample@gmail.com");
 		clientGstInfo.setEntityAddressLine1("entityAddressLine1");
-		clientGstInfo.setPostalCode("postalCode");
+		clientGstInfo.setPostalCode("9200");
 		clientGstInfo.setCity("city");
 		clientGstInfo.setState("state");
 
