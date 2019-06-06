@@ -28,10 +28,10 @@ public class ClientGstInfo implements Serializable {
     @ApiModelProperty(required = true)
     private String gstin;
 
-    @NotEmpty(message = CLIENT_EMPTY_ERROR_MSG)
     private String client;
 
     @NotEmpty(message = CLIENT_ENTITY_NAME_EMPTY_ERROR_MSG)
+    @Pattern(regexp = CLIENT_ENTITY_NAME_REGEX, message = CLIENT_ENTITY_NAME_FORMAT_ERROR_MSG)
     @Size(max = CLIENT_ENTITY_NAME_MAX_LENGTH, message = CLIENT_ENTITY_NAME_LENGTH_ERROR_MSG)
     private String clientEntityName;
 
@@ -47,21 +47,26 @@ public class ClientGstInfo implements Serializable {
     private String businessEmailAddress;
 
     @NotEmpty(message = ADDRESS_LINE1_EMPTY_ERROR_MSG)
+    @Pattern(regexp = ADDRESS_LINE1_REGEX, message = ADDRESS_LINE1_FORMAT_ERROR_MSG)
     @Size(max = ADDRESS_LINE1_MAX_LENGTH, message = ADDRESS_LINE1_LENGTH_ERROR_MSG)
     private String entityAddressLine1;
 
+    @Pattern(regexp = ADDRESS_LINE2_REGEX, message = ADDRESS_LINE2_FORMAT_ERROR_MSG)
     @Size(max = ADDRESS_LINE2_MAX_LENGTH, message = ADDRESS_LINE2_LENGTH_ERROR_MSG)
     private String entityAddressLine2;
 
     @NotEmpty(message = POSTAL_CODE_EMPTY_ERROR_MSG)
+    @Pattern(regexp = POSTAL_CODE_REGEX, message = POSTAL_CODE_FORMAT_ERROR_MSG)
     @Size(max = POSTAL_CODE_MAX_LENGTH, message = POSTAL_CODE_LENGTH_ERROR_MSG)
     private String postalCode;
 
     @NotEmpty(message = CITY_EMPTY_ERROR_MSG)
+    @Pattern(regexp = CITY_REGEX, message = CITY_FORMAT_ERROR_MSG)
     @Size(max = CITY_MAX_LENGTH, message = CITY_LENGTH_ERROR_MSG)
     private String city;
 
     @NotEmpty(message = STATE_EMPTY_ERROR_MSG)
+    @Pattern(regexp = STATE_REGEX, message = STATE_FORMAT_ERROR_MSG)
     @Size(max = STATE_MAX_LENGTH, message = STATE_LENGTH_ERROR_MSG)
     private String state;
 
