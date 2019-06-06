@@ -59,6 +59,7 @@ import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAOFactory;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AgentInfo;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirVariables;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.LineDefinitionClientMapping;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.MerchantFeeAbsorb;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.TblAgent;
@@ -78,6 +79,7 @@ public class MigrationService {
 	private static final String AIR_MISC_INFO_COLLECTION = "airMiscInfo";
 	private static final String PRODUCTS_COLLECTION = "productList";
 	private static final String AGENT_COLLECTION = "agentInfo";
+	private static final String BILLING_ENTITIES_COLLECTION = "billingEntities";
 
 	@Autowired
 	private MongoDbConnection mongoDbConnection;
@@ -132,8 +134,16 @@ public class MigrationService {
 
 	private String countryCode;
 	
-	public void getAllLineDefs() {
-		lineDefs.getLineDefinitionClientMapping();
+	public void migrateLineDefClientMapping() throws JsonProcessingException {
+		List<LineDefinitionClientMapping> lineDefinitionClientMappings = lineDefs.getLineDefinitionClientMapping();
+
+		List<Document> docs = new ArrayList<>();
+
+		for (LineDefinitionClientMapping lineDefinitionClientMapping : lineDefinitionClientMappings) {
+			docs.add(dBObjectMapper.mapAsDbDocument(lineDefinitionClientMapping));
+		}
+
+		mongoDbConnection.getCollection(BILLING_ENTITIES_COLLECTION).insertMany(docs);
 	}
 
 	@SuppressWarnings("unchecked")

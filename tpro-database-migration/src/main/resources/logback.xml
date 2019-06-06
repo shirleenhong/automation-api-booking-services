@@ -75,7 +75,7 @@
 	</logger>
 
 	<root level="INFO">
-		<appender-ref ref="ASYNC-WARNINGS" />
+		<appender-ref ref="STDOUT" />
 	</root>
 
 

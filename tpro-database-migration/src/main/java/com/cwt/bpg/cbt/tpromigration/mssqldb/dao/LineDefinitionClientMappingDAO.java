@@ -28,8 +28,12 @@ public class LineDefinitionClientMappingDAO {
 	@Autowired
 	private DataSource dataSource;
 
-	public void getLineDefinitionClientMapping() {
-		final String sql = "Select * from [CWTStandardData].[dbo].[tblCSP_LineDefClientMapping]";
+	public List<LineDefinitionClientMapping> getLineDefinitionClientMapping() {
+		final String sql = "select ldcm.*, t.ClientNumber, t.clientNumberCount from [CWTStandardData].[dbo].[tblCSP_LineDefClientMapping] ldcm "
+				+ "left join  (select t1.clientid, t1.clientnumber, t2.clientNumberCount from [CWTMasterDB_IN].[dbo].[tblClientMaster] t1 "
+				+ "inner join (SELECT  count(clientNumber) clientNumberCount, clientnumber "
+				+ "FROM [CWTMasterDB_IN].[dbo].[tblClientMaster] group by clientnumber) t2 on t1.ClientNumber = t2.ClientNumber) "
+				+ "t on ldcm.clientid = t.clientid";
 		List<LineDefinitionClientMapping> lineDefs = new ArrayList<>();
 		Connection conn = null;
 
@@ -48,8 +52,10 @@ public class LineDefinitionClientMappingDAO {
 				lineDefinition.setProfilePcc(rs.getString("ProfilePCC"));
 				lineDefinition.setProfileName(rs.getString("ProfileName"));
 				lineDefinition.setPreferred(rs.getInt("Preferred"));
+				if (rs.getInt("clientNumberCount")== 1) {
+					lineDefinition.setClientAccountNumber(rs.getString("ClientNumber"));
+				}
 				lineDefs.add(lineDefinition);
-
 			}
 			rs.close();
 			ps.close();
@@ -66,10 +72,11 @@ public class LineDefinitionClientMappingDAO {
 		logger.info("size of line definition mapping from mssqldb: {}", lineDefs.size());
 		Map<String, Object> m = new HashMap<>();
 		
-		m.put("paylaod", lineDefs);
+		m.put("payload", lineDefs);
 		String json = JsonOutput.toJson(m);
 		
 		logger.info(JsonOutput.prettyPrint(json));
+		return lineDefs;
 	}
 
 }

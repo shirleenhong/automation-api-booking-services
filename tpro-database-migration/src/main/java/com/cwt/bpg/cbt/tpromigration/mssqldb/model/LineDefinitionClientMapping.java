@@ -21,6 +21,8 @@ public class LineDefinitionClientMapping implements Serializable {
 	private String profileName;
 	
 	private int preferred;
+	
+	private String clientAccountNumber;
 
 	public Integer getMappingId() {
 		return mappingId;
@@ -86,7 +88,11 @@ public class LineDefinitionClientMapping implements Serializable {
 		this.preferred = preferred;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getClientAccountNumber() {
+		return clientAccountNumber;
+	}
+
+	public void setClientAccountNumber(String clientAccountNumber) {
+		this.clientAccountNumber = clientAccountNumber;
 	}
 }
