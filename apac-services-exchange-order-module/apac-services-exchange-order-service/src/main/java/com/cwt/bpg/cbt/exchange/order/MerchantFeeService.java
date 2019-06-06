@@ -15,8 +15,6 @@ public class MerchantFeeService {
     @Autowired
     private MerchantFeeRepository merchantFeeRepo;
     
-    public static final String KEY = "getAll";
-    
     @Cacheable(cacheNames = "merchant-fees", key="#root.methodName")
     public List<MerchantFee> getAll() {
         return merchantFeeRepo.getAll();
