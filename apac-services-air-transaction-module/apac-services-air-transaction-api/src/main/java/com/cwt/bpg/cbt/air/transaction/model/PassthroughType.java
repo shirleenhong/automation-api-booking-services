@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum PassthroughType {
 
-    AIRLINE("Airline"),
+    AIRLINE("AIRLINE"),
     CWT("CWT");
 
 	@JsonValue
