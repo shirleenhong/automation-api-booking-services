@@ -6,4 +6,3 @@ Library           String
 Library           JSONLibrary
 Library           BuiltIn
 Library           OperatingSystem    
-Library           ApacSvcLibrary    
