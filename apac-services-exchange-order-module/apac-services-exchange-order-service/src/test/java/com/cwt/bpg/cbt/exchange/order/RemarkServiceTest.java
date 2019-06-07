@@ -2,7 +2,10 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Collections;
 import java.util.List;
@@ -52,8 +55,7 @@ public class RemarkServiceTest {
         verify(repository, times(1)).get(new ObjectId("5b2870d6284b8d1ac84300ac"));
     }
 
-    @SuppressWarnings({"unchecked"})
-	@Test
+    @Test
     public void getRemarksShouldReturnRemarks() {
         Remark remark = mock(Remark.class);
         when(remark.getText()).thenReturn("ITIN REMARK");

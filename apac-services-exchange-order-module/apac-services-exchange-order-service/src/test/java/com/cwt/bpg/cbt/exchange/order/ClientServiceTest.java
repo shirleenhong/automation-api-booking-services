@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,6 @@ import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.ClientPricing;
-import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
 
 public class ClientServiceTest {

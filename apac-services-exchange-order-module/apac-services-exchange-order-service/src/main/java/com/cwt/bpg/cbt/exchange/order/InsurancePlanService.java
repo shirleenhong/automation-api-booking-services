@@ -15,8 +15,6 @@ public class InsurancePlanService {
 	@Autowired
 	private InsurancePlanRepository insurancePlanRepository;
 	
-	public static final String KEY = "getAll";
-	
 	@Cacheable(cacheNames = "insurance-types", key="#root.methodName")
 	public List<InsurancePlan> getAll() {
 		return insurancePlanRepository.getAll();
