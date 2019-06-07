@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.air.contract;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +48,8 @@ public class AirContractController {
 	@PutMapping(path = "/air-contract")
 	@ApiOperation(value = "[Maintenance] Saves (inserts/updates) Air Contract record.")
 	@ResponseBody
-	public ResponseEntity<AirContract> putAirContract(@Valid @RequestBody AirContract airContract) {
-		return new ResponseEntity<>(airContractService.save(airContract), HttpStatus.OK);
+	public ResponseEntity<List<AirContract>> putAirContract(@Valid @RequestBody List<AirContract> airContracts) {
+		return new ResponseEntity<>(airContractService.save(airContracts), HttpStatus.OK);
 	}
 
 	@DeleteMapping(path = "/air-contract/{id}")

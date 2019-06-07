@@ -1,13 +1,14 @@
 package com.cwt.bpg.cbt.air.contract;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.cwt.bpg.cbt.air.contract.AirContractRepository;
 import com.cwt.bpg.cbt.air.contract.model.AirContract;
 
 @Service
@@ -25,9 +26,10 @@ public class AirContractService {
 		return repository.get(new ObjectId(id));
 	}
 
-	@CachePut(cacheNames = "air-contracts", key = "#airContract.countryCode + #airContract.airlineCode + #airContract.clientAccountNumber")
-	public AirContract save(AirContract airContract) {
-		return repository.put(airContract);
+	public List<AirContract> save(List<AirContract> airContracts) {
+		List<AirContract> savedAirContracts = new ArrayList<>();
+		airContracts.forEach(a -> savedAirContracts.add(repository.put(a)));
+		return savedAirContracts;
 	}
 
 	@CacheEvict(cacheNames = "air-contracts", allEntries = true)
