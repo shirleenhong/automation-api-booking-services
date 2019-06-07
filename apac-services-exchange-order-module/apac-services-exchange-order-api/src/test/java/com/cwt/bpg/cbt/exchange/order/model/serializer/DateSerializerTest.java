@@ -33,7 +33,7 @@ public class DateSerializerTest {
 
         serializer.serialize(null, generator, null);
 
-        verify(generator, times(1)).writeString((String) null);
+        verify(generator, times(0)).writeString((String) null);
     }
 
     @Test
