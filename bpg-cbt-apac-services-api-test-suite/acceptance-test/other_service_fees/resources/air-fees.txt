@@ -124,7 +124,7 @@ Calculate Air Fees-IN Reference Fare
     Set Test Variable    ${reference_fare_amount}    ${calculated_value}
 
 Calculate Air Fees-IN Total Airline Commission
-    ${calculated_value}    Evaluate    (${base_fare_value}+${yq_tax_value})*(${airline_commission_value}*0.01)
+    ${calculated_value}    Evaluate    ${base_fare_value}*(${airline_commission_value}*0.01)
     ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     ${calculated_value}    Fix Decimal Places    ${calculated_value}
@@ -330,15 +330,19 @@ Create Dictionary For Clients
     ...    9000000046.air_pricing_id=20    9000000047.air_pricing_id=20    9000000048.air_pricing_id=30    9000000049.air_pricing_id=30    9000000050.air_pricing_id=20    9000000051.air_pricing_id=20
     ...    9000000052.air_pricing_id=20    9000000053.air_pricing_id=20    9000000054.air_pricing_id=20    9000000055.air_pricing_id=20    9000000056.air_pricing_id=20    9000000057.air_pricing_id=20
     ...    9000000058.air_pricing_id=20    9000000059.air_pricing_id=20    9000000060.air_pricing_id=20    9000000061.air_pricing_id=20    9000000062.air_pricing_id=20    9000000063.air_pricing_id=20
-    ...    9000000064.air_pricing_id=20    9000000065.air_pricing_id=20
-    Set Suite Variable    ${clients_dict}
-
+    ...    9000000064.air_pricing_id=20    9000000065.air_pricing_id=20    1910.air_pricing_id=20    2009.air_pricing_id=20    2039.air_pricing_id=20    2040.air_pricing_id=20    2041.air_pricing_id=20    
+    ...    2042.air_pricing_id=20    2043.air_pricing_id=20    2044.air_pricing_id=20    2045.air_pricing_id=20    2046.air_pricing_id=20    2047.air_pricing_id=20    2064.air_pricing_id=20    2063.air_pricing_id=20    142.air_pricing_id=21    2012.air_pricing_id=22    2015.air_pricing_id=23    2018.air_pricing_id=24    2021.air_pricing_id=25    
+    ...    2024.air_pricing_id=26    2027.air_pricing_id=27    2030.air_pricing_id=28    2033.air_pricing_id=29    2036.air_pricing_id=30     2037.air_pricing_id=30    2038.air_pricing_id=30    
+    
+    Set Suite Variable    ${clients_dict}    
+    
 Create Test Variables For Air Fees-HK
     [Arguments]    ${fees_list}    ${country}
     ${fees_list}    Split String    ${fees_list}    |
     : FOR    ${fees}    IN    @{fees_list}
     \    ${fees_item}    Split String    ${fees}    ,
     \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
+    
     Set Test Variable    ${fees_list}
     Set Test Variable    ${country}    ${country.lower()}
     ${var_exist_flag}    Run Keyword And Return Status    Variable Should Exist    ${tax_3_value}         
@@ -381,7 +385,10 @@ Generate Test Variables For Air Fees-IN
     [Arguments]    ${fees_list}    ${country}
     Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
     #Set Test Variable    ${tax_3_value}    0
-    Set Test Variable    ${air_pricing_id}    ${clients_dict["${client_account_number_value}.air_pricing_id"]}
+    ${client_id_value}    Get Variable Value    ${client_id_value}    null
+    Set Test Variable    ${client_id_value}
+    ${air_pricing_id}    Get Variable value    ${clients_dict["${client_id_value}.air_pricing_id"]}    ${clients_dict["${client_account_number_value}.air_pricing_id"]}    
+    Set Test Variable    ${air_pricing_id}        
     #${decimal_place}    Set Variable If    "${country.lower()}" == "hk"    0    2
     Set Test Variable    ${decimal_place}    0
     ${total_gst_amount}    Set Variable If    "${gst_enabled_value}" == "true"    0
@@ -403,11 +410,13 @@ Generate Test Variables For Air Fees-IN
     ...    ELSE IF    "${calculate_fee_flag}" == "true" and "${fee_option_value}" == "C"    Calculate Air Fees-IN Transaction Fee By Coupon
     ...    ELSE IF    "${calculate_fee_flag}" == "true" and "${fee_option_value}" == "T"    Calculate Air Fees-IN Transaction Fee By Tkt
     ...    ELSE    Set Test Variable    ${transaction_fee_amount}    ${transaction_fee_value}
+    Set Test Variable    ${fee_amount}    ${transaction_fee_amount}
     Calculate Air Fees-IN Total Merchant Fee
     Calculate Air Fees-IN Total GST On TF
     Run Keyword If    "${trip_type_value}" == "I"    Calculate Air Fees-IN Mechant Fee On TF International
     ...    ELSE    Calculate Air Fees-IN Mechant Fee On TF Domestic
     Calculate Air Fees-IN Total Selling Fare
+    Calculate Air Fees-IN Reference Fare
     Calculate Air Fees-IN Total Charge
     Calculate Air Fees-IN Reference Fare
 
@@ -458,6 +467,7 @@ Send Other Service Fees For Air Fees IN Post Request
     ${other_service_fees_request_list_1}    Create List
     ${other_service_fees_request_list_2}    Create List
     ${other_service_fees_products_list}    Create List
+    
     Run Keyword If    "${air_segment_count_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airSegmentCount":${air_segment_count_value}
     Run Keyword If    "${airline_commission_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineCommissionPercent":${airline_commission_value}
     Run Keyword If    "${airline_overhead_commission_by_percent_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "airlineOverheadCommissionByPercent":${airline_overhead_commission_by_percent_value}
@@ -466,8 +476,9 @@ Send Other Service Fees For Air Fees IN Post Request
     Run Keyword If    "${base_fare_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "baseFare":${base_fare_value}
     Run Keyword If    "${city_code_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "cityCode":"${city_code_value}"
     Run Keyword If    "${client_account_number_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "clientAccountNumber":"${client_account_number_value}"
+    Run Keyword If    "${client_id_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "clientId":"${client_id_value}"
     Run Keyword If    "${commission_enabled_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "commissionEnabled":${commission_enabled_value}
-    Run Keyword If    "${country}"!="null"    Append To List    ${other_service_fees_request_list_1}    "countryCode":"${country.upper()}"
+    #Run Keyword If    "${country}"!="null"    Append To List    ${other_service_fees_request_list_1}    "countryCode":"${country.upper()}"
     Run Keyword If    "${discount_enabled_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "discountEnabled":${discount_enabled_value}
     Run Keyword If    "${discount_percentage_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "discountPercent":${discount_percentage_value}
     Run Keyword If    "${fee_override_value}"!="null"    Append To List    ${other_service_fees_request_list_1}    "feeOverride":${fee_override_value}
