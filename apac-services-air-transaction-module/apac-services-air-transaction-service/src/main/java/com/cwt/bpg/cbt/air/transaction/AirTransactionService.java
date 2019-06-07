@@ -1,8 +1,9 @@
 package com.cwt.bpg.cbt.air.transaction;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.annotation.Resource;
 
@@ -60,9 +61,7 @@ public class AirTransactionService {
 	}
 
 	public List<AirTransaction> save(List<AirTransaction> airTrans) {
-		List<AirTransaction> savedAirTransactions = new ArrayList<>();
-		airTrans.forEach(a -> savedAirTransactions.add(airTransactionRepo.put(a)));
-		return savedAirTransactions;
+		return StreamSupport.stream(airTransactionRepo.putAll(airTrans).spliterator(), false).collect(Collectors.toList());
 	}
 	
 	public String delete(String id) {
