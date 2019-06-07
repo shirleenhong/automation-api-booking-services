@@ -34,28 +34,31 @@ Create Test Variables For Client GST Info
     \    Set Test Variable    ${airline_code_${index}}    ${expected_value}    
 
 Create Test Variables For Put Client GST Info
-    [Arguments]    ${with_address2}=true    ${gstin_info}=new    ${item}=new_record    
+    [Arguments]    ${with_address2}=true    ${gstin_info}=new    ${item}=new_record    ${field_value}=${EMPTY}    
     ${client_gst_request_list}    Set Variable    {    
     ${client_gst_list}    Split String    ${client_gst_list_${item}}    ;
     ${gstin}    Run Keyword If    "${gstin_info}"=="new"    Generate Random String    15    [NUMBERS][UPPER]    
-    ...    ELSE IF    "${gstin_info}"=="empty_gstin"    Set Variable    ${EMPTY}
     ...    ELSE    Set Variable    ${gstin}
     Set Test Variable    ${gstin}
-    ${client_gst_request_list}    Catenate    ${client_gst_request_list}    "businessEmailAddress": "${client_gst_list[3]}"
-    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "businessPhoneNumber": "${client_gst_list[2]}"
-    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "city": "${client_gst_list[7]}"
-    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "client": "${client_gst_list[1]}"
-    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "clientEntityName": "${client_gst_list[0]}"
-    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "entityAddressLine1": "${client_gst_list[4]}"
-    ${client_gst_request_list}    Run Keyword If    "${with_address2}"=="true"	Catenate    SEPARATOR=,    ${client_gst_request_list}    "entityAddressLine2": "${client_gst_list[5]}"    ELSE    Set Variable    ${client_gst_request_list}
-    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "gstin": "${gstin}"
-    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "postalCode": "${client_gst_list[6]}" 
-    ${client_gst_request_list}    Catenate    SEPARATOR=,    ${client_gst_request_list}    "state": "${client_gst_list[8]}"
-    ${client_gst_request_list}    Catenate    ${client_gst_request_list}    }     
-    Set Test Variable   ${data}    ${client_gst_request_list}   
-    Set Test Variable    ${client_gst_list}   
+    ${custom_value}    Run Keyword If    "${field_value}"!="${EMPTY}"    Split String    ${field_value}    :    ELSE    Create List    ${EMPTY}
+    ${client_gst_request_list}    Run Keyword If    "${custom_value[0]}"=="email"    Catenate    ${client_gst_request_list}    "businessEmailAddress": "${custom_value[1]}"    ELSE    Catenate    ${client_gst_request_list}    "businessEmailAddress": "${client_gst_list[3]}"
+    ${client_gst_request_list}    Run Keyword If    "${custom_value[0]}"=="phone"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "businessPhoneNumber": "${custom_value[1]}"    ELSE    Catenate    SEPARATOR=,    ${client_gst_request_list}    "businessPhoneNumber": "${client_gst_list[2]}"
+    ${client_gst_request_list}    Run Keyword If    "${custom_value[0]}"=="city"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "city": "${custom_value[1]}"    ELSE    Catenate    SEPARATOR=,    ${client_gst_request_list}    "city": "${client_gst_list[7]}"
+    ${client_gst_request_list}    Run Keyword If    "${custom_value[0]}"=="client"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "client": "${custom_value[1]}"    ELSE    Catenate    SEPARATOR=,    ${client_gst_request_list}    "client": "${client_gst_list[1]}"      
+    ${client_gst_request_list}    Run Keyword If    "${custom_value[0]}"=="clientName"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "clientEntityName": "${custom_value[1]}"    ELSE    Catenate    SEPARATOR=,    ${client_gst_request_list}    "clientEntityName": "${client_gst_list[0]}"
+    ${client_gst_request_list}    Run Keyword If    "${custom_value[0]}"=="address1"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "entityAddressLine1": "${custom_value[1]}"    ELSE    Catenate    SEPARATOR=,    ${client_gst_request_list}    "entityAddressLine1": "${client_gst_list[4]}"
+    ${client_gst_request_list}    Run Keyword If    "${with_address2}"=="true" and "${custom_value[0]}"=="address2"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "entityAddressLine2": "${custom_value[1]}"
+    ...    ELSE IF    "${with_address2}"=="true"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "entityAddressLine2": "${client_gst_list[5]}"    
+    ...    ELSE    Set Variable    ${client_gst_request_list}
+    ${client_gst_request_list}    Run Keyword If    "${custom_value[0]}"=="gstin"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "gstin": "${custom_value[1]}"    ELSE    Catenate    SEPARATOR=,    ${client_gst_request_list}    "gstin": "${gstin}"
+    ${client_gst_request_list}    Run Keyword If    "${custom_value[0]}"=="postalCode"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "postalCode": "${custom_value[1]}"    ELSE    Catenate    SEPARATOR=,    ${client_gst_request_list}    "postalCode": "${client_gst_list[6]}" 
+    ${client_gst_request_list}    Run Keyword If    "${custom_value[0]}"=="state"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "state": "${custom_value[1]}"    ELSE    Catenate    SEPARATOR=,    ${client_gst_request_list}    "state": "${client_gst_list[8]}"
+    ${client_gst_request_list}    Catenate    ${client_gst_request_list}    }   
+    Set Test Variable   ${data}    ${client_gst_request_list}      
+    Set Test Variable    ${client_gst_list}
+    Set Test Variable    ${custom_value}   
     log    ${data}
-            
+                
 Verify Client GST Info Are Retrieved Correctly
     : FOR    ${index}    IN RANGE    ${client_gst_list_length}
     \    Send Get Request For Client GST Info    gstin=${gstin_${index}}    airline_codes=${airline_code_${index}}
@@ -119,12 +122,12 @@ Verify Client GST Info Is Added And Retrieved
     [Arguments]    ${with_address2}=true    ${get_request}=false
     ${path}    Set Variable If    "${get_request}"=="true"    clientGstInfo.    ${EMPTY}            
     Verify Json Value Is Correct    $..${path}gstin    ${gstin}     key=Value
-    Verify Json Value Is Correct    $..${path}clientEntityName    ${client_gst_list[0]}    key=Value
-    Verify Json Value Is Correct    $..${path}client    ${client_gst_list[1]}     key=Value
+    Run Keyword If    "${custom_value[0]}"=="clientName"    Verify Json Value Is Correct    $..${path}clientEntityName   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..${path}clientEntityName    ${client_gst_list[0]}    key=Value
+    Run Keyword If    "${custom_value[0]}"=="client"    Verify Json Value Is Correct    $..${path}client   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..${path}client    ${client_gst_list[1]}     key=Value   
     Verify Json Value Is Correct    $..${path}businessPhoneNumber    ${client_gst_list[2]} 
-    Verify Json Value Is Correct    $..${path}businessEmailAddress    ${client_gst_list[3]} 
-    Verify Json Value Is Correct    $..${path}entityAddressLine1    ${client_gst_list[4]}     key=Value
-    Run Keyword If    "${with_address2}"=="true"    Verify Json Value Is Correct    $..${path}entityAddressLine2    ${client_gst_list[5]}     key=Value
+    Run Keyword If    "${custom_value[0]}"=="email"    Verify Json Value Is Correct    $..${path}businessEmailAddress    ${custom_value[1]}    ELSE    Verify Json Value Is Correct    $..${path}businessEmailAddress    ${client_gst_list[3]}
+    Run Keyword If    "${custom_value[0]}"=="address1"    Verify Json Value Is Correct    $..${path}entityAddressLine1   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..${path}entityAddressLine1    ${client_gst_list[4]}     key=Value
+    Run Keyword If    "${with_address2}"=="true" and "${custom_value[0]}"=="address2"    Verify Json Value Is Correct    $..${path}entityAddressLine2    ${custom_value[1]}     key=Value    ELSE IF    "${with_address2}"=="true"    Verify Json Value Is Correct    $..${path}entityAddressLine2    ${client_gst_list[5]}     key=Value
     Verify Json Value Is Correct    $..${path}postalCode    ${client_gst_list[6]} 
     Verify Json Value Is Correct    $..${path}city    ${client_gst_list[7]}     key=Value
     Verify Json Value Is Correct    $..${path}state    ${client_gst_list[8]}     key=Value   
