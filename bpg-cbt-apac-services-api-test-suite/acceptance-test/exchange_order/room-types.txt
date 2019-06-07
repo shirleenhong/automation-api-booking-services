@@ -3,6 +3,7 @@ Resource          ../resources/api-variables.txt
 Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-imports.txt
 Resource          resources/exchange-order-room-types.txt
+Test Teardown     Evict Room Types Cache    
 
 Suite Setup    Generate Suite Variable For Room Type Get Request
 

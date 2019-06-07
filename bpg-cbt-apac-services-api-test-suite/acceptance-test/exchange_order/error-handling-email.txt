@@ -7,51 +7,35 @@ Resource          resources/exchange-order.txt
 
 *** Test Cases ***
 Verify That Error Is Encountered When Invalid Token Is Used
-    [Tags]    functional    not-ready
-    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000.01|country,SG|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX4|gst_absorb,false|gst_amount,300.01|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45.01|merchant_fee_absorb,false|nett_cost,600.01|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,18|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700.01|status,New|tax_1,100.01|tax_2,120.01|total,1200.01|total_selling_price,1500.01|vendor_contact,TEST Contact Person|vendor_code,021238|vendor_name,Carlson Wagonlit GST|vendor_address_1,INTERCOMPANY - TRADE|vendor_address_2,${EMPTY}|vendor_city,SIN|vendor_country,${EMPTY}    contact_data=email,test@test.com,true|fax,099097668,true    eo_remarks_data=CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    itin_remarks_data=COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
-    Send Exchange Order Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Exchange Order Number Is Returned Correctly
-    Send Exchange Order Email Get Request    token=12345.12345.12345
+    [Tags]    functional
+    Send Exchange Order Email Get Request    exchange_order_number=1234567890    token=12345.12345.12345
     Verify Response Status Code Is Correct    401
-    Send Exchange Order Email Get Request    token=abcde.abcde.abcde
+    Send Exchange Order Email Get Request    exchange_order_number=1234567890    token=abcde.abcde.abcde
     Verify Response Status Code Is Correct    401
-    Send Exchange Order Email Get Request    token=!@#$%^&*().!@#$%^&*().!@#$%^&*()
+    Send Exchange Order Email Get Request    exchange_order_number=1234567890    token=!@#$%^&*().!@#$%^&*().!@#$%^&*()
     Verify Response Status Code Is Correct    401
 
 Verify That Error Is Encountered When Empty Token Is Used
-    [Tags]    functional    not-ready
-    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000.01|country,SG|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX4|gst_absorb,false|gst_amount,300.01|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45.01|merchant_fee_absorb,false|nett_cost,600.01|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,18|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700.01|status,New|tax_1,100.01|tax_2,120.01|total,1200.01|total_selling_price,1500.01|vendor_contact,TEST Contact Person|vendor_code,021238|vendor_name,Carlson Wagonlit GST|vendor_address_1,INTERCOMPANY - TRADE|vendor_address_2,${EMPTY}|vendor_city,SIN|vendor_country,${EMPTY}    contact_data=email,test@test.com,true|fax,099097668,true    eo_remarks_data=CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    itin_remarks_data=COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
-    Send Exchange Order Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Exchange Order Number Is Returned Correctly
-    Send Exchange Order Email Get Request    token=${EMPTY}
+    [Tags]    functional
+    Send Exchange Order Email Get Request    exchange_order_number=1234567890    token=${EMPTY}
     Verify Response Status Code Is Correct    400
 
 Verify That Error Is Encountered When Null Token Is Used
-    [Tags]    functional    not-ready
-    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000.01|country,SG|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX4|gst_absorb,false|gst_amount,300.01|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45.01|merchant_fee_absorb,false|nett_cost,600.01|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,18|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700.01|status,New|tax_1,100.01|tax_2,120.01|total,1200.01|total_selling_price,1500.01|vendor_contact,TEST Contact Person|vendor_code,021238|vendor_name,Carlson Wagonlit GST|vendor_address_1,INTERCOMPANY - TRADE|vendor_address_2,${EMPTY}|vendor_city,SIN|vendor_country,${EMPTY}    contact_data=email,test@test.com,true|fax,099097668,true    eo_remarks_data=CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    itin_remarks_data=COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
-    Send Exchange Order Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Exchange Order Number Is Returned Correctly
-    Send Exchange Order Email Get Request    token=null
-    Verify Response Status Code Is Correct    400
+    [Tags]    functional
+    Send Exchange Order Email Get Request    exchange_order_number=1234567890    token=null
+    Verify Response Status Code Is Correct    401
 
 Verify That Error Is Encountered When No Token Is Used
-    [Tags]    functional    not-ready
-    Create Test Variables For Exchange Order    account_number,12345|date,2018-05-29T00:00:00.000Z|agent_id,U001XXX|agent_name,Test Agent Name|bta_description,Test BTA Description|commission,1000.01|country,SG|cc_type,AX|cc_number,1234|expiry_date,11/23|description,Test Description|eo_action,Print|fax_number,123456789|fop_type,CX4|gst_absorb,false|gst_amount,300.01|header_address,Test Header Address|header_fax,987654321|header_telephone,00123456789|merchant_fee,45.01|merchant_fee_absorb,false|nett_cost,600.01|passenger_name,Test Passenger Name|pcc,PCC 1|product_code,18|raise_cheque,Monthly|record_locator,PNR1234|sellingPrice,700.01|status,New|tax_1,100.01|tax_2,120.01|total,1200.01|total_selling_price,1500.01|vendor_contact,TEST Contact Person|vendor_code,021238|vendor_name,Carlson Wagonlit GST|vendor_address_1,INTERCOMPANY - TRADE|vendor_address_2,${EMPTY}|vendor_city,SIN|vendor_country,${EMPTY}    contact_data=email,test@test.com,true|fax,099097668,true    eo_remarks_data=CHECK IN WITH VOUCHER COPY,REQUEST ADJOINING ROOMS    itin_remarks_data=COPY OF VOUCHER REQIRED FOR CHECKIN,EARLY CHECK IN HAS BEEN REQUESTED
-    Send Exchange Order Post Request
-    Verify Response Status Code Is Correct    200
-    Verify Exchange Order Number Is Returned Correctly
-    Send Exchange Order Email Get Request    token=None
+    [Tags]    functional
+    Send Exchange Order Email Get Request    exchange_order_number=1234567890    token=None
     Verify Response Status Code Is Correct    400
 
 Verify That Error Is Encountered When Empty Exchange Order Number Is Used
-    [Tags]    functional    not-ready
+    [Tags]    functional
     Send Exchange Order Email Get Request    exchange_order_number=${EMPTY}
-    Verify Response Status Code Is Correct    400
+    Verify Response Status Code Is Correct    404
 
 Verify That Error Is Encountered When Null Exchange Order Number Is Used
-    [Tags]    functional    not-ready
+    [Tags]    functional
     Send Exchange Order Email Get Request    exchange_order_number=null
-    Verify Response Status Code Is Correct    400
+    Verify Response Status Code Is Correct    500

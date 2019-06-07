@@ -825,12 +825,15 @@ Send Exchange Order Post Request For India
     \    Create Exchange Order Request    amend_eo=${amend_eo}
     \    ${response}    Post Request    exchange-order    /apac-services-rest/api/exchange-order/${country_code}    data=${data}    headers=${headers}
     \    ${current_date_time}    Get Current Date    time_zone=utc
-    \    Set Test Variable    ${response}
-    \    Set Test Variable    ${total_eo}
-    \    Verify Response Status Code Is Correct    ${status_code}
-    \    Set Test Variable    ${response_${eo_index}}    ${response}
     \    Set Test Variable    ${current_date_time_${eo_index}}    ${current_date_time}
-    \    #Run Keyword If    "${status_code}"=="200"    Verify Exchange Order Number Is Saved Correctly
+    \    Run Keyword If    "${amend_eo}"=="true"    Run Keywords    Set Test Variable    ${amended_response_${eo_index}}    ${response}    AND    Set Test Variable    ${amended_response}    ${response}
+    \    Set Test Variable    ${response}
+    \    Set Test Variable    ${response_${eo_index}}    ${response}
+    \    Set Test Variable    ${total_eo}
+    \     Verify Response Status Code Is Correct    ${status_code}
+    \    ${data}    Set Variable If    "${amend_eo}"=="true"    ${amended_response_${eo_index}.content}    ${response_${eo_index}.content}
+    \    ${exchange_order_number}    Run Keyword If    "${status_code}"=="200"    Get Json Value As String    ${data}    $.[0].eoNumber
+    \    Run Keyword If    "${status_code}"=="200"    Set Test Variable    ${exchange_order_number}
     \    Log    ${response_${eo_index}.headers}
     \    Log    ${response_${eo_index}.content}
 
@@ -956,22 +959,26 @@ Verify Exchange Order Is Not Saved
     Verify String Does Not Contain Substring    ${response.text}    $.total
     
 Verify Exchange Order List Is Retrieved Correctly
-    [Arguments]    ${total_eo}=${total_eo}
-    Set Test Variable    ${eo_list_from_pnr}    ${response.content}
+    [Arguments]    ${total_eo}=${total_eo}    ${amend_eo}=false    ${item}=list
+    Run Keyword If    "${amend_eo}"=="true"    Set Test Variable    ${eo_list_from_pnr}    ${amended_response.content}    ELSE    Set Test Variable    ${eo_list_from_pnr}    ${response.content}
     ${eo_index}    Evaluate    ${total_eo}-1
     : FOR    ${index}    IN RANGE    0    ${total_eo}
-    \    ${response}    Get Json Value From Array    ${eo_list_from_pnr}    $.[${index}]
-    \    ${response.content}    To Json    ${response}
-    \    Set Test Variable    ${response_${eo_index}.content}    ${response.content}
-    \    Verify Exchange Order Is Saved Correctly    eo_index=${eo_index}
+    \    ${response}    Run Keyword If    "${item}"=="list"    Get Json Value From Array    ${eo_list_from_pnr}    $.[${index}]    ELSE    Set Variable    ${eo_list_from_pnr}    
+    \    ${response}    To Json    ${response}
+    \    Set Test Variable    ${response_${eo_index}.content}    ${response}
+    \    Verify Exchange Order Is Saved Correctly    eo_index=${eo_index}    amend_eo=${amend_eo}
     \    ${eo_index}    Evaluate    ${eo_index}-1
 
 Verify Exchange Order Is Saved Correctly
     [Arguments]    ${eo_index}=0    ${amend_eo}=false
-    #${data}    Run Keyword If    ${total_eo}>1    Convert JSON To String    ${response_${eo_index}.content}
-    #...    ELSE    Set Variable    ${response_${eo_index}.content}
+    ${data}    Run Keyword If    ${total_eo}>1    Convert JSON To String    ${response_${eo_index}.content}
+    ...    ELSE    Set Variable    ${response_${eo_index}.content}
+    Log    ${response_${eo_index}.content}
+    ${data}    Convert JSON To String    ${response_${eo_index}.content}
     Set Test Variable    ${response}    ${data}
     Set Test Variable    ${response.content}    ${data}
+    Set Test Variable    ${response_${eo_index}}    ${data}
+    Set Test Variable    ${response_${eo_index}.content}    ${data}
     Verify Exchange Order Other Information Is Saved Correctly    eo_index=${eo_index}    amend_eo=${amend_eo}
     Run Keyword If    "${assoc_info_data_${eo_index}}"!="null"    Verify Exchange Order Associated Information Tab Is Saved Correctly    eo_index=${eo_index}
     ...    ELSE    Verify Json Element Does Not Exist    $.associatedChargesList
@@ -1619,6 +1626,7 @@ Verify Exchange Order Request Information Visa Fields
 
 Verify Exchange Order Number Is Saved Correctly
     [Arguments]    ${eo_index}=0
+    #${response_data}    Convert Json To String    ${response.content}
     ${exchange_order_number}    Get Json Value As String    ${response.content}    $.eoNumber
     ${eo_year}    Get Substring    ${exchange_order_number}    0    2
     ${eo_month}    Get Substring    ${exchange_order_number}    2    4

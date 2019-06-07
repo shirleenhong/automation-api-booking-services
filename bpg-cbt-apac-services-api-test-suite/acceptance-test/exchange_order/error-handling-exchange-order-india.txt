@@ -9,31 +9,31 @@ Resource          resources/exchange-order-india-variables.txt
 *** Test Cases ***
 Verify That Error Is Encountered When Invalid Token Is Used
     [Tags]    functional
-    Create Test Variables For Exchange Order India    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    service_info_data=null    request_info_data=null    request_info_tab_data=null    assoc_info_data=null
+    Create Test Variables For Exchange Order India
     Send Exchange Order Post Request For India    token=12345.12345.12345    status_code=401
     Verify Exchange Order Is Not Saved
-    Create Test Variables For Exchange Order India    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    service_info_data=null    request_info_data=null    request_info_tab_data=null    assoc_info_data=null
+    Create Test Variables For Exchange Order India
     Send Exchange Order Post Request For India    token=abcde.abcde.abcde    status_code=401
     Verify Exchange Order Is Not Saved
-    Create Test Variables For Exchange Order India    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    service_info_data=null    request_info_data=null    request_info_tab_data=null    assoc_info_data=null
+    Create Test Variables For Exchange Order India
     Send Exchange Order Post Request For India    token=!@#$%^&*().!@#$%^&*().!@#$%^&*()    status_code=401
     Verify Exchange Order Is Not Saved
 
 Verify That Error Is Encountered When Empty Token Is Used
     [Tags]    functional
-    Create Test Variables For Exchange Order India    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    service_info_data=null    request_info_data=null    request_info_tab_data=null    assoc_info_data=null
+    Create Test Variables For Exchange Order India
     Send Exchange Order Post Request For India    token=${EMPTY}    status_code=400
     Verify Exchange Order Is Not Saved
 
 Verify That Error Is Encountered When Null Token Is Used
     [Tags]    functional
-    Create Test Variables For Exchange Order India    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    service_info_data=null    request_info_data=null    request_info_tab_data=null    assoc_info_data=null
+    Create Test Variables For Exchange Order India
     Send Exchange Order Post Request For India    token=null    status_code=401
     Verify Exchange Order Is Not Saved
 
 Verify That Error Is Encountered When No Token Is Used
     [Tags]    functional
-    Create Test Variables For Exchange Order India    vendor_info_data=vendor;vendor_code,00900032^vendor_name,none^vendor_address_1,none^vendor_address_2,none^vendor_city,none^vendor_country,none^vendor_support_email,none|vendor_contact;null    misc_info_data=null    service_info_data=null    request_info_data=null    request_info_tab_data=null    assoc_info_data=null
+    Create Test Variables For Exchange Order India
     Send Exchange Order Post Request For India    token=None    status_code=400
     Verify Exchange Order Is Not Saved
 

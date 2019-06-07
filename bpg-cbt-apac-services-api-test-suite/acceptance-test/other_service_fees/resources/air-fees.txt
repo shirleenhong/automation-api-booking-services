@@ -409,6 +409,7 @@ Generate Test Variables For Air Fees-IN
     ...    ELSE    Calculate Air Fees-IN Mechant Fee On TF Domestic
     Calculate Air Fees-IN Total Selling Fare
     Calculate Air Fees-IN Total Charge
+    Calculate Air Fees-IN Reference Fare
 
 Generate Test Variables For Air Fees-SG
     [Arguments]    ${fees_list}    ${country}
