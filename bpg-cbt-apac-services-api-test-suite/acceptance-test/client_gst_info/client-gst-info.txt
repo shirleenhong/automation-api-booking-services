@@ -20,7 +20,7 @@ Verify That Client GST Info Is Correctly Retrieved
  Verify That Client GST Info Is Correctly Retrieved When Atleast 1 Valid Airline Code Is Available
     [Tags]    functional
 	Create Test Variables For Client GST Info    item=single_record    airline_codes=JL,AD,BB,AI
-    Send Get Request For Client GST Info  
+    Send Get Request For Client GST Info
     Verify Response Status Code Is Correct    200
     Verify Client GST Info Is Correctly Retrieved    airline_codes=JL,AI
     
@@ -38,10 +38,10 @@ Verify That Client GST Info Is Correctly Retrieved When There Is Duplicated Airl
     Verify Response Status Code Is Correct    200
     Verify Client GST Info Is Correctly Retrieved    airline_codes=JL,QF,MU
        
- Verify That Client GST Info Is No Data Content When No Airline Code Is Valid 
+ Verify That Client GST Info Is No Data Content When No Airline Code Is Valid
     [Tags]    functional
 	Create Test Variables For Client GST Info    item=single_record    airline_codes=5J
-    Send Get Request For Client GST Info    
+    Send Get Request For Client GST Info
     Verify Response Status Code Is Correct    204
     Verify Client GST Info Record Is Not Retrieved
     Create Test Variables For Client GST Info    item=single_record    airline_codes=5J,7J,8J
@@ -52,7 +52,41 @@ Verify That Client GST Info Is Correctly Retrieved When There Is Duplicated Airl
 Verify That Client GST Info Is Added After Put Request-Complete Info
     [Tags]    functional
     Create Test Variables For Put Client GST Info
-	Send Put Request For Client GST Info     
+	Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved
+    Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved    get_request=true
+    Send Delete Request For Client GST Info
+
+Verify That Client GST Info Is Saved When Validating The Minimum Length In Put Request
+    [Tags]    functional
+    Create Test Variables For Put Client GST Info    item=min_length 
+	Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved
+    Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved    get_request=true
+    Send Delete Request For Client GST Info
+
+Verify That Client GST Info Is Saved When Validating The Maximum Length After Put Request
+    Create Test Variables For Put Client GST Info    item=max_length    
+	Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved
+    Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved    get_request=true
+    Send Delete Request For Client GST Info
+
+Verify That Client GST Info Allows Special Characters In Client After Put Request
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=client:Banco-de.Oro!
+    Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    200
     Verify Client GST Info Is Added And Retrieved
     Evict Client GST Info Cache
@@ -61,28 +95,60 @@ Verify That Client GST Info Is Added After Put Request-Complete Info
     Verify Client GST Info Is Added And Retrieved    get_request=true
     Send Delete Request For Client GST Info
     
-Verify That Client GST Info Is Added After Put Request-Blank Address Line2 
-    [Tags]    functional
-    Create Test Variables For Put Client GST Info    with_address2=false   
-	Send Put Request For Client GST Info      
+Verify That Client GST Info Allows Spaces And Period In Client Name After Put Request
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=clientName:Bank Of The Phil. Island. 
+    Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    200
-    Verify Client GST Info Is Added And Retrieved    with_address2=false
+    Verify Client GST Info Is Added And Retrieved
     Evict Client GST Info Cache
     Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
     Verify Response Status Code Is Correct    200
-    Verify Client GST Info Is Added And Retrieved    with_address2=false    get_request=true
+    Verify Client GST Info Is Added And Retrieved    get_request=true
+    Send Delete Request For Client GST Info
+    
+Verify That Client GST Info Allows Spaces And Period In Address1 After Put Request
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=address1:Tower2 Andherii Kurla Rd. 
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved
+    Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved    get_request=true
+    Send Delete Request For Client GST Info
+
+Verify That Client GST Info Allows Spaces And Period In Address2 After Put Request
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=address2:7th Floor Bajar Brand. 
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved
+    Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved    get_request=true
+    Send Delete Request For Client GST Info
+        
+Verify That Client GST Info Allows Specific Special Characters In Email After Put Request
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=email:test-gst_info.12@gmail.com.ph
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved
+    Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved    get_request=true
     Send Delete Request For Client GST Info
     
 Verify That Client GST Info Is Updated After Put Request
     [Tags]    functional
-    Create Test Variables For Put Client GST Info            
-    Send Put Request For Client GST Info      
+    Create Test Variables For Put Client GST Info
+    Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    200
     Evict Client GST Info Cache
     Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
     Verify Client GST Info Is Added And Retrieved    get_request=true
     Create Test Variables For Put Client GST Info    with_address2=false    gstin_info=existing
-    Send Put Request For Client GST Info      
+    Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    200    
     Send Get Request For Client GST Info    gstin=${gstin}    airline_codes=9W
     Verify Client GST Info Is Added And Retrieved    with_address2=false    get_request=true
@@ -104,8 +170,8 @@ Verify That Client GST Info Can Be Saved From Excel File
        
 Verify That Client GST Info Is Deleted After Delete Request
     [Tags]    functional
-    Create Test Variables For Put Client GST Info 
-	Send Put Request For Client GST Info     
+    Create Test Variables For Put Client GST Info
+	Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    200
     Evict Client GST Info Cache
     Send Delete Request For Client GST Info

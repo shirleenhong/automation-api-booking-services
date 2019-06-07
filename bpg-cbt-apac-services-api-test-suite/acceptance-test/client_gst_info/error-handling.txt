@@ -41,8 +41,8 @@ Verify That Error Is Encountered When No Token Is Used For Get Request
     
 Verify That Error Is Encountered When GSTIN Is Not Found
     [Tags]    functional
-    Create Test Variables For Client GST Info    item=invalid
-    Send Get Request For Client GST Info
+    Create Test Variables For Client GST Info    item=single_record
+    Send Get Request For Client GST Info    gstin=29AAACC0462F12D
     Verify Response Status Code Is Correct    404
     Verify Client GST Info Record Is Not Retrieved
     
@@ -95,16 +95,159 @@ Verify That Error Is Encountered When No Token Is Used For Put Request
     Verify Client GST Info Record Is Not Retrieved
 
 Verify That Error Is Encountered When Mandatory Field Is Missing For Put Request
-    [Tags]    functional
-    Create Test Variables For Put Client GST Info    item=empty_required_field
+    [Tags]    functional  
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=email:${EMPTY}
     Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    400
     Verify Client GST Info Record Is Not Retrieved
-    Create Test Variables For Put Client GST Info    gstin_info=empty_gstin
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=phone:${EMPTY}
     Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    400
-    Verify Client GST Info Record Is Not Retrieved   
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=city:${EMPTY}
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=clientName:${EMPTY}
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=address1:${EMPTY}
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=gstin:${EMPTY}
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=postalCode:${EMPTY}
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=state:${EMPTY}
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
 
+Verify That Error Is Encountered When Data Exceeded To Max Length
+    [Tags]    functional
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=email:accenture.GST1234@accenture12345.com
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=phone:0123456789123456
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=city:Mumbai1234ABCDEFGELLISBGED
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=clientName:The Accenture ABC Solution Pvt Ltd..
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=address1:4THFLRBLK CRMZ CENTENNIALPlot 8A 8SI
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=address2:GARDEN AMBAWADI ELLIS BGED
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=gstin:12345ABCDEF67890
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=postalCode:123456789012345678
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=state:TamilNaidu23ABC1Telanganas
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+
+Verify That Error Is Encountered When GSTIN Is Not 15 Characters
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=gstin:12345
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved    
+
+Verify That Error Is Encountered When Spaces Are Available In GSTIN,Email,Postal,City And State
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=email:accenture .GST1234@accenture.com
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=city:Mumbai ABCDEFG
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=gstin:12345ABCDE 6789
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=phone:12345 6789
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=postalCode:1234 567890
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=state:Tamil ABC Telanga
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved 
+
+Verify That Error Is Encountered When Special Characters Are Available In Put Request
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=email:accenture%$GST1234@accenture.com
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=phone:+23456-8912345
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved  
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=city:Mumbai,ABCDEFG
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=gstin:12345ABCDE-6789
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=clientName:Accenture! &fj
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=address1:4THFLRBLK, (CENTENNIAL)Plot
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=address2:GARDEN I @ELLIS, BGED
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=postalCode:1234-567890
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=state:TamilABC.Telanga
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400  
+    Verify Client GST Info Record Is Not Retrieved 
+    
+Verify That Error Is Encountered When Letters Are Available In Phone And Postal Code
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=phone:12345ABCD
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=postalCode:123AB567890
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+                 
 Verify That Error Is Encountered When Invalid Token Is Used For Delete Request
     [Tags]    functional
     Send Delete Request For Client GST Info    gstin=43LARVMP42AR4OW    token=12345.12345.12345
