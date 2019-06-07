@@ -57,7 +57,7 @@ public class ClientGstInfoService {
     @CacheEvict(cacheNames = {"client-gst-info", "gst-airlines"}, allEntries = true)
     public void saveFromExcelFile(InputStream inputStream) {
         List<ClientGstInfo> clientGstInfo = clientGstInfoExcelReaderService.readExcelFile(inputStream);
-        if (CollectionUtils.isEmpty(clientGstInfo)) {
+        if (!CollectionUtils.isEmpty(clientGstInfo)) {
             backupClientGstInfo();
             clientGstInfoRepository.dropCollection();
             clientGstInfoRepository.putAll(clientGstInfo);
