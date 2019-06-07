@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 @Component
 public class DateSerializer extends JsonSerializer<Instant> {
 	
-	private final DateTimeFormatter dateFormatter = DateTimeFormatter
+	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter
 				.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 				.withZone(ZoneId.of("UTC"));
 
@@ -22,9 +22,12 @@ public class DateSerializer extends JsonSerializer<Instant> {
 	public void serialize(Instant value, JsonGenerator gen, 
 			SerializerProvider serializers)
 			throws IOException {
-	
-		gen.writeString(value != null 
-				? dateFormatter.format(value)
-				: null);			
+		if(gen == null) {
+			return;
+		}
+		String formattedDate = (value != null)? DATE_FORMATTER.format(value): null;
+		if(formattedDate != null) {
+			gen.writeString(formattedDate);
+		}
 	}
 }
