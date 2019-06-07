@@ -3,7 +3,6 @@ package com.cwt.bpg.cbt.client.gst.service;
 import com.cwt.bpg.cbt.client.gst.model.*;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoBackupRepository;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
-import com.cwt.bpg.cbt.client.gst.repository.GstAirlineRepository;
 import com.mongodb.CommandResult;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,9 +31,6 @@ public class ClientGstInfoServiceTest {
     @Mock
     private ClientGstInfoRepository clientGstInfoRepository;
 
-    @Mock
-    private GstAirlineRepository gstAirlineRepository;
-
     @InjectMocks
     private ClientGstInfoService service;
 
@@ -44,13 +40,7 @@ public class ClientGstInfoServiceTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         ClientGstInfo clientGstInfo = new ClientGstInfo();
-        GstAirline gstAirline = new GstAirline();
-
-        GstLookup mockGstLookup = new GstLookup();
-        mockGstLookup.setGstAirlines(Arrays.asList(gstAirline));
-        mockGstLookup.setClientGstInfo(Arrays.asList(clientGstInfo));
-
-        when(clientGstInfoExcelReaderService.readExcelFile(any(), any())).thenReturn(mockGstLookup);
+        when(clientGstInfoExcelReaderService.readExcelFile(any())).thenReturn(Arrays.asList(clientGstInfo));
 
         //get collection count/size
         CommandResult mockCommandResult = Mockito.mock(CommandResult.class);
@@ -71,41 +61,13 @@ public class ClientGstInfoServiceTest {
     }
 
     @Test
-    public void shouldReturnGstInfoByGstInWithAirlines() {
-        final String givenGstIn = "123456";
-
-        final GstAirline xsAirline = new GstAirline();
-        xsAirline.setCode("XS");
-
-        final GstAirline cxAirline = new GstAirline();
-        cxAirline.setCode("CX");
-
-        when(gstAirlineRepository.getAll()).thenReturn(Arrays.asList(xsAirline, cxAirline));
-        when(clientGstInfoRepository.get(anyString())).thenReturn(new ClientGstInfo());
-
-        final ClientGstInfoResponse response = service
-                .getClientGstInfo(givenGstIn, Arrays.asList("XS", "CX", "LH"));
-
-        assertNotNull(response.getAirlineCodes());
-        assertNotNull(response.getClientGstInfo());
-
-    }
-
-    @Test
     public void shouldHandleNullGstInfo() {
         final String givenGstIn = "123456";
 
-        final GstAirline xsAirline = new GstAirline();
-        xsAirline.setCode("XS");
-
-        final GstAirline cxAirline = new GstAirline();
-        cxAirline.setCode("CX");
-
-        when(gstAirlineRepository.getAll()).thenReturn(Arrays.asList(xsAirline, cxAirline));
         when(clientGstInfoRepository.get(anyString())).thenReturn(null);
 
-        final ClientGstInfoResponse response = service
-                .getClientGstInfo(givenGstIn, Arrays.asList("XS", "CX", "LH"));
+        final ClientGstInfo response = service
+                .getClientGstInfo(givenGstIn);
 
         assertNull(response);
     }
@@ -133,7 +95,7 @@ public class ClientGstInfoServiceTest {
 
     @Test
     public void shouldSaveFromExcelFile() {
-        service.saveFromExcelFile(inputStream, true);
+        service.saveFromExcelFile(inputStream);
 
         //verify if backup is performed
         ArgumentCaptor<List> backupsCaptor = ArgumentCaptor.forClass(List.class);
@@ -148,10 +110,6 @@ public class ClientGstInfoServiceTest {
         //verify if clientGstInfo collection is replaced with new collection
         verify(clientGstInfoRepository, times(1)).dropCollection();
         verify(clientGstInfoRepository, times(1)).putAll(anyCollection());
-
-        //verify if gstAirlines collection is replaced with new collection
-        verify(gstAirlineRepository, times(1)).dropCollection();
-        verify(gstAirlineRepository, times(1)).putAll(anyCollection());
     }
 
     @Test
@@ -160,7 +118,7 @@ public class ClientGstInfoServiceTest {
         when(commandResult.get("count")).thenReturn(null);
         when(clientGstInfoRepository.getStats()).thenReturn(commandResult);
 
-        service.saveFromExcelFile(inputStream, true);
+        service.saveFromExcelFile(inputStream);
 
         //verify if backup is not performed
         verify(clientGstInfoBackupRepository, times(0)).dropCollection();
@@ -168,62 +126,17 @@ public class ClientGstInfoServiceTest {
         //verify if clientGstInfo collection is replaced with new collection
         verify(clientGstInfoRepository, times(1)).dropCollection();
         verify(clientGstInfoRepository, times(1)).putAll(anyCollection());
-
-        //verify if gstAirlines collection is replaced with new collection
-        verify(gstAirlineRepository, times(1)).dropCollection();
-        verify(gstAirlineRepository, times(1)).putAll(anyCollection());
-    }
-
-    @Test
-    public void shouldNotSaveGstAirlinesIfFlagIsFalse() {
-        service.saveFromExcelFile(inputStream, false);
-
-        //verify if clientGstInfo collection is replaced with new collection
-        verify(clientGstInfoRepository, times(1)).dropCollection();
-        verify(clientGstInfoRepository, times(1)).putAll(anyCollection());
-
-        //verify if gstAirlines collection is not replaced with new collection
-        verify(gstAirlineRepository, times(0)).dropCollection();
-        verify(gstAirlineRepository, times(0)).putAll(anyCollection());
     }
 
     @Test
     public void shouldNotSaveClientGstInfoIfNoneIsExtractedFromExcel() {
-        GstAirline gstAirline = new GstAirline();
-        GstLookup mockGstLookup = new GstLookup();
-        mockGstLookup.setGstAirlines(Arrays.asList(gstAirline));
-        mockGstLookup.setClientGstInfo(Collections.emptyList());
 
-        when(clientGstInfoExcelReaderService.readExcelFile(any(), any())).thenReturn(mockGstLookup);
+        when(clientGstInfoExcelReaderService.readExcelFile(any())).thenReturn(Collections.emptyList());
 
-        service.saveFromExcelFile(inputStream, true);
+        service.saveFromExcelFile(inputStream);
 
         //verify if clientGstInfo collection is not replaced with new collection
         verify(clientGstInfoRepository, times(0)).dropCollection();
         verify(clientGstInfoRepository, times(0)).putAll(anyCollection());
-
-        //verify if gstAirlines collection is replaced with new collection
-        verify(gstAirlineRepository, times(1)).dropCollection();
-        verify(gstAirlineRepository, times(1)).putAll(anyCollection());
-    }
-
-    @Test
-    public void shouldNotSaveGstAirlinesIfNoneIsExtractedFromExcel() {
-        ClientGstInfo clientGstInfo = new ClientGstInfo();
-        GstLookup mockGstLookup = new GstLookup();
-        mockGstLookup.setGstAirlines(Collections.emptyList());
-        mockGstLookup.setClientGstInfo(Arrays.asList(clientGstInfo));
-
-        when(clientGstInfoExcelReaderService.readExcelFile(any(), any())).thenReturn(mockGstLookup);
-
-        service.saveFromExcelFile(inputStream, true);
-
-        //verify if clientGstInfo collection is not replaced with new collection
-        verify(clientGstInfoRepository, times(1)).dropCollection();
-        verify(clientGstInfoRepository, times(1)).putAll(anyCollection());
-
-        //verify if gstAirlines collection is replaced with new collection
-        verify(gstAirlineRepository, times(0)).dropCollection();
-        verify(gstAirlineRepository, times(0)).putAll(anyCollection());
     }
 }

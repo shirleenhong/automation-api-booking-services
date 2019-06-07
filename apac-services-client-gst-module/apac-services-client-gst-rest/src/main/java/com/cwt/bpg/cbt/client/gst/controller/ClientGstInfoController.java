@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.client.gst.controller;
 
 
 
-import java.io.BufferedInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
-import com.cwt.bpg.cbt.client.gst.model.ClientGstInfoResponse;
 import com.cwt.bpg.cbt.client.gst.service.ClientGstInfoService;
 
 import io.swagger.annotations.Api;
@@ -54,18 +52,11 @@ public class ClientGstInfoController {
     @GetMapping(path = "{gstin}")
     @ResponseBody
     @ApiOperation("Get client GST information given a GSTIN")
-    public ResponseEntity<ClientGstInfoResponse> getClientGstInfo(
-            @PathVariable @ApiParam(value = "GST Identification Number") String gstin,
-            @RequestParam @ApiParam(value= "Airline code", required = true) List<String> airlineCodes) {
-        if(airlineCodes == null || airlineCodes.isEmpty()) {
-            throw new IllegalArgumentException("airlineCode is required");
-        }
-        ClientGstInfoResponse response = clientGstInfoService.getClientGstInfo(gstin, airlineCodes);
+    public ResponseEntity<ClientGstInfo> getClientGstInfo(
+            @PathVariable @ApiParam(value = "GST Identification Number") String gstin) {
+        ClientGstInfo response = clientGstInfoService.getClientGstInfo(gstin);
         if(response == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        if(response.getAirlineCodes().isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -87,14 +78,13 @@ public class ClientGstInfoController {
     @PostMapping
     @ResponseBody
     @ApiOperation("[Maintenance] Saves client GST information from excel file")
-    public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file,
-            @RequestParam(required = false, defaultValue = "false") boolean includeGstAirlines)
+    public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file)
             throws Exception {
         if (!(file.getOriginalFilename().endsWith(EXCEL_WORKBOOK) || file.getOriginalFilename()
                 .endsWith(MACRO_ENABLED_WORKBOOK))) {
             throw new IllegalArgumentException("File must be in excel format");
         }
-        clientGstInfoService.saveFromExcelFile(file.getInputStream(), includeGstAirlines);
+        clientGstInfoService.saveFromExcelFile(file.getInputStream());
         Map<String, String> response = new HashMap<>();
         response.put("message", "saving in progress");
         return new ResponseEntity<>(response, HttpStatus.OK);
