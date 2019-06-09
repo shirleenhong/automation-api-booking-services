@@ -343,7 +343,8 @@ Create Test Variables For Air Fees-HK
     : FOR    ${fees}    IN    @{fees_list}
     \    ${fees_item}    Split String    ${fees}    ,
     \    Set Test Variable    ${${fees_item[0]}_value}    ${fees_item[1]}
-    
+    ${client_id_value}    Get Variable Value    ${client_id_value}    null
+    Set Test Variable    ${client_id_value}
     Set Test Variable    ${fees_list}
     Set Test Variable    ${country}    ${country.lower()}
     ${var_exist_flag}    Run Keyword And Return Status    Variable Should Exist    ${tax_3_value}         
