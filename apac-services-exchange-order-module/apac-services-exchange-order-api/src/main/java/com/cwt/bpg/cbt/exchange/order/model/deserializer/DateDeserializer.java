@@ -11,18 +11,19 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 
 public class DateDeserializer extends JsonDeserializer<Instant> {
 
-	private final DateTimeFormatter dateFormatter = DateTimeFormatter
+	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter
 			.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 			.withZone(ZoneId.of("UTC"));
 	
 	@Override
 	public Instant deserialize(JsonParser parser, DeserializationContext context)
 			throws IOException {
-		
+		if(parser == null) {
+			return null;
+		}
 		String dateStr = parser.getText();
-		
-		return dateStr != null 
-				? Instant.from(dateFormatter.parse(dateStr)) 
+		return dateStr != null
+				? Instant.from(DATE_FORMATTER.parse(dateStr))
 				: null;
 		
 	}
