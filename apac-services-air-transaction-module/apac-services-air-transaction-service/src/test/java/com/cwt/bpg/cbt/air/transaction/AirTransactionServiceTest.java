@@ -85,12 +85,11 @@ public class AirTransactionServiceTest {
 
     @Test
     public void saveShouldReturnSavedAirTransaction() {
-        AirTransaction airTransaction = mock(AirTransaction.class);
-        when(repository.put(any(AirTransaction.class))).thenReturn(airTransaction);
+        when(repository.putAll(any(List.class))).thenReturn(Arrays.asList(new AirTransaction()));
 
         List<AirTransaction> result = service.save(Arrays.asList(new AirTransaction()));
 
-        verify(repository, times(1)).put(any(AirTransaction.class));
+        verify(repository, times(1)).putAll(any(List.class));
     }
 
     @Test
