@@ -5,4 +5,5 @@ Library           RequestsLibrary
 Library           String
 Library           JSONLibrary
 Library           BuiltIn
-Library           OperatingSystem    
+Library           OperatingSystem
+Library           custom-libraries/ApacSvcLibrary.py
