@@ -6,6 +6,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -87,9 +88,8 @@ public class AirTransactionServiceTest {
         AirTransaction airTransaction = mock(AirTransaction.class);
         when(repository.put(any(AirTransaction.class))).thenReturn(airTransaction);
 
-        AirTransaction result = service.save(new AirTransaction());
+        List<AirTransaction> result = service.save(Arrays.asList(new AirTransaction()));
 
-        assertEquals(airTransaction, result);
         verify(repository, times(1)).put(any(AirTransaction.class));
     }
 

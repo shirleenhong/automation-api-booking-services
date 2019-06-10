@@ -2,6 +2,8 @@ package com.cwt.bpg.cbt.air.transaction;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.annotation.Resource;
 
@@ -58,8 +60,8 @@ public class AirTransactionService {
 		return airTransactionRepo.getAirTransactions(input);
 	}
 
-	public AirTransaction save(AirTransaction airTrans) {
-		return airTransactionRepo.put(airTrans);
+	public List<AirTransaction> save(List<AirTransaction> airTrans) {
+		return StreamSupport.stream(airTransactionRepo.putAll(airTrans).spliterator(), false).collect(Collectors.toList());
 	}
 	
 	public String delete(String id) {

@@ -2,12 +2,17 @@ package com.cwt.bpg.cbt.air.contract;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 import org.bson.types.ObjectId;
 import org.junit.Before;
@@ -56,7 +61,7 @@ public class AirContractControllerTest {
 		airContract.setCountryCode("SG");
 		airContract.setAirlineCode("BR");
 		airContract.setClientAccountNumber("3407002");
-    }
+	}
 
 	@Test
 	public void getAirContractShouldReturnAirContract() throws Exception {
@@ -98,16 +103,16 @@ public class AirContractControllerTest {
     @Test
     public void putAirContractShouldSaveAndReturnSavedAirContract() throws Exception {
 
-		when(service.save(any(AirContract.class))).thenReturn(airContract);
+		when(service.save(any())).thenReturn(Arrays.asList(new AirContract()));
 
         mockMvc.perform(put("/air-contract")
                 .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(airContract)))
+                .content(convertObjectToJsonBytes(Arrays.asList(new AirContract()))))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        verify(service, times(1)).save(any(AirContract.class));
+        verify(service, times(1)).save(any());
     }
 
     @Test

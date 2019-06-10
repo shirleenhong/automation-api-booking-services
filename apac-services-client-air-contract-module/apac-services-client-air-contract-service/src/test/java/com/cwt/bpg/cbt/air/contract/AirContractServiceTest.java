@@ -1,6 +1,17 @@
 package com.cwt.bpg.cbt.air.contract;
 
-import com.cwt.bpg.cbt.air.contract.model.AirContract;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,8 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import com.cwt.bpg.cbt.air.contract.model.AirContract;
 
 public class AirContractServiceTest {
 
@@ -48,13 +58,16 @@ public class AirContractServiceTest {
 
     @Test
     public void saveShouldReturnSavedAirContract() {
-        AirContract airContract = new AirContract();
+    	AirContract airContract = mock(AirContract.class);
+    	
+    	List<AirContract> airContracts = new ArrayList<>();
+    	airContracts.add(airContract);
 
-        when(repository.put(any(AirContract.class))).thenReturn(airContract);
+        when(repository.put(any())).thenReturn(airContract);
+        
+        List<AirContract> result = service.save(airContracts);
 
-        AirContract result = service.save(new AirContract());
-
-        assertEquals(airContract, result);
+        assertEquals(airContracts.size(), result.size());
         verify(repository, times(1)).put(any(AirContract.class));
     }
 
