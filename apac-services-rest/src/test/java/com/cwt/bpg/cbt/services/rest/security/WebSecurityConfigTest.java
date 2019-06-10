@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.Filter;
 
 import org.junit.Test;
@@ -24,8 +25,6 @@ import com.cwt.bpg.cbt.services.rest.security.WebSecurityConfig.TokenSecurityCon
 public class WebSecurityConfigTest {
 
     private ApiWebSecurityConfigurationAdapter wsc = new ApiWebSecurityConfigurationAdapter();
-    private WebSecurityConfig webConfig = new WebSecurityConfig();
-
 
     @SuppressWarnings("unchecked")
     @Test
@@ -39,16 +38,6 @@ public class WebSecurityConfigTest {
 
         List<RequestMatcher> field = (List<RequestMatcher>) ReflectionTestUtils.getField(ws, "ignoredRequests");
         assertTrue(field.size() > 0);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Test
-    public void canConfigureGlobalWebSecurity() throws Exception {
-        ObjectPostProcessor<Object> objectPostProcessor = mock(ObjectPostProcessor.class);
-        AuthenticationManagerBuilder authenticationBuilder = new AuthenticationManagerBuilder(objectPostProcessor);
-
-        webConfig.configureGlobal(authenticationBuilder);
-        assertNotNull(authenticationBuilder.getSharedObjects());
     }
 
     @SuppressWarnings("unchecked")
