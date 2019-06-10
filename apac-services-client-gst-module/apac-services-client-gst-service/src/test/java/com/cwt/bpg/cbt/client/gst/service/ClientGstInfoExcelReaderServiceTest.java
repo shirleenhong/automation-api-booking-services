@@ -6,13 +6,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
-import com.cwt.bpg.cbt.client.gst.model.GstLookup;
 
 public class ClientGstInfoExcelReaderServiceTest
 {
@@ -28,11 +28,10 @@ public class ClientGstInfoExcelReaderServiceTest
     @Test
     public void shouldReadExcelFile()
     {
-        GstLookup lookup = service.readExcelFile(testFileStream, false);
-        assertTrue(lookup.getClientGstInfo().size() == 5);
-        assertNull(lookup.getGstAirlines());
-        
-        ClientGstInfo info = lookup.getClientGstInfo().get(0);
+        List<ClientGstInfo> clientGstInfo = service.readExcelFile(testFileStream);
+        assertTrue(clientGstInfo.size() == 5);
+
+        ClientGstInfo info = clientGstInfo.get(0);
         assertEquals("RaNair@eagle.org", info.getBusinessEmailAddress());
         assertEquals("912241734173", info.getBusinessPhoneNumber());
         assertEquals("NaviMumbai", info.getCity());
@@ -49,18 +48,15 @@ public class ClientGstInfoExcelReaderServiceTest
     @Test
     public void shouldReadExcelFileWithGstAirlines()
     {
-        GstLookup lookup = service.readExcelFile(testFileStream, true);
-        assertTrue(lookup.getClientGstInfo().size() == 5);
-        assertTrue(lookup.getGstAirlines().size() == 48);
-
+        List<ClientGstInfo> clientGstInfo = service.readExcelFile(testFileStream);
+        assertTrue(clientGstInfo.size() == 5);
     }
     
     @Test
     public void shouldReadExcelFileWithError()
     {
-        GstLookup lookup = service.readExcelFile(null, false);
-        assertNull(lookup.getClientGstInfo());
-        assertNull(lookup.getGstAirlines());
+        List<ClientGstInfo> clientGstInfo = service.readExcelFile(null);
+        assertNull(clientGstInfo);
     }
 
 }

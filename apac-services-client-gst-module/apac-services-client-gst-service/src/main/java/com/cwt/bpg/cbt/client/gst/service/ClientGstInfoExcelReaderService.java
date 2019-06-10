@@ -1,8 +1,6 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
-import com.cwt.bpg.cbt.client.gst.model.GstAirline;
-import com.cwt.bpg.cbt.client.gst.model.GstLookup;
 import com.monitorjbl.xlsx.StreamingReader;
 import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
@@ -23,12 +21,9 @@ public class ClientGstInfoExcelReaderService {
     private static final int ROW_CACHE_SIZE = 100;
     private static final int BUFFER_SIZE = 4096;
     private static final int GST_DATA_SHEET_INDEX = 0;
-    private static final int GST_AIRLINE_CODES_INDEX = 1;
     private static final int ROWS_TO_SKIP_GST_DATA = 2;
-    private static final int ROWS_TO_SKIP_AIRLINE_CODES = 1;
     private static final int CLIENT_INDEX = 0;
     private static final int GSTIN_INDEX = 1;
-    private static final int AIRLINE_CODE_INDEX = 0;
     private static final int ENTITY_NAME_INDEX = 2;
     private static final int BUSINESS_PHONE_INDEX = 3;
     private static final int EMAIL_ADDRESS_INDEX = 4;
@@ -41,25 +36,18 @@ public class ClientGstInfoExcelReaderService {
     private static final String LINE_BREAK_REGEX = "\\r\\n|\\r|\\n";
     private static final String EMPTY_STRING = "";
     private static final String SPACE = " ";
-    private static final String TRAIN = "train";
 
-    public GstLookup readExcelFile(InputStream inputStream, Boolean includeGstAirlines) {
-        GstLookup gstLookup = new GstLookup();
+    public List<ClientGstInfo> readExcelFile(InputStream inputStream) {
         try(InputStream is = new BufferedInputStream(inputStream)) {
             Workbook workbook = StreamingReader.builder()
                     .rowCacheSize(ROW_CACHE_SIZE)
                     .bufferSize(BUFFER_SIZE)
                     .open(is);
-            List<ClientGstInfo> clientGstInfo = extractClientGstInfo(workbook);
-            gstLookup.setClientGstInfo(clientGstInfo);
-            if(includeGstAirlines) {
-                List<GstAirline> gstAirlines = extractGstAirlines(workbook);
-                gstLookup.setGstAirlines(gstAirlines);
-            }
+            return extractClientGstInfo(workbook);
         } catch (Exception e) {
             LOGGER.error("An error occurred while reading excel file", e);
+            return null;
         }
-        return gstLookup;
     }
 
     private static List<ClientGstInfo> extractClientGstInfo(Workbook workbook) {
@@ -79,26 +67,6 @@ public class ClientGstInfoExcelReaderService {
             }
         }
         return clientGstInfo;
-    }
-
-    private static List<GstAirline> extractGstAirlines(Workbook workbook) {
-        Sheet sheet = workbook.getSheetAt(GST_AIRLINE_CODES_INDEX);
-        List<GstAirline> gstAirlines = new LinkedList<>();
-        int rowIteration = 0;
-        for (Row row : sheet) {
-            if (++rowIteration <= ROWS_TO_SKIP_AIRLINE_CODES) {
-                continue; //stop reading excel if no values can be extracted
-            }
-            GstAirline gstAirline = new GstAirline();
-            gstAirline.setCode(getValue(row, AIRLINE_CODE_INDEX));
-            if (StringUtils.isEmpty(gstAirline.getCode())) {
-                break;
-            }
-            if(!TRAIN.equalsIgnoreCase(gstAirline.getCode())) {
-                gstAirlines.add(gstAirline);
-            }
-        }
-        return gstAirlines;
     }
 
     private static ClientGstInfo extractFromRow(Row row) {

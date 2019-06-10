@@ -15,7 +15,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
-import com.cwt.bpg.cbt.client.gst.repository.GstAirlineRepository;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class ClientGstInfoService {
@@ -25,9 +25,6 @@ public class ClientGstInfoService {
 
     @Autowired
     private ClientGstInfoRepository clientGstInfoRepository;
-    
-    @Autowired
-    private GstAirlineRepository gstAirlineRepository;
 
     @Autowired
     private ClientGstInfoBackupRepository clientGstInfoBackupRepository;
@@ -37,34 +34,6 @@ public class ClientGstInfoService {
     
     public List<ClientGstInfo> getAllClientGstInfo() {
     	return clientGstInfoRepository.getAll();
-    }
-
-    public ClientGstInfoResponse getClientGstInfo(String gstin, List<String> airlineCodes) {
-        ClientGstInfo clientGstInfo = getClientGstInfo(gstin);
-        if(clientGstInfo == null) {
-            return null;
-        }
-        ClientGstInfoResponse response = new ClientGstInfoResponse();
-        Set<String> validAirlineCodes = new HashSet<>();
-        Set<String> gstAirlines = getGstAirlines();
-        for(String airlineCode: airlineCodes) {
-            if(gstAirlines.contains(airlineCode)){
-                validAirlineCodes.add(airlineCode);
-            }
-        }
-        response.setClientGstInfo(clientGstInfo);
-        response.setAirlineCodes(validAirlineCodes);
-        return response;
-    }
-
-    @Cacheable(cacheNames = "gst-airlines")
-    public Set<String> getGstAirlines() {
-        Set<String> gstAirlineSet = new HashSet<>();
-        List<GstAirline> gstAirlineList = gstAirlineRepository.getAll();
-        for(GstAirline gstAirline: gstAirlineList) {
-            gstAirlineSet.add(gstAirline.getCode());
-        }
-        return gstAirlineSet;
     }
 
     @Cacheable(cacheNames = "client-gst-info", key = "#gstin")
@@ -86,17 +55,12 @@ public class ClientGstInfoService {
 
     @Async
     @CacheEvict(cacheNames = {"client-gst-info", "gst-airlines"}, allEntries = true)
-    public void saveFromExcelFile(InputStream inputStream, boolean includeGstAirlines) {
-        GstLookup gstLookup = clientGstInfoExcelReaderService
-                .readExcelFile(inputStream, includeGstAirlines);
-        if (!gstLookup.getClientGstInfo().isEmpty()) {
+    public void saveFromExcelFile(InputStream inputStream) {
+        List<ClientGstInfo> clientGstInfo = clientGstInfoExcelReaderService.readExcelFile(inputStream);
+        if (!CollectionUtils.isEmpty(clientGstInfo)) {
             backupClientGstInfo();
             clientGstInfoRepository.dropCollection();
-            clientGstInfoRepository.putAll(gstLookup.getClientGstInfo());
-        }
-        if (includeGstAirlines && !gstLookup.getGstAirlines().isEmpty()) {
-            gstAirlineRepository.dropCollection();
-            gstAirlineRepository.putAll(gstLookup.getGstAirlines());
+            clientGstInfoRepository.putAll(clientGstInfo);
         }
     }
 

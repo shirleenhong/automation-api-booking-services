@@ -10,11 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
-import com.cwt.bpg.cbt.client.gst.model.ClientGstInfoResponse;
 import com.cwt.bpg.cbt.client.gst.service.ClientGstInfoService;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,7 +49,7 @@ public class ClientGstInfoControllerTest {
 	public void getAllClientGstInfoReturns200() throws Exception {
 		List<ClientGstInfo> clientGstInfos = new ArrayList<>();
 
-	    when(service.getAllClientGstInfo()).thenReturn(Arrays.asList(new ClientGstInfo()));
+	    when(service.getAllClientGstInfo()).thenReturn(clientGstInfos);
 			
 	    mockMvc.perform(get("/client-gst-info").contentType(APPLICATION_JSON_UTF8)
 					.content(convertObjectToJsonBytes(clientGstInfos))).andExpect(status().isOk()).andReturn()
@@ -68,24 +63,21 @@ public class ClientGstInfoControllerTest {
 		Set<String> airlineCodes = new HashSet<>();
 		airlineCodes.add("AF");
 		airlineCodes.add("XS");
-		
-		ClientGstInfoResponse response = new ClientGstInfoResponse();
-		response.setAirlineCodes(airlineCodes);
-		
-		when(service.getClientGstInfo(any(), any())).thenReturn(response);
+
+		when(service.getClientGstInfo(any())).thenReturn(new ClientGstInfo());
 		
 		final String gstin = "1234";
 		
 		mockMvc.perform(get("/client-gst-info/" + gstin)
-				.param("airlineCodes", "AF").contentType(APPLICATION_JSON_UTF8)).andExpect(status().isOk()).andReturn()
+				.contentType(APPLICATION_JSON_UTF8)).andExpect(status().isOk()).andReturn()
 				.getResponse();
 		
-		verify(service).getClientGstInfo(any(), any());
+		verify(service).getClientGstInfo(any());
 	}
 	
 	@Test
 	public void getClientGstInfoReturns404() throws Exception {
-		when(service.getClientGstInfo(any(), any())).thenReturn(null);
+		when(service.getClientGstInfo(any())).thenReturn(null);
 		
 		final String gstin = "1234";
 		
@@ -93,25 +85,8 @@ public class ClientGstInfoControllerTest {
 				.param("airlineCodes", "AF").contentType(APPLICATION_JSON_UTF8)).andExpect(status().isNotFound()).andReturn()
 				.getResponse();
 		
-		verify(service).getClientGstInfo(any(), any());
+		verify(service).getClientGstInfo(any());
 	}
-	
-	@Test
-	public void getClientGstInfoReturns204() throws Exception {
-		ClientGstInfoResponse response = new ClientGstInfoResponse();
-		response.setAirlineCodes(new HashSet<>());
-		
-		when(service.getClientGstInfo(any(), any())).thenReturn(response);
-		
-		final String gstin = "1234";
-		
-		mockMvc.perform(get("/client-gst-info/" + gstin)
-				.param("airlineCodes", "AF").contentType(APPLICATION_JSON_UTF8)).andExpect(status().isNoContent()).andReturn()
-				.getResponse();
-		
-		verify(service).getClientGstInfo(any(), any());
-	}
-
 
 	@Test
 	public void putClientGstInfoReturns200() throws Exception {
