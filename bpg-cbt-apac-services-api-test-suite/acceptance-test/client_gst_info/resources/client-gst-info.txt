@@ -3,20 +3,18 @@ Resource          ../../resources/api-imports.txt
 Resource          ../../resources/api-utilities.txt
 Resource          ../../resources/api-variables.txt
 Resource          client-gst-info-list.txt
+Library           ApacSvcLibrary
 
 *** Keywords ***
 Create Test Variables For Client GST Info
-    [Arguments]    ${item}    ${airline_codes}=one_valid
+    [Arguments]    ${item}
     ${client_gst_list}    Convert To String    ${client_gst_list_${item}}
     ${client_gst_list}    Remove String    ${client_gst_list}    \\032\\032
     log    ${client_gst_list}
     ${client_gst_list}    Split String    ${client_gst_list}    ^
     ${client_gst_list_length}    Get Length    ${client_gst_list}
-    ${airline_codes_list}    Split String    ${airline_code_list}    ,
-    ${airline_codes_list_length}    Get Length    ${airline_codes_list}
     Set Test Variable    ${client_gst_list_length}
     Set Test Variable    ${client_gst_list}
-    Set Test Variable    ${airline_codes_list}
     : FOR    ${index}    IN RANGE    0    ${client_gst_list_length}
     \    log    ${client_gst_list[${index}]}
     \    ${data_item}    Split String    ${client_gst_list[${index}]}    ; 
@@ -30,8 +28,6 @@ Create Test Variables For Client GST Info
     \    Set Test Variable    ${postal_code_${index}}    ${data_item[7]}
     \    Set Test Variable    ${city_${index}}    ${data_item[8]}
     \    Set Test Variable    ${state_${index}}    ${data_item[9]}
-    \    ${expected_value}   Set Variable If    "${airline_codes}"=="one_valid" and "${index}"<"${airline_codes_list_length}"   ${airline_codes_list[${index}]}    "${airline_codes}"=="one_valid"    ${airline_codes_list[0]}    "${airline_codes}"=="all"    ${airline_code_list}    ${airline_codes}
-    \    Set Test Variable    ${airline_code_${index}}    ${expected_value}    
 
 Create Test Variables For Put Client GST Info
     [Arguments]    ${with_address2}=true    ${gstin_info}=new    ${item}=new_record    ${field_value}=${EMPTY}    
@@ -61,17 +57,17 @@ Create Test Variables For Put Client GST Info
                 
 Verify Client GST Info Are Retrieved Correctly
     : FOR    ${index}    IN RANGE    ${client_gst_list_length}
-    \    Send Get Request For Client GST Info    gstin=${gstin_${index}}    airline_codes=${airline_code_${index}}
+    \    Send Get Request For Client GST Info    gstin=${gstin_${index}}
     \    Verify Response Status Code Is Correct    200
     \    Verify Client GST Info Is Correctly Retrieved    index=${index} 
            
 Send Get Request For Client GST Info
-    [Arguments]    ${gstin}=${gstin_0}        ${airline_codes}=${airline_code_0}    ${token}=${default_token}    
+    [Arguments]    ${gstin}=${gstin_0}        ${token}=${default_token}    
     Create Session    client-gst-info    ${${env}_base_url}    verify=True
     ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json;charset=UTF-8    Authorization=Bearer ${token}
     ...    ELSE    Create Dictionary    Content-Type=application/json
     ${uri}    Set Variable If    "${gstin}"!="${EMPTY}"    apac-services-rest/api/client-gst-info/${gstin}    apac-services-rest/api/client-gst-info        
-    ${response}    Get Request    client-gst-info    ${uri}    params=airlineCodes=${airline_codes}  headers=${headers}
+    ${response}    Get Request    client-gst-info    ${uri}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
@@ -105,39 +101,30 @@ Send Delete Request For Client GST Info
     Set Test Variable    ${api_flag}    client-gst-info
            
 Verify Client GST Info Is Correctly Retrieved
-    [Arguments]    ${index}=0     ${airline_codes}=one_valid
-    Verify Json Value Is Correct    $..clientGstInfo.gstin    ${gstin_${index}}    key=Value
-    Verify Json Value Is Correct    $..clientGstInfo.clientEntityName    ${client_entity_name_${index}}    key=Value
-    Verify Json Value Is Correct    $..clientGstInfo.client    ${client_${index}}    key=Value
-    Verify Json Value Is Correct    $..clientGstInfo.businessPhoneNumber    ${business_phone_number_${index}}
-    Verify Json Value Is Correct    $..clientGstInfo.businessEmailAddress    ${business_email_add_${index}}
-    Verify Json Value Is Correct    $..clientGstInfo.entityAddressLine1    ${entity_address1_${index}}    key=Value
-    Run Keyword If    "${entity_address2_${index}}" != "${EMPTY}"    Verify Json Value Is Correct    $..clientGstInfo.entityAddressLine2    ${entity_address2_${index}}    key=Value
-    Verify Json Value Is Correct    $..clientGstInfo.postalCode    ${postal_code_${index}}
-    Verify Json Value Is Correct    $..clientGstInfo.city    ${city_${index}}    key=Value
-    Verify Json Value Is Correct    $..clientGstInfo.state    ${state_${index}}    key=Value
-    Run Keyword If	"${airline_codes}"=="one_valid"    Verify Json Value Is Correct    $..airlineCodes[0]    ${airline_code_${index}}	ELSE IF   "${airline_codes}"=="all"    Verify Airline Codes    ${airline_code_list}    ELSE    Verify Airline Codes    ${airline_codes}
+    [Arguments]    ${index}=0     
+    Verify Json Value Is Correct    $..gstin    ${gstin_${index}}    key=Value
+    Verify Json Value Is Correct    $..clientEntityName    ${client_entity_name_${index}}    key=Value
+    Verify Json Value Is Correct    $..client    ${client_${index}}    key=Value
+    Verify Json Value Is Correct    $..businessPhoneNumber    ${business_phone_number_${index}}
+    Verify Json Value Is Correct    $..businessEmailAddress    ${business_email_add_${index}}
+    Verify Json Value Is Correct    $..entityAddressLine1    ${entity_address1_${index}}    key=Value
+    Run Keyword If    "${entity_address2_${index}}" != "${EMPTY}"    Verify Json Value Is Correct    $..entityAddressLine2    ${entity_address2_${index}}    key=Value
+    Verify Json Value Is Correct    $..postalCode    ${postal_code_${index}}
+    Verify Json Value Is Correct    $..city    ${city_${index}}    key=Value
+    Verify Json Value Is Correct    $..state    ${state_${index}}    key=Value
 
 Verify Client GST Info Is Added And Retrieved
-    [Arguments]    ${with_address2}=true    ${get_request}=false
-    ${path}    Set Variable If    "${get_request}"=="true"    clientGstInfo.    ${EMPTY}            
-    Verify Json Value Is Correct    $..${path}gstin    ${gstin}     key=Value
-    Run Keyword If    "${custom_value[0]}"=="clientName"    Verify Json Value Is Correct    $..${path}clientEntityName   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..${path}clientEntityName    ${client_gst_list[0]}    key=Value
-    Run Keyword If    "${custom_value[0]}"=="client"    Verify Json Value Is Correct    $..${path}client   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..${path}client    ${client_gst_list[1]}     key=Value   
-    Verify Json Value Is Correct    $..${path}businessPhoneNumber    ${client_gst_list[2]} 
-    Run Keyword If    "${custom_value[0]}"=="email"    Verify Json Value Is Correct    $..${path}businessEmailAddress    ${custom_value[1]}    ELSE    Verify Json Value Is Correct    $..${path}businessEmailAddress    ${client_gst_list[3]}
-    Run Keyword If    "${custom_value[0]}"=="address1"    Verify Json Value Is Correct    $..${path}entityAddressLine1   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..${path}entityAddressLine1    ${client_gst_list[4]}     key=Value
-    Run Keyword If    "${with_address2}"=="true" and "${custom_value[0]}"=="address2"    Verify Json Value Is Correct    $..${path}entityAddressLine2    ${custom_value[1]}     key=Value    ELSE IF    "${with_address2}"=="true"    Verify Json Value Is Correct    $..${path}entityAddressLine2    ${client_gst_list[5]}     key=Value
-    Verify Json Value Is Correct    $..${path}postalCode    ${client_gst_list[6]} 
-    Verify Json Value Is Correct    $..${path}city    ${client_gst_list[7]}     key=Value
-    Verify Json Value Is Correct    $..${path}state    ${client_gst_list[8]}     key=Value   
-        
-Verify Airline Codes
-    [Arguments]    ${airline_codes}
-    ${airline_codes}    Split String    ${airline_codes}    ,
-    ${airline_codes_length}    Get Length    ${airline_codes} 
-    : FOR    ${index}    IN RANGE    0    ${airline_codes_length}
-    \    Verify Json Value Is Correct    $..airlineCodes[${index}]    ${airline_codes[${index}]}
+    [Arguments]    ${with_address2}=true    
+    Verify Json Value Is Correct    $..gstin    ${gstin}     key=Value
+    Run Keyword If    "${custom_value[0]}"=="clientName"    Verify Json Value Is Correct    $..clientEntityName   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..clientEntityName    ${client_gst_list[0]}    key=Value
+    Run Keyword If    "${custom_value[0]}"=="client"    Verify Json Value Is Correct    $..client   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..client    ${client_gst_list[1]}     key=Value   
+    Verify Json Value Is Correct    $..businessPhoneNumber    ${client_gst_list[2]} 
+    Run Keyword If    "${custom_value[0]}"=="email"    Verify Json Value Is Correct    $..businessEmailAddress    ${custom_value[1]}    ELSE    Verify Json Value Is Correct    $..businessEmailAddress    ${client_gst_list[3]}
+    Run Keyword If    "${custom_value[0]}"=="address1"    Verify Json Value Is Correct    $..entityAddressLine1   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..entityAddressLine1    ${client_gst_list[4]}     key=Value
+    Run Keyword If    "${with_address2}"=="true" and "${custom_value[0]}"=="address2"    Verify Json Value Is Correct    $..entityAddressLine2    ${custom_value[1]}     key=Value    ELSE IF    "${with_address2}"=="true"    Verify Json Value Is Correct    $..entityAddressLine2    ${client_gst_list[5]}     key=Value
+    Verify Json Value Is Correct    $..postalCode    ${client_gst_list[6]} 
+    Verify Json Value Is Correct    $..city    ${client_gst_list[7]}     key=Value
+    Verify Json Value Is Correct    $..state    ${client_gst_list[8]}     key=Value   
     
 Verify The Number Of Records Is Correct
     [Arguments]    ${expected_record}
@@ -158,7 +145,6 @@ Verify Client GST Info Record Is Not Retrieved
     Verify String Does Not Contain Substring    ${response.text}    "postalCode"
     Verify String Does Not Contain Substring    ${response.text}    "city"
     Verify String Does Not Contain Substring    ${response.text}    "state"
-    Verify String Does Not Contain Substring    ${response.text}    "airlineCodes"
     
 Evict Client GST Info Cache
     [Arguments]    ${number}=2    ${token}=${default_token}

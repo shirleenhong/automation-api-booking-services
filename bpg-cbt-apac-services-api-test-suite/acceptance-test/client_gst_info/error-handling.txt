@@ -53,13 +53,6 @@ Verify That Error Is Encountered When GSTIN Is Not Found
     Verify Response Status Code Is Correct    404
     Verify Client GST Info Record Is Not Retrieved
     
-Verify That Error Is Encountered When Airline Code Is Empty
-    [Tags]    functional
-    Create Test Variables For Client GST Info    item=single_record    airline_codes=${EMPTY}
-    Send Get Request For Client GST Info
-    Verify Response Status Code Is Correct    400
-    Verify Client GST Info Record Is Not Retrieved
-    
 Verify That Error Is Encountered When Invalid Token Is Used For Put Request
     [Tags]    functional
     Create Test Variables For Put Client GST Info    item=single_record 
