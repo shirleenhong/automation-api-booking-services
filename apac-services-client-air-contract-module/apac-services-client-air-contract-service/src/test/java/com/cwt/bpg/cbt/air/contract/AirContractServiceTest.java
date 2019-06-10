@@ -63,12 +63,12 @@ public class AirContractServiceTest {
     	List<AirContract> airContracts = new ArrayList<>();
     	airContracts.add(airContract);
 
-        when(repository.put(any())).thenReturn(airContract);
+        when(repository.putAll(any())).thenReturn(airContracts);
         
         List<AirContract> result = service.save(airContracts);
 
         assertEquals(airContracts.size(), result.size());
-        verify(repository, times(1)).put(any(AirContract.class));
+        verify(repository, times(1)).putAll(any());
     }
 
     @Test
