@@ -1,18 +1,27 @@
 package com.cwt.bpg.cbt.air.transaction;
 
 import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionOutput;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -30,11 +39,11 @@ public class AirTransactionController {
 	@ApiOperation(value = "Returns passthroughType value: CWT (Non-Passthrough) or Airline (Full Passthrough) based on "
 			+ "country code, airline code, booking class(es), ccvendor code, cc type. Client Account Number is optional.")
 	public ResponseEntity<AirTransactionOutput> getAirTransaction(
-			@RequestParam("countryCode") @ApiParam("2-character country code") String countryCode,
-			@RequestParam("airlineCode") @ApiParam("2-character airline code") String airlineCode,
+			@RequestParam("countryCode") @ApiParam(value="2-character country code", required = true) String countryCode,
+			@RequestParam("airlineCode") @ApiParam(value="2-character airline code", required = true) String airlineCode,
 			@RequestParam("bookingClasses") List<String> bookingClasses,
-			@RequestParam("ccVendorCode") @ApiParam("e.g. Mastercard, VISA") String ccVendorCode,
-			@RequestParam("ccType") @ApiParam("e.g. UATP, NRCC")  String ccType,
+			@RequestParam("ccVendorCode") @ApiParam(value="e.g. MC, VI", required = true) String ccVendorCode,
+			@RequestParam("ccType") @ApiParam(value="e.g. UATP, NRCC", required = true)  String ccType,
 			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber)
 			throws AirTransactionNoContentException {
 
