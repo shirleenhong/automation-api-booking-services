@@ -12,7 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
 
 import org.bson.types.ObjectId;
 import org.junit.Before;
@@ -103,11 +102,11 @@ public class AirContractControllerTest {
     @Test
     public void putAirContractShouldSaveAndReturnSavedAirContract() throws Exception {
 
-		when(service.save(any())).thenReturn(Arrays.asList(new AirContract()));
+		when(service.save(any())).thenReturn(airContract);
 
         mockMvc.perform(put("/air-contract")
                 .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(Arrays.asList(new AirContract()))))
+                .content(convertObjectToJsonBytes(airContract)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();

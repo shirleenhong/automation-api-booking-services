@@ -1,16 +1,21 @@
 package com.cwt.bpg.cbt.air.contract;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cwt.bpg.cbt.air.contract.model.AirContract;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -48,8 +53,8 @@ public class AirContractController {
 	@PutMapping(path = "/air-contract")
 	@ApiOperation(value = "[Maintenance] Saves (inserts/updates) Air Contract record.")
 	@ResponseBody
-	public ResponseEntity<List<AirContract>> putAirContract(@Valid @RequestBody List<AirContract> airContracts) {
-		return new ResponseEntity<>(airContractService.save(airContracts), HttpStatus.OK);
+	public ResponseEntity<AirContract> putAirContract(@Valid @RequestBody AirContract airContract) {
+		return new ResponseEntity<>(airContractService.save(airContract), HttpStatus.OK);
 	}
 
 	@DeleteMapping(path = "/air-contract/{id}")
