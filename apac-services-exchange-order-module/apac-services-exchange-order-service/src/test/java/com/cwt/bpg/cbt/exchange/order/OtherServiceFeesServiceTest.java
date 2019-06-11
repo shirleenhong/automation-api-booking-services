@@ -5,8 +5,7 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -144,7 +143,7 @@ public class OtherServiceFeesServiceTest {
 
         Client client = new Client();
         client.setPricingId(20);
-        when(clientService.getClient(any(AirFeesDefaultsInput.class))).thenReturn(client);
+        when(clientService.getClient(any(IndiaAirFeesInput.class))).thenReturn(client);
 
         IndiaAirFeesInput input = new IndiaAirFeesInput();
         input.setClientAccountNumber("123456");
@@ -261,6 +260,8 @@ public class OtherServiceFeesServiceTest {
         AirFeesDefaultsInput input = createAirFeesDefaults();
         when(clientService.getClientPricings(input)).thenReturn(clientPricings);
         when(clientService.getClient(any(AirFeesDefaultsInput.class))).thenReturn(client);
+        when(clientService.getClient(any(MerchantFeePercentInput.class))).thenReturn(client);
+        when(clientService.getDefaultClient()).thenReturn(client);
 
         AirFeesDefaultsOutput output = service.getAirFeesDefaults(input);
 

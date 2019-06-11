@@ -1,6 +1,5 @@
 package com.cwt.bpg.cbt.agent;
 
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;

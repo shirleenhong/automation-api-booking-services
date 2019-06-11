@@ -3,7 +3,6 @@ package com.cwt.bpg.cbt.exchange.order;
 import static com.cwt.bpg.cbt.exchange.order.ProductRepository.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;

@@ -2,10 +2,9 @@ package com.cwt.bpg.cbt.exchange.order;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.text.IsEmptyString.emptyOrNullString;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -114,7 +113,7 @@ public class ClientRepositoryTest {
 		verify(dataStore, times(1)).createQuery(Client.class);
 		verify(dataStore, times(1)).delete(query);
 
-		assertThat(result, isEmptyString());
+		assertThat(result, emptyOrNullString());
 	}
 
 	@Test

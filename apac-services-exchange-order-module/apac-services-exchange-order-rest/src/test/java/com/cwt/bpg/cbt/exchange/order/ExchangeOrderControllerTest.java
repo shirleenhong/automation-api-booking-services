@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -336,7 +335,7 @@ public class ExchangeOrderControllerTest {
     @Test(expected = NestedServletException.class)
     public void shouldGeneratePdfUnCheckedException() throws Exception {
 
-        when(eoReportService.generatePdf(anyString())).thenThrow(Exception.class);
+        when(eoReportService.generatePdf(anyString())).thenThrow(ApiServiceException.class);
 
         mockMvc.perform(get(url + "/pdf/" + eoNumber))
                 .andExpect(status().isInternalServerError())

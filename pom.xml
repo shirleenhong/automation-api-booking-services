@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.20.RELEASE</version>
+    <version>2.1.4.RELEASE</version>
   </parent>
 
   <groupId>com.cwt.bpg.cbt</groupId>
