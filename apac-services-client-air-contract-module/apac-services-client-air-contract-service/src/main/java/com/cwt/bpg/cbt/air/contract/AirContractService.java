@@ -1,9 +1,5 @@
 package com.cwt.bpg.cbt.air.contract;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -27,8 +23,8 @@ public class AirContractService {
 		return repository.get(new ObjectId(id));
 	}
 
-	public List<AirContract> save(List<AirContract> airContracts) {
-		return StreamSupport.stream(repository.putAll(airContracts).spliterator(), false).collect(Collectors.toList());
+	public AirContract save(AirContract airContract) {
+		return repository.put(airContract);
 	}
 
 	@CacheEvict(cacheNames = "air-contracts", allEntries = true)
