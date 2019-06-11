@@ -9,9 +9,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,15 +57,12 @@ public class AirContractServiceTest {
     public void saveShouldReturnSavedAirContract() {
     	AirContract airContract = mock(AirContract.class);
     	
-    	List<AirContract> airContracts = new ArrayList<>();
-    	airContracts.add(airContract);
-
-        when(repository.putAll(any())).thenReturn(airContracts);
+        when(repository.put(any())).thenReturn(airContract);
         
-        List<AirContract> result = service.save(airContracts);
+        AirContract result = service.save(airContract);
 
-        assertEquals(airContracts.size(), result.size());
-        verify(repository, times(1)).putAll(any());
+        assertEquals(airContract, result);
+        verify(repository, times(1)).put(any());
     }
 
     @Test
