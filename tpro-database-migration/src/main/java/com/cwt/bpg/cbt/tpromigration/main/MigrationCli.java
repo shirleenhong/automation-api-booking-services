@@ -49,7 +49,7 @@ public class MigrationCli implements Callable<Void> {
 	@Option(names = "-air-contacts", description = "migrate HK & SG air contacts")
 	private boolean migrateAirContacts;
 
-	@Option(names = "-product-list", description = "migrate HK & SG products")
+	@Option(names = "-product-list", description = "migrate products")
 	private boolean migrateProductList;
 
 	@Option(names = "-agent-contacts", description = "migrate HK & SG agent contacts")
@@ -116,15 +116,17 @@ public class MigrationCli implements Callable<Void> {
 				logger.info("Migrating merchant fees...");
 				service.migrateMerchantFees();
 			}
-			if (migrateProductList) {
-				logger.info("Migrating product list...");
-				service.migrateProductList();
-			}
 			if (migrateAgentContacts) {
 				logger.info("Migrating agent contacts...");
 				service.migrateAgentContacts();
 			}
 		}
+		
+        if (migrateProductList) {
+            logger.info("Migrating product list...");
+            service.migrateProductList();
+        }
+        
 		context.close();
 		return null;
 	}
