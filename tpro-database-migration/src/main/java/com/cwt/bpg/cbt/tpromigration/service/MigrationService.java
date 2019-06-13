@@ -548,7 +548,6 @@ public class MigrationService {
 		final LdapTemplate template = new LdapTemplate(ldapContextSource);
 		final List<AgentInfo> agentInfos = new ArrayList<AgentInfo>();
 		
-		final List<String> NoLDAPAccount = new ArrayList<String>();
 		final List<String> WithLDAPAccount = new ArrayList<String>();
 
 		agents.stream().forEach(a -> {
