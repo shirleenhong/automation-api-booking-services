@@ -134,7 +134,8 @@ public class MigrationService {
 
 	private String countryCode;
 	
-	public void migrateLineDefClientMapping() throws JsonProcessingException {
+	@SuppressWarnings("unchecked")
+    public void migrateLineDefClientMapping() throws JsonProcessingException {
 		List<LineDefinitionClientMapping> lineDefinitionClientMappings = lineDefs.getLineDefinitionClientMapping();
 
 		List<Document> docs = new ArrayList<>();

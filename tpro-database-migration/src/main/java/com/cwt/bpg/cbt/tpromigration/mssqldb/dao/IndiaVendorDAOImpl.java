@@ -6,12 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
+import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.MerchantFeeAbsorb;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
 
