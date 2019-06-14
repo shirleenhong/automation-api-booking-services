@@ -4,9 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
@@ -29,9 +33,7 @@ public class Encryptor
         byte[] iv = new byte[GCM_IV_LENGTH];
         (new SecureRandom()).nextBytes(iv);
 
-        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
-        GCMParameterSpec ivSpec = new GCMParameterSpec(GCM_TAG_LENGTH * Byte.SIZE, iv);
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivSpec);
+        Cipher cipher = getCipher(iv, Cipher.ENCRYPT_MODE);
 
         byte[] ciphertext = cipher.doFinal(privateString.getBytes("UTF8"));
         byte[] encrypted = new byte[iv.length + ciphertext.length];
@@ -48,15 +50,18 @@ public class Encryptor
 
         byte[] iv = Arrays.copyOfRange(decoded, 0, GCM_IV_LENGTH);
 
-        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
-        GCMParameterSpec ivSpec = new GCMParameterSpec(GCM_TAG_LENGTH * Byte.SIZE, iv);
-        cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec);
+        Cipher cipher = getCipher(iv, Cipher.DECRYPT_MODE);
 
         byte[] ciphertext = cipher.doFinal(decoded, GCM_IV_LENGTH, decoded.length - GCM_IV_LENGTH);
 
-        String result = new String(ciphertext, "UTF8");
+        return new String(ciphertext, "UTF8");
+    }
 
-        return result;
+    private Cipher getCipher(byte[] iv, int decryptMode) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+        GCMParameterSpec ivSpec = new GCMParameterSpec(GCM_TAG_LENGTH * Byte.SIZE, iv);
+        cipher.init(decryptMode, secretKey, ivSpec);
+        return cipher;
     }
 
     public SecretKey getSecretKey()
