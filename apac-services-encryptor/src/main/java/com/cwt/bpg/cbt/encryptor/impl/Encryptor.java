@@ -40,9 +40,7 @@ public class Encryptor
         System.arraycopy(iv, 0, encrypted, 0, iv.length);
         System.arraycopy(ciphertext, 0, encrypted, iv.length, ciphertext.length);
 
-        String encoded = Base64.getEncoder().encodeToString(encrypted);
-
-        return encoded;
+        return Base64.getEncoder().encodeToString(encrypted);
     }
 
     public String decrypt(String encrypted) throws Exception {
