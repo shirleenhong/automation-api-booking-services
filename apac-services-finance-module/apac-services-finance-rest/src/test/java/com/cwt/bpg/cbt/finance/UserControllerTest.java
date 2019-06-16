@@ -68,6 +68,20 @@ public class UserControllerTest {
         verify(service).saveUser(any(User.class));
         verifyNoMoreInteractions(service);
     }
+    
+    @Test
+    public void saveUserShouldIdentifyUnsafeHtmlContent() throws Exception {
+        User user = new User();
+        user.setUid("<script>alert(1)</script>");
+
+        mockMvc.perform(put("/user")
+                .contentType(MediaType.APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(user)))
+                .andExpect(status().isBadRequest())
+                .andReturn()
+                .getResponse();
+
+        verifyNoMoreInteractions(service);
+    }
 
     @Test
     public void deleteUserShouldReturnUidOfDeletedUser() throws Exception {
