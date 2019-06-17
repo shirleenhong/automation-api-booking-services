@@ -20,6 +20,14 @@
 			<version>${mongodb.morphia.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.cwt.bpg.cbt</groupId>
 			<artifactId>apac-services-documentation</artifactId>
 			<version>${project.version}</version>

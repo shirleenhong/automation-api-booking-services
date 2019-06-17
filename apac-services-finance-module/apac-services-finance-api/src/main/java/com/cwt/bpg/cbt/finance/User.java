@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.finance;
 
+import org.hibernate.validator.constraints.SafeHtml;
 import org.mongodb.morphia.annotations.*;
 
 @Entity(value = "users", noClassnameStored = true)
@@ -7,6 +8,7 @@ import org.mongodb.morphia.annotations.*;
 public class User {
 
     @Id
+    @SafeHtml
     private String uid;
 
     private String[] countryCodes;
