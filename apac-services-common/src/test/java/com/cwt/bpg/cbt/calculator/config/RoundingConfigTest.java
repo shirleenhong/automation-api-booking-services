@@ -1,6 +1,9 @@
 package com.cwt.bpg.cbt.calculator.config;
 
-import com.cwt.bpg.cbt.calculator.model.Country;
+import static org.junit.Assert.assertEquals;
+
+import java.math.RoundingMode;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -8,10 +11,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.core.env.Environment;
-
-import java.math.RoundingMode;
-
-import static org.junit.Assert.assertEquals;
 
 public class RoundingConfigTest {
 

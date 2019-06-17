@@ -12,6 +12,7 @@ public class ProductDAOFactory {
     @Autowired
     private IndiaProductCodeDAOImpl indiaProductCodeDAO;
 
+    @SuppressWarnings("rawtypes")
     public ProductCodeDAO getProductCodeDAO(String countryCode) {
 
         if (countryCode.equalsIgnoreCase("IN")) {

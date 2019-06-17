@@ -134,7 +134,8 @@ public class MigrationService {
 
 	private String countryCode;
 	
-	public void migrateLineDefClientMapping() throws JsonProcessingException {
+	@SuppressWarnings("unchecked")
+        public void migrateLineDefClientMapping() throws JsonProcessingException {
 		List<LineDefinitionClientMapping> lineDefinitionClientMappings = lineDefs.getLineDefinitionClientMapping();
 
 		List<Document> docs = new ArrayList<>();
@@ -547,7 +548,6 @@ public class MigrationService {
 		final LdapTemplate template = new LdapTemplate(ldapContextSource);
 		final List<AgentInfo> agentInfos = new ArrayList<AgentInfo>();
 		
-		final List<String> NoLDAPAccount = new ArrayList<String>();
 		final List<String> WithLDAPAccount = new ArrayList<String>();
 
 		agents.stream().forEach(a -> {
