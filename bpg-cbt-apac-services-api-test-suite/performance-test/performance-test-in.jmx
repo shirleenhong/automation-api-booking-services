@@ -1,0 +1,1406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="India" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(users,1)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(ramp_up,1)}</stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">${__P(duration,1)}</stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">perf.apac-services.us-west-2.cbt-aws-cwt.com</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path"></stringProp>
+          <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </ConfigTestElement>
+        <hashTree/>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Authorization</stringProp>
+              <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJQb3dlciBFeHByZXNzIn0.LKK4C3niIf80Vt0tTKNv_TevgaHeohFZmJxg7rABnGk</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="true">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="957831062">country</stringProp>
+            <stringProp name="-1954738520">record_locator</stringProp>
+            <stringProp name="-311748482">eo_number</stringProp>
+            <stringProp name="1925724619">clientAccountNumber</stringProp>
+            <stringProp name="-1700713450">agent_uid</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="-1632643325">
+              <stringProp name="3365">in</stringProp>
+              <stringProp name="-1883009455">RCR123</stringProp>
+              <stringProp name="1419794967">1904100826</stringProp>
+              <stringProp name="-348776416">9000000009</stringProp>
+              <stringProp name="187276680">UEXH190</stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">false</boolProp>
+        </UserParameters>
+        <hashTree/>
+        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Think Time" enabled="true">
+          <stringProp name="ConstantTimer.delay">${__P(delay,1)}</stringProp>
+        </ConstantTimer>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="agent" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/agent</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="agent_country_code" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/agent/${agent_uid}/${country}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="airlines" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/airlines</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="airlines_airline_code" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/airlines/CX</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="airline-rules" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/airline-rules</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="airports" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/airports</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="airports_code" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/airports/AAQ</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="client_gst_info" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/client-gst-info/29AAACC0462F1Z0?airlineCodes=JL</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="exchange_orders" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/exchange-orders</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="exchange_order_in" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">[&#xd;
+   {&#xd;
+      &quot;eoAction&quot;:&quot;Print&quot;,&#xd;
+      &quot;status&quot;:&quot;New&quot;,&#xd;
+      &quot;agentId&quot;:&quot;123345&quot;,&#xd;
+      &quot;agentName&quot;:&quot;Test Agent Name&quot;,&#xd;
+      &quot;countryCode&quot;:&quot;IN&quot;,&#xd;
+      &quot;pcc&quot;:&quot;PCC12345&quot;,&#xd;
+      &quot;productCode&quot;:&quot;0&quot;,&#xd;
+      &quot;recordLocator&quot;:&quot;PNR123&quot;,&#xd;
+      &quot;total&quot;:8999.99,&#xd;
+      &quot;associatedChargesList&quot;:[&#xd;
+         {&#xd;
+            &quot;details&quot;:&quot;Test Assoc Details&quot;,&#xd;
+            &quot;productCode&quot;:&quot;Test Product&quot;,&#xd;
+            &quot;vendorCode&quot;:&quot;Test Vendor&quot;,&#xd;
+            &quot;nettCost&quot;:200.99,&#xd;
+            &quot;commission&quot;:300.99,&#xd;
+            &quot;discount&quot;:400.99,&#xd;
+            &quot;sellingPrice&quot;:500.99,&#xd;
+            &quot;vatGstAmount&quot;:600.99,&#xd;
+            &quot;merchantFee&quot;:700.99,&#xd;
+            &quot;productDescription&quot;:&quot;Test Product Description&quot;,&#xd;
+            &quot;cwtRefNoTk&quot;:&quot;Test CWT Reference&quot;,&#xd;
+            &quot;vendorRefNoGsa&quot;:&quot;Test Vendor Reference&quot;,&#xd;
+            &quot;otherRelatedNoPo&quot;:&quot;Test Other Related&quot;,&#xd;
+            &quot;totalSellingPrice&quot;:500.99,&#xd;
+            &quot;clientExempt&quot;:true,&#xd;
+            &quot;noMerchantFee&quot;:true,&#xd;
+            &quot;formOfPayment&quot;:{&#xd;
+               &quot;fopType&quot;:&quot;CC&quot;&#xd;
+            }&#xd;
+         },&#xd;
+         {&#xd;
+            &quot;details&quot;:&quot;Test Assoc Details&quot;,&#xd;
+            &quot;productCode&quot;:&quot;Test Product&quot;,&#xd;
+            &quot;vendorCode&quot;:&quot;Test Vendor&quot;,&#xd;
+            &quot;nettCost&quot;:200.99,&#xd;
+            &quot;commission&quot;:300.99,&#xd;
+            &quot;discount&quot;:400.99,&#xd;
+            &quot;sellingPrice&quot;:500.99,&#xd;
+            &quot;vatGstAmount&quot;:600.99,&#xd;
+            &quot;merchantFee&quot;:700.99,&#xd;
+            &quot;productDescription&quot;:&quot;Test Product Description&quot;,&#xd;
+            &quot;cwtRefNoTk&quot;:&quot;Test CWT Reference&quot;,&#xd;
+            &quot;vendorRefNoGsa&quot;:&quot;Test Vendor Reference&quot;,&#xd;
+            &quot;otherRelatedNoPo&quot;:&quot;Test Other Related&quot;,&#xd;
+            &quot;totalSellingPrice&quot;:500.99,&#xd;
+            &quot;clientExempt&quot;:true,&#xd;
+            &quot;noMerchantFee&quot;:true,&#xd;
+            &quot;formOfPayment&quot;:{&#xd;
+               &quot;fopType&quot;:&quot;CC&quot;&#xd;
+            }&#xd;
+         }&#xd;
+      ],&#xd;
+      &quot;miscInfo&quot;:{&#xd;
+         &quot;referenceFare&quot;:222.99,&#xd;
+         &quot;lowFare&quot;:333.99,&#xd;
+         &quot;classOfServices&quot;:&quot;Test Class Of Service&quot;,&#xd;
+         &quot;lowFareCarrier&quot;:&quot;Test Low Fare Carrier&quot;,&#xd;
+         &quot;bookingAction&quot;:&quot;Test Booking Action&quot;,&#xd;
+         &quot;realisedSavingsCode&quot;:&quot;Test RSC&quot;,&#xd;
+         &quot;missedSavingsCode&quot;:&quot;Test MSC&quot;,&#xd;
+         &quot;declinedAirline1&quot;:&quot;Test Declined Airline 1&quot;,&#xd;
+         &quot;declinedFare1&quot;:786.99,&#xd;
+         &quot;declinedAirline2&quot;:&quot;Test Declined Airline 2&quot;,&#xd;
+         &quot;declinedFare2&quot;:2345.99&#xd;
+      },&#xd;
+      &quot;airCharges&quot;:{&#xd;
+         &quot;airlineOrCommissionPercent&quot;:0.0,&#xd;
+         &quot;baseAmount&quot;:0.0,&#xd;
+         &quot;baseFare&quot;:0.0,&#xd;
+         &quot;clientDiscountPercent&quot;:0.0,&#xd;
+         &quot;conditionalMarkUpPercent&quot;:0.0,&#xd;
+         &quot;cwtRefNo&quot;:&quot;123&quot;,&#xd;
+         &quot;finalDestination&quot;:&quot;manila&quot;,&#xd;
+         &quot;iataCommissionPercent&quot;:0.0,&#xd;
+         &quot;issueInExchangeFor&quot;:&quot;exch&quot;,&#xd;
+         &quot;markUpPercent&quot;:0.0,&#xd;
+         &quot;merchantFeeOnTf&quot;:0.0,&#xd;
+         &quot;mfOnAirFareMerchantFeePercent&quot;:0.0,&#xd;
+         &quot;mfOnAirFareOt1Percent&quot;:0.0,&#xd;
+         &quot;mfOnAirFareOt2Percent&quot;:0.0,&#xd;
+         &quot;mfOnAirFareVatGstPercent&quot;:0.0,&#xd;
+         &quot;mfOnCwtTxFeeFuelSurcharge&quot;:0.0,&#xd;
+         &quot;mfOnCwtTxFeeMerchantFeePercent&quot;:0.0,&#xd;
+         &quot;mfOnCwtTxFeeOverride&quot;:0.0,&#xd;
+         &quot;mfOnCwtTxFeeOverrideFlag&quot;:true,&#xd;
+         &quot;otherRelatedNo&quot;:&quot;456&quot;,&#xd;
+         &quot;pricing&quot;:&quot;price&quot;,&#xd;
+         &quot;reissuedTicket&quot;:true,&#xd;
+         &quot;returnableOrPercent&quot;:0.0,&#xd;
+         &quot;totalCharge&quot;:0.0,&#xd;
+         &quot;totalIataCommission&quot;:0.0,&#xd;
+         &quot;totalMarkup&quot;:0.0,&#xd;
+         &quot;totalReturnableOr&quot;:0.0,&#xd;
+         &quot;totalTax&quot;:0.0,&#xd;
+         &quot;tripType&quot;:&quot;CT&quot;,&#xd;
+         &quot;uatp&quot;:&quot;test&quot;,&#xd;
+         &quot;vendorRefNo&quot;:&quot;ref&quot;,&#xd;
+         &quot;yqTax&quot;:0.0,&#xd;
+         &quot;formOfPayment&quot;:{&#xd;
+            &quot;fopType&quot;:&quot;CX&quot;&#xd;
+         },&#xd;
+         &quot;othTax1&quot;:{&#xd;
+            &quot;code&quot;:&quot;code1&quot;,&#xd;
+            &quot;value&quot;:0.0&#xd;
+         },&#xd;
+         &quot;othTax2&quot;:{&#xd;
+            &quot;code&quot;:&quot;code2&quot;,&#xd;
+            &quot;value&quot;:0.0&#xd;
+         },&#xd;
+         &quot;othTax3&quot;:{&#xd;
+            &quot;code&quot;:&quot;code3&quot;,&#xd;
+            &quot;value&quot;:0.0&#xd;
+         }&#xd;
+      },&#xd;
+      &quot;nonAirCharges&quot;:{&#xd;
+         &quot;nettCost&quot;:100.99,&#xd;
+         &quot;sellingPrice&quot;:140.99,&#xd;
+         &quot;commission&quot;:190.99,&#xd;
+         &quot;discount&quot;:200.99,&#xd;
+         &quot;gst&quot;:800.99,&#xd;
+         &quot;gstAbsorb&quot;:true,&#xd;
+         &quot;merchantFee&quot;:888.99,&#xd;
+         &quot;merchantFeeAbsorb&quot;:true,&#xd;
+         &quot;totalSellingPrice&quot;:789.99,&#xd;
+         &quot;country&quot;:&quot;India&quot;,&#xd;
+         &quot;type&quot;:&quot;Test Type&quot;,&#xd;
+         &quot;entries&quot;:&quot;Test Entries&quot;,&#xd;
+         &quot;validityLength&quot;:20,&#xd;
+         &quot;validityType&quot;:&quot;Test Validity Type&quot;,&#xd;
+         &quot;processingType&quot;:&quot;Test Processing&quot;,&#xd;
+         &quot;classCabin&quot;:&quot;Test Description&quot;,&#xd;
+         &quot;description&quot;:&quot;Test Service Prod Descrption&quot;,&#xd;
+         &quot;cwtRefNo&quot;:&quot;Test Service CWT Reference&quot;,&#xd;
+         &quot;vendorRefNo&quot;:&quot;Test Service Vendor Reference&quot;,&#xd;
+         &quot;otherRelatedNo&quot;:&quot;Test Service Other Related No&quot;,&#xd;
+         &quot;formOfPayment&quot;:{&#xd;
+            &quot;fopType&quot;:&quot;CC&quot;&#xd;
+         }&#xd;
+      },&#xd;
+      &quot;vendor&quot;:{&#xd;
+         &quot;code&quot;:&quot;00900032&quot;,&#xd;
+         &quot;name&quot;:&quot;Test Vendor 021238&quot;,&#xd;
+         &quot;address1&quot;:&quot;Test Vendor Address 1&quot;,&#xd;
+         &quot;address2&quot;:&quot;Test Vendor Address 2&quot;,&#xd;
+         &quot;city&quot;:&quot;India&quot;,&#xd;
+         &quot;country&quot;:&quot;India&quot;,&#xd;
+         &quot;supportEmail&quot;:&quot;supportemail@test.com&quot;,&#xd;
+         &quot;contactInfo&quot;:[&#xd;
+            {&#xd;
+               &quot;type&quot;:&quot;Phone&quot;,&#xd;
+               &quot;detail&quot;:&quot;123456&quot;,&#xd;
+               &quot;preferred&quot;:true&#xd;
+            }&#xd;
+         ]&#xd;
+      },&#xd;
+      &quot;request&quot;:{&#xd;
+         &quot;internalRemarks&quot;:&quot;Test Internal Remark&quot;,&#xd;
+         &quot;air&quot;:{&#xd;
+            &quot;platingCarrier&quot;:&quot;Test Plating Carrier&quot;,&#xd;
+            &quot;fareType&quot;:&quot;Test Fare Type&quot;,&#xd;
+            &quot;passengerName&quot;:&quot;Test Passenger Name&quot;,&#xd;
+            &quot;airCustomFields&quot;:{&#xd;
+               &quot;posRemark1&quot;:&quot;Test Pos Remark 1&quot;,&#xd;
+               &quot;posRemark2&quot;:&quot;Test Pos Remark 2&quot;,&#xd;
+               &quot;posRemark3&quot;:&quot;Test Pos Remark 3&quot;,&#xd;
+               &quot;centralizedDesk1&quot;:&quot;Test Centralized Desk 1&quot;,&#xd;
+               &quot;centralizedDesk2&quot;:&quot;Test Centralized Desk 2&quot;,&#xd;
+               &quot;airlines&quot;:&quot;Test Airlines&quot;,&#xd;
+               &quot;transactionType&quot;:&quot;Test Transaction Type&quot;,&#xd;
+               &quot;airlinePNR&quot;:&quot;XXXYYY&quot;,&#xd;
+               &quot;fareBreakUp1&quot;:&quot;Test Fare Break 1&quot;,&#xd;
+               &quot;fareBreakUp2&quot;:&quot;Test Fare Break 2&quot;,&#xd;
+               &quot;cancellationPenalty&quot;:&quot;Test Cancellation Penalty&quot;,&#xd;
+               &quot;lccQueueBackRemark&quot;:&quot;Test LCC Queue&quot;,&#xd;
+               &quot;gstin&quot;:&quot;Test GSTIN&quot;,&#xd;
+               &quot;email&quot;:&quot;test@email.com&quot;,&#xd;
+               &quot;entityName&quot;:&quot;Test Entity Name&quot;,&#xd;
+               &quot;phoneNo&quot;:&quot;123456789&quot;&#xd;
+            },&#xd;
+            &quot;consolInfo&quot;:{&#xd;
+               &quot;tourCode&quot;:&quot;Test Tour Code&quot;,&#xd;
+               &quot;thresholdAmount&quot;:12334.99&#xd;
+            },&#xd;
+            &quot;airSegments&quot;:[&#xd;
+               &quot;Test Air Segments&quot;,&#xd;
+               &quot;Test Air Segments&quot;&#xd;
+            ],&#xd;
+            &quot;vmpd&quot;:{&#xd;
+               &quot;recordLocator&quot;:&quot;PNRXYZ&quot;,&#xd;
+               &quot;fare&quot;:100.99,&#xd;
+               &quot;taxes&quot;:200.99,&#xd;
+               &quot;reasonForIssue&quot;:&quot;Test Reason&quot;,&#xd;
+               &quot;headlineCurrency&quot;:&quot;Test Headline&quot;,&#xd;
+               &quot;equivalentAmountPaid&quot;:789.99,&#xd;
+               &quot;issueInExchangeFor&quot;:&quot;Test Issue&quot;,&#xd;
+               &quot;inConjuctionWith&quot;:&quot;Test Conjunction&quot;,&#xd;
+               &quot;origPlaceOfIssue&quot;:&quot;Test Original Place&quot;,&#xd;
+               &quot;remark&quot;:&quot;Test Remark&quot;,&#xd;
+               &quot;formOfPayment&quot;:{&#xd;
+                  &quot;fopType&quot;:&quot;CX&quot;&#xd;
+               }&#xd;
+            }&#xd;
+         },&#xd;
+         &quot;car&quot;:{&#xd;
+            &quot;pickupDateTime&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+            &quot;pickupLocation&quot;:&quot;Test Car Pickup Location&quot;,&#xd;
+            &quot;pickupDescription&quot;:&quot;Test Car Pickup Description&quot;,&#xd;
+            &quot;company&quot;:&quot;Test Car Company&quot;,&#xd;
+            &quot;name&quot;:&quot;Test Car Name&quot;,&#xd;
+            &quot;dropOffDateTime&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+            &quot;dropOffLocation&quot;:&quot;Test Car Dropoff Location&quot;,&#xd;
+            &quot;dropOffDescription&quot;:&quot;Test Car Dropoff Description&quot;,&#xd;
+            &quot;dailyRateCurrency&quot;:&quot;Test Daily Currency&quot;,&#xd;
+            &quot;dailyRateAmount&quot;:5645.99,&#xd;
+            &quot;confirmationNumber&quot;:&quot;Test Car Confirmation Number&quot;,&#xd;
+            &quot;type&quot;:&quot;Test Car Type&quot;,&#xd;
+            &quot;cancellationPolicy&quot;:{&#xd;
+               &quot;description&quot;:&quot;Test Car Description&quot;,&#xd;
+               &quot;type&quot;:&quot;Duration&quot;,&#xd;
+               &quot;unit&quot;:&quot;Hrs&quot;,&#xd;
+               &quot;number&quot;:5&#xd;
+            },&#xd;
+            &quot;guarantor&quot;:{&#xd;
+               &quot;type&quot;:&quot;CC&quot;,&#xd;
+               &quot;creditCard&quot;:{&#xd;
+                  &quot;ccType&quot;:&quot;AX&quot;,&#xd;
+                  &quot;ccNumber&quot;:&quot;1234&quot;,&#xd;
+                  &quot;expiryDate&quot;:&quot;10/20&quot;&#xd;
+               }&#xd;
+            }&#xd;
+         },&#xd;
+         &quot;forex&quot;:{&#xd;
+            &quot;forexType&quot;:&quot;Test Forex Type&quot;,&#xd;
+            &quot;travelType&quot;:&quot;Test Travel Type&quot;,&#xd;
+            &quot;travelDate&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+            &quot;expectedDeliveryDate&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+            &quot;deliveryAddress&quot;:&quot;Test Delivery Address&quot;,&#xd;
+            &quot;passengerEmployeeId&quot;:&quot;Test Passennger ID&quot;,&#xd;
+            &quot;businessUnit&quot;:&quot;Test Business Unit&quot;,&#xd;
+            &quot;passportNumber&quot;:&quot;Test Passport Number&quot;,&#xd;
+            &quot;contactNumber&quot;:&quot;Test Contact Number 1234&quot;,&#xd;
+            &quot;docCheckList&quot;:{&#xd;
+               &quot;passportCopiesReceived&quot;:true,&#xd;
+               &quot;refundCopiesReceived&quot;:true,&#xd;
+               &quot;vtmCardReceived&quot;:true&#xd;
+            },&#xd;
+            &quot;requestAmount&quot;:{&#xd;
+               &quot;type&quot;:&quot;Test Request Type&quot;,&#xd;
+               &quot;currency&quot;:&quot;Test Request Currency&quot;,&#xd;
+               &quot;amount&quot;:112233&#xd;
+            }&#xd;
+         },&#xd;
+         &quot;hotel&quot;:{&#xd;
+            &quot;airSegment&quot;:&quot;Test Hotel Air Segment&quot;,&#xd;
+            &quot;hotelSegment&quot;:&quot;Test Hotel Segment&quot;,&#xd;
+            &quot;name&quot;:&quot;Test Hotel Name&quot;,&#xd;
+            &quot;address&quot;:&quot;Test Hotel Address&quot;,&#xd;
+            &quot;cityName&quot;:&quot;Test Hotel City Name&quot;,&#xd;
+            &quot;stateProvince&quot;:&quot;Test Hotel State&quot;,&#xd;
+            &quot;postCode&quot;:&quot;Test Hotel Post Code&quot;,&#xd;
+            &quot;phoneNumber&quot;:&quot;Test Hotel Phone&quot;,&#xd;
+            &quot;dailyRateCurrency&quot;:&quot;Test Hotel Daily Currency&quot;,&#xd;
+            &quot;dailyRateAmount&quot;:9989.99,&#xd;
+            &quot;confirmationNumber&quot;:&quot;Test Hotel Confirmation&quot;,&#xd;
+            &quot;cityCode&quot;:&quot;Mumbai&quot;,&#xd;
+            &quot;checkInDateTime&quot;:&quot;2018-07-01T07:27:54.427Z&quot;,&#xd;
+            &quot;checkOutDateTime&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+            &quot;roomType&quot;:&quot;Test Hotel Type&quot;,&#xd;
+            &quot;noOfPeople&quot;:4,&#xd;
+            &quot;cancellationPolicy&quot;:{&#xd;
+               &quot;description&quot;:&quot;Test Car Description&quot;,&#xd;
+               &quot;type&quot;:&quot;Duration&quot;,&#xd;
+               &quot;unit&quot;:&quot;Hrs&quot;,&#xd;
+               &quot;number&quot;:5&#xd;
+            },&#xd;
+            &quot;guarantor&quot;:{&#xd;
+               &quot;type&quot;:&quot;CC&quot;,&#xd;
+               &quot;creditCard&quot;:{&#xd;
+                  &quot;ccType&quot;:&quot;AX&quot;,&#xd;
+                  &quot;ccNumber&quot;:&quot;1234&quot;,&#xd;
+                  &quot;expiryDate&quot;:&quot;Single&quot;&#xd;
+               }&#xd;
+            }&#xd;
+         },&#xd;
+         &quot;insurance&quot;:{&#xd;
+            &quot;details&quot;:&quot;Test Insurance Detail&quot;,&#xd;
+            &quot;details1&quot;:&quot;Test Insurance Detail 1&quot;,&#xd;
+            &quot;details2&quot;:&quot;Test Insurance Detail 2&quot;,&#xd;
+            &quot;indiaInsuranceCustomFields&quot;:{&#xd;
+               &quot;employeeNumber&quot;:&quot;Test Insurance Emp Number&quot;,&#xd;
+               &quot;employeeName&quot;:&quot;Test Insurance Emp Name&quot;,&#xd;
+               &quot;passportNumber&quot;:&quot;Test Insurance Passport Num&quot;,&#xd;
+               &quot;area&quot;:&quot;Test Insurance Area&quot;,&#xd;
+               &quot;assigneeName&quot;:&quot;Test Insurance Assignee Name&quot;,&#xd;
+               &quot;gender&quot;:&quot;Test Insurance Gender&quot;,&#xd;
+               &quot;dateOfBirth&quot;:&quot;1985-08-01T07:27:54.427Z&quot;,&#xd;
+               &quot;address&quot;:&quot;Test Insurance Address&quot;,&#xd;
+               &quot;street&quot;:&quot;Test Insurance Street&quot;,&#xd;
+               &quot;city&quot;:&quot;Test Insurance Sub Area&quot;,&#xd;
+               &quot;pinCode&quot;:&quot;Test Insurance Pin&quot;,&#xd;
+               &quot;state&quot;:&quot;Test Insurance State&quot;,&#xd;
+               &quot;country&quot;:&quot;Test Insurance Country&quot;,&#xd;
+               &quot;mobileNumber&quot;:&quot;Test Insurance Mobile&quot;,&#xd;
+               &quot;maritalStatus&quot;:&quot;Single&quot;,&#xd;
+               &quot;arrivalDate&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+               &quot;departureDate&quot;:&quot;2018-08-02T07:27:54.427Z&quot;&#xd;
+            }&#xd;
+         },&#xd;
+         &quot;meeting&quot;:{&#xd;
+            &quot;dateTime&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+            &quot;city&quot;:&quot;Test Meeting City&quot;,&#xd;
+            &quot;location&quot;:&quot;Test Meeting Location&quot;&#xd;
+         },&#xd;
+         &quot;tour&quot;:{&#xd;
+            &quot;startDate&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+            &quot;endDate&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+            &quot;city&quot;:&quot;Test City&quot;,&#xd;
+            &quot;packageName&quot;:&quot;Test Package Name&quot;,&#xd;
+            &quot;details&quot;:&quot;Test Details&quot;,&#xd;
+            &quot;passengerName&quot;:&quot;Test Tour Passenger&quot;&#xd;
+         },&#xd;
+         &quot;train&quot;:{&#xd;
+            &quot;domCustomFields&quot;:{&#xd;
+               &quot;ticketType&quot;:&quot;Test Ticket type&quot;,&#xd;
+               &quot;idType&quot;:&quot;Test ID Type&quot;,&#xd;
+               &quot;idIssuingAuthority&quot;:&quot;Test Issue Auth&quot;,&#xd;
+               &quot;idNumber&quot;:&quot;Test ID Number&quot;,&#xd;
+               &quot;noOfPassengers&quot;:100,&#xd;
+               &quot;travelWithin24Hrs&quot;:&quot;Test Travel Time&quot;,&#xd;
+               &quot;age&quot;:45,&#xd;
+               &quot;gender&quot;:&quot;Test Gender&quot;,&#xd;
+               &quot;travelDeskEmailId&quot;:&quot;Test Travel Desk&quot;&#xd;
+            },&#xd;
+            &quot;segments&quot;:[&#xd;
+               {&#xd;
+                  &quot;dateTime&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+                  &quot;origin&quot;:&quot;Test Origin&quot;,&#xd;
+                  &quot;originDesc&quot;:&quot;Test Origin Description&quot;,&#xd;
+                  &quot;destination&quot;:&quot;Test Destination&quot;,&#xd;
+                  &quot;destinationDesc&quot;:&quot;Test Destination Description&quot;,&#xd;
+                  &quot;number&quot;:&quot;Test Train Number&quot;,&#xd;
+                  &quot;name&quot;:&quot;Test Name&quot;,&#xd;
+                  &quot;cabinClass&quot;:&quot;Test Document&quot;&#xd;
+               },&#xd;
+               {&#xd;
+                  &quot;dateTime&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+                  &quot;origin&quot;:&quot;Test Origin&quot;,&#xd;
+                  &quot;originDesc&quot;:&quot;Test Origin Description&quot;,&#xd;
+                  &quot;destination&quot;:&quot;Test Destination&quot;,&#xd;
+                  &quot;destinationDesc&quot;:&quot;Test Destination Description&quot;,&#xd;
+                  &quot;number&quot;:&quot;Test Train Number&quot;,&#xd;
+                  &quot;name&quot;:&quot;Test Name&quot;,&#xd;
+                  &quot;cabinClass&quot;:&quot;Test Document&quot;&#xd;
+               },&#xd;
+               {&#xd;
+                  &quot;dateTime&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+                  &quot;origin&quot;:&quot;Test Origin&quot;,&#xd;
+                  &quot;originDesc&quot;:&quot;Test Origin Description&quot;,&#xd;
+                  &quot;destination&quot;:&quot;Test Destination&quot;,&#xd;
+                  &quot;destinationDesc&quot;:&quot;Test Destination Description&quot;,&#xd;
+                  &quot;number&quot;:&quot;Test Train Number&quot;,&#xd;
+                  &quot;name&quot;:&quot;Test Name&quot;,&#xd;
+                  &quot;cabinClass&quot;:&quot;Test Document&quot;&#xd;
+               }&#xd;
+            ],&#xd;
+            &quot;transChargesCustomFields&quot;:{&#xd;
+               &quot;idType&quot;:&quot;Test Travel ID Type&quot;,&#xd;
+               &quot;idNumber&quot;:&quot;Test Travel ID Number&quot;,&#xd;
+               &quot;idIssuingAuthority&quot;:&quot;Test Travel Issue Auth&quot;,&#xd;
+               &quot;noOfPassenger&quot;:10,&#xd;
+               &quot;idBelongToPassengers&quot;:&quot;Test Travel Trans ID&quot;,&#xd;
+               &quot;ticketType&quot;:&quot;Test Travel Ticket Type&quot;,&#xd;
+               &quot;travelWithin24Hrs&quot;:&quot;Test Travel Trans&quot;&#xd;
+            }&#xd;
+         },&#xd;
+         &quot;visa&quot;:{&#xd;
+            &quot;document&quot;:&quot;Test Visa Document&quot;,&#xd;
+            &quot;applicationDate&quot;:&quot;2018-08-01T07:27:54.427Z&quot;,&#xd;
+            &quot;country&quot;:&quot;India&quot;,&#xd;
+            &quot;docType&quot;:&quot;Test Visa Document Type&quot;,&#xd;
+            &quot;entries&quot;:&quot;Test Visa Entries&quot;,&#xd;
+            &quot;processingType&quot;:&quot;Test Visa Processing Type&quot;,&#xd;
+            &quot;validityLength&quot;:2,&#xd;
+            &quot;validityType&quot;:&quot;Test Visa Validity Type&quot;,&#xd;
+            &quot;customFields&quot;:{&#xd;
+               &quot;demandDraftRequired&quot;:&quot;Test Demand Required&quot;,&#xd;
+               &quot;demandDraftNumber&quot;:&quot;Test Demand Number&quot;,&#xd;
+               &quot;validity&quot;:&quot;Test Visa Validity&quot;&#xd;
+            }&#xd;
+         }&#xd;
+      }&#xd;
+   }&#xd;
+]</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/exchange-order/in</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="exchange_order_air_misc_info" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/exchange-order/air-misc-info/${clientAccountNumber}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="exchange_order_car_vendors" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/exchange-order/car-vendors</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="exchange_order_room_types" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/exchange-order/room-types</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="exchange_order_vmpd" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/exchange-order/vmpd</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="exchange_order_country_code_record_locator" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/exchange-order/${country}/${record_locator}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="exchange_order_country_code_eo_number" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/exchange-order/${country}/${eo_number}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="exchange_order_remarks" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/remarks/${country}/cx/e</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="itinerary_remarks" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/remarks/${country}/cx/i</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="other_service_fees_air_fees" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+   &quot;airSegmentCount&quot;:1,&#xd;
+   &quot;airlineCommissionPercent&quot;:10,&#xd;
+   &quot;airlineOverheadCommissionByPercent&quot;:true,&#xd;
+   &quot;airlineOverheadCommissionPercent&quot;:12,&#xd;
+   &quot;airlineOverheadCommission&quot;:10,&#xd;
+   &quot;baseFare&quot;:1000,&#xd;
+   &quot;cityCode&quot;:&quot;CCU&quot;,&#xd;
+   &quot;clientAccountNumber&quot;:&quot;9000000009&quot;,&#xd;
+   &quot;commissionEnabled&quot;:true,&#xd;
+   &quot;discountEnabled&quot;:true,&#xd;
+   &quot;discountPercent&quot;:1,&#xd;
+   &quot;feeOverride&quot;:false,&#xd;
+   &quot;gstEnabled&quot;:true,&#xd;
+   &quot;markupEnabled&quot;:true,&#xd;
+   &quot;merchantFeePercent&quot;:2,&#xd;
+   &quot;overheadCommissionEnabled&quot;:true,&#xd;
+   &quot;clientOverheadCommissionPercent&quot;:10,&#xd;
+   &quot;platCarrier&quot;:&quot;EY&quot;,&#xd;
+   &quot;product&quot;:{  &#xd;
+      &quot;gstPercent&quot;:3,&#xd;
+      &quot;ot1Percent&quot;:1,&#xd;
+      &quot;ot2Percent&quot;:3,&#xd;
+      &quot;overridePc&quot;:false&#xd;
+   },&#xd;
+   &quot;othTax1&quot;:2,&#xd;
+   &quot;othTax2&quot;:2,&#xd;
+   &quot;othTax3&quot;:0,&#xd;
+   &quot;tripType&quot;:&quot;I&quot;,&#xd;
+   &quot;yqTax&quot;:10&#xd;
+ }</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/other-service-fees/air-fees/in</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="other_service_fees_non_air_fees" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{  &#xd;
+   &quot;fopType&quot;:&quot;CX&quot;,&#xd;
+   &quot;clientAccountNumber&quot;:&quot;9000000009&quot;,&#xd;
+   &quot;ccType&quot;:&quot;DC&quot;,&#xd;
+   &quot;costAmount&quot;:400.85,&#xd;
+   &quot;commissionByPercent&quot;:true,&#xd;
+   &quot;commissionPercent&quot;:3.00,&#xd;
+   &quot;discountByPercent&quot;:true,&#xd;
+   &quot;discountPercent&quot;:2.50,&#xd;
+   &quot;fopMode&quot;:1,&#xd;
+   &quot;fopNumber&quot;:&quot;1234&quot;,&#xd;
+   &quot;product&quot;:{  &#xd;
+      &quot;gstPercent&quot;:14,&#xd;
+      &quot;ot1Percent&quot;:0.5,&#xd;
+      &quot;ot2Percent&quot;:0.5,&#xd;
+      &quot;productCode&quot;:&quot;8&quot;&#xd;
+   }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/other-service-fees/non-air-fees/in</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="obt_list" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/obt-list/${country}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="product_country_code" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/products/${country}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="report_headers_country_code" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/report-headers/${country}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="users" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/users</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="user_uid" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/apac-services-rest/api/user/UTXP311</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="false">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Graph Results" enabled="false">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">D:\apache-jmeter-5.1.1\bin\results\results_0530.csv</stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
