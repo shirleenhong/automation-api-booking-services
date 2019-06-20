@@ -1,7 +1,7 @@
 package com.cwt.bpg.cbt.obt.model;
 
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.*;
 
 import javax.validation.Valid;

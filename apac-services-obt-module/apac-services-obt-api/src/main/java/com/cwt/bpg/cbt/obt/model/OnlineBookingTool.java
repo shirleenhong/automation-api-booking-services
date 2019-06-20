@@ -1,9 +1,10 @@
 package com.cwt.bpg.cbt.obt.model;
 
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import java.io.Serializable;
+
+import javax.validation.constraints.NotEmpty;
 
 public class OnlineBookingTool implements Serializable {
 

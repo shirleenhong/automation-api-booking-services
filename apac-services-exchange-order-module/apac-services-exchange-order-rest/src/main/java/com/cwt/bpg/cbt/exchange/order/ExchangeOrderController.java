@@ -42,7 +42,8 @@ public class ExchangeOrderController {
 	@Autowired
 	private ExchangeOrderReportService eoReportService;
 
-	@PostMapping(path = "/exchange-order/{countryCode:hk|sg}", produces = {
+	@SuppressWarnings("unchecked")
+    @PostMapping(path = "/exchange-order/{countryCode:hk|sg}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
@@ -67,7 +68,8 @@ public class ExchangeOrderController {
 				HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = {
+	@SuppressWarnings("unchecked")
+    @GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "[HK/SG only] Returns exchange order given a PNR record locator.")
@@ -79,7 +81,8 @@ public class ExchangeOrderController {
 				eoService.getExchangeOrderByRecordLocator(countryCode, recordLocator), HttpStatus.OK);
 	}
 
-	@PostMapping(path = "/exchange-order/in", produces = {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+    @PostMapping(path = "/exchange-order/in", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
@@ -102,7 +105,8 @@ public class ExchangeOrderController {
 				HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/exchange-order/in/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = {
+	@SuppressWarnings("unchecked")
+    @GetMapping(path = "/exchange-order/in/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
 	@ApiOperation(value = "[India only] Returns exchange order given a PNR record locator.")

@@ -1,13 +1,5 @@
 package com.cwt.bpg.cbt.encryptor.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.GCMParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -15,10 +7,14 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
 
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
 public class Encryptor
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Encryptor.class);
-
     private SecretKey secretKey;
 
     public Encryptor(String secretKey)

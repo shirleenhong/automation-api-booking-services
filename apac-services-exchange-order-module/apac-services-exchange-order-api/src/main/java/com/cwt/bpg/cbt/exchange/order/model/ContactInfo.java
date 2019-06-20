@@ -2,7 +2,7 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 

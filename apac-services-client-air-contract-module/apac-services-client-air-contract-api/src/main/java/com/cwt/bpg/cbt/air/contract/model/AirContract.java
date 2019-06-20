@@ -2,8 +2,9 @@ package com.cwt.bpg.cbt.air.contract.model;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.bson.types.ObjectId;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.*;
 
 import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
