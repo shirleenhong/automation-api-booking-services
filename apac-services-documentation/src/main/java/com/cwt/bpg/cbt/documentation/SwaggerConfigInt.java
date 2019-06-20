@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-@Profile({ "int", "sec" })
+@Profile({ "int", "sec", "preprod" })
 public class SwaggerConfigInt extends SwaggerConfigBase
 {
     @Bean
