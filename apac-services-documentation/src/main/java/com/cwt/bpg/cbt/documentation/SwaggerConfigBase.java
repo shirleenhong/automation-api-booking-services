@@ -55,6 +55,10 @@ public class SwaggerConfigBase {
         return new ApiKey("Power Express Token", "Authorization", "header");
     }
 
+    Tag agent() {
+        return new Tag("Agent", "Maintenance of Agents.");
+    }
+
     Tag airContract() {
         return new Tag("Air Contract", "Services related to Air Contract.\nImportant field: **fopCode (BCODE)**.");
     }
@@ -79,8 +83,16 @@ public class SwaggerConfigBase {
         return new Tag("App Info", "Health-check endpoint.");
     }
 
+    Tag clientGstInfo() {
+        return new Tag("Client GST Information", "Maintenance of Client GST Information");
+    }
+
     Tag client() {
         return new Tag("Clients", "Services related to Clients.");
+    }
+
+    Tag codif() {
+        return new Tag("Codif", "Services related to Codif");
     }
 
     Tag exchangeOrder() {
@@ -129,6 +141,10 @@ public class SwaggerConfigBase {
 
     Tag serviceFees() {
         return new Tag("Service Fees", "Services related to Service Fees");
+    }
+
+    Tag user() {
+        return new Tag("User", "Maintenance of Users");
     }
     
     Tag reportHeaders() {
