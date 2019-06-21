@@ -30,8 +30,8 @@ public class SwaggerConfigInt extends SwaggerConfigBase
                 .groupName("apac-services")
                 .apiInfo(apiInfo())
                 .tags(appInfo(), airTransaction(), agent(), airline(), airlineRules(), airport(), airContract(), airMiscInfo(),
-                        carVendors(), client(), clientGstInfo(), codif(), exchangeOrder(), hotelRoomTypes(), insurance(), merchantFee(),
-						obtList(), otherServiceFees(), products(), serviceFees(), vmpdReasonCodes(), reportHeaders(), user())
+                        carVendors(), client(), clientGstInfo(), codif(), exchangeOrder(), hotelRoomTypes(), insurance(),
+						obtList(), otherServiceFees(), products(), serviceFees(), vmpdReasonCodes(), remarks(), reportHeaders())
                 .securitySchemes(Lists.newArrayList(securityScheme()))
                 .securityContexts(Lists.newArrayList(securityContext()));
     }
