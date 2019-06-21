@@ -2,7 +2,8 @@ package com.cwt.bpg.cbt.airline.model;
 
 import java.io.Serializable;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
+
 import org.mongodb.morphia.annotations.*;
 
 import io.swagger.annotations.ApiModelProperty;

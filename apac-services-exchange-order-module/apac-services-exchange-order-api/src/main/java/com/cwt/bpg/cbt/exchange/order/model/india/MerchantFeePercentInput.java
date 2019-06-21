@@ -1,8 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model.india;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.FopType;

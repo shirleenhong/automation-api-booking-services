@@ -2,10 +2,10 @@ package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.bson.types.ObjectId;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Id;

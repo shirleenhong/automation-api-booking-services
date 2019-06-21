@@ -4,7 +4,7 @@ import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 import org.bson.types.ObjectId;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.*;
 
 import java.io.Serializable;

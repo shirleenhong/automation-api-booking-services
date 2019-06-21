@@ -77,8 +77,6 @@ public class MongoDbConnection
             String mongoDBName = this.dbName;
             MongoCredential credential = MongoCredential.createCredential(encryptor.decrypt(this.dbUser), mongoDBName, pwd);
 
-            List<MongoCredential> credentials = new ArrayList<>();
-            credentials.add(credential);
             MongoClientOptions.Builder options = new MongoClientOptions.Builder().sslEnabled(sslEnabled)
                     .sslInvalidHostNameAllowed(invalidHostNameAllowed)
                     .maxConnectionIdleTime(maxConnectionIdleTime)
@@ -95,7 +93,7 @@ public class MongoDbConnection
                 hosts.add(new ServerAddress(address));
             }
 
-            mongoClient = new MongoClient(hosts, credentials, options.build());
+            mongoClient = new MongoClient(hosts, credential, options.build());
             this.database = mongoClient.getDatabase(mongoDBName);
             LOGGER.info("Mongodb connection initialized");
         }

@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Id;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;

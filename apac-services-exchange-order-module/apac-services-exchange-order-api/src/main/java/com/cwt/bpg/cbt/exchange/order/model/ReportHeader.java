@@ -1,11 +1,13 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
-import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.NotEmpty;
+import java.io.Serializable;
+
+import javax.validation.constraints.NotEmpty;
+
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-import java.io.Serializable;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity(value = "reportHeaders", noClassnameStored = true)
 public class ReportHeader implements Serializable {
