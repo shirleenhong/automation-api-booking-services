@@ -9,28 +9,33 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MorphiaComponent {
-		
-	private Datastore datastore;
-	
+public class MorphiaComponent
+{
+
+    private Datastore datastore;
+
     @Value("${com.cwt.mongodb.dbname}")
     private String dbName;
-    	
-	@Autowired
-	private MongoDbConnection mongodbConnection;
-	
-	@PostConstruct
-	public void init() {
-		Morphia morphia = new Morphia();
-		
-		morphia.mapPackage("com.cwt.bpg.cbt.exchange.order.model", true);
-		
-		datastore = morphia.createDatastore(mongodbConnection.getMongoClient(), dbName);
-		datastore.ensureIndexes();
-		
-	}
-	
-	public Datastore getDatastore() {
-		return datastore;
-	}
+
+    @Autowired
+    private MongoDbConnection mongodbConnection;
+
+    @PostConstruct
+    public void init()
+    {
+        Morphia morphia = new Morphia();
+
+        // morphia.getMapper().getConverters().removeConverter(new EnumConverter());
+
+        morphia.mapPackage("com.cwt.bpg.cbt.exchange.order.model", true);
+        morphia.mapPackage("com.cwt.bpg.cbt.air.transaction.model", true);
+
+        datastore = morphia.createDatastore(mongodbConnection.getMongoClient(), dbName);
+        datastore.ensureIndexes();
+    }
+
+    public Datastore getDatastore()
+    {
+        return datastore;
+    }
 }
