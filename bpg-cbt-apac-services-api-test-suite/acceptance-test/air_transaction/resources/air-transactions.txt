@@ -53,7 +53,7 @@ Create Put Request Body
     \    ${booking_class_data_list}    Set Variable    ${booking_class_data_list}${booking_class_request_list[${i}]}
     ${booking_class_data_list}    Set Variable If    "${booking_class_request_list_length}"=="0"    ${EMPTY}    ${booking_class_data_list}
     ${data}    Set Variable If    "${booking_class_list}"!="${EMPTY}"    {${air_transaction_data_list},"bookingClasses":[${booking_class_data_list}]}
-    Set Test Variable    ${data}
+    Set Test Variable    ${data}    [${data}]
     Log    ${data}
 
 Create Test Variable For Air Transaction
