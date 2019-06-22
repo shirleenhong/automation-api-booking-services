@@ -244,14 +244,14 @@ Verify Air Transaction Record Is Saved Correctly
     Append To List    ${id_list}    ${actual_id}
     Set Test Variable    ${actual_id}
     Set Test Variable    ${id_list}
-    Verify Json Value Is Correct    $.airlineCode    ${airline_code}
-    Verify Json Value Is Correct    $.airlineDescription    ${${airline_code}_airline_description}
-    Verify Json Value Is Correct    $.ccVendorCode    ${cc_vendor_code}
-    Verify Json Value Is Correct    $.ccVendorName    ${${cc_vendor_code}_cc_description}
-    Verify Json Value Is Correct    $.countryCode    ${country}
-    Verify Json Value Is Correct    $.ccType    ${cc_type}
-    Verify Json Value Is Correct    $.passthroughType    ${passthrough_type}
-    Run Keyword If    "${client_account_number}"!="null"    Verify Json Value Is Correct    $.clientAccountNumber    ${client_account_number}
-    ...    ELSE    Verify Json Element Does Not Exist    $.clientAccountNumber
+    Verify Json Value Is Correct    $..airlineCode    ${airline_code}
+    Verify Json Value Is Correct    $..airlineDescription    ${${airline_code}_airline_description}
+    Verify Json Value Is Correct    $..ccVendorCode    ${cc_vendor_code}
+    Verify Json Value Is Correct    $..ccVendorName    ${${cc_vendor_code}_cc_description}
+    Verify Json Value Is Correct    $..countryCode    ${country}
+    Verify Json Value Is Correct    $..ccType    ${cc_type}
+    Verify Json Value Is Correct    $..passthroughType    ${passthrough_type}
+    Run Keyword If    "${client_account_number}"!="null"    Verify Json Value Is Correct    $..clientAccountNumber    ${client_account_number}
+    ...    ELSE    Verify Json Element Does Not Exist    $..clientAccountNumber
     : FOR    ${booking_class_index}    IN RANGE    0    ${booking_class_list_length}
-    \    Verify Json Value Is Correct    $.bookingClasses.[${booking_class_index}]    ${booking_class_${booking_class_index}}
+    \    Verify Json Value Is Correct    $..bookingClasses.[${booking_class_index}]    ${booking_class_${booking_class_index}}

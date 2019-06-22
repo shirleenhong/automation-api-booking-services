@@ -137,7 +137,7 @@ Verify That Error Is Encountered When No Token Is Used For Maintenance Put Reque
     Verify Air Transaction Record Is Not Retrieved
 
 Verify That Error Is Encountered When Invalid Passthrought Type Is Used For Maintenance Put Request
-    [Tags]    functional
+    [Tags]    functional    not-ready
     Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,Cwt,in;C
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    400
