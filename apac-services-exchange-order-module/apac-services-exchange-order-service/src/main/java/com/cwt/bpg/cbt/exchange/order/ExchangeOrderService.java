@@ -6,12 +6,16 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.cwt.bpg.cbt.exchange.order.exception.ExchangeOrderNoContentException;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.CarVendor;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrder;
+import com.cwt.bpg.cbt.exchange.order.model.ExchangeOrderSearchParam;
+import com.cwt.bpg.cbt.exchange.order.model.RoomType;
+import com.cwt.bpg.cbt.exchange.order.model.VmpdReasonCode;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 
 @Service
@@ -89,12 +93,10 @@ public class ExchangeOrderService {
 		return roomTypeRepository.getAll();
 	}
 
-	@CacheEvict(cacheNames = "room-types", allEntries = true)
 	public RoomType save(RoomType roomType) {
 		return roomTypeRepository.put(roomType);
 	}
 
-    @CacheEvict(cacheNames = "room-types", allEntries = true)
 	public String delete(String code) {
 		return roomTypeRepository.remove(code);
 	}
@@ -104,12 +106,10 @@ public class ExchangeOrderService {
 		return reasonCodeRepository.getAll();
 	}
 
-	@CacheEvict(cacheNames = "reason-codes", allEntries = true)
 	public VmpdReasonCode saveVmpdReasonCode(VmpdReasonCode reasonCode) {
 		return reasonCodeRepository.put(reasonCode);
 	}
 
-    @CacheEvict(cacheNames = "reason-codes", allEntries = true)
     public String deleteVmpdReasonCode(String code) {
 		return reasonCodeRepository.remove(code);
 	}
@@ -119,12 +119,10 @@ public class ExchangeOrderService {
 		return carVendorRepository.getAll();
 	}
 
-	@CacheEvict(cacheNames = "car-vendors", allEntries = true)
 	public CarVendor saveCarVendor(CarVendor carVendor) {
 		return carVendorRepository.put(carVendor);
 	}
 
-    @CacheEvict(cacheNames = "car-vendors", allEntries = true)
 	public String deleteCarVendor(String code) {
 		return carVendorRepository.remove(code);
 	}
@@ -134,12 +132,10 @@ public class ExchangeOrderService {
     	return airMiscInfoRepository.getAirMiscInfos(clientAccountNumber, reportingFieldTypeIds);
     }
     
-    @CacheEvict(cacheNames = "air-misc-info", allEntries = true)
 	public AirMiscInfo saveAirMiscInfo(AirMiscInfo airMiscInfo) {
 		return airMiscInfoRepository.put(airMiscInfo);
 	}
     
-    @CacheEvict(cacheNames = "air-misc-info", allEntries = true)
 	public String deleteAirMiscInfo(String id) {
 		return airMiscInfoRepository.remove(new ObjectId(id));
 	}

@@ -3,8 +3,6 @@ package com.cwt.bpg.cbt.exchange.order;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +19,10 @@ public class AirlineRuleService {
 		return repository.getAll();
 	}
 
-	@CachePut(cacheNames = "airline-rules", key = "#airlineRule.code")
 	public AirlineRule save(AirlineRule airlineRule) {
 		return repository.put(airlineRule);
 	}
 
-	@CacheEvict(cacheNames = "airline-rules", allEntries = true)
 	public String delete(String airlineCode) {
 		return repository.remove(airlineCode);
 	}

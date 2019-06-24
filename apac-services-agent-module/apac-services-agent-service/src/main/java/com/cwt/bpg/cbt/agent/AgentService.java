@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,6 @@ public class AgentService {
         return agentRepository.getAll();
     }
 
-    @CacheEvict(cacheNames = "agent", allEntries=true)
     public AgentInfo save(AgentInfo agentInfo) {
         return agentRepository.put(agentInfo);
     }
@@ -38,7 +36,6 @@ public class AgentService {
         return agentRepository.remove(new ObjectId(id));
     }
     
-    @CacheEvict(cacheNames = "agent", key="{#uid.toUpperCase(), #countryCode.toUpperCase()}", condition="#uid != null && #countryCode != null")
     public String remove(String uid, String countryCode) {
         return agentRepository.removeAgent(uid, countryCode);
     }

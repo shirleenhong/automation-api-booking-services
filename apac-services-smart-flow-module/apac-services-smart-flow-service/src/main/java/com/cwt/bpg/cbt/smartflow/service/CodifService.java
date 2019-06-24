@@ -1,14 +1,14 @@
 package com.cwt.bpg.cbt.smartflow.service;
 
-import com.cwt.bpg.cbt.smartflow.model.Codif;
-import com.cwt.bpg.cbt.smartflow.repository.CodifRepository;
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.cwt.bpg.cbt.smartflow.model.Codif;
+import com.cwt.bpg.cbt.smartflow.repository.CodifRepository;
 
 @Service
 public class CodifService {
@@ -30,7 +30,6 @@ public class CodifService {
         return codifRepository.getAll();
     }
 
-    @CacheEvict(cacheNames = "codif", allEntries = true)
     public Codif save(Codif codif) {
         return codifRepository.put(codif);
     }
@@ -43,13 +42,11 @@ public class CodifService {
         return null;
     }
 
-    @CacheEvict(cacheNames = "codif", allEntries = true)
     public Codif update(Codif codif) {
         codifRepository.updateCodif(codif);
         return codif;
     }
 
-    @CacheEvict(cacheNames = "codif", key = "{#gdsPropId.toUpperCase(), #keyType.toUpperCase()}", condition = "#gdsPropId != null && #keyType != null")
     public String remove(String gdsPropId, String keyType) {
         return codifRepository.removeCodif(gdsPropId, keyType);
     }

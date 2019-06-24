@@ -12,7 +12,6 @@ import com.cwt.bpg.cbt.exchange.order.model.InsurancePlan;
 @Service
 public class InsurancePlanService
 {
-
     @Autowired
     private InsurancePlanRepository insurancePlanRepository;
 
