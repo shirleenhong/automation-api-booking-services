@@ -1,13 +1,12 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import com.cwt.bpg.cbt.exchange.order.model.Airport;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.cwt.bpg.cbt.exchange.order.model.Airport;
 
 @Service
 public class AirportService {
@@ -24,14 +23,11 @@ public class AirportService {
         return repository.get(airportCode);
     }
 
-    @CachePut(cacheNames = "airports", key = "#airport.code")
     public Airport save(Airport airport) {
         return repository.put(airport);
     }
 
-    @CacheEvict(cacheNames = "airports", allEntries = true)
     public String delete(String airportCode) {
         return repository.remove(airportCode);
     }
-
 }
