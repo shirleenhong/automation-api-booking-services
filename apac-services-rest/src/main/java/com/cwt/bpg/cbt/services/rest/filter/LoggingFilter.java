@@ -70,11 +70,12 @@ public class LoggingFilter extends OncePerRequestFilter {
 
 		final StringBuilder b = new StringBuilder();
 		
-		printRequestLine(b,
-				"Server has received a request",
-				requestId,
-				request.getMethod(),
-				request.getRequestURI());
+		printRequestLine(b, "Server has received a request",
+                requestId,
+                request.getMethod(),
+                request.getQueryString() != null
+                        ? request.getRequestURI().concat("?").concat(request.getQueryString())
+                        : request.getRequestURI());
 
 		printPrefixedHeaders(b, requestId, REQUEST_PREFIX, request);
 		
