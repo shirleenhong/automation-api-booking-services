@@ -84,7 +84,7 @@ public class SwaggerConfigBase {
     }
 
     Tag clientGstInfo() {
-        return new Tag("Client GST Information", "Maintenance of Client GST Information");
+        return new Tag("Client GST Info", "Maintenance of Client GST Information");
     }
 
     Tag client() {
