@@ -134,7 +134,7 @@ public class CommonRepository<T, D> {
             keyField.setAccessible(true);
             keyField.set(object, document.get(ID_FIELD_NAME));
         }
-        catch (JsonProcessingException | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+        catch (Exception e) {
             LoggerFactory.getLogger(typeClass)
                     .info("An error occurred while converting object to BasicDBObject", e);
         }
