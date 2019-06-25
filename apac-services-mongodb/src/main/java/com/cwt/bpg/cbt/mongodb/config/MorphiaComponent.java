@@ -25,8 +25,6 @@ public class MorphiaComponent
     {
         Morphia morphia = new Morphia();
 
-        // morphia.getMapper().getConverters().removeConverter(new EnumConverter());
-
         morphia.mapPackage("com.cwt.bpg.cbt.exchange.order.model", true);
         morphia.mapPackage("com.cwt.bpg.cbt.air.transaction.model", true);
 
