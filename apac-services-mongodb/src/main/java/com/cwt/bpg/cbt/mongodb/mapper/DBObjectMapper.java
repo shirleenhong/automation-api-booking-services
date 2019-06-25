@@ -25,7 +25,6 @@ public class DBObjectMapper
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.setSerializationInclusion(Include.NON_NULL);
         mapper.registerModules(new CustomModule());
-        mapper.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS);
         
         MAPPER = mapper;
     }
