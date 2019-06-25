@@ -10,27 +10,31 @@ import org.springframework.stereotype.Service;
 import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 
 @Service
-public class MerchantFeeService {
+public class MerchantFeeService
+{
 
     @Autowired
     private MerchantFeeRepository merchantFeeRepo;
-    
-    @Cacheable(cacheNames = "merchant-fees", key="#root.methodName")
-    public List<MerchantFee> getAll() {
+
+    @Cacheable(cacheNames = "merchant-fees", key = "#root.methodName")
+    public List<MerchantFee> getAll()
+    {
         return merchantFeeRepo.getAll();
     }
 
     @Cacheable(cacheNames = "merchant-fees", key = "{#countryCode, #clientAccountNumber}")
-    public MerchantFee getMerchantFee(String countryCode, String clientAccountNumber) {
+    public MerchantFee getMerchantFee(String countryCode, String clientAccountNumber)
+    {
         return merchantFeeRepo.getMerchantFee(countryCode, clientAccountNumber);
     }
 
-    public MerchantFee putMerchantFee(MerchantFee fee) {
+    public MerchantFee putMerchantFee(MerchantFee fee)
+    {
         return merchantFeeRepo.put(fee);
     }
 
-    
-	public String remove(String id) {
-		return merchantFeeRepo.remove(new ObjectId(id));
-	}
+    public String remove(String id)
+    {
+        return merchantFeeRepo.remove(new ObjectId(id));
+    }
 }

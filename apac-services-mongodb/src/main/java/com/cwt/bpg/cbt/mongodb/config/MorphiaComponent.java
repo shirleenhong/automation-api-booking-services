@@ -25,6 +25,11 @@ public class MorphiaComponent
     {
         Morphia morphia = new Morphia();
 
+<<<<<<< HEAD
+=======
+        // morphia.getMapper().getConverters().removeConverter(new EnumConverter());
+
+>>>>>>> develop
         morphia.mapPackage("com.cwt.bpg.cbt.exchange.order.model", true);
         morphia.mapPackage("com.cwt.bpg.cbt.air.transaction.model", true);
 

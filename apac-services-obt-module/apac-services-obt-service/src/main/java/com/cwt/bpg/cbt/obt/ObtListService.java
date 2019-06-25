@@ -1,11 +1,10 @@
 package com.cwt.bpg.cbt.obt;
 
-import com.cwt.bpg.cbt.obt.model.ObtList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import com.cwt.bpg.cbt.obt.model.ObtList;
 
 @Service
 public class ObtListService {
@@ -18,14 +17,11 @@ public class ObtListService {
         return repository.get(countryCode);
     }
 
-    @CachePut(cacheNames = "obt-list", key = "#obtList.countryCode")
     public ObtList save(ObtList obtList) {
         return repository.put(obtList);
     }
 
-    @CacheEvict(cacheNames = "obt-list", allEntries = true)
     public String delete(String countryCode) {
         return repository.remove(countryCode);
     }
-
 }

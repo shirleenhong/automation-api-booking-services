@@ -4,6 +4,7 @@ Resource          ../resources/api-variables.txt
 Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-imports.txt
 Resource          resources/air-transactions.txt
+Force Tags        not-ready
 
 *** Test Cases ***
 Verify That Air Transactions Return Correct Passthrough Type For Full Passthrough In Client Level

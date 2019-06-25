@@ -1,21 +1,22 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
-import java.io.*;
+import java.io.InputStream;
 import java.time.Instant;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
-import com.cwt.bpg.cbt.client.gst.model.*;
-import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoBackupRepository;
-import com.mongodb.CommandResult;
 import org.mongodb.morphia.query.FindOptions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
 import org.springframework.util.CollectionUtils;
+
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfoBackup;
+import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoBackupRepository;
+import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
+import com.mongodb.CommandResult;
 
 @Service
 public class ClientGstInfoService {
@@ -41,20 +42,17 @@ public class ClientGstInfoService {
         return clientGstInfoRepository.get(gstin);
     }
 
-    @CacheEvict(cacheNames = "client-gst-info", allEntries = true)
     public ClientGstInfo save(ClientGstInfo clientGstInfo) {
         String formattedGstin = clientGstInfo.getGstin().toUpperCase().trim();
         clientGstInfo.setGstin(formattedGstin);
         return clientGstInfoRepository.put(clientGstInfo);
     }
     
-    @CacheEvict(cacheNames = "client-gst-info", allEntries = true)
     public String remove(String gstin) {
     	 return clientGstInfoRepository.remove(gstin);
     }
 
     @Async
-    @CacheEvict(cacheNames = {"client-gst-info", "gst-airlines"}, allEntries = true)
     public void saveFromExcelFile(InputStream inputStream) {
         List<ClientGstInfo> clientGstInfo = clientGstInfoExcelReaderService.readExcelFile(inputStream);
         if (!CollectionUtils.isEmpty(clientGstInfo)) {

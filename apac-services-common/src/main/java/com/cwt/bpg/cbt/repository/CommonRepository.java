@@ -26,6 +26,8 @@ import java.util.function.Consumer;
  */
 public class CommonRepository<T, D> {
 
+    private static final String ID_FIELD_NAME = "_id";
+    
     private final Class<T> typeClass;
     private final String keyColumn;
     private final String collectionName;
@@ -128,8 +130,11 @@ public class CommonRepository<T, D> {
         try {
             BasicDBObject document = DBObjectMapper.mapAsBasicDBObject(getKeyValue(object), object);
             writeOperation.insert(document);
+            Field keyField = typeClass.getDeclaredField(keyColumn);
+            keyField.setAccessible(true);
+            keyField.set(object, document.get(ID_FIELD_NAME));
         }
-        catch (JsonProcessingException e) {
+        catch (Exception e) {
             LoggerFactory.getLogger(typeClass)
                     .info("An error occurred while converting object to BasicDBObject", e);
         }

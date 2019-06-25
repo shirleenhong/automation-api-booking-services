@@ -10,21 +10,24 @@ import org.springframework.stereotype.Service;
 import com.cwt.bpg.cbt.exchange.order.model.InsurancePlan;
 
 @Service
-public class InsurancePlanService {
+public class InsurancePlanService
+{
+    @Autowired
+    private InsurancePlanRepository insurancePlanRepository;
 
-	@Autowired
-	private InsurancePlanRepository insurancePlanRepository;
-	
-	@Cacheable(cacheNames = "insurance-types", key="#root.methodName")
-	public List<InsurancePlan> getAll() {
-		return insurancePlanRepository.getAll();
-	}
-	
-	public InsurancePlan putInsurancePlan(InsurancePlan insurancePlan) {
-		return insurancePlanRepository.put(insurancePlan);
-	}
-	
-	public String remove(String id) {
-		return insurancePlanRepository.remove(new ObjectId(id));
-	}
+    @Cacheable(cacheNames = "insurance-types", key = "#root.methodName")
+    public List<InsurancePlan> getAll()
+    {
+        return insurancePlanRepository.getAll();
+    }
+
+    public InsurancePlan putInsurancePlan(InsurancePlan insurancePlan)
+    {
+        return insurancePlanRepository.put(insurancePlan);
+    }
+
+    public String remove(String id)
+    {
+        return insurancePlanRepository.remove(new ObjectId(id));
+    }
 }

@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.air.contract;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +26,6 @@ public class AirContractService {
 		return repository.put(airContract);
 	}
 
-	@CacheEvict(cacheNames = "air-contracts", allEntries = true)
 	public String delete(String id) {
 		return repository.remove(new ObjectId(id));
 	}

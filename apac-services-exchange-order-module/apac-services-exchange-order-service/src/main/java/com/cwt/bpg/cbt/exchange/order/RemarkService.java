@@ -5,8 +5,6 @@ import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +21,10 @@ public class RemarkService {
 		return repository.getAll();
 	}
 
-	@CachePut(cacheNames = "remarks", key = "#result.id.toString()", unless = "#result.id.hashCode() > 0")
 	public Remark save(Remark remark) {
 		return repository.put(remark);
 	}
 
-	@CacheEvict(cacheNames = "remarks", allEntries = true)
 	public String delete(String id) {
 		return repository.remove(new ObjectId(id));
 	}
