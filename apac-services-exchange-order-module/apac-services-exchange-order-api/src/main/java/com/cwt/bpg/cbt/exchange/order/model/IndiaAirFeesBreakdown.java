@@ -7,199 +7,198 @@ import io.swagger.annotations.ApiModelProperty;
 public class IndiaAirFeesBreakdown extends FeesBreakdown
 {
 
-	private static final long serialVersionUID = 3942100881048994637L;
+    private static final long serialVersionUID = 3942100881048994637L;
 
-	@ApiModelProperty(hidden = true, notes = "Passed as input")
-	private Double overheadPercent;
-	
-	@ApiModelProperty(hidden = true, notes = "Passed as input")
-	private Double gstPercent;
-	
-	@ApiModelProperty(hidden = true, notes = "Passed as input")
-	private Double ot1Percent;
-	
-	@ApiModelProperty(hidden = true, notes = "Passed as input")
-	private Double ot2Percent;
-	
-	@ApiModelProperty(hidden = true)
-	private Double merchantFeePercent;
-	
-	@ApiModelProperty(hidden = true)
-	private Double subMerchantFeePercent;
-	private BigDecimal baseAmount;
-	private BigDecimal totalAirlineCommission;
-	private BigDecimal totalOverheadCommission;
-	private BigDecimal totalDiscount;
-	private BigDecimal totalMarkup;
-	private BigDecimal totalSellFare;
-	private BigDecimal totalGst;
-	private BigDecimal totalMerchantFee;
-	private BigDecimal totalSellingFare;
-	private BigDecimal totalTaxes;
-	private BigDecimal merchantFeeOnTf;
-	private BigDecimal totalCharge;
-	private BigDecimal referenceFare;
-	
-	@ApiModelProperty(hidden = true, notes = "For transaction fee computation")
-	private BigDecimal fee;
+    @ApiModelProperty(hidden = true, notes = "Passed as input")
+    private Double overheadPercent;
+    
+    @ApiModelProperty(hidden = true, notes = "Passed as input")
+    private Double gstPercent;
+    
+    @ApiModelProperty(hidden = true, notes = "Passed as input")
+    private Double ot1Percent;
+    
+    @ApiModelProperty(hidden = true, notes = "Passed as input")
+    private Double ot2Percent;
+    
+    @ApiModelProperty(hidden = true)
+    private Double merchantFeePercent;
+    
+    @ApiModelProperty(hidden = true)
+    private Double subMerchantFeePercent;
+    private BigDecimal baseAmount;
+    private BigDecimal totalAirlineCommission;
+    private BigDecimal totalOverheadCommission;
+    private BigDecimal totalDiscount;
+    private BigDecimal totalMarkup;
+    private BigDecimal totalSellFare;
+    private BigDecimal totalGst;
+    private BigDecimal totalMerchantFee;
+    private BigDecimal totalSellingFare;
+    private BigDecimal totalTaxes;
+    private BigDecimal merchantFeeOnTf;
+    private BigDecimal totalCharge;
+    private BigDecimal referenceFare;
 
-	public Double getOverheadPercent() {
-		return overheadPercent;
-	}
+    private BigDecimal fee;
 
-	public void setOverheadPercent(Double percent) {
-		this.overheadPercent = percent;
-	}
+    public Double getOverheadPercent() {
+        return overheadPercent;
+    }
 
-	public Double getGstPercent() {
-		return gstPercent;
-	}
+    public void setOverheadPercent(Double percent) {
+        this.overheadPercent = percent;
+    }
 
-	public void setGstPercent(Double gstPercent) {
-		this.gstPercent = gstPercent;
-	}
+    public Double getGstPercent() {
+        return gstPercent;
+    }
 
-	public Double getOt1Percent() {
-		return ot1Percent;
-	}
+    public void setGstPercent(Double gstPercent) {
+        this.gstPercent = gstPercent;
+    }
 
-	public void setOt1Percent(Double ot1Percent) {
-		this.ot1Percent = ot1Percent;
-	}
+    public Double getOt1Percent() {
+        return ot1Percent;
+    }
 
-	public Double getOt2Percent() {
-		return ot2Percent;
-	}
+    public void setOt1Percent(Double ot1Percent) {
+        this.ot1Percent = ot1Percent;
+    }
 
-	public void setOt2Percent(Double ot2Percent) {
-		this.ot2Percent = ot2Percent;
-	}
+    public Double getOt2Percent() {
+        return ot2Percent;
+    }
 
-	public Double getMerchantFeePercent() {
-		return merchantFeePercent;
-	}
+    public void setOt2Percent(Double ot2Percent) {
+        this.ot2Percent = ot2Percent;
+    }
 
-	public void setMerchantFeePercent(Double merchantFeePercent) {
-		this.merchantFeePercent = merchantFeePercent;
-	}
+    public Double getMerchantFeePercent() {
+        return merchantFeePercent;
+    }
 
-	public Double getSubMerchantFeePercent() {
-		return subMerchantFeePercent;
-	}
+    public void setMerchantFeePercent(Double merchantFeePercent) {
+        this.merchantFeePercent = merchantFeePercent;
+    }
 
-	public void setSubMerchantFeePercent(Double subMerchantFeePercent) {
-		this.subMerchantFeePercent = subMerchantFeePercent;
-	}
+    public Double getSubMerchantFeePercent() {
+        return subMerchantFeePercent;
+    }
 
-	public BigDecimal getBaseAmount() {
-		return baseAmount;
-	}
+    public void setSubMerchantFeePercent(Double subMerchantFeePercent) {
+        this.subMerchantFeePercent = subMerchantFeePercent;
+    }
 
-	public void setBaseAmount(BigDecimal baseAmount) {
-		this.baseAmount = baseAmount;
-	}
+    public BigDecimal getBaseAmount() {
+        return baseAmount;
+    }
 
-	public BigDecimal getTotalAirlineCommission() {
-		return totalAirlineCommission;
-	}
+    public void setBaseAmount(BigDecimal baseAmount) {
+        this.baseAmount = baseAmount;
+    }
 
-	public void setTotalAirlineCommission(BigDecimal totalCommission) {
-		this.totalAirlineCommission = totalCommission;
-	}
+    public BigDecimal getTotalAirlineCommission() {
+        return totalAirlineCommission;
+    }
 
-	public BigDecimal getTotalOverheadCommission() {
-		return totalOverheadCommission;
-	}
+    public void setTotalAirlineCommission(BigDecimal totalCommission) {
+        this.totalAirlineCommission = totalCommission;
+    }
 
-	public void setTotalOverheadCommission(BigDecimal commission) {
-		this.totalOverheadCommission = commission;
-	}
+    public BigDecimal getTotalOverheadCommission() {
+        return totalOverheadCommission;
+    }
 
-	public BigDecimal getTotalDiscount() {
-		return totalDiscount;
-	}
+    public void setTotalOverheadCommission(BigDecimal commission) {
+        this.totalOverheadCommission = commission;
+    }
 
-	public void setTotalDiscount(BigDecimal totalDiscount) {
-		this.totalDiscount = totalDiscount;
-	}
+    public BigDecimal getTotalDiscount() {
+        return totalDiscount;
+    }
 
-	public BigDecimal getTotalMarkup() {
-		return totalMarkup;
-	}
+    public void setTotalDiscount(BigDecimal totalDiscount) {
+        this.totalDiscount = totalDiscount;
+    }
 
-	public void setTotalMarkup(BigDecimal totalMarkup) {
-		this.totalMarkup = totalMarkup;
-	}
+    public BigDecimal getTotalMarkup() {
+        return totalMarkup;
+    }
 
-	public BigDecimal getTotalSellFare() {
-		return totalSellFare;
-	}
+    public void setTotalMarkup(BigDecimal totalMarkup) {
+        this.totalMarkup = totalMarkup;
+    }
 
-	public void setTotalSellFare(BigDecimal totalSellFare) {
-		this.totalSellFare = totalSellFare;
-	}
+    public BigDecimal getTotalSellFare() {
+        return totalSellFare;
+    }
 
-	public BigDecimal getTotalMerchantFee() {
-		return totalMerchantFee;
-	}
+    public void setTotalSellFare(BigDecimal totalSellFare) {
+        this.totalSellFare = totalSellFare;
+    }
 
-	public void setTotalMerchantFee(BigDecimal totalMerchantFee) {
-		this.totalMerchantFee = totalMerchantFee;
-	}
+    public BigDecimal getTotalMerchantFee() {
+        return totalMerchantFee;
+    }
 
-	public BigDecimal getTotalSellingFare() {
-		return totalSellingFare;
-	}
+    public void setTotalMerchantFee(BigDecimal totalMerchantFee) {
+        this.totalMerchantFee = totalMerchantFee;
+    }
 
-	public void setTotalSellingFare(BigDecimal totalSellingFare) {
-		this.totalSellingFare = totalSellingFare;
-	}
+    public BigDecimal getTotalSellingFare() {
+        return totalSellingFare;
+    }
 
-	public BigDecimal getTotalTaxes() {
-		return totalTaxes;
-	}
+    public void setTotalSellingFare(BigDecimal totalSellingFare) {
+        this.totalSellingFare = totalSellingFare;
+    }
 
-	public void setTotalTaxes(BigDecimal totalTaxes) {
-		this.totalTaxes = totalTaxes;
-	}
+    public BigDecimal getTotalTaxes() {
+        return totalTaxes;
+    }
 
-	public BigDecimal getMerchantFeeOnTf() {
-		return merchantFeeOnTf;
-	}
+    public void setTotalTaxes(BigDecimal totalTaxes) {
+        this.totalTaxes = totalTaxes;
+    }
 
-	public void setMerchantFeeOnTf(BigDecimal merchantFeeOnTF) {
-		this.merchantFeeOnTf = merchantFeeOnTF;
-	}
+    public BigDecimal getMerchantFeeOnTf() {
+        return merchantFeeOnTf;
+    }
 
-	public BigDecimal getTotalCharge() {
-		return totalCharge;
-	}
+    public void setMerchantFeeOnTf(BigDecimal merchantFeeOnTF) {
+        this.merchantFeeOnTf = merchantFeeOnTF;
+    }
 
-	public void setTotalCharge(BigDecimal totalCharge) {
-		this.totalCharge = totalCharge;
-	}
+    public BigDecimal getTotalCharge() {
+        return totalCharge;
+    }
 
-	public BigDecimal getTotalGst() {
-		return totalGst;
-	}
+    public void setTotalCharge(BigDecimal totalCharge) {
+        this.totalCharge = totalCharge;
+    }
 
-	public void setTotalGst(BigDecimal totalGst) {
-		this.totalGst = totalGst;
-	}
+    public BigDecimal getTotalGst() {
+        return totalGst;
+    }
 
-	public BigDecimal getFee() {
-		return fee;
-	}
+    public void setTotalGst(BigDecimal totalGst) {
+        this.totalGst = totalGst;
+    }
 
-	public void setFee(BigDecimal fee) {
-		this.fee = fee;
-	}
+    public BigDecimal getFee() {
+        return fee;
+    }
 
-	public BigDecimal getReferenceFare() {
-		return referenceFare;
-	}
+    public void setFee(BigDecimal fee) {
+        this.fee = fee;
+    }
 
-	public void setReferenceFare(BigDecimal referenceFare) {
-		this.referenceFare = referenceFare;
-	}
+    public BigDecimal getReferenceFare() {
+        return referenceFare;
+    }
+
+    public void setReferenceFare(BigDecimal referenceFare) {
+        this.referenceFare = referenceFare;
+    }
 }
