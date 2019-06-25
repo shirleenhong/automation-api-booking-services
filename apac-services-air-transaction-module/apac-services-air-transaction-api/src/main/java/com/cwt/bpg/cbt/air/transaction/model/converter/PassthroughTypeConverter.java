@@ -22,14 +22,6 @@ public class PassthroughTypeConverter extends TypeConverter implements SimpleVal
             return decodeCustom(fromDBObject);
         }
         return null;
-<<<<<<< HEAD
-=======
-
-        // else
-        // {
-        // return super.decode(targetClass, fromDBObject, optionalExtraInfo);
-        // }
->>>>>>> develop
     }
 
     @Override
@@ -45,10 +37,6 @@ public class PassthroughTypeConverter extends TypeConverter implements SimpleVal
         }
         else
         {
-<<<<<<< HEAD
-=======
-            // return super.encode(value, optionalExtraInfo);
->>>>>>> develop
             return null;
         }
     }
