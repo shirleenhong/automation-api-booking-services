@@ -88,8 +88,9 @@ public class ClientGstInfoExcelReaderService {
         info.setPostalCode(getValue(row, POSTAL_CODE_INDEX));
         info.setCity(getValue(row, CITY_INDEX));
         info.setState(getValue(row, STATE_INDEX));
-        if(getValue(row,ORGTYPE_INDEX)!=null){
-            info.setOrgType(OrgType.valueOf(getValue(row,ORGTYPE_INDEX)));
+        if (getValue(row, ORGTYPE_INDEX) != null)
+        {
+            info.setOrgType(OrgType.valueOf(getValue(row, ORGTYPE_INDEX)));
         }
         return info;
     }
