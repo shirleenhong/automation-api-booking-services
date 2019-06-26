@@ -42,7 +42,7 @@ public class ClientGstInfoExcelReaderServiceTest
         assertEquals("28AABCD4532R1ZD", info.getGstin());
         assertEquals("400614", info.getPostalCode());
         assertEquals("Maharashtra", info.getState());
-        
+
     }
     
     @Test

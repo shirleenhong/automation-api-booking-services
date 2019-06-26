@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import org.mongodb.morphia.annotations.*;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.beans.Transient;
 import java.io.Serializable;
 
@@ -69,6 +66,9 @@ public class ClientGstInfo implements Serializable {
     @Pattern(regexp = STATE_REGEX, message = STATE_FORMAT_ERROR_MSG)
     @Size(max = STATE_MAX_LENGTH, message = STATE_LENGTH_ERROR_MSG)
     private String state;
+
+    @ApiModelProperty(allowableValues = "S, P, U")
+    private OrgType orgType;
 
     public String getGstin() {
         return gstin;
@@ -150,6 +150,16 @@ public class ClientGstInfo implements Serializable {
         this.state = state;
     }
 
+    public OrgType getOrgType()
+    {
+        return orgType;
+    }
+
+    public void setOrgType(OrgType orgType)
+    {
+        this.orgType = orgType;
+    }
+
     @Transient
     @JsonIgnore
     public boolean allValuesNull() {
@@ -162,6 +172,7 @@ public class ClientGstInfo implements Serializable {
                 entityAddressLine2 == null &&
                 postalCode == null &&
                 city == null &&
-                state == null;
+                state == null &&
+                orgType == null;
     }
 }

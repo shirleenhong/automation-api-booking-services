@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
+import com.cwt.bpg.cbt.client.gst.model.OrgType;
 import com.monitorjbl.xlsx.StreamingReader;
 import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
@@ -32,6 +33,8 @@ public class ClientGstInfoExcelReaderService {
     private static final int POSTAL_CODE_INDEX = 7;
     private static final int CITY_INDEX = 8;
     private static final int STATE_INDEX = 9;
+    private static final int ORGTYPE_INDEX = 10;
+
     private static final String NON_ALPHANUMERIC_REGEX = "[^0-9a-zA-Z]";
     private static final String LINE_BREAK_REGEX = "\\r\\n|\\r|\\n";
     private static final String EMPTY_STRING = "";
@@ -85,6 +88,9 @@ public class ClientGstInfoExcelReaderService {
         info.setPostalCode(getValue(row, POSTAL_CODE_INDEX));
         info.setCity(getValue(row, CITY_INDEX));
         info.setState(getValue(row, STATE_INDEX));
+        if(getValue(row,ORGTYPE_INDEX)!=null){
+            info.setOrgType(OrgType.valueOf(getValue(row,ORGTYPE_INDEX)));
+        }
         return info;
     }
 
