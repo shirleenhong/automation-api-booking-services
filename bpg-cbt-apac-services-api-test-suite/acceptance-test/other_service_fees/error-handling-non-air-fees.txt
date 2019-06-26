@@ -152,7 +152,7 @@ Verify That Error Is Encountered When Invalid FOP Type Value Is Used
     Send Other Service Fees For Non-Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Non-Air Fees Are Not Returned
-    Generate Test Variables For Non-Air Fees    cc,cx|client_type,TF|client_account_number,0003405001|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,250|nett_cost,0|gst_percent,5.0|gst_absorb,true    country=hk
+    Generate Test Variables For Non-Air Fees    cc,test|client_type,TF|client_account_number,0003405001|merchant_fee_absorb,true|merchant_fee_waive,true|merchant_fee_percentage,2|selling_price,250|nett_cost,0|gst_percent,5.0|gst_absorb,true    country=hk
     Send Other Service Fees For Non-Air Fees Post Request
     Verify Response Status Code Is Correct    400
     Verify Calculated Non-Air Fees Are Not Returned
