@@ -1,7 +1,7 @@
 package com.cwt.bpg.cbt.services.rest.security;
 
 import java.io.IOException;
-import java.util.UUID;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -12,61 +12,56 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 import org.springframework.web.filter.GenericFilterBean;
 
 import com.cwt.bpg.cbt.security.service.TokenService;
 
-public class AuthenticationFilter extends GenericFilterBean {
+public class AuthenticationFilter extends GenericFilterBean
+{
 
-	private static final String BEARER = "Bearer ";
-	private static final String UUID_KEY = "UUID";
-	private TokenService tokenService;
-	
-	private static final Logger LOG = LoggerFactory.getLogger(AuthenticationFilter.class);
+    private static final String BEARER = "Bearer ";
+    private TokenService tokenService;
 
-	public AuthenticationFilter(TokenService tokenService) {
-		this.tokenService = tokenService;
-	}
+    private static final Logger LOG = LoggerFactory.getLogger(AuthenticationFilter.class);
 
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+    public AuthenticationFilter(TokenService tokenService)
+    {
+        this.tokenService = tokenService;
+    }
 
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		HttpServletResponse httpResponse = (HttpServletResponse) response;
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException
+    {
+        final HttpServletRequest httpRequest = (HttpServletRequest) request;
+        final HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-		String authHeader = httpRequest.getHeader("Authorization");
-		
-		if (StringUtils.isBlank(authHeader) || !authHeader.startsWith(BEARER)) {
-			setUUIDHeader(httpResponse);
-			httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Authorization header needed");
-			return;
-		}
+        String authHeader = httpRequest.getHeader("Authorization");
 
-		try {
-			String token = authHeader.replace(BEARER, "").trim();
-			if (!tokenService.isTokenExist(token)) {
-				setUUIDHeader(httpResponse);
-				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token.");
-				return;
-			}
-			chain.doFilter(request, response);
+        if (StringUtils.isBlank(authHeader) || !authHeader.startsWith(BEARER))
+        {
+            httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Authorization header needed");
+            return;
+        }
 
-		} 
-		catch (RuntimeException e) {
-			LOG.error("Server caught an exception: {}", e.getLocalizedMessage());
-			setUUIDHeader(httpResponse);
-			httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Server Error");
-			return;
-		}
-			
-	}
+        try
+        {
+            String token = authHeader.replace(BEARER, "").trim();
+            if (!tokenService.isTokenExist(token))
+            {
+                httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token.");
+                return;
+            }
+            chain.doFilter(request, response);
 
-	private void setUUIDHeader(HttpServletResponse httpResponse) {
-		String uuid = UUID.randomUUID().toString();
-		MDC.put(UUID_KEY, uuid);
-		httpResponse.setHeader(UUID_KEY, uuid);
-	}
+        }
+        catch (RuntimeException e)
+        {
+            LOG.error("Server caught an exception: {}", e.getLocalizedMessage());
+            httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Server Error");
+            return;
+        }
+
+    }
 
 }

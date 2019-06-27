@@ -10,55 +10,67 @@ import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.apache.commons.io.input.TeeInputStream;
 
-public class RequestWrapper extends HttpServletRequestWrapper {
+public class RequestWrapper extends HttpServletRequestWrapper
+{
 
-	private final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-	private long id;
+    private final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    private String id;
 
-	public RequestWrapper(long requestId, HttpServletRequest request) {
-		super(request);
-		this.id = requestId;
-	}
+    public RequestWrapper(String id, HttpServletRequest request)
+    {
+        super(request);
+        this.id = id;
+    }
 
-	@Override
-	public ServletInputStream getInputStream() throws IOException {
-		
-		return new ServletInputStream() {
-			
-			private TeeInputStream tee = new TeeInputStream(
-					RequestWrapper.super.getInputStream(), bos);
-			
-			@Override
-			public boolean isFinished() {
-				return false;
-			}
+    @Override
+    public ServletInputStream getInputStream() throws IOException
+    {
 
-			@Override
-			public boolean isReady() {
-				return false;
-			}
+        return new ServletInputStream()
+        {
 
-			@Override
-			public void setReadListener(ReadListener readListener) {
-				// Do nothing
-			}
+            private TeeInputStream tee = new TeeInputStream(
+                    RequestWrapper.super.getInputStream(), bos);
 
-			@Override
-			public int read() throws IOException {
-				return tee.read();
-			}
-		};
-	}
+            @Override
+            public boolean isFinished()
+            {
+                return false;
+            }
 
-	public byte[] toByteArray() {
-		return bos.toByteArray();
-	}
+            @Override
+            public boolean isReady()
+            {
+                return false;
+            }
 
-	public long getId() {
-		return id;
-	}
+            @Override
+            public void setReadListener(ReadListener readListener)
+            {
+                // Do nothing
+            }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+            @Override
+            public int read() throws IOException
+            {
+                return tee.read();
+            }
+        };
+    }
+
+    public byte[] toByteArray()
+    {
+        return bos.toByteArray();
+    }
+
+    public String getId()
+    {
+        return id;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+    
 }
