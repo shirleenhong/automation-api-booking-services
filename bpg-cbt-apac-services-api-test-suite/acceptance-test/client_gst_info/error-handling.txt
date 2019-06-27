@@ -240,7 +240,17 @@ Verify That Error Is Encountered When Letters Are Available In Phone And Postal 
     Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    400
     Verify Client GST Info Record Is Not Retrieved
-                 
+    
+Verify That Error Is Encountered When Org Type Is Invalid In Put Request   
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=orgType:D
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=orgType:SU
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    400
+    Verify Client GST Info Record Is Not Retrieved
+                     
 Verify That Error Is Encountered When Invalid Token Is Used For Delete Request
     [Tags]    functional
     Send Delete Request For Client GST Info    gstin=43LARVMP42AR4OW    token=12345.12345.12345
@@ -252,7 +262,7 @@ Verify That Error Is Encountered When Invalid Token Is Used For Delete Request
     Send Delete Request For Client GST Info    gstin=43LARVMP42AR4OW    token=!@#$%^&*()_+.!@#$%^&*()_+.!@#$%^&*()_+
     Verify Response Status Code Is Correct    401
     Verify Client GST Info Record Is Not Retrieved
-    
+ 
 Verify That Error Is Encountered When Null Token Is Used For Delete Request
     [Tags]    functional
     Send Delete Request For Client GST Info    gstin=43LARVMP42AR4OW    token=null

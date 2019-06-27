@@ -28,8 +28,20 @@ Create Test Variables For Client GST Info
     \    Set Test Variable    ${city_${index}}    ${data_item[8]}
     \    Set Test Variable    ${state_${index}}    ${data_item[9]}
 
+Create Test Variables For Client GSTN Entity Indicator 
+    [Arguments]    ${item}
+    ${client_gst_list}    Split String    ${client_gst_list_${item}}    ^
+    ${client_gst_list_length}    Get Length    ${client_gst_list}
+    Set Test Variable    ${client_gst_list_length}
+    Set Test Variable    ${client_gst_list}
+    : FOR    ${index}    IN RANGE    0    ${client_gst_list_length}
+    \    log    ${client_gst_list[${index}]}
+    \    ${data_item}    Split String    ${client_gst_list[${index}]}    ; 
+    \    Set Test Variable    ${gstin_${index}}    ${data_item[0]}
+    \    Set Test Variable    ${orgType_${index}}    ${data_item[1]}
+        
 Create Test Variables For Put Client GST Info
-    [Arguments]    ${with_address2}=true    ${gstin_info}=new    ${item}=new_record    ${field_value}=${EMPTY}    
+    [Arguments]    ${with_address2}=true    ${gstin_info}=new    ${item}=new_record    ${field_value}=${EMPTY}   
     ${client_gst_request_list}    Set Variable    {    
     ${client_gst_list}    Split String    ${client_gst_list_${item}}    ;
     ${gstin}    Run Keyword If    "${gstin_info}"=="new"    Generate Random String    15    [NUMBERS][UPPER]    
@@ -48,17 +60,27 @@ Create Test Variables For Put Client GST Info
     ${client_gst_request_list}    Run Keyword If    "${custom_value[0]}"=="gstin"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "gstin": "${custom_value[1]}"    ELSE    Catenate    SEPARATOR=,    ${client_gst_request_list}    "gstin": "${gstin}"
     ${client_gst_request_list}    Run Keyword If    "${custom_value[0]}"=="postalCode"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "postalCode": "${custom_value[1]}"    ELSE    Catenate    SEPARATOR=,    ${client_gst_request_list}    "postalCode": "${client_gst_list[6]}" 
     ${client_gst_request_list}    Run Keyword If    "${custom_value[0]}"=="state"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "state": "${custom_value[1]}"    ELSE    Catenate    SEPARATOR=,    ${client_gst_request_list}    "state": "${client_gst_list[8]}"
+    ${client_gst_request_list}    Run Keyword If    "${client_gst_list[9]}"!="${EMPTY}" and "${custom_value[0]}"=="orgType"	Catenate    SEPARATOR=,    ${client_gst_request_list}    "orgType": "${custom_value[1]}"    
+	...    ELSE IF    "${client_gst_list[9]}"!="${EMPTY}"    Catenate    SEPARATOR=,    ${client_gst_request_list}    "orgType": "${client_gst_list[9]}"
+    ...    ELSE    Set Variable    ${client_gst_request_list}
     ${client_gst_request_list}    Catenate    ${client_gst_request_list}    }   
     Set Test Variable   ${data}    ${client_gst_request_list}      
     Set Test Variable    ${client_gst_list}
     Set Test Variable    ${custom_value}   
     log    ${data}
-                
-Verify Client GST Info Are Retrieved Correctly
-    : FOR    ${index}    IN RANGE    ${client_gst_list_length}
-    \    Send Get Request For Client GST Info    gstin=${gstin_${index}}
+
+Evict Client GST Info Cache
+    [Arguments]    ${number}=2    ${token}=${default_token}
+    Create Session    client-gst-info   ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    : FOR    ${index}    IN RANGE    0    ${number}
+    \    ${response}    Get Request    client-gst-info    /apac-services-rest/api/caches/evict/client-gst-info    headers=${headers}
+    \    Set Test Variable    ${response}
     \    Verify Response Status Code Is Correct    200
-    \    Verify Client GST Info Is Correctly Retrieved    index=${index} 
+    \    Log    ${response.headers}
+    \    Log    ${response.content}
+    Set Test Variable    ${api_flag}    client-gst-info                
            
 Send Get Request For Client GST Info
     [Arguments]    ${gstin}=${gstin_0}        ${token}=${default_token}    
@@ -112,6 +134,13 @@ Verify Client GST Info Is Correctly Retrieved
     Verify Json Value Is Correct    $..city    ${city_${index}}    key=Value
     Verify Json Value Is Correct    $..state    ${state_${index}}    key=Value
 
+Verify Client GST Info Are Retrieved Correctly
+    [Arguments]    ${verification}=all
+    : FOR    ${index}    IN RANGE    ${client_gst_list_length}
+    \    Send Get Request For Client GST Info    gstin=${gstin_${index}}
+    \    Verify Response Status Code Is Correct    200
+    \    Run Keyword If    "${verification}"=="orgType"    Verify OrgType Is Correcty Retrieved    index=${index}     ELSE    Verify Client GST Info Is Correctly Retrieved    index=${index} 
+                
 Verify Client GST Info Is Added And Retrieved
     [Arguments]    ${with_address2}=true    
     Verify Json Value Is Correct    $..gstin    ${gstin}     key=Value
@@ -123,16 +152,9 @@ Verify Client GST Info Is Added And Retrieved
     Run Keyword If    "${with_address2}"=="true" and "${custom_value[0]}"=="address2"    Verify Json Value Is Correct    $..entityAddressLine2    ${custom_value[1]}     key=Value    ELSE IF    "${with_address2}"=="true"    Verify Json Value Is Correct    $..entityAddressLine2    ${client_gst_list[5]}     key=Value
     Verify Json Value Is Correct    $..postalCode    ${client_gst_list[6]} 
     Verify Json Value Is Correct    $..city    ${client_gst_list[7]}     key=Value
-    Verify Json Value Is Correct    $..state    ${client_gst_list[8]}     key=Value   
-    
-Verify The Number Of Records Is Correct
-    [Arguments]    ${expected_record}
-    ${expected_count}    Convert To Integer    ${expected_record}    
-    ${actual_response}    To Json    ${response.content}    
-    ${actual_count}    Get Length    ${actual_response}
-    Log    ${actual_count}
-    Should Be Equal    ${expected_count}    ${actual_count}    
-                  
+    Verify Json Value Is Correct    $..state    ${client_gst_list[8]}     key=Value
+    Run Keyword If    "${custom_value[0]}"=="orgType"    Verify Json Value Is Correct    $..orgType   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..orgType    ${client_gst_list[9]}    key=Value
+
 Verify Client GST Info Record Is Not Retrieved
     Verify String Does Not Contain Substring    ${response.text}    "gstin"
     Verify String Does Not Contain Substring    ${response.text}    "clientEntityName"
@@ -144,16 +166,18 @@ Verify Client GST Info Record Is Not Retrieved
     Verify String Does Not Contain Substring    ${response.text}    "postalCode"
     Verify String Does Not Contain Substring    ${response.text}    "city"
     Verify String Does Not Contain Substring    ${response.text}    "state"
+    Verify String Does Not Contain Substring    ${response.text}    "orgType"
     
-Evict Client GST Info Cache
-    [Arguments]    ${number}=2    ${token}=${default_token}
-    Create Session    client-gst-info   ${${env}_base_url}    verify=True
-    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
-    ...    ELSE    Create Dictionary    Content-Type=application/json
-    : FOR    ${index}    IN RANGE    0    ${number}
-    \    ${response}    Get Request    client-gst-info    /apac-services-rest/api/caches/evict/client-gst-info    headers=${headers}
-    \    Set Test Variable    ${response}
-    \    Verify Response Status Code Is Correct    200
-    \    Log    ${response.headers}
-    \    Log    ${response.content}
-    Set Test Variable    ${api_flag}    client-gst-info
+Verify OrgType Is Correcty Retrieved
+    [Arguments]    ${index}=0     
+    Verify Json Value Is Correct    $..gstin    ${gstin_${index}}    key=Value
+    Verify Json Value Is Correct    $..orgType    ${orgType_${index}}    key=Value
+        
+Verify The Number Of Records Is Correct
+    [Arguments]    ${expected_record}
+    ${expected_count}    Convert To Integer    ${expected_record}    
+    ${actual_response}    To Json    ${response.content}    
+    ${actual_count}    Get Length    ${actual_response}
+    Log    ${actual_count}
+    Should Be Equal    ${expected_count}    ${actual_count}    
+                
