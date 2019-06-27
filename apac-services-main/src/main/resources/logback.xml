@@ -29,7 +29,7 @@
     </filter>
     <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
       <layout class="ch.qos.logback.classic.PatternLayout">
-        <pattern>[%d{ISO8601}] %m %n</pattern>
+        <pattern>%m%n</pattern>
       </layout>
     </encoder>
     <param name="File" value="${LOG_DIR}/${APPLICATION}-txn.log" />
