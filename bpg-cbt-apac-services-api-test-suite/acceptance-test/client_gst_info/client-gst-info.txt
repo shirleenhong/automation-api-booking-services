@@ -10,13 +10,19 @@ Verify That All Client GST Info Are Correctly Retrieved
     [Tags]    functional
     Send Get Request For Client GST Info    gstin=${EMPTY}
     Verify Response Status Code Is Correct    200
-    Verify The Number Of Records Is Correct    expected_record=1369
+    Verify The Number Of Records Is Correct    expected_record=1604
     
 Verify That Client GST Info Is Correctly Retrieved
     [Tags]    functional
 	Create Test Variables For Client GST Info    item=4
 	Verify Client GST Info Are Retrieved Correctly
-    
+
+Verify That GSTN Entity Indicator Is Available In Some GSTIN
+    Create Test Variables For Client GSTN Entity Indicator     item=orgType_S
+	Verify Client GST Info Are Retrieved Correctly    verification=orgType   
+	Create Test Variables For Client GSTN Entity Indicator     item=orgType_U
+	Verify Client GST Info Are Retrieved Correctly    verification=orgType   
+	
 Verify That Client GST Info Is Added After Put Request-Complete Info
     [Tags]    functional
     Create Test Variables For Put Client GST Info
@@ -115,9 +121,10 @@ Verify That Client GST Info Is Updated After Put Request
     Evict Client GST Info Cache
     Send Get Request For Client GST Info    gstin=${gstin}
     Verify Client GST Info Is Added And Retrieved 
-    Create Test Variables For Put Client GST Info    with_address2=false    gstin_info=existing
+    Create Test Variables For Put Client GST Info    with_address2=false    gstin_info=existing    field_value=orgType:U
     Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    200    
+    Evict Client GST Info Cache
     Send Get Request For Client GST Info    gstin=${gstin}  
     Verify Client GST Info Is Added And Retrieved    with_address2=false
 
@@ -130,11 +137,11 @@ Verify That Client GST Info Can Be Saved From Excel File
     Verify The Number Of Records Is Correct    expected_record=5
     Create Test Variables For Client GST Info    item=uploaded_data
 	Verify Client GST Info Are Retrieved Correctly
-    Send Post Request For Client GST Info    filename=GSTLookup_Amadeus.xlsm
+    Send Post Request For Client GST Info    filename=GSTLookup_new.xlsx
     Verify Response Status Code Is Correct    200
     Evict Client GST Info Cache
     Send Get Request For Client GST Info    gstin=${EMPTY} 
-    Verify The Number Of Records Is Correct    expected_record=1369
+    Verify The Number Of Records Is Correct    expected_record=1604
        
 Verify That Client GST Info Is Deleted After Delete Request
     Create Test Variables For Put Client GST Info
