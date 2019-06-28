@@ -96,7 +96,12 @@ public class OtherServiceFeesService {
 
     public IndiaNonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input) {
 
-        final Client client = clientService.getClient(input);
+        Optional<Client> isClientExist = Optional.ofNullable(clientService.getClient(input));
+
+        Client client = isClientExist
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Client [ client id: " + input.getClientId() + " or client account number: " + input.getClientAccountNumber() + " ] not found."));
+        
         final Client defaultClient = clientService.getDefaultClient();
         final Double merchantFeePercent = getMerchantFeePercent(convertToMFPercentInput(input), client, defaultClient);
 
