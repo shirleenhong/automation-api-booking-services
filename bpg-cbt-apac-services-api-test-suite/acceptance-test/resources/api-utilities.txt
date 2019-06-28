@@ -62,7 +62,8 @@ Get Value As String
     ${res_content}=    To Json    ${json_object}      
     ${actual_value}    Get Value From Json    ${res_content}    ${json_path}
     ${actual_value}    Convert To String    ${actual_value}  
-    ${actual_value}    Replace String    ${actual_value}    "   ^    
+    ${actual_value}    Replace String    ${actual_value}    "   ^
+    ${actual_value}    Remove String    ${actual_value}    [u    
     ${actual_value}    Run Keyword If    "^" in "${actual_value}"     Remove String    ${actual_value}    [    ^    ]    ELSE    Remove String    ${actual_value}    [    '    ]
     [Return]    ${actual_value}
                
