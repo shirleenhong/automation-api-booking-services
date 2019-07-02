@@ -12,6 +12,7 @@ Verify That Client GST Info Can Be Saved From Excel File
     Verify Response Status Code Is Correct    200
     Evict Client GST Info Cache
     Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${EMPTY}
     Evict Client GST Info Cache
     Evict Client GST Info Cache
     Send Get Request For Client GST Info    gstin=${EMPTY}
@@ -25,6 +26,7 @@ Verify That All Client GST Info Are Correctly Retrieved After Uploading of File
     Verify Response Status Code Is Correct    200
     Evict Client GST Info Cache
     Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${EMPTY} 
     Evict Client GST Info Cache
     Evict Client GST Info Cache
     Send Get Request For Client GST Info    gstin=${EMPTY} 
