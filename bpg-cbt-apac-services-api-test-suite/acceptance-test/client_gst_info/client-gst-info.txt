@@ -7,7 +7,7 @@ Test Teardown    Evict Client GST Info Cache
 
 *** Test Cases ***
 Verify That Client GST Info Can Be Saved From Excel File
-    [Tags]    functional
+    [Tags]    not-ready
     Send Post Request For Client GST Info    filename=add_client_gst__info.xlsx
     Verify Response Status Code Is Correct    200
     Evict Client GST Info Cache
@@ -21,7 +21,7 @@ Verify That Client GST Info Can Be Saved From Excel File
 	Verify Client GST Info Are Retrieved Correctly
 
 Verify That All Client GST Info Are Correctly Retrieved After Uploading of File
-    [Tags]    functional
+    [Tags]    not-ready
     Send Post Request For Client GST Info    filename=GSTLookup_new.xlsx
     Verify Response Status Code Is Correct    200
     Evict Client GST Info Cache
