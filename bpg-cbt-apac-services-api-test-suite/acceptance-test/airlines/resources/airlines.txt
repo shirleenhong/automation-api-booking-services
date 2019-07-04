@@ -94,13 +94,18 @@ Send Put Request For Airlines
     Set Test Variable    ${response}
     Log    ${response.headers}
     Log    ${response.content}
-    Set Test Variable    ${api_flag}    airlines
-
+    Set Test Variable    ${api_flag}    airlines  
+      
 Verify Airline List Is Correctly Retrieved
+    ${actual_code}    Create List    
     :FOR    ${index}    IN RANGE    0    ${airlines_list_length}
-    \    Verify Json Value Is Correct    $.[${index}].iataCode    ${airline_code_${index}}
-    \    Verify Json Value Is Correct    $.[${index}].name    ${name_${index}}
-    \    Verify Json Value Is Correct    $.[${index}].ticketingCode    ${ticketing_code_${index}}
+    \   ${code}    Get Json Value As String    ${response.content}    $.[${index}].iataCode 
+    \   Append To List    ${actual_code}    ${code}            
+    :FOR    ${index}    IN RANGE    0    ${airlines_list_length}
+    \    ${index2}    Get Index From List    ${actual_code}    ${airline_code_${index}}   
+    \    Verify Json Value Is Correct    $.[${index2}].iataCode    ${airline_code_${index}}    
+    \    Verify Json Value Is Correct    $.[${index2}].name    ${name_${index}}
+    \    Verify Json Value Is Correct    $.[${index2}].ticketingCode    ${ticketing_code_${index}}
     ${index}    Evaluate    ${index}+1
     Verify Json Element Does Not Exist    $.[${index}].iataCode
     
