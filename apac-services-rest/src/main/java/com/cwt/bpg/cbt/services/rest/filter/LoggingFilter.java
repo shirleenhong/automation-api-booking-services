@@ -29,6 +29,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class LoggingFilter extends OncePerRequestFilter
 {
 
+    private static final String REQUEST_HEADER_USER_IDENTIFIER = "X-USER-IDENTIFIER";
+
+    private static final String EMPTY = "";
+
     private static final String NOTIFICATION_PREFIX = "* ";
 
     private static final String REQUEST_PREFIX = "> ";
@@ -60,7 +64,9 @@ public class LoggingFilter extends OncePerRequestFilter
         MDC.put(ResponseWrapper.START_TIME_KEY, String.valueOf(startTime));
 
         String uuid = resolveTransactionId(request);
-        MDC.put(UUID_KEY, uuid);
+        String transactionUserIdentifier = request.getHeader(REQUEST_HEADER_USER_IDENTIFIER);
+
+        MDC.put(UUID_KEY, uuid + (StringUtils.isNotEmpty(transactionUserIdentifier) ? "_" + transactionUserIdentifier : EMPTY));
 
         RequestWrapper wrappedRequest = new RequestWrapper(uuid, request);
         ResponseWrapper wrappedResponse = new ResponseWrapper(uuid, response);
