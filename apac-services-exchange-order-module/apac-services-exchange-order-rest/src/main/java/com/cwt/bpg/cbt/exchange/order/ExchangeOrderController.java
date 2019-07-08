@@ -34,7 +34,8 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(tags = "Exchange Order")
-public class ExchangeOrderController {
+public class ExchangeOrderController
+{
 
     @Autowired
     private ExchangeOrderService eoService;
@@ -42,17 +43,18 @@ public class ExchangeOrderController {
     @Autowired
     private ExchangeOrderReportService eoReportService;
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @PostMapping(path = "/exchange-order/{countryCode:hk|sg}", produces = {
             MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
                     MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
     @ApiOperation(value = "[HK/SG only] Saves new and updates existing exchange orders. EO objects without "
-        + "eoNumber are created. Those with eoNumber are updated.")
+            + "eoNumber are created. Those with eoNumber are updated.")
     public ResponseEntity<List<ExchangeOrder>> saveExchangeOrder(
             @PathVariable @ApiParam("2-character country code") String countryCode,
             @Valid @RequestBody @ApiParam(value = "List of exchange orders to save") List<ExchangeOrder> input)
-            throws ExchangeOrderNoContentException {
+            throws ExchangeOrderNoContentException
+    {
         return new ResponseEntity(eoService.save(countryCode, input), HttpStatus.OK);
     }
 
@@ -62,7 +64,8 @@ public class ExchangeOrderController {
     @ApiOperation(value = "[HK/SG only] Returns exchange order given an exchange order number.")
     public ResponseEntity<ExchangeOrder> getExchangeOrder(
             @PathVariable @ApiParam("2-character country code (lowercase)") String countryCode,
-            @PathVariable @ApiParam(value = "10-digit Exchange order number") String eoNumber) {
+            @PathVariable @ApiParam(value = "10-digit Exchange order number") String eoNumber)
+    {
 
         return new ResponseEntity<>((ExchangeOrder) eoService.get(countryCode, eoNumber),
                 HttpStatus.OK);
@@ -75,10 +78,10 @@ public class ExchangeOrderController {
     @ApiOperation(value = "[HK/SG only] Returns exchange order given a PNR record locator.")
     public ResponseEntity<List<ExchangeOrder>> getExchangeOrderByRecordLocator(
             @PathVariable @ApiParam("2-character country code") String countryCode,
-            @PathVariable @ApiParam(value = "6-character PNR record locator") String recordLocator) {
+            @PathVariable @ApiParam(value = "6-character PNR record locator") String recordLocator)
+    {
 
-        return new ResponseEntity<>((List<ExchangeOrder>)
-                eoService.getExchangeOrderByRecordLocator(countryCode, recordLocator), HttpStatus.OK);
+        return new ResponseEntity<>((List<ExchangeOrder>) eoService.getExchangeOrderByRecordLocator(countryCode, recordLocator), HttpStatus.OK);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -90,7 +93,8 @@ public class ExchangeOrderController {
             + "eoNumber are created. Those with eoNumber are updated.")
     public ResponseEntity<List<IndiaExchangeOrder>> saveIndiaExchangeOrder(
             @Valid @RequestBody @ApiParam(value = "Exchange order to save") List<IndiaExchangeOrder> input)
-            throws ExchangeOrderNoContentException {
+            throws ExchangeOrderNoContentException
+    {
         return new ResponseEntity(eoService.save(Country.INDIA.getCode(), input), HttpStatus.OK);
     }
 
@@ -99,7 +103,8 @@ public class ExchangeOrderController {
     @ResponseBody
     @ApiOperation(value = "[India only] Returns exchange order given an exchange order number.")
     public ResponseEntity<IndiaExchangeOrder> getIndiaExchangeOrder(
-            @PathVariable @ApiParam(value = "Exchange order number") String eoNumber) {
+            @PathVariable @ApiParam(value = "Exchange order number") String eoNumber)
+    {
 
         return new ResponseEntity<>((IndiaExchangeOrder) eoService.get("IN", eoNumber),
                 HttpStatus.OK);
@@ -111,9 +116,9 @@ public class ExchangeOrderController {
     @ResponseBody
     @ApiOperation(value = "[India only] Returns exchange order given a PNR record locator.")
     public ResponseEntity<List<IndiaExchangeOrder>> getIndiaExchangeOrderByRecordLocator(
-            @PathVariable @ApiParam(value = "6-character PNR record locator") String recordLocator) {
-        return new ResponseEntity<>((List<IndiaExchangeOrder>)
-                eoService.getExchangeOrderByRecordLocator(Country.INDIA.getCode(), recordLocator), HttpStatus.OK);
+            @PathVariable @ApiParam(value = "6-character PNR record locator") String recordLocator)
+    {
+        return new ResponseEntity<>((List<IndiaExchangeOrder>) eoService.getExchangeOrderByRecordLocator(Country.INDIA.getCode(), recordLocator), HttpStatus.OK);
     }
 
     @GetMapping(path = "/exchange-order/pdf/{eoNumber}", produces = {
@@ -121,7 +126,8 @@ public class ExchangeOrderController {
     @ApiOperation(value = "Generates exchange order pdf.")
     public ResponseEntity<byte[]> generatePdf(
             @PathVariable @ApiParam(value = "10-digit Exchange order number") String eoNumber)
-            throws ExchangeOrderNoContentException, ApiServiceException {
+            throws ExchangeOrderNoContentException, ApiServiceException
+    {
 
         final String filename = eoNumber + ".pdf";
         final HttpHeaders headers = new HttpHeaders();
@@ -136,7 +142,8 @@ public class ExchangeOrderController {
     @ApiOperation(value = "Emails exchange order pdf.")
     public ResponseEntity<EmailResponse> email(
             @RequestBody @ApiParam(value = "10-digit Exchange order number") @PathVariable String eoNumber)
-            throws ApiServiceException {
+            throws ApiServiceException
+    {
 
         return new ResponseEntity<>(eoReportService.emailPdf(eoNumber), HttpStatus.OK);
     }
@@ -144,7 +151,8 @@ public class ExchangeOrderController {
     @GetMapping(path = "/exchange-orders", produces = {
             MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ApiOperation(value = "Search for exchange orders.")
-    public List<ExchangeOrder> search(final ExchangeOrderSearchDTO p) {
+    public List<ExchangeOrder> search(final ExchangeOrderSearchDTO p)
+    {
         final ExchangeOrderSearchParam param = new ExchangeOrderSearchParam();
         param.setEoNumber(p.getEoNumber());
         param.setCountryCode(p.getCountryCode());
@@ -156,6 +164,7 @@ public class ExchangeOrderController {
         param.setStatus(EoStatus.find(p.getStatus()));
         param.setStartCreationDate(p.getStartCreationDate());
         param.setEndCreationDate(p.getEndCreationDate());
+        param.setProductCode(p.getProductCode());
         return eoService.search(param);
     }
 
@@ -165,7 +174,8 @@ public class ExchangeOrderController {
     @ResponseBody
     @ApiOperation(value = "Updates status and/or raise cheque of exchange order.")
     public ResponseEntity<Boolean> update(
-            @RequestBody @ApiParam(value = "Exchange order to update") ExchangeOrder exchangeOrder) {
+            @RequestBody @ApiParam(value = "Exchange order to update") ExchangeOrder exchangeOrder)
+    {
         final boolean result = eoService.update(exchangeOrder);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

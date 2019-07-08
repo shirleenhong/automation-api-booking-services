@@ -12,6 +12,7 @@ public class ExchangeOrderSearchDTO
     private String status;
     private Instant startCreationDate;
     private Instant endCreationDate;
+    private String productCode;
 
     public String getEoNumber()
     {
@@ -91,6 +92,16 @@ public class ExchangeOrderSearchDTO
     public void setEndCreationDate(Instant endCreationDate)
     {
         this.endCreationDate = endCreationDate;
+    }
+
+    public String getProductCode()
+    {
+        return productCode;
+    }
+    
+    public void setProductCode(String productCode)
+    {
+        this.productCode = productCode;
     }
 
 }

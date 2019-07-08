@@ -137,6 +137,10 @@ public class ExchangeOrderRepository {
         {
             query.field("status").equal(param.getStatus());
         }
+        if (StringUtils.isNotBlank(param.getProductCode()))
+        {
+            query.field("productCode").equal(param.getProductCode());
+        }
         if (StringUtils.isNotBlank(param.getRecordLocator()))
         {
             query.field(RECORD_LOCATOR).equal(param.getRecordLocator());
