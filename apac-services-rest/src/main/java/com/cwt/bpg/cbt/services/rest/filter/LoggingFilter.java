@@ -66,7 +66,8 @@ public class LoggingFilter extends OncePerRequestFilter
         String uuid = resolveTransactionId(request);
         String transactionUserIdentifier = request.getHeader(REQUEST_HEADER_USER_IDENTIFIER);
 
-        MDC.put(UUID_KEY, uuid + (StringUtils.isNotEmpty(transactionUserIdentifier) ? "_" + transactionUserIdentifier : EMPTY));
+        MDC.put(UUID_KEY, uuid);
+        MDC.put(REQUEST_HEADER_USER_IDENTIFIER, (StringUtils.isNotEmpty(transactionUserIdentifier) ? transactionUserIdentifier : EMPTY));
 
         RequestWrapper wrappedRequest = new RequestWrapper(uuid, request);
         ResponseWrapper wrappedResponse = new ResponseWrapper(uuid, response);
