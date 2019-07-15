@@ -1,7 +1,10 @@
 package com.cwt.bpg.cbt.services.rest.filter;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class TransactionLog
 {
@@ -13,6 +16,7 @@ public class TransactionLog
     private String timestamp;
     private final Map<String, String> headers = new HashMap<>();
     private final Map<String, String> parameters = new HashMap<>();
+    private final Map<String, String> userIdentifiers = new HashMap<>();
 
     public TransactionLog(String id, String method, String endpoint,
             int status, long duration, String timestamp)
@@ -79,5 +83,31 @@ public class TransactionLog
     {
         return parameters;
     }
-    
+
+    public void parseUserIdentifiers(final String param)
+    {
+        if (StringUtils.isNotBlank(param))
+        {
+            final String[] params = param.split(",");
+            for (int i = 0; i < params.length; i++)
+            {
+                final String content = params[i];
+                if (StringUtils.isNotBlank(content))
+                {
+                    final int index = content.indexOf(":");
+                    final int length = content.length();
+                    if (index != -1 && index + 1 <= length)
+                    {
+                        userIdentifiers.put(StringUtils.trim(content.substring(0, index)), StringUtils.trim(content.substring(index + 1, content.length())));
+                    }
+                }
+            }
+        }
+    }
+
+    public Map<String, String> getUserIdentifiers()
+    {
+        return Collections.unmodifiableMap(userIdentifiers);
+    }
+
 }
