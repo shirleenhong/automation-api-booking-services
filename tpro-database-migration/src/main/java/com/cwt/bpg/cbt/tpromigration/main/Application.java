@@ -23,11 +23,11 @@ public class Application {
 			service.setCountryCode(countryCode);
 			
 			if ("IN".equalsIgnoreCase(countryCode)) {
-				//service.migrateAirlineRules();
-				//service.migrateAirports();
-				//service.migrateClients();
-				//service.migrateAirMiscInfo();
-				//service.migratePassthroughs();
+//				service.migrateAirlineRules();
+//				service.migrateAirports();
+				service.migrateClients();
+//				service.migrateAirMiscInfo();
+//				service.migratePassthroughs();
 			}
 			else {
 				if ("HK".equalsIgnoreCase(countryCode)) {
@@ -38,7 +38,7 @@ public class Application {
 			}
 			
 			//service.migrateProductList();
-			service.migrateAgentContacts();
+//			service.migrateAgentContacts();
 			
 		}
 	}
