@@ -37,7 +37,8 @@ public class MssqlDBConfiguration {
     private String middlewareDbPwd;
 
 	@Bean
-	public DriverManagerDataSource dataSource() {
+	public DriverManagerDataSource dataSource() throws Exception
+    {
 
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -48,7 +49,8 @@ public class MssqlDBConfiguration {
 	}
 	
 	@Bean
-	public DriverManagerDataSource middlewareDataSource() {
+	public DriverManagerDataSource middlewareDataSource() throws Exception
+    {
 
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
