@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.client.gst.model.constraint;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
 
@@ -14,7 +13,7 @@ import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 public class GdsEmailValidationTest {
 
 	@Test
-	public void canValidateEmail() {
+	public void canValidateGdsEmailFormat() {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		Validator validator = factory.getValidator();
 
