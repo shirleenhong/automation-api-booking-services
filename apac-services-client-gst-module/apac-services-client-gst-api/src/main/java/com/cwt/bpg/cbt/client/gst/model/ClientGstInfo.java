@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.client.gst.model;
 
+import com.cwt.bpg.cbt.client.gst.model.constraint.GdsEmailFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
@@ -39,8 +40,7 @@ public class ClientGstInfo implements Serializable {
 
     @NotEmpty(message = BUSINESS_EMAIL_EMPTY_ERROR_MSG)
     @Email(message = BUSINESS_EMAIL_FORMAT_ERROR_MSG)
-    @Pattern(regexp = BUSINESS_EMAIL_REGEX, message = BUSINESS_EMAIL_FORMAT_ERROR_MSG)
-    @Size(max = BUSINESS_EMAIL_ADDRESS_MAX_LENGTH, message = BUSINESS_EMAIL_LENGTH_ERROR_MSG)
+    @GdsEmailFormat
     private String businessEmailAddress;
 
     @NotEmpty(message = ADDRESS_LINE1_EMPTY_ERROR_MSG)

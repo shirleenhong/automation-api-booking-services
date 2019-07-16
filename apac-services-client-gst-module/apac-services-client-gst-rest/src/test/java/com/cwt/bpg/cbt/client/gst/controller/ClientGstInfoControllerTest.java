@@ -108,6 +108,24 @@ public class ClientGstInfoControllerTest {
 	}
 
 	@Test
+	public void putLongEmailAfterTransformReturns400() throws Exception {
+		ClientGstInfo clientGstInfo = new ClientGstInfo();
+		clientGstInfo.setGstin("1234567890ABCDE");
+		clientGstInfo.setClient("client");
+		clientGstInfo.setClientEntityName("clientEntityName");
+		clientGstInfo.setBusinessPhoneNumber("2211996");
+		clientGstInfo.setBusinessEmailAddress("sample-mini_test1234567gmail.com");
+		clientGstInfo.setEntityAddressLine1("entityAddressLine1");
+		clientGstInfo.setPostalCode("9200");
+		clientGstInfo.setCity("city");
+		clientGstInfo.setState("state");
+
+		mockMvc.perform(put("/client-gst-info").contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(clientGstInfo)))
+				.andExpect(status().isBadRequest()).andReturn().getResponse();
+	}
+
+	@Test
 	public void removeClientGstInfoReturns200UponSuccessfulDeletion() throws Exception {
 		when(service.remove("ABC123")).thenReturn("ABC123");
 
