@@ -82,11 +82,11 @@ public class LoggingFilter extends OncePerRequestFilter
             // TeeInputStream creates a copy to after the stream is read
             logRequest(wrappedRequest, uuid);
             logResponse((ResponseWrapper) wrappedResponse, response);
-            logTransaction(request, response, startTime, uuid);
+            logTransaction(request, response, startTime, uuid, MDC.get(REQUEST_HEADER_USER_IDENTIFIER));
         }
     }
 
-    private void logTransaction(final HttpServletRequest request, final HttpServletResponse response, long startTime, String uuid) throws JsonProcessingException
+    private void logTransaction(final HttpServletRequest request, final HttpServletResponse response, long startTime, String uuid, String transactionUserIdentifier) throws JsonProcessingException
     {
         final long endTime = System.currentTimeMillis();
         final Calendar calendar = Calendar.getInstance();
@@ -119,6 +119,8 @@ public class LoggingFilter extends OncePerRequestFilter
                 transactionLog.addHeader(key, value);
             }
         }
+
+        transactionLog.parseUserIdentifiers(transactionUserIdentifier);
 
         final ObjectMapper obj = new ObjectMapper();
         final String jsonStr = obj.writeValueAsString(transactionLog);

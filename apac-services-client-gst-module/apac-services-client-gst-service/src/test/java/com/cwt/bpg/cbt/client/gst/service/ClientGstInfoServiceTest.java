@@ -30,6 +30,9 @@ public class ClientGstInfoServiceTest {
     @Mock
     private ClientGstInfoRepository clientGstInfoRepository;
 
+    @Mock
+    private ClientGstInfoFileWriterService clientGstInfoFileWriterService;
+
     @InjectMocks
     private ClientGstInfoService service;
 
@@ -137,5 +140,28 @@ public class ClientGstInfoServiceTest {
         //verify if clientGstInfo collection is not replaced with new collection
         verify(clientGstInfoRepository, times(0)).dropCollection();
         verify(clientGstInfoRepository, times(0)).putAll(anyCollection());
+    }
+
+    @Test
+    public void shouldWriteFile() throws Exception {
+        when(clientGstInfoRepository.getAll())
+                .thenReturn(Arrays.asList(new ClientGstInfo()));
+        when(clientGstInfoFileWriterService.writeToFile(anyList()))
+                .thenReturn(new WriteClientGstInfoFileResponse());
+
+        WriteClientGstInfoFileResponse result = service.writeFile();
+        assertNotNull(result);
+
+        verify(clientGstInfoFileWriterService, times(1)).writeToFile(anyList());
+    }
+
+    @Test
+    public void shouldNotWriteFileIfClientGstInfoListIsEmpty() throws Exception {
+        when(clientGstInfoRepository.getAll())
+                .thenReturn(Collections.emptyList());
+
+        WriteClientGstInfoFileResponse result = service.writeFile();
+        assertNull(result);
+        verify(clientGstInfoFileWriterService, times(0)).writeToFile(anyList());
     }
 }

@@ -40,5 +40,10 @@
         <artifactId>xlsx-streamer</artifactId>
         <version>${xlsx.streamer.version}</version>
       </dependency>
+    <dependency>
+      <groupId>com.cwt.bpg.cbt</groupId>
+      <artifactId>apac-services-exception</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 </project>
