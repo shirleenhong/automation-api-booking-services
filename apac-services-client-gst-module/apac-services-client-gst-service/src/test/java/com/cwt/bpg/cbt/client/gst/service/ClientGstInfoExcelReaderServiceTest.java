@@ -28,7 +28,7 @@ public class ClientGstInfoExcelReaderServiceTest
     @Test
     public void shouldReadExcelFile()
     {
-        List<ClientGstInfo> clientGstInfo = service.readExcelFile(testFileStream);
+        List<ClientGstInfo> clientGstInfo = service.readFile(testFileStream);
         assertTrue(clientGstInfo.size() == 5);
 
         ClientGstInfo info = clientGstInfo.get(0);
@@ -48,14 +48,14 @@ public class ClientGstInfoExcelReaderServiceTest
     @Test
     public void shouldReadExcelFileWithGstAirlines()
     {
-        List<ClientGstInfo> clientGstInfo = service.readExcelFile(testFileStream);
+        List<ClientGstInfo> clientGstInfo = service.readFile(testFileStream);
         assertTrue(clientGstInfo.size() == 5);
     }
     
     @Test
     public void shouldReadExcelFileWithError()
     {
-        List<ClientGstInfo> clientGstInfo = service.readExcelFile(null);
+        List<ClientGstInfo> clientGstInfo = service.readFile(null);
         assertNull(clientGstInfo);
     }
 

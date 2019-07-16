@@ -33,6 +33,7 @@
     <apache.poi.version>3.17</apache.poi.version>
     <xlsx.streamer.version>2.1.0</xlsx.streamer.version>
     <jsoup.version>1.11.3</jsoup.version>
+    <opencsv.version>4.6</opencsv.version>
   </properties>
 
   <scm>

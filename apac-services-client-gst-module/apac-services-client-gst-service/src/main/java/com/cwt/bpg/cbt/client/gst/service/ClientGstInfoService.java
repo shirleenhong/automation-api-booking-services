@@ -4,9 +4,11 @@ import java.io.InputStream;
 import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.mongodb.morphia.query.FindOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,8 @@ public class ClientGstInfoService {
     private ClientGstInfoBackupRepository clientGstInfoBackupRepository;
 
     @Autowired
-    private ClientGstInfoExcelReaderService clientGstInfoExcelReaderService;
+    @Qualifier("clientGstInfoReaderServiceMap")
+    private Map<String, ClientGstInfoReaderService> clientGstInfoReaderServiceMap;
     
     public List<ClientGstInfo> getAllClientGstInfo() {
     	return clientGstInfoRepository.getAll();
@@ -53,8 +56,8 @@ public class ClientGstInfoService {
     }
 
     @Async
-    public void saveFromExcelFile(InputStream inputStream) {
-        List<ClientGstInfo> clientGstInfo = clientGstInfoExcelReaderService.readExcelFile(inputStream);
+    public void saveFromFile(InputStream inputStream, String extension) {
+        List<ClientGstInfo> clientGstInfo = clientGstInfoReaderServiceMap.get(extension).readFile(inputStream);
         if (!CollectionUtils.isEmpty(clientGstInfo)) {
             backupClientGstInfo();
             clientGstInfoRepository.dropCollection();

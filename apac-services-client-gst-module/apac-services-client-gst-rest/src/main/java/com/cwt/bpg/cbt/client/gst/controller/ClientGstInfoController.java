@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.client.gst.controller;
 
-
+import static com.cwt.bpg.cbt.client.gst.service.ClientGstInfoReaderConfig.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +31,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-
 @RestController
 @Api(tags = "Client GST Info")
 @RequestMapping(path = "client-gst-info")
 public class ClientGstInfoController {
-
-    private static final String EXCEL_WORKBOOK = ".xlsx";
-    private static final String MACRO_ENABLED_WORKBOOK = ".xlsm";
 
     @Autowired
     private ClientGstInfoService clientGstInfoService;
@@ -75,18 +72,19 @@ public class ClientGstInfoController {
         return new ResponseEntity<>(clientGstInfoService.remove(gstin), HttpStatus.OK);
     }
 
-    @PostMapping
-    @ResponseBody
-    @ApiOperation("[Maintenance] Saves client GST information from excel file")
-    public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file)
-            throws Exception {
-        if (!(file.getOriginalFilename().endsWith(EXCEL_WORKBOOK) || file.getOriginalFilename()
-                .endsWith(MACRO_ENABLED_WORKBOOK))) {
-            throw new IllegalArgumentException("File must be in excel format");
-        }
-        clientGstInfoService.saveFromExcelFile(file.getInputStream());
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "saving in progress");
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+	@PostMapping
+	@ResponseBody
+	@ApiOperation("[Maintenance] Saves client GST information from excel file")
+	public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file)
+			throws Exception {
+		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+		if (!(extension.equals(EXCEL_WORKBOOK) || extension.equals(MACRO_ENABLED_WORKBOOK) ||
+				extension.equals(CSV))) {
+			throw new IllegalArgumentException("File must be in excel or csv format");
+		}
+		clientGstInfoService.saveFromFile(file.getInputStream(), extension);
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "saving in progress");
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 }
