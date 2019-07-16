@@ -303,6 +303,7 @@ public class MigrationService {
 		Map<Integer, List<TransactionFee>> transactionFeeByTicket = getTransactionFeesMap(
 				clientDAO.getTransactionFeeByTicket());
 		List<Client> clients = clientDAO.getClients();
+		List<Client> clientsFromBilling = clientDAO.getClientsFromBilling();
 		List<Client> clientsGstin = clientDAO.getClientsWithGstin();
 		List<AirVariables> airVariables = clientDAO.getAirVariables();
 
@@ -311,6 +312,7 @@ public class MigrationService {
 		defaultClient.setApplyMfBank(false);
 		defaultClient.setApplyMfCc(false);
 		clients.add(defaultClient);
+		clients.addAll(clientsFromBilling);
 
 		updateClients(clients, clientsGstin, productsMap, ccsMap, banksMap, clientPricingMaps, airVariables,
 				transactionFeeByPNR, transactionFeeByCoupon, transactionFeeByTicket);
