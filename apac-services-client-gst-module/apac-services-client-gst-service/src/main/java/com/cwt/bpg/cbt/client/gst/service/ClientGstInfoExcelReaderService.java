@@ -14,6 +14,8 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.cwt.bpg.cbt.client.gst.service.Constants.*;
+
 @Service
 public class ClientGstInfoExcelReaderService {
 
@@ -23,17 +25,6 @@ public class ClientGstInfoExcelReaderService {
     private static final int BUFFER_SIZE = 4096;
     private static final int GST_DATA_SHEET_INDEX = 0;
     private static final int ROWS_TO_SKIP_GST_DATA = 2;
-    private static final int CLIENT_INDEX = 0;
-    private static final int GSTIN_INDEX = 1;
-    private static final int ENTITY_NAME_INDEX = 2;
-    private static final int BUSINESS_PHONE_INDEX = 3;
-    private static final int EMAIL_ADDRESS_INDEX = 4;
-    private static final int ADDRESS_LINE_1_INDEX = 5;
-    private static final int ADDRESS_LINE2_INDEX = 6;
-    private static final int POSTAL_CODE_INDEX = 7;
-    private static final int CITY_INDEX = 8;
-    private static final int STATE_INDEX = 9;
-    private static final int ORGTYPE_INDEX = 10;
 
     private static final String NON_ALPHANUMERIC_REGEX = "[^0-9a-zA-Z]";
     private static final String LINE_BREAK_REGEX = "\\r\\n|\\r|\\n";

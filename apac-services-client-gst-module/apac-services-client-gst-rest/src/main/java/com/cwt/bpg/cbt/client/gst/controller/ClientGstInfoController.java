@@ -8,7 +8,9 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -88,5 +90,17 @@ public class ClientGstInfoController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "saving in progress");
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("csv")
+    @ApiOperation("Download client GST  information in csv format")
+    public ResponseEntity<byte[]> downloadClientGstInfo() throws Exception {
+        WriteClientGstInfoFileResponse response = clientGstInfoService.writeFile();
+        if(response == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + response.getFilename() + "\"");
+        return new ResponseEntity<>(response.getData(), headers, HttpStatus.OK);
     }
 }
