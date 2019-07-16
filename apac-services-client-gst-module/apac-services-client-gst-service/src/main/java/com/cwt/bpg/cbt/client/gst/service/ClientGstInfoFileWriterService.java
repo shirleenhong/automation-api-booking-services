@@ -62,7 +62,7 @@ public class ClientGstInfoFileWriterService {
                 info.getPostalCode(),
                 info.getCity(),
                 info.getState(),
-                info.getOrgType() != null? info.getOrgType().toString(): StringUtils.EMPTY
+                info.getOrgType() != null ? info.getOrgType().toString() : StringUtils.EMPTY
         ));
         lines.add(row);
     }

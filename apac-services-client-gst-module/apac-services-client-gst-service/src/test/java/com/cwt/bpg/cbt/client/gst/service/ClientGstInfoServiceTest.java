@@ -143,7 +143,7 @@ public class ClientGstInfoServiceTest {
     }
 
     @Test
-    public void shouldWriteFile() throws Exception{
+    public void shouldWriteFile() throws Exception {
         when(clientGstInfoRepository.getAll())
                 .thenReturn(Arrays.asList(new ClientGstInfo()));
         when(clientGstInfoFileWriterService.writeToFile(anyList()))

@@ -50,7 +50,7 @@ public class ClientGstInfoFileWriterServiceTest {
     }
 
     @Test
-    public void shouldWriteToFile() throws Exception{
+    public void shouldWriteToFile() throws Exception {
         String expectedLine1 = "Free Format,GSTIN Numbers,Client Entity Name,Business Phone Number,"
                 + "Business Email Address,Entity Address Line 1,Entity Address Line 1,Postal Code,City,State,";
         String expectedLine2 = "Client,FORMAT 15 Alpha numeric,FORMAT 35 Alpha Numeric,"
@@ -81,7 +81,7 @@ public class ClientGstInfoFileWriterServiceTest {
         assertArrayEquals(expectedBytes, result.getData());
     }
 
-    private byte[] combine(byte[] a, byte[] b){
+    private byte[] combine(byte[] a, byte[] b) {
         int length = a.length + b.length;
         byte[] result = new byte[length];
         System.arraycopy(a, 0, result, 0, a.length);

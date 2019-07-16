@@ -8,7 +8,7 @@ public class WriteClientGstInfoFileResponse {
     private String filename;
     private List<String> lines;
 
-    public WriteClientGstInfoFileResponse(){
+    public WriteClientGstInfoFileResponse() {
         //default no-args constructor
     }
 
