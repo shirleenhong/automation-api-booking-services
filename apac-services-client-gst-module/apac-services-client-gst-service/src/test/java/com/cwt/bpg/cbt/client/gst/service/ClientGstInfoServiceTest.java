@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -23,6 +24,9 @@ public class ClientGstInfoServiceTest {
 
     @Mock
     private ClientGstInfoExcelReaderService clientGstInfoExcelReaderService;
+    
+    @Mock
+    private Map<String, ClientGstInfoReaderService> map;
 
     @Mock
     private ClientGstInfoBackupRepository clientGstInfoBackupRepository;
@@ -42,7 +46,7 @@ public class ClientGstInfoServiceTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         ClientGstInfo clientGstInfo = new ClientGstInfo();
-        when(clientGstInfoExcelReaderService.readExcelFile(any())).thenReturn(Arrays.asList(clientGstInfo));
+        when(clientGstInfoExcelReaderService.readFile(any())).thenReturn(Arrays.asList(clientGstInfo));
 
         //get collection count/size
         CommandResult mockCommandResult = Mockito.mock(CommandResult.class);
@@ -50,6 +54,7 @@ public class ClientGstInfoServiceTest {
         when(clientGstInfoRepository.getStats()).thenReturn(mockCommandResult);
         when(clientGstInfoRepository.getAll(any())).thenReturn(Arrays.asList(clientGstInfo));
         inputStream = Mockito.mock(InputStream.class);
+        when(map.get("xlsx")).thenReturn(clientGstInfoExcelReaderService);
     }
 
     @Test
@@ -97,7 +102,7 @@ public class ClientGstInfoServiceTest {
 
     @Test
     public void shouldSaveFromExcelFile() {
-        service.saveFromExcelFile(inputStream);
+        service.saveFromFile(inputStream, "xlsx");
 
         //verify if backup is performed
         ArgumentCaptor<List> backupsCaptor = ArgumentCaptor.forClass(List.class);
@@ -120,7 +125,7 @@ public class ClientGstInfoServiceTest {
         when(commandResult.get("count")).thenReturn(null);
         when(clientGstInfoRepository.getStats()).thenReturn(commandResult);
 
-        service.saveFromExcelFile(inputStream);
+        service.saveFromFile(inputStream, "xlsx");
 
         //verify if backup is not performed
         verify(clientGstInfoBackupRepository, times(0)).dropCollection();
@@ -133,9 +138,9 @@ public class ClientGstInfoServiceTest {
     @Test
     public void shouldNotSaveClientGstInfoIfNoneIsExtractedFromExcel() {
 
-        when(clientGstInfoExcelReaderService.readExcelFile(any())).thenReturn(Collections.emptyList());
+        when(clientGstInfoExcelReaderService.readFile(any())).thenReturn(Collections.emptyList());
 
-        service.saveFromExcelFile(inputStream);
+        service.saveFromFile(inputStream, "xlsx");
 
         //verify if clientGstInfo collection is not replaced with new collection
         verify(clientGstInfoRepository, times(0)).dropCollection();

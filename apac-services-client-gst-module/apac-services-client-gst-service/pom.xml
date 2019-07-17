@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <artifactId>apac-services-client-gst-module</artifactId>
     <groupId>com.cwt.bpg.cbt</groupId>
@@ -35,11 +37,16 @@
       <artifactId>poi-ooxml</artifactId>
       <version>${apache.poi.version}</version>
     </dependency>
-      <dependency>
-        <groupId>com.monitorjbl</groupId>
-        <artifactId>xlsx-streamer</artifactId>
-        <version>${xlsx.streamer.version}</version>
-      </dependency>
+    <dependency>
+      <groupId>com.monitorjbl</groupId>
+      <artifactId>xlsx-streamer</artifactId>
+      <version>${xlsx.streamer.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.opencsv</groupId>
+      <artifactId>opencsv</artifactId>
+      <version>${opencsv.version}</version>
+    </dependency>
     <dependency>
       <groupId>com.cwt.bpg.cbt</groupId>
       <artifactId>apac-services-exception</artifactId>

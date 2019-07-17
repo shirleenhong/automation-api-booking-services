@@ -16,19 +16,19 @@ import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 
 public class ClientGstInfoExcelReaderServiceTest
 {
-    private InputStream testFileStream;
+    private InputStream xlsxFileStream;
     
     private ClientGstInfoExcelReaderService service = new ClientGstInfoExcelReaderService();
     
     @Before
     public void setUp() throws IOException {
-        testFileStream = new ClassPathResource("client_gst_info.xlsx").getInputStream();
+        xlsxFileStream = new ClassPathResource("client_gst_info.xlsx").getInputStream();
     }
     
     @Test
-    public void shouldReadExcelFile()
+    public void shouldReadXlsxFile()
     {
-        List<ClientGstInfo> clientGstInfo = service.readExcelFile(testFileStream);
+        List<ClientGstInfo> clientGstInfo = service.readFile(xlsxFileStream);
         assertTrue(clientGstInfo.size() == 5);
 
         ClientGstInfo info = clientGstInfo.get(0);
@@ -48,14 +48,14 @@ public class ClientGstInfoExcelReaderServiceTest
     @Test
     public void shouldReadExcelFileWithGstAirlines()
     {
-        List<ClientGstInfo> clientGstInfo = service.readExcelFile(testFileStream);
+        List<ClientGstInfo> clientGstInfo = service.readFile(xlsxFileStream);
         assertTrue(clientGstInfo.size() == 5);
     }
     
     @Test
     public void shouldReadExcelFileWithError()
     {
-        List<ClientGstInfo> clientGstInfo = service.readExcelFile(null);
+        List<ClientGstInfo> clientGstInfo = service.readFile(null);
         assertNull(clientGstInfo);
     }
 
