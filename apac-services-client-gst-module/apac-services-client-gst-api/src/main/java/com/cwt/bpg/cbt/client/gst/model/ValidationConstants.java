@@ -52,7 +52,7 @@ class ValidationConstants {
     static final int CITY_MAX_LENGTH = 25;
 
     static final String STATE_EMPTY_ERROR_MSG = "state is required";
-    static final String STATE_REGEX = "^[a-zA-Z0-9]*$";
+    static final String STATE_REGEX = "^[a-zA-Z0-9 ]*$";
     static final String STATE_FORMAT_ERROR_MSG = "state should be alphanumeric";
     static final String STATE_LENGTH_ERROR_MSG = "state should be at most 25 characters";
     static final int STATE_MAX_LENGTH = 25;
