@@ -3,171 +3,227 @@ package com.cwt.bpg.cbt.exchange.order.model;
 import java.io.Serializable;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
 
+import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity("clients")
-@Indexes(@Index(fields = @Field("clientId")))
+@Indexes(@Index(fields = @Field("_id")))
 @JsonIgnoreProperties(value = { "cmpid" })
-public class Client implements Serializable {
+public class Client implements Serializable
+{
 
-	private static final long serialVersionUID = 4416580993384869665L;
-	
-	private int clientId;
-	private String name;
-	private String clientAccountNumber;
-	private Integer pricingId;
-	private boolean exemptTax;
-	private List<ProductMerchantFee> mfProducts;
-	private List<CreditCardVendor> mfCcs;
-	private List<Bank> mfBanks;
-	private List<ClientPricing> clientPricings;
-	private boolean standardMfProduct;
-	private boolean applyMfCc;
-	private boolean applyMfBank;
-	private Double merchantFee;
-	private boolean lccSameAsInt;
-	private String lccDdlFeeApply;
-	private String intDdlFeeApply;
-	private String gstin;
+    private static final long serialVersionUID = 4416580993384869665L;
 
-	public int getClientId() {
-		return clientId;
-	}
+    @Id
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    @ApiModelProperty(hidden = true)
+    private ObjectId id;
 
-	public void setClientId(int clientId) {
-		this.clientId = clientId;
-	}
+    private int clientId;
+    private String name;
+    private String clientAccountNumber;
+    private Integer pricingId;
+    private boolean exemptTax;
+    private List<ProductMerchantFee> mfProducts;
+    private List<CreditCardVendor> mfCcs;
+    private List<Bank> mfBanks;
+    private List<ClientPricing> clientPricings;
+    private boolean standardMfProduct;
+    private boolean applyMfCc;
+    private boolean applyMfBank;
+    private Double merchantFee;
+    private boolean lccSameAsInt;
+    private String lccDdlFeeApply;
+    private String intDdlFeeApply;
+    private String gstin;
 
-	public String getName() {
-		return name;
-	}
+    public ObjectId getId()
+    {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(ObjectId id)
+    {
+        this.id = id;
+    }
 
-	public String getClientAccountNumber() {
-		return clientAccountNumber;
-	}
+    public int getClientId()
+    {
+        return clientId;
+    }
 
-	public void setClientAccountNumber(String clientAccountNumber) {
-		this.clientAccountNumber = clientAccountNumber;
-	}
+    public void setClientId(int clientId)
+    {
+        this.clientId = clientId;
+    }
 
-	public Integer getPricingId() {
-		return pricingId;
-	}
+    public String getName()
+    {
+        return name;
+    }
 
-	public void setPricingId(Integer pricingId) {
-		this.pricingId = pricingId;
-	}
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 
-	public boolean isExemptTax() {
-		return exemptTax;
-	}
+    public String getClientAccountNumber()
+    {
+        return clientAccountNumber;
+    }
 
-	public void setExemptTax(boolean exemptTax) {
-		this.exemptTax = exemptTax;
-	}
+    public void setClientAccountNumber(String clientAccountNumber)
+    {
+        this.clientAccountNumber = clientAccountNumber;
+    }
 
-	public List<ClientPricing> getClientPricings() {
-		return clientPricings;
-	}
+    public Integer getPricingId()
+    {
+        return pricingId;
+    }
 
-	public void setClientPricings(List<ClientPricing> clientPricings) {
-		this.clientPricings = clientPricings;
-	}
+    public void setPricingId(Integer pricingId)
+    {
+        this.pricingId = pricingId;
+    }
 
-	public boolean isStandardMfProduct() {
-		return standardMfProduct;
-	}
+    public boolean isExemptTax()
+    {
+        return exemptTax;
+    }
 
-	public void setStandardMfProduct(boolean standardMfProduct) {
-		this.standardMfProduct = standardMfProduct;
-	}
+    public void setExemptTax(boolean exemptTax)
+    {
+        this.exemptTax = exemptTax;
+    }
 
-	public boolean isApplyMfCc() {
-		return applyMfCc;
-	}
+    public List<ClientPricing> getClientPricings()
+    {
+        return clientPricings;
+    }
 
-	public void setApplyMfCc(boolean applyMfCc) {
-		this.applyMfCc = applyMfCc;
-	}
+    public void setClientPricings(List<ClientPricing> clientPricings)
+    {
+        this.clientPricings = clientPricings;
+    }
 
-	public boolean isApplyMfBank() {
-		return applyMfBank;
-	}
+    public boolean isStandardMfProduct()
+    {
+        return standardMfProduct;
+    }
 
-	public void setApplyMfBank(boolean applyMfBank) {
-		this.applyMfBank = applyMfBank;
-	}
+    public void setStandardMfProduct(boolean standardMfProduct)
+    {
+        this.standardMfProduct = standardMfProduct;
+    }
 
-	public Double getMerchantFee() {
-		return merchantFee;
-	}
+    public boolean isApplyMfCc()
+    {
+        return applyMfCc;
+    }
 
-	public void setMerchantFee(Double merchantFee) {
-		this.merchantFee = merchantFee;
-	}
+    public void setApplyMfCc(boolean applyMfCc)
+    {
+        this.applyMfCc = applyMfCc;
+    }
 
-	public boolean getLccSameAsInt() {
-		return lccSameAsInt;
-	}
+    public boolean isApplyMfBank()
+    {
+        return applyMfBank;
+    }
 
-	public void setLccSameAsInt(boolean lccSameAsInt) {
-		this.lccSameAsInt = lccSameAsInt;
-	}
+    public void setApplyMfBank(boolean applyMfBank)
+    {
+        this.applyMfBank = applyMfBank;
+    }
 
-	public String getLccDdlFeeApply() {
-		return lccDdlFeeApply;
-	}
+    public Double getMerchantFee()
+    {
+        return merchantFee;
+    }
 
-	public void setLccDdlFeeApply(String lccDdlFeeApply) {
-		this.lccDdlFeeApply = lccDdlFeeApply;
-	}
+    public void setMerchantFee(Double merchantFee)
+    {
+        this.merchantFee = merchantFee;
+    }
 
-	public String getIntDdlFeeApply() {
-		return intDdlFeeApply;
-	}
+    public boolean getLccSameAsInt()
+    {
+        return lccSameAsInt;
+    }
 
-	public void setIntDdlFeeApply(String intDdlFeeApply) {
-		this.intDdlFeeApply = intDdlFeeApply;
-	}
+    public void setLccSameAsInt(boolean lccSameAsInt)
+    {
+        this.lccSameAsInt = lccSameAsInt;
+    }
 
-	public List<ProductMerchantFee> getMfProducts() {
-		return mfProducts;
-	}
+    public String getLccDdlFeeApply()
+    {
+        return lccDdlFeeApply;
+    }
 
-	public void setMfProducts(List<ProductMerchantFee> mfProducts) {
-		this.mfProducts = mfProducts;
-	}
+    public void setLccDdlFeeApply(String lccDdlFeeApply)
+    {
+        this.lccDdlFeeApply = lccDdlFeeApply;
+    }
 
-	public List<CreditCardVendor> getMfCcs() {
-		return mfCcs;
-	}
+    public String getIntDdlFeeApply()
+    {
+        return intDdlFeeApply;
+    }
 
-	public void setMfCcs(List<CreditCardVendor> mfCcs) {
-		this.mfCcs = mfCcs;
-	}
+    public void setIntDdlFeeApply(String intDdlFeeApply)
+    {
+        this.intDdlFeeApply = intDdlFeeApply;
+    }
 
-	public List<Bank> getMfBanks() {
-		return mfBanks;
-	}
+    public List<ProductMerchantFee> getMfProducts()
+    {
+        return mfProducts;
+    }
 
-	public void setMfBanks(List<Bank> mfBanks) {
-		this.mfBanks = mfBanks;
-	}
+    public void setMfProducts(List<ProductMerchantFee> mfProducts)
+    {
+        this.mfProducts = mfProducts;
+    }
 
-	public String getGstin() {
-		return gstin;
-	}
+    public List<CreditCardVendor> getMfCcs()
+    {
+        return mfCcs;
+    }
 
-	public void setGstin(String gstin) {
-		this.gstin = gstin;
-	}
+    public void setMfCcs(List<CreditCardVendor> mfCcs)
+    {
+        this.mfCcs = mfCcs;
+    }
+
+    public List<Bank> getMfBanks()
+    {
+        return mfBanks;
+    }
+
+    public void setMfBanks(List<Bank> mfBanks)
+    {
+        this.mfBanks = mfBanks;
+    }
+
+    public String getGstin()
+    {
+        return gstin;
+    }
+
+    public void setGstin(String gstin)
+    {
+        this.gstin = gstin;
+    }
 }

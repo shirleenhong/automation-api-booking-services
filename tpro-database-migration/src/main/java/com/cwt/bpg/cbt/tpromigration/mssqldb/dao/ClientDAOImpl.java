@@ -87,21 +87,41 @@ public class ClientDAOImpl {
 
 		List<Client> clients = new ArrayList<>();
 
-		String sql = "select "+
-			"clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmaster.clientnumber, clientmasterpricing.pricingid, exempttax, "+
-			"clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank, clientmaster.merchantfee, "+
-			"airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply "+
-			"from "+
-			"tblclientmaster clientmaster left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = clientmaster.clientid, "+
-			"tblAirPricingFormula airpricingformula "+
-			"where clientmasterpricing.clientid = clientmaster.clientid "+
-			"and airpricingformula.airpricingid=clientmasterpricing.pricingid "+
-			"and cast(clientnumber as bigint) <> 0 "+
-			"group by "+
-				"clientmasterpricing.cmpid, clientmaster.clientid, clientmaster.name, clientmasterpricing.pricingid, exempttax, "+
-				"clientmaster.standardmfproduct, clientmaster.applymfcc, clientmaster.applymfbank,clientmaster.clientid,clientmaster.merchantfee, "+
-				"airpricingformula.lccsameasint, airpricingformula.intddlfeeapply, airpricingformula.lccddlfeeapply, clientmaster.clientnumber "+
-			"order by clientmaster.clientid ";
+		String sql = "select "
+		                + "clientmasterpricing.cmpid, "
+        		        + "clientmaster.clientid, "
+        		        + "clientmaster.name, "
+        		        + "clientmaster.clientnumber, "
+        		        + "clientmasterpricing.pricingid, "
+        		        + "clientmasterpricing.exempttax, "
+        		        + "clientmaster.standardmfproduct, "
+        		        + "clientmaster.applymfcc, "
+        		        + "clientmaster.applymfbank, " 
+        		        + "clientmaster.merchantfee, "
+        		        + "airpricingformula.lccsameasint, " 
+        		        + "airpricingformula.intddlfeeapply, " 
+        		        + "airpricingformula.lccddlfeeapply "
+        		    + "from " 
+        		        + "tblclientmaster clientmaster left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = clientmaster.clientid "
+        		        + "inner join tblAirPricingFormula airpricingformula on airpricingformula.airpricingid = clientmasterpricing.pricingid " 
+        		    + "where "  
+        		       + "cast(clientnumber as bigint) <> 0 "
+        		    + "group by "
+        		        + "clientmasterpricing.cmpid, "
+        		        + "clientmaster.clientid, "
+        		        + "clientmaster.name, "
+        		        + "clientmasterpricing.pricingid, "
+        		        + "clientmasterpricing.exempttax, "
+        		        + "clientmaster.standardmfproduct, "
+        		        + "clientmaster.applymfcc, "
+        		        + "clientmaster.applymfbank, "
+        		        + "clientmaster.clientid, "
+        		        + "clientmaster.merchantfee, "
+        		        + "airpricingformula.lccsameasint, "
+        		        + "airpricingformula.intddlfeeapply, " 
+        		        + "airpricingformula.lccddlfeeapply, "
+        		        + "clientmaster.clientnumber " 
+        		    + "order by clientmaster.clientid "; 
 
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -161,6 +181,107 @@ public class ClientDAOImpl {
 		return clients;
 	}
 
+
+	public List<Client> getClientsFromBilling() {
+
+		List<Client> clients = new ArrayList<>();
+
+		String sql = "select "
+        				+ "clientmasterpricing.cmpid, "
+        				+ "clientmaster.clientid, "
+        				+ "clientmaster.name, "
+        				+ "billingAddress.clientnumber, "
+        				+ "clientmasterpricing.pricingid, "
+        				+ "clientmasterpricing.exempttax, "
+        				+ "clientmaster.standardmfproduct, "
+        				+ "clientmaster.applymfcc, "
+        				+ "clientmaster.applymfbank, "
+        				+ "clientmaster.merchantfee, "
+        				+ "airpricingformula.lccsameasint, "
+        				+ "airpricingformula.intddlfeeapply, "
+        				+ "airpricingformula.lccddlfeeapply "
+        			 + "from "
+        				+ "tblBillingAddress billingAddress left join tblclientmasterpricing clientmasterpricing on clientmasterpricing.clientid = billingAddress.clientid "
+        				+ "left join tblClientMaster clientmaster on clientmaster.ClientID = billingAddress.ClientID "
+        				+ "inner join  tblAirPricingFormula airpricingformula on airpricingformula.airpricingid=clientmasterpricing.pricingid "
+    				+ "where "
+        				+ "billingAddress.clientnumber is not null "
+        				+ "and billingAddress.clientnumber <> '0' "
+        				+ "and not clientmaster.name like '%OBT%' "
+    				+ "group by "
+        				+ "clientmasterpricing.cmpid, "
+        				+ "clientmaster.clientid, "
+        				+ "clientmaster.name, "
+        				+ "clientmasterpricing.pricingid, "
+        				+ "clientmasterpricing.exempttax, "
+        				+ "clientmaster.standardmfproduct, "
+        				+ "clientmaster.applymfcc, "
+        				+ "clientmaster.applymfbank, "
+        				+ "clientmaster.clientid, "
+        				+ "clientmaster.merchantfee, "
+        				+ "airpricingformula.lccsameasint, "
+        				+ "airpricingformula.intddlfeeapply, "
+        				+ "airpricingformula.lccddlfeeapply, "
+        				+ "billingAddress.clientnumber "
+        			+ "order by clientmaster.clientid";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			LOGGER.info("Getting clients from mssqldb");
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Client client = new Client();
+				client.setClientId(rs.getInt("clientid"));
+				client.setClientAccountNumber(StringUtils.stripStart(rs.getString("clientnumber"),"0"));
+				client.setName(rs.getString("name"));
+				client.setPricingId(rs.getInt("pricingid"));
+				client.setExemptTax(rs.getBoolean("exempttax"));
+				client.setApplyMfBank(rs.getBoolean("applymfbank"));
+				client.setApplyMfCc(rs.getBoolean("applymfcc"));
+				client.setCmpid(rs.getInt("cmpid"));
+				client.setStandardMfProduct(rs.getObject("standardmfproduct") != null
+						? rs.getBoolean("standardmfproduct")
+						: true);
+				client.setMerchantFee(rs.getDouble("merchantfee"));
+				client.setLccSameAsInt(rs.getBoolean("lccsameasint"));
+				client.setIntDdlFeeApply(rs.getString("intddlfeeapply"));
+				client.setLccDdlFeeApply(rs.getString("lccddlfeeapply"));
+				clients.add(client);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading clients, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+				//
+			}
+		}
+
+		LOGGER.info("Size of clients from mssqldb: {}", clients.size());
+		return clients;
+	}
 
 	public List<ProductMerchantFee> getProducts() {
 
