@@ -33,7 +33,7 @@ public class ClientGstInfoCsvReaderService extends ClientGstInfoReaderService {
 		String[] row = null;
 		int rowIteration = 0;
 		while ((row = csvReader.readNext()) != null) {
-			rowIteration ++;
+			rowIteration++;
 			populateClientGstInfo(rowIteration, row, clientGstInfo);
 		}
 		return clientGstInfo;

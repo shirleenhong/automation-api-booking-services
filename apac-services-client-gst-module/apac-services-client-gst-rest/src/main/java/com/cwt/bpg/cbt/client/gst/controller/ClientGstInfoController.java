@@ -81,7 +81,9 @@ public class ClientGstInfoController {
     public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file)
             throws Exception {
     	String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-    	if (!(extension.equals(EXCEL_WORKBOOK) || extension.equals(MACRO_ENABLED_WORKBOOK) ||
+    	if (!(extension.equals(EXCEL_WORKBOOK) ||
+    			extension.equals(EXCEL_WORKBOOK_X) ||
+    			extension.equals(MACRO_ENABLED_WORKBOOK) ||
                 extension.equals(CSV))) {
     		throw new IllegalArgumentException("File must be in excel or csv format");
         }
