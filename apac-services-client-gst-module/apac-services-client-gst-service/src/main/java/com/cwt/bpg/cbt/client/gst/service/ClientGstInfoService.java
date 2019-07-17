@@ -7,10 +7,10 @@ import java.util.List;
 
 import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
+import com.cwt.bpg.cbt.exceptions.FileUploadException;
 import org.mongodb.morphia.query.FindOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -65,9 +65,10 @@ public class ClientGstInfoService {
         return clientGstInfoFileWriterService.writeToFile(clientGstInfo);
     }
 
-    @Async
-    public void saveFromExcelFile(InputStream inputStream) {
-        List<ClientGstInfo> clientGstInfo = clientGstInfoExcelReaderService.readExcelFile(inputStream);
+    public void saveFromExcelFile(InputStream inputStream, boolean validate)
+            throws FileUploadException {
+        List<ClientGstInfo> clientGstInfo =
+                clientGstInfoExcelReaderService.readExcelFile(inputStream, validate);
         if (!CollectionUtils.isEmpty(clientGstInfo)) {
             backupClientGstInfo();
             clientGstInfoRepository.dropCollection();

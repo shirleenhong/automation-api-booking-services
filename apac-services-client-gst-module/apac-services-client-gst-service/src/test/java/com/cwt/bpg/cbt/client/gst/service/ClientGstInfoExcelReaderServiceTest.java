@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import com.cwt.bpg.cbt.exceptions.FileUploadException;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
@@ -26,9 +27,9 @@ public class ClientGstInfoExcelReaderServiceTest
     }
     
     @Test
-    public void shouldReadExcelFile()
+    public void shouldReadExcelFile() throws FileUploadException
     {
-        List<ClientGstInfo> clientGstInfo = service.readExcelFile(testFileStream);
+        List<ClientGstInfo> clientGstInfo = service.readExcelFile(testFileStream, false);
         assertTrue(clientGstInfo.size() == 5);
 
         ClientGstInfo info = clientGstInfo.get(0);
@@ -46,16 +47,16 @@ public class ClientGstInfoExcelReaderServiceTest
     }
     
     @Test
-    public void shouldReadExcelFileWithGstAirlines()
+    public void shouldReadExcelFileWithGstAirlines() throws FileUploadException
     {
-        List<ClientGstInfo> clientGstInfo = service.readExcelFile(testFileStream);
+        List<ClientGstInfo> clientGstInfo = service.readExcelFile(testFileStream, false);
         assertTrue(clientGstInfo.size() == 5);
     }
     
     @Test
-    public void shouldReadExcelFileWithError()
+    public void shouldReadExcelFileWithError() throws FileUploadException
     {
-        List<ClientGstInfo> clientGstInfo = service.readExcelFile(null);
+        List<ClientGstInfo> clientGstInfo = service.readExcelFile(null, false);
         assertNull(clientGstInfo);
     }
 
