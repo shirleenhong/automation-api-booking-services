@@ -74,7 +74,7 @@ public class MigrationService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MigrationService.class);
 
 	private static final String AIRPORT_COLLECTION = "airports";
-	private static final String CLIENT_COLLECTION = "clients1";
+	private static final String CLIENT_COLLECTION = "clients";
 	private static final String AIR_TRANSACTION_COLLECTION = "airTransactions";
 	private static final String AIR_CONTRACTS_COLLECTION = "airContracts";
 	private static final String AIR_MISC_INFO_COLLECTION = "airMiscInfo";
