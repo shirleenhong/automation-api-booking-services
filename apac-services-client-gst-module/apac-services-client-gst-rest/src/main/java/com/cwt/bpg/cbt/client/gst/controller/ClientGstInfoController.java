@@ -1,6 +1,6 @@
 package com.cwt.bpg.cbt.client.gst.controller;
 
-
+import static com.cwt.bpg.cbt.client.gst.service.ClientGstInfoReaderConfig.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
+
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,14 +34,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-
 @RestController
 @Api(tags = "Client GST Info")
 @RequestMapping(path = "client-gst-info")
 public class ClientGstInfoController {
-
-    private static final String EXCEL_WORKBOOK = ".xlsx";
-    private static final String MACRO_ENABLED_WORKBOOK = ".xlsm";
 
     @Autowired
     private ClientGstInfoService clientGstInfoService;
@@ -83,11 +81,11 @@ public class ClientGstInfoController {
     public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file,
             @RequestParam(value = "validate", defaultValue = "true") boolean validate)
             throws Exception {
-        if (!(file.getOriginalFilename().endsWith(EXCEL_WORKBOOK) || file.getOriginalFilename()
-                .endsWith(MACRO_ENABLED_WORKBOOK))) {
-            throw new IllegalArgumentException("File must be in excel format");
+    	String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+    	if (isValidFile(extension)) {
+    		throw new IllegalArgumentException("File must be in excel or csv format");
         }
-        clientGstInfoService.saveFromExcelFile(file.getInputStream(), validate);
+        clientGstInfoService.saveFromFile(file.getInputStream(), extension, validate);
         Map<String, String> response = new HashMap<>();
         response.put("message", "saved successfully");
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -104,4 +102,10 @@ public class ClientGstInfoController {
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + response.getFilename() + "\"");
         return new ResponseEntity<>(response.getData(), headers, HttpStatus.OK);
     }
+
+	private boolean isValidFile(String extension) {
+		return !(extension.equals(EXCEL_WORKBOOK) ||
+    			extension.equals(MACRO_ENABLED_WORKBOOK) ||
+                extension.equals(CSV));
+	}
 }

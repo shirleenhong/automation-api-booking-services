@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -303,6 +304,7 @@ public class MigrationService {
 		Map<Integer, List<TransactionFee>> transactionFeeByTicket = getTransactionFeesMap(
 				clientDAO.getTransactionFeeByTicket());
 		List<Client> clients = clientDAO.getClients();
+		List<Client> clientsFromBilling = clientDAO.getClientsFromBilling();
 		List<Client> clientsGstin = clientDAO.getClientsWithGstin();
 		List<AirVariables> airVariables = clientDAO.getAirVariables();
 
@@ -311,6 +313,8 @@ public class MigrationService {
 		defaultClient.setApplyMfBank(false);
 		defaultClient.setApplyMfCc(false);
 		clients.add(defaultClient);
+		clients.removeAll(clientsFromBilling);
+		clients.addAll(clientsFromBilling);
 
 		updateClients(clients, clientsGstin, productsMap, ccsMap, banksMap, clientPricingMaps, airVariables,
 				transactionFeeByPNR, transactionFeeByCoupon, transactionFeeByTicket);
@@ -318,7 +322,7 @@ public class MigrationService {
 		List<Document> docs = new ArrayList<>();
 		for (Client client : clients) {
 
-			docs.add(dBObjectMapper.mapAsDbDocument(client.getClientId(), client));
+			docs.add(dBObjectMapper.mapAsDbDocument(client));
 		}
 
 		mongoDbConnection.getCollection(CLIENT_COLLECTION).insertMany(docs);

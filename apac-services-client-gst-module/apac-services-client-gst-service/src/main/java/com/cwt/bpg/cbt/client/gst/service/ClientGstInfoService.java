@@ -4,12 +4,14 @@ import java.io.InputStream;
 import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exceptions.FileUploadException;
 import org.mongodb.morphia.query.FindOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -38,6 +40,10 @@ public class ClientGstInfoService {
     @Autowired
     private ClientGstInfoFileWriterService clientGstInfoFileWriterService;
     
+    @Autowired
+    @Qualifier("clientGstInfoReaderServiceMap")
+    private Map<String, ClientGstInfoReaderService> clientGstInfoReaderServiceMap;
+
     public List<ClientGstInfo> getAllClientGstInfo() {
     	return clientGstInfoRepository.getAll();
     }
