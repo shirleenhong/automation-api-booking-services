@@ -40,7 +40,7 @@ public class ClientGstInfoExcelReaderService extends ClientGstInfoReaderService{
     private List<ClientGstInfo> extractClientGstInfo(Workbook workbook) {
         Sheet sheet = workbook.getSheetAt(GST_DATA_SHEET_INDEX);
         List<ClientGstInfo> clientGstInfo = new LinkedList<>();
-        Integer rowIteration = 0;
+        int rowIteration = 0;
         for (Row row : sheet) {
         	rowIteration++;
         	populateClientGstInfo(rowIteration, row, clientGstInfo);
