@@ -11,22 +11,22 @@ import org.springframework.context.annotation.Configuration;
 public class ClientGstInfoReaderConfig {
 
 	public static final String CSV = "csv";
-    public static final String EXCEL_WORKBOOK = "xlsx";
-    public static final String MACRO_ENABLED_WORKBOOK = "xlsm";
-    
-    @Autowired
-    private ClientGstInfoExcelReaderService clientGstInfoExcelReaderService;
+	public static final String EXCEL_WORKBOOK = "xlsx";
+	public static final String MACRO_ENABLED_WORKBOOK = "xlsm";
 
-    @Autowired
-    private ClientGstInfoCsvReaderService clientGstInfoCsvReaderService;
-    
-    @Bean("clientGstInfoReaderServiceMap")
-    public Map<String, ClientGstInfoReaderService> clientGstInfoReaderMap(){
-    	Map<String, ClientGstInfoReaderService> map = new HashMap<>();
-    	map.put(CSV, clientGstInfoCsvReaderService);
-    	map.put(EXCEL_WORKBOOK, clientGstInfoExcelReaderService);
-    	map.put(MACRO_ENABLED_WORKBOOK, clientGstInfoExcelReaderService);
+	@Autowired
+	private ClientGstInfoExcelReaderService clientGstInfoExcelReaderService;
+
+	@Autowired
+	private ClientGstInfoCsvReaderService clientGstInfoCsvReaderService;
+
+	@Bean("clientGstInfoReaderServiceMap")
+	public Map<String, ClientGstInfoReaderService> clientGstInfoReaderMap() {
+		Map<String, ClientGstInfoReaderService> map = new HashMap<>();
+		map.put(CSV, clientGstInfoCsvReaderService);
+		map.put(EXCEL_WORKBOOK, clientGstInfoExcelReaderService);
+		map.put(MACRO_ENABLED_WORKBOOK, clientGstInfoExcelReaderService);
 		return map;
-    }
-    
+	}
+
 }

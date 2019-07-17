@@ -15,7 +15,7 @@ import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 import com.monitorjbl.xlsx.StreamingReader;
 
 @Service
-public class ClientGstInfoExcelReaderService extends ClientGstInfoReaderService{
+public class ClientGstInfoExcelReaderService extends ClientGstInfoReaderService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientGstInfoExcelReaderService.class);
 
