@@ -39,9 +39,10 @@ public abstract class ClientGstInfoReaderService {
 
 		info.setClient(getValue(row, CLIENT_INDEX));
 		info.setGstin(getValue(row, GSTIN_INDEX));
-		if (info.getGstin() != null) {
-			info.setGstin(info.getGstin().replaceAll(NON_ALPHANUMERIC_REGEX, EMPTY_STRING));
-			info.setGstin(info.getGstin().toUpperCase());
+		String gstin = info.getGstin();
+		if (!StringUtils.isEmpty(gstin)) {
+			info.setGstin(gstin.replaceAll(NON_ALPHANUMERIC_REGEX, EMPTY_STRING));
+			info.setGstin(gstin.toUpperCase());
 		}
 		info.setClientEntityName(getValue(row, ENTITY_NAME_INDEX));
 		info.setBusinessPhoneNumber(getValue(row, BUSINESS_PHONE_INDEX));
@@ -51,42 +52,12 @@ public abstract class ClientGstInfoReaderService {
 		info.setPostalCode(getValue(row, POSTAL_CODE_INDEX));
 		info.setCity(getValue(row, CITY_INDEX));
 		info.setState(getValue(row, STATE_INDEX));
-		if (getValue(row, ORGTYPE_INDEX) != null) {
-			info.setOrgType(OrgType.valueOf(getValue(row, ORGTYPE_INDEX)));
+		String orgType = getValue(row, ORGTYPE_INDEX);
+		if (!StringUtils.isEmpty(orgType)) {
+			info.setOrgType(OrgType.valueOf(orgType));
 		}
 		return info;
 	}
 
 	protected abstract String getValue(Object obj, int index);
-}
-
-class Param {
-	int rowIteration;
-	Object row;
-	List<ClientGstInfo> clientGstInfo;
-
-	public int getRowIteration() {
-		return rowIteration;
-	}
-
-	public void setRowIteration(int rowIteration) {
-		this.rowIteration = rowIteration;
-	}
-
-	public Object getRow() {
-		return row;
-	}
-
-	public void setRow(Object row) {
-		this.row = row;
-	}
-
-	public List<ClientGstInfo> getClientGstInfo() {
-		return clientGstInfo;
-	}
-
-	public void setClientGstInfo(List<ClientGstInfo> clientGstInfo) {
-		this.clientGstInfo = clientGstInfo;
-	}
-
 }
