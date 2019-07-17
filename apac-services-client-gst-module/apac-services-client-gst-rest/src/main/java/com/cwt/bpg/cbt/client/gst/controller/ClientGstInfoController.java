@@ -81,10 +81,7 @@ public class ClientGstInfoController {
     public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file)
             throws Exception {
     	String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-    	if (!(extension.equals(EXCEL_WORKBOOK) ||
-    			extension.equals(EXCEL_WORKBOOK_X) ||
-    			extension.equals(MACRO_ENABLED_WORKBOOK) ||
-                extension.equals(CSV))) {
+    	if (isValidFile(extension)) {
     		throw new IllegalArgumentException("File must be in excel or csv format");
         }
         clientGstInfoService.saveFromFile(file.getInputStream(), extension);
@@ -104,4 +101,11 @@ public class ClientGstInfoController {
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + response.getFilename() + "\"");
         return new ResponseEntity<>(response.getData(), headers, HttpStatus.OK);
     }
+
+	private boolean isValidFile(String extension) {
+		return !(extension.equals(EXCEL_WORKBOOK) ||
+    			extension.equals(EXCEL_WORKBOOK_X) ||
+    			extension.equals(MACRO_ENABLED_WORKBOOK) ||
+                extension.equals(CSV));
+	}
 }
