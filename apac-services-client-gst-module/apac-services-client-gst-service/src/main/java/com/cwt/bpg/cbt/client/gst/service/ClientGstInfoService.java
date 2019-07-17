@@ -35,10 +35,11 @@ public class ClientGstInfoService {
     private ClientGstInfoBackupRepository clientGstInfoBackupRepository;
 
     @Autowired
-    private ClientGstInfoExcelReaderService clientGstInfoExcelReaderService;
-
-    @Autowired
     private ClientGstInfoFileWriterService clientGstInfoFileWriterService;
+    
+    @Autowired
+    @Qualifier("clientGstInfoReaderServiceMap")
+    private Map<String, ClientGstInfoReaderService> clientGstInfoReaderServiceMap;
     
     public List<ClientGstInfo> getAllClientGstInfo() {
     	return clientGstInfoRepository.getAll();

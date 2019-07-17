@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
+
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -78,11 +80,12 @@ public class ClientGstInfoController {
     @ApiOperation("[Maintenance] Saves client GST information from excel file")
     public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file)
             throws Exception {
-        if (!(file.getOriginalFilename().endsWith(EXCEL_WORKBOOK) || file.getOriginalFilename()
-                .endsWith(MACRO_ENABLED_WORKBOOK))) {
-            throw new IllegalArgumentException("File must be in excel format");
+    	String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+    	if (!(extension.equals(EXCEL_WORKBOOK) || extension.equals(MACRO_ENABLED_WORKBOOK) ||
+                extension.equals(CSV))) {
+    		throw new IllegalArgumentException("File must be in excel or csv format");
         }
-        clientGstInfoService.saveFromExcelFile(file.getInputStream());
+        clientGstInfoService.saveFromFile(file.getInputStream(), extension);
         Map<String, String> response = new HashMap<>();
         response.put("message", "saving in progress");
         return new ResponseEntity<>(response, HttpStatus.OK);

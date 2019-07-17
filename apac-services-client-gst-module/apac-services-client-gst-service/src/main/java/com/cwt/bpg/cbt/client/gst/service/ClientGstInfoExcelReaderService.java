@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 import com.monitorjbl.xlsx.StreamingReader;
 
-import static com.cwt.bpg.cbt.client.gst.service.Constants.*;
-
 @Service
 public class ClientGstInfoExcelReaderService extends ClientGstInfoReaderService{
 
@@ -24,12 +22,7 @@ public class ClientGstInfoExcelReaderService extends ClientGstInfoReaderService{
     private static final int ROW_CACHE_SIZE = 100;
     private static final int BUFFER_SIZE = 4096;
     private static final int GST_DATA_SHEET_INDEX = 0;
-    private static final int ROWS_TO_SKIP_GST_DATA = 2;
 
-    private static final String NON_ALPHANUMERIC_REGEX = "[^0-9a-zA-Z]";
-    private static final String LINE_BREAK_REGEX = "\\r\\n|\\r|\\n";
-    private static final String EMPTY_STRING = "";
-    private static final String SPACE = " ";
 
     public List<ClientGstInfo> readFile(InputStream inputStream) {
         try(InputStream is = new BufferedInputStream(inputStream)) {

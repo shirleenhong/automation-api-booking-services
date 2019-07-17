@@ -1,5 +1,7 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
+import static com.cwt.bpg.cbt.client.gst.service.Constants.*;
+
 import java.io.InputStream;
 import java.util.List;
 
@@ -11,17 +13,6 @@ import com.cwt.bpg.cbt.client.gst.model.OrgType;
 public abstract class ClientGstInfoReaderService {
 
 	protected static final int ROWS_TO_SKIP_GST_DATA = 2;
-	protected static final int CLIENT_INDEX = 0;
-	protected static final int GSTIN_INDEX = 1;
-	protected static final int ENTITY_NAME_INDEX = 2;
-	protected static final int BUSINESS_PHONE_INDEX = 3;
-	protected static final int EMAIL_ADDRESS_INDEX = 4;
-	protected static final int ADDRESS_LINE_1_INDEX = 5;
-	protected static final int ADDRESS_LINE2_INDEX = 6;
-	protected static final int POSTAL_CODE_INDEX = 7;
-	protected static final int CITY_INDEX = 8;
-	protected static final int STATE_INDEX = 9;
-	protected static final int ORGTYPE_INDEX = 10;
 
 	protected static final String NON_ALPHANUMERIC_REGEX = "[^0-9a-zA-Z]";
 	protected static final String LINE_BREAK_REGEX = "\\r\\n|\\r|\\n";
