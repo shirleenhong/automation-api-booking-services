@@ -104,7 +104,6 @@ public class ClientGstInfoController {
 
 	private boolean isValidFile(String extension) {
 		return !(extension.equals(EXCEL_WORKBOOK) ||
-    			extension.equals(EXCEL_WORKBOOK_X) ||
     			extension.equals(MACRO_ENABLED_WORKBOOK) ||
                 extension.equals(CSV));
 	}

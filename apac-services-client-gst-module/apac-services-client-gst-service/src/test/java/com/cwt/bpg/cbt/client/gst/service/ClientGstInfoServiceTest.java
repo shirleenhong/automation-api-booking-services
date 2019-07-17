@@ -54,7 +54,7 @@ public class ClientGstInfoServiceTest {
         when(clientGstInfoRepository.getStats()).thenReturn(mockCommandResult);
         when(clientGstInfoRepository.getAll(any())).thenReturn(Arrays.asList(clientGstInfo));
         inputStream = Mockito.mock(InputStream.class);
-        when(map.get("xls")).thenReturn(clientGstInfoExcelReaderService);
+        when(map.get("xlsx")).thenReturn(clientGstInfoExcelReaderService);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class ClientGstInfoServiceTest {
 
     @Test
     public void shouldSaveFromExcelFile() {
-        service.saveFromFile(inputStream, "xls");
+        service.saveFromFile(inputStream, "xlsx");
 
         //verify if backup is performed
         ArgumentCaptor<List> backupsCaptor = ArgumentCaptor.forClass(List.class);
@@ -125,7 +125,7 @@ public class ClientGstInfoServiceTest {
         when(commandResult.get("count")).thenReturn(null);
         when(clientGstInfoRepository.getStats()).thenReturn(commandResult);
 
-        service.saveFromFile(inputStream, "xls");
+        service.saveFromFile(inputStream, "xlsx");
 
         //verify if backup is not performed
         verify(clientGstInfoBackupRepository, times(0)).dropCollection();
@@ -140,7 +140,7 @@ public class ClientGstInfoServiceTest {
 
         when(clientGstInfoExcelReaderService.readFile(any())).thenReturn(Collections.emptyList());
 
-        service.saveFromFile(inputStream, "xls");
+        service.saveFromFile(inputStream, "xlsx");
 
         //verify if clientGstInfo collection is not replaced with new collection
         verify(clientGstInfoRepository, times(0)).dropCollection();
