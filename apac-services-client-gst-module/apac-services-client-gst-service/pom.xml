@@ -37,15 +37,15 @@
       <artifactId>poi-ooxml</artifactId>
       <version>${apache.poi.version}</version>
     </dependency>
+      <dependency>
+        <groupId>com.monitorjbl</groupId>
+        <artifactId>xlsx-streamer</artifactId>
+        <version>${xlsx.streamer.version}</version>
+      </dependency>
     <dependency>
-      <groupId>com.opencsv</groupId>
-      <artifactId>opencsv</artifactId>
-      <version>${opencsv.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.monitorjbl</groupId>
-      <artifactId>xlsx-streamer</artifactId>
-      <version>${xlsx.streamer.version}</version>
+      <groupId>com.cwt.bpg.cbt</groupId>
+      <artifactId>apac-services-exception</artifactId>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 </project>

@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
+import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import org.mongodb.morphia.query.FindOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,8 +35,10 @@ public class ClientGstInfoService {
     private ClientGstInfoBackupRepository clientGstInfoBackupRepository;
 
     @Autowired
-    @Qualifier("clientGstInfoReaderServiceMap")
-    private Map<String, ClientGstInfoReaderService> clientGstInfoReaderServiceMap;
+    private ClientGstInfoExcelReaderService clientGstInfoExcelReaderService;
+
+    @Autowired
+    private ClientGstInfoFileWriterService clientGstInfoFileWriterService;
     
     public List<ClientGstInfo> getAllClientGstInfo() {
     	return clientGstInfoRepository.getAll();
@@ -53,6 +57,14 @@ public class ClientGstInfoService {
     
     public String remove(String gstin) {
     	 return clientGstInfoRepository.remove(gstin);
+    }
+
+    public WriteClientGstInfoFileResponse writeFile() throws ApiServiceException {
+        List<ClientGstInfo> clientGstInfo = clientGstInfoRepository.getAll();
+        if(CollectionUtils.isEmpty(clientGstInfo)) {
+            return null;
+        }
+        return clientGstInfoFileWriterService.writeToFile(clientGstInfo);
     }
 
     @Async
