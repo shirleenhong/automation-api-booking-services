@@ -78,15 +78,16 @@ public class ClientGstInfoController {
     @PostMapping
     @ResponseBody
     @ApiOperation("[Maintenance] Saves client GST information from excel file")
-    public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file)
+    public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file,
+            @RequestParam(value = "validate", defaultValue = "true") boolean validate)
             throws Exception {
     	String extension = FilenameUtils.getExtension(file.getOriginalFilename());
     	if (isValidFile(extension)) {
     		throw new IllegalArgumentException("File must be in excel or csv format");
         }
-        clientGstInfoService.saveFromFile(file.getInputStream(), extension);
+        clientGstInfoService.saveFromFile(file.getInputStream(), extension, validate);
         Map<String, String> response = new HashMap<>();
-        response.put("message", "saving in progress");
+        response.put("message", "saved successfully");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

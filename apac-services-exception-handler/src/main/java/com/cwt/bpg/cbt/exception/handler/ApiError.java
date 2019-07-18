@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.exception.handler;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,9 +10,9 @@ public class ApiError {
 
 	private HttpStatus status;
 	private String message;
-	private List<String> errors;
+	private List<? extends Serializable> errors;
 
-	public ApiError(HttpStatus status, String message, List<String> errors) {
+	public ApiError(HttpStatus status, String message, List<? extends Serializable> errors) {
 		super();
 		this.status = status;
 		this.message = message;
@@ -47,11 +48,11 @@ public class ApiError {
 		this.message = message;
 	}
 
-	public List<String> getErrors() {
+	public List<? extends Serializable> getErrors() {
 		return errors;
 	}
 
-	public void setErrors(List<String> errors) {
+	public void setErrors(List<? extends Serializable> errors) {
 		this.errors = errors;
 	}
 }

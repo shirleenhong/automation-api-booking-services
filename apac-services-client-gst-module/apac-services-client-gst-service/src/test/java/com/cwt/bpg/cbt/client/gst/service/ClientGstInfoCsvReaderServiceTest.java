@@ -24,9 +24,9 @@ public class ClientGstInfoCsvReaderServiceTest {
     }
     
     @Test
-    public void shouldReadCsvFile()
+    public void shouldReadCsvFile() throws Exception
     {
-        List<ClientGstInfo> clientGstInfo = service.readFile(testFileStream);
+        List<ClientGstInfo> clientGstInfo = service.readFile(testFileStream, false);
         assertTrue(clientGstInfo.size() == 5);
 
         ClientGstInfo info = clientGstInfo.get(0);
@@ -44,16 +44,16 @@ public class ClientGstInfoCsvReaderServiceTest {
     }
     
     @Test
-    public void shouldReadCsvFileWithGstAirlines()
+    public void shouldReadCsvFileWithGstAirlines() throws Exception
     {
-        List<ClientGstInfo> clientGstInfo = service.readFile(testFileStream);
+        List<ClientGstInfo> clientGstInfo = service.readFile(testFileStream, false);
         assertTrue(clientGstInfo.size() == 5);
     }
     
     @Test
-    public void shouldReadCsvFileWithError()
+    public void shouldReadCsvFileWithError() throws Exception
     {
-        List<ClientGstInfo> clientGstInfo = service.readFile(null);
+        List<ClientGstInfo> clientGstInfo = service.readFile(null, false);
         assertNull(clientGstInfo);
     }
 

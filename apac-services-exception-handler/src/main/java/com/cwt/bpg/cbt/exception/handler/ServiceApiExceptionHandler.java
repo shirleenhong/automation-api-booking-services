@@ -2,6 +2,7 @@ package com.cwt.bpg.cbt.exception.handler;
 
 import java.util.*;
 
+import com.cwt.bpg.cbt.exceptions.FileUploadException;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.CollectionUtils;
@@ -53,6 +54,16 @@ public class ServiceApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return new ResponseEntity<>(apiError, new HttpHeaders(),
 				apiError.getStatus());
+	}
+
+	@ExceptionHandler({ FileUploadException.class })
+	public ResponseEntity<Object> handleFileUploadException(FileUploadException ex) {
+
+    	logger.error("Validation error caught during upload");
+
+    	ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), ex.getErrors());
+
+    	return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
 	@Override
