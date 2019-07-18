@@ -80,7 +80,7 @@ public class MigrationService
     private static final String CLIENT_COLLECTION = "clients";
     private static final String AIR_TRANSACTION_COLLECTION = "airTransactions";
     private static final String AIR_CONTRACTS_COLLECTION = "airContracts";
-    private static final String AIR_MISC_INFO_COLLECTION = "airMiscInfoTest2";
+    private static final String AIR_MISC_INFO_COLLECTION = "airMiscInfo";
     private static final String PRODUCTS_COLLECTION = "productList";
     private static final String AGENT_COLLECTION = "agentInfo";
     private static final String BILLING_ENTITIES_COLLECTION = "billingEntities";
@@ -138,7 +138,6 @@ public class MigrationService
 
     private String countryCode;
 
-    @SuppressWarnings("unchecked")
     public void migrateLineDefClientMapping() throws JsonProcessingException
     {
         List<LineDefinitionClientMapping> lineDefinitionClientMappings = lineDefs.getLineDefinitionClientMapping();
@@ -262,7 +261,6 @@ public class MigrationService
         contactList.add(contactInfo);
     }
 
-    @SuppressWarnings("unchecked")
     public void migrateAirports() throws JsonProcessingException
     {
         List<Airport> airports = airportDAO.getAirports();
@@ -277,7 +275,6 @@ public class MigrationService
         mongoDbConnection.getCollection(AIRPORT_COLLECTION).insertMany(docs);
     }
 
-    @SuppressWarnings("unchecked")
     public void migrateMerchantFees() throws JsonProcessingException
     {
 
@@ -294,7 +291,6 @@ public class MigrationService
 
     }
 
-    @SuppressWarnings("unchecked")
     public void migrateAirlineRules() throws JsonProcessingException
     {
 
@@ -312,7 +308,6 @@ public class MigrationService
 
     }
 
-    @SuppressWarnings("unchecked")
     public void migrateClients() throws JsonProcessingException
     {
 
@@ -532,7 +527,6 @@ public class MigrationService
         return clients;
     }
 
-    @SuppressWarnings("unchecked")
     public void migrateRemarks() throws JsonProcessingException
     {
 
@@ -543,7 +537,6 @@ public class MigrationService
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void migrateAirContracts() throws JsonProcessingException
     {
 
@@ -561,7 +554,6 @@ public class MigrationService
         LOGGER.info("End of client air contracts migration...");
     }
 
-    @SuppressWarnings("unchecked")
     public void migrateAirMiscInfo() throws JsonProcessingException
     {
 
@@ -578,7 +570,6 @@ public class MigrationService
         LOGGER.info("End of air misc info migration...");
     }
 
-    @SuppressWarnings("unchecked")
     public void migrateAirMiscInfoMerged(final String wave) throws IOException
     {
 
@@ -607,12 +598,11 @@ public class MigrationService
                 LOGGER.error(ex.getMessage(), e);
             }
         });
-        
+
         mongoDbConnection.getCollection(AIR_MISC_INFO_COLLECTION).insertMany(docs);
         LOGGER.info("End of air misc info migration...");
     }
 
-    @SuppressWarnings({ "unchecked" })
     public void migratePassthroughs() throws JsonProcessingException
     {
         List<AirTransaction> airTransactionsFPNP = airTransactionDAOImpl.getList(false);
@@ -649,7 +639,6 @@ public class MigrationService
         System.out.println("Finished migration of airTransactions");
     }
 
-    @SuppressWarnings("unchecked")
     public void migrateAgentContacts() throws JsonProcessingException
     {
 
@@ -674,6 +663,7 @@ public class MigrationService
 
                 AgentInfo agentInfo = new AgentInfo();
 
+                @SuppressWarnings("unused")
                 final List<AgentInfo> users = template.search(LdapUtils.emptyLdapName(), searchFilter.encode(), new AttributesMapper<AgentInfo>()
                 {
                     @Override
@@ -707,9 +697,9 @@ public class MigrationService
         mongoDbConnection.getCollection(AGENT_COLLECTION).insertMany(docs);
     }
 
-    private Map<String, Object> mapBookingClasses()
+    private Map<String, List<String>> mapBookingClasses()
     {
-        Map<String, Object> parameters = new HashMap<>();
+        Map<String, List<String>> parameters = new HashMap<>();
         parameters.put("TGCWT", Arrays.asList("T", "K", "S", "V", "W", "L"));
         parameters.put("TGAirline", Arrays.asList("F", "A", "P", "C", "D", "J", "Z", "Y", "B", "M", "H", "Q"));
         parameters.put("MHCWT", Arrays.asList("O", "Q"));
@@ -719,7 +709,6 @@ public class MigrationService
         return parameters;
     }
 
-    @SuppressWarnings("unchecked")
     private List<String> formBookingClasses(String airlineCode, String passthroughType)
     {
         return (List<String>) mapBookingClasses().get(airlineCode + passthroughType);

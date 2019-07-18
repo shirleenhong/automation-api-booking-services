@@ -1,13 +1,5 @@
 package com.cwt.bpg.cbt.tpromigration.encryptor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.GCMParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -15,9 +7,14 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
 
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
 public class Encryptor
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Encryptor.class);
 
     private SecretKey secretKey;
 
@@ -29,7 +26,8 @@ public class Encryptor
     private final static int GCM_IV_LENGTH = 12;
     private final static int GCM_TAG_LENGTH = 16;
 
-    public String encrypt(String privateString) throws Exception {
+    public String encrypt(String privateString) throws Exception
+    {
         byte[] iv = new byte[GCM_IV_LENGTH];
         (new SecureRandom()).nextBytes(iv);
 
@@ -43,7 +41,8 @@ public class Encryptor
         return Base64.getEncoder().encodeToString(encrypted);
     }
 
-    public String decrypt(String encrypted) throws Exception {
+    public String decrypt(String encrypted) throws Exception
+    {
         byte[] decoded = Base64.getDecoder().decode(encrypted);
 
         byte[] iv = Arrays.copyOfRange(decoded, 0, GCM_IV_LENGTH);
