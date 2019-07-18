@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -165,7 +164,7 @@ public class MigrationService {
 			List<String> productCodes = vendor.getProductCodes();
 
 			LOGGER.info("vendor:{}", vendor);
-			LOGGER.info("vendor.getProductCodes():" + productCodes);
+			LOGGER.info("vendor.getProductCodes(): {}", productCodes);
 
 			if (!ObjectUtils.isEmpty(contactInfoList)) {
 
@@ -177,7 +176,7 @@ public class MigrationService {
 					}
 
 				});
-				LOGGER.info("size of contact info saved in vendor " + contactList.size());
+				LOGGER.info("size of contact info saved in vendor {}", contactList.size());
 				vendor.setContactInfo(contactList);
 			} else {
 				List<ContactInfo> contactList = new ArrayList<>();
@@ -191,7 +190,7 @@ public class MigrationService {
 				if (!ObjectUtils.isEmpty(vendor.getContactNo())) {
 					setMigratedContactInfo(contactList, ContactInfoType.PHONE, vendor.getContactNo(), true);
 				}
-				LOGGER.info("size of contact info saved in vendor " + contactList.size());
+				LOGGER.info("size of contact info saved in vendor {}", contactList.size());
 				vendor.setContactInfo(contactList);
 			}
 
@@ -540,7 +539,7 @@ public class MigrationService {
 
 		mongoDbConnection.getCollection(AIR_TRANSACTION_COLLECTION).insertMany(docs);
 
-		System.out.println("Finished migration of airTransactions");
+		LOGGER.info("Finished migration of airTransactions");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -550,9 +549,9 @@ public class MigrationService {
 		final List<TblAgent> agents = agentDAOImpl.getAgentList();
 		final List<TblAgentConfig> agentConfigs = agentDAOImpl.getAgentConfigList();
 		final LdapTemplate template = new LdapTemplate(ldapContextSource);
-		final List<AgentInfo> agentInfos = new ArrayList<AgentInfo>();
+		final List<AgentInfo> agentInfos = new ArrayList<>();
 		
-		final List<String> WithLDAPAccount = new ArrayList<String>();
+		final List<String> withLDAPAccount = new ArrayList<>();
 
 		agents.stream().forEach(a -> {
 			agentConfigs.stream().filter(c -> c.getDivision().equalsIgnoreCase(a.getDivision())).forEach(c -> {
@@ -567,7 +566,7 @@ public class MigrationService {
 
 				AgentInfo agentInfo = new AgentInfo();
 
-		        final List<AgentInfo> users = template.search(LdapUtils.emptyLdapName(), searchFilter.encode(), new AttributesMapper<AgentInfo>() {
+		        template.search(LdapUtils.emptyLdapName(), searchFilter.encode(), new AttributesMapper<AgentInfo>() {
 					@Override
 					public AgentInfo mapFromAttributes(Attributes attributes) throws NamingException {
 						String uid = (String) attributes.get("sAMAccountName").get();
@@ -578,7 +577,7 @@ public class MigrationService {
 							agentInfos.add(agentInfo);
 							
 							String name = a.getLastName() + ", " + a.getFirstName() + " - " + c.getCountryCode();
-							WithLDAPAccount.add(name);
+							withLDAPAccount.add(name);
 						}
 						return null;
 					}
