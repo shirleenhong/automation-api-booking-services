@@ -23,11 +23,12 @@ public class ClientGstInfoFileWriterService {
 
     private static final String FILENAME = "GSTLookup.csv";
 
-    public WriteClientGstInfoFileResponse writeToFile(List<ClientGstInfo> clientGstInfo) throws ApiServiceException {
+    public WriteClientGstInfoFileResponse writeToFile(List<ClientGstInfo> clientGstInfo)
+            throws ApiServiceException {
         List<String> lines = new ArrayList<>(clientGstInfo.size());
         populateFirstRowLabels(lines);
         populateSecondRowLabels(lines);
-        for(ClientGstInfo info: clientGstInfo){
+        for (ClientGstInfo info : clientGstInfo) {
             populateClientGstInfo(info, lines);
         }
         byte[] data = transformToBytes(lines);
@@ -36,23 +37,23 @@ public class ClientGstInfoFileWriterService {
 
     private byte[] transformToBytes(List<String> lines) throws ApiServiceException {
         final String newLine = System.lineSeparator();
-        try(final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(baos));
-            for(String line: lines) {
+            for (String line : lines) {
                 writer.write(line);
                 writer.write(newLine);
             }
             writer.flush();
-            return  baos.toByteArray();
-        } catch (Exception e) {
+            return baos.toByteArray();
+        }
+        catch (Exception e) {
             LOGGER.error("An error occurred while writing file", e);
             throw new ApiServiceException(e.getMessage());
         }
     }
 
     private void populateClientGstInfo(ClientGstInfo info, List<String> lines) {
-        String row = createRow(Arrays.asList(
-                info.getClient(),
+        String row = createRow(Arrays.asList(info.getClient(),
                 info.getGstin(),
                 info.getClientEntityName(),
                 info.getBusinessPhoneNumber(),
@@ -62,14 +63,12 @@ public class ClientGstInfoFileWriterService {
                 info.getPostalCode(),
                 info.getCity(),
                 info.getState(),
-                info.getOrgType() != null ? info.getOrgType().toString() : StringUtils.EMPTY
-        ));
+                info.getOrgType() != null ? info.getOrgType().toString() : StringUtils.EMPTY));
         lines.add(row);
     }
 
     private void populateFirstRowLabels(List<String> lines) {
-        String row = createRow(Arrays.asList(
-                "Free Format",
+        String row = createRow(Arrays.asList("Free Format",
                 "GSTIN Numbers",
                 "Client Entity Name",
                 "Business Phone Number",
@@ -79,14 +78,12 @@ public class ClientGstInfoFileWriterService {
                 "Postal Code",
                 "City",
                 "State",
-                StringUtils.EMPTY
-        ));
+                StringUtils.EMPTY));
         lines.add(row);
     }
 
     private void populateSecondRowLabels(List<String> lines) {
-        String row = createRow(Arrays.asList(
-                "Client",
+        String row = createRow(Arrays.asList("Client",
                 "FORMAT 15 Alpha numeric",
                 "FORMAT 35 Alpha Numeric",
                 "FORMAT 15 Numeric (No Space or Hyphens etc)",
@@ -96,20 +93,18 @@ public class ClientGstInfoFileWriterService {
                 "FORMAT 17 Alpha Numeric",
                 "FORMAT 25 Alpha",
                 "FORMAT 25 Alpha",
-                "OrgType"
-        ));
+                "OrgType"));
         lines.add(row);
     }
 
     private String createRow(List<String> entries) {
-        List<String> entriesCopy = entries.stream()
-                .map(this::escapeSpecialCharacters)
+        List<String> entriesCopy = entries.stream().map(this::escapeSpecialCharacters)
                 .collect(Collectors.toList());
         return String.join(",", entriesCopy);
     }
 
     private String escapeSpecialCharacters(String data) {
-        if(data == null) {
+        if (data == null) {
             return StringUtils.EMPTY;
         }
         String escapedData = data.replaceAll("\\R", " ");

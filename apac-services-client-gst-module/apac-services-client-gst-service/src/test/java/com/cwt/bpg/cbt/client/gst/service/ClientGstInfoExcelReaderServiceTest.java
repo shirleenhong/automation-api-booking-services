@@ -27,9 +27,9 @@ public class ClientGstInfoExcelReaderServiceTest
     }
     
     @Test
-    public void shouldReadExcelFile() throws FileUploadException
+    public void shouldReadExcelFile() throws Exception
     {
-        List<ClientGstInfo> clientGstInfo = service.readExcelFile(testFileStream, false);
+        List<ClientGstInfo> clientGstInfo = service.readFile(xlsxFileStream, false);
         assertTrue(clientGstInfo.size() == 5);
 
         ClientGstInfo info = clientGstInfo.get(0);
@@ -47,16 +47,16 @@ public class ClientGstInfoExcelReaderServiceTest
     }
     
     @Test
-    public void shouldReadExcelFileWithGstAirlines() throws FileUploadException
+    public void shouldReadExcelFileWithGstAirlines() throws Exception
     {
-        List<ClientGstInfo> clientGstInfo = service.readExcelFile(testFileStream);
+        List<ClientGstInfo> clientGstInfo = service.readFile(xlsxFileStream, false);
         assertTrue(clientGstInfo.size() == 5);
     }
     
     @Test
-    public void shouldReadExcelFileWithError() throws FileUploadException
+    public void shouldReadExcelFileWithError() throws Exception
     {
-        List<ClientGstInfo> clientGstInfo = service.readExcelFile(null);
+        List<ClientGstInfo> clientGstInfo = service.readFile(null, false);
         assertNull(clientGstInfo);
     }
 

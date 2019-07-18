@@ -47,7 +47,7 @@ public class ClientGstInfoServiceTest {
     public void setup() throws FileUploadException {
         MockitoAnnotations.initMocks(this);
         ClientGstInfo clientGstInfo = new ClientGstInfo();
-        when(clientGstInfoExcelReaderService.readFile(any())).thenReturn(Arrays.asList(clientGstInfo));
+        when(clientGstInfoExcelReaderService.readFile(any(), anyBoolean())).thenReturn(Arrays.asList(clientGstInfo));
 
         //get collection count/size
         CommandResult mockCommandResult = Mockito.mock(CommandResult.class);
@@ -102,8 +102,8 @@ public class ClientGstInfoServiceTest {
     }
 
     @Test
-    public void shouldSaveFromExcelFile() {
-        service.saveFromFile(inputStream, "xlsx");
+    public void shouldSaveFromExcelFile() throws Exception{
+        service.saveFromFile(inputStream, "xlsx", false);
 
         //verify if backup is performed
         ArgumentCaptor<List> backupsCaptor = ArgumentCaptor.forClass(List.class);
@@ -126,7 +126,7 @@ public class ClientGstInfoServiceTest {
         when(commandResult.get("count")).thenReturn(null);
         when(clientGstInfoRepository.getStats()).thenReturn(commandResult);
 
-        service.saveFromFile(inputStream, "xlsx");
+        service.saveFromFile(inputStream, "xlsx", false);
 
         //verify if backup is not performed
         verify(clientGstInfoBackupRepository, times(0)).dropCollection();
@@ -139,9 +139,9 @@ public class ClientGstInfoServiceTest {
     @Test
     public void shouldNotSaveClientGstInfoIfNoneIsExtractedFromExcel() throws Exception{
 
-        when(clientGstInfoExcelReaderService.readFile(any())).thenReturn(Collections.emptyList());
+        when(clientGstInfoExcelReaderService.readFile(any(), anyBoolean())).thenReturn(Collections.emptyList());
 
-        service.saveFromFile(inputStream, "xlsx");
+        service.saveFromFile(inputStream, "xlsx", false);
 
         //verify if clientGstInfo collection is not replaced with new collection
         verify(clientGstInfoRepository, times(0)).dropCollection();

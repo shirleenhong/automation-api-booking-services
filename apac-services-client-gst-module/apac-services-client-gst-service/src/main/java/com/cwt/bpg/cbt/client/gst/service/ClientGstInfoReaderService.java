@@ -1,63 +1,121 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
-import static com.cwt.bpg.cbt.client.gst.service.Constants.*;
-
-import java.io.InputStream;
-import java.util.List;
-
-import org.springframework.util.StringUtils;
-
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 import com.cwt.bpg.cbt.client.gst.model.OrgType;
+import com.cwt.bpg.cbt.client.gst.model.ValidationError;
+import com.cwt.bpg.cbt.exceptions.FileUploadException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
-public abstract class ClientGstInfoReaderService {
+import java.io.BufferedInputStream;
+import java.io.Closeable;
+import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 
-	protected static final int ROWS_TO_SKIP_GST_DATA = 2;
+import static com.cwt.bpg.cbt.client.gst.service.Constants.*;
 
-	protected static final String NON_ALPHANUMERIC_REGEX = "[^0-9a-zA-Z]";
-	protected static final String LINE_BREAK_REGEX = "\\r\\n|\\r|\\n";
-	protected static final String EMPTY_STRING = "";
-	protected static final String SPACE = " ";
+public abstract class ClientGstInfoReaderService<W extends Closeable, S extends Iterable<R>, R> {
 
-	protected abstract List<ClientGstInfo> readFile(InputStream inputStream);
+    private static final int ROWS_TO_SKIP_GST_DATA = 2;
 
-	protected boolean populateClientGstInfo(Integer rowIteration, Object row, List<ClientGstInfo> clientGstInfo) {
-		if (rowIteration <= ROWS_TO_SKIP_GST_DATA) {
-			return true;
-		}
-		ClientGstInfo info = extractFromRow(row);
-		if (info.allValuesNull()) {
-			return false; // stop reading excel if no values can be extracted
-		} else if (!StringUtils.isEmpty(info.getGstin())) {
-			clientGstInfo.add(info);
-		}
-		return true;
-	}
+    private static final String REPLACE_WITH_SPACE_REGEX = "[\\s\\p{Z}]";
+    private static final String REPLACE_WITH_EMPTY_STRING_REGEX = "[\\p{Cf}]";
+    private static final String EMPTY_STRING = "";
+    private static final String SPACE = " ";
 
-	protected ClientGstInfo extractFromRow(Object row) {
-		ClientGstInfo info = new ClientGstInfo();
+    private Logger logger;
 
-		info.setClient(getValue(row, CLIENT_INDEX));
-		info.setGstin(getValue(row, GSTIN_INDEX));
-		String gstin = info.getGstin();
-		if (!StringUtils.isEmpty(gstin)) {
-			info.setGstin(gstin.replaceAll(NON_ALPHANUMERIC_REGEX, EMPTY_STRING));
-			info.setGstin(gstin.toUpperCase());
-		}
-		info.setClientEntityName(getValue(row, ENTITY_NAME_INDEX));
-		info.setBusinessPhoneNumber(getValue(row, BUSINESS_PHONE_INDEX));
-		info.setBusinessEmailAddress(getValue(row, EMAIL_ADDRESS_INDEX));
-		info.setEntityAddressLine1(getValue(row, ADDRESS_LINE_1_INDEX));
-		info.setEntityAddressLine2(getValue(row, ADDRESS_LINE2_INDEX));
-		info.setPostalCode(getValue(row, POSTAL_CODE_INDEX));
-		info.setCity(getValue(row, CITY_INDEX));
-		info.setState(getValue(row, STATE_INDEX));
-		String orgType = getValue(row, ORGTYPE_INDEX);
-		if (!StringUtils.isEmpty(orgType)) {
-			info.setOrgType(OrgType.valueOf(orgType));
-		}
-		return info;
-	}
+    public ClientGstInfoReaderService() {
+        this.logger = LoggerFactory.getLogger(getClass());
+    }
 
-	protected abstract String getValue(Object obj, int index);
+    @Autowired
+    private ClientGstInfoListValidatorService validatorService;
+
+    protected abstract W createWorkbook(InputStream inputStream);
+
+    protected abstract S createSheet(W workbook);
+
+    protected abstract String getValue(R row, int index);
+
+    public List<ClientGstInfo> readFile(InputStream inputStream, boolean validate)
+            throws FileUploadException {
+        if(inputStream == null) {
+            return null;
+        }
+        try(W workbook = createWorkbook(new BufferedInputStream(inputStream))) {
+            return extractClientGstInfo(workbook, validate);
+        }
+        catch (FileUploadException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            logger.error("An error occurred while reading file", e);
+            return null;
+        }
+    }
+
+    private List<ClientGstInfo> extractClientGstInfo(W workbook, boolean validate)
+            throws FileUploadException {
+        S sheet = createSheet(workbook);
+        List<ClientGstInfo> clientGstInfo = new LinkedList<>();
+        List<ValidationError> validationErrors = new LinkedList<>();
+        int rowIteration = 0;
+        for(R row: sheet) {
+            if (++rowIteration <= ROWS_TO_SKIP_GST_DATA) {
+                continue;
+            }
+            ClientGstInfo info = extractFromRow(row);
+            if(info.allValuesNull()) {
+                break;
+            }
+            clientGstInfo.add(info);
+            if(validate) {
+                validatorService.validate(rowIteration, info, validationErrors);
+            }
+        }
+        if(!validationErrors.isEmpty()) {
+            throw new FileUploadException("Validation error", validationErrors);
+        }
+        return clientGstInfo;
+    }
+
+    private ClientGstInfo extractFromRow(R row) {
+        ClientGstInfo info = new ClientGstInfo();
+        info.setClient(getAndCleanValue(row, CLIENT_INDEX));
+        info.setGstin(getAndCleanValue(row, GSTIN_INDEX));
+        String gstin = info.getGstin();
+        if (!StringUtils.isEmpty(gstin)) {
+            info.setGstin(gstin.toUpperCase());
+        }
+        info.setClientEntityName(getAndCleanValue(row, ENTITY_NAME_INDEX));
+        info.setBusinessPhoneNumber(getAndCleanValue(row, BUSINESS_PHONE_INDEX));
+        info.setBusinessEmailAddress(getAndCleanValue(row, EMAIL_ADDRESS_INDEX));
+        info.setEntityAddressLine1(getAndCleanValue(row, ADDRESS_LINE_1_INDEX));
+        info.setEntityAddressLine2(getAndCleanValue(row, ADDRESS_LINE2_INDEX));
+        info.setPostalCode(getAndCleanValue(row, POSTAL_CODE_INDEX));
+        info.setCity(getAndCleanValue(row, CITY_INDEX));
+        info.setState(getAndCleanValue(row, STATE_INDEX));
+        String orgType = getAndCleanValue(row, ORGTYPE_INDEX);
+        if (!StringUtils.isEmpty(orgType)) {
+            info.setOrgType(OrgType.valueOf(orgType));
+        }
+        return info;
+    }
+
+    private String cleanWhiteSpaces(String value) {
+        if(value == null) {
+            return null;
+        }
+        return value
+                .replaceAll(REPLACE_WITH_EMPTY_STRING_REGEX, EMPTY_STRING)
+                .replaceAll(REPLACE_WITH_SPACE_REGEX, SPACE).trim();
+    }
+
+    private String getAndCleanValue(R row, int index) {
+        return cleanWhiteSpaces(getValue(row, index));
+    }
 }

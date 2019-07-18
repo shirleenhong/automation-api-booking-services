@@ -1,14 +1,13 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
-import java.io.InputStream;
-import java.time.Instant;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfoBackup;
 import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
+import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoBackupRepository;
+import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exceptions.FileUploadException;
+import com.mongodb.CommandResult;
 import org.mongodb.morphia.query.FindOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,11 +15,11 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
-import com.cwt.bpg.cbt.client.gst.model.ClientGstInfoBackup;
-import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoBackupRepository;
-import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
-import com.mongodb.CommandResult;
+import java.io.InputStream;
+import java.time.Instant;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ClientGstInfoService {
@@ -35,17 +34,14 @@ public class ClientGstInfoService {
     private ClientGstInfoBackupRepository clientGstInfoBackupRepository;
 
     @Autowired
-    private ClientGstInfoExcelReaderService clientGstInfoExcelReaderService;
-
-    @Autowired
     private ClientGstInfoFileWriterService clientGstInfoFileWriterService;
-    
+
     @Autowired
     @Qualifier("clientGstInfoReaderServiceMap")
     private Map<String, ClientGstInfoReaderService> clientGstInfoReaderServiceMap;
 
     public List<ClientGstInfo> getAllClientGstInfo() {
-    	return clientGstInfoRepository.getAll();
+        return clientGstInfoRepository.getAll();
     }
 
     @Cacheable(cacheNames = "client-gst-info", key = "#gstin")
@@ -58,23 +54,23 @@ public class ClientGstInfoService {
         clientGstInfo.setGstin(formattedGstin);
         return clientGstInfoRepository.put(clientGstInfo);
     }
-    
+
     public String remove(String gstin) {
-    	 return clientGstInfoRepository.remove(gstin);
+        return clientGstInfoRepository.remove(gstin);
     }
 
     public WriteClientGstInfoFileResponse writeFile() throws ApiServiceException {
         List<ClientGstInfo> clientGstInfo = clientGstInfoRepository.getAll();
-        if(CollectionUtils.isEmpty(clientGstInfo)) {
+        if (CollectionUtils.isEmpty(clientGstInfo)) {
             return null;
         }
         return clientGstInfoFileWriterService.writeToFile(clientGstInfo);
     }
 
-    public void saveFromExcelFile(InputStream inputStream, boolean validate)
+    public void saveFromFile(InputStream inputStream, String extension, boolean validate)
             throws FileUploadException {
-        List<ClientGstInfo> clientGstInfo =
-                clientGstInfoExcelReaderService.readExcelFile(inputStream, validate);
+        List<ClientGstInfo> clientGstInfo = clientGstInfoReaderServiceMap.get(extension)
+                .readFile(inputStream, validate);
         if (!CollectionUtils.isEmpty(clientGstInfo)) {
             backupClientGstInfo();
             clientGstInfoRepository.dropCollection();
@@ -84,20 +80,18 @@ public class ClientGstInfoService {
 
     private void backupClientGstInfo() {
         CommandResult stats = clientGstInfoRepository.getStats();
-        Integer size = (Integer)stats.get(COUNT_STAT);
-        if(size == null || size == 0) {
+        Integer size = (Integer) stats.get(COUNT_STAT);
+        if (size == null || size == 0) {
             return; //size will be null if collection doesn't exist
         }
         clientGstInfoBackupRepository.dropCollection();
         Instant currentDateTime = Instant.now();
-        int batches = (int)Math.ceil(size/(double)BATCH_SIZE);
+        int batches = (int) Math.ceil(size / (double) BATCH_SIZE);
         int currentBatch = 0;
         int skip = 0;
         int limit = BATCH_SIZE;
-        while(++currentBatch <= batches) {
-            FindOptions options = new FindOptions()
-                    .skip(skip)
-                    .limit(limit);
+        while (++currentBatch <= batches) {
+            FindOptions options = new FindOptions().skip(skip).limit(limit);
             List<ClientGstInfo> toBackup = clientGstInfoRepository.getAll(options);
             List<ClientGstInfoBackup> backups = createBackupList(toBackup, currentDateTime);
             clientGstInfoBackupRepository.putAll(backups);
@@ -108,7 +102,7 @@ public class ClientGstInfoService {
 
     private List<ClientGstInfoBackup> createBackupList(List<ClientGstInfo> toBackup, Instant dateTime) {
         List<ClientGstInfoBackup> backups = new LinkedList<>();
-        for(ClientGstInfo clientGstInfo: toBackup) {
+        for (ClientGstInfo clientGstInfo : toBackup) {
             ClientGstInfoBackup backup = new ClientGstInfoBackup();
             backup.setDateCreated(dateTime);
             backup.setClientGstInfo(clientGstInfo);

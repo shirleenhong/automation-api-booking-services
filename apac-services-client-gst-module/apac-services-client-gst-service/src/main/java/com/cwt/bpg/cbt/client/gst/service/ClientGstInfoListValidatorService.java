@@ -18,16 +18,15 @@ public class ClientGstInfoListValidatorService {
     @Autowired
     private Validator validator;
 
-    public void validate(int rowNumber, ClientGstInfo clientGstInfo,
-            List<ValidationError> validationErrors) {
+    public void validate(int rowNumber, ClientGstInfo clientGstInfo, List<ValidationError> validationErrors) {
         Set<ConstraintViolation<ClientGstInfo>> result = validator.validate(clientGstInfo);
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             return;
         }
-        List<FieldError> fieldErrors = result.stream()
-                .map(violation -> FieldError.create(violation.getPropertyPath().toString(),
-                        violation.getInvalidValue(), violation.getMessage()))
-                .collect(Collectors.toList());
+        List<FieldError> fieldErrors = result.stream().map(violation -> FieldError
+                .create(violation.getPropertyPath().toString(),
+                        violation.getInvalidValue(),
+                        violation.getMessage())).collect(Collectors.toList());
         validationErrors.add(ValidationError.create(rowNumber, fieldErrors));
     }
 }
