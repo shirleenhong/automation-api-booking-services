@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -7,39 +6,21 @@
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.1.4.RELEASE</version>
+    <relativePath />
   </parent>
-
-  <groupId>com.cwt.bpg.cbt</groupId>
+  
   <artifactId>tpro-database-migration</artifactId>
-  <version>2.7.0-SNAPSHOT</version>
   <name>tpro-database-migration</name>
   <description>tpro-database-migration</description>
-
+  <version>2.7.0-SNAPSHOT</version>
+  
   <properties>
     <java.version>1.8</java.version>
+    <apac-services.version>2.7.0-SNAPSHOT</apac-services.version>
   </properties>
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-eclipse-plugin</artifactId>
-        <configuration>
-          <wtpversion>2.0</wtpversion>
-          <ajdtVersion>none</ajdtVersion>
-          <downloadSources>true</downloadSources>
-          <downloadJavadocs>false</downloadJavadocs>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -109,39 +90,9 @@
       <version>1.1.1</version>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.cwt.bpg.cbt</groupId>
-      <artifactId>apac-services-exchange-order-api</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.cwt.bpg.cbt</groupId>
-      <artifactId>apac-services-air-transaction-api</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.cwt.bpg.cbt</groupId>
-      <artifactId>apac-services-fees-api</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.cwt.bpg.cbt</groupId>
-      <artifactId>apac-services-client-air-contract-api</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>
       <version>4.0.0-alpha-3</version>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.groovy</groupId>
-      <artifactId>groovy-all</artifactId>
-      <version>3.0.0-beta-1</version>
-      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -151,12 +102,32 @@
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
     </dependency>
-      <dependency>
-          <groupId>com.cwt.bpg.cbt</groupId>
-          <artifactId>apac-services-exchange-order-api</artifactId>
-          <version>2.7.0-SNAPSHOT</version>
-          <scope>compile</scope>
-      </dependency>
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-json</artifactId>
+      <version>3.0.0-beta-1</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.cwt.bpg.cbt</groupId>
+      <artifactId>apac-services-exchange-order-api</artifactId>
+      <version>${apac-services.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.cwt.bpg.cbt</groupId>
+      <artifactId>apac-services-air-transaction-api</artifactId>
+      <version>${apac-services.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.cwt.bpg.cbt</groupId>
+      <artifactId>apac-services-fees-api</artifactId>
+      <version>${apac-services.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.cwt.bpg.cbt</groupId>
+      <artifactId>apac-services-client-air-contract-api</artifactId>
+      <version>${apac-services.version}</version>
+    </dependency>
 
   </dependencies>
 
