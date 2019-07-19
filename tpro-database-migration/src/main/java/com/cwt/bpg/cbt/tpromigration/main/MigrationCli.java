@@ -19,7 +19,7 @@ import picocli.CommandLine.Option;
 public class MigrationCli implements Callable<Void>
 {
 
-    private static final Logger logger = LoggerFactory.getLogger(MigrationCli.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MigrationCli.class);
 
     @Option(names = "-environment", required = true, description = "dev, test, preprod")
     private String environment;
@@ -78,7 +78,7 @@ public class MigrationCli implements Callable<Void>
     {
         if (!countryCodes.contains(countryCode.toUpperCase()))
         {
-            System.out.println("Country is not supported.");
+            LOGGER.warn("Country is not supported.");
             return null;
         }
         System.setProperty("country.code", countryCode.toUpperCase());
@@ -87,33 +87,33 @@ public class MigrationCli implements Callable<Void>
         MigrationService service = context.getBean(MigrationService.class);
         service.setCountryCode(countryCode);
 
-        logger.info("Country code: {}", countryCode);
+        LOGGER.info("Country code: {}", countryCode);
 
         if (countryCode.equalsIgnoreCase("IN"))
         {
             if (migrateLineDefinitionClientMapping)
             {
-                logger.info("Migrating line definition client mapping...");
+                LOGGER.info("Migrating line definition client mapping...");
                 service.migrateLineDefClientMapping();
             }
             if (migrateAirlineRules)
             {
-                logger.info("Migrating airline rules...");
+                LOGGER.info("Migrating airline rules...");
                 service.migrateAirlineRules();
             }
             if (migrateClients)
             {
-                logger.info("Migrating clients...");
+                LOGGER.info("Migrating clients...");
                 service.migrateClients();
             }
             if (migrateAirports)
             {
-                logger.info("Migrating airports...");
+                LOGGER.info("Migrating airports...");
                 service.migrateAirports();
             }
             if (migrateAirMiscInfo)
             {
-                logger.info("Migrating air misc info...");
+                LOGGER.info("Migrating air misc info...");
                 if (StringUtils.isNotBlank(wave))
                 {
                     service.migrateAirMiscInfoMerged(wave);
@@ -125,7 +125,7 @@ public class MigrationCli implements Callable<Void>
             }
             if (migratePassthroughs)
             {
-                logger.info("Migrating passthru's...");
+                LOGGER.info("Migrating passthru's...");
                 service.migratePassthroughs();
             }
         }
@@ -133,24 +133,24 @@ public class MigrationCli implements Callable<Void>
         {
             if (migrateAirContacts)
             {
-                logger.info("Migrating air contacts...");
+                LOGGER.info("Migrating air contacts...");
                 service.migrateAirContracts();
             }
             if (migrateMerchantFees)
             {
-                logger.info("Migrating merchant fees...");
+                LOGGER.info("Migrating merchant fees...");
                 service.migrateMerchantFees();
             }
             if (migrateAgentContacts)
             {
-                logger.info("Migrating agent contacts...");
+                LOGGER.info("Migrating agent contacts...");
                 service.migrateAgentContacts();
             }
         }
 
         if (migrateProductList)
         {
-            logger.info("Migrating product list...");
+            LOGGER.info("Migrating product list...");
             service.migrateProductList();
         }
 

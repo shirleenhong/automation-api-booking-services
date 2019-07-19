@@ -636,7 +636,7 @@ public class MigrationService
 
         mongoDbConnection.getCollection(AIR_TRANSACTION_COLLECTION).insertMany(docs);
 
-        System.out.println("Finished migration of airTransactions");
+        LOGGER.info("Finished migration of airTransactions");
     }
 
     public void migrateAgentContacts() throws JsonProcessingException
@@ -646,9 +646,7 @@ public class MigrationService
         final List<TblAgent> agents = agentDAOImpl.getAgentList();
         final List<TblAgentConfig> agentConfigs = agentDAOImpl.getAgentConfigList();
         final LdapTemplate template = new LdapTemplate(ldapContextSource);
-        final List<AgentInfo> agentInfos = new ArrayList<AgentInfo>();
-
-        final List<String> WithLDAPAccount = new ArrayList<String>();
+        final List<AgentInfo> agentInfos = new ArrayList<>();
 
         agents.stream().forEach(a -> {
             agentConfigs.stream().filter(c -> c.getDivision().equalsIgnoreCase(a.getDivision())).forEach(c -> {
@@ -663,8 +661,7 @@ public class MigrationService
 
                 AgentInfo agentInfo = new AgentInfo();
 
-                @SuppressWarnings("unused")
-                final List<AgentInfo> users = template.search(LdapUtils.emptyLdapName(), searchFilter.encode(), new AttributesMapper<AgentInfo>()
+                template.search(LdapUtils.emptyLdapName(), searchFilter.encode(), new AttributesMapper<AgentInfo>()
                 {
                     @Override
                     public AgentInfo mapFromAttributes(Attributes attributes) throws NamingException
@@ -676,9 +673,6 @@ public class MigrationService
                             agentInfo.setPhone(c.getPhone());
                             agentInfo.setCountryCode(c.getCountryCode());
                             agentInfos.add(agentInfo);
-
-                            String name = a.getLastName() + ", " + a.getFirstName() + " - " + c.getCountryCode();
-                            WithLDAPAccount.add(name);
                         }
                         return null;
                     }
