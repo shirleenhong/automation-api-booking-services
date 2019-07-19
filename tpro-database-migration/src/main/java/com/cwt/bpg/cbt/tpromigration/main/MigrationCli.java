@@ -46,8 +46,8 @@ public class MigrationCli implements Callable<Void> {
 	/**
 	 * HK & SG
 	 */
-	@Option(names = "-air-contacts", description = "migrate HK & SG air contacts")
-	private boolean migrateAirContacts;
+	@Option(names = "-air-contracts", description = "migrate HK & SG air contracts")
+	private boolean migrateAirContracts;
 
 	@Option(names = "-product-list", description = "migrate products")
 	private boolean migrateProductList;
@@ -58,7 +58,7 @@ public class MigrationCli implements Callable<Void> {
 	@Option(names = "-remarks", description = "migrate HK & SG remarks")
 	private boolean migrateRemarks;
 
-	@Option(names = "-merchant-fee", description = "migrate HK & SG merchange fees")
+	@Option(names = "-merchant-fee", description = "migrate HK & SG merchant fees")
 	private boolean migrateMerchantFees;
 
 	private static List<String> countryCodes = Arrays.asList("IN", "HK", "SG");
@@ -108,7 +108,7 @@ public class MigrationCli implements Callable<Void> {
 			}
 		}
 		if (countryCode.equalsIgnoreCase("HK") || countryCode.equalsIgnoreCase("SG")) {
-			if (migrateAirContacts) {
+			if (migrateAirContracts) {
 				logger.info("Migrating air contacts...");
 				service.migrateAirContracts();
 			}
