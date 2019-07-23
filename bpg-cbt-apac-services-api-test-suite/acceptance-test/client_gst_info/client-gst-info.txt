@@ -80,6 +80,21 @@ Verify That Client GST Info Is Saved When Validating The Maximum Length After Pu
     Verify Client GST Info Is Added And Retrieved
     Send Delete Request For Client GST Info
 
+Verify That Client GST Info Is Saved When Validating The Max Length Of Email Address After Put Request
+    [Tags]    functional  
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=email:accenture123456test-123@gmail.com
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=email:accenture123456_test123@gmail.com
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=email:accenture-1234_test123@gmail.com
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved
+            
 Verify That Client GST Info Allows Special Characters In Client After Put Request
     [Tags]    functional
     Create Test Variables For Put Client GST Info    item=new_record    field_value=client:Banco-de.Oro!
@@ -91,7 +106,19 @@ Verify That Client GST Info Allows Special Characters In Client After Put Reques
     Verify Response Status Code Is Correct    200
     Verify Client GST Info Is Added And Retrieved
     Send Delete Request For Client GST Info
-    
+ 
+Verify That Client GST Info Allows Spaces In State After Put Request
+    [Tags]    functional
+    Create Test Variables For Put Client GST Info    item=new_record    field_value=state:Tamil ABC Telanga 
+    Send Put Request For Client GST Info
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved
+    Evict Client GST Info Cache
+    Send Get Request For Client GST Info    gstin=${gstin} 
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info Is Added And Retrieved
+    Send Delete Request For Client GST Info
+        
 Verify That Client GST Info Allows Spaces And Period In Client Name After Put Request
     [Tags]    functional
     Create Test Variables For Put Client GST Info    item=new_record    field_value=clientName:Bank Of The Phil. Island. 

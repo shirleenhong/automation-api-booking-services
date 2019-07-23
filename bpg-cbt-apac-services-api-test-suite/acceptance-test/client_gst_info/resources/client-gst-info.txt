@@ -152,7 +152,7 @@ Verify Client GST Info Is Added And Retrieved
     Run Keyword If    "${with_address2}"=="true" and "${custom_value[0]}"=="address2"    Verify Json Value Is Correct    $..entityAddressLine2    ${custom_value[1]}     key=Value    ELSE IF    "${with_address2}"=="true"    Verify Json Value Is Correct    $..entityAddressLine2    ${client_gst_list[5]}     key=Value
     Verify Json Value Is Correct    $..postalCode    ${client_gst_list[6]} 
     Verify Json Value Is Correct    $..city    ${client_gst_list[7]}     key=Value
-    Verify Json Value Is Correct    $..state    ${client_gst_list[8]}     key=Value
+    Run Keyword If    "${custom_value[0]}"=="state"    Verify Json Value Is Correct    $..state    ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..state    ${client_gst_list[8]}    key=Value
     Run Keyword If    "${custom_value[0]}"=="orgType"    Verify Json Value Is Correct    $..orgType   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..orgType    ${client_gst_list[9]}    key=Value
 
 Verify Client GST Info Record Is Not Retrieved
