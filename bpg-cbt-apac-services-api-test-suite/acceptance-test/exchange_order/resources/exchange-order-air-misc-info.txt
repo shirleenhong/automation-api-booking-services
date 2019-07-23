@@ -114,7 +114,7 @@ Send Air Misc Info Put Request
     Set Test Variable    ${api_flag}    air-misc-info
     
 Verify Air Misc Info Is Retrieved Correctly
-    ${air_misc_info_record_length}    Get Json Array Length
+    ${air_misc_info_record_length}    Get Json Array Length    split_item="id"
     : FOR    ${index}    IN RANGE    ${air_misc_info_record_length}
     \    ${client_account_number}    Get Json Value As String    ${response.content}    $[${index}].clientAccountNumber
     \    ${gds_format}    Get Json Value As String    ${response.content}    $[${index}].gdsFormat
