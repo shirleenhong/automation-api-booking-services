@@ -6,6 +6,11 @@ Resource    resources/client-gst-info.txt
 Test Teardown    Evict Client GST Info Cache
 
 *** Test Cases ***
+Verify That Client GST Info Can Be Downloaded In CSV Format
+    Send Get Request For Client GST Info    csv
+    Verify Response Status Code Is Correct    200
+    Verify Client GST Info For CSV Is Retrieved Correctly
+    
 Verify That Client GST Info Can Be Saved From Excel File
     [Tags]    not-ready
     Send Post Request For Client GST Info    filename=add_client_gst__info.xlsx
