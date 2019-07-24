@@ -40,6 +40,7 @@ public class ClientGstInfo implements Serializable {
 
     @NotEmpty(message = BUSINESS_EMAIL_EMPTY_ERROR_MSG)
     @Email(message = BUSINESS_EMAIL_FORMAT_ERROR_MSG)
+    @Pattern(regexp = BUSINESS_EMAIL_REGEX, message = BUSINESS_EMAIL_FORMAT_ERROR_MSG)
     @GdsEmailFormat
     private String businessEmailAddress;
 
