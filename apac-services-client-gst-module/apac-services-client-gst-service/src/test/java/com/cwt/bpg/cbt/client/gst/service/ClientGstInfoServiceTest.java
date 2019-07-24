@@ -44,7 +44,7 @@ public class ClientGstInfoServiceTest {
     private InputStream inputStream;
 
     @Before
-    public void setup() throws FileUploadException {
+    public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
         ClientGstInfo clientGstInfo = new ClientGstInfo();
         when(clientGstInfoExcelReaderService.readFile(any(), anyBoolean())).thenReturn(Arrays.asList(clientGstInfo));

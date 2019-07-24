@@ -42,19 +42,12 @@ public abstract class ClientGstInfoReaderService<W extends Closeable, S extends 
     protected abstract String getValue(R row, int index);
 
     public List<ClientGstInfo> readFile(InputStream inputStream, boolean validate)
-            throws FileUploadException {
+            throws Exception {
         if(inputStream == null) {
             return null;
         }
         try(W workbook = createWorkbook(new BufferedInputStream(inputStream))) {
             return extractClientGstInfo(workbook, validate);
-        }
-        catch (FileUploadException e) {
-            throw e;
-        }
-        catch (Exception e) {
-            logger.error("An error occurred while reading file", e);
-            return null;
         }
     }
 

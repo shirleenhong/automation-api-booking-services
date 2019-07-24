@@ -6,7 +6,6 @@ import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoBackupRepository;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
-import com.cwt.bpg.cbt.exceptions.FileUploadException;
 import com.mongodb.CommandResult;
 import org.mongodb.morphia.query.FindOptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,8 +66,9 @@ public class ClientGstInfoService {
         return clientGstInfoFileWriterService.writeToFile(clientGstInfo);
     }
 
+    @SuppressWarnings("unchecked")
     public void saveFromFile(InputStream inputStream, String extension, boolean validate)
-            throws FileUploadException {
+            throws Exception {
         List<ClientGstInfo> clientGstInfo = clientGstInfoReaderServiceMap.get(extension)
                 .readFile(inputStream, validate);
         if (!CollectionUtils.isEmpty(clientGstInfo)) {
