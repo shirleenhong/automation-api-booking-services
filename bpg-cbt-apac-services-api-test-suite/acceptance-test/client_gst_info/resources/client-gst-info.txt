@@ -156,6 +156,7 @@ Verify Client GST Info Is Added And Retrieved
     Run Keyword If    "${custom_value[0]}"=="orgType"    Verify Json Value Is Correct    $..orgType   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..orgType    ${client_gst_list[9]}    key=Value
 
 Verify Client GST Info For CSV Is Retrieved Correctly
+   Create Binary File    ${CURDIR}${/}expected_clientgstinfo.csv    ${response.content} 
    ${actual_result}    Convert To String    ${response.content}
    ${actual_result}    Remove String    ${actual_result}    Free Format,GSTIN Numbers,Client Entity Name,Business Phone Number,Business Email Address,Entity Address Line 1,Entity Address Line 1,Postal Code,City,State,
    ${actual_result}    Remove String    ${actual_result}    Client,FORMAT 15 Alpha numeric,FORMAT 35 Alpha Numeric,FORMAT 15 Numeric (No Space or Hyphens etc),FORMAT 35 Alpha numeric,FORMAT 35 Alpha numeric,FORMAT 25 Alpha Numeric,FORMAT 17 Alpha Numeric,FORMAT 25 Alpha,FORMAT 25 Alpha,OrgType
