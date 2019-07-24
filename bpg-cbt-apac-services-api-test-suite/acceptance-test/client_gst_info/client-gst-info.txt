@@ -7,6 +7,7 @@ Test Teardown    Evict Client GST Info Cache
 
 *** Test Cases ***
 Verify That Client GST Info Can Be Downloaded In CSV Format
+    [Tags]    functional
     Send Get Request For Client GST Info    csv
     Verify Response Status Code Is Correct    200
     Verify Client GST Info For CSV Is Retrieved Correctly
