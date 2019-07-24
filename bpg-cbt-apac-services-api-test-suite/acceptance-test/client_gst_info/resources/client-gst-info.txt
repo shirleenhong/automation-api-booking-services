@@ -4,7 +4,7 @@ Resource          ../../resources/api-utilities.txt
 Resource          ../../resources/api-variables.txt
 Resource          client-gst-info-list.txt
 
-*** Keywords ***
+*** Keywords ***  
 Create Test Variables For Client GST Info
     [Arguments]    ${item}
     ${client_gst_list}    Convert To String    ${client_gst_list_${item}}
@@ -91,7 +91,7 @@ Send Get Request For Client GST Info
     ${response}    Get Request    client-gst-info    ${uri}    headers=${headers}
     Set Test Variable    ${response}
     Log    ${response.headers}
-    Log    ${response.content}
+    Log    ${response.content}    
     Set Test Variable    ${api_flag}    client-gst-info  
 
 Send Put Request For Client GST Info
@@ -155,6 +155,41 @@ Verify Client GST Info Is Added And Retrieved
     Run Keyword If    "${custom_value[0]}"=="state"    Verify Json Value Is Correct    $..state    ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..state    ${client_gst_list[8]}    key=Value
     Run Keyword If    "${custom_value[0]}"=="orgType"    Verify Json Value Is Correct    $..orgType   ${custom_value[1]}     key=Value    ELSE    Verify Json Value Is Correct    $..orgType    ${client_gst_list[9]}    key=Value
 
+Verify Client GST Info For CSV Is Retrieved Correctly
+   Create Binary File    ${CURDIR}${/}expected_clientgstinfo.csv    ${response.content} 
+   ${actual_result}    Convert To String    ${response.content}
+   ${actual_result}    Remove String    ${actual_result}    Free Format,GSTIN Numbers,Client Entity Name,Business Phone Number,Business Email Address,Entity Address Line 1,Entity Address Line 1,Postal Code,City,State,
+   ${actual_result}    Remove String    ${actual_result}    Client,FORMAT 15 Alpha numeric,FORMAT 35 Alpha Numeric,FORMAT 15 Numeric (No Space or Hyphens etc),FORMAT 35 Alpha numeric,FORMAT 35 Alpha numeric,FORMAT 25 Alpha Numeric,FORMAT 17 Alpha Numeric,FORMAT 25 Alpha,FORMAT 25 Alpha,OrgType
+   ${actual_data}    Split String    ${actual_result}    \n    
+   log    ${actual_data}
+   log    ${actual_result}
+   ${count_actual}    Get Length    ${actual_data}  
+   Should Be Equal    ${actual_data[0]}    ${EMPTY}
+   Should Be Equal    ${actual_data[1]}    ${EMPTY}  
+   Should Be Equal    ${actual_data[${count_actual}-1]}    ${EMPTY}
+   ${range}    Run Keyword If   ${count_actual}>24    Set Variable    22    ELSE     Evaluate    ${count_actual}-1           
+   : FOR    ${index}    IN RANGE    2    ${range}
+   \    ${data}    Split String    ${actual_data[${index}]}    ,
+   \    log    ${data}
+   \    Send Get Request For Client GST Info    ${data[1]}    
+   \    ${response}    To Json     ${response.content}   
+   \    Run Keyword If    "${data[0]}"!="${EMPTY}"    Verify Json Value Is Correct    $..client    ${data[0]}  
+   \    Verify Json Value Is Correct    $..gstin    ${data[1]}
+   \    Verify Json Value Is Correct    $..clientEntityName    ${data[2]}
+   \    Verify Json Value Is Correct    $..businessPhoneNumber    ${data[3]}
+   \    Verify Json Value Is Correct    $..businessEmailAddress    ${data[4]}
+   \    Verify Json Value Is Correct    $..entityAddressLine1    ${data[5]}
+   \    Run Keyword If    "${data[6]}"!="${EMPTY}"    Verify Json Value Is Correct    $..entityAddressLine2    ${data[6]}  
+   \    Verify Json Value Is Correct    $..postalCode    ${data[7]}
+   \    Verify Json Value Is Correct    $..city    ${data[8]}
+   \    Verify Json Value Is Correct    $..state    ${data[9]}
+   \   Run Keyword If    "${data[10]}"!="${EMPTY}"    Verify Json Value Is Correct    $..orgType    ${data[10]}      
+   Send Get Request For Client GST Info    ${EMPTY}
+   ${json_data}    To Json    ${response.content}
+   ${count}    Get Length    ${json_data}
+   ${count_actual}    Evaluate    ${count_actual}-3    
+   Should Be Equal    ${count_actual}    ${count}  
+    
 Verify Client GST Info Record Is Not Retrieved
     Verify String Does Not Contain Substring    ${response.text}    "gstin"
     Verify String Does Not Contain Substring    ${response.text}    "clientEntityName"
@@ -179,5 +214,5 @@ Verify The Number Of Records Is Correct
     ${actual_response}    To Json    ${response.content}    
     ${actual_count}    Get Length    ${actual_response}
     Log    ${actual_count}
-    Should Be Equal    ${expected_count}    ${actual_count}    
-                
+    Should Be Equal    ${expected_count}    ${actual_count} 
+      
