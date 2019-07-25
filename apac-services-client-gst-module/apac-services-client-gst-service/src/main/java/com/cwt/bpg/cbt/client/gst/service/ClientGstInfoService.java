@@ -69,8 +69,11 @@ public class ClientGstInfoService {
     @SuppressWarnings("unchecked")
     public void saveFromFile(InputStream inputStream, String extension, boolean validate)
             throws Exception {
-        List<ClientGstInfo> clientGstInfo = clientGstInfoReaderServiceMap.get(extension)
-                .readFile(inputStream, validate);
+        ClientGstInfoReaderService reader = clientGstInfoReaderServiceMap.get(extension);
+        if(reader == null) {
+            throw new IllegalArgumentException("File must be in excel or csv format");
+        }
+        List<ClientGstInfo> clientGstInfo = reader.readFile(inputStream, validate);
         if (!CollectionUtils.isEmpty(clientGstInfo)) {
             backupClientGstInfo();
             clientGstInfoRepository.dropCollection();

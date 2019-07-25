@@ -1,16 +1,19 @@
 package com.cwt.bpg.cbt.client.gst.model;
 
-import com.cwt.bpg.cbt.client.gst.model.constraint.GdsEmailFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.annotations.ApiModelProperty;
-import org.mongodb.morphia.annotations.*;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.*;
 
-import javax.validation.constraints.*;
 import java.beans.Transient;
 import java.io.Serializable;
 
-import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.*;
+import javax.validation.constraints.*;
+
+import org.mongodb.morphia.annotations.*;
+
+import com.cwt.bpg.cbt.client.gst.model.constraint.GdsEmailFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity(value = "clientGstInfo", noClassnameStored = true)
@@ -39,8 +42,7 @@ public class ClientGstInfo implements Serializable {
     private String businessPhoneNumber;
 
     @NotEmpty(message = BUSINESS_EMAIL_EMPTY_ERROR_MSG)
-    @Email(message = BUSINESS_EMAIL_FORMAT_ERROR_MSG)
-    @Pattern(regexp = BUSINESS_EMAIL_REGEX, message = BUSINESS_EMAIL_FORMAT_ERROR_MSG)
+    @Email(message = BUSINESS_EMAIL_FORMAT_ERROR_MSG, regexp = BUSINESS_EMAIL_REGEX)
     @GdsEmailFormat
     private String businessEmailAddress;
 

@@ -1,38 +1,26 @@
 package com.cwt.bpg.cbt.client.gst.controller;
 
-import static com.cwt.bpg.cbt.client.gst.service.ClientGstInfoReaderConfig.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.validation.Valid;
-
-import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
+import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 import com.cwt.bpg.cbt.client.gst.service.ClientGstInfoService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
+import javax.validation.Valid;
 
 @RestController
 @Api(tags = "Client GST Info")
@@ -64,14 +52,14 @@ public class ClientGstInfoController {
     @PutMapping
     @ResponseBody
     @ApiOperation("[Maintenance] Saves client GST information")
-    public ResponseEntity<ClientGstInfo> putClientGstInfo(@Valid @RequestBody ClientGstInfo clientGstInfo) {
+    public ResponseEntity<ClientGstInfo> putClientGstInfo(@Valid @RequestBody  ClientGstInfo clientGstInfo) {
         return new ResponseEntity<>(clientGstInfoService.save(clientGstInfo), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "{gstin}")
     @ResponseBody
     @ApiOperation("[Maintenance] Delete client GST information given a GSTIN")
-    public ResponseEntity<String> removeClientGstInfo( @PathVariable @ApiParam(value = "GST Identification Number") String gstin) {
+    public ResponseEntity<String> removeClientGstInfo(@PathVariable @ApiParam(value = "GST Identification Number") String gstin) {
         return new ResponseEntity<>(clientGstInfoService.remove(gstin), HttpStatus.OK);
     }
 
@@ -82,9 +70,6 @@ public class ClientGstInfoController {
             @RequestParam(value = "validate", defaultValue = "true") boolean validate)
             throws Exception {
     	String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-    	if (isValidFile(extension)) {
-    		throw new IllegalArgumentException("File must be in excel or csv format");
-        }
         clientGstInfoService.saveFromFile(file.getInputStream(), extension, validate);
         Map<String, String> response = new HashMap<>();
         response.put("message", "saved successfully");
@@ -102,10 +87,4 @@ public class ClientGstInfoController {
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + response.getFilename() + "\"");
         return new ResponseEntity<>(response.getData(), headers, HttpStatus.OK);
     }
-
-	private boolean isValidFile(String extension) {
-		return !(extension.equals(EXCEL_WORKBOOK) ||
-    			extension.equals(MACRO_ENABLED_WORKBOOK) ||
-                extension.equals(CSV));
-	}
 }
