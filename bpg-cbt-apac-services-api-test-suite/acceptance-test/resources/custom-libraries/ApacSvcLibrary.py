@@ -82,10 +82,10 @@ class ApacSvcLibrary:
        """return round_value if country == 'SG' else int(round_value)"""
        return int(round_value)
    
-    def post_request_file(self, file_dir, token, environment):
+    def post_request_file(self, file_dir, token, environment, param, paramvalue):
        files = {'file': open(file_dir, 'rb')}
        url = environment
-       querystring = {"includeGstAirlines":"false"}       
+       querystring = {param:paramvalue}      
        headers = {
            'Authorization': "Bearer "+token,
            'Accept': "*/*",
@@ -96,5 +96,5 @@ class ApacSvcLibrary:
            'cache-control': "no-cache"
         }
        response = requests.post(url, files=files, headers=headers, params=querystring)
-       return response.status_code
+       return response
 

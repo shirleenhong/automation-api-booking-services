@@ -181,7 +181,7 @@ Verify That Error Is Encountered When GSTIN Is Not 15 Characters
     Create Test Variables For Put Client GST Info    item=new_record    field_value=gstin:12345
     Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    400
-    Verify Client GST Info Record Is Not Retrieved    
+    Verify Client GST Info Record Is Not Retrieved
 
 Verify That Error Is Encountered When Spaces Are Available In GSTIN,Email,Postal,City And State
     [Tags]    functional
@@ -215,7 +215,7 @@ Verify That Error Is Encountered When Special Characters Are Available In Put Re
     Create Test Variables For Put Client GST Info    item=new_record    field_value=phone:+23456-8912345
     Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    400
-    Verify Client GST Info Record Is Not Retrieved  
+    Verify Client GST Info Record Is Not Retrieved
     Create Test Variables For Put Client GST Info    item=new_record    field_value=city:Mumbai,ABCDEFG
     Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    400
@@ -243,7 +243,7 @@ Verify That Error Is Encountered When Special Characters Are Available In Put Re
     Create Test Variables For Put Client GST Info    item=new_record    field_value=state:TamilABC.Telanga
     Send Put Request For Client GST Info
     Verify Response Status Code Is Correct    400  
-    Verify Client GST Info Record Is Not Retrieved 
+    Verify Client GST Info Record Is Not Retrieved
     
 Verify That Error Is Encountered When Letters Are Available In Phone And Postal Code
     [Tags]    functional
@@ -256,7 +256,7 @@ Verify That Error Is Encountered When Letters Are Available In Phone And Postal 
     Verify Response Status Code Is Correct    400
     Verify Client GST Info Record Is Not Retrieved
     
-Verify That Error Is Encountered When Org Type Is Invalid In Put Request   
+Verify That Error Is Encountered When Org Type Is Invalid In Put Request
     [Tags]    functional
     Create Test Variables For Put Client GST Info    item=new_record    field_value=orgType:D
     Send Put Request For Client GST Info
@@ -331,3 +331,9 @@ Verify That Error Is Encountered When No Token Is Used For Post Request
     [Tags]    functional
     Send Post Request For Client GST Info    filename=client-gst-info-list.txt
     Verify Response Status Code Is Correct    400
+    
+ Verify That Error Is Encountered When Some Data Is Invalid For Post Request
+    [Tags]    functional
+    Send Post Request For Client GST Info    filename=invalid_clientgstinfo.xlsx
+    Verify Response Status Code Is Correct    400   
+    Verify The Error Message Of Response Body

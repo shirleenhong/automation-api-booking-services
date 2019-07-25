@@ -14,7 +14,7 @@ Verify That Client GST Info Can Be Downloaded In CSV Format
     
 Verify That Client GST Info Can Be Saved From Excel File
     [Tags]    not-ready
-    Send Post Request For Client GST Info    filename=add_client_gst__info.xlsx
+    Send Post Request For Client GST Info    filename=valid_clientgstinfo.xlsx
     Verify Response Status Code Is Correct    200
     Evict Client GST Info Cache
     Evict Client GST Info Cache
@@ -22,13 +22,13 @@ Verify That Client GST Info Can Be Saved From Excel File
     Evict Client GST Info Cache
     Evict Client GST Info Cache
     Send Get Request For Client GST Info    gstin=${EMPTY}
-    Verify The Number Of Records Is Correct    expected_record=5
-    Create Test Variables For Client GST Info    item=uploaded_data
+    Verify The Number Of Records Is Correct    expected_record=10
+    Create Test Variables For Client GST Info    item=uploaded_valid_data
 	Verify Client GST Info Are Retrieved Correctly
 
 Verify That All Client GST Info Are Correctly Retrieved After Uploading of File
     [Tags]    not-ready
-    Send Post Request For Client GST Info    filename=GSTLookup_new.xlsx
+    Send Post Request For Client GST Info    filename=GSTLookup_new.xlsx    validation=false
     Verify Response Status Code Is Correct    200
     Evict Client GST Info Cache
     Evict Client GST Info Cache
