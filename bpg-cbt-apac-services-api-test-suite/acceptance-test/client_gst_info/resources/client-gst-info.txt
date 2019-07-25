@@ -106,9 +106,9 @@ Send Put Request For Client GST Info
     Set Test Variable    ${api_flag}    client-gst-info
 
 Send Post Request For Client GST Info
-    [Arguments]    ${filename}    ${token}=${default_token}
-    ${response.status_code}    Post Request File    ${CURDIR}${/}${filename}    ${token}    ${${env}_base_url}/apac-services-rest/api/client-gst-info
-    Set Test Variable    ${response.status_code}
+    [Arguments]    ${filename}    ${token}=${default_token}    ${validation}=true
+    ${response}    Upload File    file=${CURDIR}${/}${filename}    uri=apac-services-rest/api/client-gst-info    token=${token}    param=validate    paramvalue=${validation}    
+    Set Test Variable    ${response}
                        
 Send Delete Request For Client GST Info
     [Arguments]    ${gstin}=${gstin}    ${token}=${default_token}
@@ -207,7 +207,33 @@ Verify OrgType Is Correcty Retrieved
     [Arguments]    ${index}=0     
     Verify Json Value Is Correct    $..gstin    ${gstin_${index}}    key=Value
     Verify Json Value Is Correct    $..orgType    ${orgType_${index}}    key=Value
-        
+
+Verify The Error Message Of Response Body
+    Verify Json Value Is Correct    $..status    BAD_REQUEST
+    ${actual_result}    To Json    ${response.content}
+    Set Test Variable    ${actual_result} 
+    ${row_no}    Get Value From Json    ${actual_result}    $..rowNumber
+    ${count}    Get Length    ${row_no}  
+    ${expected_error}    Split String    ${client_gst_list_expected_error}    ^
+    Set Test Variable    ${expected_error}       
+    : FOR    ${index}    IN RANGE    0    ${count}
+    \    ${error_message}    Get Value From Json    ${actual_result}    $..errors[${index}].errors
+    \    ${error_message}    Convert JSON To String    ${error_message}
+    \    ${error_message_count}    Split String    ${error_message}    }, {
+    \    ${error_count}    Get Length    ${error_message_count}
+    \    Verify The Error Message Per Row    ${error_message}    ${error_count}    ${index}               
+    
+Verify The Error Message Per Row
+    [Arguments]    ${message}    ${count}    ${row}
+    ${error_messages}    Split String    ${expected_error[${row}]}    ;
+    log    ${error_messages}    
+    ${expected_count}    Get Length    ${error_messages}
+    ${expected_count}    Evaluate    ${expected_count}-1
+    Should Be Equal    ${count}    ${expected_count}  
+    Verify Json Value Is Correct    $..errors[${row}].rowNumber   ${error_messages[0]}    
+    : FOR    ${index}    IN RANGE    1    ${count}
+    \    Verify String Contains Substring    ${message}    ${error_messages[${index}]}
+            
 Verify The Number Of Records Is Correct
     [Arguments]    ${expected_record}
     ${expected_count}    Convert To Integer    ${expected_record}    
