@@ -216,114 +216,114 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Commission
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9300|commission,500|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,1000    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9300|commission,500|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,1000    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9333|commission,1150|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9333|commission,1150|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8399|commission,850|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8399|commission,850|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7333|commission,650|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7333|commission,650|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,2|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Commission Percentage
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9444|commission,0|commission_percent_flag,true|commission_percentage,3|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,877    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9444|commission,0|commission_percent_flag,true|commission_percentage,3|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,877    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9774|commission,0|commission_percent_flag,true|commission_percentage,4|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9774|commission,0|commission_percent_flag,true|commission_percentage,4|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10004|commission,0|commission_percent_flag,true|commission_percentage,3.33|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10004|commission,0|commission_percent_flag,true|commission_percentage,3.33|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9104|commission,0|commission_percent_flag,true|commission_percentage,3.63|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9104|commission,0|commission_percent_flag,true|commission_percentage,3.63|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Discount
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9795|commission,0|commission_percent_flag,false|commission_percentage,0|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,1100    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9795|commission,0|commission_percent_flag,false|commission_percentage,0|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,1100    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9542|commission,0|commission_percent_flag,false|commission_percentage,0|discount,650|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9542|commission,0|commission_percent_flag,false|commission_percentage,0|discount,650|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9775|commission,0|commission_percent_flag,false|commission_percentage,0|discount,659|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9775|commission,0|commission_percent_flag,false|commission_percentage,0|discount,659|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8885|commission,0|commission_percent_flag,false|commission_percentage,0|discount,765|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8885|commission,0|commission_percent_flag,false|commission_percentage,0|discount,765|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Discount Percentage
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9866|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,1050    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9866|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,1050    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9546|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9546|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9886|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,6.03|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9886|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,6.03|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9999|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,6.13|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9999|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,6.13|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9777|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,322|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,867    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9777|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,322|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,867    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9799|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,42|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9799|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,42|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8743|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,532|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8743|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,532|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,11127|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,732|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,11127|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,732|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9888|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,392|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,490    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9888|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,392|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,490    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9978|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,622|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9978|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,622|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8788|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,522|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8788|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,522|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8899|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,442|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8899|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,442|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -349,7 +349,7 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Discount
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9100|commission,100|commission_percent_flag,false|commission_percentage,0|discount,555|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,555    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9100|commission,100|commission_percent_flag,false|commission_percentage,0|discount,555|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,555    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -357,68 +357,68 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8105|commission,20|commission_percent_flag,false|commission_percentage,0|discount,625|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8105|commission,20|commission_percent_flag,false|commission_percentage,0|discount,625|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,13215|commission,20|commission_percent_flag,false|commission_percentage,0|discount,1125|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,13215|commission,20|commission_percent_flag,false|commission_percentage,0|discount,1125|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Discount Percentage
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9101|commission,1111|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,900    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9101|commission,1111|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,900    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10211|commission,711|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,3|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10211|commission,711|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,3|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8701|commission,811|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,3.81|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8701|commission,811|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,3.81|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,12111|commission,911|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4.81|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,12111|commission,911|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4.81|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7102|commission,512|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,422|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,657    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7102|commission,512|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,422|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,657    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9112|commission,312|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,212|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9112|commission,312|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,212|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7112|commission,422|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,422|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7112|commission,422|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,422|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8122|commission,322|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,322|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8122|commission,322|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,322|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10333|commission,903|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,432|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,10    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10333|commission,903|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,432|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,10    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,5113|commission,513|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,432|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,5113|commission,513|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,432|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3113|commission,313|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,322|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3113|commission,313|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,322|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,5113|commission,523|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,522|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,5113|commission,523|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,522|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -429,91 +429,91 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7114|commission,514|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7114|commission,514|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8124|commission,814|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8124|commission,814|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7124|commission,711|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7124|commission,711|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Discount
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8105|commission,0|commission_percent_flag,true|commission_percentage,3|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,700    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8105|commission,0|commission_percent_flag,true|commission_percentage,3|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,700    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10105|commission,0|commission_percent_flag,true|commission_percentage,2|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10105|commission,0|commission_percent_flag,true|commission_percentage,2|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9105|commission,0|commission_percent_flag,true|commission_percentage,2.97|discount,955|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9105|commission,0|commission_percent_flag,true|commission_percentage,2.97|discount,955|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Discount Percentage
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,226|commission,0|commission_percent_flag,true|commission_percentage,4|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,226|commission,0|commission_percent_flag,true|commission_percentage,4|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,336|commission,0|commission_percent_flag,true|commission_percentage,5|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,700    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,336|commission,0|commission_percent_flag,true|commission_percentage,5|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,700    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,276|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,276|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,350|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,350|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,297|commission,0|commission_percent_flag,true|commission_percentage,5|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,29|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,297|commission,0|commission_percent_flag,true|commission_percentage,5|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,29|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,387|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,44|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,400    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,387|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,44|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,400    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1095|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,35|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1095|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,35|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,287|commission,0|commission_percent_flag,true|commission_percentage,8|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,287|commission,0|commission_percent_flag,true|commission_percentage,8|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,258|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,25|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,258|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,25|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,208|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,55|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,350    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,208|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,55|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,350    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,308|commission,0|commission_percent_flag,true|commission_percentage,8|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,45|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,308|commission,0|commission_percent_flag,true|commission_percentage,8|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,45|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,398|commission,0|commission_percent_flag,true|commission_percentage,10|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,35|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,398|commission,0|commission_percent_flag,true|commission_percentage,10|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,35|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -539,38 +539,38 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,490|commission,100|commission_percent_flag,false|commission_percentage,0|discount,35|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,490|commission,100|commission_percent_flag,false|commission_percentage,0|discount,35|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,410|commission,200|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,350    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,410|commission,200|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,350    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,310|commission,100|commission_percent_flag,false|commission_percentage,0|discount,45|discount_percent_flag,false|discount_percentage,0|tax_1,41|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,310|commission,100|commission_percent_flag,false|commission_percentage,0|discount,45|discount_percent_flag,false|discount_percentage,0|tax_1,41|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,210|commission,140|commission_percent_flag,false|commission_percentage,0|discount,55|discount_percent_flag,false|discount_percentage,0|tax_1,40|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,210|commission,140|commission_percent_flag,false|commission_percentage,0|discount,55|discount_percent_flag,false|discount_percentage,0|tax_1,40|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,211|commission,101|commission_percent_flag,false|commission_percentage,0|discount,96|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,211|commission,101|commission_percent_flag,false|commission_percentage,0|discount,96|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,291|commission,121|commission_percent_flag,false|commission_percentage,0|discount,86|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,42|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,250    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,291|commission,121|commission_percent_flag,false|commission_percentage,0|discount,86|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,42|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,250    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,382|commission,105|commission_percent_flag,false|commission_percentage,0|discount,76|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,50|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,382|commission,105|commission_percent_flag,false|commission_percentage,0|discount,76|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,50|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,379|commission,131|commission_percent_flag,false|commission_percentage,0|discount,56|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,40|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,379|commission,131|commission_percent_flag,false|commission_percentage,0|discount,56|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,40|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -596,38 +596,38 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,413|commission,0|commission_percent_flag,true|commission_percentage,10|discount,75|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,413|commission,0|commission_percent_flag,true|commission_percentage,10|discount,75|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,313|commission,0|commission_percent_flag,true|commission_percentage,12|discount,40|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,500    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,313|commission,0|commission_percent_flag,true|commission_percentage,12|discount,40|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,500    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,513|commission,0|commission_percent_flag,true|commission_percentage,10|discount,50|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,513|commission,0|commission_percent_flag,true|commission_percentage,10|discount,50|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,493|commission,0|commission_percent_flag,true|commission_percentage,7|discount,58|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,493|commission,0|commission_percent_flag,true|commission_percentage,7|discount,58|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,214|commission,0|commission_percent_flag,true|commission_percentage,11|discount,40|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,214|commission,0|commission_percent_flag,true|commission_percentage,11|discount,40|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,304|commission,0|commission_percent_flag,true|commission_percentage,10|discount,70|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,590    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,304|commission,0|commission_percent_flag,true|commission_percentage,10|discount,70|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,590    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,234|commission,0|commission_percent_flag,true|commission_percentage,9|discount,49|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,234|commission,0|commission_percent_flag,true|commission_percentage,9|discount,49|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,254|commission,0|commission_percent_flag,true|commission_percentage,8|discount,59|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,254|commission,0|commission_percent_flag,true|commission_percentage,8|discount,59|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -653,38 +653,38 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1216|commission,0|commission_percent_flag,true|commission_percentage,10|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1216|commission,0|commission_percent_flag,true|commission_percentage,10|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1726|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,28|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,500    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1726|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,28|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,500    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1266|commission,0|commission_percent_flag,true|commission_percentage,12|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,35|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1266|commission,0|commission_percent_flag,true|commission_percentage,12|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,35|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1627|commission,0|commission_percent_flag,true|commission_percentage,13|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,25|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1627|commission,0|commission_percent_flag,true|commission_percentage,13|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,25|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1117|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,0|tax_2,28|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1117|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,0|tax_2,28|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1117|commission,0|commission_percent_flag,true|commission_percentage,12|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,33|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,500    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1117|commission,0|commission_percent_flag,true|commission_percentage,12|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,33|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,500    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1117|commission,0|commission_percent_flag,true|commission_percentage,13|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,42|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1117|commission,0|commission_percent_flag,true|commission_percentage,13|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,42|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1117|commission,0|commission_percent_flag,true|commission_percentage,14|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1117|commission,0|commission_percent_flag,true|commission_percentage,14|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -710,38 +710,38 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,219|commission,143|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,219|commission,143|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,219|commission,141|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,30|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,400    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,219|commission,141|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,30|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,400    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,319|commission,131|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,40|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,319|commission,131|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,40|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,329|commission,120|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,329|commission,120|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,420|commission,1501|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,11|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,420|commission,1501|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,11|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,320|commission,143|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,10|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,350    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,320|commission,143|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,10|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,350    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,200|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,200|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1220|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1220|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -767,19 +767,19 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax1 And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,212|commission,103|commission_percent_flag,false|commission_percentage,0|discount,59|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,42|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,212|commission,103|commission_percent_flag,false|commission_percentage,0|discount,59|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,42|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1132|commission,123|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,31|tax_2,45|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,678    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1132|commission,123|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,31|tax_2,45|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,678    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,222|commission,113|commission_percent_flag,false|commission_percentage,0|discount,70|discount_percent_flag,false|discount_percentage,0|tax_1,23|tax_2,35|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,222|commission,113|commission_percent_flag,false|commission_percentage,0|discount,70|discount_percent_flag,false|discount_percentage,0|tax_1,23|tax_2,35|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1122|commission,93|commission_percent_flag,false|commission_percentage,0|discount,60|discount_percent_flag,false|discount_percentage,0|tax_1,30|tax_2,40|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1122|commission,93|commission_percent_flag,false|commission_percentage,0|discount,60|discount_percent_flag,false|discount_percentage,0|tax_1,30|tax_2,40|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -824,19 +824,19 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount, Tax1 And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1125|commission,0|commission_percent_flag,true|commission_percentage,12|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,29|tax_2,31|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1125|commission,0|commission_percent_flag,true|commission_percentage,12|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,29|tax_2,31|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,365|commission,0|commission_percent_flag,true|commission_percentage,14|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,27|tax_2,43|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,690    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,365|commission,0|commission_percent_flag,true|commission_percentage,14|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,27|tax_2,43|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,690    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,285|commission,0|commission_percent_flag,true|commission_percentage,13|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,32|tax_2,33|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,285|commission,0|commission_percent_flag,true|commission_percentage,13|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,32|tax_2,33|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1195|commission,0|commission_percent_flag,true|commission_percentage,15|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,13|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1195|commission,0|commission_percent_flag,true|commission_percentage,15|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,13|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -881,19 +881,19 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage, Tax1 And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,228|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,28|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,228|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,28|tax_2,34|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,228|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,32|tax_2,55|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,567    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,228|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,32|tax_2,55|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,567    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,228|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,16|tax_2,44|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,228|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,16|tax_2,44|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,228|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,35|tax_2,20|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,228|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,35|tax_2,20|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -938,19 +938,19 @@ Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Sele
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage, Tax1 And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1100|commission,110|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1100|commission,110|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MG|client_account_number,0000001042|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,200|commission,120|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,430    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,200|commission,120|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001053|cwt_absorb,false|product_type,BT|transaction_fee,430    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,300|commission,130|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,300|commission,130|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0000001036|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,400|commission,140|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,400|commission,140|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000001092|cwt_absorb,false|product_type,BT    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -999,7 +999,7 @@ Verify That Air Fees Merchant Fee Is Calculated Correctly With FOPType CX, UATP 
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,155|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,1.75|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001050|cwt_absorb,false|product_type,BT|uatp_flag,true|transaction_fee,305    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,155|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000001050|cwt_absorb,false|product_type,BT|uatp_flag,true|transaction_fee,305    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -1010,7 +1010,7 @@ Verify That Air Fees Merchant Fee Is Calculated Correctly With FOPType CX, And U
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.5|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000006710|cwt_absorb,false|product_type,BT|uatp_flag,true    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000006710|cwt_absorb,false|product_type,BT|uatp_flag,true    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -1032,7 +1032,7 @@ Verify That Air Fees Merchant Fee Is Calculated Correctly With FOPType CX
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2815|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,515|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.5|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000006710|cwt_absorb,false|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
+    Generate Test Variables For Air Fees-HK    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2815|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,515|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0000006710|cwt_absorb,false|product_type,BT|uatp_flag,false|tfincmf_flag,false    country=hk
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
