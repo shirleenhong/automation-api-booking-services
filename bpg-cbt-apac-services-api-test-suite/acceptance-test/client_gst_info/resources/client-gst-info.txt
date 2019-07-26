@@ -225,13 +225,13 @@ Verify The Error Message Of Response Body
     
 Verify The Error Message Per Row
     [Arguments]    ${message}    ${count}    ${row}
-    ${error_messages}    Split String    ${expected_error[${row}]}    ;
+    ${expected_count}    Get Count    ${expected_error[${row}]}     field   
+    ${error_messages}    Split String    ${expected_error[${row}]}    ; 
+    ${count_message}    Get Length    ${error_messages}  
     log    ${error_messages}    
-    ${expected_count}    Get Length    ${error_messages}
-    ${expected_count}    Evaluate    ${expected_count}-1
     Should Be Equal    ${count}    ${expected_count}  
     Verify Json Value Is Correct    $..errors[${row}].rowNumber   ${error_messages[0]}    
-    : FOR    ${index}    IN RANGE    1    ${count}
+    : FOR    ${index}    IN RANGE    1    ${count_message}
     \    Verify String Contains Substring    ${message}    ${error_messages[${index}]}
             
 Verify The Number Of Records Is Correct
