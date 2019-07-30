@@ -527,14 +527,15 @@ public class MigrationService {
 			List<String> airlineBkClassList = formBookingClasses(airTransaction.getAirlineCode(),
 					PassthroughType.AIRLINE.getCode());
 
-			airTransaction.setBookingClasses(cwtBkClassList);
-			airTransaction.setPassthroughType(PassthroughType.CWT);
-
+			if ((cwtBkClassList != null && !cwtBkClassList.isEmpty()) || (airlineBkClassList != null && !airlineBkClassList.isEmpty()))
+			{
+				airTransaction.setBookingClasses(cwtBkClassList);
+				airTransaction.setPassthroughType(PassthroughType.CWT);
+				docs.add(dBObjectMapper.mapAsDbDocument(airTransaction));
+			}
 			airTransaction2.setBookingClasses(airlineBkClassList);
 			airTransaction2.setPassthroughType(PassthroughType.AIRLINE);
-
 			docs.add(dBObjectMapper.mapAsDbDocument(airTransaction2));
-			docs.add(dBObjectMapper.mapAsDbDocument(airTransaction));
 		}
 
 		mongoDbConnection.getCollection(AIR_TRANSACTION_COLLECTION).insertMany(docs);
