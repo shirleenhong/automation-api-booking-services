@@ -71,6 +71,11 @@ public class ResponseWrapper extends HttpServletResponseWrapper
             {
                 tee.write(b);
             }
+
+            @Override
+            public void close() throws IOException {
+                tee.close();
+            }
         };
     }
 

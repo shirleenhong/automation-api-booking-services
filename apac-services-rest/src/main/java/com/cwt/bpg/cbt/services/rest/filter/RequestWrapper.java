@@ -55,6 +55,11 @@ public class RequestWrapper extends HttpServletRequestWrapper
             {
                 return tee.read();
             }
+
+            @Override
+            public void close() throws IOException {
+                tee.close();
+            }
         };
     }
 
