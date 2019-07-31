@@ -17,12 +17,11 @@ import com.cwt.bpg.cbt.tpromigration.csv.converter.Converter;
 
 public class CSVReader
 {
-
-    private static final Logger log = LoggerFactory.getLogger(CSVReader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CSVReader.class);
 
     public <T> List<T> parse(final String path, final Converter<Map<String, String>, T> converter) throws IOException
     {
-        final List<T> results = new ArrayList<T>();
+        final List<T> results = new ArrayList<>();
         final Resource resource = new ClassPathResource(path);
         try (final LineNumberReader io = new LineNumberReader(new InputStreamReader(resource.getInputStream())))
         {
@@ -42,12 +41,11 @@ public class CSVReader
                     {
                         map.put(header[i], data[i]);
                     }
-                    results.addAll(converter.convert(map));
+                    converter.convert(map, results);
                 }
             }
         }
-        log.info("results size {}", results.size());
+        LOGGER.info("results size {}", results.size());
         return results;
     }
-
 }

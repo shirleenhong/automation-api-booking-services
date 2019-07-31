@@ -24,9 +24,9 @@ public class AirTransactionConverter implements Converter<Map<String, String>, A
         airTransaction.setCcVendorName(StringUtils.trim(source.get("ccVendorName")));
         airTransaction.setCcType(StringUtils.trim(source.get("ccType")));
         airTransaction.setPassthroughType(PassthroughType.fromString(StringUtils.trim(source.get("passthroughType"))));
-        airTransaction.setCountryCode(StringUtils.trim(source.get("countryCode")));
         airTransaction.setBookingClasses(getBookingClasses(StringUtils.trim(source.get("bookingClasses"))));
-
+        airTransaction.setCountryCode(StringUtils.trim(source.get("countryCode")));
+        
         results.add(airTransaction);
     }
 

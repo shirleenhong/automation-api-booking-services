@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.tpromigration.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +29,6 @@ import org.springframework.util.ObjectUtils;
 
 import com.cwt.bpg.cbt.air.contract.model.AirContract;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
-import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
 import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
 import com.cwt.bpg.cbt.exchange.order.model.Airport;
 import com.cwt.bpg.cbt.exchange.order.model.Bank;
@@ -46,11 +44,11 @@ import com.cwt.bpg.cbt.exchange.order.model.TransactionFee;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 import com.cwt.bpg.cbt.tpromigration.csv.CSVReader;
 import com.cwt.bpg.cbt.tpromigration.csv.converter.AirMiscInfoConverter;
+import com.cwt.bpg.cbt.tpromigration.csv.converter.AirTransactionConverter;
 import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AgentDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirContractDAOImpl;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirTransactionDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirlineRuleDAOImpl;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirportDAO;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientDAOImpl;
@@ -116,9 +114,6 @@ public class MigrationService
     private RemarkDAO remarkDAO;
 
     @Autowired
-    private AirTransactionDAOImpl airTransactionDAOImpl;
-
-    @Autowired
     private AgentDAOImpl agentDAOImpl;
 
     @Autowired
@@ -155,7 +150,6 @@ public class MigrationService
     @SuppressWarnings("unchecked")
     public void migrateProductList() throws JsonProcessingException
     {
-
         LOGGER.info("start migration...");
 
         List<ContactInfo> contactInfoList = vendorDAOFactory.getVendorDAO(countryCode).listVendorContactInfo();
@@ -288,13 +282,12 @@ public class MigrationService
         }
 
         LOGGER.info("End of merchant fee migration...");
-
     }
 
     public void migrateAirlineRules() throws JsonProcessingException
     {
-
         LOGGER.info("Started airline rule migration...");
+        
         List<AirlineRule> rules = airlineRuleDAO.list();
         List<Document> docs = new ArrayList<>();
         for (AirlineRule rule : rules)
@@ -303,14 +296,11 @@ public class MigrationService
         }
 
         mongoDbConnection.getCollection("airlineRules").insertMany(docs);
-
         LOGGER.info("End of airline rule migration...");
-
     }
 
     public void migrateClients() throws JsonProcessingException
     {
-
         LOGGER.info("Started clients migration...");
 
         Map<Integer, List<ProductMerchantFee>> productsMap = getProductMap(clientDAO.getProducts());
@@ -348,9 +338,7 @@ public class MigrationService
         }
 
         mongoDbConnection.getCollection(CLIENT_COLLECTION).insertMany(docs);
-
         LOGGER.info("End of clients migration...");
-
     }
 
     private Map<Integer, List<TransactionFee>> getTransactionFeesMap(List<TransactionFee> transactionFees)
@@ -566,13 +554,11 @@ public class MigrationService
         }
 
         mongoDbConnection.getCollection(AIR_MISC_INFO_COLLECTION).insertMany(docs);
-
         LOGGER.info("End of air misc info migration...");
     }
 
     public void migrateAirMiscInfoMerged(final String wave) throws IOException
     {
-
         LOGGER.info("Started air misc info migration with wave {}", wave);
         final List<AirMiscInfo> airMiscInfoList = clientDAO.getAirMiscInfo();
         final List<Document> docs = new ArrayList<>();
@@ -603,45 +589,28 @@ public class MigrationService
         LOGGER.info("End of air misc info migration...");
     }
 
-    public void migratePassthroughs() throws JsonProcessingException
+    public void migratePassthroughs(final String wave) throws IOException
     {
-        List<AirTransaction> airTransactionsFPNP = airTransactionDAOImpl.getList(false);
-        List<AirTransaction> airTransactionsSP = airTransactionDAOImpl.getList(true);
-
-        List<Document> docs = new ArrayList<>();
-
-        for (AirTransaction airTransaction : airTransactionsFPNP)
-        {
-            docs.add(dBObjectMapper.mapAsDbDocument(airTransaction));
-        }
-
-        for (AirTransaction airTransaction : airTransactionsSP)
-        {
-
-            AirTransaction airTransaction2 = new AirTransaction(airTransaction);
-            List<String> cwtBkClassList = formBookingClasses(airTransaction.getAirlineCode(),
-                    PassthroughType.CWT.getCode());
-            List<String> airlineBkClassList = formBookingClasses(airTransaction.getAirlineCode(),
-                    PassthroughType.AIRLINE.getCode());
-
-            airTransaction.setBookingClasses(cwtBkClassList);
-            airTransaction.setPassthroughType(PassthroughType.CWT);
-
-            airTransaction2.setBookingClasses(airlineBkClassList);
-            airTransaction2.setPassthroughType(PassthroughType.AIRLINE);
-
-            docs.add(dBObjectMapper.mapAsDbDocument(airTransaction2));
-            docs.add(dBObjectMapper.mapAsDbDocument(airTransaction));
-        }
+        LOGGER.info("Started air transactions migration with wave {}", wave);
+        final List<Document> docs = new ArrayList<>();
+        final List<AirTransaction> airTransCSVList = new CSVReader().parse("data/" + wave + "/airTransaction.csv", new AirTransactionConverter());
+        airTransCSVList.forEach(e -> {
+            try
+            {
+                docs.add(dBObjectMapper.mapAsDbDocument(e));
+            }
+            catch (IOException ex)
+            {
+                LOGGER.error(ex.getMessage(), e);
+            }
+        });
 
         mongoDbConnection.getCollection(AIR_TRANSACTION_COLLECTION).insertMany(docs);
-
         LOGGER.info("Finished migration of airTransactions");
     }
 
     public void migrateAgentContacts() throws JsonProcessingException
     {
-
         LOGGER.info("Started agent migration...");
         final List<TblAgent> agents = agentDAOImpl.getAgentList();
         final List<TblAgentConfig> agentConfigs = agentDAOImpl.getAgentConfigList();
@@ -689,24 +658,6 @@ public class MigrationService
         }
 
         mongoDbConnection.getCollection(AGENT_COLLECTION).insertMany(docs);
-    }
-
-    private Map<String, List<String>> mapBookingClasses()
-    {
-        Map<String, List<String>> parameters = new HashMap<>();
-        parameters.put("TGCWT", Arrays.asList("T", "K", "S", "V", "W", "L"));
-        parameters.put("TGAirline", Arrays.asList("F", "A", "P", "C", "D", "J", "Z", "Y", "B", "M", "H", "Q"));
-        parameters.put("MHCWT", Arrays.asList("O", "Q"));
-        parameters.put("MHAirline", Arrays.asList("F", "A", "P", "J", "C", "D", "Z", "I", "U", "Y", "B", "H", "K", "M",
-                "L", "V", "S", "N", "E", "X", "G"));
-
-        return parameters;
-    }
-
-    private List<String> formBookingClasses(String airlineCode, String passthroughType)
-    {
-        return (List<String>) mapBookingClasses().get(airlineCode + passthroughType);
-
     }
 
     public String getCountryCode()
