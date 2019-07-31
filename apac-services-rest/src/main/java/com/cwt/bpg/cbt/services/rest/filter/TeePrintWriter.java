@@ -40,4 +40,10 @@ public class TeePrintWriter extends PrintWriter {
 		super.flush();
 		branch.flush();
 	}
+
+	@Override
+	public void close() {
+		super.close();
+		branch.close();
+	}
 }
