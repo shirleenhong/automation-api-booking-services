@@ -76,7 +76,7 @@ public class MigrationService
 
     private static final String AIRPORT_COLLECTION = "airports";
     private static final String CLIENT_COLLECTION = "clients";
-    private static final String AIR_TRANSACTION_COLLECTION = "airTransactions";
+    private static final String AIR_TRANSACTION_COLLECTION = "airTransactionsTest";
     private static final String AIR_CONTRACTS_COLLECTION = "airContracts";
     private static final String AIR_MISC_INFO_COLLECTION = "airMiscInfo";
     private static final String PRODUCTS_COLLECTION = "productList";
@@ -593,7 +593,7 @@ public class MigrationService
     {
         LOGGER.info("Started air transactions migration with wave {}", wave);
         final List<Document> docs = new ArrayList<>();
-        final List<AirTransaction> airTransCSVList = new CSVReader().parse("data/" + wave + "/airTransaction.csv", new AirTransactionConverter());
+        final List<AirTransaction> airTransCSVList = new CSVReader().parse("data/" + wave + "/airTransactions.csv", new AirTransactionConverter());
         airTransCSVList.forEach(e -> {
             try
             {

@@ -126,7 +126,10 @@ public class MigrationCli implements Callable<Void>
             if (migratePassthroughs)
             {
                 LOGGER.info("Migrating passthru's...");
-                service.migratePassthroughs();
+                if (StringUtils.isNotBlank(wave))
+                {
+                    service.migratePassthroughs(wave);
+                }
             }
         }
         if (countryCode.equalsIgnoreCase("HK") || countryCode.equalsIgnoreCase("SG"))
