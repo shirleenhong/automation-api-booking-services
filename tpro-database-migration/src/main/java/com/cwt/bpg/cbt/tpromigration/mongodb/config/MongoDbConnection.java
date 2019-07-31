@@ -81,8 +81,8 @@ public class MongoDbConnection
             credentials.add(credential);
             MongoClientOptions.Builder options = new MongoClientOptions.Builder().sslEnabled(sslEnabled)
                     .sslInvalidHostNameAllowed(invalidHostNameAllowed)
-                    .socketFactory(MongoSSLCertificateUtility.mongoDbSocketFactory())
-                    ;
+                    .socketFactory(MongoSSLCertificateUtility.mongoDbSocketFactory());
+            
             List<ServerAddress> hosts = new ArrayList<>();
 
             String[] adresses = this.dbAddresses.split(",");
@@ -92,8 +92,7 @@ public class MongoDbConnection
                 hosts.add(new ServerAddress(address));
             }
 
-//            mongoClient = new MongoClient(hosts, options.build());
-            mongoClient = new MongoClient(hosts, credentials, options.build());
+            mongoClient = new MongoClient(hosts, credential, options.build());
             this.database = mongoClient.getDatabase(mongoDBName);
             LOGGER.info("Mongodb connection initialized");
         }
