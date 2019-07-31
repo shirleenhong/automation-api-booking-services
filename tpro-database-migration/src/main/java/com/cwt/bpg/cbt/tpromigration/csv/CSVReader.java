@@ -13,14 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-import com.cwt.bpg.cbt.tpromigration.csv.converter.ListConverter;
+import com.cwt.bpg.cbt.tpromigration.csv.converter.Converter;
 
 public class CSVReader
 {
 
     private static final Logger log = LoggerFactory.getLogger(CSVReader.class);
 
-    public <T> List<T> parse(final String path, final ListConverter<Map<String, String>, T> converter) throws IOException
+    public <T> List<T> parse(final String path, final Converter<Map<String, String>, T> converter) throws IOException
     {
         final List<T> results = new ArrayList<T>();
         final Resource resource = new ClassPathResource(path);

@@ -2,7 +2,7 @@ package com.cwt.bpg.cbt.tpromigration.csv.converter;
 
 import java.util.List;
 
-public interface ListConverter<S, T>
+public interface Converter<S, T>
 {
-    List<T> convert(S source);
+    void convert(S source, List<T> results);
 }

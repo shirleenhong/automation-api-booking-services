@@ -1,6 +1,5 @@
 package com.cwt.bpg.cbt.tpromigration.csv.converter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,13 +7,12 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 
-public class AirMiscInfoConverter implements ListConverter<Map<String, String>, AirMiscInfo>
+public class AirMiscInfoConverter implements Converter<Map<String, String>, AirMiscInfo>
 {
 
     @Override
-    public List<AirMiscInfo> convert(final Map<String, String> source)
+    public void convert(final Map<String, String> source, List<AirMiscInfo> results)
     {
-        final List<AirMiscInfo> results = new ArrayList<>();
         final String cdrOutputValue = StringUtils.trim(source.get("CDROutput"));
         if (StringUtils.isNotBlank(cdrOutputValue))
         {
@@ -38,7 +36,5 @@ public class AirMiscInfoConverter implements ListConverter<Map<String, String>, 
                 results.add(airMiscInfo);
             }
         }
-        return results;
     }
-
 }
