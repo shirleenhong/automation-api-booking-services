@@ -21,7 +21,7 @@ public class MigrationCli implements Callable<Void>
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MigrationCli.class);
 
-    @Option(names = "-environment", required = true, description = "dev, test, preprod")
+    @Option(names = "-environment", required = true, description = "dev, int, preprod")
     private String environment;
 
     @Option(names = "-country", required = true, description = "availables is HK, SG, IN")
