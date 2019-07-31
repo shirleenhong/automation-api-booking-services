@@ -79,7 +79,6 @@ public class AirTransactionRepositoryTest {
         AirTransactionInput input = new AirTransactionInput();
         input.setAirlineCode("TG");
         input.setCcVendorCode("V");
-        input.setCcType("UATP");
         input.setClientAccountNumber("12345");
         input.setBookingClasses(bookingClasses);
 		return input;

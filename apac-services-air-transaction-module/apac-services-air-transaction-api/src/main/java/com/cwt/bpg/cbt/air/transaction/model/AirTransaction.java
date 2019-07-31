@@ -34,8 +34,6 @@ public class AirTransaction implements Serializable
 
     private String ccVendorName;
 
-    private String ccType;
-
     private PassthroughType passthroughType;
 
     private List<String> bookingClasses;
@@ -57,7 +55,6 @@ public class AirTransaction implements Serializable
         this.id = airTransaction.id;
         this.airlineDescription = airTransaction.airlineDescription;
         this.ccVendorName = airTransaction.ccVendorName;
-        this.ccType = airTransaction.ccType;
         this.passthroughType = airTransaction.passthroughType;
         this.bookingClasses = airTransaction.bookingClasses;
         this.airlineCode = airTransaction.airlineCode;
@@ -134,16 +131,6 @@ public class AirTransaction implements Serializable
     public void setCcVendorName(String ccVendorName)
     {
         this.ccVendorName = ccVendorName;
-    }
-
-    public String getCcType()
-    {
-        return ccType;
-    }
-
-    public void setCcType(String ccType)
-    {
-        this.ccType = ccType;
     }
 
     public PassthroughType getPassthroughType()

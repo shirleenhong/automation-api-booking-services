@@ -18,7 +18,6 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 	private static final String COUNTRY_CODE = "countryCode";
 	private static final String AIRLINE_CODE = "airlineCode";
 	private static final String CC_VENDOR_CODE = "ccVendorCode";
-	private static final String CC_TYPE = "ccType";
 	private static final String BOOKING_CLASSES = "bookingClasses";
 	private static final String CLIENT_ACCT_NUM = "clientAccountNumber";
 	
@@ -49,10 +48,6 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 			query.field(CLIENT_ACCT_NUM).equal(StringUtils.stripStart(params.getClientAccountNumber(),"0"));
 		}else {
 			query.field(CLIENT_ACCT_NUM).doesNotExist();
-		}
-		
-		if(StringUtils.isNotBlank(params.getCcType())) {
-			query.field(CC_TYPE).equal(params.getCcType());
 		}
 		
 		return query.asList();	

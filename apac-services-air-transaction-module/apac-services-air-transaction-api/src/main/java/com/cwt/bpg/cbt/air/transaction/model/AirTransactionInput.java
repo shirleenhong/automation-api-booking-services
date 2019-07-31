@@ -15,8 +15,6 @@ public class AirTransactionInput implements Serializable {
 
 	private String ccVendorCode;
 	
-	private String ccType;
-	
 	private String clientAccountNumber;
 
 	
@@ -50,14 +48,6 @@ public class AirTransactionInput implements Serializable {
 
 	public void setClientAccountNumber(String clientAccountNumber) {
 		this.clientAccountNumber = clientAccountNumber;
-	}
-
-	public String getCcType() {
-		return ccType;
-	}
-
-	public void setCcType(String ccType) {
-		this.ccType = ccType;
 	}
 
 	public String getCountryCode() {

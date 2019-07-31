@@ -66,7 +66,6 @@ public class AirTransactionDAOImpl {
 				airTransaction.setAirlineDescription(rs.getString("AirlineDescription"));
 				airTransaction.setCcVendorCode(rs.getString("CCVendorCode"));
 				airTransaction.setCcVendorName(rs.getString("CCVendorName"));
-				airTransaction.setCcType(rs.getString("CCType"));
 				airTransaction.setPassthroughType(PassthroughType.fromString(rs.getString("PassthroughType")));
 				airTransaction.setClientAccountNumber(StringUtils.stripStart(rs.getString("ClientNumber"),"0"));
 				airTransactions.add(airTransaction);
