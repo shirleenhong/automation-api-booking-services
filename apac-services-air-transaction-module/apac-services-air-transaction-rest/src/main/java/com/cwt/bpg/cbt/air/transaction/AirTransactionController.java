@@ -43,7 +43,7 @@ public class AirTransactionController {
 			@RequestParam("airlineCode") @ApiParam(value="2-character airline code", required = true) String airlineCode,
 			@RequestParam("bookingClasses") List<String> bookingClasses,
 			@RequestParam("ccVendorCode") @ApiParam(value="e.g. MC, VI", required = true) String ccVendorCode,
-			@RequestParam("ccType") @ApiParam(value="UNUSED e.g. UATP, NRCC")  String ccType,
+			@RequestParam(value = "ccType", required = false) @ApiParam(value="UNUSED e.g. UATP, NRCC")  String ccType,
 			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber)
 			throws AirTransactionNoContentException {
 
