@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.tpromigration.csv.converter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +11,8 @@ import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
 
 public class AirTransactionConverter implements Converter<Map<String, String>, AirTransaction>
 {
-
+    private static final String BOOKING_CLASS_INVALID_VALUE = "ALL";
+    
     @Override
     public void convert(Map<String, String> source, List<AirTransaction> results)
     {
@@ -22,7 +22,6 @@ public class AirTransactionConverter implements Converter<Map<String, String>, A
         airTransaction.setAirlineDescription(StringUtils.trim(source.get("airlineDescription")));
         airTransaction.setCcVendorCode(StringUtils.trim(source.get("ccVendorCode")));
         airTransaction.setCcVendorName(StringUtils.trim(source.get("ccVendorName")));
-        airTransaction.setCcType(StringUtils.trim(source.get("ccType")));
         airTransaction.setPassthroughType(PassthroughType.fromString(StringUtils.trim(source.get("passthroughType"))));
         airTransaction.setBookingClasses(getBookingClasses(StringUtils.trim(source.get("bookingClasses"))));
         airTransaction.setCountryCode(StringUtils.trim(source.get("countryCode")));
@@ -32,7 +31,7 @@ public class AirTransactionConverter implements Converter<Map<String, String>, A
 
     private List<String> getBookingClasses(String bookingClass)
     {
-        if (StringUtils.isNotEmpty(bookingClass))
+        if (StringUtils.isNotEmpty(bookingClass) && !BOOKING_CLASS_INVALID_VALUE.equalsIgnoreCase(bookingClass))
         {
 
             final String[] bookingClassValue = bookingClass.split(",");
@@ -44,9 +43,7 @@ public class AirTransactionConverter implements Converter<Map<String, String>, A
             }
 
             return bookingClasses;
-
         }
-
-        return Collections.emptyList();
+        return null;
     }
 }

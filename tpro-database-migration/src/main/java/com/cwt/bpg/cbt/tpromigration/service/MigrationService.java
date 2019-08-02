@@ -76,7 +76,7 @@ public class MigrationService
 
     private static final String AIRPORT_COLLECTION = "airports";
     private static final String CLIENT_COLLECTION = "clients";
-    private static final String AIR_TRANSACTION_COLLECTION = "airTransactionsTest";
+    private static final String AIR_TRANSACTION_COLLECTION = "airTransactions";
     private static final String AIR_CONTRACTS_COLLECTION = "airContracts";
     private static final String AIR_MISC_INFO_COLLECTION = "airMiscInfo";
     private static final String PRODUCTS_COLLECTION = "productList";
