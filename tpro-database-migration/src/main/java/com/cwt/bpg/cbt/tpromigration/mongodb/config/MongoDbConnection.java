@@ -55,7 +55,7 @@ public class MongoDbConnection
     private MongoClient mongoClient;
 
     private MongoDatabase database;
-    
+
     @Autowired
     private Encryptor encryptor;
 
@@ -77,14 +77,11 @@ public class MongoDbConnection
             String mongoDBName = this.dbName;
             MongoCredential credential = MongoCredential.createCredential(encryptor.decrypt(this.dbUser), mongoDBName, pwd);
 
-            List<MongoCredential> credentials = new ArrayList<>();
-            credentials.add(credential);
             MongoClientOptions.Builder options = new MongoClientOptions.Builder().sslEnabled(sslEnabled)
                     .sslInvalidHostNameAllowed(invalidHostNameAllowed)
                     .socketFactory(MongoSSLCertificateUtility.mongoDbSocketFactory());
-            
-            List<ServerAddress> hosts = new ArrayList<>();
 
+            List<ServerAddress> hosts = new ArrayList<>();
             String[] adresses = this.dbAddresses.split(",");
 
             for (String address : adresses)
@@ -147,7 +144,8 @@ public class MongoDbConnection
         return new StringBuilder(collectionName).append("-").append(field).toString();
     }
 
-	public MongoCollection getCollection(String collection) {
-		return this.getDatabase().getCollection(collection);
-	}
+    public MongoCollection<Document> getCollection(String collection)
+    {
+        return this.getDatabase().getCollection(collection);
+    }
 }
