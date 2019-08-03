@@ -61,13 +61,6 @@ Verify That Error Is Encountered When Empty CC Vendor Code Is Used For Get Reque
     Verify Response Status Code Is Correct    400
     Verify Air Transaction Passthrough Type Is Not Retrieved
 
-Verify That Error Is Encountered When Empty CC Type Is Used For Get Request
-    [Tags]    functional
-    Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline,in;Q
-    Send Air Transaction Get Request    cc_type=null
-    Verify Response Status Code Is Correct    400
-    Verify Air Transaction Passthrough Type Is Not Retrieved
-
 Verify That Error Is Encountered When Invalid Token Is Used For Maintenance Maintenance Get Request
     [Tags]    functional
     Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline,in;Q
