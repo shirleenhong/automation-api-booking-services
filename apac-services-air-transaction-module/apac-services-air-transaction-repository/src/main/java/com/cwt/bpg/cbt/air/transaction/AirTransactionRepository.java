@@ -19,7 +19,6 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 	private static final String AIRLINE_CODE = "airlineCode";
 	private static final String CC_VENDOR_CODE = "ccVendorCode";
 	private static final String BOOKING_CLASSES = "bookingClasses";
-	private static final String CLIENT_ACCT_NUM = "clientAccountNumber";
 	
 	public AirTransactionRepository() {
 		super(AirTransaction.class, ID);
@@ -42,12 +41,6 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 		if (params.getBookingClasses()!=null && !params.getBookingClasses().isEmpty()) {
 			query.or(query.criteria(BOOKING_CLASSES).doesNotExist(),
                     query.criteria(BOOKING_CLASSES).hasAnyOf(params.getBookingClasses()));
-		}
-		
-		if(StringUtils.isNotBlank(params.getClientAccountNumber())) {
-			query.field(CLIENT_ACCT_NUM).equal(StringUtils.stripStart(params.getClientAccountNumber(),"0"));
-		}else {
-			query.field(CLIENT_ACCT_NUM).doesNotExist();
 		}
 		
 		return query.asList();	

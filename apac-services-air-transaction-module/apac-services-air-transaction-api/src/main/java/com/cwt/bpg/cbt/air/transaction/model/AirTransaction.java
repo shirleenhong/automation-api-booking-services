@@ -44,8 +44,6 @@ public class AirTransaction implements Serializable
 
     private String countryCode;
 
-    private String clientAccountNumber;
-
     public AirTransaction()
     {
     }
@@ -60,7 +58,6 @@ public class AirTransaction implements Serializable
         this.airlineCode = airTransaction.airlineCode;
         this.ccVendorCode = airTransaction.ccVendorCode;
         this.countryCode = airTransaction.countryCode;
-        this.clientAccountNumber = airTransaction.clientAccountNumber;
     }
 
     public ObjectId getId()
@@ -101,16 +98,6 @@ public class AirTransaction implements Serializable
     public void setCountryCode(String countryCode)
     {
         this.countryCode = countryCode;
-    }
-
-    public String getClientAccountNumber()
-    {
-        return clientAccountNumber;
-    }
-
-    public void setClientAccountNumber(String clientAccountNumber)
-    {
-        this.clientAccountNumber = clientAccountNumber;
     }
 
     public String getAirlineDescription()

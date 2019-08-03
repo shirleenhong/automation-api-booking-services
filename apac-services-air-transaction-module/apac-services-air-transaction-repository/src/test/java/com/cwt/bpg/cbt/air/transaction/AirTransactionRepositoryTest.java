@@ -44,7 +44,7 @@ public class AirTransactionRepositoryTest {
         when(dataStore.createQuery(AirTransaction.class)).thenReturn(query);
         when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
         when(fieldEnd.equal(anyString())).thenReturn(query);
-        when(query.filter(Mockito.anyString(), Mockito.anyObject())).thenReturn(query);
+        when(query.filter(Mockito.anyString(), Mockito.any())).thenReturn(query);
 
         repository.getAirTransactions(new AirTransactionInput());
 
@@ -60,7 +60,7 @@ public class AirTransactionRepositoryTest {
         when(dataStore.createQuery(AirTransaction.class)).thenReturn(query);
         when(query.field(Mockito.anyString())).thenReturn(fieldEnd);
         when(fieldEnd.equal(anyString())).thenReturn(query);
-        when(query.filter(Mockito.anyString(), Mockito.anyObject())).thenReturn(query);
+        when(query.filter(Mockito.anyString(), Mockito.any())).thenReturn(query);
 
         when(query.criteria(anyString())).thenReturn(fieldEnd);
         
@@ -79,7 +79,6 @@ public class AirTransactionRepositoryTest {
         AirTransactionInput input = new AirTransactionInput();
         input.setAirlineCode("TG");
         input.setCcVendorCode("V");
-        input.setClientAccountNumber("12345");
         input.setBookingClasses(bookingClasses);
 		return input;
 	}
