@@ -1,0 +1,130 @@
+*** Setting ***
+Resource          ../resources/api-imports.txt
+Resource          ../resources/api-utilities.txt
+Resource          ../resources/api-variables.txt
+
+*** Test Cases ***
+Test
+    Configure Main Products And Fees
+    Parse Air File    file_name=IN00650.AIR
+    
+                
+
+***Keywords***
+Configure Fees
+    [Arguments]    ${service_fees}=PC87,VAT;PC35,AIR_TRANSACTION_FEE;PC43,TRAIN_TRANSACTION_FEE;PC39,OTH_HANDLING_FEE;PC40,MERCHANT_FEE;PC50,REBATE
+    ${fees_list}    Split String    ${service_fees}    ;
+    :FOR    ${fees}    IN    @{fees_list}
+    \    ${fees}    Split String    ${fees}    ,
+    \    ${fee_code}    Get Substring    ${fees[0]}    2
+    \    Set Test Variable    ${service_name_${fee_code}}    ${fees[1].lower()}
+
+Configure Main Products
+    [Arguments]    ${main_products}=PC0,AIR_INTERNATIONAL_BSP;PC00,AIR_INTERNATIONAL_BSP;PC02,AIR_DOMESTIC_NON_BSP;PC4,AIR_DOMESTIC_BSP;PC04,AIR_DOMESTIC_BSP;PC86,AIR_INTERNATIONAL_NON_BSP;PC06,VISA;PC08,DESPATCH;PC25,VISA_WITH_FEE;PC18,ETS;PC16,HOTEL_DOMESTIC_PREPAID;PC24,HOTEL_INTERNATIONAL_PREPAID;PC19,CAR_DOMESTIC_PREPAID;PC12,MEET_AND_ASSIST;PC26,RAIL_DOMESTIC;PC15,RAIL_DOMESTIC_2;PC09,INSURANCE;PC37,VISA_HANDLING_FEE
+    ${product_list}    Split String    ${main_products}    ;
+    :FOR    ${products}    IN    @{product_list}
+    \    ${products}    Split String    ${products}    ,
+    \    ${product_code}    Get Substring    ${products[0]}    2
+    \    Set Test Variable    ${product_name_${product_code}}    ${products[1].lower()}
+
+Configure Main Products And Fees
+    Configure Main Products
+    Configure Fees  
+
+Get Main Product Selling Fare
+    [Arguments]    ${line}
+    ${line}    Split String    ${line}    ;
+    :FOR    ${item}    IN    @{line}
+    \    ${kf_exists}    Run Keyword And Return Status    Should Contain    ${item}    K-F
+    \    ${fare_exists}    Run Keyword And Return Status    Should Contain    ${item}    INR
+    \    ${gds_amount}    Run Keyword If    "${fare_exists}"=="True" and "${kf_exists}"=="True"    Get Substring    ${item}    6    ELSE IF    "${fare_exists}"=="True" and "${kf_exists}"=="False"    Get Substring    ${item}    3    ELSE    Set Variable    null
+    \    ${gds_amount}    Strip String    ${gds_amount}
+    \    Run Keyword If    "${fare_exists}"=="True"    Append To List    ${gds_fares_list}    ${gds_amount}
+    ${base_amount}    Set Variable    ${gds_fares_list[0]}
+    Set Test Variable    ${base_amount}
+
+Get Product Code
+    [Arguments]    ${line}    ${product}=others
+    ${pc}    Run Keyword If    "${product}"=="others"    Get Substring    ${line}    8    10    ELSE   Split String    ${line}    /
+    ${pc}    Set Variable If    "${product}"=="others"    ${pc}    ${pc[1]}
+    Run Keyword If    ("${pc}"=="0" or "${pc}"=="00" or "${pc}"=="2" or "${pc}"=="4" or "${pc}"=="04" or "${pc}"=="86" or "${pc}"=="06" or "${pc}"=="08" or "${pc}"=="25" or "${pc}"=="18" or "${pc}"=="16" or "${pc}"=="24" or "${pc}"=="19" or "${pc}"=="12" or "${pc}"=="26" or "${pc}"=="15" or "${pc}"=="09" or "${pc}"=="37")    Run Keywords    Set Test Variable    ${current_main_product}    ${product_name_${pc}}    AND    Append To List    ${main_products_list}    ${current_main_product}    AND    Set Test Variable    ${flag}    main_product    ELSE    Run Keywords    Set Test Variable    ${current_service_fee}    ${service_name_${pc}}    AND    Set Test Variable    ${flag}    service
+    Run Keyword If    ("${pc}"=="0" or "${pc}"=="4")    Set Test Variable    ${parsed_${current_main_product}_sf}    ${base_amount}
+    Set Test Variable    ${main_products_list} 
+
+Get Service Fee Selling Fare
+    [Arguments]    ${line}
+    ${line}    Split String    ${line}    /
+    :FOR    ${item}    IN    @{line}
+    \    ${sf_exists}    Run Keyword And Return Status    Should Contain    ${item}    SF
+    \    ${selling_fare}    Run Keyword If    "${sf_exists}"=="True"    Get Substring    ${item}    2
+    \    Run Keyword If    "${sf_exists}"=="True"    Exit For Loop
+    ${variable_name}    Set Variable If    "${flag}"=="main_product"    sf    "${flag}"=="service" and "${current_service_fee}"=="vat"    vat    "${flag}"=="service" and "${current_service_fee}"=="air_transaction_fee"    tfee    "${flag}"=="service" and "${current_service_fee}"=="train_transaction_fee"    tfee    "${flag}"=="service" and "${current_service_fee}"=="visa_handling_fee"    vfee    "${flag}"=="service" and "${current_service_fee}"=="oth_handling_fee"    ofee    "${flag}"=="service" and "${current_service_fee}"=="merchant_fee"    mfee    "${flag}"=="service" and "${current_service_fee}"=="rebate"    rebate
+    ${variable_name}    Run Keyword If    "${variable_name}"=="vat"    Set VAT/GST Value    ELSE IF    "${variable_name}"=="mfee"    Set Merchant Fee    ELSE    Set Variable    ${variable_name}
+    Set Test Variable    ${parsed_${current_main_product}_${variable_name}}    ${selling_fare}
+    Append To List    ${service_fee_list}    ${variable_name}
+    Append To List    ${fee_amount_list}    ${parsed_${current_main_product}_${variable_name}}
+    Set Test Variable    ${service_fee_list}      
+
+Get YQ Tax
+    [Arguments]    ${line}
+    ${line}    Split String    ${line}    ;
+    :FOR    ${item}    IN    @{line}
+    \    ${yq_exists}    Run Keyword And Return Status    Should Contain    ${item}    YQ
+    \    ${item_with_yq}    Run Keyword If    "${yq_exists}"=="True"    Split String    ${item}    ${SPACE}    ELSE    Set Variable    0
+    \    ${yq_tax}    Run Keyword If    "${yq_exists}"=="True"    Get Substring    ${item_with_yq[1]}    3    ELSE    Set Variable    0
+    \    Run Keyword If    "${yq_exists}"=="True"    Exit For Loop
+    Set Test Variable    ${yq_tax}
+
+Parse Air File
+    [Arguments]    ${file_name}
+    @{gds_fares_list}    Create List
+    @{main_products_list}    Create List
+    @{service_fee_list}    Create List
+    @{fee_amount_list}    Create List
+    Set Test Variable    ${gds_fares_list}
+    Set Test Variable    ${main_products_list}
+    Set Test Variable    ${service_fee_list}
+    Set Test Variable    ${fee_amount_list}
+    ${contents}    Get File    ${CURDIR}${/}test_data/${file_name}
+    @{lines}    Split to lines    ${contents}
+    :FOR    ${line}    IN    @{lines}
+    \    Log    ${line}
+    \    ${kf_exists}    Run Keyword And Return Status    Should Contain    ${line}    K-F
+    \    Run Keyword If    "${kf_exists}"=="True"    Get Main Product Selling Fare    line=${line}
+    \    ${main_pc_exists}    Run Keyword And Return Status    Should Contain    ${line}    RM*PC/
+    \    Run Keyword If    "${main_pc_exists}"=="True"    Get Product Code    line=${line}    product=air       
+    \    ${pc_exists}    Run Keyword And Return Status    Should Contain    ${line}    MS/PC
+    \    Run Keyword If    "${pc_exists}"=="True"    Get Product Code    ${line}
+    \    ${sf_exists}    Run Keyword And Return Status    Should Contain    ${line}    /SF
+    \    Run Keyword If    "${sf_exists}"=="True"    Get Service Fee Selling Fare    line=${line}
+    \    ${yq_exists}    Run Keyword And Return Status    Should Contain    ${line}    KFTF
+    \    Run Keyword If    "${yq_exists}"=="True"    Get YQ Tax    line=${line}
+    Log    ${gds_fares_list}
+    Log    ${main_products_list}
+    Log    ${service_fee_list}
+    Log    ${fee_amount_list}
+    Log    ${yq_tax}
+
+Set Merchant Fee
+    ${mfee_value}    Get Variable Value    ${parsed_${current_main_product}_mfee}    null
+    ${tfee_value}    Get Variable Value    ${parsed_${current_main_product}_tfee}    null
+    ${mtfee_value}    Get Variable Value    ${parsed_${current_main_product}_mtfee}    null
+    ${mofee_value}    Get Variable Value    ${parsed_${current_main_product}_mofee}    null
+    ${variable_name}    Set Variable If    "${mfee_value}"=="null"    mfee    "${mfee_value}"!="null" and "${tfee_value}"!="null" and "${mtfee_value}"=="null"    mtfee    mofee        
+    [Return]    ${variable_name}
+    
+Set VAT/GST Value
+    ${vat_value}    Get Variable Value    ${parsed_${current_main_product}_vat}    null
+    ${mfee_value}    Get Variable Value    ${parsed_${current_main_product}_mfee}    null
+    ${mf_vat_value}    Get Variable Value    ${parsed_${current_main_product}_mf_vat}    null
+    ${tfee_value}    Get Variable Value    ${parsed_${current_main_product}_tfee}    null
+    ${tf_vat_value}    Get Variable Value    ${parsed_${current_main_product}_tf_vat}    null
+    ${mtfee_value}    Get Variable Value    ${parsed_${current_main_product}_mtfee}    null
+    ${mtf_vat_value}    Get Variable Value    ${parsed_${current_main_product}_mtf_vat}    null
+    ${vfee_value}    Get Variable Value    ${parsed_${current_main_product}_vfee}    null
+    ${vf_vat_value}    Get Variable Value    ${parsed_${current_main_product}_vf_vat}    null
+    ${ofee_value}    Get Variable Value    ${parsed_${current_main_product}_ofee}    null
+    ${of_vat_value}    Get Variable Value    ${parsed_${current_main_product}_of_vat}    null
+    ${variable_name}    Set Variable If    "${vat_value}"=="null"    vat    "${vat_value}"!="null" and "${mf_vat_value}"=="null" and "${mfee_value}"!="null"    mf_vat    ("${vat_value}"!="null" and "${tf_vat_value}"=="null" and "${mf_vat_value}"!="null" and "${tfee_value}"!="null") or ("${vat_value}"!="null" and "${tf_vat_value}"=="null" and "${tfee_value}"!="null")    tf_vat    "${vat_value}"!="null" and "${tf_vat_value}"!="null" and "${mtf_vat_value}"=="null" and "${mfee_value}"!="null" and "${tfee_value}"!="null" and "${mtfee_value}"!="null"    mtf_vat    "${vf_vat_value}"=="null" and "${vfee_value}"!="null"    vf_vat    "${of_vat_value}"=="null" and "${ofee_value}"!="null"    of_vat
+    [Return]    ${variable_name}
+    

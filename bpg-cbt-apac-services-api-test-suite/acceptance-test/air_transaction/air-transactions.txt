@@ -4,18 +4,17 @@ Resource          ../resources/api-variables.txt
 Resource          ../resources/api-utilities.txt
 Resource          ../resources/api-imports.txt
 Resource          resources/air-transactions.txt
-Force Tags        not-ready
+Force Tags	  not-ready
 
 *** Test Cases ***
 Verify That Air Transactions Return Correct Passthrough Type For Full Passthrough In Client Level
     [Tags]    functional
-    [Setup]
-    Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline,in;Q
+    Create Test Variable For Air Transaction    data_list=CX,AX,Airline,in;Q
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=CX,AX,NRCC,3021300025,Airline,in;Q
+    Create Test Variable For Air Transaction    data_list=CX,AX,Airline,in;Q
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
@@ -23,12 +22,12 @@ Verify That Air Transactions Return Correct Passthrough Type For Full Passthroug
 
 Verify That Air Transactions Return Correct Passthrough Type For Non-Passthrough In Client Level
     [Tags]    functional
-    Create Test Variable For Air Transaction    data_list=AF,CA,NRCC,3104300001,CWT,in;G
+    Create Test Variable For Air Transaction    data_list=AF,CA,CWT,in;G
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=AF,CA,NRCC,3104300001,CWT,in;G
+    Create Test Variable For Air Transaction    data_list=AF,CA,CWT,in;G
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
@@ -36,7 +35,7 @@ Verify That Air Transactions Return Correct Passthrough Type For Non-Passthrough
 
 Verify That Air Transactions Return Correct Passthrough Type For Selective Passthrough In Client Level
     [Tags]    functional
-    Create Test Variable For Air Transaction    data_list=TST,AX,UATP,2222222222,Airline,in;Q
+    Create Test Variable For Air Transaction    data_list=TST,AX,Airline,in;Q
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
@@ -44,7 +43,7 @@ Verify That Air Transactions Return Correct Passthrough Type For Selective Passt
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
-    Create Test Variable For Air Transaction    data_list=TST,AX,UATP,2222222222,CWT,in;L,C,G
+    Create Test Variable For Air Transaction    data_list=TST,AX,CWT,in;L,C,G
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
@@ -56,12 +55,12 @@ Verify That Air Transactions Return Correct Passthrough Type For Selective Passt
 
 Verify That Air Transactions Return Correct Passthrough Type For Full Passthrough In Country Level
     [Tags]    functional
-    Create Test Variable For Air Transaction    data_list=1A,AX,NRCC,null,Airline,in;Q
+    Create Test Variable For Air Transaction    data_list=1A,AX,Airline,in;Q
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=1A,AX,NRCC,${EMPTY},Airline,in;Q
+    Create Test Variable For Air Transaction    data_list=1A,AX,Airline,in;Q
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
@@ -69,12 +68,12 @@ Verify That Air Transactions Return Correct Passthrough Type For Full Passthroug
 
 Verify That Air Transactions Return Correct Passthrough Type For Non-Passthrough In Country Level
     [Tags]    functional
-    Create Test Variable For Air Transaction    data_list=4L,CA,UATP,null,CWT,in;G
+    Create Test Variable For Air Transaction    data_list=4L,CA,CWT,in;G
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=4L,CA,UATP,${EMPTY},CWT,in;G
+    Create Test Variable For Air Transaction    data_list=4L,CA,CWT,in;G
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
@@ -82,21 +81,21 @@ Verify That Air Transactions Return Correct Passthrough Type For Non-Passthrough
 
 Verify That Air Transactions Return Correct Passthrough Type For Selective Passthrough Type In Country Level
     [Tags]    functional
-    Create Test Variable For Air Transaction    data_list=TG,AX,NRCC,null,CWT,in;L
+    Create Test Variable For Air Transaction    data_list=TG,AX,CWT,in;L
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=TG,AX,NRCC,${EMPTY},CWT,in;L
+    Create Test Variable For Air Transaction    data_list=TG,AX,CWT,in;L
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
-    Create Test Variable For Air Transaction    data_list=TG,AX,NRCC,null,Airline,in;Q
+    Create Test Variable For Air Transaction    data_list=TG,AX,Airline,in;Q
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=TG,AX,NRCC,${EMPTY},Airline,in;Q
+    Create Test Variable For Air Transaction    data_list=TG,AX,Airline,in;Q
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
@@ -105,58 +104,58 @@ Verify That Air Transactions Return Correct Passthrough Type For Selective Passt
 Verify That Air Transactions Return Correct Passthrough Type For Multiple Booking Class
     [Tags]    functional
     #Mixed Passthrough Type
-    Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,CWT,in;C
+    Create Test Variable For Air Transaction    data_list=TST,CA,CWT,in;C
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,Airline,in;Q
+    Create Test Variable For Air Transaction    data_list=TST,CA,Airline,in;Q
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,Airline,in;L
+    Create Test Variable For Air Transaction    data_list=TST,CA,Airline,in;L
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Send Air Transaction Get Request (Maintenance)    airline_code=TST    client_account_number=1111111111
+    Send Air Transaction Get Request (Maintenance)    airline_code=TST
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,CWT,in;C,Q,L
+    Create Test Variable For Air Transaction    data_list=TST,CA,CWT,in;C,Q,L
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
     #Single Passthrough Type - CWT
-    Create Test Variable For Air Transaction    data_list=TST1,CA,NRCC,1111111111,CWT,in;C
+    Create Test Variable For Air Transaction    data_list=TST1,CA,CWT,in;C
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=TST1,CA,NRCC,1111111111,CWT,in;Q
+    Create Test Variable For Air Transaction    data_list=TST1,CA,CWT,in;Q
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Send Air Transaction Get Request (Maintenance)    airline_code=TST    client_account_number=1111111111
+    Send Air Transaction Get Request (Maintenance)    airline_code=TST
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=TST1,CA,NRCC,1111111111,CWT,in;C,Q
+    Create Test Variable For Air Transaction    data_list=TST1,CA,CWT,in;C,Q
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
     #Single Passthrough Type - Airline
-    Create Test Variable For Air Transaction    data_list=TST2,CA,NRCC,1111111111,Airline,in;C
+    Create Test Variable For Air Transaction    data_list=TST2,CA,Airline,in;C
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=TST2,CA,NRCC,1111111111,Airline,in;Q
+    Create Test Variable For Air Transaction    data_list=TST2,CA,Airline,in;Q
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Send Air Transaction Get Request (Maintenance)    airline_code=TST    client_account_number=1111111111
+    Send Air Transaction Get Request (Maintenance)    airline_code=TST
     Evict Air Transaction Cache
-    Create Test Variable For Air Transaction    data_list=TST2,CA,NRCC,1111111111,Airline,in;C,Q
+    Create Test Variable For Air Transaction    data_list=TST2,CA,Airline,in;C,Q
     Send Air Transaction Get Request
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Passthrough Type Is Retrieved Correctly
@@ -164,8 +163,8 @@ Verify That Air Transactions Return Correct Passthrough Type For Multiple Bookin
 
 Verify That Air Transactions Are Correctly Retrieved
     [Tags]    functional
-    Create Test Variable For Air Transaction    data_list=AA,AX,NRCC,3104300001,CWT,in;null|AA,VI,UATP,3104300001,CWT,in;null    consumer=maintenance
-    Send Air Transaction Get Request (Maintenance)    client_account_number=3104300001
+    Create Test Variable For Air Transaction    data_list=PR,CA,CWT,in;null|PR,VI,CWT,in;null|PR,AX,CWT,in,null    consumer=maintenance
+    Send Air Transaction Get Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Retrieved Correctly
     [Teardown]    Evict Air Transaction Cache
@@ -173,23 +172,23 @@ Verify That Air Transactions Are Correctly Retrieved
 Verify That Air Transactions Are Updated Correctly After Put Request
     [Tags]    functional
     #Single Booking Class
-    Create Test Variable For Air Transaction    data_list=TST1,CA,NRCC,1111111111,CWT,in;C    consumer=maintenance
+    Create Test Variable For Air Transaction    data_list=TST1,CA,CWT,in;C    consumer=maintenance
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Send Air Transaction Get Request (Maintenance)    airline_code=TST1    client_account_number=1111111111
+    Send Air Transaction Get Request (Maintenance)    airline_code=TST1
     Verify Air Transaction Record Is Retrieved Correctly
     #Multiple Booking Class
-    Create Test Variable For Air Transaction    data_list=TST2,CA,NRCC,1111122222,CWT,in;C,G,Q    consumer=maintenance
+    Create Test Variable For Air Transaction    data_list=TST2,CA,CWT,in;C,G,Q    consumer=maintenance
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
     Evict Air Transaction Cache
-    Send Air Transaction Get Request (Maintenance)    airline_code=TST2    client_account_number=1111122222
+    Send Air Transaction Get Request (Maintenance)    airline_code=TST2
     Verify Air Transaction Record Is Retrieved Correctly
     #No Client Account Number
-    Create Test Variable For Air Transaction    data_list=TST3,CA,NRCC,null,CWT,in;C,G,Q    consumer=maintenance
+    Create Test Variable For Air Transaction    data_list=TST3,CA,CWT,in;C,G,Q    consumer=maintenance
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
@@ -200,7 +199,7 @@ Verify That Air Transactions Are Updated Correctly After Put Request
 
 Verify That Air Transactions Are Deleted Correctly After Delete Request
     [Tags]    functional
-    Create Test Variable For Air Transaction    data_list=TST,CA,NRCC,1111111111,CWT,in;C
+    Create Test Variable For Air Transaction    data_list=TST,CA,CWT,in;C
     Send Air Transaction Put Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Saved Correctly
@@ -208,7 +207,7 @@ Verify That Air Transactions Are Deleted Correctly After Delete Request
     Send Air Transaction Delete Request (Maintenance)
     Verify Response Status Code Is Correct    200
     Evict Air Transaction Cache
-    Send Air Transaction Get Request (Maintenance)    airline_code=TST    client_account_number=1111111111
+    Send Air Transaction Get Request (Maintenance)    airline_code=TST
     Verify Response Status Code Is Correct    200
     Verify Air Transaction Record Is Not Retrieved
     [Teardown]    Evict Air Transaction Cache

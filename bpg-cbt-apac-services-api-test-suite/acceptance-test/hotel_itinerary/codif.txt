@@ -1,0 +1,77 @@
+*** Settings ***
+Resource        ../resources/api-variables.txt
+Resource	    ../resources/api-utilities.txt
+Resource	    ../resources/api-imports.txt
+Resource	    resources/codif.txt
+Suite Setup     Create Test Variables For Hotel Itinerary Codif
+
+***Variables***
+${hotel_itin_codif_data_list}    2,WO,029533;111277|0,WO,029442|1JTOKYOMONTEGINZ,WO,0145352;0154380;0295446|ZWZIMBAELEPHP.O.,WO,033148;199966|441235520151,WO,048794|ZWZWK000,1A,294391|ZXBUEAR,1P,322590|1,AA,262165|0,FM,081701;123469|AK0004,FM,008580;195673;202878;344689|96341428-736,P,000089;150315;161515|9191 1142502293,P,337556|BLXMKP01,1A,147219;310415|MCHKGDTM,1A,000001|MDFRA275,1A,000010|FXAALFIR,1A,000181|HIGRI988,1A,001767|BWMIL091,1A,025270
+
+***Test Cases***
+Verify That Hotel Itinerary Harp Number Is Retrieved For Single Result     
+    [Tags]    functional
+    Send Get Request For Hotel Itinerary Codif    gds_prop_id=ZWZWK000    key_type=1A
+    Verify Response Status Code Is Correct    200
+    Verify Hotel Itinerary Codif Is Correctly Retrieved
+    
+Verify Hotel Itinerary Harp Number Is Retrieved For Multiple Result
+    [Tags]    functional      
+    Send Get Request For Hotel Itinerary Codif    gds_prop_id=BLXMKP01    key_type=1A
+    Verify Response Status Code Is Correct    200
+    Verify Hotel Itinerary Codif Is Correctly Retrieved
+    
+Verify That Hotel Itinerary Harp Number Is Retrieved With Needed Padded Zeroes
+    [Tags]    functional
+    Send Get Request For Hotel Itinerary Codif    gds_prop_id=MCHKGDTM    key_type=1A
+    Verify Response Status Code Is Correct    200
+    Verify Hotel Itinerary Codif Is Correctly Retrieved
+    Send Get Request For Hotel Itinerary Codif    gds_prop_id=MDFRA275    key_type=1A
+    Verify Response Status Code Is Correct    200
+    Verify Hotel Itinerary Codif Is Correctly Retrieved
+    Send Get Request For Hotel Itinerary Codif    gds_prop_id=FXAALFIR    key_type=1A
+    Verify Response Status Code Is Correct    200
+    Verify Hotel Itinerary Codif Is Correctly Retrieved
+    Send Get Request For Hotel Itinerary Codif    gds_prop_id=HIGRI988    key_type=1A
+    Verify Response Status Code Is Correct    200
+    Verify Hotel Itinerary Codif Is Correctly Retrieved
+    Send Get Request For Hotel Itinerary Codif    gds_prop_id=BWMIL091    key_type=1A
+    Verify Response Status Code Is Correct    200
+    Verify Hotel Itinerary Codif Is Correctly Retrieved
+
+Verify That Error Is Encountered When Empty GDS Prop ID Is Used
+    Send Get Request For Hotel Itinerary Codif    gds_prop_id=${EMPTY}    key_type=1A
+    Verify Response Status Code Is Correct    400
+    Verify Hotel Itinerary Codif Is Not Retrieved
+
+Verify That Error Is Encountered When Null GDS Prop ID Is Used
+    Send Get Request For Hotel Itinerary Codif    gds_prop_id=null    key_type=1A
+    Verify Response Status Code Is Correct    400
+    Verify Hotel Itinerary Codif Is Not Retrieved
+    
+Verify That Error Is Encountered When Empty Key Type Is Used
+    Send Get Request For Hotel Itinerary Codif    gds_prop_id=MCHKGDTM    key_type=${EMPTY}
+    Verify Response Status Code Is Correct    400
+    Verify Hotel Itinerary Codif Is Not Retrieved
+    
+Verify That Error Is Encountered When Null Key Type ID Is Used
+    Send Get Request For Hotel Itinerary Codif    gds_prop_id=MCHKGDTM    key_type=null
+    Verify Response Status Code Is Correct    400
+    Verify Hotel Itinerary Codif Is Not Retrieved
+    
+Verify That Hotel Itinerary Harp Number Is Added For Different Input
+    [Tags]    functional    not-ready    
+    Send Put Request For Hotel Itinerary Codif    gds_prop_id=1.X.0.1.TEST    key_type=XX    harp_number=123    crs_code=AB    status=V    last_updated=20190503
+    Verify Response Status Code Is Correct    200
+    Evict Hotel Itinerary Codif Cache
+    Send Get Request For Hotel Itinerary Codif    gds_prop_id=1.X.0.1.TEST    key_type=XX
+    Verify Response Status Code Is Correct    200
+    Verify Hotel Itinerary Codif Is Correctly Retrieved
+    
+    
+    Send Put Request For Hotel Itinerary Codif    gds_prop_id=1234-1234-1234    key_type=X1    harp_number=1ABC    crs_code=AB    status=V    last_updated=20190503
+    Verify Response Status Code Is Correct    200
+    Verify Hotel Itinerary Codif Is Correctly Retrieved
+    Send Put Request For Hotel Itinerary Codif    gds_prop_id=1111 ABC    key_type=Y    harp_number=H    crs_code=AB    status=V    last_updated=20190503
+    Verify Response Status Code Is Correct    200
+    Verify Hotel Itinerary Codif Is Correctly Retrieved

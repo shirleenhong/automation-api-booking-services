@@ -1,0 +1,75 @@
+*** Setting ***
+Resource          ../../resources/api-imports.txt
+Resource          ../../resources/api-utilities.txt
+Resource          ../../resources/api-variables.txt
+
+
+*** Keywords ***
+Create Test Variables For Hotel Itinerary Codif
+    [Arguments]    ${codif_list}=${hotel_itin_codif_data_list}
+    ${codif_list}    Split String    ${codif_list}    |
+    ${codif_list_length}    Get Length    ${codif_list}
+    Set Suite Variable    ${codif_list_length}
+    Set Suite Variable    ${codif_list}
+    : FOR    ${data}    IN    @{codif_list}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Set Suite Variable    ${gds_prop_id}    ${data_item[0]}
+    \    Set Suite Variable    ${key_type}    ${data_item[1]}
+    \    Create Test Variables For Codif Harp Number    ${data_item[2]}
+    
+Create Test Variables For Codif Harp Number
+    [Arguments]    ${codif_harp_number_list}
+    ${codif_harp_number_list}    Split String    ${codif_harp_number_list}    ;
+    ${codif_harp_number_list_length}    Get Length    ${codif_harp_number_list}
+    Set Suite Variable    ${${gds_prop_id}_${key_type}_harp_number_list_length}    ${codif_harp_number_list_length}
+    ${index}    Set Variable    0
+    :FOR    ${harp_data}    IN    @{codif_harp_number_list}
+    \    Set Suite Variable    ${${gds_prop_id}_${key_type}_${index}}    ${harp_data}
+    \    ${index}    Evaluate    ${index}+1
+
+Evict Hotel Itinerary Codif Cache
+    [Arguments]    ${number}=2    ${token}=${default_token}
+    Create Session    hotel-itin    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    : FOR    ${index}    IN RANGE    0    ${number}
+    \    ${response}    Get Request    hotel-itin    /apac-services-rest/api/caches/evict/codif    headers=${headers}
+    \    Set Test Variable    ${response}
+    \    Verify Response Status Code Is Correct    200
+    \    Log    ${response.headers}
+    \    Log    ${response.content}
+    Set Test Variable    ${api_flag}    hotel-itin
+
+Send Get Request For Hotel Itinerary Codif
+    [Arguments]    ${gds_prop_id}    ${key_type}    ${token}=${default_token}
+    Set Test Variable    ${gds_prop_id}
+    Set Test Variable    ${key_type}
+    Create Session    hotel-itin    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    hotel-itin    /apac-services-rest/api/codif/harpno/${gds_prop_id}/${key_type}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    hotel-itin
+
+Send Put Request For Hotel Itinerary Codif
+    [Arguments]    ${gds_prop_id}    ${key_type}    ${harp_number}    ${crs_code}    ${status}    ${last_updated}
+    Create Session    hotel-itin    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${request_data}    Set Variable    {"crsCode":"${crs_code}","gdsPropId":"${gds_prop_id}","harpNo":"${harp_number}","keyType":"${key_type}","lastUpdated":"${last_updated}","status":"${status}"}
+    ${response}    Put Request    hotel-itin    /apac-services-rest/api/codif    data=${request_data}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    hotel-itin
+    
+Verify Hotel Itinerary Codif Is Correctly Retrieved
+    ${expected_list_length}    Set Variable    ${${gds_prop_id}_${key_type}_harp_number_list_length}
+    :FOR    ${index}    IN RANGE    0    ${expected_list_length}
+    \    ${actual_value}    Get Value From Json    ${response.content}    $.${index}
+    \    Verify Actual Value Matches Expected Value    ${actual_value}    ${${gds_prop_id}_${key_type}_${index}}
+    
+Verify Hotel Itinerary Codif Is Not Retrieved
+    Verify Actual Value Matches Expected Value    ${response.content}    []
