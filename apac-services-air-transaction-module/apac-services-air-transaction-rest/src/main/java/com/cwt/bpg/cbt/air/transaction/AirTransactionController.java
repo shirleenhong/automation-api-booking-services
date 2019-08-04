@@ -43,12 +43,11 @@ public class AirTransactionController {
 			@RequestParam("airlineCode") @ApiParam(value="2-character airline code", required = true) String airlineCode,
 			@RequestParam("bookingClasses") List<String> bookingClasses,
 			@RequestParam("ccVendorCode") @ApiParam(value="e.g. MC, VI", required = true) String ccVendorCode,
-			@RequestParam(value = "ccType", required = false) @ApiParam(value="UNUSED e.g. UATP, NRCC")  String ccType,
-			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber)
+			@RequestParam(value = "ccType", required = false) @ApiParam(value="unused/depricated")  String ccType,
+			@RequestParam(value = "clientAccountNumber", required = false) @ApiParam(value="unused/depricated") String clientAccountNumber)
 			throws AirTransactionNoContentException {
 
-		AirTransactionInput input = formAirTransactionInput(countryCode, airlineCode, bookingClasses,
-				ccVendorCode, clientAccountNumber);
+		AirTransactionInput input = formAirTransactionInput(countryCode, airlineCode, bookingClasses, ccVendorCode);
 
 		return new ResponseEntity<>(airTransService.getAirTransaction(input), HttpStatus.OK);
 	}
@@ -60,10 +59,9 @@ public class AirTransactionController {
 	public ResponseEntity<List<AirTransaction>> getAirTransactions(
 			@PathVariable("countryCode") @ApiParam("2-character country code") String countryCode,
 			@PathVariable("airlineCode") @ApiParam("2-character airline code") String airlineCode,
-			@RequestParam(value = "clientAccountNumber", required = false) String clientAccountNumber) {
+			@RequestParam(value = "clientAccountNumber", required = false) @ApiParam(value="unused/depricated") String clientAccountNumber) {
 
-		AirTransactionInput input = formAirTransactionInput(countryCode, airlineCode, null,
-				null, clientAccountNumber);
+		AirTransactionInput input = formAirTransactionInput(countryCode, airlineCode, null, null);
     
 		return new ResponseEntity<>(airTransService.getAirTransactionList(input),
 				HttpStatus.OK);
@@ -87,13 +85,12 @@ public class AirTransactionController {
 	}
 
 	private AirTransactionInput formAirTransactionInput(String countryCode,String airlineCode,
-			List<String> bookingClasses, String ccVendorCode, String clientAccountNumber) {
+			List<String> bookingClasses, String ccVendorCode) {
 
 		AirTransactionInput input = new AirTransactionInput();
 		input.setBookingClasses(bookingClasses);
 		input.setAirlineCode(airlineCode);
 		input.setCcVendorCode(ccVendorCode);
-		input.setClientAccountNumber(clientAccountNumber);
 		input.setCountryCode(countryCode);
 		return input;
 	}

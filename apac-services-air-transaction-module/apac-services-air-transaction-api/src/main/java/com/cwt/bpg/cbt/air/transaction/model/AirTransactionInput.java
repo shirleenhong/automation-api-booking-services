@@ -14,10 +14,7 @@ public class AirTransactionInput implements Serializable {
 	private String airlineCode;
 
 	private String ccVendorCode;
-	
-	private String clientAccountNumber;
 
-	
 	public List<String> getBookingClasses() {
 		return bookingClasses;
 	}
@@ -42,14 +39,6 @@ public class AirTransactionInput implements Serializable {
 		this.ccVendorCode = ccVendorCode;
 	}
 
-	public String getClientAccountNumber() {
-		return clientAccountNumber;
-	}
-
-	public void setClientAccountNumber(String clientAccountNumber) {
-		this.clientAccountNumber = clientAccountNumber;
-	}
-
 	public String getCountryCode() {
 		return countryCode;
 	}
@@ -57,5 +46,4 @@ public class AirTransactionInput implements Serializable {
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
 	}
-	
 }
