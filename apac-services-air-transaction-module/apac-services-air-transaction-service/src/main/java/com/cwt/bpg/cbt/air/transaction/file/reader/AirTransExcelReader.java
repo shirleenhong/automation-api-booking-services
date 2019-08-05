@@ -59,23 +59,22 @@ public class AirTransExcelReader
             AirTransaction data = new AirTransaction();
             data.setCountryCode(Country.INDIA.getCode());
             
-            String airlinCode = StringUtils.trim(getCellValue(row, AIRLINE_CODE));
+            String airlinCode = getCellValue(row, AIRLINE_CODE);
             data.setAirlineCode(airlinCode);
 
-            String airlineDescription = StringUtils.trim(getCellValue(row, AIRLINE_DESCRIPTION));
+            String airlineDescription = getCellValue(row, AIRLINE_DESCRIPTION);
             data.setAirlineDescription(airlineDescription);
 
-            String vendorCode = StringUtils.trim(getCellValue(row, VENDOR_CODE));
+            String vendorCode = getCellValue(row, VENDOR_CODE);
             data.setCcVendorCode(vendorCode);
 
-            String vendorName = StringUtils.trim(getCellValue(row, VENDOR_NAME));
+            String vendorName = getCellValue(row, VENDOR_NAME);
             data.setCcVendorName(vendorName);
 
-            String passThruValue = StringUtils.trim(getCellValue(row, PASS_THRU));
+            String passThruValue = getCellValue(row, PASS_THRU);
             data.setPassthroughType(PassthroughType.fromString(passThruValue));
 
-            String bookingClassVal = StringUtils.trim(getCellValue(row, BOOKING_CLASSES));
-            List<String> bookingClasses = BookingClassParser.parse(bookingClassVal);
+            List<String> bookingClasses = BookingClassParser.parse(getCellValue(row, BOOKING_CLASSES));
             if(!CollectionUtils.isEmpty(bookingClasses)) {
                 data.setBookingClasses(bookingClasses);
             }
@@ -93,7 +92,7 @@ public class AirTransExcelReader
         }
         if (cell.getCellTypeEnum() == CellType.STRING)
         {
-            return cell.getStringCellValue();
+            return StringUtils.trim(cell.getStringCellValue());
         }
         return null;
     }
