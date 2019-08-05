@@ -2,7 +2,6 @@ package com.cwt.bpg.cbt.repository;
 
 import com.cwt.bpg.cbt.mongodb.config.MorphiaComponent;
 import com.cwt.bpg.cbt.mongodb.mapper.DBObjectMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mongodb.*;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;

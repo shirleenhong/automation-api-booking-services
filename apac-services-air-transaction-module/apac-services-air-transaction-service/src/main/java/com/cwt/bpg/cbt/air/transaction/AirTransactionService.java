@@ -92,7 +92,7 @@ public class AirTransactionService
         return airTransactionRepo.remove(new ObjectId(id));
     }
 
-    public List<AirTransaction> upload(InputStream inputStream, String fileType)
+    public void upload(InputStream inputStream, String fileType)
     {
         try
         {
@@ -101,7 +101,7 @@ public class AirTransactionService
                 List<AirTransaction> updatedList = excelReader.parse(inputStream);
                 airTransBackupService.archive();
                 airTransactionRepo.dropCollection();
-                return (List<AirTransaction>) airTransactionRepo.putAll(updatedList);
+                airTransactionRepo.putAll(updatedList);
             }
             else {
                 throw new IllegalArgumentException("File must be in excel format");
@@ -111,6 +111,5 @@ public class AirTransactionService
         {
             LOGGER.error("Error in parsing of air transaction from excel file", e);
         }
-        return Collections.emptyList();
     }
 }
