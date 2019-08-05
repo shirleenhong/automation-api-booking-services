@@ -8,6 +8,8 @@ public class BookingClassParser
 {
     private static final String DELIMETER = ",";
     private static final String BOOKING_CLASS_ALL = "all";
+    
+    private BookingClassParser() {}
 
     public static List<String> parse(String value)
     {
