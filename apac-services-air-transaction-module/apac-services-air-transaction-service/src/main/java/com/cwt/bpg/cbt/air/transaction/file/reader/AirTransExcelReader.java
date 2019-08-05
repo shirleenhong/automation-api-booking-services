@@ -24,6 +24,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
@@ -56,7 +57,8 @@ public class AirTransExcelReader
         if (rowNumber >= START_ROW && StringUtils.isNotEmpty(row.getCell(AIRLINE_CODE).getStringCellValue()))
         {
             AirTransaction data = new AirTransaction();
-
+            data.setCountryCode(Country.INDIA.getCode());
+            
             String airlinCode = StringUtils.trim(getCellValue(row, AIRLINE_CODE));
             data.setAirlineCode(airlinCode);
 
@@ -72,10 +74,11 @@ public class AirTransExcelReader
             String passThruValue = StringUtils.trim(getCellValue(row, PASS_THRU));
             data.setPassthroughType(PassthroughType.fromString(passThruValue));
 
-            String bookingClasses = StringUtils.trim(getCellValue(row, BOOKING_CLASSES));
-            data.setBookingClasses(BookingClassParser.parse(bookingClasses));
-
-            data.setCountryCode(Country.INDIA.getCode());
+            String bookingClassVal = StringUtils.trim(getCellValue(row, BOOKING_CLASSES));
+            List<String> bookingClasses = BookingClassParser.parse(bookingClassVal);
+            if(!CollectionUtils.isEmpty(bookingClasses)) {
+                data.setBookingClasses(bookingClasses);
+            }
 
             airTransactions.add(data);
         }

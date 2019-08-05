@@ -40,6 +40,9 @@ public class AirTransactionService
 
     @Autowired
     private AirTransExcelReader excelReader;
+    
+    @Autowired
+    private AirTransactionBackupService airTransBackupService;
 
     public AirTransactionOutput getAirTransaction(AirTransactionInput input)
             throws AirTransactionNoContentException
@@ -95,7 +98,10 @@ public class AirTransactionService
         {
             if (EXCEL_WORKBOOK.equalsIgnoreCase(fileType))
             {
-                return excelReader.parse(inputStream);
+                List<AirTransaction> updatedList = excelReader.parse(inputStream);
+                airTransBackupService.archive();
+                airTransactionRepo.dropCollection();
+                return (List<AirTransaction>) airTransactionRepo.putAll(updatedList);
             }
             else {
                 throw new IllegalArgumentException("File must be in excel format");

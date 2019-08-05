@@ -4,7 +4,7 @@ public final class AirTransExcelColumn
 {
     AirTransExcelColumn() {}
     
-    public static final int START_ROW = 7;
+    public static final int START_ROW = 5;
     
     public static final int AIRLINE_CODE = 2;
     public static final int AIRLINE_DESCRIPTION = 3;
