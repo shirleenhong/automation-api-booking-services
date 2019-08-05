@@ -33,10 +33,10 @@ public class AirTransactionRepository extends CommonRepository<AirTransaction, O
 		}
 		
 		if(StringUtils.isNotBlank(params.getAirlineCode())) {
-			query.field(AIRLINE_CODE).equal(params.getAirlineCode());
+			query.field(AIRLINE_CODE).equalIgnoreCase(params.getAirlineCode());
 		}
 		if(StringUtils.isNotBlank(params.getCcVendorCode())) {
-			query.field(CC_VENDOR_CODE).equal(params.getCcVendorCode());
+			query.field(CC_VENDOR_CODE).equalIgnoreCase(params.getCcVendorCode());
 		}
 		if (params.getBookingClasses()!=null && !params.getBookingClasses().isEmpty()) {
 			query.or(query.criteria(BOOKING_CLASSES).doesNotExist(),
