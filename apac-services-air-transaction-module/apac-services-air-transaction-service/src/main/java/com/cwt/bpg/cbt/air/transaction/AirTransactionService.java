@@ -14,7 +14,6 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -86,6 +85,11 @@ public class AirTransactionService
         return StreamSupport.stream(airTransactionRepo.putAll(airTrans).spliterator(), false).collect(Collectors.toList());
     }
 
+    public AirTransaction save(AirTransaction airTransaction)
+    {
+        return airTransactionRepo.put(airTransaction);
+    }
+    
     public String delete(String id)
     {
         return airTransactionRepo.remove(new ObjectId(id));

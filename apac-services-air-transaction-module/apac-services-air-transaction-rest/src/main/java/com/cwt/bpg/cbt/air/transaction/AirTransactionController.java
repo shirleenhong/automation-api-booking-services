@@ -89,6 +89,13 @@ public class AirTransactionController {
 		return new ResponseEntity<>(airTransService.save(airTransaction), HttpStatus.OK);
 	}
 
+	@PutMapping(path = "/air-transaction")
+	@ApiOperation(value = "[Maintenance] Saves (inserts/updates) Air Transaction.")
+	@ResponseBody
+	public ResponseEntity<AirTransaction> putAirTransaction(@Valid @RequestBody AirTransaction airTransaction) {
+		return new ResponseEntity<>(airTransService.save(airTransaction), HttpStatus.OK);
+	}
+
 	@DeleteMapping(path = "/air-transactions/{id}")
 	@ResponseBody
 	@ApiOperation(value = "[Maintenance] Deletes Air Transaction.")
