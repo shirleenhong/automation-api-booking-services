@@ -20,7 +20,6 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -29,15 +28,21 @@ import org.springframework.util.CollectionUtils;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
 import com.cwt.bpg.cbt.calculator.model.Country;
+import com.monitorjbl.xlsx.StreamingReader.Builder;
 
 @Component
 public class AirTransExcelReader
 {
+    private static final int ROW_CACHE_SIZE = 100;
+    private static final int BUFFER_SIZE = 4096;
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(AirTransExcelReader.class);
 
     public List<AirTransaction> parse(final InputStream inputStream) throws IOException
     {
-        try (Workbook workbook = new XSSFWorkbook(inputStream);)
+        try (Workbook workbook = new Builder().rowCacheSize(ROW_CACHE_SIZE)
+                                              .bufferSize(BUFFER_SIZE)
+                                              .open(inputStream);)
         {
             Sheet sheet = workbook.getSheetAt(0);
             List<AirTransaction> airTransactions = new ArrayList<>();

@@ -47,6 +47,11 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>${apache.poi.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.monitorjbl</groupId>
+			<artifactId>xlsx-streamer</artifactId>
+			<version>${xlsx.streamer.version}</version>
+		</dependency>
 	</dependencies>
 
 	<properties>
