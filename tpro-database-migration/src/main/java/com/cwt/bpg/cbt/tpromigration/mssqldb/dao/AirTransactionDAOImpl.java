@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +66,6 @@ public class AirTransactionDAOImpl {
 				airTransaction.setCcVendorCode(rs.getString("CCVendorCode"));
 				airTransaction.setCcVendorName(rs.getString("CCVendorName"));
 				airTransaction.setPassthroughType(PassthroughType.fromString(rs.getString("PassthroughType")));
-				airTransaction.setClientAccountNumber(StringUtils.stripStart(rs.getString("ClientNumber"),"0"));
 				airTransactions.add(airTransaction);
 			}
 			rs.close();
