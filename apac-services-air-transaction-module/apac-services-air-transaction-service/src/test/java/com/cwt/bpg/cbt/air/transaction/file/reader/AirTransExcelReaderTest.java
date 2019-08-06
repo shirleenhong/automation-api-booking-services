@@ -1,26 +1,38 @@
 package com.cwt.bpg.cbt.air.transaction.file.reader;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
+
+import org.junit.Test;
 
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 
 public class AirTransExcelReaderTest
 {
-    public static final void main(String[] args) throws IOException
+    @Test
+    public void shouldReadExcel() throws IOException
     {
-        String filePath = "/home/u021axc/Documents/New_UATP_Matrix v1.0 (002).xlsx";
-        File file = new File(filePath);
-        InputStream inputStream = new FileInputStream(file);
+        String resourceName = "test.xlsx";
+        ClassLoader classLoader = getClass().getClassLoader();
+
+        File file = new File(classLoader.getResource(resourceName).getFile());
+        FileInputStream inputStream = new FileInputStream(file);
 
         AirTransExcelReader reader = new AirTransExcelReader();
-        List<AirTransaction> airTrans = reader.parse(inputStream);
+        List<AirTransaction> results = reader.parse(inputStream);
 
-        for(AirTransaction air: airTrans) {
-            System.out.println(air.getAirlineCode() + " " + air.getAirlineDescription() + " " + air.getCcVendorCode() + " " + air.getCcVendorName() + " " + air.getBookingClasses() + " " + air.getCountryCode());
-        }
+        AirTransaction airTrans = results.get(0);
+        String bookingClass = airTrans.getBookingClasses().get(0);
+
+        assertEquals("AA", airTrans.getAirlineCode());
+        assertEquals("AMERICAN AIRLINES", airTrans.getAirlineDescription());
+        assertEquals("AX", airTrans.getCcVendorCode());
+        assertEquals("AMEX", airTrans.getCcVendorName());
+        assertEquals("Airline", airTrans.getPassthroughType().getCode());
+        assertEquals("A", bookingClass);
     }
 }
