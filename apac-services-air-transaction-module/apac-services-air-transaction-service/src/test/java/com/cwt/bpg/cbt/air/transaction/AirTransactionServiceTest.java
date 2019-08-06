@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
+import com.cwt.bpg.cbt.air.transaction.file.reader.AirTransExcelReader;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionOutput;
@@ -28,6 +31,12 @@ public class AirTransactionServiceTest {
 
     @Mock
     private AirTransactionRepository repository;
+    
+    @Mock
+    private AirTransactionBackupService backupService;
+    
+    @Mock
+    private AirTransExcelReader excelReader;
 
     @InjectMocks
     private AirTransactionService service;
@@ -39,7 +48,8 @@ public class AirTransactionServiceTest {
 
     @Test
     public void getAirTransactionListShouldReturnAirTransactionList() {
-		List<AirTransaction> airTransactions = mock(List.class);
+		@SuppressWarnings("unchecked")
+        List<AirTransaction> airTransactions = mock(List.class);
         when(repository.getAirTransactions(any(AirTransactionInput.class))).thenReturn(airTransactions);
 
         List<AirTransaction> result = service.getAirTransactionList(new AirTransactionInput());
@@ -65,7 +75,6 @@ public class AirTransactionServiceTest {
         verify(proxy, times(1)).getAirTransactionList(any(AirTransactionInput.class));
     }
     
-    
     @Test(expected = AirTransactionNoContentException.class)
     public void getAirTransactionListShouldThrowException() throws AirTransactionNoContentException {
     	AirTransaction airTransaction = mock(AirTransaction.class);
@@ -82,11 +91,12 @@ public class AirTransactionServiceTest {
         verify(proxy, times(1)).getAirTransactionList(any(AirTransactionInput.class));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void saveShouldReturnSavedAirTransaction() {
         when(repository.putAll(any(List.class))).thenReturn(Arrays.asList(new AirTransaction()));
 
-        List<AirTransaction> result = service.save(Arrays.asList(new AirTransaction()));
+        service.save(Arrays.asList(new AirTransaction()));
 
         verify(repository, times(1)).putAll(any(List.class));
     }
@@ -100,5 +110,40 @@ public class AirTransactionServiceTest {
 
         assertEquals(id, result);
         verify(repository, times(1)).remove(any(ObjectId.class));
+    }
+    
+    @Test
+    public void shouldUploadExcel() throws IOException {
+        InputStream inputStream = mock(InputStream.class);
+        String fileType = "xlsx";
+        
+        when(excelReader.parse(any(InputStream.class))).thenReturn(Arrays.asList(new AirTransaction()));
+        when(repository.putAll(any())).thenReturn(Arrays.asList(new AirTransaction()));
+        doNothing().when(backupService).archive();
+        doNothing().when(repository).dropCollection();
+        
+        service.upload(inputStream, fileType);
+        
+        verify(excelReader, times(1)).parse(any(InputStream.class));
+        verify(repository, times(1)).putAll(any());
+        verify(backupService, times(1)).archive();
+        verify(repository, times(1)).dropCollection();
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldHandleInvalidFile() {
+        InputStream inputStream = mock(InputStream.class);
+        String fileType = "xxx";
+        
+        service.upload(inputStream, fileType);
+    }
+    
+    @Test
+    public void shouldHandleErrorInParsing() throws IOException {
+        InputStream inputStream = mock(InputStream.class);
+        String fileType = "xlsx";
+        
+        when(excelReader.parse(any(InputStream.class))).thenThrow(new IOException());
+        service.upload(inputStream, fileType);
     }
 }

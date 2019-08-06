@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class BookingClassParser
 {
     private static final String DELIMETER = ",";
@@ -13,7 +15,7 @@ public class BookingClassParser
 
     public static List<String> parse(String value)
     {
-        if (value != null &&  !BOOKING_CLASS_ALL.equalsIgnoreCase(value))
+        if (StringUtils.isNoneEmpty(value) &&  !BOOKING_CLASS_ALL.equalsIgnoreCase(value))
         {
             List<String> bookingClasses = new ArrayList<>();
             String[] data = value.split(DELIMETER);

@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.air.transaction;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -97,7 +98,7 @@ public class AirTransactionService
         {
             if (EXCEL_WORKBOOK.equalsIgnoreCase(fileType))
             {
-                List<AirTransaction> updatedList = excelReader.parse(inputStream);
+                List<AirTransaction> updatedList = excelReader.parse(new BufferedInputStream(inputStream));
                 airTransBackupService.archive();
                 airTransactionRepo.dropCollection();
                 airTransactionRepo.putAll(updatedList);

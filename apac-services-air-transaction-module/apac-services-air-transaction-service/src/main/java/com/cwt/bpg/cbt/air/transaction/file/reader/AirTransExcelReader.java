@@ -59,12 +59,13 @@ public class AirTransExcelReader
     private void populate(Row row, List<AirTransaction> airTransactions)
     {
         int rowNumber = row.getRowNum();
-        if (rowNumber >= START_ROW && StringUtils.isNotEmpty(row.getCell(AIRLINE_CODE).getStringCellValue()))
+        String airlinCode = getCellValue(row, AIRLINE_CODE);
+        
+        if (rowNumber >= START_ROW && StringUtils.isNotEmpty(airlinCode))
         {
             AirTransaction data = new AirTransaction();
-            data.setCountryCode(Country.INDIA.getCode());
             
-            String airlinCode = getCellValue(row, AIRLINE_CODE);
+            data.setCountryCode(Country.INDIA.getCode());
             data.setAirlineCode(airlinCode);
 
             String airlineDescription = getCellValue(row, AIRLINE_DESCRIPTION);
@@ -83,7 +84,6 @@ public class AirTransExcelReader
             if(!CollectionUtils.isEmpty(bookingClasses)) {
                 data.setBookingClasses(bookingClasses);
             }
-
             airTransactions.add(data);
         }
     }
