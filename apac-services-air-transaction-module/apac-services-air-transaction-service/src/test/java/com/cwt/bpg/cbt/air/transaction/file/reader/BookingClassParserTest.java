@@ -12,7 +12,7 @@ public class BookingClassParserTest
     @Test
     public void shouldParseBookingClass()
     {
-        String given = "A, B, C, D";
+        String given = "W,H,M,E,B,Y,D,U,J,C,Z";
         List<String> bookingClasses = BookingClassParser.parse(given);
         assertFalse(bookingClasses.isEmpty());
     }
@@ -23,6 +23,14 @@ public class BookingClassParserTest
         String given = "";
         List<String> bookingClasses = BookingClassParser.parse(given);
         assertTrue(bookingClasses.isEmpty());
+    }
+    
+    @Test
+    public void shouldHandleSingleBookingClass()
+    {
+        String given = "A ";
+        List<String> bookingClasses = BookingClassParser.parse(given);
+        assertFalse(bookingClasses.isEmpty());
     }
     
     @Test

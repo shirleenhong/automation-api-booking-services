@@ -22,7 +22,7 @@ public class BookingClassParser
 
             for (String bookingClass : data)
             {
-                bookingClasses.add(bookingClass);
+                bookingClasses.add(bookingClass.trim());
             }
             return bookingClasses;
         }
