@@ -6,8 +6,6 @@ import java.util.List;
 public class Air implements Serializable {
 	
 	private static final long serialVersionUID = 1184885404521305510L;
-
-	private String passengerName;
 	
 	private List<String> airSegments;
 	
@@ -51,14 +49,6 @@ public class Air implements Serializable {
 
 	public void setConsolInfo(ConsolInfo consolInfo) {
 		this.consolInfo = consolInfo;
-	}
-
-	public String getPassengerName() {
-		return passengerName;
-	}
-
-	public void setPassengerName(String passengerName) {
-		this.passengerName = passengerName;
 	}
 
     public VirtualMiscMultipurposeDoc getVmpd()

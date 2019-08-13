@@ -17,7 +17,7 @@ import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializable {
 
 	private static final long serialVersionUID = -5915661302682405152L;
-
+	
 	@Valid
 	private NonAirCharges nonAirCharges;
 
@@ -40,6 +40,8 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 	private String agentName;
 
 	private String pcc;
+	
+	private String passengerName;
 
 	public IndiaMiscInfo getMiscInfo() {
 		return miscInfo;
@@ -113,4 +115,13 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 	public void setVendor(IndiaVendor vendor) {
 		this.vendor = vendor;
 	}
+
+	public String getPassengerName() {
+		return passengerName;
+	}
+
+	public void setPassengerName(String passengerName) {
+		this.passengerName = passengerName;
+	}
+	
 }
