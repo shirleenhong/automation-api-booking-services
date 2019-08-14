@@ -67,6 +67,7 @@ Append Exchange Order Other Information Tab Fields For India
     Run Keyword If    "${status_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "status":"${status_${eo_index}_value}"
     Run Keyword If    "${agent_id_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "agentId":"${agent_id_${eo_index}_value}"
     Run Keyword If    "${agent_name_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "agentName":"${agent_name_${eo_index}_value}"
+    Run Keyword If    "${passenger_name_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "passengerName":"${passenger_name_${eo_index}_value}"
     Run Keyword If    "${country_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "countryCode":"${country_code_${eo_index}_value}"
     Run Keyword If    "${pcc_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "pcc":"${pcc_${eo_index}_value}"
     Run Keyword If    "${product_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_other_info_list}    "productCode":"${product_code_${eo_index}_value}"
@@ -202,7 +203,6 @@ Append Exchange Order Request Tab Air Fields
     ${exchange_order_request_air_segments_list}    Create List
     Run Keyword If    "${air_plating_carrier_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_air_fields_list}    "platingCarrier":"${air_plating_carrier_${eo_index}_value}"
     Run Keyword If    "${air_fare_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_air_fields_list}    "fareType":"${air_fare_type_${eo_index}_value}"
-    Run Keyword If    "${air_passenger_name_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_air_fields_list}    "passengerName":"${air_passenger_name_${eo_index}_value}"
     Run Keyword If    "${air_consol_tour_code_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_consol_list}    "tourCode":"${air_consol_tour_code_${eo_index}_value}"
     Run Keyword If    "${air_consol_threshold_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_consol_list}    "thresholdAmount":${air_consol_threshold_${eo_index}_value}
     Run Keyword If    "${vmpd_record_locator_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_vmpd_list}    "recordLocator":"${vmpd_record_locator_${eo_index}_value}"
@@ -379,7 +379,6 @@ Append Exchange Order Request Tab Tour Fields
     Run Keyword If    "${tour_city_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_tour_list}    "city":"${tour_city_${eo_index}_value}"
     Run Keyword If    "${tour_package_name_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_tour_list}    "packageName":"${tour_package_name_${eo_index}_value}"
     Run Keyword If    "${tour_details_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_tour_list}    "details":"${tour_details_${eo_index}_value}"
-    Run Keyword If    "${tour_passenger_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_tour_list}    "passengerName":"${tour_passenger_${eo_index}_value}"
     Set Test Variable    ${tour_flag}    true
     Set Test Variable    ${exchange_order_request_tour_list}
     
@@ -515,6 +514,7 @@ Create Exchange Order Body List
 
 Create Test Variables For Exchange Order India
     [Arguments]    ${other_info_data}=${default_other_info_data}    ${air_charges_data}=${default_air_charges_data}    ${assoc_info_data}=${default_assoc_info_data}    ${assoc_info_number}=0    ${misc_info_data}=${default_misc_info_data}    ${request_info_data}=${default_request_info_data}    ${train_info_number}=0    ${air_segments_number}=0    ${request_info_tab_data}=${default_request_info_tab_data}    ${service_info_data}=${default_service_info_data}    ${vendor_info_data}=${default_vendor_info_data}    ${total_eo}=1    ${generate_pnr}=false
+    log    ${other_info_data}    
     ${pnr_value}    Run Keyword If    "${generate_pnr.lower()}"=="true"    Generate Random Record Locator
     ...    ELSE    Set Variable    ${EMPTY}
     : FOR    ${eo_index}    IN RANGE    0    ${total_eo}
@@ -1007,6 +1007,8 @@ Verify Exchange Order Other Information Is Saved Correctly
     ...    ELSE    Verify Json Element Does Not Exist    $.agentId
     Run Keyword If    "${agent_name_${eo_index}_value}"!="null" and "${agent_name_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.agentName    ${agent_name_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.agentName
+    Run Keyword If    "${passenger_name_${eo_index}_value}"!="null" and "${passenger_name_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.passengerName    ${passenger_name_${eo_index}_value}
+    ...    ELSE    Verify Json Element Does Not Exist    $.passengerName
     Run Keyword If    "${country_code_${eo_index}_value}"!="null" and "${country_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.countryCode    ${country_code_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.countryCode
     Run Keyword If    "${pcc_${eo_index}_value}"!="null" and "${pcc_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.pcc    ${pcc_${eo_index}_value}
@@ -1282,8 +1284,6 @@ Verify Exchange Order Request Information Air Fields
     ...    ELSE    Verify Json Element Does Not Exist    $.request.air.platingCarrier
     Run Keyword If    "${air_fare_type_${eo_index}_value}"!="null" and "${air_fare_type_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.fareType    ${air_fare_type_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.request.air.fareType
-    Run Keyword If    "${air_passenger_name_${eo_index}_value}"!="null" and "${air_passenger_name_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.passengerName    ${air_passenger_name_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.request.air.passengerName
     Run Keyword If    "${air_consol_tour_code_${eo_index}_value}"!="null" and "${air_consol_tour_code_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.consolInfo.tourCode    ${air_consol_tour_code_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.request.air.consolInfo.tourCode
     Run Keyword If    "${air_consol_threshold_${eo_index}_value}"!="null" and "${air_consol_threshold_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.air.consolInfo.thresholdAmount    ${air_consol_threshold_${eo_index}_value}
@@ -1543,8 +1543,6 @@ Verify Exchange Order Request Information Tour Fields
     ...    ELSE    Verify Json Element Does Not Exist    $.request.tour.packageName
     Run Keyword If    "${tour_details_${eo_index}_value}"!="null" and "${tour_details_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.tour.details    ${tour_details_${eo_index}_value}
     ...    ELSE    Verify Json Element Does Not Exist    $.request.tour.details
-    Run Keyword If    "${tour_passenger_${eo_index}_value}"!="null" and "${tour_passenger_${eo_index}_value}"!="none"    Verify Json Value Is Correct    $.request.tour.passengerName    ${tour_passenger_${eo_index}_value}
-    ...    ELSE    Verify Json Element Does Not Exist    $.request.tour.passengerName
 
 Verify Exchange Order Request Information Train Fields
     [Arguments]    ${eo_index}=0    
