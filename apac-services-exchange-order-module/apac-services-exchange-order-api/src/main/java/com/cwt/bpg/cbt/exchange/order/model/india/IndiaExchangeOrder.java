@@ -5,10 +5,12 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
+import org.mongodb.morphia.annotations.Property;
 
 import com.cwt.bpg.cbt.exchange.order.model.BaseExchangeOrder;
 
@@ -40,9 +42,9 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 	private String agentName;
 
 	private String pcc;
-	
-	private String passengerName;
 
+	private String passengerName;
+	
 	public IndiaMiscInfo getMiscInfo() {
 		return miscInfo;
 	}
@@ -117,6 +119,14 @@ public class IndiaExchangeOrder extends BaseExchangeOrder implements Serializabl
 	}
 
 	public String getPassengerName() {
+		if (StringUtils.isNotBlank(passengerName)) {
+			return passengerName;
+		}
+		else if (request != null 
+				&& request.getAir() != null 
+				&& StringUtils.isNotBlank(request.getAir().getPassengerName())) {
+			return request.getAir().getPassengerName();
+		}
 		return passengerName;
 	}
 

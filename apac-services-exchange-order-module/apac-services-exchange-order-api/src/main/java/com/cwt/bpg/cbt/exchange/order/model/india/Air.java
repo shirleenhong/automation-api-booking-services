@@ -18,6 +18,8 @@ public class Air implements Serializable {
 	private ConsolInfo consolInfo;
 
 	private AirCustomFields airCustomFields;
+	
+	private String passengerName;
 
 	public List<String> getAirSegments() {
 		return airSegments;
@@ -68,4 +70,12 @@ public class Air implements Serializable {
     public void setAirCustomFields(AirCustomFields airCustomFields) {
         this.airCustomFields = airCustomFields;
     }
+
+	public String getPassengerName() {
+		return passengerName;
+	}
+
+	public void setPassengerName(String passengerName) {
+		this.passengerName = passengerName;
+	}
 }
