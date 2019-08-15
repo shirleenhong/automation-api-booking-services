@@ -59,14 +59,16 @@ public class AirTransExcelReader
     private void populate(Row row, List<AirTransaction> airTransactions)
     {
         int rowNumber = row.getRowNum();
-        String airlinCode = getCellValue(row, AIRLINE_CODE);
+        String airlineCode = getCellValue(row, AIRLINE_CODE);
+        PassthroughType passThruValue = getPassthroughType(getCellValue(row, PASS_THRU));
         
-        if (rowNumber >= START_ROW && StringUtils.isNotEmpty(airlinCode))
+        if (rowNumber >= START_ROW && StringUtils.isNotEmpty(airlineCode) && passThruValue!=null)
         {
             AirTransaction data = new AirTransaction();
             
             data.setCountryCode(Country.INDIA.getCode());
-            data.setAirlineCode(airlinCode);
+            data.setAirlineCode(airlineCode);
+            data.setPassthroughType(passThruValue);
 
             String airlineDescription = getCellValue(row, AIRLINE_DESCRIPTION);
             data.setAirlineDescription(airlineDescription);
@@ -76,9 +78,6 @@ public class AirTransExcelReader
 
             String vendorName = getCellValue(row, VENDOR_NAME);
             data.setCcVendorName(vendorName);
-
-            String passThruValue = getCellValue(row, PASS_THRU);
-            data.setPassthroughType(PassthroughType.fromString(passThruValue));
 
             List<String> bookingClasses = BookingClassParser.parse(getCellValue(row, BOOKING_CLASSES));
             if(!CollectionUtils.isEmpty(bookingClasses)) {
@@ -101,4 +100,9 @@ public class AirTransExcelReader
         }
         return null;
     }
+    
+    private PassthroughType getPassthroughType(String passthroughType) {
+    	return PassthroughType.fromString(passthroughType);
+    }
+    
 }
