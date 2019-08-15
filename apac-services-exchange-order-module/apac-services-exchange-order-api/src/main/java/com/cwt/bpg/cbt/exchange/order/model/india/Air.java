@@ -3,59 +3,59 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 import java.io.Serializable;
 import java.util.List;
 
-import org.mongodb.morphia.annotations.NotSaved;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Air implements Serializable {
-	
-	private static final long serialVersionUID = 1184885404521305510L;
-	
-	private List<String> airSegments;
-	
-	private String platingCarrier;
-	
-	private String fareType;
+    
+    private static final long serialVersionUID = 1184885404521305510L;
+    
+    private List<String> airSegments;
+    
+    private String platingCarrier;
+    
+    private String fareType;
 
-	private VirtualMiscMultipurposeDoc vmpd;
+    private VirtualMiscMultipurposeDoc vmpd;
 
-	private ConsolInfo consolInfo;
+    private ConsolInfo consolInfo;
 
-	private AirCustomFields airCustomFields;
-	
-	@NotSaved
-	@Deprecated
-	private String passengerName;
+    private AirCustomFields airCustomFields;
+    
+    @Deprecated
+    @JsonIgnore
+    private String passengerName;
 
-	public List<String> getAirSegments() {
-		return airSegments;
-	}
+    public List<String> getAirSegments() {
+        return airSegments;
+    }
 
-	public void setAirSegments(List<String> airSegments) {
-		this.airSegments = airSegments;
-	}
+    public void setAirSegments(List<String> airSegments) {
+        this.airSegments = airSegments;
+    }
 
-	public String getPlatingCarrier() {
-		return platingCarrier;
-	}
+    public String getPlatingCarrier() {
+        return platingCarrier;
+    }
 
-	public void setPlatingCarrier(String platingCarrier) {
-		this.platingCarrier = platingCarrier;
-	}
+    public void setPlatingCarrier(String platingCarrier) {
+        this.platingCarrier = platingCarrier;
+    }
 
-	public String getFareType() {
-		return fareType;
-	}
+    public String getFareType() {
+        return fareType;
+    }
 
-	public void setFareType(String fareType) {
-		this.fareType = fareType;
-	}
+    public void setFareType(String fareType) {
+        this.fareType = fareType;
+    }
 
-	public ConsolInfo getConsolInfo() {
-		return consolInfo;
-	}
+    public ConsolInfo getConsolInfo() {
+        return consolInfo;
+    }
 
-	public void setConsolInfo(ConsolInfo consolInfo) {
-		this.consolInfo = consolInfo;
-	}
+    public void setConsolInfo(ConsolInfo consolInfo) {
+        this.consolInfo = consolInfo;
+    }
 
     public VirtualMiscMultipurposeDoc getVmpd()
     {
@@ -75,11 +75,11 @@ public class Air implements Serializable {
         this.airCustomFields = airCustomFields;
     }
 
-	public String getPassengerName() {
-		return passengerName;
-	}
+    public String getPassengerName() {
+        return passengerName;
+    }
 
-	public void setPassengerName(String passengerName) {
-		this.passengerName = passengerName;
-	}
+    public void setPassengerName(String passengerName) {
+        this.passengerName = passengerName;
+    }
 }
