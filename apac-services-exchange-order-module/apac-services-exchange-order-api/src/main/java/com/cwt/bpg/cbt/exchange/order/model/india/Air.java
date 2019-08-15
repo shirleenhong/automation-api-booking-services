@@ -3,6 +3,8 @@ package com.cwt.bpg.cbt.exchange.order.model.india;
 import java.io.Serializable;
 import java.util.List;
 
+import org.mongodb.morphia.annotations.NotSaved;
+
 public class Air implements Serializable {
 	
 	private static final long serialVersionUID = 1184885404521305510L;
@@ -19,6 +21,7 @@ public class Air implements Serializable {
 
 	private AirCustomFields airCustomFields;
 	
+	@NotSaved
 	private String passengerName;
 
 	public List<String> getAirSegments() {
