@@ -51,14 +51,23 @@ public class RequestWrapper extends HttpServletRequestWrapper
             }
 
             @Override
-            public int read() throws IOException
-            {
+            public int read() throws IOException {
                 return tee.read();
             }
 
             @Override
             public void close() throws IOException {
                 tee.close();
+            }
+
+            @Override
+            public int read(byte[] b) throws IOException {
+                return tee.read(b);
+            }
+
+            @Override
+            public int read(byte[] b, int off, int len) throws IOException {
+                return tee.read(b, off, len);
             }
         };
     }
