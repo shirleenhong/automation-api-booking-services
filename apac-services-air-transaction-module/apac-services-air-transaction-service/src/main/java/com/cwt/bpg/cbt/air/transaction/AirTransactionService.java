@@ -51,7 +51,7 @@ public class AirTransactionService
         checkEmptyList(airTransactionList);
 
         Optional<AirTransaction> passthroughCWT = airTransactionList.stream()
-                .filter(p -> p.getPassthroughType().equals(PassthroughType.CWT))
+                .filter(p -> PassthroughType.CWT.equals(p.getPassthroughType()))
                 .findFirst();
 
         return passthroughCWT.isPresent() ? createPassthroughOutput(PassthroughType.CWT)
