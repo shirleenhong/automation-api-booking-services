@@ -403,7 +403,7 @@ Append Exchange Order Request Tab Train Fields
     Run Keyword If    "${train_trans_ticket_type_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_train_trans_list}    "ticketType":"${train_trans_ticket_type_${eo_index}_value}"
     Run Keyword If    "${train_trans_travel_${eo_index}_value}"!="none"    Append To List    ${exchange_order_request_train_trans_list}    "travelWithin24Hrs":"${train_trans_travel_${eo_index}_value}"
     : FOR    ${index}    IN RANGE    0    ${train_info_number}
-    \    Append To List    ${exchange_order_request_train_segments_list}    {"dateTime":"${train_data_time_${eo_index}_${index}_value}","origin":"${train_origin_${eo_index}_${index}_value}","originDesc":"${train_origin_description_${eo_index}_${index}_value}","destination":"${train_destination_${eo_index}_${index}_value}","destinationDesc":"${train_destination_description_${eo_index}_${index}_value}","number":"${train_number_${eo_index}_${index}_value}","name":"${train_name${eo_index}_${index}_value}","cabinClass":"${train_document_${eo_index}_${index}_value}"}
+    \    Append To List    ${exchange_order_request_train_segments_list}    {"dateTime":"${train_data_time_${eo_index}_${index}_value}","origin":"${train_origin_${eo_index}_${index}_value}","originDesc":"${train_origin_description_${eo_index}_${index}_value}","destination":"${train_destination_${eo_index}_${index}_value}","destinationDesc":"${train_destination_description_${eo_index}_${index}_value}","number":"${train_number_${eo_index}_${index}_value}","name":"${train_name${eo_index}_${index}_value}","cabinClass":"${train_document_${eo_index}_${index}_value}","railCode":"${train_rail_code_${eo_index}_${index}_value}"}
     Set Test Variable    ${train_flag}    true
     Set Test Variable    ${exchange_order_request_train_custom_list}
     Set Test Variable    ${exchange_order_request_train_segments_list}
@@ -651,6 +651,7 @@ Create Test Variables For Request Info Train Tab
     \    Set Test Variable    ${train_destination_description_${eo_index}_${index}_value}    ${data_item[5]}
     \    Set Test Variable    ${train_number_${eo_index}_${index}_value}    ${data_item[6]}
     \    Set Test Variable    ${train_document_${eo_index}_${index}_value}    ${data_item[7]}
+    \    Set Test Variable    ${train_rail_code_${eo_index}_${index}_value}    ${data_item[8]}
     Set Test Variable    ${train_info_number}    
 
 Generate Random Record Locator
@@ -1595,6 +1596,8 @@ Verify Exchange Order Request Information Train Fields
     \    ...    ELSE    Verify Json Element Does Not Exist    $.request.train.segments.[${index}].name
     \    Run Keyword If    "${train_document_${eo_index}_${index}_value}"!="null" and "${train_data_time_${eo_index}_${index}_value}"!="none"    Verify Json Value Is Correct    $.request.train.segments.[${index}].cabinClass    ${train_document_${eo_index}_${index}_value}
     \    ...    ELSE    Verify Json Element Does Not Exist    $.request.train.segments.[${index}].cabinClass
+    \    Run Keyword If    "${train_rail_code_${eo_index}_${index}_value}"!="null" and "${train_data_time_${eo_index}_${index}_value}"!="none"    Verify Json Value Is Correct    $.request.train.segments.[${index}].railCode    ${train_rail_code_${eo_index}_${index}_value}
+    \    ...    ELSE    Verify Json Element Does Not Exist    $.request.train.segments.[${index}].railCode
     Run Keyword If    "${train_info_number}"=="0"    Verify Json Element Does Not Exist    $.request.train.segments
     
 Verify Exchange Order Request Information Visa Fields
