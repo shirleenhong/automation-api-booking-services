@@ -22,6 +22,7 @@ public class Air implements Serializable {
 	private AirCustomFields airCustomFields;
 	
 	@NotSaved
+	@Deprecated
 	private String passengerName;
 
 	public List<String> getAirSegments() {
