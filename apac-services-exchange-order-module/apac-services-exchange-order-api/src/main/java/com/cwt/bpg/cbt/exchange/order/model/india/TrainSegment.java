@@ -29,8 +29,10 @@ public class TrainSegment implements Serializable {
 	private String originDesc;
 
 	private String destination;
+	
+	private String railCode;
 
-	private String destinationDesc;
+    private String destinationDesc;
 
 	public String getNumber() {
 		return number;
@@ -104,5 +106,15 @@ public class TrainSegment implements Serializable {
     public void setDateTime(Instant dateTime)
     {
         this.dateTime = dateTime;
+    }
+
+    public String getRailCode()
+    {
+        return railCode;
+    }
+
+    public void setRailCode(String railCode)
+    {
+        this.railCode = railCode;
     }
 }

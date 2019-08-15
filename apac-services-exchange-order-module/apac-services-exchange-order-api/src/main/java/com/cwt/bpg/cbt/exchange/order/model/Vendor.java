@@ -24,8 +24,10 @@ public class Vendor extends BaseVendor implements Serializable {
 	private String supportEmail;
 	
 	private Boolean merchantFeeAbsorb;
+	
+	private String railCode;
 
-	public String getCountryCode() {
+    public String getCountryCode() {
 		return countryCode;
 	}
 
@@ -89,4 +91,11 @@ public class Vendor extends BaseVendor implements Serializable {
 		this.merchantFeeAbsorb = merchantFeeAbsorb;
 	}
 
+    public String getRailCode() {
+        return railCode;
+    }
+
+    public void setRailCode(String railCode) {
+        this.railCode = railCode;
+    }
 }
