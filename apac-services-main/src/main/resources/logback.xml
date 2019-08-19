@@ -46,10 +46,12 @@
   </appender>
 
   <appender name="ASYNC-WARNINGS" class="ch.qos.logback.classic.AsyncAppender">
+    <neverBlock>true</neverBlock>
     <appender-ref ref="WARNINGS" />
   </appender>
 
   <appender name="ASYNC-APP_TXN" class="ch.qos.logback.classic.AsyncAppender">
+    <neverBlock>true</neverBlock>
     <appender-ref ref="APP_TXN" />
   </appender>
 
