@@ -13,6 +13,7 @@ public class ExchangeOrderSearchDTO
     private Instant startCreationDate;
     private Instant endCreationDate;
     private String productCode;
+    private Integer size;
 
     public String getEoNumber()
     {
@@ -98,10 +99,20 @@ public class ExchangeOrderSearchDTO
     {
         return productCode;
     }
-    
+
     public void setProductCode(String productCode)
     {
         this.productCode = productCode;
+    }
+
+    public Integer getSize()
+    {
+        return size;
+    }
+
+    public void setSize(Integer size)
+    {
+        this.size = size;
     }
 
 }

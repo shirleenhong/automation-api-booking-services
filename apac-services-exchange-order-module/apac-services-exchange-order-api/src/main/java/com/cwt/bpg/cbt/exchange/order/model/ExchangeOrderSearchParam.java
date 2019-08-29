@@ -27,7 +27,9 @@ public class ExchangeOrderSearchParam extends ExchangeOrder
     @JsonSerialize(using = DateSerializer.class)
     @JsonDeserialize(using = DateDeserializer.class)
     private Instant endCreationDate;
-    
+
+    private Integer size;
+
     public Instant getStartCreationDate()
     {
         return startCreationDate;
@@ -47,5 +49,15 @@ public class ExchangeOrderSearchParam extends ExchangeOrder
     {
         this.endCreationDate = endCreationDate;
     }
-    
+
+    public Integer getSize()
+    {
+        return size;
+    }
+
+    public void setSize(Integer size)
+    {
+        this.size = size;
+    }
+
 }
