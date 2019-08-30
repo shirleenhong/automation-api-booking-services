@@ -110,7 +110,7 @@ public class AirTransactionControllerTest
     }
 
     @SuppressWarnings("unchecked")
-	@Test
+    @Test
     public void putAirTransactionShouldSaveAndReturnSavedAirTransaction() throws Exception
     {
         when(service.save((List<AirTransaction>) any(List.class))).thenReturn(Arrays.asList(new AirTransaction()));
