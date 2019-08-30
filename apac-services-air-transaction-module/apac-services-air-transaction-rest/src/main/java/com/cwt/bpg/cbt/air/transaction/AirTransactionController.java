@@ -71,6 +71,17 @@ public class AirTransactionController {
 				HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/air-transactions/{countryCode}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "[Maintenance] Pulls air transactions based on country code")
+	public ResponseEntity<List<AirTransaction>> getAirTransactions(@PathVariable("countryCode") @ApiParam("2-character country code") String countryCode) {
+		
+		AirTransactionInput input = formAirTransactionInput(countryCode, null, null, null);
+   
+		return new ResponseEntity<>(airTransService.getAirTransactionList(input),
+				HttpStatus.OK);
+	}
+	
 	private AirTransactionInput formAirTransactionInput(String countryCode,String airlineCode,
             List<String> bookingClasses, String ccVendorCode) {
 
