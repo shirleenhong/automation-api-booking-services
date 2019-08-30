@@ -162,7 +162,13 @@ public class ExchangeOrderRepository {
         query.order(Sort.descending(CREATE_DATETIME));
 
         final FindOptions options = new FindOptions();
-        options.limit(100);
+        if (param.getSize() != null) {
+            options.limit(param.getSize());
+        }
+        else {
+            options.limit(300);
+        }
+        
         return query.asList(options);
     }
 
