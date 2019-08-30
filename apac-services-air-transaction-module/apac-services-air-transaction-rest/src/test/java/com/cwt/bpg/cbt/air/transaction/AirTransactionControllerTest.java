@@ -12,10 +12,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.List;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -94,7 +94,22 @@ public class AirTransactionControllerTest
                 .getResponse();
         verify(service, times(1)).getAirTransactionList(any(AirTransactionInput.class));
     }
+    
+    @Test
+    public void getAirTransactionsShouldReturnAll() throws Exception
+    {
 
+        when(service.getAirTransactionList(any(AirTransactionInput.class))).thenReturn(anyList());
+
+        mockMvc.perform(get("/air-transactions/IN")
+                .contentType(APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+        verify(service, times(1)).getAirTransactionList(any(AirTransactionInput.class));
+    }
+
+    @SuppressWarnings("unchecked")
     @Test
     public void putAirTransactionShouldSaveAndReturnSavedAirTransaction() throws Exception
     {

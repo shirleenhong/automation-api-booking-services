@@ -40,4 +40,12 @@ public class BookingClassParserTest
         List<String> bookingClasses = BookingClassParser.parse(given);
         assertTrue(bookingClasses.isEmpty());
     }
+    
+    @Test
+    public void shouldIgnoreNAValue()
+    {
+        String given = "NA";
+        List<String> bookingClasses = BookingClassParser.parse(given);
+        assertTrue(bookingClasses.isEmpty());
+    }
 }
