@@ -4,6 +4,7 @@
 
   <property name="PATTERN" value="[%d{ISO8601}] [%X{UUID}] [%X{X-USER-IDENTIFIER}] [%t] [%p] [%c{1}] [%m]%n" />
   <property name="APPLICATION" value="bpg-cbt-apac-services" />
+  <property name="TXN_LOG" value="apac-services-txn" />
   <property name="LOG_DIR" value="${LOG_DIR}" />
 
   <appender name="WARNINGS" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -32,9 +33,9 @@
         <pattern>%m%n</pattern>
       </layout>
     </encoder>
-    <param name="File" value="${LOG_DIR}/${APPLICATION}-txn.log" />
+    <param name="File" value="${LOG_DIR}/${TXN_LOG}.log" />
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <FileNamePattern>${LOG_DIR}/${APPLICATION}-txn.%d{yyyy-MM-dd-HH}.log</FileNamePattern>
+      <FileNamePattern>${LOG_DIR}/${TXN_LOG}.%d{yyyy-MM-dd-HH}.log</FileNamePattern>
       <maxHistory>30</maxHistory>
     </rollingPolicy>
   </appender>
