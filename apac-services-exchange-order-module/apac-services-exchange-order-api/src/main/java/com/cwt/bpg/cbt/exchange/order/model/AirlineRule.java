@@ -19,10 +19,21 @@ public class AirlineRule implements Serializable {
 	private static final long serialVersionUID = -3604480842389246624L;
 
 	@Id
+	@ApiModelProperty(hidden = true)
+	private String id;
+
 	@NotEmpty
 	@ApiModelProperty(required = true)
 	private String code;
 	private boolean includeYqCommission;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getCode() {
 		return code;

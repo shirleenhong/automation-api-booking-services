@@ -20,6 +20,7 @@ public class AirlineRuleService {
 	}
 
 	public AirlineRule save(AirlineRule airlineRule) {
+		airlineRule.setId(airlineRule.getCode());
 		return repository.put(airlineRule);
 	}
 
