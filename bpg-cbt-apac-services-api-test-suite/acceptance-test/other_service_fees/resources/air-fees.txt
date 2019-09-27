@@ -421,6 +421,51 @@ Generate Test Variables For Air Fees-IN
     Calculate Air Fees-IN Total Charge
     Calculate Air Fees-IN Reference Fare
 
+Generate Test Variables For Air Fees-IN - new
+    [Arguments]    ${fees_list}    ${country}
+    Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
+    ${client_id_value}    Get Variable Value    ${client_id_value}    null
+    Set Test Variable    ${client_id_value}
+    ${air_pricing_id}    Get Variable value    ${clients_dict["${client_id_value}.air_pricing_id"]}    ${clients_dict["${client_account_number_value}.air_pricing_id"]}    
+    Set Test Variable    ${air_pricing_id}        
+    Set Test Variable    ${decimal_place}    0
+    ${total_gst_amount}    Set Variable If    "${gst_enabled_value}" == "true"    0
+    Run Keyword If    "${include_yq_comm_value}" == "false"    Set Test Variable    ${yq_tax_value}    0
+    Run Keyword If    "${exempt_tax_value}" == "false" and "${gst_enabled_value}" == "true"    Calculate Air Fees-IN Total GST
+    ...    ELSE    Set Test Variable    ${total_gst_amount}    0
+    Run Keyword If    "${commission_enabled_value}" == "true"    Calculate Air Fees-IN Total Airline Commission
+    ...    ELSE    Set Test Variable    ${total_airline_commission_amount}    0
+    Run Keyword If    "${trip_type_value}" == "I" and "${overhead_commission_enabled_value}" == "true"    Calculate Air Fees-IN Total Overhead Commission
+    ...    ELSE    Set Test Variable    ${total_overhead_commission_amount}    0
+    Run Keyword If    "${discount_enabled_value}" == "true"    Calculate Air Fees-IN Total Discount
+    ...    ELSE    Set Test Variable    ${total_discount_amount}    0
+    Calculate Air Fees-IN Total Taxes
+    Calculate Air Fees-IN Total Sell Fare
+    Calculate Air Fees-IN Total Fee
+    ${calculate_fee_flag}    Set Variable If    "${fee_override_value}" == "false" and "${apply_fee_value}" != "NA"    true    false
+    Run Keyword If    "${calculate_fee_flag}" == "true"    Get Air Fees-IN Transaction Fee From Client Master
+    ...    ELSE    Set Test Variable    ${transaction_fee_amount}    ${transaction_fee_value}
+    Set Test Variable    ${fee_amount}    ${transaction_fee_amount}
+    Calculate Air Fees-IN Total Merchant Fee
+    Calculate Air Fees-IN Total GST On TF
+    Run Keyword If    "${trip_type_value}" == "I"    Calculate Air Fees-IN Mechant Fee On TF International
+    ...    ELSE    Calculate Air Fees-IN Mechant Fee On TF Domestic
+    Calculate Air Fees-IN Total Selling Fare
+    Calculate Air Fees-IN Reference Fare
+    Calculate Air Fees-IN Total Charge
+    Calculate Air Fees-IN Reference Fare
+    
+Get Air Fees-IN Transaction Fee From Client Master
+    [Arguments]    ${token}=${default_token}
+    Create Session    transaction-fees    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    transaction-fees    apac-services-rest/api/clients/${client_account_number_value}/transaction-fees?tripType=${trip_type_value}     headers=${headers}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    transaction-fees
+    Set Test Variable    ${transaction_fee_amount}    ${response.content} 
+          
 Generate Test Variables For Air Fees-SG
     [Arguments]    ${fees_list}    ${country}
     Create Test Variables For Air Fees-HK    ${fees_list}    ${country}
@@ -581,6 +626,7 @@ Verify Calculated Air Fees Are Returned Correctly
     ${data_list}    Split String    ${data}    ,
     : FOR    ${item}    IN    @{data_list}
     \    ${items}    Split String    ${item}    :
+    \    log    ${items[0]}
     \    Verify Actual Numerical Value Matches Expected Numerical Value    ${items[1]}    ${${items[0]}_amount}
 
 Verify Calculated Air Fees India Are Not Returned Correctly
