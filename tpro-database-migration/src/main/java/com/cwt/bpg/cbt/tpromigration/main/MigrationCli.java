@@ -32,7 +32,10 @@ public class MigrationCli implements Callable<Void>
 
     @Option(names = "-in-airports", description = "migrate india airports")
     private boolean migrateAirports;
-
+    
+    @Option(names = "-in-client-transaction-fees", description = "migrate india client transaction fees")
+    private boolean clientTransactionFees;
+    
     @Option(names = "-in-clients", description = "migrate india clients")
     private boolean migrateClients;
 
@@ -105,6 +108,11 @@ public class MigrationCli implements Callable<Void>
             {
                 LOGGER.info("Migrating clients...");
                 service.migrateClients();
+            }
+            if (clientTransactionFees)
+            {
+                LOGGER.info("Migrating client transaction fees...");
+                service.migrateClientTransactionFees();
             }
             if (migrateAirports)
             {

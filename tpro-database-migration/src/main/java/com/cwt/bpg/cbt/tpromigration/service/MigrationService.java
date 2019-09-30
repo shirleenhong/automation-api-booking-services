@@ -60,6 +60,7 @@ import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAOFactory;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AgentInfo;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirVariables;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.InClientTransactionFee;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.LineDefinitionClientMapping;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.MerchantFeeAbsorb;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
@@ -82,6 +83,7 @@ public class MigrationService
     private static final String PRODUCTS_COLLECTION = "productList";
     private static final String AGENT_COLLECTION = "agentInfo";
     private static final String BILLING_ENTITIES_COLLECTION = "billingEntities";
+    private static final String CLIENT_TRANSACTION_FEE_COLLECTION = "clientTransactionFees_2";
 
     @Autowired
     private MongoDbConnection mongoDbConnection;
@@ -341,6 +343,19 @@ public class MigrationService
         LOGGER.info("End of clients migration...");
     }
 
+	public void migrateClientTransactionFees() throws JsonProcessingException {
+		LOGGER.info("Started client transaction fees migration...");
+		List<InClientTransactionFee> clientTransactionFees = clientDAO.getClientTransactionFees();
+		
+		List<Document> docs = new ArrayList<>();
+		for (InClientTransactionFee clientTransactionFee: clientTransactionFees) {
+			docs.add(dBObjectMapper.mapAsDbDocument(clientTransactionFee.getClientAccountNumber(), clientTransactionFee));
+		}
+		
+		mongoDbConnection.getCollection(CLIENT_TRANSACTION_FEE_COLLECTION).insertMany(docs);
+        LOGGER.info("End of client transaction fees migration...");
+	}
+	
     private Map<Integer, List<TransactionFee>> getTransactionFeesMap(List<TransactionFee> transactionFees)
     {
         Map<Integer, List<TransactionFee>> transactionFeesMap = new HashMap<>();

@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.tpromigration.mssqldb.config;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -54,7 +55,7 @@ public class MssqlDBConfiguration {
 
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		dataSource.setUrl("jdbc:sqlserver://"+middlewareDbHost+":"+middlewareDbPort+";databaseName="+ middlewareDbName);
+		dataSource.setUrl("jdbc:sqlserver://" + middlewareDbHost + (StringUtils.isBlank(middlewareDbPort) ? "" : (":" + middlewareDbPort)) + ";databaseName=" + middlewareDbName);
 		dataSource.setUsername(encryptor.decrypt(middlewareDbuser));
 		dataSource.setPassword(encryptor.decrypt(middlewareDbPwd));
 		return dataSource;

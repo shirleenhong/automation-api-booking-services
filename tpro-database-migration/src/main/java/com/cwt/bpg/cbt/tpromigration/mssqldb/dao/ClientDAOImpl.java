@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirVariables;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
-
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.InClientTransactionFee;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 
@@ -801,5 +801,60 @@ public class ClientDAOImpl {
 		LOGGER.info("Size of air misc info from mssqldb : {}", airMiscInfoList.size());
 		return airMiscInfoList;
 		
+	}
+
+	public List<InClientTransactionFee> getClientTransactionFees() {
+		List<InClientTransactionFee> clientTransactionFees = new ArrayList<>();
+		String sql = "select " + 
+				"CNCode, " + 
+				"DomOffline, " + 
+				"IntOffline, " + 
+				"LCCOffline from ClientMaster where CNCode <> ''";
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			LOGGER.info("Getting client transaction fees from mssqldb middleware");
+			conn = middlewareDataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				InClientTransactionFee clientTransactionFee = new InClientTransactionFee();
+				clientTransactionFee.setClientAccountNumber(StringUtils.stripStart(rs.getString("CNCode"),"0"));
+				clientTransactionFee.setIntOfflineAmount(rs.getBigDecimal("IntOffline"));
+				clientTransactionFee.setDomOfflineAmount(rs.getBigDecimal("DomOffline"));
+				clientTransactionFee.setLccOfflineAmount(rs.getBigDecimal("LCCOffline"));
+				clientTransactionFees.add(clientTransactionFee);
+			}
+		}
+		catch (SQLException e) {
+			LOGGER.error("Error reading client transaction fees from mssqldb middleware, {}", e);
+		}
+		finally {
+
+			try {
+
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (ps != null) {
+					ps.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			}
+			catch (SQLException e) {
+				//
+			}
+		}
+
+		LOGGER.info("Size of client transaction fees from mssqldb middleware: {}", clientTransactionFees.size());
+		return clientTransactionFees;
 	}
 }
