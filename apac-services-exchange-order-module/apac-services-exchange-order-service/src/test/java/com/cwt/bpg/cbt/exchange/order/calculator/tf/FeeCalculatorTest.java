@@ -2,43 +2,49 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.cwt.bpg.cbt.exchange.order.FlatTransactionFeeService;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
-public class FeeCalculatorTest {
+@RunWith(MockitoJUnitRunner.class)
+public class FeeCalculatorTest
+{
 
+    @InjectMocks
     private FeeCalculator calculator;
     private IndiaAirFeesInput input;
-    private AirlineRule airlineRule;
-    private Airport airport;
     private IndiaProduct airProduct;
 
     @Mock
     private ScaleConfig scaleConfig;
 
+    @Mock
+    private FlatTransactionFeeService transactionFeeService;
+
     @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-
-        calculator = new FeeCalculator();
-
-        Mockito.when(scaleConfig.getScale(Mockito.eq("IN"))).thenReturn(2);
-
-        ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
+    public void setup()
+    {
+        when(scaleConfig.getScale(Mockito.eq("IN"))).thenReturn(2);
 
         input = new IndiaAirFeesInput();
         input.setAirSegmentCount(2);
@@ -61,12 +67,11 @@ public class FeeCalculatorTest {
         input.setProduct(createProduct());
         input.setAirlineOverheadCommissionByPercent(true);
 
-        airlineRule = createAirlineRule();
-        airport = createAirport();
         airProduct = createAirProduct();
     }
 
-    private Client createClient(String feeOption) {
+    private Client createClient(String feeOption)
+    {
         TransactionFee transactionFee = new TransactionFee();
         transactionFee.setTerritoryCodes(asList("BLR"));
         transactionFee.setStartAmount(new BigDecimal(25));
@@ -94,13 +99,15 @@ public class FeeCalculatorTest {
         return client;
     }
 
-    private AirlineRule createAirlineRule() {
+    private AirlineRule createAirlineRule()
+    {
         AirlineRule airlineRule = new AirlineRule();
         airlineRule.setIncludeYqCommission(false);
         return airlineRule;
     }
 
-    private IndiaAirProductInput createProduct() {
+    private IndiaAirProductInput createProduct()
+    {
         IndiaAirProductInput product = new IndiaAirProductInput();
         product.setGstPercent(7d);
         product.setOt1Percent(5d);
@@ -108,7 +115,8 @@ public class FeeCalculatorTest {
         return product;
     }
 
-    private IndiaProduct createAirProduct() {
+    private IndiaProduct createAirProduct()
+    {
         IndiaProduct product = new IndiaProduct();
         product.setGstPercent(8d);
         product.setOt1Percent(6d);
@@ -116,7 +124,8 @@ public class FeeCalculatorTest {
         return product;
     }
 
-    private Airport createAirport() {
+    private Airport createAirport()
+    {
         Airport airport = new Airport();
         airport.setCityCode("BLR");
         airport.setCode("BLR");
@@ -125,234 +134,8 @@ public class FeeCalculatorTest {
     }
 
     @Test
-    public void shouldCalculateFeeOptionPnr() {
-        Client client = createClient(FeeCalculator.PNR);
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, airport, airProduct);
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(225d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(2.06d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(13.31d));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(486.69d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(596.69d));
-        assertThat(breakdown.getFee().doubleValue(), is(0d));
-
-        assertThat(breakdown.getCommission(), is(nullValue()));
-    }
-
-    @Test
-    public void shouldCalculateFeeOptionCouponSoloWithinCouponRange() {
-        Client client = createClient(FeeCalculator.COUPON);
-        TransactionFee transactionFee = client.getClientPricings().get(0).getTransactionFees().get(0);
-        transactionFee.setType(FeeCalculator.SOLO);
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, airport, airProduct);
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(225d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(2.06d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(13.31d));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(486.69d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(616.69d));
-        assertThat(breakdown.getFee().doubleValue(), is(20d));
-
-        assertThat(breakdown.getCommission(), is(nullValue()));
-    }
-
-    @Test
-    public void shouldCalculateFeeOptionCouponSoloOutsideCouponRange() {
-        Client client = createClient(FeeCalculator.COUPON);
-        TransactionFee transactionFee = client.getClientPricings().get(0).getTransactionFees().get(0);
-        transactionFee.setType(FeeCalculator.SOLO);
-
-        input.setAirSegmentCount(3);
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, airport, airProduct);
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(225d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(2.06d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(13.31d));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(486.69d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(596.69d));
-        assertThat(breakdown.getFee().doubleValue(), is(0d));
-
-        assertThat(breakdown.getCommission(), is(nullValue()));
-    }
-
-    @Test
-    public void shouldCalculateFeeOptionCouponGroupSegmentCountEqualToStartCoupon() {
-        Client client = createClient(FeeCalculator.COUPON);
-        TransactionFee transactionFee = client.getClientPricings().get(0).getTransactionFees().get(0);
-        transactionFee.setType(FeeCalculator.GROUP);
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, airport, airProduct);
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(225d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(2.06d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(13.31d));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(486.69d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(616.69d));
-        assertThat(breakdown.getFee().doubleValue(), is(20d));
-
-        assertThat(breakdown.getCommission(), is(nullValue()));
-    }
-
-    @Test
-    public void shouldCalculateFeeOptionCouponGroupSegmentCountGreaterThanStartCoupon() {
-        Client client = createClient(FeeCalculator.COUPON);
-        TransactionFee transactionFee = client.getClientPricings().get(0).getTransactionFees().get(0);
-        transactionFee.setType(FeeCalculator.GROUP);
-
-        input.setAirSegmentCount(2);
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, airport, airProduct);
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(225d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(2.06d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(13.31d));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(486.69d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(616.69d));
-        assertThat(breakdown.getFee().doubleValue(), is(20d));
-
-        assertThat(breakdown.getCommission(), is(nullValue()));
-    }
-
-    @Test
-    public void shouldCalculateFeeOptionCouponGroupSegmentCountLessThanStartCoupon() {
-        Client client = createClient(FeeCalculator.COUPON);
-        TransactionFee transactionFee = client.getClientPricings().get(0).getTransactionFees().get(0);
-        transactionFee.setType(FeeCalculator.GROUP);
-        transactionFee.setStartCoupon(2);
-
-        input.setAirSegmentCount(1);
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, airport, airProduct);
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(225d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(2.06d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(13.31d));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(486.69d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(596.69d));
-        assertThat(breakdown.getFee().doubleValue(), is(0d));
-
-        assertThat(breakdown.getCommission(), is(nullValue()));
-    }
-
-    @Test
-    public void shouldCalculateFeeOptionTicket() {
-        Client client = createClient(FeeCalculator.TICKET);
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, airport, airProduct);
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(225d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(2.06d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(13.31d));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(486.69d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(596.69d));
-        assertThat(breakdown.getFee().doubleValue(), is(0d));
-
-        assertThat(breakdown.getCommission(), is(nullValue()));
-    }
-
-    @Test
-    public void shouldGetTotalDiscountInternational() {
+    public void shouldGetTotalDiscountInternational()
+    {
         input.setTripType(TripType.INTERNATIONAL.getCode());
         input.setDiscountPercent(10d);
         IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
@@ -365,7 +148,8 @@ public class FeeCalculatorTest {
     }
 
     @Test
-    public void shouldGetTotalDiscountNotInternational() {
+    public void shouldGetTotalDiscountNotInternational()
+    {
         input.setTripType(TripType.DOMESTIC.getCode());
         input.setDiscountPercent(10d);
         IndiaAirFeesBreakdown breakdown = new IndiaAirFeesBreakdown();
@@ -378,7 +162,8 @@ public class FeeCalculatorTest {
     }
 
     @Test
-    public void shouldGetTotalOverheadCommissionInternational() {
+    public void shouldGetTotalOverheadCommissionInternational()
+    {
         input.setTripType(TripType.INTERNATIONAL.getCode());
         input.setBaseFare(new BigDecimal(100));
         input.setAirlineOverheadCommissionPercent(10d);
@@ -390,7 +175,8 @@ public class FeeCalculatorTest {
     }
 
     @Test
-    public void shouldGetTotalOverheadCommissionNotInternational() {
+    public void shouldGetTotalOverheadCommissionNotInternational()
+    {
         input.setTripType(TripType.DOMESTIC.getCode());
 
         BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission(input, new BigDecimal(15));
@@ -399,11 +185,11 @@ public class FeeCalculatorTest {
     }
 
     @Test
-    public void shouldGetTotalOverheadCommission2International() {
+    public void shouldGetTotalOverheadCommission2International()
+    {
         input.setTripType(TripType.INTERNATIONAL.getCode());
         input.setBaseFare(new BigDecimal(100));
         input.setAirlineOverheadCommissionByPercent(false);
-
 
         input.setAirlineOverheadCommission(new BigDecimal(15));
         input.setClientOverheadCommissionPercent(50d);
@@ -414,7 +200,8 @@ public class FeeCalculatorTest {
     }
 
     @Test
-    public void shouldGetTotalOverheadCommission2NotInternational() {
+    public void shouldGetTotalOverheadCommission2NotInternational()
+    {
         input.setTripType(TripType.DOMESTIC.getCode());
 
         BigDecimal totalOverheadCommission = calculator.getTotalOverheadCommission2(input);
@@ -422,9 +209,9 @@ public class FeeCalculatorTest {
         assertThat(totalOverheadCommission, is(BigDecimal.ZERO));
     }
 
-
     @Test
-    public void shouldGetTotalNettFare() {
+    public void shouldGetTotalNettFare()
+    {
         input.setBaseFare(new BigDecimal(100));
 
         BigDecimal totalNettFare = calculator.getTotalNettFare(input);
@@ -433,157 +220,16 @@ public class FeeCalculatorTest {
     }
 
     @Test
-    public void shouldGetDdlFeeApply() {
+    public void shouldGetDdlFeeApply()
+    {
         Boolean ddlFeeApply = calculator.getDdlFeeApply();
 
         assertThat(ddlFeeApply, is(true));
     }
 
-
     @Test
-    public void shouldCalculateFlagsFalseTicketAllOpF() {
-
-        Client client = createClient(FeeCalculator.TICKET);
-        TransactionFee transactionFee = client.getClientPricings().get(0).getTransactionFees().get(0);
-        client.setExemptTax(false);
-        client.setLccSameAsInt(true);
-        client.setIntDdlFeeApply("N");
-
-        transactionFee.setTerritoryCodes(Arrays.asList("BLR"));
-        transactionFee.setOperator("F");
-        transactionFee.setStartAmount(BigDecimal.ZERO);
-        transactionFee.setEndAmount(new BigDecimal(1000));
-
-        AirlineRule airlineRule = new AirlineRule();
-        airlineRule.setIncludeYqCommission(true);
-
-        setInputFlagsToFalse();
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission(), is(nullValue()));
-        assertThat(breakdown.getTotalOverheadCommission(), is(nullValue()));
-        assertThat(breakdown.getTotalDiscount(), is(nullValue()));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst(), is(nullValue()));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(500.0d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(630d));
-        assertThat(breakdown.getFee().doubleValue(), is(20d));
-        assertThat(breakdown.getCommission(), is(nullValue()));
-
-    }
-
-    private void setInputFlagsToFalse() {
-
-        input.setGstEnabled(false);
-        input.setCommissionEnabled(false);
-        input.setOverheadCommissionEnabled(false);
-        input.setClientOverheadCommissionPercent(15d);
-        input.setMarkupEnabled(false);
-        input.setDiscountEnabled(false);
-        input.setFeeOverride(false);
-    }
-
-    @Test
-    public void shouldCalculateFlagsFalseTicketAllOpM() {
-
-        Client client = createClient(FeeCalculator.TICKET);
-        TransactionFee transactionFee = client.getClientPricings().get(0).getTransactionFees().get(0);
-        client.setExemptTax(false);
-        client.setLccSameAsInt(true);
-        client.setIntDdlFeeApply("N");
-
-        transactionFee.setTerritoryCodes(Arrays.asList("BLR"));
-        transactionFee.setOperator("M");
-        transactionFee.setStartAmount(BigDecimal.ZERO);
-        transactionFee.setEndAmount(new BigDecimal(1000));
-
-        AirlineRule airlineRule = new AirlineRule();
-        airlineRule.setIncludeYqCommission(true);
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, airport, new IndiaProduct());
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(225.0d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(2.06d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(13.31d));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst().doubleValue(), is(82.5d));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(569.19));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(679.19d));
-        assertThat(breakdown.getFee().doubleValue(), is(0d));
-        assertThat(breakdown.getCommission(), is(nullValue()));
-    }
-
-
-    @Test
-    public void shouldCalculateFlagsFalseTicketAllOpMFeeGrMax() {
-
-        Client client = createClient(FeeCalculator.TICKET);
-        TransactionFee transactionFee = client.getClientPricings().get(0).getTransactionFees().get(0);
-        client.setExemptTax(false);
-        client.setLccSameAsInt(true);
-        client.setIntDdlFeeApply("N");
-
-        transactionFee.setTerritoryCodes(Arrays.asList("BLR"));
-        transactionFee.setOperator("D");
-        transactionFee.setStartAmount(BigDecimal.ZERO);
-        transactionFee.setEndAmount(new BigDecimal(1000));
-        transactionFee.setMaxAmount(new BigDecimal(10));
-
-        AirlineRule airlineRule = new AirlineRule();
-        airlineRule.setIncludeYqCommission(true);
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, airport, airProduct);
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(225.0d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(2.06d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(13.31d));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst().doubleValue(), is(82.5d));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(569.19d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(679.19d));
-        assertThat(breakdown.getFee().doubleValue(), is(0d));
-        assertThat(breakdown.getCommission(), is(nullValue()));
-    }
-
-    @Test
-    public void shouldCalculateFlagsNoAirlineRule() {
+    public void shouldCalculateFlagsNoAirlineRule()
+    {
 
         Client client = createClient("P");
         TransactionFee transactionFee = client.getClientPricings().get(0).getTransactionFees().get(0);
@@ -601,8 +247,7 @@ public class FeeCalculatorTest {
         input.setFeeOverride(true);
         input.setFee(new BigDecimal(500));
 
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, null, client,
-                new Airport(), airProduct);
+        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, null, client, airProduct);
 
         assertThat(breakdown, is(not(nullValue())));
         assertThat(breakdown.getOverheadPercent(), is(nullValue()));
@@ -625,161 +270,61 @@ public class FeeCalculatorTest {
         assertThat(breakdown.getTotalCharge().doubleValue(), is(1181.25d));
         assertThat(breakdown.getFee().doubleValue(), is(500d));
         assertThat(breakdown.getCommission(), is(nullValue()));
-
     }
 
     @Test
-    public void shouldCalculateApplyFeeNA() {
+    public void shouldGetIntOfflineAmount()
+    {
+        Client client = new Client();
+        client.setClientAccountNumber("9000000042");
+        input.setTripType(TripType.INTERNATIONAL.getCode());
+        input.setFeeOverride(false);
 
-        Client client = createClient(FeeCalculator.TICKET);
-        TransactionFee transactionFee = client.getClientPricings().get(0).getTransactionFees().get(0);
-        client.setLccSameAsInt(false);
-        client.setLccDdlFeeApply("NA");
-
-        transactionFee.setTerritoryCodes(Arrays.asList("X"));
-        transactionFee.setOperator("F");
-        transactionFee.setStartAmount(BigDecimal.ZERO);
-        transactionFee.setEndAmount(new BigDecimal(1000));
-
-        AirlineRule airlineRule = new AirlineRule();
-        airlineRule.setIncludeYqCommission(true);
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, new Airport(), airProduct);
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(225.0d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(2.06d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(13.31d));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(486.69d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(596.69));
-        assertThat(breakdown.getFee().doubleValue(), is(0d));
-        assertThat(breakdown.getCommission(), is(nullValue()));
+        FlatTransactionFee tf = new FlatTransactionFee();
+        tf.setIntOfflineAmount(BigDecimal.valueOf(100));
+        when(transactionFeeService.getTransactionFee(anyString())).thenReturn(tf);
+        IndiaAirFeesBreakdown result = calculator.calculate(input, null, client, airProduct);
+        assertThat(result.getFee().doubleValue(), is(tf.getIntOfflineAmount().doubleValue()));
     }
 
     @Test
-    public void shouldCalculateInvalidFeeOption() {
+    public void shouldGetDomOfflineAmount()
+    {
+        Client client = new Client();
+        client.setClientAccountNumber("9000000043");
+        input.setTripType(TripType.DOMESTIC.getCode());
+        input.setFeeOverride(false);
 
-        Client client = createClient("X");
-        TransactionFee transactionFee = client.getClientPricings().get(0).getTransactionFees().get(0);
-        client.setLccSameAsInt(false);
-        client.setLccDdlFeeApply("N");
-
-        transactionFee.setTerritoryCodes(Arrays.asList("X"));
-        transactionFee.setOperator("F");
-        transactionFee.setStartAmount(BigDecimal.ZERO);
-        transactionFee.setEndAmount(new BigDecimal(1000));
-
-        AirlineRule airlineRule = new AirlineRule();
-        airlineRule.setIncludeYqCommission(true);
-
-        setInputFlagsToFalse();
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, new Airport(), airProduct);
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission(), is(nullValue()));
-        assertThat(breakdown.getTotalOverheadCommission(), is(nullValue()));
-        assertThat(breakdown.getTotalDiscount(), is(nullValue()));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst(), is(nullValue()));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(500.0d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(610d));
-        assertThat(breakdown.getFee().doubleValue(), is(0d));
-        assertThat(breakdown.getCommission(), is(nullValue()));
-
+        FlatTransactionFee tf = new FlatTransactionFee();
+        tf.setDomOfflineAmount(BigDecimal.valueOf(100));
+        when(transactionFeeService.getTransactionFee(anyString())).thenReturn(tf);
+        IndiaAirFeesBreakdown result = calculator.calculate(input, null, client, airProduct);
+        assertThat(result.getFee().doubleValue(), is(tf.getDomOfflineAmount().doubleValue()));
     }
 
     @Test
-    public void shouldCalculateNonExistentOp() {
+    public void shouldGetLccAmount()
+    {
+        Client client = new Client();
+        client.setClientAccountNumber("9000000043");
+        input.setTripType(TripType.LCC.getCode());
+        input.setFeeOverride(false);
 
-        Client client = createClient(FeeCalculator.TICKET);
-        TransactionFee transactionFee = client.getClientPricings().get(0).getTransactionFees().get(0);
-        client.setLccSameAsInt(false);
-        client.setLccDdlFeeApply("N");
-
-        transactionFee.setTerritoryCodes(Arrays.asList("BLR"));
-        transactionFee.setOperator("X");
-        transactionFee.setEndAmount(BigDecimal.ZERO);
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, airport, airProduct);
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(225.00d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(2.06d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(13.31d));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(486.69d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(596.69d));
-        assertThat(breakdown.getFee().doubleValue(), is(0d));
-        assertThat(breakdown.getCommission(), is(nullValue()));
-
+        FlatTransactionFee tf = new FlatTransactionFee();
+        tf.setLccOfflineAmount(BigDecimal.valueOf(100.00));
+        when(transactionFeeService.getTransactionFee(anyString())).thenReturn(tf);
+        IndiaAirFeesBreakdown result = calculator.calculate(input, null, client, airProduct);
+        assertThat(result.getFee().doubleValue(), is(tf.getLccOfflineAmount().doubleValue()));
     }
 
-    @Test
-    public void shouldCalculatePricingNotPresent() {
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionOnNoFeeforClient() {
+        Client client = new Client();
+        client.setClientAccountNumber("9000000042");
+        input.setTripType(TripType.INTERNATIONAL.getCode());
+        input.setFeeOverride(false);
 
-        Client client = createClient(FeeCalculator.TICKET);
-        client.setClientPricings(new ArrayList<>());
-
-        IndiaAirFeesBreakdown breakdown = calculator.calculate(input, airlineRule, client, airport, airProduct);
-
-        assertThat(breakdown, is(not(nullValue())));
-        assertThat(breakdown.getOverheadPercent(), is(nullValue()));
-        assertThat(breakdown.getGstPercent(), is(nullValue()));
-        assertThat(breakdown.getOt1Percent(), is(nullValue()));
-        assertThat(breakdown.getOt2Percent(), is(nullValue()));
-        assertThat(breakdown.getMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getSubMerchantFeePercent(), is(nullValue()));
-        assertThat(breakdown.getBaseAmount(), is(nullValue()));
-        assertThat(breakdown.getTotalAirlineCommission().doubleValue(), is(225.00d));
-        assertThat(breakdown.getTotalOverheadCommission().doubleValue(), is(2.06d));
-        assertThat(breakdown.getTotalDiscount().doubleValue(), is(13.31d));
-        assertThat(breakdown.getTotalMarkup(), is(nullValue()));
-        assertThat(breakdown.getTotalSellFare().doubleValue(), is(500d));
-        assertThat(breakdown.getTotalGst().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalMerchantFee().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalSellingFare().doubleValue(), is(486.69d));
-        assertThat(breakdown.getTotalTaxes().doubleValue(), is(110d));
-        assertThat(breakdown.getMerchantFeeOnTf().doubleValue(), is(0d));
-        assertThat(breakdown.getTotalCharge().doubleValue(), is(596.69d));
-        assertThat(breakdown.getFee().doubleValue(), is(0d));
-        assertThat(breakdown.getCommission(), is(nullValue()));
-
+        when(transactionFeeService.getTransactionFee(anyString())).thenReturn(null);
+        calculator.calculate(input, null, client, airProduct);
     }
-
 }

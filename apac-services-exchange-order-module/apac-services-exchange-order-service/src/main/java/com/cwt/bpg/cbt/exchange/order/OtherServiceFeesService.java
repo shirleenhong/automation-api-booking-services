@@ -124,16 +124,10 @@ public class OtherServiceFeesService {
         final int pricingId = client.getPricingId();
         final AirlineRule airlineRule = airlineRuleService.getAirlineRule(input.getPlatCarrier());
 
-        Optional<Airport> isAirportExist = Optional.ofNullable(getAirport(input.getCityCode()));
-
-        Airport airport = isAirportExist
-                .orElseThrow(() -> new IllegalArgumentException(
-                        "Airport City Code [ " + input.getCityCode() + " ] not found."));
-
         final IndiaProduct airProduct = (IndiaProduct) getProduct(Country.INDIA.getCode(), AIR_PRODUCT_CODE);
 
         return this.tfFactory.getCalculator(pricingId)
-                .calculate(input, airlineRule, client, airport, airProduct);
+                .calculate(input, airlineRule, client, airProduct);
     }
 
     public AirFeesDefaultsOutput getAirFeesDefaults(AirFeesDefaultsInput input) {

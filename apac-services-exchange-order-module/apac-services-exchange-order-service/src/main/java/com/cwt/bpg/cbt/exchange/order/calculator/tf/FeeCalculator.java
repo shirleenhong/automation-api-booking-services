@@ -1,39 +1,30 @@
 package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
-import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
-
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
+import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
+import com.cwt.bpg.cbt.calculator.model.Country;
+import com.cwt.bpg.cbt.exchange.order.FlatTransactionFeeService;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
-import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.model.*;
+import java.math.BigDecimal;
+
+import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
+import static com.cwt.bpg.cbt.exchange.order.model.TripType.isDomestic;
+import static com.cwt.bpg.cbt.exchange.order.model.TripType.isInternational;
 
 @Component("tfCalculator")
 public class FeeCalculator {
 
-	static final String PNR = "P";
-	static final String COUPON = "C";
-	static final String TICKET = "T";
-	private static final String NA = "NA";
-	private static final String ALL = "X";
-	static final String SOLO = "SOLO";
-	static final String GROUP = "GROUP";
-	static final int FEE = 5;
-
 	@Autowired
 	private ScaleConfig scaleConfig;
+
+	@Autowired
+	private FlatTransactionFeeService transactionFeeService;
 
 	public IndiaAirFeesBreakdown calculate(final IndiaAirFeesInput input,
 										   AirlineRule airlineRule,
 										   Client client,
-										   Airport airport,
 										   BaseProduct airProduct) {
 
 		BigDecimal gstAmount = null;
@@ -94,7 +85,7 @@ public class FeeCalculator {
 		breakdown.setTotalSellFare(round(safeValue(input.getBaseFare()), scale));
 		breakdown.setBaseAmount(round(getTotalFee(input, breakdown, input.getYqTax()), scale));
 
-		breakdown.setFee(round(getTransactionFee(client, input, airport, breakdown.getBaseAmount()), scale));
+		breakdown.setFee(round(getTransactionFee(client, input), scale));
 
 		breakdown.setTotalMerchantFee(round(getMerchantFee(input, breakdown), scale));
 
@@ -126,193 +117,34 @@ public class FeeCalculator {
 	}
 
 	private BigDecimal getTransactionFee(Client client,
-										 IndiaAirFeesInput input,
-										 Airport airport,
-										 BigDecimal baseAmount) {
+										 IndiaAirFeesInput input) {
 
 		BigDecimal result = BigDecimal.ZERO;
 
 		if (!input.isFeeOverride()) {
+			FlatTransactionFee tf = transactionFeeService.getTransactionFee(client.getClientAccountNumber());
+			if (tf != null) {
 
-            List<ClientPricing> clientPricings = Optional.ofNullable(client.getClientPricings())
-                    .orElse(Collections.emptyList());
-
-			Optional<ClientPricing> pricing = filterClientPricings(input, clientPricings);
-
-			if (pricing.isPresent()) {
-				final ClientPricing clientPricing = pricing.get();
-				final String feeOption = clientPricing.getFeeOption();
-
-				final String applyFee = client.getLccSameAsInt()
-							? client.getIntDdlFeeApply()
-							: client.getLccDdlFeeApply();
-
-				if (applyFee != null && !applyFee.equals(NA)) {
-					switch (feeOption) {
-						case PNR:
-							result = getFeeByPnr(input, airport, clientPricing, baseAmount);
-							break;
-						case COUPON:
-							result = getFeeByCoupon(input, clientPricing);
-							break;
-						case TICKET:
-							result = getFeeByTicket(input, airport, clientPricing, baseAmount);
-							break;
-						default:
-							break;
-					}
+				if (isInternational(input.getTripType())) {
+					result = tf.getIntOfflineAmount();
+				}
+				else if (isDomestic(input.getTripType())) {
+					result = tf.getDomOfflineAmount();
+				}
+				else {
+					result = tf.getLccOfflineAmount();
 				}
 			}
-
+			else {
+				throw new IllegalArgumentException(
+					"Client [ client account number: " + input.getClientAccountNumber() + " ] not found in flat transaction fee collection.");
+			}
 		}
 		else {
 			result = input.getFee();
 		}
 		
 		return result;
-	}
-
-	private Optional<ClientPricing> filterClientPricings(IndiaAirFeesInput input,
-			List<ClientPricing> clientPricings) {
-		
-		return clientPricings.stream()
-				.filter(i -> i.getFieldId() == FEE
-				&& i.getTripType().equals(input.getTripType()))
-		.findFirst();
-	}
-
-	private BigDecimal getFeeByTicket(
-			IndiaAirFeesInput input,
-			Airport airport,
-			ClientPricing pricing,
-			BigDecimal totalFee) {
-
-		BigDecimal result = BigDecimal.ZERO;
-		BigDecimal baseAmount = totalFee;
-
-		if (baseAmount == null) {
-			baseAmount = input.getBaseFare();
-		}
-
-		TransactionFee tf = getFeeByTerritory(airport, pricing, baseAmount);
-
-		if (tf != null) {
-
-			if ("F".equals(tf.getOperator())) {
-				result = safeValue(tf.getAmount()).add(safeValue(tf.getExtraAmount()));
-			}
-			else if ("M".equals(tf.getOperator())) {
-				result = calculatePercentage(baseAmount, tf.getPerAmount())
-						.add(safeValue(tf.getExtraAmount()));
-			}
-			else if ("D".equals(tf.getOperator())) {
-				result = baseAmount
-						.divide(percentDecimal(BigDecimal.valueOf(100)
-								.subtract(BigDecimal.valueOf(safeValue(tf.getPerAmount())))), MathContext.DECIMAL128)
-						.add(safeValue(tf.getExtraAmount()))
-						.subtract(safeValue(baseAmount));
-			}
-
-			if (safeValue(tf.getMaxAmount()).compareTo(BigDecimal.ZERO) > 0
-					&& result.compareTo(safeValue(tf.getMaxAmount())) > 0) {
-				result = tf.getMaxAmount();
-			}
-			else if (result.compareTo(safeValue(tf.getMinAmount())) < 0) {
-				result = safeValue(tf.getMinAmount());
-			}
-		}
-
-		return result;
-	}
-
-	private BigDecimal getFeeByCoupon(IndiaAirFeesInput input, ClientPricing pricing) {
-
-		BigDecimal tfAmount = BigDecimal.ZERO;
-		int segmentCount = input.getAirSegmentCount();
-
-		if (segmentCount == 0) 
-		{
-			return tfAmount;
-		}
-		
-		for (TransactionFee tf : pricing.getTransactionFees()) {
-
-			if (SOLO.equalsIgnoreCase(tf.getType())) {
-
-				if (tf.getStartCoupon() <= segmentCount && segmentCount <= tf.getEndCoupon()) {
-
-					tfAmount = tf.getAmount();
-					break;
-				}
-			}
-			else if (GROUP.equalsIgnoreCase(tf.getType())) {
-
-				if (tf.getStartCoupon() <= segmentCount) {
-
-					tfAmount = tfAmount.add(safeValue(tf.getAmount()));
-				}
-			}
-		}
-
-		return tfAmount;
-	}
-
-    private BigDecimal getFeeByPnr(
-			IndiaAirFeesInput input,
-			Airport airport,
-			ClientPricing pricing,
-			BigDecimal totalFee) {
-
-		BigDecimal result = BigDecimal.ZERO;
-		BigDecimal baseAmount = totalFee;
-
-		if (baseAmount == null) {
-			baseAmount = input.getBaseFare();
-		}
-
-		TransactionFee transactionFee = getFeeByTerritory(airport, pricing, baseAmount);
-
-		if (transactionFee != null) {
-			result = transactionFee.getAmount();
-		}
-
-		return result;
-	}
-
-	private TransactionFee getFeeByTerritory(Airport airport, ClientPricing pricing, BigDecimal baseAmount) {
-		TransactionFee transactionFee = getFeeByTerritory(pricing, airport.getCityCode(), baseAmount);
-
-		if (transactionFee == null) {
-			transactionFee = getFeeByTerritory(pricing, airport.getCountryCode(), baseAmount);
-		}
-
-		if (transactionFee == null) {
-			transactionFee = getFeeByTerritory(pricing, airport.getRegionCode(), baseAmount);
-		}
-
-		if (transactionFee == null) {
-			transactionFee = getFeeByTerritory(pricing, ALL, baseAmount);
-		}
-
-		return transactionFee;
-	}
-
-	private TransactionFee getFeeByTerritory(
-			ClientPricing pricing,
-			String territoryCode,
-			BigDecimal amount) {
-
-		Optional<TransactionFee> result = pricing.getTransactionFees().stream()
-				.filter(i -> i.getTerritoryCodes().stream()
-						.anyMatch(code ->
-							code.equals(territoryCode)
-							&& amount.compareTo(i.getStartAmount()) >= 0
-							&& (amount.compareTo(i.getEndAmount()) <= 0
-							  || i.getEndAmount().compareTo(BigDecimal.ZERO) == 0)
-							)
-				).findFirst();
-
-		return result.orElse(null);
 	}
 
 	/**
@@ -338,7 +170,7 @@ public class FeeCalculator {
 		BigDecimal discountAmount = calculatePercentage(breakdown.getTotalAirlineCommission(),
 				input.getDiscountPercent());
 
-		if (TripType.isInternational(input.getTripType())) {
+		if (isInternational(input.getTripType())) {
 			return discountAmount.add(safeValue(breakdown.getTotalOverheadCommission()));
 		}
 
@@ -347,7 +179,7 @@ public class FeeCalculator {
 
 	//Airline OR Commission %
 	public BigDecimal getTotalOverheadCommission(IndiaAirFeesInput input, BigDecimal totalAirlineCommission) {
-		if (TripType.isInternational(input.getTripType())) {
+		if (isInternational(input.getTripType())) {
 			return calculatePercentage(calculatePercentage(safeValue(input.getBaseFare())
 						.subtract(safeValue(totalAirlineCommission)), input.getAirlineOverheadCommissionPercent()),
 					input.getClientOverheadCommissionPercent());
@@ -357,7 +189,7 @@ public class FeeCalculator {
 
 	//Airline OR Commission $
 	public BigDecimal getTotalOverheadCommission2(IndiaAirFeesInput input) {
-		if (TripType.isInternational(input.getTripType())) {
+		if (isInternational(input.getTripType())) {
 			return calculatePercentage(input.getAirlineOverheadCommission(),
 					input.getClientOverheadCommissionPercent());
 		}
@@ -377,7 +209,7 @@ public class FeeCalculator {
 								IndiaAirFeesBreakdown breakdown,
 								BigDecimal totalGstOnTf) {
 
-		if (TripType.isInternational(input.getTripType())) {
+		if (isInternational(input.getTripType())) {
 			return calculatePercentage(safeValue(breakdown.getFee()).add(totalGstOnTf),
 					input.getMerchantFeePercent());
 		}

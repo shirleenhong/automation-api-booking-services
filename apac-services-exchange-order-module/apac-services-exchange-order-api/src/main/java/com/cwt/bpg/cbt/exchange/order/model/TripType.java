@@ -20,4 +20,8 @@ public enum TripType
 	public static boolean isInternational(String tripType) {
 		return INTERNATIONAL.getCode().equalsIgnoreCase(tripType);
 	}
+
+	public static boolean isDomestic(String tripType) {
+		return DOMESTIC.getCode().equalsIgnoreCase(tripType);
+	}
 }

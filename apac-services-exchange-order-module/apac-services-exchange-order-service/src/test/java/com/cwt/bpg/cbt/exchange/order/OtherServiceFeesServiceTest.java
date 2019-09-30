@@ -133,7 +133,6 @@ public class OtherServiceFeesServiceTest {
                         any(IndiaAirFeesInput.class),
                         any(AirlineRule.class),
                         any(Client.class),
-                        any(Airport.class),
                         any(BaseProduct.class)))
                 .thenReturn(new IndiaAirFeesBreakdown());
 

@@ -77,7 +77,7 @@ public class BaseAndYqCalculatorTest {
 		product.setOt2Percent(1.5d);
 		input.setProduct(product);
 
-		IndiaAirFeesBreakdown result = calculator.calculate(input, rule, client, new Airport(), new IndiaProduct());
+		IndiaAirFeesBreakdown result = calculator.calculate(input, rule, client, new IndiaProduct());
 		
 		assertThat(result.getCommission(), is(nullValue()));
 		assertThat(result.getBaseAmount().doubleValue(), is(equalTo(610d)));
