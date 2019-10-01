@@ -11,6 +11,10 @@ import java.util.stream.Collectors;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 
+import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Projections.*;
+
+import com.mongodb.client.FindIterable;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
 import org.slf4j.Logger;
@@ -84,6 +88,7 @@ public class MigrationService
     private static final String AGENT_COLLECTION = "agentInfo";
     private static final String BILLING_ENTITIES_COLLECTION = "billingEntities";
     private static final String CLIENT_TRANSACTION_FEE_COLLECTION = "clientTransactionFees_2";
+    public static final String CLIENT_ACCOUNT_NUMBER = "clientAccountNumber";
 
     @Autowired
     private MongoDbConnection mongoDbConnection;
@@ -332,14 +337,31 @@ public class MigrationService
         updateClients(clients, clientsGstin, productsMap, ccsMap, banksMap, clientPricingMaps, airVariables,
                 transactionFeeByPNR, transactionFeeByCoupon, transactionFeeByTicket);
 
-        List<Document> docs = new ArrayList<>();
-        for (Client client : clients)
-        {
+        List<String> existingClientList = new ArrayList<>();
+        List<String> allClients = clients.stream().map(client -> client.getClientAccountNumber()).collect(Collectors.toList());
+        FindIterable<Document> existingClients = mongoDbConnection.getCollection(CLIENT_COLLECTION)
+                    .find(in(CLIENT_ACCOUNT_NUMBER, allClients))
+                    .projection(fields(include(CLIENT_ACCOUNT_NUMBER), excludeId()));
 
-            docs.add(dBObjectMapper.mapAsDbDocument(client));
+        for (Document doc : existingClients) {
+            existingClientList.add(doc.getString(CLIENT_ACCOUNT_NUMBER));
         }
 
-        mongoDbConnection.getCollection(CLIENT_COLLECTION).insertMany(docs);
+        List<Document> docs = new ArrayList<>();
+
+        for (Client client : clients)
+        {
+            if(!existingClientList.contains(client.getClientAccountNumber()))
+            {
+                LOGGER.info("Adding "+ client.getClientAccountNumber());
+                docs.add(dBObjectMapper.mapAsDbDocument(client));
+            }
+        }
+
+        if(!docs.isEmpty()) {
+            mongoDbConnection.getCollection(CLIENT_COLLECTION).insertMany(docs);
+        }
+
         LOGGER.info("End of clients migration...");
     }
 
