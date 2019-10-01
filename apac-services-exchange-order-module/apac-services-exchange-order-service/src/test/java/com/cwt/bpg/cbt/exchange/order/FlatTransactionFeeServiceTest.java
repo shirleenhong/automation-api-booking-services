@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertNotNull;
@@ -16,24 +17,46 @@ import static org.mockito.Mockito.*;
 public class FlatTransactionFeeServiceTest
 {
     @Mock
-    private FlatTransactionFeeRepository repository;
+    private FlatTransactionFeeRepository flatTransactionFeeRepository;
 
     @InjectMocks
-    FlatTransactionFeeService service;
+    private FlatTransactionFeeService flatTransactionFeeService;
 
     @Before
-    public void setUp() throws Exception
+    public void init()
     {
-
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void shoulGetTransactionFee()
+    public void canPutFlatTransactionFee()
     {
-        String cn = "10000000";
-        when(repository.get(eq(cn))).thenReturn(mock(FlatTransactionFee.class));
-        FlatTransactionFee result = service.getTransactionFee(cn);
+
+        FlatTransactionFee input = new FlatTransactionFee();
+        FlatTransactionFee result = flatTransactionFeeService.save(input);
+
+        verify(flatTransactionFeeRepository).put(input);
+    }
+
+
+    @Test
+    public void canRemoveFlatTransactionFee()
+    {
+        String clientAccountNumber = "1233333000";
+        final String result = flatTransactionFeeService.delete(clientAccountNumber);
+
+        verify(flatTransactionFeeRepository).remove(clientAccountNumber);
+    }
+
+
+    @Test
+    public void canGetClientFlatTransactionFee()
+    {
+        final String clientAccountNumber = "1233333000";
+        when(flatTransactionFeeRepository.get(eq(clientAccountNumber))).thenReturn(mock(FlatTransactionFee.class));
+        final FlatTransactionFee result = flatTransactionFeeService.getTransactionFee(clientAccountNumber);
+
         assertNotNull(result);
-        verify(repository, times(1)).get(cn);
+        verify(flatTransactionFeeRepository).get(clientAccountNumber);
     }
 }

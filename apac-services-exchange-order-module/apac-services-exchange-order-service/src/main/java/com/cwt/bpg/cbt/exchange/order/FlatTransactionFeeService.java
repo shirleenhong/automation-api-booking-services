@@ -8,10 +8,20 @@ import org.springframework.stereotype.Service;
 public class FlatTransactionFeeService
 {
     @Autowired
-    private FlatTransactionFeeRepository repository;
+    private FlatTransactionFeeRepository flatTransactionFeeRepository;
 
     public FlatTransactionFee getTransactionFee(String clientAccountNumber)
     {
-        return repository.get(clientAccountNumber);
+        return flatTransactionFeeRepository.get(clientAccountNumber);
+    }
+
+    public FlatTransactionFee save(FlatTransactionFee input)
+    {
+        return flatTransactionFeeRepository.put(input);
+    }
+
+    public String delete(String clientAccountNumber)
+    {
+        return flatTransactionFeeRepository.remove(clientAccountNumber);
     }
 }

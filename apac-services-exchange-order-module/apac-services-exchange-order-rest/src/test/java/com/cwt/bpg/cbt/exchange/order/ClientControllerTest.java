@@ -17,11 +17,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.cwt.bpg.cbt.exchange.order.model.Client;
+import com.cwt.bpg.cbt.exchange.order.model.FlatTransactionFee;
 
 public class ClientControllerTest {
 
 	@Mock
 	private ClientService clientService;
+
+	@Mock
+	private FlatTransactionFeeService clientTransactionFeeService;
 	
 	@InjectMocks
 	private ClientController clientController;
@@ -81,6 +85,25 @@ public class ClientControllerTest {
 
 		ResponseEntity<?> client = clientController.getAllClients();
 		verify(clientService, times(1)).getAll();
+		assertEquals(HttpStatus.OK, client.getStatusCode());
+	}
+
+	@Test
+	public void canPutClientTransactionFee()
+	{
+		FlatTransactionFee clientTransactionFee = new FlatTransactionFee();
+		ResponseEntity<?> client = clientController.putClientTransactionFee("123456789", clientTransactionFee);
+		verify(clientTransactionFeeService).save(clientTransactionFee);
+		assertEquals(HttpStatus.OK, client.getStatusCode());
+	}
+
+
+	@Test
+	public void canRemoveClientTransactionFee()
+	{
+		final String clientAccountNumber = "0011122";
+		ResponseEntity<?> client = clientController.removeClientTransactionFee(clientAccountNumber);
+		verify(clientTransactionFeeService).delete(clientAccountNumber);
 		assertEquals(HttpStatus.OK, client.getStatusCode());
 	}
 }

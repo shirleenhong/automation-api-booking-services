@@ -8,10 +8,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
+import com.cwt.bpg.cbt.exchange.order.model.FlatTransactionFee;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(tags = "Clients")
@@ -20,6 +23,8 @@ public class ClientController {
 	@Autowired
 	private ClientService clientService;
 	
+	@Autowired
+	private FlatTransactionFeeService clientTransactionFeeService;
 	
 	@GetMapping(path = "/clients", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
@@ -54,4 +59,36 @@ public class ClientController {
 		return new ResponseEntity<>(deleteResult, status);
 	}
 
+	@Internal
+	@GetMapping(path = "/clients/{clientAccountNumber}/transaction-fees", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "[Maintenance] Returns client transaction fee.")
+	public ResponseEntity<FlatTransactionFee> getClientTransactionFee(@PathVariable String clientAccountNumber)
+	{
+		return new ResponseEntity<>(clientTransactionFeeService.getTransactionFee(clientAccountNumber), HttpStatus.OK);
+	}
+
+	@Internal
+	@PutMapping(path = "/clients/{clientAccountNumber}/transaction-fees", produces = {
+		MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
+		MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	@ApiOperation(value = "[Maintenance] Saves (inserts/updates) client transaction fees.")
+	public ResponseEntity<FlatTransactionFee> putClientTransactionFee(@PathVariable String clientAccountNumber, @RequestBody FlatTransactionFee clientTransactionFee)
+	{
+		clientTransactionFee.setClientAccountNumber(clientAccountNumber);
+		clientTransactionFee.setId(clientAccountNumber);
+		FlatTransactionFee updatedClient = clientTransactionFeeService.save(clientTransactionFee);
+		return new ResponseEntity<>(updatedClient, HttpStatus.OK);
+	}
+
+	@Internal
+	@DeleteMapping(path = "/clients/{clientAccountNumber}/transaction-fees")
+	@ResponseBody
+	@ApiOperation(value = "[Maintenance] Deletes client transaction fees.")
+	public ResponseEntity<String> removeClientTransactionFee(@PathVariable
+			@ApiParam(value = "ClientTransactionFee clientAccountNumber to delete") String clientAccountNumber)
+	{
+		return new ResponseEntity<>(clientTransactionFeeService.delete(clientAccountNumber), HttpStatus.OK);
+	}
 }
