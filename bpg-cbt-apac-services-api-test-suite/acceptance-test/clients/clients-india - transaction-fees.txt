@@ -5,38 +5,55 @@ Resource          ../resources/api-imports.txt
 Resource    resources/clients.txt
 
 *** Test Cases ***
-Verify That Transaction Fee For Specific Client Account Number Is Correctly Retrieved When Trip Type Is International
-    [Tags]    functional
-    Create Test Variables For Client Transaction Fees    client_account_number=9000000066    trip_type=I    tf_amount=200     
+Verify That Transaction Fee For Specific Client Account Number Is Correctly Retrieved
+    [Tags]    functional 
+    Create Test Variables For Client Transaction Fees    client_account_number=3237300015    int_amount=575    dom_amount=100    lcc_amount=100    
     Send Get Request For Client Transaction Fees 
     Verify Response Status Code Is Correct    200
     Verify Transaction Fee Amount Is Correct
-    Create Test Variables For Client Transaction Fees    client_account_number=9000000066    trip_type=I    tf_amount=200     
+    Create Test Variables For Client Transaction Fees    client_account_number=3238100005    int_amount=1770    dom_amount=314    lcc_amount=557      
     Send Get Request For Client Transaction Fees 
     Verify Response Status Code Is Correct    200
     Verify Transaction Fee Amount Is Correct
-    Create Test Variables For Client Transaction Fees    client_account_number=9000000066    trip_type=I    tf_amount=200     
+    Create Test Variables For Client Transaction Fees    client_account_number=3242100004    int_amount=1400    dom_amount=340    lcc_amount=400      
     Send Get Request For Client Transaction Fees 
     Verify Response Status Code Is Correct    200
-    Verify Transaction Fee Amount Is Correct
- 
+    Verify Transaction Fee Amount Is Correct 
             
-Verify That Client Transaction Fee Is Added After Post Request
+Verify That Client Transaction Fee Is Added After Put Request
     [Tags]    functional
-    Create Test Variables For Client Transaction Fees    client_account_number=9000000066    int_amount=200    dom_amount=100    lcc_amount=50     
-    Send Post Request For Client Transaction Fees 
-    Verify Response Status Code Is Correct    200
+    Create Test Variables For Client Transaction Fees    client_account_number=9000000111    int_amount=200    dom_amount=100    lcc_amount=50     
+    Send Put Request For Client Transaction Fees 
+    Verify Response Status Code Is Correct    200        
+    Verify Transaction Fee Amount Is Correct
     Send Get Request For Client Transaction Fees 
     Verify Response Status Code Is Correct    200
     Verify Transaction Fee Amount Is Correct
     [Teardown]    Send Delete Request For Client Transaction Fees    
     
-Verify That Clients Are Updated Correctly After Put Request
+Verify That Client Transaction Fee Is Updated After Put Request
     [Tags]    functional
-    Create Test Variables For Client Transaction Fees    client_account_number=9000000066    int_amount=200    dom_amount=100    lcc_amount=50     
+    Create Test Variables For Client Transaction Fees    client_account_number=9000000112    int_amount=200    dom_amount=100    lcc_amount=50     
     Send Put Request For Client Transaction Fees 
-    Verify Response Status Code Is Correct    200
+    Verify Response Status Code Is Correct    200        
+    Verify Transaction Fee Amount Is Correct
+    Create Test Variables For Client Transaction Fees    client_account_number=9000000112    int_amount=300    dom_amount=150    lcc_amount=80     
+    Send Put Request For Client Transaction Fees 
+    Verify Response Status Code Is Correct    200        
+    Verify Transaction Fee Amount Is Correct
     Send Get Request For Client Transaction Fees 
     Verify Response Status Code Is Correct    200
     Verify Transaction Fee Amount Is Correct
     [Teardown]    Send Delete Request For Client Transaction Fees    
+    
+Verify That Client Transaction Fee Is Deleted After Delete Request 
+    [Tags]    functional
+    Create Test Variables For Client Transaction Fees    client_account_number=9000000113    int_amount=230    dom_amount=110    lcc_amount=60     
+    Send Put Request For Client Transaction Fees 
+    Send Get Request For Client Transaction Fees
+    Verify Response Status Code Is Correct    200        
+    Verify Transaction Fee Amount Is Correct
+    Send Delete Request For Client Transaction Fees
+    Verify Response Status Code Is Correct    200
+    Verify Response Content Is Correct
+    
