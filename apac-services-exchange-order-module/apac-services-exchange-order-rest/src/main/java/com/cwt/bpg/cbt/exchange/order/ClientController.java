@@ -65,7 +65,9 @@ public class ClientController {
 	@ApiOperation(value = "[Maintenance] Returns client transaction fee.")
 	public ResponseEntity<FlatTransactionFee> getClientTransactionFee(@PathVariable String clientAccountNumber)
 	{
-		return new ResponseEntity<>(clientTransactionFeeService.getTransactionFee(clientAccountNumber), HttpStatus.OK);
+		FlatTransactionFee transactionFee = clientTransactionFeeService.getTransactionFee(clientAccountNumber);
+		HttpStatus status = (transactionFee == null) ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+		return new ResponseEntity<>(transactionFee, status);
 	}
 
 	@Internal

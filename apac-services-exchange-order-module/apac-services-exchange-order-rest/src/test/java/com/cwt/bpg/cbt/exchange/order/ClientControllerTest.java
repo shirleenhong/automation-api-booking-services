@@ -106,4 +106,21 @@ public class ClientControllerTest {
 		verify(clientTransactionFeeService).delete(clientAccountNumber);
 		assertEquals(HttpStatus.OK, client.getStatusCode());
 	}
+
+	@Test
+	public void canGetClientTransactionFee()
+	{
+		final String clientAccountNumber = "123456789";
+		when(clientTransactionFeeService.getTransactionFee(clientAccountNumber)).thenReturn(null);
+		ResponseEntity<?> client = clientController.getClientTransactionFee(clientAccountNumber);
+		assertEquals(HttpStatus.NO_CONTENT, client.getStatusCode());
+
+		FlatTransactionFee clientTransactionFee = new FlatTransactionFee();
+
+		when(clientTransactionFeeService.getTransactionFee(clientAccountNumber)).thenReturn(clientTransactionFee);
+		client = clientController.getClientTransactionFee(clientAccountNumber);
+
+		verify(clientTransactionFeeService, times(2)).getTransactionFee(clientAccountNumber);
+		assertEquals(HttpStatus.OK, client.getStatusCode());
+	}
 }
