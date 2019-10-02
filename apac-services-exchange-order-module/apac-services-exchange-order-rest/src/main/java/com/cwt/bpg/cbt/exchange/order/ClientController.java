@@ -66,7 +66,7 @@ public class ClientController {
 	public ResponseEntity<FlatTransactionFee> getClientTransactionFee(@PathVariable String clientAccountNumber)
 	{
 		FlatTransactionFee transactionFee = clientTransactionFeeService.getTransactionFee(clientAccountNumber);
-		HttpStatus status = (transactionFee == null) ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+		HttpStatus status = (transactionFee == null) ? HttpStatus.NOT_FOUND : HttpStatus.OK;
 		return new ResponseEntity<>(transactionFee, status);
 	}
 
@@ -91,6 +91,8 @@ public class ClientController {
 	public ResponseEntity<String> removeClientTransactionFee(@PathVariable
 			@ApiParam(value = "ClientTransactionFee clientAccountNumber to delete") String clientAccountNumber)
 	{
-		return new ResponseEntity<>(clientTransactionFeeService.delete(clientAccountNumber), HttpStatus.OK);
+		String deleteResult = clientTransactionFeeService.delete(clientAccountNumber);
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		return new ResponseEntity<>(deleteResult, status);
 	}
 }

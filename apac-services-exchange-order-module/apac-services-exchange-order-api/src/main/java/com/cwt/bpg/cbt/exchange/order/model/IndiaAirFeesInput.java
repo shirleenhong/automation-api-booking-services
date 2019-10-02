@@ -40,6 +40,7 @@ public class IndiaAirFeesInput extends FeesInput {
 
 	private boolean feeOverride;
 
+	@Deprecated
 	private String cityCode;
 
 	public String getCityCode() {

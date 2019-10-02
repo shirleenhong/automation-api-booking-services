@@ -102,9 +102,14 @@ public class ClientControllerTest {
 	public void canRemoveClientTransactionFee()
 	{
 		final String clientAccountNumber = "0011122";
+		when(clientTransactionFeeService.delete(clientAccountNumber)).thenReturn("");
 		ResponseEntity<?> client = clientController.removeClientTransactionFee(clientAccountNumber);
-		verify(clientTransactionFeeService).delete(clientAccountNumber);
+		assertEquals(HttpStatus.NOT_FOUND, client.getStatusCode());
+
+		when(clientTransactionFeeService.delete(clientAccountNumber)).thenReturn("row deleted");
+		client = clientController.removeClientTransactionFee(clientAccountNumber);
 		assertEquals(HttpStatus.OK, client.getStatusCode());
+		verify(clientTransactionFeeService, times(2)).delete(clientAccountNumber);
 	}
 
 	@Test
@@ -113,7 +118,7 @@ public class ClientControllerTest {
 		final String clientAccountNumber = "123456789";
 		when(clientTransactionFeeService.getTransactionFee(clientAccountNumber)).thenReturn(null);
 		ResponseEntity<?> client = clientController.getClientTransactionFee(clientAccountNumber);
-		assertEquals(HttpStatus.NO_CONTENT, client.getStatusCode());
+		assertEquals(HttpStatus.NOT_FOUND, client.getStatusCode());
 
 		FlatTransactionFee clientTransactionFee = new FlatTransactionFee();
 
