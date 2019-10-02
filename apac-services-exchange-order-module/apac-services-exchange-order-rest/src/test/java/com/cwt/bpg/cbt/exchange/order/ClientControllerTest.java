@@ -77,7 +77,7 @@ public class ClientControllerTest {
 
 		ResponseEntity<?> client = clientController.removeClient(clientAccountNumber);
 		verify(clientService, times(1)).delete(clientAccountNumber);
-		assertEquals(HttpStatus.NOT_FOUND, client.getStatusCode());
+		assertEquals(HttpStatus.NO_CONTENT, client.getStatusCode());
 	}
 
 	@Test
@@ -104,7 +104,7 @@ public class ClientControllerTest {
 		final String clientAccountNumber = "0011122";
 		when(clientTransactionFeeService.delete(clientAccountNumber)).thenReturn("");
 		ResponseEntity<?> client = clientController.removeClientTransactionFee(clientAccountNumber);
-		assertEquals(HttpStatus.NOT_FOUND, client.getStatusCode());
+		assertEquals(HttpStatus.NO_CONTENT, client.getStatusCode());
 
 		when(clientTransactionFeeService.delete(clientAccountNumber)).thenReturn("row deleted");
 		client = clientController.removeClientTransactionFee(clientAccountNumber);

@@ -55,7 +55,7 @@ public class ClientController {
 	@ApiOperation(value = "[Maintenance] Deletes client by client account number.")
 	public ResponseEntity<String> removeClient(@PathVariable String clientAccountNumber) {
 		String deleteResult = clientService.delete(clientAccountNumber);
-		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 		return new ResponseEntity<>(deleteResult, status);
 	}
 
@@ -92,7 +92,7 @@ public class ClientController {
 			@ApiParam(value = "ClientTransactionFee clientAccountNumber to delete") String clientAccountNumber)
 	{
 		String deleteResult = clientTransactionFeeService.delete(clientAccountNumber);
-		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 		return new ResponseEntity<>(deleteResult, status);
 	}
 }
