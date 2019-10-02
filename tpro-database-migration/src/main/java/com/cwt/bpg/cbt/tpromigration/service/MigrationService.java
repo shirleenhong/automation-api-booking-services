@@ -83,7 +83,7 @@ public class MigrationService
     private static final String PRODUCTS_COLLECTION = "productList";
     private static final String AGENT_COLLECTION = "agentInfo";
     private static final String BILLING_ENTITIES_COLLECTION = "billingEntities";
-    private static final String CLIENT_TRANSACTION_FEE_COLLECTION = "clientTransactionFees_2";
+    private static final String CLIENT_TRANSACTION_FEE_COLLECTION = "clientTransactionFees";
 
     @Autowired
     private MongoDbConnection mongoDbConnection;
