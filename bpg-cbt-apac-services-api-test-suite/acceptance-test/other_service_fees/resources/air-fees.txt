@@ -241,7 +241,7 @@ Calculate Air Fees-IN Transaction Fee By Tkt
 Calculate Air Fees-SG Commission
     ${commission_formula}    Set Variable If    "${commission_percent_flag_value}" == "true"    ${nett_fare_value}*(${commission_percentage_value}*0.01)    ${commission_value}
     ${calculated_value}    Evaluate    ${commission_formula}
-    ${calculated_value}    Round Off    ${calculated_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     Set Test Variable    ${commission_amount}    ${calculated_value}
 
@@ -249,7 +249,7 @@ Calculate Air Fees-SG Discount
     ${client_type_flag}    Set Variable If    "${client_type_value.upper()}" == "DU" or "${client_type_value.upper()}" == "DB" or "${client_type_value.upper()}" == "TF" or "${client_type_value.upper()}" == "MN"    true    false
     ${discount_formula}    Set Variable If    "${client_type_flag}" == "true" and "${discount_percent_flag_value}" == "true"    ${nett_fare_value}*(${discount_percentage_value}*0.01)    "${client_type_flag}" == "true" and "${discount_percent_flag_value}" == "true"    0    ${discount_value}
     ${calculated_value}    Evaluate    ${discount_formula}
-    ${calculated_value}    Round Off    ${calculated_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     Set Test Variable    ${discount_amount}    ${calculated_value}
 
@@ -273,27 +273,27 @@ Calculate Air Fees-SG Merchant Fee For Product Type CT
 
 Calculate Air Fees-SG Nett Cost In EO With Formula
     ${calculated_value}    Evaluate    ${nett_fare_value}-${commission_amount}
-    ${calculated_value}    Round Off    ${calculated_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     Set Test Variable    ${nett_cost_amount}    ${calculated_value}
 
 Calculate Air Fees-SG Nett Cost In EO Without Formula
     ${calculated_value}    Evaluate    ${nett_fare_value}-${commission_value}
-    ${calculated_value}    Round Off    ${calculated_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     Set Test Variable    ${nett_cost_amount}    ${calculated_value}
 
 Calculate Air Fees-SG Total Selling Fare With Formula
     ${total_selling_fare_formula}    Set Variable If    "${product_type_value.upper()}" == "CT"    ${nett_cost_amount}+${commission_amount}-${discount_amount}+${tax_1_value}+${tax_2_value}+${merchant_fee_amount}    ${selling_price_value}-${discount_amount}+${tax_1_value}+${tax_2_value}+${merchant_fee_amount}
     ${calculated_value}    Evaluate    ${total_selling_fare_formula}
-    ${calculated_value}    Round Off    ${calculated_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}
 
 Calculate Air Fees-SG Total Selling Fare Without Formula
     ${total_selling_fare_formula}    Set Variable If    "${product_type_value.upper()}" == "CT"    ${nett_fare_value}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}    ${selling_price_value}-${discount_value}+${tax_1_value}+${tax_2_value}+${merchant_fee_value}
     ${calculated_value}    Evaluate    ${total_selling_fare_formula}
-    ${calculated_value}    Round Off    ${calculated_value}
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
     Set Test Variable    ${total_selling_fare_amount}    ${calculated_value}
 
