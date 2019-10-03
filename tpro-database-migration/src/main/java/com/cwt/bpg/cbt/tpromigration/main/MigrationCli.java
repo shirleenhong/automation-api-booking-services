@@ -24,7 +24,7 @@ public class MigrationCli implements Callable<Void>
     @Option(names = "-environment", required = true, description = "dev, int, preprod")
     private String environment;
 
-    @Option(names = "-country", required = true, description = "availables is HK, SG, IN")
+    @Option(names = "-country", required = true, description = "HK, SG, IN")
     private String countryCode;
 
     @Option(names = "-in-airline-rules", description = "migrate india airline rules")
@@ -66,7 +66,7 @@ public class MigrationCli implements Callable<Void>
     @Option(names = "-remarks", description = "migrate HK & SG remarks")
     private boolean migrateRemarks;
 
-    @Option(names = "-merchant-fee", description = "migrate HK & SG merchange fees")
+    @Option(names = "-merchant-fee", description = "migrate HK & SG merchant fees")
     private boolean migrateMerchantFees;
 
     private static List<String> countryCodes = Arrays.asList("IN", "HK", "SG");
