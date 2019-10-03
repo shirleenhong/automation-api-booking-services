@@ -203,3 +203,54 @@ Verify Client Vendors Are Correctly Retrieved
     \    ${vendor_percentage}    Set Variable If    "${items[2].strip()}" == "percentage"    ${items[3].strip()}    ${items[1].strip()}
     \    Verify Actual Value Matches Expected Value    ${vendor_percentage}    ${${vendor_name}_vendors_percentage__value}
     \    Verify Actual Value Matches Expected Value    ${items[5].strip()}    ${${vendor_name}_vendors_standard__value}
+
+Create Test Variables For Client Transaction Fees 
+    [Arguments]    ${client_account_number}    ${int_amount}=${EMPTY}    ${dom_amount}=${EMPTY}    ${lcc_amount}=${EMPTY}    
+    Set Test Variable    ${client_account_number}
+    Set Test Variable    ${int_amount}
+    Set Test Variable    ${dom_amount}
+    Set Test Variable    ${lcc_amount}
+    
+Send Get Request For Client Transaction Fees 
+    [Arguments]    ${token}=${default_token}
+    Create Session    transaction-fees    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    transaction-fees    apac-services-rest/api/clients/${client_account_number}/transaction-fees     headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    transaction-fees
+    Set Test Variable    ${transaction_fee_amount}    ${response.content}    
+        
+Send Put Request For Client Transaction Fees 
+    [Arguments]    ${token}=${default_token}
+    Create Session    transaction-fees    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${data}    Set Variable    {"intOfflineAmount":"${int_amount}","domOfflineAmount":${dom_amount},"lccOfflineAmount":${lcc_amount}}
+    ${data}    Replace String    ${data}    "null"    null
+    ${response}    Put Request    transaction-fees    /apac-services-rest/api/clients/${clientAccountNumber}/transaction-fees   data=${data}    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    transaction-fees
+ 
+Send Delete Request For Client Transaction Fees
+    [Arguments]    ${token}=${default_token}
+    Create Session    transaction-fees    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Delete Request    transaction-fees    /apac-services-rest/api/clients/${client_account_number}/transaction-fees    headers=${headers}
+    Set Test Variable    ${response}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${api_flag}    transaction-fees
+        
+Verify Transaction Fee Amount Is Correct
+    Verify Json Value Is Correct    $.clientAccountNumber    ${client_account_number}    
+    Verify Json Value Is Correct    $.intOfflineAmount    ${int_amount}
+    Verify Json Value Is Correct    $.domOfflineAmount    ${dom_amount}
+    Verify Json Value Is Correct    $.lccOfflineAmount    ${lcc_amount}
+    
+Verify Response Content Is Correct
+    Verify Actual Value Matches Expected Value    ${response.content}    ${client_account_number} 
