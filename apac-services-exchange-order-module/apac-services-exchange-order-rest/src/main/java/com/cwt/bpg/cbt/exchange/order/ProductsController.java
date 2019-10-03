@@ -75,7 +75,7 @@ public class ProductsController {
 	public ResponseEntity<String> removeProductByCode(
 			@PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
 			@PathVariable String productCode) {
-		String deleteResult = service.removeProduct(countryCode, productCode);
+		String deleteResult = service.removeProduct(countryCode.toUpperCase(), productCode);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 		return new ResponseEntity<>(deleteResult, status);
 	}
@@ -86,7 +86,7 @@ public class ProductsController {
 	public ResponseEntity<String> removeVendorByCode(
 	        @PathVariable @ApiParam(value = "Country code of the requested market") String countryCode,
 			@PathVariable String vendorCode) {
-		String deleteResult = service.removeVendor(countryCode, vendorCode);
+		String deleteResult = service.removeVendor(countryCode.toUpperCase(), vendorCode);
 		HttpStatus status = deleteResult.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 		return new ResponseEntity<>(deleteResult, status);
 	}
