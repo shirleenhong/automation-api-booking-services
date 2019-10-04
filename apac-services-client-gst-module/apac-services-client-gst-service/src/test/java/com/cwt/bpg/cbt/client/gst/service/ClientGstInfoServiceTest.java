@@ -3,7 +3,6 @@ package com.cwt.bpg.cbt.client.gst.service;
 import com.cwt.bpg.cbt.client.gst.model.*;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoBackupRepository;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
-import com.cwt.bpg.cbt.exceptions.FileUploadException;
 import com.mongodb.CommandResult;
 import org.junit.Before;
 import org.junit.Test;

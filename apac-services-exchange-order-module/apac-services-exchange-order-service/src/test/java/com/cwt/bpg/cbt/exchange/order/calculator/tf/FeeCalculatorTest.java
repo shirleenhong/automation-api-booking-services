@@ -2,14 +2,12 @@ package com.cwt.bpg.cbt.exchange.order.calculator.tf;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.cwt.bpg.cbt.exchange.order.FlatTransactionFeeService;
@@ -19,9 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 import com.cwt.bpg.cbt.exchange.order.model.*;
@@ -122,15 +118,6 @@ public class FeeCalculatorTest
         product.setOt1Percent(6d);
         product.setOt2Percent(4d);
         return product;
-    }
-
-    private Airport createAirport()
-    {
-        Airport airport = new Airport();
-        airport.setCityCode("BLR");
-        airport.setCode("BLR");
-        airport.setCountryCode("IN");
-        return airport;
     }
 
     @Test

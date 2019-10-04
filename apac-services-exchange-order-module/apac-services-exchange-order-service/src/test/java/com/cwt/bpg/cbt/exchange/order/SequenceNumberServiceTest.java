@@ -71,7 +71,6 @@ public class SequenceNumberServiceTest {
 		verify(sequentNumberRepo, times(1)).save(list);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldThrowException() {
 		SequenceNumber sn = mock(SequenceNumber.class);
