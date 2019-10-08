@@ -1,20 +1,17 @@
 package com.cwt.bpg.cbt.tpromigration.service;
 
+import static com.mongodb.client.model.Filters.in;
+import static com.mongodb.client.model.Projections.excludeId;
+import static com.mongodb.client.model.Projections.fields;
+import static com.mongodb.client.model.Projections.include;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 
-import static com.mongodb.client.model.Filters.*;
-import static com.mongodb.client.model.Projections.*;
-
-import com.mongodb.client.FindIterable;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
 import org.slf4j.Logger;
@@ -33,45 +30,20 @@ import org.springframework.util.ObjectUtils;
 
 import com.cwt.bpg.cbt.air.contract.model.AirContract;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
-import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
-import com.cwt.bpg.cbt.exchange.order.model.Airport;
-import com.cwt.bpg.cbt.exchange.order.model.Bank;
-import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
-import com.cwt.bpg.cbt.exchange.order.model.ClientPricing;
-import com.cwt.bpg.cbt.exchange.order.model.ContactInfo;
-import com.cwt.bpg.cbt.exchange.order.model.ContactInfoType;
-import com.cwt.bpg.cbt.exchange.order.model.CreditCardVendor;
-import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
-import com.cwt.bpg.cbt.exchange.order.model.ProductMerchantFee;
-import com.cwt.bpg.cbt.exchange.order.model.Remark;
-import com.cwt.bpg.cbt.exchange.order.model.TransactionFee;
+import com.cwt.bpg.cbt.exchange.order.model.*;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirMiscInfo;
 import com.cwt.bpg.cbt.tpromigration.csv.CSVReader;
 import com.cwt.bpg.cbt.tpromigration.csv.converter.AirMiscInfoConverter;
 import com.cwt.bpg.cbt.tpromigration.csv.converter.AirTransactionConverter;
 import com.cwt.bpg.cbt.tpromigration.mongodb.config.MongoDbConnection;
 import com.cwt.bpg.cbt.tpromigration.mongodb.mapper.DBObjectMapper;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AgentDAOImpl;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirContractDAOImpl;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirlineRuleDAOImpl;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.AirportDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientDAOImpl;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ClientMerchantFeeDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.LineDefinitionClientMappingDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.ProductDAOFactory;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.RemarkDAO;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.VendorDAOFactory;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AgentInfo;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.AirVariables;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.dao.*;
+import com.cwt.bpg.cbt.tpromigration.mssqldb.model.*;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Client;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.InClientTransactionFee;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.LineDefinitionClientMapping;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.MerchantFeeAbsorb;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.ProductList;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.TblAgent;
-import com.cwt.bpg.cbt.tpromigration.mssqldb.model.TblAgentConfig;
 import com.cwt.bpg.cbt.tpromigration.mssqldb.model.Vendor;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.mongodb.client.FindIterable;
 
 @Service
 public class MigrationService

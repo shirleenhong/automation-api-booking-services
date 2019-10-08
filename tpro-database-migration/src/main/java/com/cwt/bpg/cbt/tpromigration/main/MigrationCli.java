@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.tpromigration.main;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.cwt.bpg.cbt.tpromigration.service.DataCompareService;
 import com.cwt.bpg.cbt.tpromigration.service.MigrationService;
 
 import picocli.CommandLine;
@@ -69,11 +71,24 @@ public class MigrationCli implements Callable<Void>
     @Option(names = "-merchant-fee", description = "migrate HK & SG merchant fees")
     private boolean migrateMerchantFees;
 
+
+    // TODO: refactor to better groupings of command and options
+
+    @Option(names = "-compare-mongodb-clients", description = "compare client account number file to mongodb clients")
+    private boolean compareMongodbClients;
+
+    @Option(names = "-compare-middleware-clients", description = "compare client account number file to middleware clients")
+    private boolean compareMiddlewareClients;
+
+    @Option(names = "--file", paramLabel = "FILE", description = "the archive file")
+    private File clientAccountNumberFile;
+
     private static List<String> countryCodes = Arrays.asList("IN", "HK", "SG");
 
     public static void main(String[] args)
     {
-        new CommandLine(new MigrationCli()).execute(args);
+        CommandLine commandLine = new CommandLine(new MigrationCli());
+        commandLine.execute(args);
     }
 
     @Override
@@ -88,6 +103,7 @@ public class MigrationCli implements Callable<Void>
         System.setProperty("spring.profiles.active", environment);
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
         MigrationService service = context.getBean(MigrationService.class);
+        DataCompareService dataCompareService = context.getBean(DataCompareService.class);
         service.setCountryCode(countryCode);
 
         LOGGER.info("Country code: {}", countryCode);
@@ -137,6 +153,27 @@ public class MigrationCli implements Callable<Void>
                 if (StringUtils.isNotBlank(wave))
                 {
                     service.migratePassthroughs(wave);
+                }
+            }
+
+            if (compareMongodbClients) {
+
+                if (clientAccountNumberFile == null) {
+                    LOGGER.error("No input file, please provide input file.");
+                }
+                else {
+                    LOGGER.info("Comparing list to mongodb clients.");
+                    dataCompareService.compareMongoClients(clientAccountNumberFile);
+                }
+            }
+
+            if (compareMiddlewareClients) {
+                if (clientAccountNumberFile == null) {
+                    LOGGER.error("No input file, please provide input file.");
+                }
+                else {
+                    LOGGER.info("Comparing list to middleware clients.");
+                    dataCompareService.compareMiddlesareClients(clientAccountNumberFile);
                 }
             }
         }
