@@ -80,7 +80,7 @@ public class MigrationCli implements Callable<Void>
     @Option(names = "-compare-middleware-clients", description = "compare client account number file to middleware clients")
     private boolean compareMiddlewareClients;
 
-    @Option(names = "--file", paramLabel = "FILE", description = "the archive file")
+    @Option(names = "--file", paramLabel = "FILE", description = "file that contains a list of client account numbers")
     private File clientAccountNumberFile;
 
     private static List<String> countryCodes = Arrays.asList("IN", "HK", "SG");

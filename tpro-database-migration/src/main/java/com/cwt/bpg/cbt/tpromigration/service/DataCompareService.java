@@ -21,12 +21,12 @@ import com.mongodb.client.FindIterable;
 
 @Service
 public class DataCompareService {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(DataCompareService.class);
-	
+
 	@Autowired
     private MongoDbConnection mongoDbConnection;
-	
+
     @Autowired
     private ClientDAOImpl clientDAO;
 	
