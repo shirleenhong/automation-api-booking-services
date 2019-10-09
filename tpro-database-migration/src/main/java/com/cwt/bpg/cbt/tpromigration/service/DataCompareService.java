@@ -22,62 +22,62 @@ import com.mongodb.client.FindIterable;
 @Service
 public class DataCompareService {
 
-	private static final Logger logger = LoggerFactory.getLogger(DataCompareService.class);
+    private static final Logger logger = LoggerFactory.getLogger(DataCompareService.class);
 
-	@Autowired
+    @Autowired
     private MongoDbConnection mongoDbConnection;
 
     @Autowired
     private ClientDAOImpl clientDAO;
-	
-	public void compareMongoClients(File clientAccountNumberFile) {
-		try {
-			List<String> readLines = FileUtils.readLines(clientAccountNumberFile, StandardCharsets.UTF_8);
 
-			logger.info("Getting mongodb clients...");
-			// get mongo clients
-			BasicDBObject inQuery = new BasicDBObject();
-			inQuery.put("clientAccountNumber", new BasicDBObject("$in", readLines));
-			FindIterable<Document> find = mongoDbConnection.getCollection("clients")
-					.find(inQuery);
+    public void compareMongoClients(File clientAccountNumberFile) {
+        try {
+            List<String> readLines = FileUtils.readLines(clientAccountNumberFile, StandardCharsets.UTF_8);
 
-			final List<String> mongoClients = new ArrayList<>();
-			find.forEach(new Block<Document>() {
-				@Override
-				public void apply(Document t) {
-					mongoClients.add((String) t.get("clientAccountNumber"));
-				}
-			});
+            logger.info("Getting mongodb clients...");
+            // get mongo clients
+            BasicDBObject inQuery = new BasicDBObject();
+            inQuery.put("clientAccountNumber", new BasicDBObject("$in", readLines));
+            FindIterable<Document> find = mongoDbConnection.getCollection("clients")
+                    .find(inQuery);
 
-			// compare file list vs mongo hits
-			readLines.forEach(e -> {
-				boolean anyMatch = mongoClients.stream().anyMatch(m -> m.equals(e));
-				final String match = anyMatch ? "OK!" : "<----------- MISSING ----------->";
-				logger.info("{}\t{}", e, match);
-			});
+            final List<String> mongoClients = new ArrayList<>();
+            find.forEach(new Block<Document>() {
+                @Override
+                public void apply(Document t) {
+                    mongoClients.add((String) t.get("clientAccountNumber"));
+                }
+            });
 
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+            // compare file list vs mongodb hits
+            readLines.forEach(e -> {
+                boolean anyMatch = mongoClients.stream().anyMatch(m -> m.equals(e));
+                final String match = anyMatch ? "OK!" : "<----------- MISSING ----------->";
+                logger.info("{}\t{}", e, match);
+            });
 
-	}
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	public void compareMiddlesareClients(File clientAccountNumberFile) {
-		try {
-			List<String> readLines = FileUtils.readLines(clientAccountNumberFile, StandardCharsets.UTF_8);
+    }
 
-			List<String> mwClientAccountNumber = clientDAO.getMWClientAccountNumber(readLines);
+    public void compareMiddlesareClients(File clientAccountNumberFile) {
+        try {
+            List<String> readLines = FileUtils.readLines(clientAccountNumberFile, StandardCharsets.UTF_8);
 
-			// compare file list vs sql hits
-			readLines.forEach(e -> {
-				boolean anyMatch = mwClientAccountNumber.stream().anyMatch(m -> m.equals(e));
-				final String match = anyMatch ? "OK!" : "<----------- MISSING ----------->";
-				logger.info("{}\t{}", e, match);
-			});
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+            List<String> mwClientAccountNumber = clientDAO.getMWClientAccountNumber(readLines);
+
+            // compare file list vs sqldb hits
+            readLines.forEach(e -> {
+                boolean anyMatch = mwClientAccountNumber.stream().anyMatch(m -> m.equals(e));
+                final String match = anyMatch ? "OK!" : "<----------- MISSING ----------->";
+                logger.info("{}\t{}", e, match);
+            });
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

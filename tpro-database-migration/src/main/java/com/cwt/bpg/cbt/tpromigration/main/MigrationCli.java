@@ -74,10 +74,10 @@ public class MigrationCli implements Callable<Void>
 
     // TODO: refactor to better groupings of command and options
 
-    @Option(names = "-compare-mongodb-clients", description = "compare client account number file to mongodb clients")
+    @Option(names = "-compare-mongodb-clients", description = "compare client account numbers from file to mongodb clients")
     private boolean compareMongodbClients;
 
-    @Option(names = "-compare-middleware-clients", description = "compare client account number file to middleware clients")
+    @Option(names = "-compare-middleware-clients", description = "compare client account numbers from file to middleware clients")
     private boolean compareMiddlewareClients;
 
     @Option(names = "--file", paramLabel = "FILE", description = "file that contains a list of client account numbers")
