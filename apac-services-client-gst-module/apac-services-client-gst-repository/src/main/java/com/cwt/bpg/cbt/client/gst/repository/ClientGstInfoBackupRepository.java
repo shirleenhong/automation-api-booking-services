@@ -1,11 +1,12 @@
 package com.cwt.bpg.cbt.client.gst.repository;
 
-import com.cwt.bpg.cbt.client.gst.model.ClientGstInfoBackup;
-import com.cwt.bpg.cbt.repository.CommonRepository;
 import org.springframework.stereotype.Repository;
 
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfoBackup;
+import com.cwt.bpg.cbt.repository.CommonBackupRepository;
+
 @Repository
-public class ClientGstInfoBackupRepository extends CommonRepository<ClientGstInfoBackup, String> {
+public class ClientGstInfoBackupRepository extends CommonBackupRepository<ClientGstInfoBackup, String> {
 
     private static final String KEY_COLUMN = "id";
 

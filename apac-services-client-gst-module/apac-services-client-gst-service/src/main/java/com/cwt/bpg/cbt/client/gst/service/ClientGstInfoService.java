@@ -1,36 +1,36 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
-import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
-import com.cwt.bpg.cbt.client.gst.model.ClientGstInfoBackup;
-import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
-import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoBackupRepository;
-import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
-import com.cwt.bpg.cbt.exceptions.ApiServiceException;
-import com.mongodb.CommandResult;
-import org.mongodb.morphia.query.FindOptions;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.io.InputStream;
-import java.time.Instant;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import com.cwt.bpg.cbt.client.gst.exception.ClientGstInfoBackupException;
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
+import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
+import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
+import com.cwt.bpg.cbt.exceptions.ApiServiceException;
+import com.cwt.bpg.cbt.exceptions.FileUploadException;
 
 @Service
 public class ClientGstInfoService {
 
-    private static final int BATCH_SIZE = 1000;
-    private static final String COUNT_STAT = "count";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientGstInfoService.class);
 
     @Autowired
     private ClientGstInfoRepository clientGstInfoRepository;
 
     @Autowired
-    private ClientGstInfoBackupRepository clientGstInfoBackupRepository;
+    private ClientGstInfoBackupService clientGstInfoBackupService;
 
     @Autowired
     private ClientGstInfoFileWriterService clientGstInfoFileWriterService;
@@ -67,50 +67,28 @@ public class ClientGstInfoService {
     }
 
     @SuppressWarnings("unchecked")
-    public void saveFromFile(InputStream inputStream, String extension, boolean validate)
-            throws Exception {
+    public void saveFromFile(InputStream inputStream, String extension, boolean validate) throws Exception {
         ClientGstInfoReaderService reader = clientGstInfoReaderServiceMap.get(extension);
-        if(reader == null) {
+        if (reader == null) {
             throw new IllegalArgumentException("File must be in excel or csv format");
         }
-        List<ClientGstInfo> clientGstInfo = reader.readFile(inputStream, validate);
-        if (!CollectionUtils.isEmpty(clientGstInfo)) {
-            backupClientGstInfo();
-            clientGstInfoRepository.dropCollection();
+        String batchId = UUID.randomUUID().toString();
+        final List<ClientGstInfo> clientGstInfoBackupList = new ArrayList<>();
+        try {
+            List<ClientGstInfo> clientGstInfo = reader.readFile(inputStream, validate);
+            clientGstInfoBackupService.archive(clientGstInfoBackupList, batchId, true);
             clientGstInfoRepository.putAll(clientGstInfo);
         }
-    }
-
-    private void backupClientGstInfo() {
-        CommandResult stats = clientGstInfoRepository.getStats();
-        Integer size = (Integer) stats.get(COUNT_STAT);
-        if (size == null || size == 0) {
-            return; //size will be null if collection doesn't exist
+        catch (FileUploadException e) {
+            clientGstInfoBackupService.rollback(clientGstInfoBackupList, batchId);
+            LOGGER.error("Error in creating backup of client gst info from file", e);
+            throw e;
         }
-        clientGstInfoBackupRepository.dropCollection();
-        Instant currentDateTime = Instant.now();
-        int batches = (int) Math.ceil(size / (double) BATCH_SIZE);
-        int currentBatch = 0;
-        int skip = 0;
-        int limit = BATCH_SIZE;
-        while (++currentBatch <= batches) {
-            FindOptions options = new FindOptions().skip(skip).limit(limit);
-            List<ClientGstInfo> toBackup = clientGstInfoRepository.getAll(options);
-            List<ClientGstInfoBackup> backups = createBackupList(toBackup, currentDateTime);
-            clientGstInfoBackupRepository.putAll(backups);
-            skip = skip + limit;
-            limit = limit + BATCH_SIZE;
+        catch (Exception e) {
+            clientGstInfoBackupService.rollback(clientGstInfoBackupList, batchId);
+            LOGGER.error("Error in creating backup of client gst info from file", e);
+            throw new ClientGstInfoBackupException("Error in creating backup of client gst info from file",
+                    e);
         }
-    }
-
-    private List<ClientGstInfoBackup> createBackupList(List<ClientGstInfo> toBackup, Instant dateTime) {
-        List<ClientGstInfoBackup> backups = new LinkedList<>();
-        for (ClientGstInfo clientGstInfo : toBackup) {
-            ClientGstInfoBackup backup = new ClientGstInfoBackup();
-            backup.setDateCreated(dateTime);
-            backup.setClientGstInfo(clientGstInfo);
-            backups.add(backup);
-        }
-        return backups;
     }
 }

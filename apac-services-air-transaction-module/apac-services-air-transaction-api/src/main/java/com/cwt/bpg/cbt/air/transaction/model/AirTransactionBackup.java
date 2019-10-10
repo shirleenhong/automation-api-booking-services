@@ -19,6 +19,8 @@ public class AirTransactionBackup
 
     @Id
     private ObjectId id;
+    
+    private String batchId;
 
     private Instant dateCreated;
 
@@ -32,6 +34,16 @@ public class AirTransactionBackup
     public void setId(ObjectId id)
     {
         this.id = id;
+    }
+
+    public String getBatchId()
+    {
+        return batchId;
+    }
+
+    public void setBatchId(String batchId)
+    {
+        this.batchId = batchId;
     }
 
     public Instant getDateCreated()

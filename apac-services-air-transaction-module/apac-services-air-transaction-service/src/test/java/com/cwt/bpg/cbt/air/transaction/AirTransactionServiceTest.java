@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionBackupException;
 import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
 import com.cwt.bpg.cbt.air.transaction.file.reader.AirTransExcelReader;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
@@ -113,25 +114,25 @@ public class AirTransactionServiceTest {
     }
     
     @Test
-    public void shouldUploadExcel() throws IOException {
+    public void shouldUploadExcel() throws IOException, AirTransactionBackupException {
         InputStream inputStream = mock(InputStream.class);
         String fileType = "xlsx";
         
         when(excelReader.parse(any(InputStream.class))).thenReturn(Arrays.asList(new AirTransaction()));
         when(repository.putAll(any())).thenReturn(Arrays.asList(new AirTransaction()));
-        doNothing().when(backupService).archive();
+        doNothing().when(backupService).archive(null, null, false);
         doNothing().when(repository).dropCollection();
         
         service.upload(inputStream, fileType);
         
         verify(excelReader, times(1)).parse(any(InputStream.class));
         verify(repository, times(1)).putAll(any());
-        verify(backupService, times(1)).archive();
+        verify(backupService, times(1)).archive(null, null, false);
         verify(repository, times(1)).dropCollection();
     }
     
     @Test(expected = IllegalArgumentException.class)
-    public void shouldHandleInvalidFile() {
+    public void shouldHandleInvalidFile() throws AirTransactionBackupException {
         InputStream inputStream = mock(InputStream.class);
         String fileType = "xxx";
         
@@ -139,7 +140,7 @@ public class AirTransactionServiceTest {
     }
     
     @Test
-    public void shouldHandleErrorInParsing() throws IOException {
+    public void shouldHandleErrorInParsing() throws IOException, AirTransactionBackupException {
         InputStream inputStream = mock(InputStream.class);
         String fileType = "xlsx";
         

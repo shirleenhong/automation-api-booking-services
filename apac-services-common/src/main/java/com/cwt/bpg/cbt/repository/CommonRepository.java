@@ -64,6 +64,16 @@ public class CommonRepository<T, D> {
         return morphia.getDatastore().createQuery(typeClass).field(keyColumn).equal(criteria).get();
     }
 
+    public Query<T> createQuery()
+    {
+        return morphia.getDatastore().createQuery(typeClass);
+    }
+
+    public Datastore createUpdateOperations()
+    {
+        return morphia.getDatastore();
+    }
+    
     public T put(T object) {
         final D keyValue = getKeyValue(object);
         if (keyValue != null) {
@@ -91,12 +101,16 @@ public class CommonRepository<T, D> {
     public String remove(D keyValue) {
         final Datastore datastore = morphia.getDatastore();
         final Query<T> query = datastore.createQuery(typeClass).field(keyColumn).equal(keyValue);
-
+        boolean deleteSuccess = remove(query);
+        return deleteSuccess ? keyValue.toString() : "";
+    }
+    
+    public boolean remove(Query<T> query)
+    {
+        final Datastore datastore = morphia.getDatastore();
         WriteResult delete = datastore.delete(query);
-
         LoggerFactory.getLogger(typeClass).info("Delete Result: {}", delete);
-
-        return delete.getN() > 0 ? keyValue.toString() : "";
+        return delete.getN() > 0;
     }
 
     public boolean collectionExists() {

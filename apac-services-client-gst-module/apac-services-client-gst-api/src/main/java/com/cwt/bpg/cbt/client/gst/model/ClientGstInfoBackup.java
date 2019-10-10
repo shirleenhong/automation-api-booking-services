@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@Entity(value = "clientGstInfoBackup", noClassnameStored = true)
+@Entity(value = "clientGstInfoBackup2", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("id")))
 public class ClientGstInfoBackup implements Serializable {
 
@@ -17,6 +17,8 @@ public class ClientGstInfoBackup implements Serializable {
 
     @Id
     private ObjectId id;
+    
+    private String batchId;
 
     private Instant dateCreated;
 
@@ -28,6 +30,14 @@ public class ClientGstInfoBackup implements Serializable {
 
     public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    public String getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(String batchId) {
+        this.batchId = batchId;
     }
 
     public Instant getDateCreated() {

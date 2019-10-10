@@ -1,6 +1,5 @@
 package com.cwt.bpg.cbt.air.transaction;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,7 +119,7 @@ public class AirTransactionController {
 	@PostMapping(path = "/air-transactions")
 	@ApiOperation(value = "[Maintenance] Saves Air Transaction from excel file.")
 	@ResponseBody
-	public ResponseEntity<Map<String, String>> uploadAirTransction(@RequestParam("file") MultipartFile file) throws IOException {
+	public ResponseEntity<Map<String, String>> uploadAirTransction(@RequestParam("file") MultipartFile file) throws Exception {
 	    String fileType = FilenameUtils.getExtension(file.getOriginalFilename());
 		airTransService.upload(file.getInputStream(), fileType);
 		Map<String, String> response = new HashMap<>();

@@ -34,7 +34,7 @@ public class AirTransactionBackupServiceTest
         Mockito.when(repository.getAll()).thenReturn(Arrays.asList(new AirTransaction()));
         Mockito.when(repository.putAll(Mockito.any())).thenReturn(Arrays.asList(new AirTransaction()));
 
-        service.archive();
+        service.archive(null, null, false);
 
         Mockito.verify(backupRepository, Mockito.times(1)).putAll(Mockito.any());
     }
@@ -44,7 +44,7 @@ public class AirTransactionBackupServiceTest
     {
         Mockito.when(repository.getAll()).thenReturn(null);
 
-        service.archive();
+        service.archive(null, null, false);
 
         Mockito.verify(backupRepository, Mockito.times(0)).putAll(Mockito.any());
     }

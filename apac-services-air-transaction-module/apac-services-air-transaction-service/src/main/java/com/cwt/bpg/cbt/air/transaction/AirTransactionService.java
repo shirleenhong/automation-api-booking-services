@@ -1,10 +1,11 @@
 package com.cwt.bpg.cbt.air.transaction;
 
 import java.io.BufferedInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionBackupException;
 import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
 import com.cwt.bpg.cbt.air.transaction.file.reader.AirTransExcelReader;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
@@ -39,7 +41,7 @@ public class AirTransactionService
 
     @Autowired
     private AirTransExcelReader excelReader;
-    
+
     @Autowired
     private AirTransactionBackupService airTransBackupService;
 
@@ -89,30 +91,36 @@ public class AirTransactionService
     {
         return airTransactionRepo.put(airTransaction);
     }
-    
+
     public String delete(String id)
     {
         return airTransactionRepo.remove(new ObjectId(id));
     }
 
-    public void upload(InputStream inputStream, String fileType)
+    public void upload(InputStream inputStream, String fileType) throws AirTransactionBackupException
     {
-        try
+        if (EXCEL_WORKBOOK.equalsIgnoreCase(fileType))
         {
-            if (EXCEL_WORKBOOK.equalsIgnoreCase(fileType))
+            String batchId = UUID.randomUUID().toString();
+            final List<AirTransaction> airTransactionList = new ArrayList<>();
+            try
             {
-                List<AirTransaction> updatedList = excelReader.parse(new BufferedInputStream(inputStream));
-                airTransBackupService.archive();
-                airTransactionRepo.dropCollection();
+                final List<AirTransaction> updatedList = excelReader.parse(new BufferedInputStream(inputStream));
+                airTransBackupService.archive(airTransactionList, batchId);
                 airTransactionRepo.putAll(updatedList);
             }
-            else {
-                throw new IllegalArgumentException("File must be in excel format");
+            catch (Exception e)
+            {
+                airTransBackupService.rollback(airTransactionList, batchId, airTransaction -> {
+                    airTransaction.setId(null);
+                });
+                LOGGER.error("Error in creating backup of air transaction from excel file", e);
+                throw new AirTransactionBackupException("", e);
             }
         }
-        catch (IOException e)
+        else
         {
-            LOGGER.error("Error in parsing of air transaction from excel file", e);
+            throw new IllegalArgumentException("File must be in excel format");
         }
     }
 }
