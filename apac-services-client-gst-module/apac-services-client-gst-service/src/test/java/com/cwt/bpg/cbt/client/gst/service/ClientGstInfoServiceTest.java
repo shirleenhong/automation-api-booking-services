@@ -3,6 +3,9 @@ package com.cwt.bpg.cbt.client.gst.service;
 import com.cwt.bpg.cbt.client.gst.model.*;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoBackupRepository;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
+import com.cwt.bpg.cbt.exceptions.ApiServiceException;
+import com.cwt.bpg.cbt.exceptions.FileUploadException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,132 +24,152 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ClientGstInfoServiceTest {
 
-    @Mock
-    private ClientGstInfoExcelReaderService clientGstInfoExcelReaderService;
-    
-    @Mock
-    private ClientGstInfoBackupService clientGstInfoBackupService;
+	@Mock
+	private ClientGstInfoExcelReaderService clientGstInfoExcelReaderService;
 
-    @Mock
-    private Map<String, ClientGstInfoReaderService> map;
+	@Mock
+	private ClientGstInfoBackupService clientGstInfoBackupService;
 
-    @Mock
-    private ClientGstInfoBackupRepository clientGstInfoBackupRepository;
+	@Mock
+	private Map<String, ClientGstInfoReaderService> map;
 
-    @Mock
-    private ClientGstInfoRepository clientGstInfoRepository;
+	@Mock
+	private ClientGstInfoBackupRepository clientGstInfoBackupRepository;
 
-    @Mock
-    private ClientGstInfoFileWriterService clientGstInfoFileWriterService;
+	@Mock
+	private ClientGstInfoRepository clientGstInfoRepository;
 
-    @InjectMocks
-    private ClientGstInfoService service;
+	@Mock
+	private ClientGstInfoFileWriterService clientGstInfoFileWriterService;
 
-    private InputStream inputStream;
+	@InjectMocks
+	private ClientGstInfoService service;
 
-    @Before
-    public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        ClientGstInfo clientGstInfo = new ClientGstInfo();
-        when(clientGstInfoExcelReaderService.readFile(any(), anyBoolean())).thenReturn(Arrays.asList(clientGstInfo));
+	private InputStream inputStream;
 
-        when(map.get("xlsx")).thenReturn(clientGstInfoExcelReaderService);
-    }
+	@Before
+	public void setup() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		ClientGstInfo clientGstInfo = new ClientGstInfo();
+		when(clientGstInfoExcelReaderService.readFile(any(), anyBoolean())).thenReturn(Arrays.asList(clientGstInfo));
 
-    @Test
-    public void shouldReturnAllGstInfoByGstIn() {
-        when(clientGstInfoRepository.getAll())
-                .thenReturn(Arrays.asList(new ClientGstInfo(), new ClientGstInfo()));
+		when(map.get("xlsx")).thenReturn(clientGstInfoExcelReaderService);
+	}
 
-        List<ClientGstInfo> response = service.getAllClientGstInfo();
+	@Test
+	public void shouldReturnAllGstInfoByGstIn() {
+		when(clientGstInfoRepository.getAll()).thenReturn(Arrays.asList(new ClientGstInfo(), new ClientGstInfo()));
 
-        assertNotNull(response);
-    }
+		List<ClientGstInfo> response = service.getAllClientGstInfo();
 
-    @Test
-    public void shouldHandleNullGstInfo() {
-        final String givenGstIn = "123456";
+		assertNotNull(response);
+	}
 
-        when(clientGstInfoRepository.get(anyString())).thenReturn(null);
+	@Test
+	public void shouldHandleNullGstInfo() {
+		final String givenGstIn = "123456";
 
-        final ClientGstInfo response = service
-                .getClientGstInfo(givenGstIn);
+		when(clientGstInfoRepository.get(anyString())).thenReturn(null);
 
-        assertNull(response);
-    }
+		final ClientGstInfo response = service.getClientGstInfo(givenGstIn);
 
-    @Test
-    public void shouldSaveGstInfo() {
-        final ClientGstInfo givenInfo = new ClientGstInfo();
-        givenInfo.setGstin("12345");
+		assertNull(response);
+	}
 
-        when(clientGstInfoRepository.put(any())).thenReturn(givenInfo);
-        final ClientGstInfo response = service.save(givenInfo);
+	@Test
+	public void shouldSaveGstInfo() {
+		final ClientGstInfo givenInfo = new ClientGstInfo();
+		givenInfo.setGstin("12345");
 
-        assertEquals(givenInfo.getGstin(), response.getGstin());
-    }
+		when(clientGstInfoRepository.put(any())).thenReturn(givenInfo);
+		final ClientGstInfo response = service.save(givenInfo);
 
-    @Test
-    public void shouldRemoveGstInfo() {
-        final String givenGstIn = "123456";
+		assertEquals(givenInfo.getGstin(), response.getGstin());
+	}
 
-        when(clientGstInfoRepository.remove(anyString())).thenReturn(givenGstIn);
-        final String response = service.remove(givenGstIn);
+	@Test
+	public void shouldRemoveGstInfo() {
+		final String givenGstIn = "123456";
 
-        assertEquals(givenGstIn, response);
-    }
+		when(clientGstInfoRepository.remove(anyString())).thenReturn(givenGstIn);
+		final String response = service.remove(givenGstIn);
 
-    @Test
-    public void shouldSaveFromExcelFile() throws Exception{
-        service.saveFromFile(inputStream, "xlsx", false);
+		assertEquals(givenGstIn, response);
+	}
 
-        //verify if backup is performed
-        verify(clientGstInfoBackupService, times(1)).archive(any(), any(), any(Boolean.class));
-        verify(clientGstInfoRepository, times(1)).putAll(anyCollection());
-    }
+	@Test
+	public void shouldSaveFromExcelFile() throws Exception {
+		service.saveFromFile(inputStream, "xlsx", false);
 
-    @Test
-    public void shouldNotBackupWhenClientGstInfoDoesntExist() throws Exception{
-        service.saveFromFile(inputStream, "xlsx", false);
+		//verify if backup is performed
+		verify(clientGstInfoBackupService, times(1)).archive(any(), any(), anyBoolean());
+		verify(clientGstInfoRepository, times(1)).putAll(anyCollection());
+	}
 
-        //verify if backup is not performed
-        verify(clientGstInfoBackupRepository, times(0)).dropCollection();
+	@Test
+	public void shouldNotBackupWhenClientGstInfoDoesntExist() throws Exception {
+		service.saveFromFile(inputStream, "xlsx", false);
 
-        verify(clientGstInfoRepository, times(1)).putAll(anyCollection());
-    }
+		//verify if backup is not performed
+		verify(clientGstInfoBackupRepository, times(0)).dropCollection();
 
-    @Test
-    public void shouldNotSaveClientGstInfoIfNoneIsExtractedFromExcel() throws Exception{
+		verify(clientGstInfoRepository, times(1)).putAll(anyCollection());
+	}
 
-        when(clientGstInfoExcelReaderService.readFile(any(), anyBoolean())).thenReturn(Collections.emptyList());
+	@Test
+	public void shouldNotSaveClientGstInfoIfNoneIsExtractedFromExcel() throws Exception {
 
-        service.saveFromFile(inputStream, "xlsx", false);
-        
-        //verify if clientGstInfo collection is not replaced with new collection
-        verify(clientGstInfoRepository, times(0)).dropCollection();
-        verify(clientGstInfoRepository, times(1)).putAll(Collections.emptyList());
-    }
+		when(clientGstInfoExcelReaderService.readFile(any(), anyBoolean())).thenReturn(Collections.emptyList());
 
-    @Test
-    public void shouldWriteFile() throws Exception {
-        when(clientGstInfoRepository.getAll())
-                .thenReturn(Arrays.asList(new ClientGstInfo()));
-        when(clientGstInfoFileWriterService.writeToFile(anyList()))
-                .thenReturn(new WriteClientGstInfoFileResponse());
+		service.saveFromFile(inputStream, "xlsx", false);
 
-        WriteClientGstInfoFileResponse result = service.writeFile();
-        assertNotNull(result);
+		//verify if clientGstInfo collection is not replaced with new collection
+		verify(clientGstInfoRepository, times(0)).dropCollection();
+		verify(clientGstInfoRepository, times(1)).putAll(Collections.emptyList());
+	}
 
-        verify(clientGstInfoFileWriterService, times(1)).writeToFile(anyList());
-    }
+	@Test
+	public void shouldWriteFile() throws Exception {
+		when(clientGstInfoRepository.getAll()).thenReturn(Arrays.asList(new ClientGstInfo()));
+		when(clientGstInfoFileWriterService.writeToFile(anyList())).thenReturn(new WriteClientGstInfoFileResponse());
 
-    @Test
-    public void shouldNotWriteFileIfClientGstInfoListIsEmpty() throws Exception {
-        when(clientGstInfoRepository.getAll())
-                .thenReturn(Collections.emptyList());
+		WriteClientGstInfoFileResponse result = service.writeFile();
+		assertNotNull(result);
 
-        WriteClientGstInfoFileResponse result = service.writeFile();
-        assertNull(result);
-        verify(clientGstInfoFileWriterService, times(0)).writeToFile(anyList());
-    }
+		verify(clientGstInfoFileWriterService, times(1)).writeToFile(anyList());
+	}
+
+	@Test
+	public void shouldNotWriteFileIfClientGstInfoListIsEmpty() throws Exception {
+		when(clientGstInfoRepository.getAll()).thenReturn(Collections.emptyList());
+
+		WriteClientGstInfoFileResponse result = service.writeFile();
+		assertNull(result);
+		verify(clientGstInfoFileWriterService, times(0)).writeToFile(anyList());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldThrowIllegalArgumentException() throws Exception {
+		when(map.get(any())).thenReturn(null);
+		service.saveFromFile(inputStream, "xlsx", false);
+		verify(clientGstInfoFileWriterService, times(0)).writeToFile(anyList());
+	}
+
+	@Test(expected = FileUploadException.class)
+	public void shouldThrowFileUploadException() throws Exception {
+		ClientGstInfoReaderService reader = mock(ClientGstInfoReaderService.class);
+		when(map.get(any())).thenReturn(reader);
+		when(reader.readFile(any(), anyBoolean())).thenThrow(FileUploadException.class);
+		service.saveFromFile(inputStream, "xlsx", false);
+		verify(clientGstInfoBackupService, times(1)).rollback(any(), anyString());
+	}
+
+	@Test(expected = Exception.class)
+	public void shouldThrowException() throws Exception {
+		ClientGstInfoReaderService reader = mock(ClientGstInfoReaderService.class);
+		when(map.get(any())).thenReturn(reader);
+		when(clientGstInfoRepository.putAll(any())).thenThrow(NullPointerException.class);
+		service.saveFromFile(inputStream, "xlsx", false);
+		verify(clientGstInfoBackupService, times(1)).rollback(any(), anyString());
+	}
 }

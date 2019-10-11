@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.air.transaction;
+package com.cwt.bpg.cbt.client.gst.service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -18,46 +18,45 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
+import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoBackupRepository;
+import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
 import com.mongodb.CommandResult;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AirTransactionBackupServiceTest {
-	
+public class ClientGstInfoBackupServiceTest {
+
 	@InjectMocks
-	private AirTransactionBackupService service;
+	private ClientGstInfoBackupService clientGstInfoBackupService;
+	
+	@Mock
+	private ClientGstInfoRepository repository;
 
 	@Mock
-	private AirTransactionRepository repository;
-
-	@Mock
-	private AirTransactionBackupRepository backupRepository;
-
-	@Mock
-	private List<AirTransaction> sourceList;
+	private ClientGstInfoBackupRepository backupRepository;
 
 	@Test
 	public void shouldNotBackup() {
 		CommandResult stats = mock(CommandResult.class);
 		when(repository.getStats()).thenReturn(stats);
 		when(stats.get(anyString())).thenReturn(0);
-		service.archive(Collections.EMPTY_LIST, "");
+		clientGstInfoBackupService.archive(Collections.EMPTY_LIST, "");
 		verify(repository, times(1)).getStats();
 		verify(repository, never()).dropCollection();
 		verify(backupRepository, never()).putAll(any());
 	}
-
+	
 	@Test
 	public void shouldBackup() {
 		CommandResult stats = mock(CommandResult.class);
 		when(repository.getStats()).thenReturn(stats);
-		List<AirTransaction> list = new ArrayList<AirTransaction>();
-		AirTransaction airTransaction = new AirTransaction();
-		list.add(airTransaction);
+		List<ClientGstInfo> list = new ArrayList<ClientGstInfo>();
+		ClientGstInfo clientGstInfo = new ClientGstInfo();
+		list.add(clientGstInfo);
 		when(repository.getAll(any())).thenReturn(list);
 		when(stats.get(anyString())).thenReturn(10);
-
-		service.archive(new ArrayList<AirTransaction>(), "", true);
+		
+		clientGstInfoBackupService.archive(new ArrayList<ClientGstInfo>() , "", true);
 		verify(repository, times(1)).getStats();
 		verify(repository, times(1)).dropCollection();
 		verify(backupRepository, times(1)).dropCollection();
@@ -66,11 +65,11 @@ public class AirTransactionBackupServiceTest {
 
 	@Test
 	public void shouldRollback() {
-		List<AirTransaction> list = new ArrayList<AirTransaction>();
-		AirTransaction airTransaction = new AirTransaction();
-		list.add(airTransaction);
+		List<ClientGstInfo> list = new ArrayList<ClientGstInfo>();
+		ClientGstInfo clientGstInfo = new ClientGstInfo();
+		list.add(clientGstInfo);
 
-		service.rollback(list, "");
+		clientGstInfoBackupService.rollback(list, "");
 		verify(backupRepository, times(1)).removeBatchBackup(any());
 		verify(repository, times(1)).putAll(any());
 	}
