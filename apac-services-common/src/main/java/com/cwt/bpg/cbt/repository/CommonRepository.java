@@ -101,8 +101,9 @@ public class CommonRepository<T, D> {
     public String remove(D keyValue) {
         final Datastore datastore = getDatastore();
         final Query<T> query = datastore.createQuery(typeClass).field(keyColumn).equal(keyValue);
-        boolean deleteSuccess = remove(query);
-        return deleteSuccess ? keyValue.toString() : "";
+        WriteResult delete = datastore.delete(query);
+        LoggerFactory.getLogger(typeClass).info("Delete Result: {}", delete);
+        return delete.getN() > 0 ? keyValue.toString() : "";
     }
     
     public boolean remove(Query<T> query)

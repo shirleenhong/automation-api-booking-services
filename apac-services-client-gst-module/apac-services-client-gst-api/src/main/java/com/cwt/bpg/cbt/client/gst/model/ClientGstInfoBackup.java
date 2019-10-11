@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@Entity(value = "clientGstInfoBackup2", noClassnameStored = true)
+@Entity(value = "clientGstInfoBackup", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("id")))
 public class ClientGstInfoBackup implements Serializable {
 

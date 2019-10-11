@@ -3,7 +3,6 @@ package com.cwt.bpg.cbt.client.gst.service;
 import com.cwt.bpg.cbt.client.gst.model.*;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoBackupRepository;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
-import com.mongodb.CommandResult;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +23,9 @@ public class ClientGstInfoServiceTest {
 
     @Mock
     private ClientGstInfoExcelReaderService clientGstInfoExcelReaderService;
+    
+    @Mock
+    private ClientGstInfoBackupService clientGstInfoBackupService;
 
     @Mock
     private Map<String, ClientGstInfoReaderService> map;
@@ -48,12 +50,6 @@ public class ClientGstInfoServiceTest {
         ClientGstInfo clientGstInfo = new ClientGstInfo();
         when(clientGstInfoExcelReaderService.readFile(any(), anyBoolean())).thenReturn(Arrays.asList(clientGstInfo));
 
-        //get collection count/size
-        CommandResult mockCommandResult = Mockito.mock(CommandResult.class);
-        when(mockCommandResult.get("count")).thenReturn(5);
-        when(clientGstInfoRepository.getStats()).thenReturn(mockCommandResult);
-        when(clientGstInfoRepository.getAll(any())).thenReturn(Arrays.asList(clientGstInfo));
-        inputStream = Mockito.mock(InputStream.class);
         when(map.get("xlsx")).thenReturn(clientGstInfoExcelReaderService);
     }
 
@@ -84,7 +80,7 @@ public class ClientGstInfoServiceTest {
         final ClientGstInfo givenInfo = new ClientGstInfo();
         givenInfo.setGstin("12345");
 
-        when(clientGstInfoRepository.put(anyObject())).thenReturn(givenInfo);
+        when(clientGstInfoRepository.put(any())).thenReturn(givenInfo);
         final ClientGstInfo response = service.save(givenInfo);
 
         assertEquals(givenInfo.getGstin(), response.getGstin());
@@ -105,33 +101,17 @@ public class ClientGstInfoServiceTest {
         service.saveFromFile(inputStream, "xlsx", false);
 
         //verify if backup is performed
-        ArgumentCaptor<List> backupsCaptor = ArgumentCaptor.forClass(List.class);
-        verify(clientGstInfoBackupRepository, times(1)).putAll(backupsCaptor.capture());
-
-        List<ClientGstInfoBackup> backups = (List<ClientGstInfoBackup>)backupsCaptor.getValue();
-        ClientGstInfoBackup backup = backups.get(0);
-
-        assertNotNull(backup.getDateCreated());
-        assertNotNull(backup.getClientGstInfo());
-
-        //verify if clientGstInfo collection is replaced with new collection
-        verify(clientGstInfoRepository, times(1)).dropCollection();
+        verify(clientGstInfoBackupService, times(1)).archive(any(), any(), any(Boolean.class));
         verify(clientGstInfoRepository, times(1)).putAll(anyCollection());
     }
 
     @Test
     public void shouldNotBackupWhenClientGstInfoDoesntExist() throws Exception{
-        CommandResult commandResult = Mockito.mock(CommandResult.class);
-        when(commandResult.get("count")).thenReturn(null);
-        when(clientGstInfoRepository.getStats()).thenReturn(commandResult);
-
         service.saveFromFile(inputStream, "xlsx", false);
 
         //verify if backup is not performed
         verify(clientGstInfoBackupRepository, times(0)).dropCollection();
 
-        //verify if clientGstInfo collection is replaced with new collection
-        verify(clientGstInfoRepository, times(1)).dropCollection();
         verify(clientGstInfoRepository, times(1)).putAll(anyCollection());
     }
 
@@ -141,10 +121,10 @@ public class ClientGstInfoServiceTest {
         when(clientGstInfoExcelReaderService.readFile(any(), anyBoolean())).thenReturn(Collections.emptyList());
 
         service.saveFromFile(inputStream, "xlsx", false);
-
+        
         //verify if clientGstInfo collection is not replaced with new collection
         verify(clientGstInfoRepository, times(0)).dropCollection();
-        verify(clientGstInfoRepository, times(0)).putAll(anyCollection());
+        verify(clientGstInfoRepository, times(1)).putAll(Collections.emptyList());
     }
 
     @Test

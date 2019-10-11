@@ -1,6 +1,9 @@
 package com.cwt.bpg.cbt.air.transaction;
 
+import static org.mockito.Mockito.*;
+
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.mongodb.CommandResult;
 
 public class AirTransactionBackupServiceTest
 {
@@ -22,21 +26,29 @@ public class AirTransactionBackupServiceTest
     @Mock
     private AirTransactionBackupRepository backupRepository;
 
+    @Mock
+	private List<AirTransaction> sourceList;
+
+    @Mock
+	private CommandResult commandResult;
+
     @Before
     public void setUp()
     {
         MockitoAnnotations.initMocks(this);
+		when(repository.getStats()).thenReturn(commandResult);
     }
 
     @Test
     public void shouldArchiveWhenAirTransactionIsNotEmpty()
     {
-        Mockito.when(repository.getAll()).thenReturn(Arrays.asList(new AirTransaction()));
-        Mockito.when(repository.putAll(Mockito.any())).thenReturn(Arrays.asList(new AirTransaction()));
+    	when(commandResult.get("count")).thenReturn(2);
+        when(repository.getAll()).thenReturn(Arrays.asList(new AirTransaction()));
+        when(repository.putAll(any())).thenReturn(Arrays.asList(new AirTransaction()));
 
-        service.archive(null, null, false);
+        service.archive(sourceList, null, false);
 
-        Mockito.verify(backupRepository, Mockito.times(1)).putAll(Mockito.any());
+        verify(backupRepository, times(1)).putAll(any());
     }
     
     @Test
@@ -44,7 +56,7 @@ public class AirTransactionBackupServiceTest
     {
         Mockito.when(repository.getAll()).thenReturn(null);
 
-        service.archive(null, null, false);
+        service.archive(sourceList, null, false);
 
         Mockito.verify(backupRepository, Mockito.times(0)).putAll(Mockito.any());
     }

@@ -120,15 +120,14 @@ public class AirTransactionServiceTest {
         
         when(excelReader.parse(any(InputStream.class))).thenReturn(Arrays.asList(new AirTransaction()));
         when(repository.putAll(any())).thenReturn(Arrays.asList(new AirTransaction()));
-        doNothing().when(backupService).archive(null, null, false);
+        doNothing().when(backupService).archive(any(), any());
         doNothing().when(repository).dropCollection();
         
         service.upload(inputStream, fileType);
         
         verify(excelReader, times(1)).parse(any(InputStream.class));
         verify(repository, times(1)).putAll(any());
-        verify(backupService, times(1)).archive(null, null, false);
-        verify(repository, times(1)).dropCollection();
+        verify(backupService, times(1)).archive(any(), any());
     }
     
     @Test(expected = IllegalArgumentException.class)
@@ -139,7 +138,7 @@ public class AirTransactionServiceTest {
         service.upload(inputStream, fileType);
     }
     
-    @Test
+    @Test( expected = AirTransactionBackupException.class )
     public void shouldHandleErrorInParsing() throws IOException, AirTransactionBackupException {
         InputStream inputStream = mock(InputStream.class);
         String fileType = "xlsx";

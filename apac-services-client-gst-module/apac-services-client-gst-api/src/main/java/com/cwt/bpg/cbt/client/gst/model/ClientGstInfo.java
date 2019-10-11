@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@Entity(value = "clientGstInfo2", noClassnameStored = true)
+@Entity(value = "clientGstInfo", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("gstin")))
 public class ClientGstInfo implements Serializable {
 
