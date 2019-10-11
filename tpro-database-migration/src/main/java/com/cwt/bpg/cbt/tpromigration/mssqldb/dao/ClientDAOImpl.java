@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
@@ -857,4 +858,53 @@ public class ClientDAOImpl {
 		LOGGER.info("Size of client transaction fees from mssqldb middleware: {}", clientTransactionFees.size());
 		return clientTransactionFees;
 	}
+
+
+    public List<String> getMWClientAccountNumber(List<String> clientAccountNumber) {
+
+        String collect = clientAccountNumber.stream().map(e -> "'" + e + "'").collect(Collectors.joining(","));
+        StringBuilder sql = new StringBuilder();
+        sql.append("select CNCode from clientmaster where cncode in (");
+        sql.append(collect);
+        sql.append(")");
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            LOGGER.info("Getting clients from mssqldb middleware");
+            conn = middlewareDataSource.getConnection();
+            ps = conn.prepareStatement(sql.toString());
+            rs = ps.executeQuery();
+            final List<String> middlewareClients = new ArrayList<>();
+            while (rs.next()) {
+                middlewareClients.add(rs.getString("CNCode"));
+            }
+            return middlewareClients;
+        }
+        catch (SQLException e) {
+            LOGGER.error("Error reading clients from mssqldb middleware, {}", e);
+        }
+        finally {
+            try {
+
+                if (rs != null) {
+                    rs.close();
+                }
+
+                if (ps != null) {
+                    ps.close();
+                }
+
+                if (conn != null) {
+                    conn.close();
+                }
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 }

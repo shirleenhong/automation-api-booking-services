@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -8,12 +9,12 @@
     <version>2.1.4.RELEASE</version>
     <relativePath />
   </parent>
-  
+
   <artifactId>tpro-database-migration</artifactId>
   <name>tpro-database-migration</name>
   <description>tpro-database-migration</description>
   <version>2.7.0-SNAPSHOT</version>
-  
+
   <properties>
     <java.version>1.8</java.version>
     <apac-services.version>2.7.0-SNAPSHOT</apac-services.version>
@@ -90,6 +91,11 @@
       <version>1.1.1</version>
     </dependency>
     <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.6</version>
+    </dependency>
+    <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>
       <version>4.0.0-alpha-3</version>
@@ -107,7 +113,7 @@
       <artifactId>groovy-json</artifactId>
       <version>3.0.0-beta-1</version>
     </dependency>
-    
+
     <dependency>
       <groupId>com.cwt.bpg.cbt</groupId>
       <artifactId>apac-services-exchange-order-api</artifactId>
