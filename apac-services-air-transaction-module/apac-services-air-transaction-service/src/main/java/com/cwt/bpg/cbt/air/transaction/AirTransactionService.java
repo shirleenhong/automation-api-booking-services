@@ -111,11 +111,9 @@ public class AirTransactionService
             }
             catch (Exception e)
             {
-                airTransBackupService.rollback(airTransactionList, batchId, airTransaction -> {
-                    airTransaction.setId(null);
-                });
+                airTransBackupService.rollback(airTransactionList, batchId);
                 LOGGER.error("Error in creating backup of air transaction from excel file", e);
-                throw new AirTransactionBackupException("", e);
+                throw new AirTransactionBackupException("Error in creating backup of air transaction from excel file", e);
             }
         }
         else

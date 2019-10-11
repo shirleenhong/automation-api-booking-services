@@ -61,15 +61,15 @@ public class CommonRepository<T, D> {
      * @return
      */
     public T get(D criteria) {
-        return morphia.getDatastore().createQuery(typeClass).field(keyColumn).equal(criteria).get();
+        return getDatastore().createQuery(typeClass).field(keyColumn).equal(criteria).get();
     }
 
     public Query<T> createQuery()
     {
-        return morphia.getDatastore().createQuery(typeClass);
+        return getDatastore().createQuery(typeClass);
     }
 
-    public Datastore createUpdateOperations()
+    public Datastore getDatastore()
     {
         return morphia.getDatastore();
     }
@@ -79,7 +79,7 @@ public class CommonRepository<T, D> {
         if (keyValue != null) {
             remove(keyValue);
         }
-        final Datastore datastore = morphia.getDatastore();
+        final Datastore datastore = getDatastore();
         Key<T> newKey = datastore.save(object);
 
         LoggerFactory.getLogger(typeClass).info("Save Result: {}", newKey);
@@ -87,7 +87,7 @@ public class CommonRepository<T, D> {
     }
 
     public Iterable<T> putAll(Iterable<T> objects) {
-        DBCollection collection = morphia.getDatastore().getCollection(typeClass);
+        DBCollection collection = getDatastore().getCollection(typeClass);
         BulkWriteOperation writeOperation = collection.initializeUnorderedBulkOperation();
         for (T clientGstInfo : objects) {
             mapAndInsertToWriteOperation(clientGstInfo, writeOperation);
@@ -99,7 +99,7 @@ public class CommonRepository<T, D> {
     }
 
     public String remove(D keyValue) {
-        final Datastore datastore = morphia.getDatastore();
+        final Datastore datastore = getDatastore();
         final Query<T> query = datastore.createQuery(typeClass).field(keyColumn).equal(keyValue);
         boolean deleteSuccess = remove(query);
         return deleteSuccess ? keyValue.toString() : "";
@@ -107,23 +107,23 @@ public class CommonRepository<T, D> {
     
     public boolean remove(Query<T> query)
     {
-        final Datastore datastore = morphia.getDatastore();
+        final Datastore datastore = getDatastore();
         WriteResult delete = datastore.delete(query);
         LoggerFactory.getLogger(typeClass).info("Delete Result: {}", delete);
         return delete.getN() > 0;
     }
 
     public boolean collectionExists() {
-        return morphia.getDatastore().getDB().collectionExists(collectionName);
+        return getDatastore().getDB().collectionExists(collectionName);
     }
 
     public CommandResult getStats() {
-        return morphia.getDatastore().getCollection(typeClass).getStats();
+        return getDatastore().getCollection(typeClass).getStats();
     }
 
     public void dropCollection() {
         if(collectionExists()) {
-            morphia.getDatastore().getCollection(typeClass).drop();
+            getDatastore().getCollection(typeClass).drop();
         }
     }
 

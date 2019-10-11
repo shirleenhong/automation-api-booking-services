@@ -63,14 +63,21 @@ public abstract class CommonBackupService<O, B>
 
     public abstract List<B> createBackupList(List<O> toBackup, Instant dateTime, String batchId);
 
-    public void rollback(List<O> backup, String batchId, Consumer< ? super O> action)
+    public void rollback(List<O> backupList, String batchId)
     {
         backupRepository.removeBatchBackup(batchId);
-        if (backup != null && !backup.isEmpty())
+        if (backupList != null && !backupList.isEmpty())
         {
-            backup.stream().forEach(action);
-            repository.putAll(backup);
+            backupList.stream().forEach(updateBackup());
+            repository.putAll(backupList);
         }
+    }
+
+    /**
+     * Override to set id to null if needed
+     */
+    public Consumer<? super O> updateBackup() {
+        return e -> {};
     }
 
 }

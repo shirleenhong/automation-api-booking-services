@@ -34,9 +34,4 @@ public class ClientGstInfoBackupService extends CommonBackupService<ClientGstInf
         }
         return backups;
     }
-
-    public void rollback(List<ClientGstInfo> clientGstInfoBackupList, String batchId) {
-        rollback(clientGstInfoBackupList, batchId, e -> {
-        });
-    }
 }

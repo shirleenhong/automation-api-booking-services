@@ -16,10 +16,12 @@ import org.springframework.util.CollectionUtils;
 
 import com.cwt.bpg.cbt.client.gst.exception.ClientGstInfoBackupException;
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfoBackup;
 import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exceptions.FileUploadException;
+import com.cwt.bpg.cbt.service.CommonBackupService;
 
 @Service
 public class ClientGstInfoService {
@@ -30,7 +32,7 @@ public class ClientGstInfoService {
     private ClientGstInfoRepository clientGstInfoRepository;
 
     @Autowired
-    private ClientGstInfoBackupService clientGstInfoBackupService;
+    private CommonBackupService<ClientGstInfo, ClientGstInfoBackup> clientGstInfoBackupService;
 
     @Autowired
     private ClientGstInfoFileWriterService clientGstInfoFileWriterService;

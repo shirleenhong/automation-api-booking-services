@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.air.transaction;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,4 +35,12 @@ public class AirTransactionBackupService extends CommonBackupService<AirTransact
         return airTransactionBackupList;
 
     }
+
+    @Override
+    public Consumer<? super AirTransaction> updateBackup() {
+        return airTransaction -> {
+            airTransaction.setId(null);
+        };
+    }
+    
 }
