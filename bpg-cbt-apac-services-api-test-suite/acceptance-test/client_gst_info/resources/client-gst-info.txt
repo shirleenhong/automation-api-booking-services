@@ -81,7 +81,7 @@ Evict Client GST Info Cache
     \    Log    ${response.headers}
     \    Log    ${response.content}
     Set Test Variable    ${api_flag}    client-gst-info                
-           
+                 
 Send Get Request For Client GST Info
     [Arguments]    ${gstin}=${gstin_0}        ${token}=${default_token}    
     Create Session    client-gst-info    ${${env}_base_url}    verify=True
@@ -233,12 +233,5 @@ Verify The Error Message Per Row
     Verify Json Value Is Correct    $..errors[${row}].rowNumber   ${error_messages[0]}    
     : FOR    ${index}    IN RANGE    1    ${count_message}
     \    Verify String Contains Substring    ${message}    ${error_messages[${index}]}
-            
-Verify The Number Of Records Is Correct
-    [Arguments]    ${expected_record}
-    ${expected_count}    Convert To Integer    ${expected_record}    
-    ${actual_response}    To Json    ${response.content}    
-    ${actual_count}    Get Length    ${actual_response}
-    Log    ${actual_count}
-    Should Be Equal    ${expected_count}    ${actual_count} 
+
       

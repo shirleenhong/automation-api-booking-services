@@ -38,7 +38,7 @@ Generate UUID
     ${epoch_datetime}    Convert Date    ${current_datetime}    epoch
     ${uuid}    Evaluate    str(${epoch_datetime}-1400000000).replace(".","${unique_key}")
     [Return]    ${uuid}
-    
+      
 Get Json Array Length
     [Arguments]    ${json_object}=${response.content}    ${split_item}=id
     ${response_list}    To Json    ${json_object}
@@ -56,7 +56,12 @@ Get Json Value As String
     Comment    ${actual_value}    Evaluate    json.dumps(${actual_value})    json
     ${actual_value}    Remove String    ${actual_value}    [    "    ]
     [Return]    ${actual_value}
-
+    
+Get The Number Of Actual Record 
+    ${actual_response}    To Json    ${response.content}    
+    ${actual_record_count}    Get Length    ${actual_response}
+    Set Test Variable    ${actual_record_count}
+  
 Get Value As String
     [Arguments]    ${json_object}    ${json_path}
     ${res_content}=    To Json    ${json_object}      
@@ -170,3 +175,12 @@ Verify String Matches Pattern
     Log    Actual String: ${string}
     Log    Expected Pattern: ${pattern}
     Run Keyword And Continue On Failure    Should Match RegExp    ${string}    ${pattern}    String "${string}" does not match pattern "${pattern}"    FALSE
+    
+            
+Verify The Number Of Records Is Correct
+    [Arguments]    ${expected_record}=${actual_record_count}
+    ${expected_count}    Convert To Integer    ${expected_record}    
+    ${actual_response}    To Json    ${response.content}    
+    ${actual_count}    Get Length    ${actual_response}
+    Log    ${actual_count}
+    Should Be Equal    ${expected_count}    ${actual_count} 

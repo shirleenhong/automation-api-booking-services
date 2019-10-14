@@ -329,11 +329,19 @@ Verify That Error Is Encountered When No Token Is Used For Post Request
     
  Verify That Error Is Encountered When File Is not Excel File For Post Request
     [Tags]    functional
+    Send Get Request For Client GST Info    gstin=${EMPTY} 
+    Get The Number Of Actual Record
     Send Post Request For Client GST Info    filename=client-gst-info-list.txt
     Verify Response Status Code Is Correct    400
+    Send Get Request For Client GST Info    gstin=${EMPTY} 
+    Verify The Number Of Records Is Correct
     
  Verify That Error Is Encountered When Some Data Is Invalid For Post Request
     [Tags]    functional
+    Send Get Request For Client GST Info    gstin=${EMPTY} 
+    Get The Number Of Actual Record
     Send Post Request For Client GST Info    filename=invalid_clientgstinfo.xlsx
     Verify Response Status Code Is Correct    400   
     Verify The Error Message Of Response Body
+    Send Get Request For Client GST Info    gstin=${EMPTY} 
+    Verify The Number Of Records Is Correct

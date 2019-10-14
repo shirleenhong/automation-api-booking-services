@@ -191,3 +191,21 @@ Verify That Error Is Encountered When Null ID Is Used For Maintenance Delete Req
     Send Air Transaction Delete Request (Maintenance)    id=null
     Verify Response Status Code Is Correct    400
     Verify Air Transaction Record Is Not Retrieved
+
+ Verify That Error Is Encountered When File Is not Excel File For Post Request
+    [Tags]    functional
+    Send Air Transaction Get Request (India)
+    Get The Number Of Actual Record
+    Send Post Request For Air Transaction    filename=air-transactions.txt
+    Verify Response Status Code Is Correct    400
+    Send Air Transaction Get Request (India)
+    Verify The Number Of Records Is Correct
+    
+ Verify That Error Is Encountered When File Is Empty For Post Request
+    [Tags]    not-ready
+    Send Air Transaction Get Request (India)
+    Get The Number Of Actual Record
+    Send Post Request For Air Transaction    filename=invalid_file.xlsx
+    Verify Response Status Code Is Correct    400
+    Send Air Transaction Get Request (India)
+    Verify The Number Of Records Is Correct
