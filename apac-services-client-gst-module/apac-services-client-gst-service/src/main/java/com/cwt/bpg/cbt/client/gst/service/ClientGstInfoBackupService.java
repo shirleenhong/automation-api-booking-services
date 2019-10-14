@@ -28,6 +28,7 @@ public class ClientGstInfoBackupService extends CommonBackupService<ClientGstInf
         final List<ClientGstInfoBackup> backups = new ArrayList<>();
         for (ClientGstInfo clientGstInfo : toBackup) {
             ClientGstInfoBackup backup = new ClientGstInfoBackup();
+            backup.setBatchId(batchId);
             backup.setDateCreated(dateTime);
             backup.setClientGstInfo(clientGstInfo);
             backups.add(backup);
