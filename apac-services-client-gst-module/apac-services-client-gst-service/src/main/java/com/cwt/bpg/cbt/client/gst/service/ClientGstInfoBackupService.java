@@ -1,7 +1,7 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
 import java.time.Instant;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class ClientGstInfoBackupService extends CommonBackupService<ClientGstInf
     @Override
     public List<ClientGstInfoBackup> createBackupList(List<ClientGstInfo> toBackup, Instant dateTime,
             String batchId) {
-        List<ClientGstInfoBackup> backups = new LinkedList<>();
+        final List<ClientGstInfoBackup> backups = new ArrayList<>();
         for (ClientGstInfo clientGstInfo : toBackup) {
             ClientGstInfoBackup backup = new ClientGstInfoBackup();
             backup.setDateCreated(dateTime);
