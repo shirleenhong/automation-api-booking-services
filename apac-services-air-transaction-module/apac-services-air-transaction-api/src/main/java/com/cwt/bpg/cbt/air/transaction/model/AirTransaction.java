@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
 
-@Entity(value = "airTransactions", noClassnameStored = true)
+@Entity(value = "airTransactions2", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("id")))
 @Converters(value = PassthroughTypeConverter.class)
 public class AirTransaction implements Serializable
@@ -29,6 +29,9 @@ public class AirTransaction implements Serializable
     @JsonSerialize(using = ObjectIdSerializer.class)
     @ApiModelProperty(hidden = true)
     private ObjectId id;
+
+    @ApiModelProperty(hidden = true)
+    private String groupId;
 
     private String airlineDescription;
 
@@ -50,7 +53,6 @@ public class AirTransaction implements Serializable
 
     public AirTransaction(AirTransaction airTransaction)
     {
-        this.id = airTransaction.id;
         this.airlineDescription = airTransaction.airlineDescription;
         this.ccVendorName = airTransaction.ccVendorName;
         this.passthroughType = airTransaction.passthroughType;
@@ -68,6 +70,16 @@ public class AirTransaction implements Serializable
     public void setId(ObjectId id)
     {
         this.id = id;
+    }
+
+    public String getGroupId()
+    {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId)
+    {
+        this.groupId = groupId;
     }
 
     public String getAirlineCode()
