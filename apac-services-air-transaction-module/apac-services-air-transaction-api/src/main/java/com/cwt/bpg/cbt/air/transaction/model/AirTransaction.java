@@ -53,6 +53,7 @@ public class AirTransaction implements Serializable
 
     public AirTransaction(AirTransaction airTransaction)
     {
+        this.id = airTransaction.id;
         this.airlineDescription = airTransaction.airlineDescription;
         this.ccVendorName = airTransaction.ccVendorName;
         this.passthroughType = airTransaction.passthroughType;
