@@ -1,8 +1,6 @@
 package com.cwt.bpg.cbt.repository;
 
-import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.query.FindOptions;
@@ -12,39 +10,25 @@ import org.springframework.util.CollectionUtils;
 
 import com.cwt.bpg.cbt.upload.model.CollectionGroup;
 
-public abstract class CollectionGroupRepository extends CommonBackupRepository<CollectionGroup, ObjectId>
+public class CollectionGroupRepository extends CommonRepository<CollectionGroup, ObjectId>
 {
-    private static final String ID_COLUMN = "id";
+    private static final String ID_FIELD = "id";
+    private static final String GROUP_ID_FIELD = "groupdId";
+    private static final String COLLECTION_NAME_FIELD = "collectionName";
+    private static final String IS_ACTIVE_FIELD = "isActive";
+    private static final String CREATION_TIMESTAMP_FIELD = "creationTimestamp";
 
     public CollectionGroupRepository()
     {
-        super(CollectionGroup.class, ID_COLUMN);
+        super(CollectionGroup.class, ID_FIELD);
     }
 
-    protected CollectionGroup createCollectionGroup(String collectionName)
-    {
-        CollectionGroup activeGroup = getActiveCollectionGroup(collectionName);
-        if (activeGroup != null)
-        {
-            activeGroup.setActive(false);
-            put(activeGroup);
-        }
-
-        CollectionGroup newGroup = new CollectionGroup();
-        newGroup.setGroupId(UUID.randomUUID().toString());
-        newGroup.setCollectionName(collectionName);
-        newGroup.setCreationTimestamp(Instant.now());
-        newGroup.setActive(true);
-
-        return put(newGroup);
-    }
-
-    protected CollectionGroup getActiveCollectionGroup(String collectionName)
+    public CollectionGroup getActiveCollectionGroup(String collectionName)
     {
         Query<CollectionGroup> query = morphia.getDatastore().createQuery(CollectionGroup.class);
-        query.field("collectionName").equal(collectionName);
-        query.field("isActive").equal(true);
-        query.order(Sort.descending("creationTimestamp"));
+        query.field(COLLECTION_NAME_FIELD).equal(collectionName);
+        query.field(IS_ACTIVE_FIELD).equal(true);
+        query.order(Sort.descending(CREATION_TIMESTAMP_FIELD));
 
         List<CollectionGroup> collectionGroup = query.asList(new FindOptions().limit(1));
 
@@ -56,30 +40,19 @@ public abstract class CollectionGroupRepository extends CommonBackupRepository<C
         return null;
     }
 
-    protected void restorePreviousCollection(String groupId)
+    public List<CollectionGroup> getAllActiveCollectionGroup()
     {
         Query<CollectionGroup> activeCollectionQuery = morphia.getDatastore().createQuery(CollectionGroup.class);
-        activeCollectionQuery.field("isActive").equal(true);
+        activeCollectionQuery.field(IS_ACTIVE_FIELD).equal(true);
 
-        List<CollectionGroup> activeCollections = activeCollectionQuery.asList();
+        return activeCollectionQuery.asList();
+    }
 
-        if (!CollectionUtils.isEmpty(activeCollections))
-        {
-            activeCollections.stream().forEach(c -> {
-                c.setActive(false);
-                put(c);
-            });
-        }
-
+    public CollectionGroup getByGroupId(String groupId)
+    {
         Query<CollectionGroup> restorePrevCollectionQuery = morphia.getDatastore().createQuery(CollectionGroup.class);
-        restorePrevCollectionQuery.field("groupId").equal(groupId);
+        restorePrevCollectionQuery.field(GROUP_ID_FIELD).equal(groupId);
 
-        CollectionGroup prevCollection = restorePrevCollectionQuery.get();
-
-        if (prevCollection != null)
-        {
-            prevCollection.setActive(true);
-            put(prevCollection);
-        }
+        return restorePrevCollectionQuery.get();
     }
 }

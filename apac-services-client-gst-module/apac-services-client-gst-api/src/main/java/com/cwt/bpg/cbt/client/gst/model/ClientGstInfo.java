@@ -18,7 +18,8 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity(value = "clientGstInfo", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("gstin")))
-public class ClientGstInfo implements Serializable {
+public class ClientGstInfo implements Serializable
+{
 
     private static final long serialVersionUID = 1600168082099452654L;
 
@@ -28,6 +29,8 @@ public class ClientGstInfo implements Serializable {
     @Size(min = GSTIN_LENGTH, max = GSTIN_LENGTH, message = GSTIN_LENGTH_ERROR_MSG)
     @ApiModelProperty(required = true)
     private String gstin;
+    
+    private String groupId;
 
     private String client;
 
@@ -73,83 +76,114 @@ public class ClientGstInfo implements Serializable {
     @ApiModelProperty(allowableValues = "S, P, U")
     private OrgType orgType;
 
-    public String getGstin() {
+    public String getGstin()
+    {
         return gstin;
     }
 
-    public void setGstin(String gstin) {
+    public void setGstin(String gstin)
+    {
         this.gstin = gstin;
     }
+    
 
-    public String getClient() {
+    public String getGroupId()
+    {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId)
+    {
+        this.groupId = groupId;
+    }
+
+    public String getClient()
+    {
         return client;
     }
 
-    public void setClient(String client) {
+    public void setClient(String client)
+    {
         this.client = client;
     }
 
-    public String getClientEntityName() {
+    public String getClientEntityName()
+    {
         return clientEntityName;
     }
 
-    public void setClientEntityName(String clientEntityName) {
+    public void setClientEntityName(String clientEntityName)
+    {
         this.clientEntityName = clientEntityName;
     }
 
-    public String getBusinessPhoneNumber() {
+    public String getBusinessPhoneNumber()
+    {
         return businessPhoneNumber;
     }
 
-    public void setBusinessPhoneNumber(String businessPhoneNumber) {
+    public void setBusinessPhoneNumber(String businessPhoneNumber)
+    {
         this.businessPhoneNumber = businessPhoneNumber;
     }
 
-    public String getBusinessEmailAddress() {
+    public String getBusinessEmailAddress()
+    {
         return businessEmailAddress;
     }
 
-    public void setBusinessEmailAddress(String businessEmailAddress) {
+    public void setBusinessEmailAddress(String businessEmailAddress)
+    {
         this.businessEmailAddress = businessEmailAddress;
     }
 
-    public String getEntityAddressLine1() {
+    public String getEntityAddressLine1()
+    {
         return entityAddressLine1;
     }
 
-    public void setEntityAddressLine1(String entityAddressLine1) {
+    public void setEntityAddressLine1(String entityAddressLine1)
+    {
         this.entityAddressLine1 = entityAddressLine1;
     }
 
-    public String getEntityAddressLine2() {
+    public String getEntityAddressLine2()
+    {
         return entityAddressLine2;
     }
 
-    public void setEntityAddressLine2(String entityAddressLine2) {
+    public void setEntityAddressLine2(String entityAddressLine2)
+    {
         this.entityAddressLine2 = entityAddressLine2;
     }
 
-    public String getPostalCode() {
+    public String getPostalCode()
+    {
         return postalCode;
     }
 
-    public void setPostalCode(String postalCode) {
+    public void setPostalCode(String postalCode)
+    {
         this.postalCode = postalCode;
     }
 
-    public String getCity() {
+    public String getCity()
+    {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(String city)
+    {
         this.city = city;
     }
 
-    public String getState() {
+    public String getState()
+    {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(String state)
+    {
         this.state = state;
     }
 
@@ -165,7 +199,8 @@ public class ClientGstInfo implements Serializable {
 
     @Transient
     @JsonIgnore
-    public boolean allValuesNull() {
+    public boolean allValuesNull()
+    {
         return gstin == null &&
                 client == null &&
                 clientEntityName == null &&
