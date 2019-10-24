@@ -33,14 +33,14 @@ public class AirTransactionService
     private AirTransactionRepository airTransactionRepo;
 
     @Autowired
-    private AirTransactionGroupRepository groupRepository;
+    private AirTransactionGroupService groupService;
 
     @Autowired
     private AirTransExcelReader excelReader;
 
     public AirTransactionOutput getAirTransaction(AirTransactionInput input) throws AirTransactionNoContentException
     {
-        CollectionGroup collectionGroup = groupRepository.getActiveAirTransactionGroup();
+        CollectionGroup collectionGroup = groupService.createAirTransactionGroup();
         input.setGroupId(collectionGroup.getGroupId());
 
         List<AirTransaction> airTransactionList = getAirTransactionList(input);
@@ -78,7 +78,7 @@ public class AirTransactionService
 
     public List<AirTransaction> save(List<AirTransaction> airTrans)
     {
-        CollectionGroup collectionGroup = groupRepository.getActiveAirTransactionGroup();
+        CollectionGroup collectionGroup = groupService.getAirTransactionActiveCollection();
         airTrans.forEach(a -> a.setGroupId(collectionGroup.getGroupId()));
 
         return StreamSupport.stream(airTransactionRepo.putAll(airTrans).spliterator(), false).collect(Collectors.toList());
@@ -86,7 +86,7 @@ public class AirTransactionService
 
     public AirTransaction save(AirTransaction airTrans)
     {
-        CollectionGroup collectionGroup = groupRepository.getActiveAirTransactionGroup();
+        CollectionGroup collectionGroup = groupService.getAirTransactionActiveCollection();
         airTrans.setGroupId(collectionGroup.getGroupId());
 
         return airTransactionRepo.put(airTrans);
@@ -101,19 +101,18 @@ public class AirTransactionService
     {
         if (EXCEL_WORKBOOK.equalsIgnoreCase(fileType))
         {
-            CollectionGroup currentCollectionGroup = groupRepository.getActiveAirTransactionGroup();
+            CollectionGroup groupToRollback = groupService.getAirTransactionActiveCollection();
             try
             {
                 final List<AirTransaction> airTransactions = excelReader.parse(new BufferedInputStream(inputStream));
-                CollectionGroup group = groupRepository.createAirTransactionGroup();
+                CollectionGroup group = groupService.createAirTransactionGroup();
                 airTransactions.forEach(a -> a.setGroupId(group.getGroupId()));
                 airTransactionRepo.putAll(airTransactions);
-                throw new IllegalArgumentException("File must be in excel format");
             }
             catch (Exception e)
             {
                 LOGGER.error("Error in uploading Air Transactions: {}", e.getMessage());
-                groupRepository.restorePrevAirTransactionCollection(currentCollectionGroup.getGroupId());
+                groupService.rollbackAirTransactionGroup(groupToRollback.getGroupId());
             }
         }
         else

@@ -20,6 +20,7 @@ public class CollectionGroup
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId id;
     private String groupId;
+    private String branchVersion;
     private String collectionName;
     private boolean isActive;
     private Instant creationTimestamp;
@@ -42,6 +43,16 @@ public class CollectionGroup
     public void setGroupId(String groupId)
     {
         this.groupId = groupId;
+    }
+
+    public String getBranchVersion()
+    {
+        return branchVersion;
+    }
+
+    public void setBranchVersion(String branchVersion)
+    {
+        this.branchVersion = branchVersion;
     }
 
     public String getCollectionName()

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
 
-@Entity(value = "airTransactions2", noClassnameStored = true)
+@Entity(value = "airTransactions", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("id")))
 @Converters(value = PassthroughTypeConverter.class)
 public class AirTransaction implements Serializable

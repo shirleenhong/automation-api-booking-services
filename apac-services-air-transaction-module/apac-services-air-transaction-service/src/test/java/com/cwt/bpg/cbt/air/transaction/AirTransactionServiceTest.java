@@ -39,7 +39,7 @@ public class AirTransactionServiceTest
     private AirTransactionRepository repository;
 
     @Mock
-    private AirTransactionGroupRepository groupRepository;
+    private AirTransactionGroupService groupService;
 
     @Mock
     private AirTransExcelReader excelReader;
@@ -71,7 +71,7 @@ public class AirTransactionServiceTest
     {
         AirTransaction airTransaction = mock(AirTransaction.class);
         when(airTransaction.getPassthroughType()).thenReturn(PassthroughType.CWT);
-        when(groupRepository.getActiveAirTransactionGroup()).thenReturn(new CollectionGroup());
+        when(groupService.createAirTransactionGroup()).thenReturn(new CollectionGroup());
 
         List<AirTransaction> airTransactions = new ArrayList<>();
         airTransactions.add(airTransaction);
@@ -89,7 +89,7 @@ public class AirTransactionServiceTest
     {
         AirTransaction airTransaction = mock(AirTransaction.class);
         when(airTransaction.getPassthroughType()).thenReturn(PassthroughType.AIRLINE);
-        when(groupRepository.getActiveAirTransactionGroup()).thenReturn(new CollectionGroup());
+        when(groupService.createAirTransactionGroup()).thenReturn(new CollectionGroup());
 
         List<AirTransaction> airTransactions = new ArrayList<>();
         airTransactions.add(airTransaction);
@@ -107,7 +107,7 @@ public class AirTransactionServiceTest
     {
         AirTransaction airTransaction = mock(AirTransaction.class);
         when(airTransaction.getPassthroughType()).thenReturn(PassthroughType.CWT);
-        when(groupRepository.getActiveAirTransactionGroup()).thenReturn(new CollectionGroup());
+        when(groupService.createAirTransactionGroup()).thenReturn(new CollectionGroup());
 
         List<AirTransaction> airTransactions = new ArrayList<>();
 
@@ -125,7 +125,7 @@ public class AirTransactionServiceTest
     public void saveShouldReturnSavedAirTransactions()
     {
         when(repository.putAll(any(List.class))).thenReturn(Arrays.asList(new AirTransaction()));
-        when(groupRepository.getActiveAirTransactionGroup()).thenReturn(new CollectionGroup());
+        when(groupService.getAirTransactionActiveCollection()).thenReturn(new CollectionGroup());
 
         service.save(Arrays.asList(new AirTransaction()));
 
@@ -136,7 +136,7 @@ public class AirTransactionServiceTest
     public void saveShouldReturnSavedAirTransaction()
     {
         when(repository.put(any(AirTransaction.class))).thenReturn(new AirTransaction());
-        when(groupRepository.getActiveAirTransactionGroup()).thenReturn(new CollectionGroup());
+        when(groupService.getAirTransactionActiveCollection()).thenReturn(new CollectionGroup());
 
         service.save(new AirTransaction());
 
@@ -163,8 +163,8 @@ public class AirTransactionServiceTest
 
         when(excelReader.parse(any(InputStream.class))).thenReturn(Arrays.asList(new AirTransaction()));
         when(repository.putAll(any())).thenReturn(Arrays.asList(new AirTransaction()));
-        when(groupRepository.getActiveAirTransactionGroup()).thenReturn(new CollectionGroup());
-        when(groupRepository.createAirTransactionGroup()).thenReturn(new CollectionGroup());
+        when(groupService.getAirTransactionActiveCollection()).thenReturn(new CollectionGroup());
+        when(groupService.createAirTransactionGroup()).thenReturn(new CollectionGroup());
 
         service.upload(inputStream, fileType);
 
