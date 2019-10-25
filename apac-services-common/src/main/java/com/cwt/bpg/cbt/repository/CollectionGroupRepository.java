@@ -13,7 +13,6 @@ import com.cwt.bpg.cbt.upload.model.CollectionGroup;
 public class CollectionGroupRepository extends CommonRepository<CollectionGroup, ObjectId>
 {
     private static final String ID_FIELD = "id";
-    private static final String GROUP_ID_FIELD = "groupdId";
     private static final String COLLECTION_NAME_FIELD = "collectionName";
     private static final String IS_ACTIVE_FIELD = "isActive";
     private static final String CREATION_TIMESTAMP_FIELD = "creationTimestamp";
@@ -38,13 +37,5 @@ public class CollectionGroupRepository extends CommonRepository<CollectionGroup,
         }
 
         return null;
-    }
-
-    public CollectionGroup getByGroupId(String groupId)
-    {
-        Query<CollectionGroup> restorePrevCollectionQuery = morphia.getDatastore().createQuery(CollectionGroup.class);
-        restorePrevCollectionQuery.field(GROUP_ID_FIELD).equal(groupId);
-
-        return restorePrevCollectionQuery.get();
     }
 }

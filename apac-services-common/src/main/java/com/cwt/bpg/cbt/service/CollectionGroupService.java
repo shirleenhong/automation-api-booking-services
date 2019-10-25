@@ -14,13 +14,13 @@ public abstract class CollectionGroupService<T>
     @Value("${com.bpg.cbt.apac.service.version}")
     private String branchVersion;
 
-    private CommonRepository<T, ?> repository;
+    private CommonRepository<T, ? > repository;
 
     private CollectionGroupRepository groupRepository;
 
     public abstract CollectionGroupContext<T> createCollectionGroup(List<T> data);
 
-    public CollectionGroupService(CommonRepository<T, ?> repository, CollectionGroupRepository groupRespository)
+    public CollectionGroupService(CommonRepository<T, ? > repository, CollectionGroupRepository groupRespository)
     {
         this.repository = repository;
         this.groupRepository = groupRespository;
@@ -29,12 +29,16 @@ public abstract class CollectionGroupService<T>
     public void saveCollectionGroup(List<T> data)
     {
         CollectionGroupContext<T> context = createCollectionGroup(data);
-        CollectionGroup currentGroup = groupRepository.getActiveCollectionGroup(context.getCollectionGroup().getCollectionName());
-        currentGroup.setActive(false);
 
         repository.putAll(context.getData());
         groupRepository.put(context.getCollectionGroup());
-        groupRepository.put(currentGroup);
+
+        CollectionGroup currentGroup = groupRepository.getActiveCollectionGroup(context.getCollectionGroup().getCollectionName());
+        if (currentGroup != null)
+        {
+            currentGroup.setActive(false);
+            groupRepository.put(currentGroup);
+        }
     }
 
     public String getBranchVersion()
