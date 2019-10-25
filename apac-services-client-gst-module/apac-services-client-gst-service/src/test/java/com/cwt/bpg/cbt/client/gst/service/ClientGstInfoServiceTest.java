@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -24,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -74,7 +74,7 @@ public class ClientGstInfoServiceTest
     @Test
     public void shouldReturnAllGstInfoByGstIn()
     {
-        when(groupService.getClientGstInfoActiveCollection()).thenReturn(new CollectionGroup());
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
         List<ClientGstInfo> response = service.getAllClientGstInfo();
 
         assertNotNull(response);
@@ -85,7 +85,7 @@ public class ClientGstInfoServiceTest
     {
         final String givenGstIn = "123456";
 
-        when(groupService.getClientGstInfoActiveCollection()).thenReturn(new CollectionGroup());
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
         final ClientGstInfo response = service.getClientGstInfo(givenGstIn);
 
         assertNull(response);
@@ -98,7 +98,7 @@ public class ClientGstInfoServiceTest
         givenInfo.setGstin("12345");
 
         when(clientGstInfoRepository.put(any())).thenReturn(givenInfo);
-        when(groupService.getClientGstInfoActiveCollection()).thenReturn(new CollectionGroup());
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
         final ClientGstInfo response = service.save(givenInfo);
 
         assertEquals(givenInfo.getGstin(), response.getGstin());
@@ -115,41 +115,25 @@ public class ClientGstInfoServiceTest
         assertEquals(givenGstIn, response);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldSaveFromExcelFile() throws Exception
     {
-        when(groupService.createClientGstInfoGroup()).thenReturn(new CollectionGroup());
         service.saveFromFile(inputStream, "xlsx", false);
 
         // verify if backup is performed
-        verify(groupService, times(0)).rollbackClientGstInfoGroup((any()));
-        verify(clientGstInfoRepository, times(1)).putAll(anyCollection());
-    }
-
-    @Test
-    public void shouldNotBackupWhenClientGstInfoDoesntExist() throws Exception
-    {
-        when(groupService.createClientGstInfoGroup()).thenReturn(new CollectionGroup());
-
-        service.saveFromFile(inputStream, "xlsx", false);
-
-        // verify if backup is not performed
-        verify(groupService, times(0)).rollbackClientGstInfoGroup((any()));
-
-        verify(clientGstInfoRepository, times(1)).putAll(anyCollection());
+        verify(groupService, times(1)).saveCollectionGroup(Mockito.any(List.class));
     }
 
     @Test
     public void shouldNotSaveClientGstInfoIfNoneIsExtractedFromExcel() throws Exception
     {
-
         when(clientGstInfoExcelReaderService.readFile(any(), anyBoolean())).thenReturn(Collections.emptyList());
 
         service.saveFromFile(inputStream, "xlsx", false);
 
         // verify if clientGstInfo collection is not replaced with new collection
-        verify(clientGstInfoRepository, times(0)).dropCollection();
-        verify(clientGstInfoRepository, times(1)).putAll(Collections.emptyList());
+        verify(groupService, times(1)).saveCollectionGroup(Collections.emptyList());
     }
 
     @Test
@@ -189,19 +173,6 @@ public class ClientGstInfoServiceTest
         ClientGstInfoReaderService reader = mock(ClientGstInfoReaderService.class);
         when(map.get(any())).thenReturn(reader);
         when(reader.readFile(any(), anyBoolean())).thenThrow(FileUploadException.class);
-        when(groupService.getClientGstInfoActiveCollection()).thenReturn(new CollectionGroup());
         service.saveFromFile(inputStream, "xlsx", false);
-        verify(groupService, times(1)).rollbackClientGstInfoGroup((any()));
-    }
-
-    @SuppressWarnings("rawtypes")
-    @Test(expected = Exception.class)
-    public void shouldThrowException() throws Exception
-    {
-        ClientGstInfoReaderService reader = mock(ClientGstInfoReaderService.class);
-        when(map.get(any())).thenReturn(reader);
-        when(clientGstInfoRepository.putAll(any())).thenThrow(NullPointerException.class);
-        service.saveFromFile(inputStream, "xlsx", false);
-        verify(groupService, times(1)).rollbackClientGstInfoGroup((any()));
     }
 }

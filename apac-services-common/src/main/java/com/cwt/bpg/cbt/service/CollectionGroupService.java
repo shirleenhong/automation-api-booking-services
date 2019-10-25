@@ -1,69 +1,44 @@
 package com.cwt.bpg.cbt.service;
 
-import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.CollectionUtils;
 
 import com.cwt.bpg.cbt.repository.CollectionGroupRepository;
+import com.cwt.bpg.cbt.repository.CommonRepository;
 import com.cwt.bpg.cbt.upload.model.CollectionGroup;
+import com.cwt.bpg.cbt.upload.model.CollectionGroupContext;
 
-public class CollectionGroupService<T extends CollectionGroupRepository>
+public abstract class CollectionGroupService<T>
 {
-    private T repository;
-    
     @Value("${com.bpg.cbt.apac.service.version}")
-    private String branchVersion;    
+    private String branchVersion;
 
-    public CollectionGroupService(T repository)
+    private CommonRepository<T, ?> repository;
+
+    private CollectionGroupRepository groupRepository;
+
+    public abstract CollectionGroupContext<T> createCollectionGroup(List<T> data);
+
+    public CollectionGroupService(CommonRepository<T, ?> repository, CollectionGroupRepository groupRespository)
     {
         this.repository = repository;
+        this.groupRepository = groupRespository;
     }
 
-    protected CollectionGroup createCollectionGroup(String collectionName)
+    public void saveCollectionGroup(List<T> data)
     {
-        CollectionGroup activeGroup = repository.getActiveCollectionGroup(collectionName);
-        if (activeGroup != null)
-        {
-            activeGroup.setActive(false);
-            repository.put(activeGroup);
-        }
+        CollectionGroupContext<T> context = createCollectionGroup(data);
+        CollectionGroup currentGroup = groupRepository.getActiveCollectionGroup(context.getCollectionGroup().getCollectionName());
+        currentGroup.setActive(false);
 
-        CollectionGroup newGroup = new CollectionGroup();
-        newGroup.setGroupId(UUID.randomUUID().toString());
-        newGroup.setCollectionName(collectionName);
-        newGroup.setCreationTimestamp(Instant.now());
-        newGroup.setActive(true);
-        newGroup.setBranchVersion(branchVersion);
-
-        return repository.put(newGroup);
+        repository.putAll(context.getData());
+        groupRepository.put(context.getCollectionGroup());
+        groupRepository.put(currentGroup);
     }
 
-    protected void rollbackCollectionGroup(String rollbackGroupId)
+    public String getBranchVersion()
     {
-        List<CollectionGroup> activeCollections = repository.getAllActiveCollectionGroup();
-
-        if (!CollectionUtils.isEmpty(activeCollections))
-        {
-            activeCollections.stream().forEach(c -> {
-                c.setActive(false);
-                repository.put(c);
-            });
-        }
-
-        CollectionGroup prevCollection = repository.getByGroupId(rollbackGroupId);
-
-        if (prevCollection != null)
-        {
-            prevCollection.setActive(true);
-            repository.put(prevCollection);
-        }
-    }
-
-    protected CollectionGroup getActiveCollectionGroup(String collectionName)
-    {
-        return repository.getActiveCollectionGroup(collectionName);
+        return branchVersion;
     }
 }

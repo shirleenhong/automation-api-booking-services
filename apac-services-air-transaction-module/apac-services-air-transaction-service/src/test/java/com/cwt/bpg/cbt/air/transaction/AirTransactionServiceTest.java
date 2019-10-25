@@ -31,10 +31,6 @@ import com.cwt.bpg.cbt.upload.model.CollectionGroup;
 
 public class AirTransactionServiceTest
 {
-
-    @Mock
-    private AirTransactionService proxy;
-
     @Mock
     private AirTransactionRepository repository;
 
@@ -71,13 +67,13 @@ public class AirTransactionServiceTest
     {
         AirTransaction airTransaction = mock(AirTransaction.class);
         when(airTransaction.getPassthroughType()).thenReturn(PassthroughType.CWT);
-        when(groupService.createAirTransactionGroup()).thenReturn(new CollectionGroup());
 
         List<AirTransaction> airTransactions = new ArrayList<>();
         airTransactions.add(airTransaction);
 
         when(repository.getAirTransactions(any(AirTransactionInput.class))).thenReturn(airTransactions);
-
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
+        
         AirTransactionOutput result = service.getAirTransaction(new AirTransactionInput());
 
         assertNotNull(result);
@@ -89,12 +85,12 @@ public class AirTransactionServiceTest
     {
         AirTransaction airTransaction = mock(AirTransaction.class);
         when(airTransaction.getPassthroughType()).thenReturn(PassthroughType.AIRLINE);
-        when(groupService.createAirTransactionGroup()).thenReturn(new CollectionGroup());
 
         List<AirTransaction> airTransactions = new ArrayList<>();
         airTransactions.add(airTransaction);
 
         when(repository.getAirTransactions(any(AirTransactionInput.class))).thenReturn(airTransactions);
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
 
         AirTransactionOutput result = service.getAirTransaction(new AirTransactionInput());
 
@@ -106,18 +102,14 @@ public class AirTransactionServiceTest
     public void getAirTransactionListShouldThrowException() throws AirTransactionNoContentException
     {
         AirTransaction airTransaction = mock(AirTransaction.class);
+
         when(airTransaction.getPassthroughType()).thenReturn(PassthroughType.CWT);
-        when(groupService.createAirTransactionGroup()).thenReturn(new CollectionGroup());
-
-        List<AirTransaction> airTransactions = new ArrayList<>();
-
-        when(proxy.getAirTransactionList(any(AirTransactionInput.class))).thenReturn(airTransactions);
-
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
+        
         AirTransactionOutput result = service.getAirTransaction(new AirTransactionInput());
 
         assertNotNull(result);
         assertEquals(PassthroughType.CWT, result.getPassthroughType());
-        verify(proxy, times(1)).getAirTransactionList(any(AirTransactionInput.class));
     }
 
     @SuppressWarnings("unchecked")
@@ -125,8 +117,8 @@ public class AirTransactionServiceTest
     public void saveShouldReturnSavedAirTransactions()
     {
         when(repository.putAll(any(List.class))).thenReturn(Arrays.asList(new AirTransaction()));
-        when(groupService.getAirTransactionActiveCollection()).thenReturn(new CollectionGroup());
-
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
+        
         service.save(Arrays.asList(new AirTransaction()));
 
         verify(repository, times(1)).putAll(any(List.class));
@@ -136,8 +128,8 @@ public class AirTransactionServiceTest
     public void saveShouldReturnSavedAirTransaction()
     {
         when(repository.put(any(AirTransaction.class))).thenReturn(new AirTransaction());
-        when(groupService.getAirTransactionActiveCollection()).thenReturn(new CollectionGroup());
-
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
+        
         service.save(new AirTransaction());
 
         verify(repository, times(1)).put(any(AirTransaction.class));
@@ -162,14 +154,10 @@ public class AirTransactionServiceTest
         String fileType = "xlsx";
 
         when(excelReader.parse(any(InputStream.class))).thenReturn(Arrays.asList(new AirTransaction()));
-        when(repository.putAll(any())).thenReturn(Arrays.asList(new AirTransaction()));
-        when(groupService.getAirTransactionActiveCollection()).thenReturn(new CollectionGroup());
-        when(groupService.createAirTransactionGroup()).thenReturn(new CollectionGroup());
 
         service.upload(inputStream, fileType);
 
         verify(excelReader, times(1)).parse(any(InputStream.class));
-        verify(repository, times(1)).putAll(any());
     }
 
     @Test(expected = IllegalArgumentException.class)

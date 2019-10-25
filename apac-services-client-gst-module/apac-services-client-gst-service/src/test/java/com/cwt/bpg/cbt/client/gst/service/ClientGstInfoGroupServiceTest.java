@@ -1,4 +1,4 @@
-package com.cwt.bpg.cbt.air.transaction;
+package com.cwt.bpg.cbt.client.gst.service;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.times;
@@ -15,43 +15,45 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
+import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
+import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoGroupRepository;
+import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
 import com.cwt.bpg.cbt.upload.model.CollectionGroup;
 import com.cwt.bpg.cbt.upload.model.CollectionGroupContext;
 
-public class AirTransactionGroupServiceTest
+public class ClientGstInfoGroupServiceTest
 {
     @Mock
-    private AirTransactionGroupRepository groupRepository;
+    private ClientGstInfoGroupRepository groupRepository;
     
     @Mock
-    private AirTransactionRepository repository;
+    private ClientGstInfoRepository repository;
 
     @InjectMocks
-    private AirTransactionGroupService service;
+    private ClientGstInfoGroupService service;
 
     @Before
     public void init()
     {
         MockitoAnnotations.initMocks(this);
-        service = new AirTransactionGroupService(repository, groupRepository);
+        service = new ClientGstInfoGroupService(repository, groupRepository);
     }
 
     @Test
     public void shouldCreateCollectionGroupContext()
     {
-        CollectionGroupContext<AirTransaction> result = service.createCollectionGroup(Arrays.asList(new AirTransaction()));
+        CollectionGroupContext<ClientGstInfo> result = service.createCollectionGroup(Arrays.asList(new ClientGstInfo()));
         assertNotNull(result);
     }
 
     @Test
     public void shouldSaveAirTransctionGroup()
     {
-        List<AirTransaction> airTransactions = new ArrayList<>();
-        airTransactions.add(new AirTransaction());
+        List<ClientGstInfo> clientGstInfo = new ArrayList<>();
+        clientGstInfo.add(new ClientGstInfo());
        
         Mockito.when(groupRepository.getActiveCollectionGroup(Mockito.anyString())).thenReturn(new CollectionGroup());
-        service.save(airTransactions);
+        service.saveCollectionGroup(clientGstInfo);
 
         verify(groupRepository, times(2)).put(Mockito.any(CollectionGroup.class));
     }

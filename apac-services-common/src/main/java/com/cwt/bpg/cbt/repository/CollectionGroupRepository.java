@@ -40,14 +40,6 @@ public class CollectionGroupRepository extends CommonRepository<CollectionGroup,
         return null;
     }
 
-    public List<CollectionGroup> getAllActiveCollectionGroup()
-    {
-        Query<CollectionGroup> activeCollectionQuery = morphia.getDatastore().createQuery(CollectionGroup.class);
-        activeCollectionQuery.field(IS_ACTIVE_FIELD).equal(true);
-
-        return activeCollectionQuery.asList();
-    }
-
     public CollectionGroup getByGroupId(String groupId)
     {
         Query<CollectionGroup> restorePrevCollectionQuery = morphia.getDatastore().createQuery(CollectionGroup.class);

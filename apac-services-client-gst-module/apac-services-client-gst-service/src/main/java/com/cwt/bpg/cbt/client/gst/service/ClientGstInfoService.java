@@ -42,20 +42,20 @@ public class ClientGstInfoService
 
     public List<ClientGstInfo> getAllClientGstInfo()
     {
-        CollectionGroup activeGroup = groupService.getClientGstInfoActiveCollection();
+        CollectionGroup activeGroup = groupService.getActiveCollectionGroup();
         return clientGstInfoRepository.getAll(activeGroup.getGroupId());
     }
 
     @Cacheable(cacheNames = "client-gst-info", key = "#gstin")
     public ClientGstInfo getClientGstInfo(String gstin)
     {
-        CollectionGroup activeGroup = groupService.getClientGstInfoActiveCollection();
+        CollectionGroup activeGroup = groupService.getActiveCollectionGroup();
         return clientGstInfoRepository.getByGstin(activeGroup.getGroupId(), gstin);
     }
 
     public ClientGstInfo save(ClientGstInfo clientGstInfo)
     {
-        CollectionGroup activeGroup = groupService.getClientGstInfoActiveCollection();
+        CollectionGroup activeGroup = groupService.getActiveCollectionGroup();
         String formattedGstin = clientGstInfo.getGstin().toUpperCase().trim();
         clientGstInfo.setGstin(formattedGstin);
         clientGstInfo.setGroupId(activeGroup.getGroupId());
@@ -87,24 +87,18 @@ public class ClientGstInfoService
             throw new IllegalArgumentException("File must be in excel or csv format");
         }
 
-        CollectionGroup groupToRollback = groupService.getClientGstInfoActiveCollection();
         try
         {
             List<ClientGstInfo> clientGstInfo = reader.readFile(inputStream, validate);
-            CollectionGroup group = groupService.createClientGstInfoGroup();
-            clientGstInfo.forEach(c -> c.setGroupId(group.getGroupId()));
-            clientGstInfoRepository.putAll(clientGstInfo);
-            throw new NullPointerException();
+            groupService.saveCollectionGroup(clientGstInfo);
         }
         catch (FileUploadException e)
         {
-            groupService.rollbackClientGstInfoGroup(groupToRollback.getGroupId());
             LOGGER.error("Error in creating backup of client gst info from file", e);
             throw e;
         }
         catch (Exception e)
         {
-            groupService.rollbackClientGstInfoGroup(groupToRollback.getGroupId());
             LOGGER.error("Error in creating backup of client gst info from file", e);
             throw new ClientGstInfoBackupException("Error in creating backup of client gst info from file",
                     e);
