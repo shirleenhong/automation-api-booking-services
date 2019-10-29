@@ -50,7 +50,7 @@ Evict OBT List Cache
     Set Test Variable    ${api_flag}    obt-list
 
 Generate Suite Variables For OBT
-    [Arguments]    ${sg_obt_list}=EBA,GET,EBS,CBK,EAM,KDS,CTG,CYT    ${hk_obt_list}=EBA,GET,EBS,CBK,EAM,KDS,CTG,CYT    ${in_obt_list}=EBA,GET,EAM,CYT,ZZ,ZIL,OTH,CTG    ${obt_name_list}=EBA,Concur|GET,Get There|EBS,Arnold|CBK,Cliqbook|EAM,Etravel/AetM|KDS,KDS|CYT,Cytric|CTG,CWT To Go|ZZ,Zillious|ZIL,Zillious|OTH,Zillious    ${obt_code_list}=EBA,AMA|EBS,AMS|CBK,AMA|GET,AMI|EAM,AME|KDS,AMK|CYT,AM6|CTG,AM5|ZZ,AMZ|ZIL,AMZ|OTH,AMA
+    [Arguments]    ${sg_obt_list}=EBA,GET,EBS,CBK,EAM,KDS,CTG,CYT    ${hk_obt_list}=EBA,GET,EBS,CBK,EAM,KDS,CTG,CYT    ${in_obt_list}=EBA,GET,EAM,CYT,ZZ,ZIL,OTH,CTG    ${obt_name_list}=EBA,Concur|GET,Get There|EBS,Arnold|CBK,Cliqbook|EAM,Etravel/AetM|KDS,KDS|CYT,Cytric|CTG,CWT To Go|ZZ,Zillious|ZIL,Zillious|OTH,Zillious    ${obt_code_list}=EBA,AMC|EBS,AMS|CBK,AMC|GET,AMI|EAM,AME|KDS,AMK|CYT,AM6|CTG,AM5|ZZ,AMZ|ZIL,AMZ|OTH,AMC    ${obt_code_list_in}=EBA,AMC|EBS,AMS|CBK,AMC|GET,AMI|EAM,AME|KDS,AMK|CYT,AM6|CTG,AM5|ZZ,AMZ|ZIL,AMZ|OTH,AMA
     Set Suite Variable    ${sg_obt_list}
     Set Suite Variable    ${hk_obt_list}
     Set Suite Variable    ${in_obt_list}
@@ -82,6 +82,11 @@ Generate Suite Variables For OBT
     : FOR    ${data}    IN    @{data_list}
     \    ${data_item}    Split String    ${data}    ,
     \    Set Suite Variable    ${${data_item[0]}_agent_code}    ${data_item[1]}
+    ${data_list_in}    Split String    ${obt_code_list_in}    |
+    ${index}    Set Variable    0
+    : FOR    ${data}    IN    @{data_list_in}
+    \    ${data_item}    Split String    ${data}    ,
+    \    Set Suite Variable    ${${data_item[0]}_agent_code_in}    ${data_item[1]}
 
 Send OBT List Delete Request
     [Arguments]    ${token}=${default_token}    ${country_code}=sg
@@ -130,6 +135,7 @@ Verify OBT List Is Retrieved Correctly
     \    Verify Json Value Is Correct    $.onlineBookingTools.[${index}].onlineUnassistedCode    ${${country_code}_obt_${index}}
     \    Run Keyword If    "${${${country_code}_obt_${index}}_name}"!="null"    Verify Json Value Is Correct    $.onlineBookingTools.[${index}].name    ${${${country_code}_obt_${index}}_name}
     \    ...    ELSE    Verify Json Element Does Not Exist    $.onlineBookingTools.[${index}].name
-    \    Verify Json Value Is Correct    $.onlineBookingTools.[${index}].agentAssistedCode    ${${${country_code}_obt_${index}}_agent_code}
+    \    ${agent_code}    Set Variable If    "${country_code}"=="IN"    ${${${country_code}_obt_${index}}_agent_code_in}    ${${${country_code}_obt_${index}}_agent_code}     
+    \    Verify Json Value Is Correct    $.onlineBookingTools.[${index}].agentAssistedCode    ${agent_code}
     ${index}    Evaluate    ${index}+1
     Verify Json Element Does Not Exist    $.onlineBookingTools.[${index}].onlineUnassistedCode
