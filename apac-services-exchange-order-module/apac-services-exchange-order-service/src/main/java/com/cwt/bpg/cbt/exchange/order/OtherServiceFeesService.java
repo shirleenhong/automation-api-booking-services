@@ -20,7 +20,6 @@ import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculato
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.AirFeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.AirlineRule;
-import com.cwt.bpg.cbt.exchange.order.model.Airport;
 import com.cwt.bpg.cbt.exchange.order.model.Bank;
 import com.cwt.bpg.cbt.exchange.order.model.BaseProduct;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
@@ -79,9 +78,6 @@ public class OtherServiceFeesService {
 
     @Autowired
     private ClientService clientService;
-
-    @Autowired
-    private AirportService airportService;
 
     @Autowired
     private AirlineRuleService airlineRuleService;
@@ -271,10 +267,6 @@ public class OtherServiceFeesService {
 
     private BaseProduct getProduct(String countryCode, String productCode) {
         return productService.getProductByCode(countryCode, productCode);
-    }
-
-    private Airport getAirport(String cityCode) {
-        return airportService.getAirport(cityCode);
     }
 
     public VisaFeesBreakdown calculateVisaFees(VisaFeesInput input) {
