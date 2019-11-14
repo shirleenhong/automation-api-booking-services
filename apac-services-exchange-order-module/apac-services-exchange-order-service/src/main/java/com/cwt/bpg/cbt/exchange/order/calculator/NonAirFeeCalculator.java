@@ -51,7 +51,7 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 							input.getSellingPrice()
 									.multiply(BigDecimal.ONE.add(percentDecimal(input.getGstPercent()))),
 							merchantFee.getMerchantFeePercent()),
-					0, getRoundingMode("merchantFee", countryCode));
+					scale, getRoundingMode("merchantFee", countryCode));
 		}
 
 		BigDecimal sellingPriceInDi = round(

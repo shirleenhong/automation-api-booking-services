@@ -66,7 +66,7 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 						input.getTransactionFee(),
 						inClientType,
 						merchantFeeObj.isIncludeTransactionFee());
-				merchantFee = getMerchantFee(totalPlusTF, merchantFeeObj.getMerchantFeePercent(), 0, getRoundingMode("merchantFee", countryCode));
+				merchantFee = getMerchantFee(totalPlusTF, merchantFeeObj.getMerchantFeePercent(), scale, getRoundingMode("merchantFee", countryCode));
 				result.setMerchantFee(merchantFee);
 			}
 
