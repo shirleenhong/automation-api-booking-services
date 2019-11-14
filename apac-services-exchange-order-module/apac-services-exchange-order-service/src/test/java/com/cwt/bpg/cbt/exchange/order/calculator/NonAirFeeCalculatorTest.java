@@ -71,9 +71,9 @@ public class NonAirFeeCalculatorTest {
 
 		assertEquals(round(BigDecimal.ZERO, 2), result.getCommission());
 		assertEquals(round(new BigDecimal(60.03), 2), result.getGstAmount());
-		assertEquals(round(new BigDecimal(76), 0, "merchantFee"), result.getMerchantFee());
+		assertEquals(round(new BigDecimal(75.63), 2, "merchantFee"), result.getMerchantFee());
 		assertEquals(round(new BigDecimal(76.4135), 2), result.getNettCostGst());
-		assertEquals(round(new BigDecimal(1272.89), 2), result.getTotalSellingPrice());
+		assertEquals(round(new BigDecimal(1272.53), 2), result.getTotalSellingPrice());
 	}
 
 	@Test
