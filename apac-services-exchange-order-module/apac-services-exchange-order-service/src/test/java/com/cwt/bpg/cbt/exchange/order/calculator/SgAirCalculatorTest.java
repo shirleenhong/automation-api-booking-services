@@ -176,8 +176,8 @@ public class SgAirCalculatorTest {
         assertThat(afb.getDiscount().doubleValue(), is(equalTo(45D)));
         assertThat(afb.getCommission().doubleValue(), is(equalTo(15D)));
         assertThat(afb.getNettCost().doubleValue(), is(equalTo(285D)));
-        assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(92.0D)));
-        assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(384.0)));
+        assertThat(afb.getMerchantFee().doubleValue(), is(equalTo(91.75)));
+        assertThat(afb.getTotalSellingFare().doubleValue(), is(equalTo(383.75)));
     }
 
     @Test
