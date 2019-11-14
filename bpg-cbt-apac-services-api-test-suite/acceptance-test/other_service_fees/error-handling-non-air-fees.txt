@@ -28,7 +28,7 @@ Verify That Calculated Values Are Complete For Non-Air Fees Singapore
     Verify Response Does Not Contain Element    element=discount
     Verify Response Does Not Contain Element    element=clientExempt
     Verify Response Does Not Contain Element    element=noMerchantFee
-    Generate Test Variables For Non-Air Fees    cc,CX|client_type,TF|client_account_number,0003405001|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2|selling_price,250.78|nett_cost,0|gst_percent,5.8|gst_absorb,true
+    Generate Test Variables For Non-Air Fees    cc,CX|client_type,TF|client_account_number,0003405001|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2.041|selling_price,250.78|nett_cost,0|gst_percent,5.8|gst_absorb,true
     Send Other Service Fees For Non-Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Non-Air Fees Are Returned Correctly
