@@ -40,11 +40,11 @@ Verify That Non-Air Fees Are Calculated Correctly Using CC, Selling Price, Nett 
 
 Verify That Non-Air Fees Are Calculated Correctly Using CC, Selling Price, Nett Cost And Merchant Fee Percentage
     [Tags]    functional
-    Generate Test Variables For Non-Air Fees    cc,CX|client_type,TF|client_account_number,0003405001|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2.041|selling_price,100.11|nett_cost,0|gst_percent,0|gst_absorb,false
+    Generate Test Variables For Non-Air Fees    cc,CX|client_type,TF|client_account_number,0003405001|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2.041|selling_price,2500|nett_cost,0|gst_percent,0|gst_absorb,false
     Send Other Service Fees For Non-Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Non-Air Fees Are Returned Correctly
-    Generate Test Variables For Non-Air Fees    cc,CX|client_type,TF|client_account_number,0003405001|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2.041|selling_price,100.11|nett_cost,99.00|gst_percent,0|gst_absorb,false
+    Generate Test Variables For Non-Air Fees    cc,CX|client_type,TF|client_account_number,0003405001|merchant_fee_absorb,false|merchant_fee_waive,false|merchant_fee_percentage,2.041|selling_price,2500|nett_cost,99.00|gst_percent,0|gst_absorb,false
     Send Other Service Fees For Non-Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Non-Air Fees Are Returned Correctly
