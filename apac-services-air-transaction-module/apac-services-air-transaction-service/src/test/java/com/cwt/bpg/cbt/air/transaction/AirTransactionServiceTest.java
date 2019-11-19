@@ -54,8 +54,9 @@ public class AirTransactionServiceTest
     {
         @SuppressWarnings("unchecked")
         List<AirTransaction> airTransactions = mock(List.class);
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
         when(repository.getAirTransactions(any(AirTransactionInput.class))).thenReturn(airTransactions);
-
+        
         List<AirTransaction> result = service.getAirTransactionList(new AirTransactionInput());
 
         assertEquals(airTransactions, result);
