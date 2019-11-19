@@ -124,8 +124,10 @@ Calculate Non-Air Fees-HK Merchant Fee
 
 Calculate Non-Air Fees Merchant Fee
     ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percentage_value}*0.01)
-    ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    up    
+    ${calculated_value}    Convert To Number    ${calculated_value}    ${decimal_place}
+    # ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${merchant_fee_value}    ${calculated_value}
 
 Calculate Non-Air Fees Merchant Fee Percentage

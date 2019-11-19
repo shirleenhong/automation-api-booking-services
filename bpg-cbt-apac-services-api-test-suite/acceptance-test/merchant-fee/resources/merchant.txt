@@ -108,8 +108,10 @@ Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client A
     Verify Json Value Is Correct    $.clientName    ${client_name_${index}}
     Verify Json Value Is Correct    $.clientType    ${client_type_${index}}
     ${actual_cn}    Get Json Value As String    ${response.content}    $.clientAccountNumber
-    Run Keyword If    "${mfee_list}"=="${EMPTY}"    Verify Json Value Is Correct    $.clientAccountNumber    ${client_account_number_${index}}
-    ...    ELSE    Verify String Contains Substring    ${actual_cn}    ${client_account_number_${index}}
+    ${expected_cn}    Convert To String    ${client_account_number_${index}}
+    ${actual_cn}    Convert To String    ${actual_cn}
+    Run Keyword If    "${mfee_list}"=="${EMPTY}"    Verify Json Value Is Correct    $.clientAccountNumber    ${expected_cn}
+    ...    ELSE    Verify String Contains Substring    ${actual_cn}    ${expected_cn}
     Verify Json Value Is Correct    $.merchantFeePercent    ${merchant_fee_percent_${index}}    float
     Verify Json Value Is Correct    $.includeTransactionFee    ${merchant_fee_flag_${index}}    boolean
 

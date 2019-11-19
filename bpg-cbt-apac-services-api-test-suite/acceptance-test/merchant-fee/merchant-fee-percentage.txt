@@ -29,3 +29,49 @@ Verify That Merchant Fee Percentage Are Correctly Retrieved After Client Account
     Send Get Request For Merchant Fee Percentage    
     Verify Response Status Code Is Correct For Merchant Fee Percentage    200
     Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account
+    
+Verify That Merchant Fee Percentages Are Correctly Retrieved After Client Account Number Matching For Singapore
+    [Tags]    functional
+    Create Test Variables For Merchant Fee Percentage    country=sg    mfee_list=SHELL EASTERN PETROLEUM LTD,0041001001,MN,2.041,0
+    Send Get Request For Merchant Fee Percentage    
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    200
+    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account
+    Create Test Variables For Merchant Fee Percentage    country=sg    mfee_list=AON HEWITT WEALTH MANAGEMENT PTE LTD,0003348007,TF,2.041,0
+    Send Get Request For Merchant Fee Percentage    
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    200
+    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account
+    Create Test Variables For Merchant Fee Percentage    country=sg    mfee_list=NOMURA ASSET MANAGEMENT SINGAPORE LIMITED,0003238001,TF,2.041,0
+    Send Get Request For Merchant Fee Percentage    
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    200
+    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account
+    Create Test Variables For Merchant Fee Percentage    country=sg    mfee_list=SHOTIC (SINGAPORE) PTE LTD,0001013001,TF,2.041,0
+    Send Get Request For Merchant Fee Percentage    
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    200
+    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account
+    Create Test Variables For Merchant Fee Percentage    country=sg    mfee_list=GINGA GLOBAL MARKETS PTE LTD,0000302002,TF,2.041,0
+    Send Get Request For Merchant Fee Percentage    
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    200
+    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account
+    
+Verify That Merchant Fee Percentages Are Correctly Retrieved After Client Account Number Matching For Hong Kong
+    [Tags]    functional
+    Create Test Variables For Merchant Fee Percentage    country=hk    mfee_list=MASTERCARD HONG KONG,0000001541,DU,2.041,0
+    Send Get Request For Merchant Fee Percentage    
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    200
+    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account
+    Create Test Variables For Merchant Fee Percentage    country=hk    mfee_list=CELANESE FAR EAST LTD,0000001142,TF,2.041,0
+    Send Get Request For Merchant Fee Percentage    
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    200
+    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account
+    Create Test Variables For Merchant Fee Percentage    country=hk    mfee_list=GULF ALUMINIUM ROLLING MILL CO,0000001345,DU,2.041,1
+    Send Get Request For Merchant Fee Percentage    
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    200
+    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account
+    Create Test Variables For Merchant Fee Percentage    country=hk    mfee_list=Zebra Technologies (Hong Kong) Limited,0000001904,TF,2.041,0
+    Send Get Request For Merchant Fee Percentage    
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    200
+    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account
+    Create Test Variables For Merchant Fee Percentage    country=hk    mfee_list=CHEVRON HONG KONG LTD,0000001163,TF,1.85,0
+    Send Get Request For Merchant Fee Percentage    
+    Verify Response Status Code Is Correct For Merchant Fee Percentage    200
+    Verify Merchant Fee Percentage Detail Is Correctly Retrieved For Single Client Account

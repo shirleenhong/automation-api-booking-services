@@ -7,631 +7,631 @@ Resource          ../resources/api-variables.txt
 *** Test Cases ***
 Verify That Air Fees Are Calculated Correctly Using CC, Selling Price, Nett Fare, Commission, Discount, Tax1, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3800.7777|commission,300.31|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,350|selling_price,3000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3800.7777|commission,300.31|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,false|discount_percentage,0|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,350|selling_price,3000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,2580|commission,150|commission_percent_flag,false|commission_percentage,0|discount,150|discount_percent_flag,false|discount_percentage,0|tax_1,150|tax_2,150|merchant_fee,8|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,BT|selling_price,2000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,2580|commission,150|commission_percent_flag,false|commission_percentage,0|discount,150|discount_percent_flag,false|discount_percentage,0|tax_1,150|tax_2,150|merchant_fee,8|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,BT|selling_price,2000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, CC, Nett Fare, Commission, Discount, Tax1, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,false|cc,CX|nett_fare,8402|commission,602|commission_percent_flag,false|commission_percentage,0|discount,452|discount_percent_flag,false|discount_percentage,0|tax_1,312|tax_2,422|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,400|selling_price,8000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,false|cc,CX|nett_fare,8402|commission,602|commission_percent_flag,false|commission_percentage,0|discount,452|discount_percent_flag,false|discount_percentage,0|tax_1,312|tax_2,422|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,400|selling_price,8000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,false|cc,CX|nett_fare,7200|commission,712|commission_percent_flag,false|commission_percentage,0|discount,303|discount_percent_flag,false|discount_percentage,0|tax_1,412|tax_2,322|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,7000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,false|cc,CX|nett_fare,7200|commission,712|commission_percent_flag,false|commission_percentage,0|discount,303|discount_percent_flag,false|discount_percentage,0|tax_1,412|tax_2,322|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,7000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax1, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8387|commission,803|commission_percent_flag,false|commission_percentage,0|discount,530|discount_percent_flag,false|discount_percentage,0|tax_1,213|tax_2,223|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,500|selling_price,8000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8387|commission,803|commission_percent_flag,false|commission_percentage,0|discount,530|discount_percent_flag,false|discount_percentage,0|tax_1,213|tax_2,223|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,500|selling_price,8000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9365|commission,913|commission_percent_flag,false|commission_percentage,0|discount,537|discount_percent_flag,false|discount_percentage,0|tax_1,413|tax_2,323|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9365|commission,913|commission_percent_flag,false|commission_percentage,0|discount,537|discount_percent_flag,false|discount_percentage,0|tax_1,413|tax_2,323|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, CC, Nett Fare, Commission Percentage, Discount, Tax1, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,false|cc,CX|nett_fare,8590|commission,0|commission_percent_flag,true|commission_percentage,2|discount,550|discount_percent_flag,false|discount_percentage,0|tax_1,415|tax_2,325|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,600|selling_price,8000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,false|cc,CX|nett_fare,8590|commission,0|commission_percent_flag,true|commission_percentage,2|discount,550|discount_percent_flag,false|discount_percentage,0|tax_1,415|tax_2,325|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,600|selling_price,8000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,false|cc,CX|nett_fare,7700|commission,0|commission_percent_flag,true|commission_percentage,2|discount,350|discount_percent_flag,false|discount_percentage,0|tax_1,115|tax_2,125|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,7000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,false|cc,CX|nett_fare,7700|commission,0|commission_percent_flag,true|commission_percentage,2|discount,350|discount_percent_flag,false|discount_percentage,0|tax_1,115|tax_2,125|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,7000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, CC, Nett Fare, Commission, Discount Percentage, Tax1, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,false|cc,CX|nett_fare,8655|commission,1000|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,316|tax_2,326|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,700|selling_price,8000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,false|cc,CX|nett_fare,8655|commission,1000|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,316|tax_2,326|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,700|selling_price,8000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,false|cc,CX|nett_fare,7860|commission,800|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4.5|tax_1,416|tax_2,326|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,7000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,false|cc,CX|nett_fare,7860|commission,800|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4.5|tax_1,416|tax_2,326|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,7000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage, Tax1, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8743|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,854|selling_price,8000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8743|commission,0|commission_percent_flag,true|commission_percentage,2|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,317|tax_2,327|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,854|selling_price,8000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8887|commission,0|commission_percent_flag,true|commission_percentage,3|discount,0|discount_percent_flag,true|discount_percentage,3|tax_1,217|tax_2,327|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,8000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8887|commission,0|commission_percent_flag,true|commission_percentage,3|discount,0|discount_percent_flag,true|discount_percentage,3|tax_1,217|tax_2,327|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,8000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount, Tax1, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8888|commission,0|commission_percent_flag,true|commission_percentage,3|discount,505|discount_percent_flag,false|discount_percentage,0|tax_1,218|tax_2,228|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,723|selling_price,8000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8888|commission,0|commission_percent_flag,true|commission_percentage,3|discount,505|discount_percent_flag,false|discount_percentage,0|tax_1,218|tax_2,228|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,723|selling_price,8000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8045|commission,0|commission_percent_flag,true|commission_percentage,2|discount,205|discount_percent_flag,false|discount_percentage,0|tax_1,318|tax_2,328|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,8000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8045|commission,0|commission_percent_flag,true|commission_percentage,2|discount,205|discount_percent_flag,false|discount_percentage,0|tax_1,318|tax_2,328|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,8000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage, Tax1, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8679|commission,500|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,319|tax_2,229|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,667|selling_price,8000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8679|commission,500|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,319|tax_2,229|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,667|selling_price,8000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8999|commission,1000|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,319|tax_2,329|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,8000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8999|commission,1000|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,319|tax_2,329|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,8000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Tax1, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9100|commission,0|commission_percent_flag,true|commission_percentage,3|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,221|tax_2,231|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,734|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9100|commission,0|commission_percent_flag,true|commission_percentage,3|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,221|tax_2,231|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,734|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9222|commission,0|commission_percent_flag,true|commission_percentage,4|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,321|tax_2,331|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9222|commission,0|commission_percent_flag,true|commission_percentage,4|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,321|tax_2,331|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Discount Percentage, Tax1, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9222|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,222|tax_2,232|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,943|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9222|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,222|tax_2,232|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,943|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9542|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,3|tax_1,322|tax_2,332|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9542|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,3|tax_1,322|tax_2,332|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Commission
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9300|commission,500|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,1000|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9300|commission,500|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,1000|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9333|commission,1150|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9333|commission,1150|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Commission Percentage
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9444|commission,0|commission_percent_flag,true|commission_percentage,3|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,877|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9444|commission,0|commission_percent_flag,true|commission_percentage,3|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,877|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9774|commission,0|commission_percent_flag,true|commission_percentage,4|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9774|commission,0|commission_percent_flag,true|commission_percentage,4|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Discount
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9795|commission,0|commission_percent_flag,false|commission_percentage,0|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,1100|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9795|commission,0|commission_percent_flag,false|commission_percentage,0|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,1100|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9542|commission,0|commission_percent_flag,false|commission_percentage,0|discount,650|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9542|commission,0|commission_percent_flag,false|commission_percentage,0|discount,650|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Discount Percentage
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9866|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,1050|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9866|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,1050|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9546|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9546|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9777|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,322|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,867|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9777|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,322|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,867|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9799|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,42|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9799|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,42|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9888|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,392|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,490|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9888|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,392|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,490|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9978|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,622|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9978|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,622|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9999|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,599|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9999|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,599|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8989|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,8000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8989|commission,0|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,8000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Discount
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9100|commission,100|commission_percent_flag,false|commission_percentage,0|discount,555|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,555|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9100|commission,100|commission_percent_flag,false|commission_percentage,0|discount,555|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,555|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9105|commission,10|commission_percent_flag,false|commission_percentage,0|discount,255|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9105|commission,10|commission_percent_flag,false|commission_percentage,0|discount,255|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|client_account_number,0003225001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Discount Percentage
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9101|commission,1111|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,900|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9101|commission,1111|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,900|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10211|commission,711|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,3|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10211|commission,711|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,3|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7102|commission,512|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,422|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,657|selling_price,7000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7102|commission,512|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,422|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,657|selling_price,7000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9112|commission,312|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,212|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9112|commission,312|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,212|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10333|commission,903|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,432|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,10|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10333|commission,903|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,432|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,10|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,5113|commission,513|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,432|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,5000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,5113|commission,513|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,432|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,5000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9104|commission,414|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,588|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,9104|commission,414|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,588|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7114|commission,514|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,7000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7114|commission,514|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,7000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Discount
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8105|commission,0|commission_percent_flag,true|commission_percentage,3|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,700|selling_price,8000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,8105|commission,0|commission_percent_flag,true|commission_percentage,3|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|transaction_fee,700|selling_price,8000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10105|commission,0|commission_percent_flag,true|commission_percentage,2|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,10105|commission,0|commission_percent_flag,true|commission_percentage,2|discount,855|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|selling_price,9000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Discount Percentage
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,226|commission,0|commission_percent_flag,true|commission_percentage,4|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,226|commission,0|commission_percent_flag,true|commission_percentage,4|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,336|commission,0|commission_percent_flag,true|commission_percentage,5|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,700|selling_price,300    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,336|commission,0|commission_percent_flag,true|commission_percentage,5|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,700|selling_price,300    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,297|commission,0|commission_percent_flag,true|commission_percentage,5|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,29|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,297|commission,0|commission_percent_flag,true|commission_percentage,5|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,29|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,387|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,44|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,400|selling_price,300    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,387|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,44|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,400|selling_price,300    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,258|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,25|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,258|commission,0|commission_percent_flag,true|commission_percentage,6|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,25|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,208|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,55|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,350|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,208|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,55|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,350|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,359|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,400|selling_price,300    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,359|commission,0|commission_percent_flag,true|commission_percentage,7|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,400|selling_price,300    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,309|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,309|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,490|commission,100|commission_percent_flag,false|commission_percentage,0|discount,35|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,400    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,490|commission,100|commission_percent_flag,false|commission_percentage,0|discount,35|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,400    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,410|commission,200|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,350|selling_price,300    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,410|commission,200|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,350|selling_price,300    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,211|commission,101|commission_percent_flag,false|commission_percentage,0|discount,96|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,211|commission,101|commission_percent_flag,false|commission_percentage,0|discount,96|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,291|commission,121|commission_percent_flag,false|commission_percentage,0|discount,86|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,42|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,250|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,291|commission,121|commission_percent_flag,false|commission_percentage,0|discount,86|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,42|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,250|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,212|commission,102|commission_percent_flag,false|commission_percentage,0|discount,45|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,450|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,212|commission,102|commission_percent_flag,false|commission_percentage,0|discount,45|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,450|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,212|commission,132|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,212|commission,132|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,413|commission,0|commission_percent_flag,true|commission_percentage,10|discount,75|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,300    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,413|commission,0|commission_percent_flag,true|commission_percentage,10|discount,75|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,300    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,313|commission,0|commission_percent_flag,true|commission_percentage,12|discount,40|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,500|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,313|commission,0|commission_percent_flag,true|commission_percentage,12|discount,40|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,500|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,214|commission,0|commission_percent_flag,true|commission_percentage,11|discount,40|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,214|commission,0|commission_percent_flag,true|commission_percentage,11|discount,40|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,304|commission,0|commission_percent_flag,true|commission_percentage,10|discount,70|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,590|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,304|commission,0|commission_percent_flag,true|commission_percentage,10|discount,70|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,590|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,415|commission,0|commission_percent_flag,true|commission_percentage,11|discount,29|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,350|selling_price,300    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,415|commission,0|commission_percent_flag,true|commission_percentage,11|discount,29|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,350|selling_price,300    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,335|commission,0|commission_percent_flag,true|commission_percentage,40|discount,15|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,300    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,335|commission,0|commission_percent_flag,true|commission_percentage,40|discount,15|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,300    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1216|commission,0|commission_percent_flag,true|commission_percentage,10|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,1100    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1216|commission,0|commission_percent_flag,true|commission_percentage,10|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,1100    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1726|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,28|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,500|selling_price,1500    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1726|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,28|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,500|selling_price,1500    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1117|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,0|tax_2,28|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,1000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1117|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,0|tax_2,28|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,1000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1117|commission,0|commission_percent_flag,true|commission_percentage,12|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,33|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,500|selling_price,1000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1117|commission,0|commission_percent_flag,true|commission_percentage,12|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,33|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,500|selling_price,1000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,248|commission,0|commission_percent_flag,true|commission_percentage,12|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,300|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,248|commission,0|commission_percent_flag,true|commission_percentage,12|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,300|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,238|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,238|commission,0|commission_percent_flag,true|commission_percentage,11|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage And Tax1
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,219|commission,143|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,219|commission,143|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,219|commission,141|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,30|tax_2,0|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,400|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,219|commission,141|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,30|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,400|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,420|commission,1501|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,11|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,300    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,420|commission,1501|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,11|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,300    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,320|commission,143|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,10|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,350|selling_price,300    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,320|commission,143|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,10|tax_1,0|tax_2,32|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,350|selling_price,300    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1145|commission,67|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,600|selling_price,1000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1145|commission,67|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,600|selling_price,1000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,210|commission,195|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,2|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,210|commission,195|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,2|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax1 And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,212|commission,103|commission_percent_flag,false|commission_percentage,0|discount,59|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,42|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,212|commission,103|commission_percent_flag,false|commission_percentage,0|discount,59|discount_percent_flag,false|discount_percentage,0|tax_1,22|tax_2,42|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1132|commission,123|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,31|tax_2,45|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,678|selling_price,1000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1132|commission,123|commission_percent_flag,false|commission_percentage,0|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,31|tax_2,45|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,678|selling_price,1000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax1 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1123|commission,66|commission_percent_flag,false|commission_percentage,0|discount,61|discount_percent_flag,false|discount_percentage,0|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,290|selling_price,1000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1123|commission,66|commission_percent_flag,false|commission_percentage,0|discount,61|discount_percent_flag,false|discount_percentage,0|tax_1,32|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,290|selling_price,1000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,223|commission,77|commission_percent_flag,false|commission_percentage,0|discount,72|discount_percent_flag,false|discount_percentage,0|tax_1,50|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,223|commission,77|commission_percent_flag,false|commission_percentage,0|discount,72|discount_percent_flag,false|discount_percentage,0|tax_1,50|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1124|commission,95|commission_percent_flag,false|commission_percentage,0|discount,62|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,35|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,600|selling_price,1000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1124|commission,95|commission_percent_flag,false|commission_percentage,0|discount,62|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,35|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,600|selling_price,1000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,224|commission,115|commission_percent_flag,false|commission_percentage,0|discount,75|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,29|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,224|commission,115|commission_percent_flag,false|commission_percentage,0|discount,75|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,29|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount, Tax1 And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1125|commission,0|commission_percent_flag,true|commission_percentage,12|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,29|tax_2,31|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,1000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1125|commission,0|commission_percent_flag,true|commission_percentage,12|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,29|tax_2,31|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,1000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,365|commission,0|commission_percent_flag,true|commission_percentage,14|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,27|tax_2,43|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,690|selling_price,300    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,365|commission,0|commission_percent_flag,true|commission_percentage,14|discount,63|discount_percent_flag,false|discount_percentage,0|tax_1,27|tax_2,43|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,690|selling_price,300    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount, Tax1 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,180|commission,0|commission_percent_flag,true|commission_percentage,15|discount,64|discount_percent_flag,false|discount_percentage,0|tax_1,19|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,560|selling_price,100    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,180|commission,0|commission_percent_flag,true|commission_percentage,15|discount,64|discount_percent_flag,false|discount_percentage,0|tax_1,19|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,560|selling_price,100    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,280|commission,0|commission_percent_flag,true|commission_percentage,14|discount,70|discount_percent_flag,false|discount_percentage,0|tax_1,42|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,100    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,280|commission,0|commission_percent_flag,true|commission_percentage,14|discount,70|discount_percent_flag,false|discount_percentage,0|tax_1,42|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,100    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,227|commission,0|commission_percent_flag,true|commission_percentage,14|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,63|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,456|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,227|commission,0|commission_percent_flag,true|commission_percentage,14|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,63|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,456|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,227|commission,0|commission_percent_flag,true|commission_percentage,15|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,53|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,227|commission,0|commission_percent_flag,true|commission_percentage,15|discount,65|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,53|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage, Tax1 And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,228|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,28|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,228|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,28|tax_2,34|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,228|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,32|tax_2,55|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,567|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,228|commission,0|commission_percent_flag,true|commission_percentage,15|discount,0|discount_percent_flag,true|discount_percentage,4|tax_1,32|tax_2,55|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,567|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage, Tax1 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,250|commission,0|commission_percent_flag,true|commission_percentage,16|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,20|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,800|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,250|commission,0|commission_percent_flag,true|commission_percentage,16|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,20|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,800|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,350|commission,0|commission_percent_flag,true|commission_percentage,16|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,30|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,300    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,350|commission,0|commission_percent_flag,true|commission_percentage,16|discount,0|discount_percent_flag,true|discount_percentage,5|tax_1,30|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,300    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission Percentage, Discount Percentage, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1230|commission,0|commission_percent_flag,true|commission_percentage,19|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,35|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,500|selling_price,1000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1230|commission,0|commission_percent_flag,true|commission_percentage,19|discount,0|discount_percent_flag,true|discount_percentage,6|tax_1,0|tax_2,35|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,500|selling_price,1000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,230|commission,0|commission_percent_flag,true|commission_percentage,50|discount,0|discount_percent_flag,true|discount_percentage,2|tax_1,0|tax_2,100|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,230|commission,0|commission_percent_flag,true|commission_percentage,50|discount,0|discount_percent_flag,true|discount_percentage,2|tax_1,0|tax_2,100|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage, Tax1 And Tax2
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1100|commission,110|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,1000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1100|commission,110|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,CT|selling_price,1000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,200|commission,120|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,0|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,430|selling_price,150    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,200|commission,120|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,22|tax_2,34|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0000123001|cwt_absorb,false|product_type,BT|transaction_fee,430|selling_price,150    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage, Tax1 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1322|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,15|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,290|selling_price,1000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1322|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,15|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,290|selling_price,1000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1200|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,35|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,1000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1200|commission,101|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,8|tax_1,35|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,1000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Are Calculated Correctly Using Apply Formula, Web Fare Selection, CC, Nett Fare, Commission, Discount Percentage, Tax2 And Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1233|commission,102|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,0|tax_2,34|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,400|selling_price,1000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1233|commission,102|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,7|tax_1,0|tax_2,34|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,400|selling_price,1000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,233|commission,250|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,65|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,233|commission,250|commission_percent_flag,false|commission_percentage,0|discount,0|discount_percent_flag,true|discount_percentage,9|tax_1,0|tax_2,65|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,200    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Discount Are Calculated Correctly With Client Type DU, DB, MN And TF
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3800.5555|commission,300|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,true|discount_percentage,2|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,350|selling_price,3000.6786    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3800.5555|commission,300|commission_percent_flag,false|commission_percentage,0|discount,250|discount_percent_flag,true|discount_percentage,2|tax_1,10|tax_2,120|merchant_fee,50|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,350|selling_price,3000.6786    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,2580|commission,150|commission_percent_flag,false|commission_percentage,0|discount,150|discount_percent_flag,true|discount_percentage,2.5|tax_1,150|tax_2,150|merchant_fee,8|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|cwt_absorb,false|product_type,BT|selling_price,2000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,2580|commission,150|commission_percent_flag,false|commission_percentage,0|discount,150|discount_percent_flag,true|discount_percentage,2.5|tax_1,150|tax_2,150|merchant_fee,8|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|cwt_absorb,false|product_type,BT|selling_price,2000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3580|commission,150|commission_percent_flag,false|commission_percentage,0|discount,150|discount_percent_flag,true|discount_percentage,3|tax_1,150|tax_2,150|merchant_fee,8|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|cwt_absorb,false|product_type,BT|selling_price,3000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3580|commission,150|commission_percent_flag,false|commission_percentage,0|discount,150|discount_percent_flag,true|discount_percentage,3|tax_1,150|tax_2,150|merchant_fee,8|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,MN|cwt_absorb,false|product_type,BT|selling_price,3000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3580|commission,150|commission_percent_flag,false|commission_percentage,0|discount,150|discount_percent_flag,true|discount_percentage,3.5|tax_1,150|tax_2,150|merchant_fee,8|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|cwt_absorb,false|product_type,BT|selling_price,3000    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,false|web_fare_flag,false|cc,CX|nett_fare,3580|commission,150|commission_percent_flag,false|commission_percentage,0|discount,150|discount_percent_flag,true|discount_percentage,3.5|tax_1,150|tax_2,150|merchant_fee,8|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|cwt_absorb,false|product_type,BT|selling_price,3000    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With ProductType CT, FOPType CX, ClientType TF And TFIncMF
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,155|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003434001|cwt_absorb,false|product_type,CT|uatp_flag,true|transaction_fee,200|selling_price,1000|tfincmf_flag,true    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,155|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003434001|cwt_absorb,false|product_type,CT|uatp_flag,true|transaction_fee,200|selling_price,1000|tfincmf_flag,true    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,155|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003434001|cwt_absorb,false|product_type,CT|uatp_flag,true|transaction_fee,305|selling_price,2000|tfincmf_flag,true    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,155|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003434001|cwt_absorb,false|product_type,CT|uatp_flag,true|transaction_fee,305|selling_price,2000|tfincmf_flag,true    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With ProductType CT, FOPType CX And ClientType TF
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,9|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,300|selling_price,1000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,9|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,300|selling_price,1000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,350|selling_price,3000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,CT|transaction_fee,350|selling_price,3000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With ProductType CT, FOPType CX And TFIncMF
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,9|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,CT|selling_price,1000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,9|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,CT|selling_price,1000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,CT|selling_price,3000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,CT|selling_price,3000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With ProductType CT And FOPType CX
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,310|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,CT|selling_price,2000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,310|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,CT|selling_price,2000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3415|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,CT|selling_price,3000|tfincmf_flag,true    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3415|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,CT|selling_price,3000|tfincmf_flag,true    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With ProductType CT And CWT Absorb
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,255|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,CT|selling_price,1000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,255|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,CT|selling_price,1000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -642,18 +642,18 @@ Verify That Air Fees Merchant Fee Is Calculated Correctly With ProductType CT An
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With ProductType CT, CWT Absorb And Waive Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,5550|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,655|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,CT|selling_price,5000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,5550|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,655|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,CT|selling_price,5000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,4115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,600|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DU|client_account_number,0088888888|cwt_absorb,true|product_type,CT|selling_price,4000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,4115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,600|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DU|client_account_number,0088888888|cwt_absorb,true|product_type,CT|selling_price,4000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With ProductType CT
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,455|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,CT|selling_price,3000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,455|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,CT|selling_price,3000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -664,7 +664,7 @@ Verify That Air Fees Merchant Fee Is Calculated Correctly With ProductType CT
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With ProductType CT, CWT Absorb And FOPType CX
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,805|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,CT|selling_price,7000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,7115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,805|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,CT|selling_price,7000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -675,84 +675,84 @@ Verify That Air Fees Merchant Fee Is Calculated Correctly With ProductType CT, C
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With ProductType CT, FOPType CX And Waive Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,4115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,403|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,CT|selling_price,4000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,4115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,403|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,CT|selling_price,4000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,5115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,515|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,MG|client_account_number,0088888888|cwt_absorb,false|product_type,CT|selling_price,1000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,5115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,515|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,MG|client_account_number,0088888888|cwt_absorb,false|product_type,CT|selling_price,1000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With FOPType CX, ClientType TF And TFIncMF
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,155|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003434001|cwt_absorb,false|product_type,BT|transaction_fee,200|selling_price,1000|tfincmf_flag,true    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,155|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003434001|cwt_absorb,false|product_type,BT|transaction_fee,200|selling_price,1000|tfincmf_flag,true    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,155|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003434001|cwt_absorb,false|product_type,BT|transaction_fee,305|selling_price,2000|tfincmf_flag,true    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,155|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003434001|cwt_absorb,false|product_type,BT|transaction_fee,305|selling_price,2000|tfincmf_flag,true    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With FOPType CX And ClientType TF
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,9|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,BT|transaction_fee,200|selling_price,1000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,9|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,BT|transaction_fee,200|selling_price,1000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,BT|transaction_fee,250|selling_price,3000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,TF|client_account_number,0003405001|cwt_absorb,false|product_type,BT|transaction_fee,250|selling_price,3000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With FOPType CX And TFIncMF
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,9|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,BT|selling_price,1000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,9|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,BT|selling_price,1000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,3000|tfincmf_flag,true    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,3000|tfincmf_flag,true    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With FOPType CX
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,310|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,BT|selling_price,2000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,2315|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,310|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,BT|selling_price,2000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3415|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,3000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,3415|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,355|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,3000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With CWT Absorb
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,255|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,BT|selling_price,1000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,255|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,BT|selling_price,1000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,2815|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,515|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,true|product_type,BT|selling_price,1000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,2815|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,515|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,true|product_type,BT|selling_price,1000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With CWT Absorb And Waive Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,5550|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,655|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,BT|selling_price,5000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,5550|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,655|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,BT|selling_price,5000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,4115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,600|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DU|client_account_number,0088888888|cwt_absorb,true|product_type,BT|selling_price,4000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,4115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,600|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DU|client_account_number,0088888888|cwt_absorb,true|product_type,BT|selling_price,4000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With Non-ProductType CT
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,455|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,BT|selling_price,3000|tfincmf_flag,true    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,3115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,455|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,BT|selling_price,3000|tfincmf_flag,true    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
@@ -763,22 +763,22 @@ Verify That Air Fees Merchant Fee Is Calculated Correctly With Non-ProductType C
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With CWT Absorb And FOPType CX
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,7115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,805|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,BT|selling_price,7000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,7115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,805|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DB|client_account_number,0015025455|cwt_absorb,true|product_type,BT|selling_price,7000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,140|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,true|product_type,BT|selling_price,1000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,INV|nett_fare,1115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,140|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,false|client_type,DU|client_account_number,0088888888|cwt_absorb,true|product_type,BT|selling_price,1000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
 
 Verify That Air Fees Merchant Fee Is Calculated Correctly With FOPType CX And Waive Merchant Fee
     [Tags]    functional
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,4115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,403|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,BT|selling_price,4000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,4115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,403|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DB|client_account_number,0015025455|cwt_absorb,false|product_type,BT|selling_price,4000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly
-    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,5115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,515|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,5000|tfincmf_flag,false    country=sg
+    Generate Test Variables For Air Fees-SG    apply_formula,true|web_fare_flag,true|cc,CX|nett_fare,5115|commission,0|commission_percent_flag,true|commission_percentage,3.07|discount,515|discount_percent_flag,false|discount_percentage,0|tax_1,0|tax_2,0|merchant_fee,0|merchant_fee_percentage,2.041|merchant_fee_absorb,false|merchant_fee_waive,true|client_type,DU|client_account_number,0088888888|cwt_absorb,false|product_type,BT|selling_price,5000|tfincmf_flag,false    country=sg
     Send Other Service Fees For Air Fees Post Request
     Verify Response Status Code Is Correct    200
     Verify Calculated Air Fees Are Returned Correctly

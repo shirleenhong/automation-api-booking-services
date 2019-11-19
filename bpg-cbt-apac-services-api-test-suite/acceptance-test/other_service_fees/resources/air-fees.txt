@@ -260,15 +260,17 @@ Calculate Air Fees-SG Merchant Fee
 Calculate Air Fees-SG Merchant Fee For Non-Product Type CT
     ${merchant_fee_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" and "${tfincmf_flag_value}" == "true"    (${selling_price_value}-${discount_amount}+${tax_1_value}+${tax_2_value}+${transaction_fee_value})*(${merchant_fee_percentage_value}*0.01)    (${selling_price_value}-${discount_amount}+${tax_1_value}+${tax_2_value})*(${merchant_fee_percentage_value}*0.01)
     ${calculated_value}    Evaluate    ${merchant_fee_formula}
-    ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    up
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${merchant_fee_amount}    ${calculated_value}
 
 Calculate Air Fees-SG Merchant Fee For Product Type CT
     ${merchant_fee_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" and "${tfincmf_flag_value}" == "true"    (${nett_cost_amount}+${commission_amount}-${discount_amount}+${tax_1_value}+${tax_2_value}+${transaction_fee_value})*(${merchant_fee_percentage_value}*0.01)    (${nett_cost_amount}+${commission_amount}-${discount_amount}+${tax_1_value}+${tax_2_value})*(${merchant_fee_percentage_value}*0.01)
     ${calculated_value}    Evaluate    ${merchant_fee_formula}
-    ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    up
+    ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
     ${calculated_value}    Convert To String    ${calculated_value}
+    ${calculated_value}    Fix Decimal Places    ${calculated_value}
     Set Test Variable    ${merchant_fee_amount}    ${calculated_value}
 
 Calculate Air Fees-SG Nett Cost In EO With Formula
