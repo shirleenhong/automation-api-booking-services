@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -108,8 +109,15 @@ public class ClientGstInfoServiceTest
     public void shouldRemoveGstInfo()
     {
         final String givenGstIn = "123456";
-
-        when(clientGstInfoRepository.remove(anyString())).thenReturn(givenGstIn);
+        
+        CollectionGroup activeGroup = new CollectionGroup();
+        activeGroup.setGroupId("123");
+        when(groupService.getActiveCollectionGroup()).thenReturn(activeGroup);
+        
+        ClientGstInfo info = new ClientGstInfo();
+        info.setId(new ObjectId("5dd3b3bb24aa9a0008a2ef57"));
+        when(clientGstInfoRepository.getByGstin(anyString(), anyString())).thenReturn(info);
+        when(clientGstInfoRepository.remove(any(ObjectId.class))).thenReturn(givenGstIn);
         final String response = service.remove(givenGstIn);
 
         assertEquals(givenGstIn, response);

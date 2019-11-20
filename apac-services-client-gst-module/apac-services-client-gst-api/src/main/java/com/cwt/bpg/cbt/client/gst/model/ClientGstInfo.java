@@ -1,17 +1,68 @@
 package com.cwt.bpg.cbt.client.gst.model;
 
-import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.*;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE1_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE1_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE1_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE1_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE1_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE2_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE2_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE2_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE2_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_EMAIL_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_EMAIL_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_EMAIL_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_PHONE_NUM_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_PHONE_NUM_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_PHONE_NUM_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_PHONE_NUM_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_PHONE_NUM_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CITY_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CITY_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CITY_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CITY_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CITY_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CLIENT_ENTITY_NAME_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CLIENT_ENTITY_NAME_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CLIENT_ENTITY_NAME_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CLIENT_ENTITY_NAME_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CLIENT_ENTITY_NAME_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.GSTIN_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.GSTIN_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.GSTIN_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.GSTIN_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.GSTIN_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.POSTAL_CODE_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.POSTAL_CODE_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.POSTAL_CODE_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.POSTAL_CODE_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.POSTAL_CODE_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.STATE_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.STATE_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.STATE_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.STATE_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.STATE_REGEX;
 
 import java.beans.Transient;
 import java.io.Serializable;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
-import org.mongodb.morphia.annotations.*;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 
 import com.cwt.bpg.cbt.client.gst.model.constraint.GdsEmailFormat;
+import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -24,6 +75,10 @@ public class ClientGstInfo implements Serializable
     private static final long serialVersionUID = 1600168082099452654L;
 
     @Id
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    @ApiModelProperty(hidden = true)
+    private ObjectId id;
+    
     @NotEmpty(message = GSTIN_EMPTY_ERROR_MSG)
     @Pattern(regexp = GSTIN_REGEX, message = GSTIN_FORMAT_ERROR_MSG)
     @Size(min = GSTIN_LENGTH, max = GSTIN_LENGTH, message = GSTIN_LENGTH_ERROR_MSG)
@@ -75,6 +130,17 @@ public class ClientGstInfo implements Serializable
 
     @ApiModelProperty(allowableValues = "S, P, U")
     private OrgType orgType;
+    
+
+    public ObjectId getId()
+    {
+        return id;
+    }
+
+    public void setId(ObjectId id)
+    {
+        this.id = id;
+    }
 
     public String getGstin()
     {

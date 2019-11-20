@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class ClientGstInfoGroupService extends CollectionGroupService<ClientGstI
     private ClientGstInfoGroupRepository groupRespository;
 
     @Autowired
-    public ClientGstInfoGroupService(CommonRepository<ClientGstInfo, String> repository, ClientGstInfoGroupRepository groupRespository)
+    public ClientGstInfoGroupService(CommonRepository<ClientGstInfo, ObjectId> repository, ClientGstInfoGroupRepository groupRespository)
     {
         super(repository, groupRespository);
         this.groupRespository = groupRespository;

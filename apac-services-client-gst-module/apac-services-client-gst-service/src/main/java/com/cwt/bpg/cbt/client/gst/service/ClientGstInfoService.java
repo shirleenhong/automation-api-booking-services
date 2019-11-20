@@ -64,7 +64,15 @@ public class ClientGstInfoService
 
     public String remove(String gstin)
     {
-        return clientGstInfoRepository.remove(gstin);
+        CollectionGroup activeGroup = groupService.getActiveCollectionGroup();
+        ClientGstInfo toDelete = clientGstInfoRepository.getByGstin(activeGroup.getGroupId(), gstin);
+
+        if (toDelete != null)
+        {
+            return clientGstInfoRepository.remove(toDelete.getId());
+        }
+
+        return null;
     }
 
     public WriteClientGstInfoFileResponse writeFile() throws ApiServiceException
