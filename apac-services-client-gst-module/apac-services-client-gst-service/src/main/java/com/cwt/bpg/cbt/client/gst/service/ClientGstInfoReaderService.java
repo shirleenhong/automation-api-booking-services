@@ -1,21 +1,32 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
+import static com.cwt.bpg.cbt.client.gst.service.Constants.ADDRESS_LINE2_INDEX;
+import static com.cwt.bpg.cbt.client.gst.service.Constants.ADDRESS_LINE_1_INDEX;
+import static com.cwt.bpg.cbt.client.gst.service.Constants.BUSINESS_PHONE_INDEX;
+import static com.cwt.bpg.cbt.client.gst.service.Constants.CITY_INDEX;
+import static com.cwt.bpg.cbt.client.gst.service.Constants.CLIENT_INDEX;
+import static com.cwt.bpg.cbt.client.gst.service.Constants.EMAIL_ADDRESS_INDEX;
+import static com.cwt.bpg.cbt.client.gst.service.Constants.ENTITY_NAME_INDEX;
+import static com.cwt.bpg.cbt.client.gst.service.Constants.GSTIN_INDEX;
+import static com.cwt.bpg.cbt.client.gst.service.Constants.ORGTYPE_INDEX;
+import static com.cwt.bpg.cbt.client.gst.service.Constants.POSTAL_CODE_INDEX;
+import static com.cwt.bpg.cbt.client.gst.service.Constants.STATE_INDEX;
+
+import java.io.BufferedInputStream;
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 import com.cwt.bpg.cbt.client.gst.model.OrgType;
 import com.cwt.bpg.cbt.client.gst.model.ValidationError;
 import com.cwt.bpg.cbt.exceptions.FileUploadException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
-
-import java.io.BufferedInputStream;
-import java.io.Closeable;
-import java.io.InputStream;
-import java.util.LinkedList;
-import java.util.List;
-
-import static com.cwt.bpg.cbt.client.gst.service.Constants.*;
 
 public abstract class ClientGstInfoReaderService<W extends Closeable, S extends Iterable<R>, R> {
 
@@ -26,12 +37,6 @@ public abstract class ClientGstInfoReaderService<W extends Closeable, S extends 
     private static final String EMPTY_STRING = "";
     private static final String SPACE = " ";
 
-    private Logger logger;
-
-    public ClientGstInfoReaderService() {
-        this.logger = LoggerFactory.getLogger(getClass());
-    }
-
     @Autowired
     private ClientGstInfoListValidatorService validatorService;
 
@@ -41,10 +46,9 @@ public abstract class ClientGstInfoReaderService<W extends Closeable, S extends 
 
     protected abstract String getValue(R row, int index);
 
-    public List<ClientGstInfo> readFile(InputStream inputStream, boolean validate)
-            throws Exception {
+    public List<ClientGstInfo> readFile(InputStream inputStream, boolean validate) throws FileUploadException, IOException {
         if(inputStream == null) {
-            return null;
+            return Collections.emptyList();
         }
         try(W workbook = createWorkbook(new BufferedInputStream(inputStream))) {
             return extractClientGstInfo(workbook, validate);

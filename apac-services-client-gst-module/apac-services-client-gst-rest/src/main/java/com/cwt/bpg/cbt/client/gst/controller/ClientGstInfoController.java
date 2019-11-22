@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 import com.cwt.bpg.cbt.client.gst.service.ClientGstInfoService;
+import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -78,7 +79,7 @@ public class ClientGstInfoController {
 
     @GetMapping("csv")
     @ApiOperation("Download client GST  information in csv format")
-    public ResponseEntity<byte[]> downloadClientGstInfo() throws Exception {
+    public ResponseEntity<byte[]> downloadClientGstInfo() throws ApiServiceException {
         WriteClientGstInfoFileResponse response = clientGstInfoService.writeFile();
         if(response == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

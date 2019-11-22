@@ -4,8 +4,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,15 +15,11 @@ import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
-import com.cwt.bpg.cbt.exceptions.FileUploadException;
 import com.cwt.bpg.cbt.upload.model.CollectionGroup;
 
 @Service
 public class ClientGstInfoService
 {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClientGstInfoService.class);
-
     @Autowired
     private ClientGstInfoRepository clientGstInfoRepository;
 
@@ -77,7 +71,8 @@ public class ClientGstInfoService
 
     public WriteClientGstInfoFileResponse writeFile() throws ApiServiceException
     {
-        List<ClientGstInfo> clientGstInfo = clientGstInfoRepository.getAll();
+        CollectionGroup activeGroup = groupService.getActiveCollectionGroup();
+        List<ClientGstInfo> clientGstInfo = clientGstInfoRepository.getAll(activeGroup.getGroupId());
         if (CollectionUtils.isEmpty(clientGstInfo))
         {
             return null;
@@ -86,7 +81,7 @@ public class ClientGstInfoService
     }
 
     @SuppressWarnings("unchecked")
-    public void saveFromFile(InputStream inputStream, String extension, boolean validate) throws Exception
+    public void saveFromFile(InputStream inputStream, String extension, boolean validate) throws ClientGstInfoBackupException
     {
         @SuppressWarnings("rawtypes")
         ClientGstInfoReaderService reader = clientGstInfoReaderServiceMap.get(extension);
@@ -100,16 +95,9 @@ public class ClientGstInfoService
             List<ClientGstInfo> clientGstInfo = reader.readFile(inputStream, validate);
             groupService.saveCollectionGroup(clientGstInfo);
         }
-        catch (FileUploadException e)
-        {
-            LOGGER.error("Error in creating backup of client gst info from file", e);
-            throw e;
-        }
         catch (Exception e)
         {
-            LOGGER.error("Error in creating backup of client gst info from file", e);
-            throw new ClientGstInfoBackupException("Error in creating backup of client gst info from file",
-                    e);
+            throw new ClientGstInfoBackupException("Error in creating backup of client gst info from file", e);
         }
     }
 }

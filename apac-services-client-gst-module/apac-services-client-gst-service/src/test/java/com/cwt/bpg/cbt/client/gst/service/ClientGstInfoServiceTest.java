@@ -12,6 +12,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,9 +29,11 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.cwt.bpg.cbt.client.gst.exception.ClientGstInfoBackupException;
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
+import com.cwt.bpg.cbt.exceptions.ApiServiceException;
 import com.cwt.bpg.cbt.exceptions.FileUploadException;
 import com.cwt.bpg.cbt.upload.model.CollectionGroup;
 
@@ -63,7 +66,7 @@ public class ClientGstInfoServiceTest
     private InputStream inputStream;
 
     @Before
-    public void setup() throws Exception
+    public void setup() throws FileUploadException, IOException
     {
         MockitoAnnotations.initMocks(this);
         ClientGstInfo clientGstInfo = new ClientGstInfo();
@@ -145,9 +148,12 @@ public class ClientGstInfoServiceTest
     }
 
     @Test
-    public void shouldWriteFile() throws Exception
+    public void shouldWriteFile() throws ApiServiceException 
     {
-        when(clientGstInfoRepository.getAll()).thenReturn(Arrays.asList(new ClientGstInfo()));
+        CollectionGroup activeGroup = new CollectionGroup();
+        activeGroup.setGroupId("123");
+        when(groupService.getActiveCollectionGroup()).thenReturn(activeGroup);
+        when(clientGstInfoRepository.getAll(anyString())).thenReturn(Arrays.asList(new ClientGstInfo()));
         when(clientGstInfoFileWriterService.writeToFile(anyList())).thenReturn(new WriteClientGstInfoFileResponse());
 
         WriteClientGstInfoFileResponse result = service.writeFile();
@@ -157,9 +163,12 @@ public class ClientGstInfoServiceTest
     }
 
     @Test
-    public void shouldNotWriteFileIfClientGstInfoListIsEmpty() throws Exception
+    public void shouldNotWriteFileIfClientGstInfoListIsEmpty() throws ApiServiceException
     {
-        when(clientGstInfoRepository.getAll()).thenReturn(Collections.emptyList());
+        CollectionGroup activeGroup = new CollectionGroup();
+        activeGroup.setGroupId("123");
+        when(groupService.getActiveCollectionGroup()).thenReturn(activeGroup);
+        when(clientGstInfoRepository.getAll(anyString())).thenReturn(Collections.emptyList());
 
         WriteClientGstInfoFileResponse result = service.writeFile();
         assertNull(result);
@@ -167,7 +176,7 @@ public class ClientGstInfoServiceTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowIllegalArgumentException() throws Exception
+    public void shouldThrowIllegalArgumentException() throws ClientGstInfoBackupException, ApiServiceException
     {
         when(map.get(any())).thenReturn(null);
         service.saveFromFile(inputStream, "xlsx", false);
@@ -175,8 +184,8 @@ public class ClientGstInfoServiceTest
     }
 
     @SuppressWarnings("rawtypes")
-    @Test(expected = FileUploadException.class)
-    public void shouldThrowFileUploadException() throws Exception
+    @Test(expected = ClientGstInfoBackupException.class)
+    public void shouldThrowFileUploadException() throws FileUploadException, IOException, ClientGstInfoBackupException 
     {
         ClientGstInfoReaderService reader = mock(ClientGstInfoReaderService.class);
         when(map.get(any())).thenReturn(reader);

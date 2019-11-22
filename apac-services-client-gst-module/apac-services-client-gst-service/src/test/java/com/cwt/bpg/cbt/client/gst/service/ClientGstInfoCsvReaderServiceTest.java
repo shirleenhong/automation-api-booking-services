@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +10,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.CollectionUtils;
 
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 
@@ -54,7 +56,7 @@ public class ClientGstInfoCsvReaderServiceTest {
     public void shouldReadCsvFileWithError() throws Exception
     {
         List<ClientGstInfo> clientGstInfo = service.readFile(null, false);
-        assertNull(clientGstInfo);
+        assertTrue(CollectionUtils.isEmpty(clientGstInfo));
     }
 
 }
