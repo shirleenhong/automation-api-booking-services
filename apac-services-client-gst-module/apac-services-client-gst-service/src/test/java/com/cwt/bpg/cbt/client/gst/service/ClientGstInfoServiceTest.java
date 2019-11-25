@@ -176,7 +176,7 @@ public class ClientGstInfoServiceTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowIllegalArgumentException() throws ClientGstInfoBackupException, ApiServiceException
+    public void shouldThrowIllegalArgumentException() throws ClientGstInfoBackupException, ApiServiceException, FileUploadException
     {
         when(map.get(any())).thenReturn(null);
         service.saveFromFile(inputStream, "xlsx", false);
@@ -184,7 +184,7 @@ public class ClientGstInfoServiceTest
     }
 
     @SuppressWarnings("rawtypes")
-    @Test(expected = ClientGstInfoBackupException.class)
+    @Test(expected = FileUploadException.class)
     public void shouldThrowFileUploadException() throws FileUploadException, IOException, ClientGstInfoBackupException 
     {
         ClientGstInfoReaderService reader = mock(ClientGstInfoReaderService.class);
