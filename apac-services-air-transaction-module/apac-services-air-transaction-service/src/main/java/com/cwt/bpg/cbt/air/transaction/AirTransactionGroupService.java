@@ -28,6 +28,7 @@ public class AirTransactionGroupService extends CollectionGroupService<AirTransa
         this.groupRespository = groupRespository;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public CollectionGroupContext<AirTransaction> createCollectionGroup(List<AirTransaction> data)
     {
@@ -40,7 +41,7 @@ public class AirTransactionGroupService extends CollectionGroupService<AirTransa
 
         data.stream().forEach(a -> a.setGroupId(group.getGroupId()));
 
-        return new CollectionGroupContext<AirTransaction>(group, data);
+        return new CollectionGroupContext(group, data);
     }
 
     public void save(List<AirTransaction> airTransaction)

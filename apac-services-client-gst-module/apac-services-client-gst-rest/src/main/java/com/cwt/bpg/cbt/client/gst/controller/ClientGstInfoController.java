@@ -1,5 +1,6 @@
 package com.cwt.bpg.cbt.client.gst.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cwt.bpg.cbt.client.gst.exception.ClientGstInfoBackupException;
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 import com.cwt.bpg.cbt.client.gst.service.ClientGstInfoService;
 import com.cwt.bpg.cbt.exceptions.ApiServiceException;
+import com.cwt.bpg.cbt.exceptions.FileUploadException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -68,8 +71,7 @@ public class ClientGstInfoController {
     @ResponseBody
     @ApiOperation("[Maintenance] Saves client GST information from excel file")
     public ResponseEntity<Map<String, String>> uploadClientGstInfo(@RequestParam("file") MultipartFile file,
-            @RequestParam(value = "validate", defaultValue = "true") boolean validate)
-            throws Exception {
+            @RequestParam(value = "validate", defaultValue = "true") boolean validate) throws ClientGstInfoBackupException, FileUploadException, IOException  {
     	String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         clientGstInfoService.saveFromFile(file.getInputStream(), extension, validate);
         Map<String, String> response = new HashMap<>();

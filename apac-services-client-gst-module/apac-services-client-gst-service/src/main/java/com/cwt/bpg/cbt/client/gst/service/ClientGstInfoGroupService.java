@@ -29,6 +29,7 @@ public class ClientGstInfoGroupService extends CollectionGroupService<ClientGstI
         this.groupRespository = groupRespository;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public CollectionGroupContext<ClientGstInfo> createCollectionGroup(List<ClientGstInfo> data)
     {
@@ -41,7 +42,7 @@ public class ClientGstInfoGroupService extends CollectionGroupService<ClientGstI
 
         data.stream().forEach(a -> a.setGroupId(group.getGroupId()));
 
-        return new CollectionGroupContext<ClientGstInfo>(group, data);
+        return new CollectionGroupContext(group, data);
     }
     
     public CollectionGroup getActiveCollectionGroup()
