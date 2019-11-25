@@ -30,15 +30,15 @@ public abstract class CollectionGroupService<T>
     {
         CollectionGroupContext<T> context = createCollectionGroup(data);
 
-        repository.putAll(context.getData());
-        groupRepository.put(context.getCollectionGroup());
-
-        CollectionGroup currentGroup = groupRepository.getActiveCollectionGroup(context.getCollectionGroup().getCollectionName());
-        if (currentGroup != null)
+        CollectionGroup prevGroup = groupRepository.getActiveCollectionGroup(context.getCollectionGroup().getCollectionName());
+        if (prevGroup != null)
         {
-            currentGroup.setActive(false);
-            groupRepository.put(currentGroup);
+            prevGroup.setActive(false);
+            groupRepository.put(prevGroup);
         }
+        
+        repository.putAll(context.getData());
+        groupRepository.put(context.getCollectionGroup());     
     }
 
     public String getBranchVersion()

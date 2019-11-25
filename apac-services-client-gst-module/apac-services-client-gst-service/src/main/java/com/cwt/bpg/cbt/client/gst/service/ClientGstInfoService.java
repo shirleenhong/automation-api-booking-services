@@ -3,6 +3,7 @@ package com.cwt.bpg.cbt.client.gst.service;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ import com.cwt.bpg.cbt.upload.model.CollectionGroup;
 public class ClientGstInfoService
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientGstInfoService.class);
-    
+
     @Autowired
     private ClientGstInfoRepository clientGstInfoRepository;
 
@@ -56,6 +57,8 @@ public class ClientGstInfoService
     {
         CollectionGroup activeGroup = groupService.getActiveCollectionGroup();
         String formattedGstin = clientGstInfo.getGstin().toUpperCase().trim();
+        ClientGstInfo existingClientGstInfo = clientGstInfoRepository.getByGstin(activeGroup.getGroupId(), formattedGstin);
+        clientGstInfo.setId(existingClientGstInfo == null ? null : existingClientGstInfo.getId());
         clientGstInfo.setGstin(formattedGstin);
         clientGstInfo.setGroupId(activeGroup.getGroupId());
         return clientGstInfoRepository.put(clientGstInfo);
