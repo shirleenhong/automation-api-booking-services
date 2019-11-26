@@ -17,163 +17,190 @@ import com.cwt.bpg.cbt.calculator.model.Country;
 import com.cwt.bpg.cbt.exchange.order.model.*;
 
 @Component
-public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInput> {
+public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInput>
+{
 
-	@Autowired
-	private ScaleConfig scaleConfig;
+    @Autowired
+    private ScaleConfig scaleConfig;
 
-	@Autowired
-	private RoundingConfig roundingConfig;
+    @Autowired
+    private RoundingConfig roundingConfig;
 
-	private final List<String> clientsWithAdditionalSellPrice = Arrays.asList(ClientType.MG.getCode(),
-			ClientType.DB.getCode(),
-			ClientType.TF.getCode(),
-			ClientType.MN.getCode());
+    private final List<String> clientsWithAdditionalSellPrice = Arrays.asList(ClientType.MG.getCode(),
+            ClientType.DB.getCode(),
+            ClientType.TF.getCode(),
+            ClientType.MN.getCode());
 
-	private final List<String> clientsWithPercentageDiscount = Arrays.asList(ClientType.DU.getCode(),
-			ClientType.DB.getCode());
+    private final List<String> clientsWithPercentageDiscount = Arrays.asList(ClientType.DU.getCode(),
+            ClientType.DB.getCode());
 
-	private final List<String> clientsWithCommissionDiscount = Arrays
-			.asList(ClientType.MN.getCode(), ClientType.TF.getCode(), ClientType.TP.getCode());
+    private final List<String> clientsWithCommissionDiscount = Arrays
+            .asList(ClientType.MN.getCode(), ClientType.TF.getCode(), ClientType.TP.getCode());
 
-	private final List<String> clientsWithNoDiscount = Arrays.asList(ClientType.MN.getCode(),
-			ClientType.TF.getCode());
+    private final List<String> clientsWithNoDiscount = Arrays.asList(ClientType.MN.getCode(),
+            ClientType.TF.getCode());
 
-	@Override
-	public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFee, String countryCode) {
+    @Override
+    public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFee, String countryCode)
+    {
 
-		AirFeesBreakdown result = new AirFeesBreakdown();
-		
-		if (input == null) {
-			return result;
-		}
+        AirFeesBreakdown result = new AirFeesBreakdown();
 
-		int scale = scaleConfig.getScale(Country.HONG_KONG.getCode());
+        if (input == null)
+        {
+            return result;
+        }
 
-		BigDecimal totalSellingFare;
-		BigDecimal nettCost;
-		BigDecimal sellingPrice;
-		BigDecimal merchantFeeAmount = safeValue(input.getMerchantFee());
-		BigDecimal commission = safeValue(input.getCommission());
-		BigDecimal discount = safeValue(input.getDiscount());
-		BigDecimal nettFare = safeValue(input.getNettFare());
-		BigDecimal tax1 = safeValue(input.getTax1());
-		BigDecimal tax2 = safeValue(input.getTax2());
+        int scale = scaleConfig.getScale(Country.HONG_KONG.getCode());
 
-		if (!input.isApplyFormula()) {
-			totalSellingFare = nettFare.add(commission).subtract(discount).add(tax1).add(tax2)
-					.add(merchantFeeAmount);
-			nettCost = nettFare;
-		}
-		else {
-			if (input.isCommissionByPercent()) {
-				if (!ClientType.TP.getCode().equals(input.getClientType())) {
-					commission = getCommission(input, scale, getRoundingMode("commission", countryCode), nettFare);
-				}
+        BigDecimal totalSellingFare;
+        BigDecimal nettCost;
+        BigDecimal sellingPrice;
+        BigDecimal merchantFeeAmount = safeValue(input.getMerchantFee());
+        BigDecimal commission = safeValue(input.getCommission());
+        BigDecimal discount = safeValue(input.getDiscount());
+        BigDecimal nettFare = safeValue(input.getNettFare());
+        BigDecimal tax1 = safeValue(input.getTax1());
+        BigDecimal tax2 = safeValue(input.getTax2());
 
-				sellingPrice = nettFare.divide(
-						BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPercent())),
-						MathContext.DECIMAL128);
+        if (!input.isApplyFormula())
+        {
+            totalSellingFare = nettFare.add(commission)
+                    .subtract(discount)
+                    .add(tax1)
+                    .add(tax2)
+                    .add(merchantFeeAmount);
+            nettCost = nettFare;
+        }
+        else
+        {
+            if (input.isCommissionByPercent())
+            {
+                if (!ClientType.TP.getCode().equals(input.getClientType()))
+                {
+                    commission = getCommission(input, scale, getRoundingMode("commission", countryCode), nettFare);
+                }
 
-				if (!clientsWithAdditionalSellPrice.contains(input.getClientType())) {
-					sellingPrice = sellingPrice.add(BigDecimal.TEN);
-				}
-			}
-			else {
-				commission = round(commission, scale, getRoundingMode("commission", countryCode));
-				sellingPrice = nettFare.add(commission);
-			}
+                sellingPrice = nettFare.divide(
+                        BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPercent())),
+                        MathContext.DECIMAL128);
 
-			sellingPrice = round(sellingPrice, scale);
-			result.setCommission(commission);
-			result.setSellingPrice(sellingPrice);
+                if (!clientsWithAdditionalSellPrice.contains(input.getClientType()))
+                {
+                    sellingPrice = sellingPrice.add(BigDecimal.TEN);
+                }
+            }
+            else
+            {
+                commission = round(commission, scale, getRoundingMode("commission", countryCode));
+                sellingPrice = nettFare.add(commission);
+            }
 
-			discount = round(applyDiscount(input, commission, discount, nettFare), scale);
-			result.setDiscount(discount);
+            sellingPrice = round(sellingPrice, scale);
+            result.setCommission(commission);
+            result.setSellingPrice(sellingPrice);
 
-			nettCost = nettFare;
-			nettFare = round(sellingPrice.add(tax1).add(tax2).subtract(discount), scale, getRoundingMode("nettFare", countryCode));
-			result.setNettFare(nettFare);
+            discount = round(applyDiscount(input, commission, discount, nettFare), scale);
+            result.setDiscount(discount);
 
-			merchantFeeAmount = applyMerchantFee(merchantFee, input, scale, getRoundingMode("merchantFee", countryCode), nettFare, tax1, tax2);
-			result.setMerchantFee(merchantFeeAmount);
+            nettCost = nettFare;
+            nettFare = round(sellingPrice.add(tax1).add(tax2).subtract(discount), scale, getRoundingMode("nettFare", countryCode));
+            result.setNettFare(nettFare);
 
-			totalSellingFare = nettFare.add(safeValue(merchantFeeAmount));
-		}
+            merchantFeeAmount = applyMerchantFee(merchantFee, input, scale, getRoundingMode("merchantFee", countryCode), nettFare, tax1, tax2);
+            result.setMerchantFee(merchantFeeAmount);
 
-		result.setTotalSellingFare(round(totalSellingFare, scale, getRoundingMode("totalSellingFare", countryCode)));
-		result.setNettCost(round(nettCost, scale, getRoundingMode("nettCost", countryCode)));
+            totalSellingFare = nettFare.add(safeValue(merchantFeeAmount));
+        }
 
-		return result;
-	}
+        result.setTotalSellingFare(round(totalSellingFare, scale, getRoundingMode("totalSellingFare", countryCode)));
+        result.setNettCost(round(nettCost, scale, getRoundingMode("nettCost", countryCode)));
 
-	private BigDecimal getCommission(AirFeesInput input, int scale, RoundingMode roundingMode, BigDecimal nettFare) {
+        return result;
+    }
 
-		BigDecimal commission = nettFare
-				.divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPercent())),
-						MathContext.DECIMAL128)
-				.subtract(nettFare);
+    private BigDecimal getCommission(AirFeesInput input, int scale, RoundingMode roundingMode, BigDecimal nettFare)
+    {
 
-		if (commission.compareTo(BigDecimal.ZERO) > 0
-				&& ClientType.DU.getCode().equals(input.getClientType())) {
-			commission = commission.add(BigDecimal.TEN);
-		}
-		return round(commission, scale, roundingMode);
-	}
+        BigDecimal commission = nettFare
+                .divide(BigDecimal.ONE.subtract(percentDecimal(input.getCommissionPercent())),
+                        MathContext.DECIMAL128)
+                .subtract(nettFare);
 
-	private BigDecimal applyMerchantFee(MerchantFee merchantFee, AirFeesInput input, int scale, RoundingMode roundingMode,
-                                        BigDecimal nettFare, BigDecimal tax1, BigDecimal tax2) {
+        if (commission.compareTo(BigDecimal.ZERO) > 0
+                && ClientType.DU.getCode().equals(input.getClientType()))
+        {
+            commission = commission.add(BigDecimal.TEN);
+        }
+        return round(commission, scale, roundingMode);
+    }
 
-		BigDecimal merchantFeeAmount = null;
+    private BigDecimal applyMerchantFee(MerchantFee merchantFee, AirFeesInput input, int scale, RoundingMode roundingMode,
+            BigDecimal nettFare, BigDecimal tax1, BigDecimal tax2)
+    {
 
-		if (!input.isCwtAbsorb() && FopType.CWT.equals(input.getFopType())
-                && !input.isMerchantFeeWaive()) {
+        BigDecimal merchantFeeAmount = null;
+
+        if (!input.isCwtAbsorb() && FopType.CWT.equals(input.getFopType())
+                && !input.isMerchantFeeWaive())
+        {
 
             BigDecimal mFTotal;
             BigDecimal transactionFee = safeValue(input.getTransactionFee());
 
-            if (input.isUatp()) {
-                if (ClientType.TF.getCode().equals(input.getClientType())) {
+            if (input.isUatp())
+            {
+                if (ClientType.TF.getCode().equals(input.getClientType()))
+                {
                     mFTotal = transactionFee;
                 }
-                else {
+                else
+                {
                     mFTotal = nettFare.subtract(input.getNettFare()).subtract(tax1).subtract(tax2);
                 }
             }
-            else {
+            else
+            {
                 mFTotal = nettFare;
 
-                if (ClientType.TF.getCode().equals(input.getClientType()) && merchantFee.isIncludeTransactionFee()) {
+                if (ClientType.TF.getCode().equals(input.getClientType()) && merchantFee.isIncludeTransactionFee())
+                {
                     mFTotal = mFTotal.add(transactionFee);
                 }
             }
-			merchantFeeAmount = BigDecimal.ZERO.max(round(calculatePercentage(mFTotal, merchantFee.getMerchantFeePercent()), scale, roundingMode));
-		}
+            merchantFeeAmount = BigDecimal.ZERO.max(round(calculatePercentage(mFTotal.doubleValue(), merchantFee.getMerchantFeePercent()), scale, roundingMode));
+        }
 
-		return merchantFeeAmount;
-	}
+        return merchantFeeAmount;
+    }
 
-	private BigDecimal applyDiscount(AirFeesInput input, BigDecimal commission, BigDecimal discount,
-                                     BigDecimal nettFare) {
+    private BigDecimal applyDiscount(AirFeesInput input, BigDecimal commission, BigDecimal discount,
+            BigDecimal nettFare)
+    {
 
-		BigDecimal result = discount;
+        BigDecimal result = discount;
 
-		if (clientsWithNoDiscount.contains(input.getClientType())) {
-			result = BigDecimal.ZERO;
-		}
-		else if (input.isDiscountByPercent()) {
-			if (clientsWithPercentageDiscount.contains(input.getClientType())) {
-				result = calculatePercentage(commission.add(nettFare), input.getDiscountPercent());
-			}
-			else if (clientsWithCommissionDiscount.contains(input.getClientType())) {
-				result = commission;
-			}
-		}
+        if (clientsWithNoDiscount.contains(input.getClientType()))
+        {
+            result = BigDecimal.ZERO;
+        }
+        else if (input.isDiscountByPercent())
+        {
+            if (clientsWithPercentageDiscount.contains(input.getClientType()))
+            {
+                result = calculatePercentage(commission.add(nettFare), input.getDiscountPercent());
+            }
+            else if (clientsWithCommissionDiscount.contains(input.getClientType()))
+            {
+                result = commission;
+            }
+        }
 
-		return result;
-	}
-	
-	private RoundingMode getRoundingMode(String field, String countryCode) {
-		return roundingConfig.getRoundingMode(field, countryCode);
-	}
+        return result;
+    }
+
+    private RoundingMode getRoundingMode(String field, String countryCode)
+    {
+        return roundingConfig.getRoundingMode(field, countryCode);
+    }
 }
