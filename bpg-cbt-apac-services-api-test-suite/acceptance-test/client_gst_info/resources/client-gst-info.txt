@@ -175,11 +175,7 @@ Verify Client GST Info For CSV Is Retrieved Correctly
    \    ${response}    To Json     ${response.content}   
    \    Run Keyword If    "${data[0]}"!="${EMPTY}"    Verify Json Value Is Correct    $..client    ${data[0]}  
    \    Verify Json Value Is Correct    $..gstin    ${data[1]}
-   \    ${actual_entity_name}    Get Value From Json    ${response}    $..clientEntityName
-   \    ${actual_entity_name}    Convert To String    ${actual_entity_name}
-   \    ${actual_entity_name}    Remove String    ${actual_entity_name}    [    '    ]
-   \    ${actual_entity_name}    Encode String To Bytes    ${actual_entity_name}    UTF-8
-   \    Run Keyword And Continue On Failure    Should Be Equal As Strings    ${actual_entity_name.rstrip()}    ${data[2].rstrip()}
+   \    Verify Json Value Is Correct    $..clientEntityName    ${data[2]}
    \    Verify Json Value Is Correct    $..businessPhoneNumber    ${data[3]}
    \    Verify Json Value Is Correct    $..businessEmailAddress    ${data[4]}
    \    Verify Json Value Is Correct    $..entityAddressLine1    ${data[5]}
