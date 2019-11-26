@@ -13,7 +13,7 @@ Verify That Client GST Info Can Be Downloaded In CSV Format
     Verify Client GST Info For CSV Is Retrieved Correctly
     
 Verify That Client GST Info Can Be Saved From Excel File
-    [Tags]    not-ready
+    [Tags]    functional
     Send Post Request For Client GST Info    filename=valid_clientgstinfo.xlsx
     Verify Response Status Code Is Correct    200
     Evict Client GST Info Cache
@@ -27,7 +27,7 @@ Verify That Client GST Info Can Be Saved From Excel File
 	Verify Client GST Info Are Retrieved Correctly
 
 Verify That All Client GST Info Are Correctly Retrieved After Uploading of File
-    [Tags]    not-ready
+    [Tags]    functional
     Send Post Request For Client GST Info    filename=GSTLookup_new.xlsx    validation=false
     Verify Response Status Code Is Correct    200
     Evict Client GST Info Cache
