@@ -30,6 +30,6 @@ public class NoFeeWithDiscountCalculatorTest {
         breakdown.setFee(new BigDecimal(1000));
         
         BigDecimal result = noFeeWithDiscountCalculator.getMfOnTf(input, breakdown, new BigDecimal(2)); 
-        assertEquals(new BigDecimal(20).setScale(2), result);
+        assertEquals(new BigDecimal(20).setScale(2), result.setScale(2));
     }
 }

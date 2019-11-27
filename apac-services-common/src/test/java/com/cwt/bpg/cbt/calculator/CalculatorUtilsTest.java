@@ -168,11 +168,18 @@ public class CalculatorUtilsTest
         safeValue = safeValue(input);
         assertThat(safeValue, is(equalTo(input)));
     }
-
+    
     @Test
     public void shouldCalculatePercentageForDoubleType()
     {
-        BigDecimal decimal = CalculatorUtils.calculatePercentage(2000D, 1.82D);
-        assertThat(decimal.doubleValue(), is(equalTo(36.4)));
+        BigDecimal decimal = CalculatorUtils.calculatePercentage(2000.00, 1.85);
+        assertThat(decimal.doubleValue(), is(equalTo(37.0)));
+    }
+    
+    @Test
+    public void shouldHandleNullPercentageOnCalculatePercentageForDoubleType()
+    {
+        BigDecimal decimal = CalculatorUtils.calculatePercentage(2000.00, null);
+        assertThat(decimal.doubleValue(), is(equalTo(0.0)));
     }
 }

@@ -38,11 +38,11 @@ public final class CalculatorUtils {
 	}
 
 	public static BigDecimal calculatePercentage(BigDecimal input, Double percent) {
-		return safeValue(input).multiply(percentDecimal(percent));
+		return percentDecimal(safeValue(input).multiply(BigDecimal.valueOf(safeValue(percent))));
 	}
 	
 	public static BigDecimal calculatePercentage(Double input, Double percent) {
-		return BigDecimal.valueOf(percentDouble(safeValue(input) * percent));
+		return BigDecimal.valueOf(percentDouble(safeValue(input) * safeValue(percent)));
 	}
 
 	public static Double percentDouble(Double value) {

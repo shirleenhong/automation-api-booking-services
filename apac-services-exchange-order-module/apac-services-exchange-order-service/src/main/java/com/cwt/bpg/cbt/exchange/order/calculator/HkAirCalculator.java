@@ -168,7 +168,7 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
                     mFTotal = mFTotal.add(transactionFee);
                 }
             }
-            merchantFeeAmount = BigDecimal.ZERO.max(round(calculatePercentage(mFTotal.doubleValue(), merchantFee.getMerchantFeePercent()), scale, roundingMode));
+            merchantFeeAmount = BigDecimal.ZERO.max(round(calculatePercentage(mFTotal, merchantFee.getMerchantFeePercent()), scale, roundingMode));
         }
 
         return merchantFeeAmount;
