@@ -337,19 +337,22 @@ public class MigrationService
         LOGGER.info("End of clients migration...");
     }
 
-	public void migrateClientTransactionFees() throws JsonProcessingException {
-		LOGGER.info("Started client transaction fees migration...");
-		List<InClientTransactionFee> clientTransactionFees = clientDAO.getClientTransactionFees();
-		
-		List<Document> docs = new ArrayList<>();
-		for (InClientTransactionFee clientTransactionFee: clientTransactionFees) {
-			docs.add(dBObjectMapper.mapAsDbDocument(clientTransactionFee.getClientAccountNumber(), clientTransactionFee));
-		}
-		
-		mongoDbConnection.getCollection(CLIENT_TRANSACTION_FEE_COLLECTION).insertMany(docs);
+    public void migrateClientTransactionFees() throws JsonProcessingException
+    {
+        LOGGER.info("Started client transaction fees migration...");
+        List<InClientTransactionFee> clientTransactionFees = clientDAO.getClientTransactionFees();
+
+        List<Document> docs = new ArrayList<>();
+        for (InClientTransactionFee clientTransactionFee : clientTransactionFees)
+        {
+            docs.add(dBObjectMapper.mapAsDbDocument(clientTransactionFee.getClientAccountNumber(),
+                    clientTransactionFee));
+        }
+
+        mongoDbConnection.getCollection(CLIENT_TRANSACTION_FEE_COLLECTION).insertMany(docs);
         LOGGER.info("End of client transaction fees migration...");
-	}
-	
+    }
+
     private Map<Integer, List<TransactionFee>> getTransactionFeesMap(List<TransactionFee> transactionFees)
     {
         Map<Integer, List<TransactionFee>> transactionFeesMap = new HashMap<>();
