@@ -33,7 +33,7 @@ Calculate Air Fees-HK Merchant Fee
     ...    ELSE    Calculate Air Fees-HK Merchant Fee Without UATP
 
 Calculate Air Fees-HK Merchant Fee With UATP
-    ${merchant_fee_formula}    Set Variable If    "${country}" == "hk" and "${client_type_value.upper()}" == "TF"    ${transaction_fee_value}*(${merchant_fee_percentage_value}*0.01)    "${country}" == "hk" and "${client_type_value.upper()}" != "TF"    (${nett_fare_amount}-${nett_fare_original_value}-${tax_1_value}-${tax_2_value})*(${merchant_fee_percentage_value}*0.01)
+    ${merchant_fee_formula}    Set Variable If    "${country}" == "hk" and "${client_type_value.upper()}" == "TF"    (${transaction_fee_value}*${merchant_fee_percentage_value})*0.01    "${country}" == "hk" and "${client_type_value.upper()}" != "TF"    ((${nett_fare_amount}-${nett_fare_original_value}-${tax_1_value}-${tax_2_value})*${merchant_fee_percentage_value})*0.01
     ${calculated_value}    Evaluate    ${merchant_fee_formula}
     ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    up
     ${calculated_value}    Set Variable If    ${calculated_value} < 0    0    ${calculated_value} == -0    0    ${calculated_value}
@@ -41,7 +41,7 @@ Calculate Air Fees-HK Merchant Fee With UATP
     Set Test Variable    ${merchant_fee_amount}    ${calculated_value}
 
 Calculate Air Fees-HK Merchant Fee Without UATP
-    ${merchant_fee_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" and "${tfincmf_flag_value}" == "true"    (${nett_fare_amount}+${transaction_fee_value})*(${merchant_fee_percentage_value}*0.01)    ${nett_fare_amount}*(${merchant_fee_percentage_value}*0.01)
+    ${merchant_fee_formula}    Set Variable If    "${client_type_value.upper()}" == "TF" and "${tfincmf_flag_value}" == "true"    ((${nett_fare_amount}+${transaction_fee_value})*${merchant_fee_percentage_value})*0.01    (${nett_fare_amount}*${merchant_fee_percentage_value})*0.01
     ${calculated_value}    Evaluate    ${merchant_fee_formula}
     ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    up
     ${calculated_value}    Convert To String    ${calculated_value}
