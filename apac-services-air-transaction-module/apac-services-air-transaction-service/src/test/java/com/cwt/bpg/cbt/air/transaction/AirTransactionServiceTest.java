@@ -22,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
+import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionUploadException;
 import com.cwt.bpg.cbt.air.transaction.file.reader.AirTransExcelReader;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
@@ -149,7 +150,7 @@ public class AirTransactionServiceTest
     }
 
     @Test
-    public void shouldUploadExcel() throws IOException
+    public void shouldUploadExcel() throws IOException, AirTransactionUploadException
     {
         InputStream inputStream = mock(InputStream.class);
         String fileType = "xlsx";
@@ -162,7 +163,7 @@ public class AirTransactionServiceTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldHandleInvalidFile()
+    public void shouldHandleInvalidFile() throws AirTransactionUploadException
     {
         InputStream inputStream = mock(InputStream.class);
         String fileType = "xxx";

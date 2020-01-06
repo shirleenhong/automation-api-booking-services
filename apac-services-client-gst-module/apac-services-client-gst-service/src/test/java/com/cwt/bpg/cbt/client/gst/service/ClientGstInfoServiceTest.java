@@ -29,7 +29,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.cwt.bpg.cbt.client.gst.exception.ClientGstInfoBackupException;
+import com.cwt.bpg.cbt.client.gst.exception.ClientGstInfoUploadException;
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
@@ -176,7 +176,7 @@ public class ClientGstInfoServiceTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowIllegalArgumentException() throws ClientGstInfoBackupException, ApiServiceException, FileUploadException
+    public void shouldThrowIllegalArgumentException() throws ClientGstInfoUploadException, ApiServiceException, FileUploadException
     {
         when(map.get(any())).thenReturn(null);
         service.saveFromFile(inputStream, "xlsx", false);
@@ -185,7 +185,7 @@ public class ClientGstInfoServiceTest
 
     @SuppressWarnings("rawtypes")
     @Test(expected = FileUploadException.class)
-    public void shouldThrowFileUploadException() throws FileUploadException, IOException, ClientGstInfoBackupException 
+    public void shouldThrowFileUploadException() throws FileUploadException, IOException, ClientGstInfoUploadException 
     {
         ClientGstInfoReaderService reader = mock(ClientGstInfoReaderService.class);
         when(map.get(any())).thenReturn(reader);

@@ -8,13 +8,12 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
+import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionUploadException;
 import com.cwt.bpg.cbt.air.transaction.file.reader.AirTransExcelReader;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
@@ -25,12 +24,10 @@ import com.cwt.bpg.cbt.upload.model.CollectionGroup;
 @Service
 public class AirTransactionService
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AirTransactionService.class);
-
     private static final String EXCEL_WORKBOOK = "xlsx";
 
     @Autowired
-    private AirTransactionRepository airTransactionRepo;
+    private AirTransactionRepository airTransactionRepository;
 
     @Autowired
     private AirTransactionGroupService airTransGroupService;
@@ -58,7 +55,7 @@ public class AirTransactionService
     {
         CollectionGroup collectionGroup = airTransGroupService.getActiveCollectionGroup();
         input.setGroupId(collectionGroup.getGroupId());
-        return airTransactionRepo.getAirTransactions(input);
+        return airTransactionRepository.getAirTransactions(input);
     }
 
     private void checkEmptyList(List<AirTransaction> airTransactionList)
@@ -78,12 +75,12 @@ public class AirTransactionService
         return output;
     }
 
-    public List<AirTransaction> save(List<AirTransaction> airTrans)
+    public List<AirTransaction> save(List<AirTransaction> airTransaction)
     {
         CollectionGroup collectionGroup = airTransGroupService.getActiveCollectionGroup();
-        airTrans.forEach(a -> a.setGroupId(collectionGroup.getGroupId()));
+        airTransaction.forEach(a -> a.setGroupId(collectionGroup.getGroupId()));
 
-        return StreamSupport.stream(airTransactionRepo.putAll(airTrans).spliterator(), false).collect(Collectors.toList());
+        return StreamSupport.stream(airTransactionRepository.putAll(airTransaction).spliterator(), false).collect(Collectors.toList());
     }
 
     public AirTransaction save(AirTransaction airTrans)
@@ -91,15 +88,15 @@ public class AirTransactionService
         CollectionGroup collectionGroup = airTransGroupService.getActiveCollectionGroup();
         airTrans.setGroupId(collectionGroup.getGroupId());
 
-        return airTransactionRepo.put(airTrans);
+        return airTransactionRepository.put(airTrans);
     }
 
     public String delete(String id)
     {
-        return airTransactionRepo.remove(new ObjectId(id));
+        return airTransactionRepository.remove(new ObjectId(id));
     }
 
-    public void upload(InputStream inputStream, String fileType)
+    public void upload(InputStream inputStream, String fileType) throws AirTransactionUploadException
     {
         if (EXCEL_WORKBOOK.equalsIgnoreCase(fileType))
         {
@@ -110,7 +107,7 @@ public class AirTransactionService
             }
             catch (Exception e)
             {
-                LOGGER.error("Error in uploading Air Transactions: {}", e.getMessage());
+                throw new AirTransactionUploadException("Error in uploading air transaction from file", e);
             }
         }
         else

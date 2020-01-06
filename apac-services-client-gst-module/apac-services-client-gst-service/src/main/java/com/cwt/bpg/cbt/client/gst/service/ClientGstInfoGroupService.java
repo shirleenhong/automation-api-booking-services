@@ -40,7 +40,7 @@ public class ClientGstInfoGroupService extends CollectionGroupService<ClientGstI
         group.setActive(true);
         group.setCreationTimestamp(Instant.now());
 
-        data.stream().forEach(a -> a.setGroupId(group.getGroupId()));
+        data.stream().forEach(clientGstInfo -> clientGstInfo.setGroupId(group.getGroupId()));
 
         return new CollectionGroupContext(group, data);
     }

@@ -12,7 +12,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import com.cwt.bpg.cbt.client.gst.exception.ClientGstInfoBackupException;
+import com.cwt.bpg.cbt.client.gst.exception.ClientGstInfoUploadException;
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
 import com.cwt.bpg.cbt.client.gst.model.WriteClientGstInfoFileResponse;
 import com.cwt.bpg.cbt.client.gst.repository.ClientGstInfoRepository;
@@ -88,7 +88,7 @@ public class ClientGstInfoService
     }
 
     @SuppressWarnings("unchecked")
-    public void saveFromFile(InputStream inputStream, String extension, boolean validate) throws ClientGstInfoBackupException, FileUploadException
+    public void saveFromFile(InputStream inputStream, String extension, boolean validate) throws ClientGstInfoUploadException, FileUploadException
     {
         @SuppressWarnings("rawtypes")
         ClientGstInfoReaderService reader = clientGstInfoReaderServiceMap.get(extension);
@@ -109,7 +109,7 @@ public class ClientGstInfoService
         }
         catch (Exception e)
         {
-            throw new ClientGstInfoBackupException("Error in creating backup of client gst info from file", e);
+            throw new ClientGstInfoUploadException("Error in uploading client gst info from file", e);
         }
     }
 }

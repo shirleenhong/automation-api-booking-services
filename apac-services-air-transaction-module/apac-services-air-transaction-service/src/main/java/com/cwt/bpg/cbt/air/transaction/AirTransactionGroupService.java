@@ -39,7 +39,7 @@ public class AirTransactionGroupService extends CollectionGroupService<AirTransa
         group.setActive(true);
         group.setCreationTimestamp(Instant.now());
 
-        data.stream().forEach(a -> a.setGroupId(group.getGroupId()));
+        data.stream().forEach(airTransaction -> airTransaction.setGroupId(group.getGroupId()));
 
         return new CollectionGroupContext(group, data);
     }
