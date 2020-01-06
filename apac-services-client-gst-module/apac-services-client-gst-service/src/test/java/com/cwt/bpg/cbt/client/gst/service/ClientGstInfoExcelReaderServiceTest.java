@@ -1,7 +1,6 @@
 package com.cwt.bpg.cbt.client.gst.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -11,8 +10,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.CollectionUtils;
 
 import com.cwt.bpg.cbt.client.gst.model.ClientGstInfo;
+import com.cwt.bpg.cbt.exceptions.FileUploadException;
 
 public class ClientGstInfoExcelReaderServiceTest
 {
@@ -26,7 +27,7 @@ public class ClientGstInfoExcelReaderServiceTest
     }
     
     @Test
-    public void shouldReadExcelFile() throws Exception
+    public void shouldReadExcelFile() throws FileUploadException, IOException 
     {
         List<ClientGstInfo> clientGstInfo = service.readFile(xlsxFileStream, false);
         assertTrue(clientGstInfo.size() == 5);
@@ -46,17 +47,17 @@ public class ClientGstInfoExcelReaderServiceTest
     }
     
     @Test
-    public void shouldReadExcelFileWithGstAirlines() throws Exception
+    public void shouldReadExcelFileWithGstAirlines() throws FileUploadException, IOException
     {
         List<ClientGstInfo> clientGstInfo = service.readFile(xlsxFileStream, false);
         assertTrue(clientGstInfo.size() == 5);
     }
     
     @Test
-    public void shouldReadExcelFileWithError() throws Exception
+    public void shouldReadExcelFileWithError() throws FileUploadException, IOException 
     {
         List<ClientGstInfo> clientGstInfo = service.readFile(null, false);
-        assertNull(clientGstInfo);
+        assertTrue(CollectionUtils.isEmpty(clientGstInfo));
     }
 
 }

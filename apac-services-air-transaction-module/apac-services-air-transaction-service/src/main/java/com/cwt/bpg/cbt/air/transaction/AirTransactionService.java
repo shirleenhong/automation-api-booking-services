@@ -2,54 +2,45 @@ package com.cwt.bpg.cbt.air.transaction;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import javax.annotation.Resource;
-
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionBackupException;
 import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
+import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionUploadException;
 import com.cwt.bpg.cbt.air.transaction.file.reader.AirTransExcelReader;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionOutput;
 import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
+import com.cwt.bpg.cbt.upload.model.CollectionGroup;
 
 @Service
 public class AirTransactionService
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AirTransactionService.class);
-
     private static final String EXCEL_WORKBOOK = "xlsx";
 
-    @Resource
-    private AirTransactionService proxy;
+    @Autowired
+    private AirTransactionRepository airTransactionRepository;
 
     @Autowired
-    private AirTransactionRepository airTransactionRepo;
+    private AirTransactionGroupService airTransGroupService;
 
     @Autowired
     private AirTransExcelReader excelReader;
 
-    @Autowired
-    private AirTransactionBackupService airTransBackupService;
-
-    public AirTransactionOutput getAirTransaction(AirTransactionInput input)
-            throws AirTransactionNoContentException
+    public AirTransactionOutput getAirTransaction(AirTransactionInput input) throws AirTransactionNoContentException
     {
+        CollectionGroup collectionGroup = airTransGroupService.getActiveCollectionGroup();
+        input.setGroupId(collectionGroup.getGroupId());
 
-        List<AirTransaction> airTransactionList = proxy.getAirTransactionList(input);
+        List<AirTransaction> airTransactionList = getAirTransactionList(input);
         checkEmptyList(airTransactionList);
 
         Optional<AirTransaction> passthroughCWT = airTransactionList.stream()
@@ -60,11 +51,11 @@ public class AirTransactionService
                 : createPassthroughOutput(PassthroughType.AIRLINE);
     }
 
-    private AirTransactionOutput createPassthroughOutput(PassthroughType type)
+    public List<AirTransaction> getAirTransactionList(AirTransactionInput input)
     {
-        AirTransactionOutput output = new AirTransactionOutput();
-        output.setPassthroughType(type);
-        return output;
+        CollectionGroup collectionGroup = airTransGroupService.getActiveCollectionGroup();
+        input.setGroupId(collectionGroup.getGroupId());
+        return airTransactionRepository.getAirTransactions(input);
     }
 
     private void checkEmptyList(List<AirTransaction> airTransactionList)
@@ -77,43 +68,46 @@ public class AirTransactionService
         }
     }
 
-    public List<AirTransaction> getAirTransactionList(AirTransactionInput input)
+    private AirTransactionOutput createPassthroughOutput(PassthroughType type)
     {
-        return airTransactionRepo.getAirTransactions(input);
+        AirTransactionOutput output = new AirTransactionOutput();
+        output.setPassthroughType(type);
+        return output;
     }
 
-    public List<AirTransaction> save(List<AirTransaction> airTrans)
+    public List<AirTransaction> save(List<AirTransaction> airTransaction)
     {
-        return StreamSupport.stream(airTransactionRepo.putAll(airTrans).spliterator(), false).collect(Collectors.toList());
+        CollectionGroup collectionGroup = airTransGroupService.getActiveCollectionGroup();
+        airTransaction.forEach(a -> a.setGroupId(collectionGroup.getGroupId()));
+
+        return StreamSupport.stream(airTransactionRepository.putAll(airTransaction).spliterator(), false).collect(Collectors.toList());
     }
 
-    public AirTransaction save(AirTransaction airTransaction)
+    public AirTransaction save(AirTransaction airTrans)
     {
-        return airTransactionRepo.put(airTransaction);
+        CollectionGroup collectionGroup = airTransGroupService.getActiveCollectionGroup();
+        airTrans.setGroupId(collectionGroup.getGroupId());
+
+        return airTransactionRepository.put(airTrans);
     }
 
     public String delete(String id)
     {
-        return airTransactionRepo.remove(new ObjectId(id));
+        return airTransactionRepository.remove(new ObjectId(id));
     }
 
-    public void upload(InputStream inputStream, String fileType) throws AirTransactionBackupException
+    public void upload(InputStream inputStream, String fileType) throws AirTransactionUploadException
     {
         if (EXCEL_WORKBOOK.equalsIgnoreCase(fileType))
         {
-            String batchId = UUID.randomUUID().toString();
-            final List<AirTransaction> airTransactionList = new ArrayList<>();
             try
             {
-                final List<AirTransaction> updatedList = excelReader.parse(new BufferedInputStream(inputStream));
-                airTransBackupService.archive(airTransactionList, batchId);
-                airTransactionRepo.putAll(updatedList);
+                final List<AirTransaction> airTransactions = excelReader.parse(new BufferedInputStream(inputStream));
+                airTransGroupService.save(airTransactions);
             }
             catch (Exception e)
             {
-                airTransBackupService.rollback(airTransactionList, batchId);
-                LOGGER.error("Error in creating backup of air transaction from excel file", e);
-                throw new AirTransactionBackupException("Error in creating backup of air transaction from excel file", e);
+                throw new AirTransactionUploadException("Error in uploading air transaction from file", e);
             }
         }
         else

@@ -2,7 +2,11 @@ package com.cwt.bpg.cbt.air.transaction;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,25 +21,23 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionBackupException;
 import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionNoContentException;
+import com.cwt.bpg.cbt.air.transaction.exception.AirTransactionUploadException;
 import com.cwt.bpg.cbt.air.transaction.file.reader.AirTransExcelReader;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransaction;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionInput;
 import com.cwt.bpg.cbt.air.transaction.model.AirTransactionOutput;
 import com.cwt.bpg.cbt.air.transaction.model.PassthroughType;
+import com.cwt.bpg.cbt.upload.model.CollectionGroup;
 
-public class AirTransactionServiceTest {
-
-    @Mock
-    private AirTransactionService proxy;
-
+public class AirTransactionServiceTest
+{
     @Mock
     private AirTransactionRepository repository;
-    
+
     @Mock
-    private AirTransactionBackupService backupService;
-    
+    private AirTransactionGroupService groupService;
+
     @Mock
     private AirTransExcelReader excelReader;
 
@@ -43,16 +45,19 @@ public class AirTransactionServiceTest {
     private AirTransactionService service;
 
     @Before
-    public void init() {
+    public void init()
+    {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void getAirTransactionListShouldReturnAirTransactionList() {
-		@SuppressWarnings("unchecked")
+    public void getAirTransactionListShouldReturnAirTransactionList()
+    {
+        @SuppressWarnings("unchecked")
         List<AirTransaction> airTransactions = mock(List.class);
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
         when(repository.getAirTransactions(any(AirTransactionInput.class))).thenReturn(airTransactions);
-
+        
         List<AirTransaction> result = service.getAirTransactionList(new AirTransactionInput());
 
         assertEquals(airTransactions, result);
@@ -60,51 +65,82 @@ public class AirTransactionServiceTest {
     }
 
     @Test
-    public void getAirTransactionShouldReturnAirTransaction() throws AirTransactionNoContentException {
+    public void getAirTransactionShouldReturnAirTransactionCWTPassThru() throws AirTransactionNoContentException
+    {
         AirTransaction airTransaction = mock(AirTransaction.class);
         when(airTransaction.getPassthroughType()).thenReturn(PassthroughType.CWT);
 
         List<AirTransaction> airTransactions = new ArrayList<>();
         airTransactions.add(airTransaction);
 
-        when(proxy.getAirTransactionList(any(AirTransactionInput.class))).thenReturn(airTransactions);
-
+        when(repository.getAirTransactions(any(AirTransactionInput.class))).thenReturn(airTransactions);
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
+        
         AirTransactionOutput result = service.getAirTransaction(new AirTransactionInput());
 
         assertNotNull(result);
         assertEquals(PassthroughType.CWT, result.getPassthroughType());
-        verify(proxy, times(1)).getAirTransactionList(any(AirTransactionInput.class));
     }
     
-    @Test(expected = AirTransactionNoContentException.class)
-    public void getAirTransactionListShouldThrowException() throws AirTransactionNoContentException {
-    	AirTransaction airTransaction = mock(AirTransaction.class);
-        when(airTransaction.getPassthroughType()).thenReturn(PassthroughType.CWT);
+    @Test
+    public void getAirTransactionShouldReturnAirTransactionAirlinePassThru() throws AirTransactionNoContentException
+    {
+        AirTransaction airTransaction = mock(AirTransaction.class);
+        when(airTransaction.getPassthroughType()).thenReturn(PassthroughType.AIRLINE);
 
         List<AirTransaction> airTransactions = new ArrayList<>();
+        airTransactions.add(airTransaction);
 
-        when(proxy.getAirTransactionList(any(AirTransactionInput.class))).thenReturn(airTransactions);
+        when(repository.getAirTransactions(any(AirTransactionInput.class))).thenReturn(airTransactions);
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
 
         AirTransactionOutput result = service.getAirTransaction(new AirTransactionInput());
 
         assertNotNull(result);
+        assertEquals(PassthroughType.AIRLINE, result.getPassthroughType());
+    }
+
+    @Test(expected = AirTransactionNoContentException.class)
+    public void getAirTransactionListShouldThrowException() throws AirTransactionNoContentException
+    {
+        AirTransaction airTransaction = mock(AirTransaction.class);
+
+        when(airTransaction.getPassthroughType()).thenReturn(PassthroughType.CWT);
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
+        
+        AirTransactionOutput result = service.getAirTransaction(new AirTransactionInput());
+
+        assertNotNull(result);
         assertEquals(PassthroughType.CWT, result.getPassthroughType());
-        verify(proxy, times(1)).getAirTransactionList(any(AirTransactionInput.class));
     }
 
     @SuppressWarnings("unchecked")
     @Test
-    public void saveShouldReturnSavedAirTransaction() {
+    public void saveShouldReturnSavedAirTransactions()
+    {
         when(repository.putAll(any(List.class))).thenReturn(Arrays.asList(new AirTransaction()));
-
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
+        
         service.save(Arrays.asList(new AirTransaction()));
 
         verify(repository, times(1)).putAll(any(List.class));
     }
+    
+    @Test
+    public void saveShouldReturnSavedAirTransaction()
+    {
+        when(repository.put(any(AirTransaction.class))).thenReturn(new AirTransaction());
+        when(groupService.getActiveCollectionGroup()).thenReturn(new CollectionGroup());
+        
+        service.save(new AirTransaction());
+
+        verify(repository, times(1)).put(any(AirTransaction.class));
+    }
 
     @Test
-    public void deleteShouldReturnWriteResult() {
-    	String id = "5b2870d6284b8d1ac84300ad";
+    public void deleteShouldReturnWriteResult()
+    {
+        String id = "5b2870d6284b8d1ac84300ad";
         when(repository.remove(any(ObjectId.class))).thenReturn(id);
 
         String result = service.delete(id);
@@ -112,38 +148,26 @@ public class AirTransactionServiceTest {
         assertEquals(id, result);
         verify(repository, times(1)).remove(any(ObjectId.class));
     }
-    
+
     @Test
-    public void shouldUploadExcel() throws IOException, AirTransactionBackupException {
+    public void shouldUploadExcel() throws IOException, AirTransactionUploadException
+    {
         InputStream inputStream = mock(InputStream.class);
         String fileType = "xlsx";
-        
+
         when(excelReader.parse(any(InputStream.class))).thenReturn(Arrays.asList(new AirTransaction()));
-        when(repository.putAll(any())).thenReturn(Arrays.asList(new AirTransaction()));
-        doNothing().when(backupService).archive(any(), any());
-        doNothing().when(repository).dropCollection();
-        
+
         service.upload(inputStream, fileType);
-        
+
         verify(excelReader, times(1)).parse(any(InputStream.class));
-        verify(repository, times(1)).putAll(any());
-        verify(backupService, times(1)).archive(any(), any());
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
-    public void shouldHandleInvalidFile() throws AirTransactionBackupException {
+    public void shouldHandleInvalidFile() throws AirTransactionUploadException
+    {
         InputStream inputStream = mock(InputStream.class);
         String fileType = "xxx";
-        
-        service.upload(inputStream, fileType);
-    }
-    
-    @Test( expected = AirTransactionBackupException.class )
-    public void shouldHandleErrorInParsing() throws IOException, AirTransactionBackupException {
-        InputStream inputStream = mock(InputStream.class);
-        String fileType = "xlsx";
-        
-        when(excelReader.parse(any(InputStream.class))).thenThrow(new IOException());
+
         service.upload(inputStream, fileType);
     }
 }

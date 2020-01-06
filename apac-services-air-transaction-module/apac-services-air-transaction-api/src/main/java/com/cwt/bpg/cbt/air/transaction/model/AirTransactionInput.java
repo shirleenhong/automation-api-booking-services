@@ -3,47 +3,68 @@ package com.cwt.bpg.cbt.air.transaction.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class AirTransactionInput implements Serializable {
+public class AirTransactionInput implements Serializable
+{
 
-	private static final long serialVersionUID = 5943172847055937530L;
+    private static final long serialVersionUID = 5943172847055937530L;
 
-	private List<String> bookingClasses;
-	
-	private String countryCode;
+    private String groupId;
 
-	private String airlineCode;
+    private List<String> bookingClasses;
 
-	private String ccVendorCode;
+    private String countryCode;
 
-	public List<String> getBookingClasses() {
-		return bookingClasses;
-	}
+    private String airlineCode;
 
-	public void setBookingClasses(List<String> bookingClasses) {
-		this.bookingClasses = bookingClasses;
-	}
+    private String ccVendorCode;
 
-	public String getAirlineCode() {
-		return airlineCode;
-	}
+    public String getGroupId()
+    {
+        return groupId;
+    }
 
-	public void setAirlineCode(String airlineCode) {
-		this.airlineCode = airlineCode;
-	}
+    public void setGroupId(String groupId)
+    {
+        this.groupId = groupId;
+    }
 
-	public String getCcVendorCode() {
-		return ccVendorCode;
-	}
+    public List<String> getBookingClasses()
+    {
+        return bookingClasses;
+    }
 
-	public void setCcVendorCode(String ccVendorCode) {
-		this.ccVendorCode = ccVendorCode;
-	}
+    public void setBookingClasses(List<String> bookingClasses)
+    {
+        this.bookingClasses = bookingClasses;
+    }
 
-	public String getCountryCode() {
-		return countryCode;
-	}
+    public String getAirlineCode()
+    {
+        return airlineCode;
+    }
 
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
+    public void setAirlineCode(String airlineCode)
+    {
+        this.airlineCode = airlineCode;
+    }
+
+    public String getCcVendorCode()
+    {
+        return ccVendorCode;
+    }
+
+    public void setCcVendorCode(String ccVendorCode)
+    {
+        this.ccVendorCode = ccVendorCode;
+    }
+
+    public String getCountryCode()
+    {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode)
+    {
+        this.countryCode = countryCode;
+    }
 }

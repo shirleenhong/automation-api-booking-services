@@ -1,33 +1,91 @@
 package com.cwt.bpg.cbt.client.gst.model;
 
-import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.*;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE1_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE1_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE1_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE1_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE1_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE2_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE2_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE2_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.ADDRESS_LINE2_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_EMAIL_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_EMAIL_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_EMAIL_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_PHONE_NUM_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_PHONE_NUM_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_PHONE_NUM_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_PHONE_NUM_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.BUSINESS_PHONE_NUM_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CITY_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CITY_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CITY_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CITY_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CITY_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CLIENT_ENTITY_NAME_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CLIENT_ENTITY_NAME_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CLIENT_ENTITY_NAME_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CLIENT_ENTITY_NAME_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.CLIENT_ENTITY_NAME_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.GSTIN_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.GSTIN_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.GSTIN_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.GSTIN_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.GSTIN_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.POSTAL_CODE_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.POSTAL_CODE_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.POSTAL_CODE_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.POSTAL_CODE_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.POSTAL_CODE_REGEX;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.STATE_EMPTY_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.STATE_FORMAT_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.STATE_LENGTH_ERROR_MSG;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.STATE_MAX_LENGTH;
+import static com.cwt.bpg.cbt.client.gst.model.ValidationConstants.STATE_REGEX;
 
 import java.beans.Transient;
 import java.io.Serializable;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
-import org.mongodb.morphia.annotations.*;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 
 import com.cwt.bpg.cbt.client.gst.model.constraint.GdsEmailFormat;
+import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity(value = "clientGstInfo", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("gstin")))
-public class ClientGstInfo implements Serializable {
+public class ClientGstInfo implements Serializable
+{
 
     private static final long serialVersionUID = 1600168082099452654L;
 
     @Id
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    @ApiModelProperty(hidden = true)
+    private ObjectId id;
+    
     @NotEmpty(message = GSTIN_EMPTY_ERROR_MSG)
     @Pattern(regexp = GSTIN_REGEX, message = GSTIN_FORMAT_ERROR_MSG)
     @Size(min = GSTIN_LENGTH, max = GSTIN_LENGTH, message = GSTIN_LENGTH_ERROR_MSG)
     @ApiModelProperty(required = true)
     private String gstin;
+    
+    private String groupId;
 
     private String client;
 
@@ -72,84 +130,126 @@ public class ClientGstInfo implements Serializable {
 
     @ApiModelProperty(allowableValues = "S, P, U")
     private OrgType orgType;
+    
 
-    public String getGstin() {
+    public ObjectId getId()
+    {
+        return id;
+    }
+
+    public void setId(ObjectId id)
+    {
+        this.id = id;
+    }
+
+    public String getGstin()
+    {
         return gstin;
     }
 
-    public void setGstin(String gstin) {
+    public void setGstin(String gstin)
+    {
         this.gstin = gstin;
     }
+    
 
-    public String getClient() {
+    public String getGroupId()
+    {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId)
+    {
+        this.groupId = groupId;
+    }
+
+    public String getClient()
+    {
         return client;
     }
 
-    public void setClient(String client) {
+    public void setClient(String client)
+    {
         this.client = client;
     }
 
-    public String getClientEntityName() {
+    public String getClientEntityName()
+    {
         return clientEntityName;
     }
 
-    public void setClientEntityName(String clientEntityName) {
+    public void setClientEntityName(String clientEntityName)
+    {
         this.clientEntityName = clientEntityName;
     }
 
-    public String getBusinessPhoneNumber() {
+    public String getBusinessPhoneNumber()
+    {
         return businessPhoneNumber;
     }
 
-    public void setBusinessPhoneNumber(String businessPhoneNumber) {
+    public void setBusinessPhoneNumber(String businessPhoneNumber)
+    {
         this.businessPhoneNumber = businessPhoneNumber;
     }
 
-    public String getBusinessEmailAddress() {
+    public String getBusinessEmailAddress()
+    {
         return businessEmailAddress;
     }
 
-    public void setBusinessEmailAddress(String businessEmailAddress) {
+    public void setBusinessEmailAddress(String businessEmailAddress)
+    {
         this.businessEmailAddress = businessEmailAddress;
     }
 
-    public String getEntityAddressLine1() {
+    public String getEntityAddressLine1()
+    {
         return entityAddressLine1;
     }
 
-    public void setEntityAddressLine1(String entityAddressLine1) {
+    public void setEntityAddressLine1(String entityAddressLine1)
+    {
         this.entityAddressLine1 = entityAddressLine1;
     }
 
-    public String getEntityAddressLine2() {
+    public String getEntityAddressLine2()
+    {
         return entityAddressLine2;
     }
 
-    public void setEntityAddressLine2(String entityAddressLine2) {
+    public void setEntityAddressLine2(String entityAddressLine2)
+    {
         this.entityAddressLine2 = entityAddressLine2;
     }
 
-    public String getPostalCode() {
+    public String getPostalCode()
+    {
         return postalCode;
     }
 
-    public void setPostalCode(String postalCode) {
+    public void setPostalCode(String postalCode)
+    {
         this.postalCode = postalCode;
     }
 
-    public String getCity() {
+    public String getCity()
+    {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(String city)
+    {
         this.city = city;
     }
 
-    public String getState() {
+    public String getState()
+    {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(String state)
+    {
         this.state = state;
     }
 
@@ -165,7 +265,8 @@ public class ClientGstInfo implements Serializable {
 
     @Transient
     @JsonIgnore
-    public boolean allValuesNull() {
+    public boolean allValuesNull()
+    {
         return gstin == null &&
                 client == null &&
                 clientEntityName == null &&

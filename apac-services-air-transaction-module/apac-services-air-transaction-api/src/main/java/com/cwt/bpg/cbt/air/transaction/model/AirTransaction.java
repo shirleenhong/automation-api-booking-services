@@ -30,6 +30,9 @@ public class AirTransaction implements Serializable
     @ApiModelProperty(hidden = true)
     private ObjectId id;
 
+    @ApiModelProperty(hidden = true)
+    private String groupId;
+
     private String airlineDescription;
 
     private String ccVendorName;
@@ -50,7 +53,6 @@ public class AirTransaction implements Serializable
 
     public AirTransaction(AirTransaction airTransaction)
     {
-        this.id = airTransaction.id;
         this.airlineDescription = airTransaction.airlineDescription;
         this.ccVendorName = airTransaction.ccVendorName;
         this.passthroughType = airTransaction.passthroughType;
@@ -68,6 +70,16 @@ public class AirTransaction implements Serializable
     public void setId(ObjectId id)
     {
         this.id = id;
+    }
+
+    public String getGroupId()
+    {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId)
+    {
+        this.groupId = groupId;
     }
 
     public String getAirlineCode()

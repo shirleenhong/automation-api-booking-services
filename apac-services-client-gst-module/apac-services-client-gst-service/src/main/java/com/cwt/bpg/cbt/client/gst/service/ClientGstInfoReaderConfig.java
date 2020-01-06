@@ -20,6 +20,7 @@ public class ClientGstInfoReaderConfig {
     @Autowired
     private ClientGstInfoCsvReaderService clientGstInfoCsvReaderService;
 
+    @SuppressWarnings("rawtypes")
     @Bean("clientGstInfoReaderServiceMap")
     public Map<String, ClientGstInfoReaderService> clientGstInfoReaderMap() {
         Map<String, ClientGstInfoReaderService> map = new HashMap<>();
