@@ -12,7 +12,7 @@ import org.mongodb.morphia.annotations.Indexes;
 import com.cwt.bpg.cbt.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@Entity(value = "collection_group", noClassnameStored = true)
+@Entity(value = "collectionGroup", noClassnameStored = true)
 @Indexes(@Index(fields = @Field("id")))
 public class CollectionGroup
 {
