@@ -27,6 +27,7 @@ Calculate Air Fees-HK Discount
     Set Test Variable    ${discount_amount}    ${calculated_value}
 
 Calculate Air Fees-HK Merchant Fee
+    Get Merchant Fee Percentage
     ${uatp_not_exists}    Run Keyword And Return Status    Variable Should Not Exist    ${uatp_flag_value}
     Run Keyword If    "${uatp_not_exists}" == "True"    Set Test Variable    ${uatp_flag_value}    true
     Run Keyword If    "${uatp_flag_value}" == "true"    Calculate Air Fees-HK Merchant Fee With UATP
@@ -254,6 +255,7 @@ Calculate Air Fees-SG Discount
     Set Test Variable    ${discount_amount}    ${calculated_value}
 
 Calculate Air Fees-SG Merchant Fee
+    Get Merchant Fee Percentage
     Run Keyword If    "${product_type_value.upper()}" == "CT"    Calculate Air Fees-SG Merchant Fee For Product Type CT
     ...    ELSE    Calculate Air Fees-SG Merchant Fee For Non-Product Type CT
 
@@ -322,6 +324,34 @@ Create Test Variables For Air Fees-HK
     ${var_exist_flag}    Run Keyword And Return Status    Variable Should Exist    ${tax_3_value}         
     Run Keyword If    "${var_exist_flag}"!="True"    Set Test Variable    ${tax_3_value}    0
     Set Test Variable    ${service_fee_name}    air-fees
+    
+Get Merchant Fee For CC Vendor
+    ${vendor_list}    Get Value From Json    ${response.json()}    $.mfCcs
+    ${vendor_list_count}    Get Length    ${vendor_list}
+    ${vendor_count}    Run Keyword If    ${vendor_list_count} > 0    Get Length    ${vendor_list[0]}
+    ...    ELSE    Set Variable    0
+    : FOR    ${index}    IN RANGE    ${vendor_count}
+    \    ${mf_vendor}    Get Json Value As String    ${response.content}     $.mfCcs[${index}].vendorCode
+    \    ${mf_percentage}    Run Keyword If    "${mf_vendor}"=="${cc_vendor_value}"    Get Json Value As String    ${response.content}     $.mfCcs[${index}].percentage
+    \    Exit For Loop If    "${mf_vendor}"=="${cc_vendor_value}"
+    [Return]    ${mf_percentage}
+
+Get Merchant Fee Percentage
+    [Arguments]    ${token}=${default_token}
+    Create Session    merchant    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    merchant    /apac-services-rest/api/merchant-fee/${country}/${client_account_number_value}    headers=${headers}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${response}
+    Set Test Variable    ${api_flag}    merchant
+    ${merchant_fee_percentage_value}    Get Json Value As String    ${response.content}    $.merchantFeePercent
+    ${var_exist_flag}    Run Keyword And Return Status    Variable Should Exist    ${cc_vendor_value}         
+    Set Test Variable    ${mf_percentage}    ${null}
+    ${mf_percentage}    Run Keyword If    "${var_exist_flag}"=="True"    Get Merchant Fee For CC Vendor
+    ${merchant_fee_percentage_value}    Set Variable If    "${${mf_percentage}}"!="${null}"    ${mf_percentage}    ${merchant_fee_percentage_value}
+    Set Test Variable    ${merchant_fee_percentage_value}
 
 Generate Test Variables For Air Fees-HK
     [Arguments]    ${fees_list}    ${country}
@@ -574,6 +604,8 @@ Send Other Service Fees For Air Fees Post Request
     Run Keyword If    "${transaction_fee_exists}"=="True"    Append To List    ${other_service_fees_request_list}    "transactionFee":${transaction_fee_value}
     ${uatp_exists}    Run Keyword And Return Status    Variable Should Exist    ${uatp_flag_value}
     Run Keyword If    "${uatp_exists}"=="True"    Append To List    ${other_service_fees_request_list}    "uatp":${uatp_flag_value}
+    ${cc_vendor_exists}    Run Keyword And Return Status    Variable Should Exist    ${cc_vendor_value}
+    Run Keyword If    "${cc_vendor_exists}"=="True"    Append To List    ${other_service_fees_request_list}    "vendorCode":"${cc_vendor_value}"
     ${list_count}    Get Length    ${other_service_fees_request_list}
     : FOR    ${i}    IN RANGE    0    ${list_count}
     \    ${fees_list}    Set Variable If    ${i}==0    ${EMPTY}    ${fees_list},

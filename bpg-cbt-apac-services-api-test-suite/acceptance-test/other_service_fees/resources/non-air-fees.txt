@@ -14,6 +14,8 @@ Append Fields For Non-Air Fees For HK/SG
     Run Keyword If    "${gst_absorb_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstAbsorb":${gst_absorb_value}
     Run Keyword If    "${nett_cost_value}"!="null"    Append To List    ${other_service_fees_request_list}    "nettCost":${nett_cost_value}
     Run Keyword If    "${gst_percent_value}"!="null"    Append To List    ${other_service_fees_request_list}    "gstPercent":${gst_percent_value}
+    ${cc_vendor_exists}    Run Keyword And Return Status    Variable Should Exist    ${cc_vendor_value}
+    Run Keyword If    "${cc_vendor_exists}"=="True"    Append To List    ${other_service_fees_request_list}    "vendorCode":"${cc_vendor_value}"
     Set Test Variable    ${other_service_fees_request_list}
 
 Append Fields For Non-Air Fees For India
@@ -117,12 +119,14 @@ Calculate Non-Air Fees Gross Sell Amount
     Set Test Variable    ${gross_selling_price_value}    ${calculated_value}
     
 Calculate Non-Air Fees-HK Merchant Fee
+    Get Merchant Fee Percentage
     ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percentage_value}*0.01)
     ${calculated_value}    Round To Nearest Dollar    ${calculated_value}    ${country.upper()}    up    
     ${calculated_value}    Convert To String    ${calculated_value}
     Set Test Variable    ${merchant_fee_value}    ${calculated_value}
 
 Calculate Non-Air Fees Merchant Fee
+    Get Merchant Fee Percentage
     ${calculated_value}    Evaluate    ${selling_price_value}*(1+${gst_percent_value}*0.01)*(${merchant_fee_percentage_value}*0.01)
     ${calculated_value}    Convert To Number    ${calculated_value}    ${decimal_place}
     # ${calculated_value}    Evaluate    round(${calculated_value},${decimal_place})
@@ -195,6 +199,34 @@ Create Test Variables For Non-Air Fees
     Set Test Variable    ${fees_list}
     Set Test Variable    ${country}    ${country.lower()}
     Set Test Variable    ${service_fee_name}    non-air-fees
+    
+Get Merchant Fee For CC Vendor
+    ${vendor_list}    Get Value From Json    ${response.json()}    $.mfCcs
+    ${vendor_list_count}    Get Length    ${vendor_list}
+    ${vendor_count}    Run Keyword If    ${vendor_list_count} > 0    Get Length    ${vendor_list[0]}
+    ...    ELSE    Set Variable    0
+    : FOR    ${index}    IN RANGE    ${vendor_count}
+    \    ${mf_vendor}    Get Json Value As String    ${response.content}     $.mfCcs[${index}].vendorCode
+    \    ${mf_percentage}    Run Keyword If    "${mf_vendor}"=="${cc_vendor_value}"    Get Json Value As String    ${response.content}     $.mfCcs[${index}].percentage
+    \    Exit For Loop If    "${mf_vendor}"=="${cc_vendor_value}"
+    [Return]    ${mf_percentage}
+
+Get Merchant Fee Percentage
+    [Arguments]    ${token}=${default_token}
+    Create Session    merchant    ${${env}_base_url}    verify=True
+    ${headers}    Run Keyword If    "${token}" != "None"    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${token}
+    ...    ELSE    Create Dictionary    Content-Type=application/json
+    ${response}    Get Request    merchant    /apac-services-rest/api/merchant-fee/${country}/${client_account_number_value}    headers=${headers}
+    Log    ${response.headers}
+    Log    ${response.content}
+    Set Test Variable    ${response}
+    Set Test Variable    ${api_flag}    merchant
+    ${merchant_fee_percentage_value}    Get Json Value As String    ${response.content}    $.merchantFeePercent
+    ${var_exist_flag}    Run Keyword And Return Status    Variable Should Exist    ${cc_vendor_value}         
+    Set Test Variable    ${mf_percentage}    ${null}
+    ${mf_percentage}    Run Keyword If    "${var_exist_flag}"=="True"    Get Merchant Fee For CC Vendor
+    ${merchant_fee_percentage_value}    Set Variable If    "${${mf_percentage}}"!="${null}"    ${mf_percentage}    ${merchant_fee_percentage_value}
+    Set Test Variable    ${merchant_fee_percentage_value}
 
 Generate Test Variables For Non-Air Fees
     [Arguments]    ${fees_list}    ${country}=sg
