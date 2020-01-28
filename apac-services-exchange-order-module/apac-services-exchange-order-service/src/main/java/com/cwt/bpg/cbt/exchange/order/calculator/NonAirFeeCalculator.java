@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
 import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
+import static com.cwt.bpg.cbt.exchange.order.calculator.MerchantFeeCalculatorUtils.getMerchantFeeForVendorCode;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -46,11 +47,12 @@ public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonA
 		if (!input.isMerchantFeeAbsorb() && FopType.CWT.equals(input.getFopType())
 				&& !input.isMerchantFeeWaive()) {
 
+			Double merchantFeePercent = getMerchantFeeForVendorCode(merchantFee, input.getVendorCode());
+
 			merchantFeeAmount = round(
 					calculatePercentage(
 							input.getSellingPrice()
-									.multiply(BigDecimal.ONE.add(percentDecimal(input.getGstPercent()))),
-							merchantFee.getMerchantFeePercent()),
+									.multiply(BigDecimal.ONE.add(percentDecimal(input.getGstPercent()))), merchantFeePercent),
 					scale, getRoundingMode("merchantFee", countryCode));
 		}
 

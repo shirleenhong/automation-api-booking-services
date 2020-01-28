@@ -7,29 +7,40 @@ import javax.validation.constraints.NotEmpty;
 
 public class FeesInput implements Serializable {
 
-	private static final long serialVersionUID = -5237125856544162255L;
+    private static final long serialVersionUID = -5237125856544162255L;
 
-	@ApiModelProperty(required = true)
-	@NotEmpty
-	private String clientAccountNumber;
+    @ApiModelProperty(required = true)
+    @NotEmpty
+    private String clientAccountNumber;
 
-	@ApiModelProperty(required = false)
-	private int clientId;
+    @ApiModelProperty
+    private int clientId;
 
-	public String getClientAccountNumber() {
-		return clientAccountNumber;
-	}
+    private String vendorCode;
 
-	public void setClientAccountNumber(String clientAccountNumber) {
-		this.clientAccountNumber = clientAccountNumber;
-	}
+    public String getClientAccountNumber() {
+        return clientAccountNumber;
+    }
 
-	public int getClientId() {
-		return clientId;
-	}
+    public void setClientAccountNumber(String clientAccountNumber) {
+        this.clientAccountNumber = clientAccountNumber;
+    }
 
-	public void setClientId(int clientId) {
-		this.clientId = clientId;
-	}
+    public int getClientId() {
+        return clientId;
+    }
 
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getVendorCode()
+    {
+        return vendorCode;
+    }
+
+    public void setVendorCode(String vendorCode)
+    {
+        this.vendorCode = vendorCode;
+    }
 }

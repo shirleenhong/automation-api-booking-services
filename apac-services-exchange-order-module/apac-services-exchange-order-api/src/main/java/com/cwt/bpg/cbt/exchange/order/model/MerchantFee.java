@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
@@ -36,6 +37,8 @@ public class MerchantFee implements Serializable {
 	private String countryCode;
 
 	private String clientAccountNumber;
+
+	private List<MerchantFeeCreditCardVendor> mfCcs;
 
 	public MerchantFee() {
 		merchantFeePercent = 0d;
@@ -96,4 +99,15 @@ public class MerchantFee implements Serializable {
 	public void setMerchantFeePercent(Double merchantFeePercent) {
 		this.merchantFeePercent = merchantFeePercent;
 	}
+
+	public void setMfCcs(List<MerchantFeeCreditCardVendor> mfCcs)
+	{
+		this.mfCcs = mfCcs;
+	}
+
+	public List<MerchantFeeCreditCardVendor> getMfCcs()
+	{
+		return mfCcs;
+	}
+
 }

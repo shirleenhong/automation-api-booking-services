@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
 import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
+import static com.cwt.bpg.cbt.exchange.order.calculator.MerchantFeeCalculatorUtils.getMerchantFeeForVendorCode;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -168,7 +169,9 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
                     mFTotal = mFTotal.add(transactionFee);
                 }
             }
-            merchantFeeAmount = BigDecimal.ZERO.max(round(calculatePercentage(mFTotal, merchantFee.getMerchantFeePercent()), scale, roundingMode));
+
+            Double merchantFeePercent = getMerchantFeeForVendorCode(merchantFee, input.getVendorCode());
+            merchantFeeAmount = BigDecimal.ZERO.max(round(calculatePercentage(mFTotal, merchantFeePercent), scale, roundingMode));
         }
 
         return merchantFeeAmount;

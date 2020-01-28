@@ -1,6 +1,7 @@
 package com.cwt.bpg.cbt.exchange.order.calculator;
 
 import static com.cwt.bpg.cbt.calculator.CalculatorUtils.*;
+import static com.cwt.bpg.cbt.exchange.order.calculator.MerchantFeeCalculatorUtils.getMerchantFeeForVendorCode;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -66,7 +67,10 @@ public class SgAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 						input.getTransactionFee(),
 						inClientType,
 						merchantFeeObj.isIncludeTransactionFee());
-				merchantFee = getMerchantFee(totalPlusTF, merchantFeeObj.getMerchantFeePercent(), scale, getRoundingMode("merchantFee", countryCode));
+
+				Double merchantFeePercent = getMerchantFeeForVendorCode(merchantFeeObj, input.getVendorCode());
+
+				merchantFee = getMerchantFee(totalPlusTF, merchantFeePercent, scale, getRoundingMode("merchantFee", countryCode));
 				result.setMerchantFee(merchantFee);
 			}
 
