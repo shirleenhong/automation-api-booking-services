@@ -192,10 +192,10 @@ public class HkAirCalculatorTest {
 				
 		assertEquals(2000D, airFeesBreakdown.getCommission().doubleValue(), 0D);
 		assertEquals(12000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
-		assertEquals(0D, airFeesBreakdown.getDiscount().doubleValue(), 0D);
-		assertEquals(12000D, airFeesBreakdown.getNettFare().doubleValue(), 0D);
+		assertEquals(2000D, airFeesBreakdown.getDiscount().doubleValue(), 0D);
+		assertEquals(10000D, airFeesBreakdown.getNettFare().doubleValue(), 0D);
 		assertNull(airFeesBreakdown.getMerchantFee());
-		assertEquals(12000D, airFeesBreakdown.getTotalSellingFare().doubleValue(), 0D);
+		assertEquals(10000D, airFeesBreakdown.getTotalSellingFare().doubleValue(), 0D);
 		assertEquals(10000D, airFeesBreakdown.getNettCost().doubleValue(), 0D);
 	}
 

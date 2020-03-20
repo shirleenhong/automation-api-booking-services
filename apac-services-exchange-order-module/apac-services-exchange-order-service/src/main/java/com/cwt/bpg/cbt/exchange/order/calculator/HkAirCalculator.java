@@ -38,9 +38,6 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
     private final List<String> clientsWithCommissionDiscount = Arrays
             .asList(ClientType.MN.getCode(), ClientType.TF.getCode(), ClientType.TP.getCode());
 
-    private final List<String> clientsWithNoDiscount = Arrays.asList(ClientType.MN.getCode(),
-            ClientType.TF.getCode());
-
     @Override
     public AirFeesBreakdown calculate(AirFeesInput input, MerchantFee merchantFee, String countryCode)
     {
@@ -183,11 +180,7 @@ public class HkAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 
         BigDecimal result = discount;
 
-        if (clientsWithNoDiscount.contains(input.getClientType()))
-        {
-            result = BigDecimal.ZERO;
-        }
-        else if (input.isDiscountByPercent())
+        if (input.isDiscountByPercent())
         {
             if (clientsWithPercentageDiscount.contains(input.getClientType()))
             {
