@@ -28,6 +28,8 @@ public class MiscInfo implements Serializable {
 
     private String bookingAction;
 
+    private String obtBookingAction;
+
     private String realisedSavingsCode;
 
     private String missedSavingsCode;
@@ -94,6 +96,16 @@ public class MiscInfo implements Serializable {
 
     public void setBookingAction(String bookingAction) {
         this.bookingAction = bookingAction;
+    }
+
+    public String getObtBookingAction()
+    {
+        return obtBookingAction;
+    }
+
+    public void setObtBookingAction(String obtBookingAction)
+    {
+        this.obtBookingAction = obtBookingAction;
     }
 
     public String getRealisedSavingsCode() {
