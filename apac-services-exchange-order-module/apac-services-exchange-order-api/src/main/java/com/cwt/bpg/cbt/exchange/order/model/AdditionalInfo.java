@@ -23,7 +23,7 @@ public class AdditionalInfo implements Serializable {
     @JsonDeserialize(using = DateDeserializer.class)
     private Instant date;
 
-    private String obtBookingAction;
+    private String touchLevel;
 
     public String getDescription() {
         return description;
@@ -49,13 +49,13 @@ public class AdditionalInfo implements Serializable {
         this.date = date;
     }
 
-    public String getObtBookingAction()
+    public String getTouchLevel()
     {
-        return obtBookingAction;
+        return touchLevel;
     }
 
-    public void setObtBookingAction(String obtBookingAction)
+    public void setTouchLevel(String touchLevel)
     {
-        this.obtBookingAction = obtBookingAction;
+        this.touchLevel = touchLevel;
     }
 }
