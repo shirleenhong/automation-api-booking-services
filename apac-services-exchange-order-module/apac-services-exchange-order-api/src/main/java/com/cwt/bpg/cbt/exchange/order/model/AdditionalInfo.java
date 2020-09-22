@@ -1,3 +1,4 @@
+
 package com.cwt.bpg.cbt.exchange.order.model;
 
 import com.cwt.bpg.cbt.exchange.order.model.deserializer.DateDeserializer;
@@ -22,6 +23,8 @@ public class AdditionalInfo implements Serializable {
     @JsonDeserialize(using = DateDeserializer.class)
     private Instant date;
 
+    private String obtBookingAction;
+
     public String getDescription() {
         return description;
     }
@@ -44,5 +47,15 @@ public class AdditionalInfo implements Serializable {
 
     public void setDate(Instant date) {
         this.date = date;
+    }
+
+    public String getObtBookingAction()
+    {
+        return obtBookingAction;
+    }
+
+    public void setObtBookingAction(String obtBookingAction)
+    {
+        this.obtBookingAction = obtBookingAction;
     }
 }
