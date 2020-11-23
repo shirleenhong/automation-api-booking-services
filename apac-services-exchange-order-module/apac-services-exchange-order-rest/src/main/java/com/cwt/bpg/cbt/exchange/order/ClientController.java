@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import com.cwt.bpg.cbt.documentation.annotation.Internal;
 import com.cwt.bpg.cbt.exchange.order.model.Client;
 import com.cwt.bpg.cbt.exchange.order.model.FlatTransactionFee;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -41,17 +40,18 @@ public class ClientController
     @ApiOperation(value = "Returns client by client account number.")
     public ResponseEntity<Client> getClient(@PathVariable String clientAccountNumber)
     {
-
         return new ResponseEntity<>(clientService.getClient(clientAccountNumber), HttpStatus.OK);
     }
 
-    @PutMapping(path = "/clients", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    @PutMapping(path = "/clients",
+            consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
+            produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     @ResponseBody
     @ApiOperation(value = "[Maintenance] Saves (inserts/updates) client.")
-    public ResponseEntity<Client> putClient(@RequestBody Client client)
+    public ResponseEntity<List<Client>> putClient(@RequestBody List<Client> clientList)
     {
-        Client updatedClient = clientService.save(client);
-        return new ResponseEntity<>(updatedClient, HttpStatus.OK);
+        List<Client> updatedClients = clientService.save(clientList);
+        return new ResponseEntity<>(updatedClients, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/clients/{clientAccountNumber}")

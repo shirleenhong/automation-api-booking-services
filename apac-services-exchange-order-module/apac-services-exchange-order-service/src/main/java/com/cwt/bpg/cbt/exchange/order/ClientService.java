@@ -1,8 +1,6 @@
 package com.cwt.bpg.cbt.exchange.order;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,55 +13,68 @@ import com.cwt.bpg.cbt.exchange.order.model.FeesInput;
 import com.cwt.bpg.cbt.exchange.order.model.india.AirFeesDefaultsInput;
 
 @Service
-public class ClientService {
-	
-	@Autowired
-	private ClientRepository clientRepository;
+public class ClientService
+{
 
-	@Cacheable(cacheNames = "clients", key = "#root.methodName")
-	public List<Client> getAll() {
-		return clientRepository.getAll();
-	}
+    @Autowired
+    private ClientRepository clientRepository;
 
-	public Client save(Client client) {
-		return clientRepository.put(client);
-	}
+    @Cacheable(cacheNames = "clients", key = "#root.methodName")
+    public List<Client> getAll()
+    {
+        return clientRepository.getAll();
+    }
 
-	public String delete(String keyValue) {
-		return clientRepository.remove(keyValue);
-	}
-	
-	@Cacheable(cacheNames="clients", key="#clientAccountNumber", condition="#clientAccountNumber != null")
-	public Client getClient(String clientAccountNumber) {
-		return clientRepository.getClient(clientAccountNumber);
-	}
+    public List<Client> save(List<Client> clients)
+    {
+        return clients.stream()
+                .map(client -> clientRepository.put(client))
+                .collect(Collectors.toList());
+    }
 
-	@Cacheable(cacheNames="clients", key="#clientId", condition="#clientId != null")
-	public Client getClient(Integer clientId) {
-		return clientRepository.get(clientId);
-	}
+    public String delete(String keyValue)
+    {
+        return clientRepository.remove(keyValue);
+    }
 
-	public List<ClientPricing> getClientPricings(AirFeesDefaultsInput input) {
+    @Cacheable(cacheNames = "clients", key = "#clientAccountNumber", condition = "#clientAccountNumber != null")
+    public Client getClient(String clientAccountNumber)
+    {
+        return clientRepository.getClient(clientAccountNumber);
+    }
 
-		Client client = getClient(input);
+    @Cacheable(cacheNames = "clients", key = "#clientId", condition = "#clientId != null")
+    public Client getClient(Integer clientId)
+    {
+        return clientRepository.get(clientId);
+    }
 
-		List<ClientPricing> clientPricings = Optional.ofNullable(client.getClientPricings())
-				.orElse(Collections.emptyList());
+    public List<ClientPricing> getClientPricings(AirFeesDefaultsInput input)
+    {
+        Client client = getClient(input);
 
-		return clientPricings.stream().filter(pricing -> pricing.getTripType().equals(input.getTripType()))
-				.collect(Collectors.toList());
-	}
+        List<ClientPricing> clientPricings = Optional.ofNullable(client.getClientPricings())
+                .orElse(Collections.emptyList());
 
-	public Client getDefaultClient() {
-		return getClient(-1);		
-	}
+        return clientPricings.stream().filter(pricing -> pricing.getTripType().equals(input.getTripType()))
+                .collect(Collectors.toList());
+    }
 
-	public Client getClient(FeesInput input) {
-		if (input.getClientId() != 0) {
-			return getClient(input.getClientId());
-		} else {
-			return getClient(input.getClientAccountNumber());
-		}
-	}
+    public Client getDefaultClient()
+    {
+        return getClient(-1);
+    }
+
+    public Client getClient(FeesInput input)
+    {
+        if (input.getClientId() != 0)
+        {
+            return getClient(input.getClientId());
+        }
+        else
+        {
+            return getClient(input.getClientAccountNumber());
+        }
+    }
 
 }

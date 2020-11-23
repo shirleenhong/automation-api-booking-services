@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -49,9 +50,16 @@ public class ClientServiceTest {
 	
 	@Test
 	public void canSaveClient() {
-		Client client = new Client();
-		Client result = service.save(client);
-		assertEquals(null, result);
+		final Client client = new Client();
+		client.setClientAccountNumber("11111");
+		List<Client> clientList = Arrays.asList(client);
+		when(repository.put(client)).thenReturn(client);
+
+		List<Client> result = service.save(clientList);
+
+		assertEquals(result.size(), 1);
+		assertEquals(client, result.get(0));
+		verify(repository, times(1)).put(client);
 	}
 	
 	@Test

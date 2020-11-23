@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -45,7 +46,7 @@ public class ClientControllerTest {
 
 	@Test
 	public void canPutClientPricing() {
-		Client newClient = new Client();
+		List<Client> newClient = Arrays.asList(new Client());
 		List<Client> clientList = new ArrayList<>();
 		when(clientService.getAll()).thenReturn(clientList);
 
