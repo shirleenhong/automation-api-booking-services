@@ -24,7 +24,7 @@ public class FlatTransactionFeeService
     {
         if (clientLAccountNumberList != null && !clientLAccountNumberList.isEmpty())
         {
-            return flatTransactionFeeRepository.get(clientLAccountNumberList);
+            return flatTransactionFeeRepository.getMany(clientLAccountNumberList);
         }
         else
         {

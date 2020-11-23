@@ -64,7 +64,7 @@ public class CommonRepository<T, D> {
         return getDatastore().createQuery(typeClass).field(keyColumn).equal(criteria).get();
     }
 
-    public List<T> get(List<D> criteria) {
+    public List<T> getMany(List<D> criteria) {
         return getDatastore().createQuery(typeClass).field(keyColumn).hasAnyOf(criteria).asList();
     }
 
