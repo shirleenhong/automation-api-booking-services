@@ -9,10 +9,7 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
@@ -117,12 +114,12 @@ public class ClientRepositoryTest {
 	}
 
 	@Test
-	public void shouldCreateInsuranceRepository() {
+	public void shouldCreateClientRepository() {
 		ClientRepository repo = new ClientRepository();
 
 		repo.identity((i) -> {
 			assertThat(i[0], is(equalTo(Client.class)));
-			assertThat(i[1], is(equalTo("clientId")));
+			assertThat(i[1], is(equalTo("clientAccountNumber")));
 		});
 	}
 }
