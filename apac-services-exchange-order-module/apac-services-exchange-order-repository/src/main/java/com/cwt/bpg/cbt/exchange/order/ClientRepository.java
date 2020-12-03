@@ -13,7 +13,7 @@ import com.mongodb.WriteResult;
 @Repository
 public class ClientRepository extends CommonRepository<Client, Integer> {
 	
-	private static final String ID = "clientId";
+	private static final String ID = "clientAccountNumber";
 
 	public ClientRepository() {
 		super(Client.class, ID);
