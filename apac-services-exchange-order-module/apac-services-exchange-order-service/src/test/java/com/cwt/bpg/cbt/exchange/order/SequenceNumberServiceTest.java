@@ -40,7 +40,7 @@ public class SequenceNumberServiceTest {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
-	public void resetSgHkSequenceNumber() {
+	public void resetNonIndiaSequenceNumber() {
 
 		SequenceNumber sn = mock(SequenceNumber.class);
 		List list = new ArrayList<SequenceNumber>();
@@ -49,7 +49,7 @@ public class SequenceNumberServiceTest {
 
 		when(sequentNumberRepo.get("SG", "HK")).thenReturn(list);
 
-		service.resetHkSgSequenceNumber();
+		service.resetNonIndiaSequenceNumber();
 
 		verify(sn, times(2)).setValue(0);
 		verify(sequentNumberRepo, times(1)).save(list);

@@ -75,7 +75,7 @@ class SequenceNumberService {
 	}
 
 	@Scheduled(cron = "${exchange.order.reset.schedule.hk.sg}")
-	void resetHkSgSequenceNumber() {
+	void resetNonIndiaSequenceNumber() {
 
 		List<SequenceNumber> sequenceNumbers = sequenceNumberRepo.get(Country.SINGAPORE.getCode(),
 				Country.HONG_KONG.getCode());

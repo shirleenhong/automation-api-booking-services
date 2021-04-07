@@ -196,7 +196,7 @@ public class OtherServiceFeesServiceTest {
     }
 
     @Test
-    public void shouldReturnNonAirFeeHkSg() {
+    public void shouldReturnNonAirFeeNonIndia() {
         when(nonAirFeeCalculator
                 .calculate(
                         any(NonAirFeesInput.class),

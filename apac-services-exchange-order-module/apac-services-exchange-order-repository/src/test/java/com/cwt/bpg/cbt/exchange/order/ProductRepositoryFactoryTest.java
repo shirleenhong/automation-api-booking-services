@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.model.HkSgProductList;
+import com.cwt.bpg.cbt.exchange.order.model.NonIndiaProductList;
 import com.cwt.bpg.cbt.exchange.order.model.InProductList;
 
 public class ProductRepositoryFactoryTest
@@ -21,7 +21,7 @@ public class ProductRepositoryFactoryTest
     private ProductRepository<InProductList> indiaRepository;
 
 	@Mock
-    private ProductRepository<HkSgProductList> hkSgRepository;
+    private ProductRepository<NonIndiaProductList> nonIndiaRepository;
 	
 	@Before
 	public void setUp() {
@@ -39,10 +39,10 @@ public class ProductRepositoryFactoryTest
 	
 	@SuppressWarnings("rawtypes")
 	@Test
-	public void shouldGetProductRepositoryHkSg() {
+	public void shouldGetProductRepositoryNonIndia() {
 		
 		String countryCode = Country.HONG_KONG.getCode();
 		ProductRepository repo = factory.getProductRepository(countryCode);
-		assertEquals(hkSgRepository, repo);
+		assertEquals(nonIndiaRepository, repo);
 	}
 }

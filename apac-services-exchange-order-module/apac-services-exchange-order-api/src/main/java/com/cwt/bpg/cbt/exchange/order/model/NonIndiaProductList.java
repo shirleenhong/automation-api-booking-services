@@ -9,7 +9,7 @@ import org.mongodb.morphia.annotations.Indexes;
 
 @Entity("productList")
 @Indexes(@Index(fields = @Field("countryCode")))
-public class HkSgProductList extends ProductList {
+public class NonIndiaProductList extends ProductList {
 
 	private List<Product> products;
 
