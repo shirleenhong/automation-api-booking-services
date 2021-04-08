@@ -4,10 +4,8 @@ public enum Country {
 
 	HONG_KONG("HK", "1"),
 	SINGAPORE("SG", "2"),
-	AUSTRALIA("AU", "4"),
-	NEW_ZEALAND("NZ", "5"),
 	INDIA("IN", "3"),
-	THAILAND("TH", "6");
+	THAILAND("TH", "4");
 
 	private final String code;
 	private final String id;

@@ -30,8 +30,6 @@ public class OtherServiceCalculatorFactory {
 		
 		calculatorMap.put(Country.HONG_KONG.getCode(), hkAirCalculator);
 		calculatorMap.put(Country.SINGAPORE.getCode(), sgAirCalculator);
-		calculatorMap.put(Country.AUSTRALIA.getCode(), sgAirCalculator);
-		calculatorMap.put(Country.NEW_ZEALAND.getCode(), sgAirCalculator);
 	}
 	
 	public Calculator<AirFeesBreakdown, AirFeesInput> getCalculator(String countryCode) {
