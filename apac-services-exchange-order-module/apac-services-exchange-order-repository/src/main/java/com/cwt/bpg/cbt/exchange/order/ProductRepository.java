@@ -49,7 +49,7 @@ public class ProductRepository<T extends ProductList> {
     }
 
     private List<Product> getNonIndiaProducts(String countryCode) {
-        HkSgProductList productList = morphia.getDatastore().createQuery(HkSgProductList.class)
+        NonIndiaProductList productList = morphia.getDatastore().createQuery(NonIndiaProductList.class)
                 .field(COUNTRY_CODE).equalIgnoreCase(countryCode).get();
 
         return productList == null ? Collections.emptyList() : productList.getProducts();
@@ -238,6 +238,6 @@ public class ProductRepository<T extends ProductList> {
 	@SuppressWarnings("rawtypes")
 	private Class getCurrentClass(String countryCode) {
 		return Country.INDIA.getCode().equalsIgnoreCase(countryCode) ? InProductList.class
-				: HkSgProductList.class;
+				: NonIndiaProductList.class;
 	}
 }

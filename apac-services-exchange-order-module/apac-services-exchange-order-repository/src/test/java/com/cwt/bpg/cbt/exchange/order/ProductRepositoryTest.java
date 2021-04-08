@@ -42,10 +42,10 @@ public class ProductRepositoryTest
 	private UpdateOperations<InProductList> inUpdateOps;
 
 	@Mock
-	private UpdateOperations<HkSgProductList> hkSgUpdateOps;
+	private UpdateOperations<NonIndiaProductList> nonIndiaUpdateOps;
 
     @Mock
-    private Query<HkSgProductList> hkSgQuery;
+    private Query<NonIndiaProductList> nonIndiaQuery;
 
     @Mock
     private Query<InProductList> inQuery;
@@ -59,7 +59,7 @@ public class ProductRepositoryTest
     @InjectMocks
 	private ProductRepository repository;
 
-    private HkSgProductList productList = new HkSgProductList();
+    private NonIndiaProductList productList = new NonIndiaProductList();
 
 
     @Before
@@ -67,13 +67,14 @@ public class ProductRepositoryTest
 		MockitoAnnotations.initMocks(this);
 		when(morphia.getDatastore()).thenReturn(dataStore);
 
-        when(dataStore.createQuery(HkSgProductList.class)).thenReturn(hkSgQuery);
-        when(dataStore.createUpdateOperations(HkSgProductList.class)).thenReturn(hkSgUpdateOps);
-        when(dataStore.update(hkSgQuery, hkSgUpdateOps)).thenReturn(updateResults);
-        when(hkSgQuery.field(anyString())).thenReturn(fieldEnd);
-        when(hkSgQuery.filter(anyString(), anyObject())).thenReturn(hkSgQuery);
-        when(fieldEnd.equalIgnoreCase(Country.HONG_KONG.getCode())).thenReturn(hkSgQuery);
-        when(fieldEnd.equalIgnoreCase(Country.SINGAPORE.getCode())).thenReturn(hkSgQuery);
+        when(dataStore.createQuery(NonIndiaProductList.class)).thenReturn(nonIndiaQuery);
+        when(dataStore.createUpdateOperations(NonIndiaProductList.class)).thenReturn(nonIndiaUpdateOps);
+        when(dataStore.update(nonIndiaQuery, nonIndiaUpdateOps)).thenReturn(updateResults);
+        when(nonIndiaQuery.field(anyString())).thenReturn(fieldEnd);
+        when(nonIndiaQuery.filter(anyString(), anyObject())).thenReturn(nonIndiaQuery);
+        when(fieldEnd.equalIgnoreCase(Country.HONG_KONG.getCode())).thenReturn(nonIndiaQuery);
+        when(fieldEnd.equalIgnoreCase(Country.SINGAPORE.getCode())).thenReturn(nonIndiaQuery);
+        when(fieldEnd.equalIgnoreCase(Country.THAILAND.getCode())).thenReturn(nonIndiaQuery);
 
         when(dataStore.createQuery(InProductList.class)).thenReturn(inQuery);
         when(dataStore.createUpdateOperations(InProductList.class)).thenReturn(inUpdateOps);
@@ -133,7 +134,7 @@ public class ProductRepositoryTest
 
 	@Test
 	public void shouldGetProductList() throws IOException {
-		when(hkSgQuery.get()).thenReturn(productList);
+		when(nonIndiaQuery.get()).thenReturn(productList);
 		
 		List<BaseProduct> baseProducts = repository.getProducts("SG");
 
@@ -159,7 +160,7 @@ public class ProductRepositoryTest
 	
 	@Test
 	public void shouldGetNullHKProductList() {
-		when(hkSgQuery.get()).thenReturn(null);
+		when(nonIndiaQuery.get()).thenReturn(null);
 
 		List<BaseProduct> baseProducts = repository.getProducts("HK");
 
@@ -182,6 +183,22 @@ public class ProductRepositoryTest
 		assertNotNull(products);
 		assertEquals(1, result.size());
 	}
+
+    @Test
+    public void canGetThailandProductList() {
+        NonIndiaProductList nonIndiaProductList = new NonIndiaProductList();
+        nonIndiaProductList.setCountryCode(Country.THAILAND.getCode());
+        List<Product> products = new ArrayList<>();
+        products.add(new Product());
+        nonIndiaProductList.setProducts(products);
+
+        when(nonIndiaQuery.get()).thenReturn(nonIndiaProductList);
+
+        List<BaseProduct> result = repository.getProducts(Country.THAILAND.getCode());
+
+        assertNotNull(products);
+        assertEquals(1, result.size());
+    }
 
 	@Test
 	public void shouldRemoveProductNoResult() {
@@ -217,25 +234,25 @@ public class ProductRepositoryTest
 	}
 
 	@Test
-	public void shouldRemoveProductHkSg() {
+	public void shouldRemoveProductNonIndia() {
 		String productCode = "01";
 
-		HkSgProductList inProductList = new HkSgProductList();
+		NonIndiaProductList inProductList = new NonIndiaProductList();
 		inProductList.setCountryCode(Country.HONG_KONG.getCode());
 
-		List<HkSgProductList> queryList = new ArrayList<>();
+		List<NonIndiaProductList> queryList = new ArrayList<>();
 		queryList.add(inProductList);
 
-		when(hkSgQuery.asList()).thenReturn(queryList);
-		when(hkSgUpdateOps.disableValidation()).thenReturn(hkSgUpdateOps);
-        when(hkSgUpdateOps.removeAll(anyString(), any(BasicDBObject.class))).thenReturn(hkSgUpdateOps);
+		when(nonIndiaQuery.asList()).thenReturn(queryList);
+		when(nonIndiaUpdateOps.disableValidation()).thenReturn(nonIndiaUpdateOps);
+        when(nonIndiaUpdateOps.removeAll(anyString(), any(BasicDBObject.class))).thenReturn(nonIndiaUpdateOps);
 
 		String result = repository.removeProduct(Country.HONG_KONG.getCode(), productCode);
 
 		assertEquals(productCode, result);
 
 		InOrder inOrder = verifyCheckIfExists(Country.HONG_KONG.getCode());
-		inOrder.verify(hkSgQuery).filter(PRODUCTS_PRODUCTCODE, productCode);
+		inOrder.verify(nonIndiaQuery).filter(PRODUCTS_PRODUCTCODE, productCode);
         verifyRemoveQuery(inOrder, Country.HONG_KONG.getCode());
 	}
 
@@ -428,32 +445,32 @@ public class ProductRepositoryTest
         product.setProductCode(expected);
         String countryCode = "HK";
 
-        when(hkSgUpdateOps.push(PRODUCTS, product)).thenReturn(hkSgUpdateOps);
+        when(nonIndiaUpdateOps.push(PRODUCTS, product)).thenReturn(nonIndiaUpdateOps);
         when(updateResults.getWriteResult()).thenReturn(mock(WriteResult.class));
 
         String actual = repository.saveProduct(countryCode, product, true);
 
         assertThat(actual, equalTo(expected));
-        InOrder inOrder = inOrder(morphia, dataStore, hkSgQuery, hkSgUpdateOps, updateResults);
+        InOrder inOrder = inOrder(morphia, dataStore, nonIndiaQuery, nonIndiaUpdateOps, updateResults);
         inOrder.verify(morphia).getDatastore();
         inOrder.verify(dataStore).createQuery(any());
-        inOrder.verify(hkSgQuery).filter(COUNTRY_CODE, countryCode);
+        inOrder.verify(nonIndiaQuery).filter(COUNTRY_CODE, countryCode);
         inOrder.verify(dataStore).createUpdateOperations(any());
-        inOrder.verify(hkSgUpdateOps).push(PRODUCTS, product);
-        inOrder.verify(dataStore).update(hkSgQuery, hkSgUpdateOps);
+        inOrder.verify(nonIndiaUpdateOps).push(PRODUCTS, product);
+        inOrder.verify(dataStore).update(nonIndiaQuery, nonIndiaUpdateOps);
     }
 
 	private InOrder verifyCheckIfExists(String countryCode) {
 
 		boolean isIndia = Country.INDIA.getCode().equalsIgnoreCase(countryCode);
 
-		InOrder inOrder = inOrder(morphia, dataStore, inQuery, hkSgQuery, hkSgUpdateOps,
+		InOrder inOrder = inOrder(morphia, dataStore, inQuery, nonIndiaQuery, nonIndiaUpdateOps,
 				inUpdateOps);
 
 		inOrder.verify(morphia).getDatastore();
 		inOrder.verify(dataStore).createQuery(any());
 		inOrder.verify(isIndia ? inQuery
-				: hkSgQuery).filter(COUNTRY_CODE, countryCode);
+				: nonIndiaQuery).filter(COUNTRY_CODE, countryCode);
 
 		return inOrder;
 	}
@@ -465,13 +482,13 @@ public class ProductRepositoryTest
 
 		inOrder.verify(dataStore).createUpdateOperations(any());
         inOrder.verify(isIndia ? inUpdateOps
-				: hkSgUpdateOps).disableValidation();
+				: nonIndiaUpdateOps).disableValidation();
         inOrder.verify(isIndia ? inUpdateOps
-				: hkSgUpdateOps).removeAll(anyString(), any(BasicDBObject.class));
+				: nonIndiaUpdateOps).removeAll(anyString(), any(BasicDBObject.class));
         if(isIndia) {
         	inOrder.verify(dataStore).update(inQuery, inUpdateOps);
         }else {
-        	inOrder.verify(dataStore).update(hkSgQuery, hkSgUpdateOps);
+        	inOrder.verify(dataStore).update(nonIndiaQuery, nonIndiaUpdateOps);
         }
 	}
 }

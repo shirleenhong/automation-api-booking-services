@@ -31,16 +31,6 @@ public class OtherServiceCalculatorFactoryTest {
 		assertTrue(factory.getCalculator(Country.SINGAPORE.getCode()) instanceof SgAirCalculator);
 	}
 	
-	@Test
-	public void shouldGetSgCalculatorForAU() {
-		assertTrue(factory.getCalculator(Country.AUSTRALIA.getCode()) instanceof SgAirCalculator);
-	}
-	
-	@Test
-	public void shouldGetSgCalculatorForNz() {
-		assertTrue(factory.getCalculator(Country.NEW_ZEALAND.getCode()) instanceof SgAirCalculator);
-	}
-	
 
 	@Test(expected=IllegalArgumentException.class)
 	public void shouldThrowException() {
