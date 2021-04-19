@@ -80,8 +80,7 @@ public class ThAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 
     private BigDecimal roundUp(BigDecimal merchantFeeAmount)
     {
-        BigDecimal five = new BigDecimal("5");
-        MathContext mcUp = new MathContext(2, RoundingMode.CEILING);
+        final BigDecimal five = new BigDecimal("5");
 
         return merchantFeeAmount.divide(five)
                 .setScale(0, RoundingMode.CEILING)

@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -70,10 +71,10 @@ public class ThAirCalculatorTest {
     public void shouldHandleNullFieldsFromInput() {
         AirFeesBreakdown airFeesBreakdown = calculator.calculate(new AirFeesInput(), null, countryCode);
         assertNotNull(airFeesBreakdown);
-        assertEquals(0D, airFeesBreakdown.getNettFare().doubleValue(), 0D);
-        assertEquals(0D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
-        assertEquals(0D, airFeesBreakdown.getCommission().doubleValue(), 0D);
-        assertEquals(0D, airFeesBreakdown.getMerchantFee().doubleValue(), 0D);
+        assertThat(airFeesBreakdown.getNettFare(), Matchers.comparesEqualTo(BigDecimal.ZERO));
+        assertThat(airFeesBreakdown.getSellingPrice(), Matchers.comparesEqualTo(BigDecimal.ZERO));
+        assertThat(airFeesBreakdown.getCommission(), Matchers.comparesEqualTo(BigDecimal.ZERO));
+        assertThat(airFeesBreakdown.getMerchantFee(), Matchers.comparesEqualTo(BigDecimal.ZERO));
     }
 
     @Test
