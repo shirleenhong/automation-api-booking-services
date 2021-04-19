@@ -76,6 +76,26 @@ public class OtherServiceFeesControllerAirFeeTest {
     }
 
     @Test
+    public void shouldReturnThailandFeesBreakdown() throws Exception {
+        JSONObject jsonObj = new JSONObject();
+
+        jsonObj.put("clientType", "Z");
+        jsonObj.put("clientAccountNumber", "testName");
+        jsonObj.put("fopType", "CX");
+        jsonObj.put("applyFormula", 111);
+        jsonObj.put("commissionByPercent", 111);
+
+        mockMvc.perform(post("/other-service-fees/air-fees/th")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(convertObjectToJsonBytes(jsonObj)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        verify(service, times(1)).calculateAirFees(any(AirFeesInput.class), anyString());
+    }
+
+    @Test
     public void shouldReturnBadRequestOnEmptyMandatoryField() throws Exception {
         JSONObject jsonObj = new JSONObject();
 
