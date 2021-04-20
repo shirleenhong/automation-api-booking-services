@@ -90,12 +90,12 @@ public class ThAirCalculatorTest {
         input.setClientType("TF");
         AirFeesBreakdown airFeesBreakdown = calculator.calculate(input, merchantFee, countryCode);
 
-        assertEquals(2000D, airFeesBreakdown.getCommission().doubleValue(), 0D);
-        assertEquals(10000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
-        assertEquals(12000D, airFeesBreakdown.getNettFare().doubleValue(), 0D);
-        assertEquals(2400D, airFeesBreakdown.getMerchantFee().doubleValue(), 0D);
-        assertEquals(14400D, airFeesBreakdown.getTotalSellingFare().doubleValue(), 0D);
-        assertEquals(10000D, airFeesBreakdown.getNettCost().doubleValue(), 0D);
+        assertThat(airFeesBreakdown.getCommission(), Matchers.comparesEqualTo(BigDecimal.valueOf(2000)));
+        assertThat(airFeesBreakdown.getSellingPrice(), Matchers.equalTo(BigDecimal.valueOf(10000)));
+        assertThat(airFeesBreakdown.getNettFare(), Matchers.equalTo(BigDecimal.valueOf(12000)));
+        assertThat(airFeesBreakdown.getMerchantFee(), Matchers.equalTo(BigDecimal.valueOf(2400)));
+        assertThat(airFeesBreakdown.getTotalSellingFare(), Matchers.equalTo(BigDecimal.valueOf(14400)));
+        assertThat(airFeesBreakdown.getNettCost(), Matchers.equalTo(BigDecimal.valueOf(10000)));
     }
 
     @Test
@@ -111,11 +111,11 @@ public class ThAirCalculatorTest {
         input.setClientType("TF");
         AirFeesBreakdown airFeesBreakdown = calculator.calculate(input, merchantFee, countryCode);
 
-        assertEquals(800D, airFeesBreakdown.getCommission().doubleValue(), 0D);
-        assertEquals(5000D, airFeesBreakdown.getSellingPrice().doubleValue(), 0D);
-        assertEquals(5500D, airFeesBreakdown.getNettFare().doubleValue(), 0D);
-        assertEquals( 100D, airFeesBreakdown.getMerchantFee().doubleValue(), 0D);
-        assertEquals(5600D, airFeesBreakdown.getTotalSellingFare().doubleValue(), 0D);
-        assertEquals(5000D, airFeesBreakdown.getNettCost().doubleValue(), 0D);
+        assertThat(airFeesBreakdown.getCommission(), Matchers.equalTo(BigDecimal.valueOf(800)));
+        assertThat(airFeesBreakdown.getSellingPrice(), Matchers.equalTo(BigDecimal.valueOf(5000)));
+        assertThat(airFeesBreakdown.getNettFare(), Matchers.equalTo(BigDecimal.valueOf(5500)));
+        assertThat(airFeesBreakdown.getMerchantFee(), Matchers.equalTo(BigDecimal.valueOf(100)));
+        assertThat(airFeesBreakdown.getTotalSellingFare(), Matchers.equalTo(BigDecimal.valueOf(5600)));
+        assertThat(airFeesBreakdown.getNettCost(), Matchers.equalTo(BigDecimal.valueOf(5000)));
     }
 }

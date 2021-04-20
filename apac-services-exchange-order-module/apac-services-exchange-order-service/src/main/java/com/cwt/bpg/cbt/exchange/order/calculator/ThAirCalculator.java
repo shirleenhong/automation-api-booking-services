@@ -57,7 +57,6 @@ public class ThAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 
         totalSellingFare = nettFare.add(safeValue(merchantFeeAmount));
 
-
         result.setTotalSellingFare(round(totalSellingFare, scale, getRoundingMode("totalSellingFare", countryCode)));
         result.setNettCost(round(nettCost, scale, getRoundingMode("nettCost", countryCode)));
 
@@ -71,8 +70,7 @@ public class ThAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
 
         if (merchantFee != null) {
             Double merchantFeePercent = getMerchantFeeForVendorCode(merchantFee, input.getVendorCode());
-            merchantFeeAmount = BigDecimal.ZERO
-                    .max(round(calculatePercentage(nettFare, merchantFeePercent), scale, roundingMode));
+            merchantFeeAmount = round(calculatePercentage(nettFare, merchantFeePercent), scale, roundingMode);
         }
 
         return roundUp(merchantFeeAmount);
