@@ -82,11 +82,11 @@ public class OtherServiceFeesController {
 	}
 
 	@PostMapping(
-			path = "/air-fees/{countryCode:hk|sg}",
+			path = "/air-fees/{countryCode:hk|sg|th}",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "[HK/SG only] Computes air fees.")
+	@ApiOperation(value = "[HK/SG/TH only] Computes air fees.")
 	public ResponseEntity<AirFeesBreakdown> computeAirFees(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") AirFeesInput input) {

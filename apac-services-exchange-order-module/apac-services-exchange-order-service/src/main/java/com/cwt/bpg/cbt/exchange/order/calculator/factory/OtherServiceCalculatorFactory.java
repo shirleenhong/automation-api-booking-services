@@ -22,6 +22,10 @@ public class OtherServiceCalculatorFactory {
 	@Autowired
 	@Qualifier("sgAirCalculator")
 	private Calculator<AirFeesBreakdown, AirFeesInput> sgAirCalculator;
+
+    @Autowired
+    @Qualifier("thAirCalculator")
+    private Calculator<AirFeesBreakdown, AirFeesInput> thAirCalculator;
 		
 	private Map<String, Calculator<AirFeesBreakdown, AirFeesInput>> calculatorMap = new HashMap<>();
 	
@@ -30,6 +34,7 @@ public class OtherServiceCalculatorFactory {
 		
 		calculatorMap.put(Country.HONG_KONG.getCode(), hkAirCalculator);
 		calculatorMap.put(Country.SINGAPORE.getCode(), sgAirCalculator);
+		calculatorMap.put(Country.THAILAND.getCode(), thAirCalculator);
 	}
 	
 	public Calculator<AirFeesBreakdown, AirFeesInput> getCalculator(String countryCode) {
