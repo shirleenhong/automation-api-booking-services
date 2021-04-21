@@ -10,6 +10,9 @@ public class NonAirFeesBreakdown extends FeesBreakdown {
 	private BigDecimal gstAmount;
 	private BigDecimal merchantFee;
 	private BigDecimal nettCostGst;
+	private BigDecimal nettCost;
+	private BigDecimal sellingPrice;
+	private BigDecimal tax;
 
 	public BigDecimal getTotalSellingPrice() {
 		return totalSellingPrice;
@@ -42,4 +45,20 @@ public class NonAirFeesBreakdown extends FeesBreakdown {
 	public void setNettCostGst(BigDecimal nettCostGst) {
 		this.nettCostGst = nettCostGst;
 	}
+
+	public BigDecimal getNettCost() {
+		return nettCost;
+	}
+
+	public void setNettCost(BigDecimal nettCost) {
+		this.nettCost = nettCost;
+	}
+
+	public  BigDecimal getSellingPrice() {return sellingPrice;}
+
+	public void setSellingPrice(BigDecimal sellingPrice) {this.sellingPrice = sellingPrice;}
+
+	public  BigDecimal getTax() {return tax;}
+
+	public void setTax(BigDecimal tax) {this.tax = tax;}
 }
