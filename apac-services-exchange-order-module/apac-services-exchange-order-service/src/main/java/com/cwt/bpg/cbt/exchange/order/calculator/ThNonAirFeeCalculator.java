@@ -38,13 +38,13 @@ public class ThNonAirFeeCalculator {
 
         BigDecimal totalSellingPrice;
         BigDecimal nettPrice = sellingPrice.add(tax);
-        BigDecimal gstAmount = calculatePercentage(nettPrice, input.getGstPercent());
+        BigDecimal gstAmount = calculatePercentage(nettPrice, input.getGstPercent()).setScale(1);
         BigDecimal nettPriceWithGST = nettPrice.add(gstAmount);
 
         BigDecimal merchantFeeAmount = applyMerchantFee(merchantFee, input, scale,
                 getRoundingMode("merchantFee", countryCode), nettPriceWithGST);
 
-        totalSellingPrice = round(nettPriceWithGST.add(safeValue(merchantFeeAmount)), scale, getRoundingMode("totalSellingPrice", countryCode));
+        totalSellingPrice = round(nettPriceWithGST.add(safeValue(merchantFeeAmount)), scale);
 
         result.setNettCost(nettCost);
         result.setSellingPrice(sellingPrice);
@@ -58,13 +58,13 @@ public class ThNonAirFeeCalculator {
     }
 
     private BigDecimal applyMerchantFee(MerchantFee merchantFee, NonAirFeesInput input, int scale, RoundingMode roundingMode,
-            BigDecimal nettFareWithGST)
+            BigDecimal nettPriceWithGST)
     {
         BigDecimal merchantFeeAmount = BigDecimal.ZERO;
 
         if (merchantFee != null) {
             Double merchantFeePercent = getMerchantFeeForVendorCode(merchantFee, input.getVendorCode());
-            merchantFeeAmount = round(calculatePercentage(nettFareWithGST, merchantFeePercent), scale, roundingMode);
+            merchantFeeAmount = round(calculatePercentage(nettPriceWithGST, merchantFeePercent), scale, roundingMode);
         }
 
         return roundUp(merchantFeeAmount);
