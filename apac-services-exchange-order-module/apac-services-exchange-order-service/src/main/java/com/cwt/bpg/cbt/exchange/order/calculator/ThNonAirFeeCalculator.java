@@ -38,7 +38,7 @@ public class ThNonAirFeeCalculator {
 
         BigDecimal totalSellingPrice;
         BigDecimal nettPrice = sellingPrice.add(tax);
-        BigDecimal gstAmount = calculatePercentage(nettPrice, input.getGstPercent()).setScale(1);
+        BigDecimal gstAmount = calculatePercentage(nettPrice, input.getGstPercent()).setScale(1, RoundingMode.HALF_UP);
         BigDecimal nettPriceWithGST = nettPrice.add(gstAmount);
 
         BigDecimal merchantFeeAmount = applyMerchantFee(merchantFee, input, scale,
