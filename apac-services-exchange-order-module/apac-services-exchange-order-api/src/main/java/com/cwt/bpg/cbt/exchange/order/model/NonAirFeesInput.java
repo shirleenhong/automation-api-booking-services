@@ -28,6 +28,10 @@ public class NonAirFeesInput extends FeesInput {
 
 	private BigDecimal nettCost;
 
+	private BigDecimal tax;
+
+	private BigDecimal commission;
+
 	public NonAirFeesInput() {
         this.sellingPrice = BigDecimal.ZERO;
         this.gstPercent = 0d;
@@ -88,6 +92,15 @@ public class NonAirFeesInput extends FeesInput {
 	public void setFopType(FopType fopType) {
 		this.fopType = fopType;
 	}
+
+	public BigDecimal getTax() {return tax;}
+
+	public void setTax(BigDecimal tax){this.tax = tax;}
+
+	public BigDecimal getCommission() {return commission;}
+
+	public void setCommission(BigDecimal commission){this.commission = commission;}
+
 	
 	
 }

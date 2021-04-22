@@ -56,7 +56,7 @@ public class OtherServiceFeesController {
 	}
 
 	@PostMapping(
-			path = "/non-air-fees/{countryCode:hk|sg}",
+			path = "/non-air-fees/{countryCode:hk|sg|th}",
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
