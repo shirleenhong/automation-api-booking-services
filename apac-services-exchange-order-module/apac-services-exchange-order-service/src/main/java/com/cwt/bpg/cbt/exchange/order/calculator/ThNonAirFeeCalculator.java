@@ -42,7 +42,7 @@ public class ThNonAirFeeCalculator {
         BigDecimal nettPriceWithGST = nettPrice.add(gstAmount);
 
         BigDecimal merchantFeeAmount = applyMerchantFee(merchantFee, input, scale,
-                getRoundingMode("merchantFee", countryCode), nettPriceWithGST);
+                getRoundingMode("merchantFee", countryCode), nettPrice);
 
         totalSellingPrice = round(nettPriceWithGST.add(safeValue(merchantFeeAmount)), scale);
 
@@ -58,13 +58,13 @@ public class ThNonAirFeeCalculator {
     }
 
     private BigDecimal applyMerchantFee(MerchantFee merchantFee, NonAirFeesInput input, int scale, RoundingMode roundingMode,
-            BigDecimal nettPriceWithGST)
+            BigDecimal nettPrice)
     {
         BigDecimal merchantFeeAmount = BigDecimal.ZERO;
 
         if (merchantFee != null) {
             Double merchantFeePercent = getMerchantFeeForVendorCode(merchantFee, input.getVendorCode());
-            merchantFeeAmount = round(calculatePercentage(nettPriceWithGST, merchantFeePercent), scale, roundingMode);
+            merchantFeeAmount = round(calculatePercentage(nettPrice, merchantFeePercent), scale, roundingMode);
         }
 
         return roundUp(merchantFeeAmount);
