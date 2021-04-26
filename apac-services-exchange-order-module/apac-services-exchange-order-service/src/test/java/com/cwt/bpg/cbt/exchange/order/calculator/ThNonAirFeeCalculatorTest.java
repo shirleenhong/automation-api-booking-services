@@ -60,22 +60,22 @@ public class ThNonAirFeeCalculatorTest {
 
         NonAirFeesInput input = new NonAirFeesInput();
 
-        input.setSellingPrice(new BigDecimal(500.20D));
+        input.setSellingPrice(new BigDecimal(550.30D));
         input.setGstPercent(7D);
         input.setNettCost(new BigDecimal(1228.27));
-        input.setTax(new BigDecimal(10.12D));
+        input.setTax(new BigDecimal(15.15D));
         input.setCommission(new BigDecimal(5.2D));
 
         NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
         assertNotNull(result);
 
         assertThat(result.getCommission(), Matchers.equalTo(BigDecimal.valueOf(5)));
-        assertThat(result.getGstAmount(), Matchers.equalTo(BigDecimal.valueOf(35.7)));
+        assertThat(result.getGstAmount(), Matchers.equalTo(BigDecimal.valueOf(39.55)));
         assertThat(result.getMerchantFee(), Matchers.equalTo(BigDecimal.valueOf(10)));
         assertThat(result.getNettCost(), Matchers.equalTo(BigDecimal.valueOf(1228)));
-        assertThat(result.getSellingPrice(), Matchers.equalTo(BigDecimal.valueOf(500)));
-        assertThat(result.getTax(), Matchers.equalTo(BigDecimal.valueOf(10)));
-        assertThat(result.getTotalSellingPrice(), Matchers.equalTo(BigDecimal.valueOf(556)));
+        assertThat(result.getSellingPrice(), Matchers.equalTo(BigDecimal.valueOf(550)));
+        assertThat(result.getTax(), Matchers.equalTo(BigDecimal.valueOf(15)));
+        assertThat(result.getTotalSellingPrice(), Matchers.equalTo(BigDecimal.valueOf(614.55)));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class ThNonAirFeeCalculatorTest {
         input.setCommission(new BigDecimal(5D));
         NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
 
-        assertThat(result.getGstAmount(), Matchers.equalTo(BigDecimal.valueOf(35.4)));
+        assertThat(result.getGstAmount(), Matchers.equalTo(BigDecimal.valueOf(35.35)));
     }
 
     @Test

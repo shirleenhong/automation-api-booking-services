@@ -14,7 +14,8 @@ import org.springframework.stereotype.Component;
 import com.cwt.bpg.cbt.calculator.config.ScaleConfig;
 
 @Component
-public class ThNonAirFeeCalculator {
+public class ThNonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonAirFeesInput>
+{
 
     @Autowired
     private ScaleConfig scaleConfig;
@@ -22,6 +23,7 @@ public class ThNonAirFeeCalculator {
     @Autowired
     private RoundingConfig roundingConfig;
 
+    @Override
     public NonAirFeesBreakdown calculate(NonAirFeesInput input, MerchantFee merchantFee, String countryCode) {
         NonAirFeesBreakdown result = new NonAirFeesBreakdown();
 
@@ -38,13 +40,13 @@ public class ThNonAirFeeCalculator {
 
         BigDecimal totalSellingPrice;
         BigDecimal nettPrice = sellingPrice.add(tax);
-        BigDecimal gstAmount = calculatePercentage(nettPrice, input.getGstPercent()).setScale(1, RoundingMode.HALF_UP);
+        BigDecimal gstAmount = calculatePercentage(nettPrice, input.getGstPercent()).setScale(2, RoundingMode.HALF_UP);
         BigDecimal nettPriceWithGST = nettPrice.add(gstAmount);
 
         BigDecimal merchantFeeAmount = applyMerchantFee(merchantFee, input, scale,
                 getRoundingMode("merchantFee", countryCode), nettPrice);
 
-        totalSellingPrice = round(nettPriceWithGST.add(safeValue(merchantFeeAmount)), scale);
+        totalSellingPrice = (nettPriceWithGST.add(safeValue(merchantFeeAmount)).setScale(2, RoundingMode.HALF_UP));
 
         result.setNettCost(nettCost);
         result.setSellingPrice(sellingPrice);

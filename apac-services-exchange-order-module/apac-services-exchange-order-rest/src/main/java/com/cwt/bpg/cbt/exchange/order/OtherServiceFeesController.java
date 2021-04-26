@@ -60,7 +60,7 @@ public class OtherServiceFeesController {
 			produces = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 			consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	@ApiOperation(value = "[HK/SG only] Computes non air fees.")
+	@ApiOperation(value = "[HK/SG/TH only] Computes non air fees.")
 	public ResponseEntity<NonAirFeesBreakdown> computeNonAirFees(
 			@PathVariable @ApiParam("2-character country code") String countryCode,
 			@Valid @RequestBody @ApiParam(value = "Values needed for calculation") NonAirFeesInput input){

@@ -12,7 +12,6 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.IndiaNonAirFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
@@ -53,10 +52,6 @@ public class OtherServiceFeesService
     static final int BILL_TO_COMPANY = 3;
 
     @Autowired
-    @Qualifier(value = "nonAirFeeCalculator")
-    private Calculator<NonAirFeesBreakdown, NonAirFeesInput> nonAirFeeCalculator;
-
-    @Autowired
     @Qualifier(value = "indiaNonAirFeeCalculator")
     private IndiaNonAirFeeCalculator indiaNonAirFeeCalculator;
 
@@ -93,7 +88,6 @@ public class OtherServiceFeesService
     {
         MerchantFee merchantFee = merchantFeeService.getMerchantFee(countryCode, input.getClientAccountNumber());
         return  this.osNonAirFactory.getCalculator(countryCode).calculate(input,merchantFee,countryCode);
-
     }
 
     public IndiaNonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input)

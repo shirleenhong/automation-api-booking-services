@@ -16,7 +16,7 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
 
-@Component("nonAirFeeCalculator")
+@Component
 public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonAirFeesInput> {
 
 	@Autowired
