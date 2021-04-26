@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceNonAirCalculatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -71,6 +72,9 @@ public class OtherServiceFeesService
     private OtherServiceCalculatorFactory osFactory;
 
     @Autowired
+    private OtherServiceNonAirCalculatorFactory osNonAirFactory;
+
+    @Autowired
     private TransactionFeeCalculatorFactory tfFactory;
 
     @Autowired
@@ -88,7 +92,8 @@ public class OtherServiceFeesService
     public NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input, String countryCode)
     {
         MerchantFee merchantFee = merchantFeeService.getMerchantFee(countryCode, input.getClientAccountNumber());
-        return this.nonAirFeeCalculator.calculate(input, merchantFee, countryCode);
+        return  this.osNonAirFactory.getCalculator(countryCode).calculate(input,merchantFee,countryCode);
+
     }
 
     public IndiaNonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input)
