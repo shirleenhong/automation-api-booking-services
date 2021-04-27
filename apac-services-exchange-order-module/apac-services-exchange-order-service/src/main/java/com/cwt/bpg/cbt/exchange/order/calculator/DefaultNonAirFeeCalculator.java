@@ -17,7 +17,7 @@ import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
 
 @Component
-public class NonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonAirFeesInput> {
+public class DefaultNonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, NonAirFeesInput> {
 
 	@Autowired
 	private ScaleConfig scaleConfig;

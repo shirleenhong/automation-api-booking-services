@@ -54,11 +54,19 @@ public class NonAirFeesBreakdown extends FeesBreakdown {
 		this.nettCost = nettCost;
 	}
 
-	public  BigDecimal getSellingPrice() {return sellingPrice;}
+	public  BigDecimal getSellingPrice() {
+		return sellingPrice;
+	}
 
-	public void setSellingPrice(BigDecimal sellingPrice) {this.sellingPrice = sellingPrice;}
+	public void setSellingPrice(BigDecimal sellingPrice) {
+		this.sellingPrice = sellingPrice;
+	}
 
-	public  BigDecimal getTax() {return tax;}
+	public  BigDecimal getTax() {
+		return tax;
+	}
 
-	public void setTax(BigDecimal tax) {this.tax = tax;}
+	public void setTax(BigDecimal tax) {
+		this.tax = tax;
+	}
 }

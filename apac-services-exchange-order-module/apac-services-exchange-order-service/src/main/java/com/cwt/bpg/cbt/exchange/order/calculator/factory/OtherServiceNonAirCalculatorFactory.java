@@ -18,16 +18,16 @@ public class OtherServiceNonAirCalculatorFactory {
     private Calculator<NonAirFeesBreakdown, NonAirFeesInput> thNonAirFeeCalculator;
 
     @Autowired
-    @Qualifier("nonAirFeeCalculator")
-    private Calculator<NonAirFeesBreakdown, NonAirFeesInput> nonAirFeeCalculator;
+    @Qualifier("defaultNonAirFeeCalculator")
+    private Calculator<NonAirFeesBreakdown, NonAirFeesInput> defaultNonAirFeeCalculator;
 
     private Map<String, Calculator<NonAirFeesBreakdown, NonAirFeesInput>> calculatorMap = new HashMap<>();
 
     @PostConstruct
     public void init(){
         calculatorMap.put(Country.THAILAND.getCode(), thNonAirFeeCalculator);
-        calculatorMap.put(Country.SINGAPORE.getCode(), nonAirFeeCalculator);
-        calculatorMap.put(Country.HONG_KONG.getCode(), nonAirFeeCalculator);
+        calculatorMap.put(Country.SINGAPORE.getCode(), defaultNonAirFeeCalculator);
+        calculatorMap.put(Country.HONG_KONG.getCode(), defaultNonAirFeeCalculator);
     }
 
     public Calculator<NonAirFeesBreakdown, NonAirFeesInput> getCalculator(String countryCode){

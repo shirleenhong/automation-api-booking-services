@@ -93,13 +93,21 @@ public class NonAirFeesInput extends FeesInput {
 		this.fopType = fopType;
 	}
 
-	public BigDecimal getTax() {return tax;}
+	public BigDecimal getTax() {
+		return tax;
+	}
 
-	public void setTax(BigDecimal tax){this.tax = tax;}
+	public void setTax(BigDecimal tax){
+		this.tax = tax;
+	}
 
-	public BigDecimal getCommission() {return commission;}
+	public BigDecimal getCommission() {
+		return commission;
+	}
 
-	public void setCommission(BigDecimal commission){this.commission = commission;}
+	public void setCommission(BigDecimal commission){
+		this.commission = commission;
+	}
 
 	
 	

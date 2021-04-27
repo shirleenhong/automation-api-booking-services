@@ -23,10 +23,10 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
 
-public class NonAirFeeCalculatorTest {
+public class DefaultNonAirFeeCalculatorTest {
 	
 	@InjectMocks
-	private NonAirFeeCalculator calculator;
+	private DefaultNonAirFeeCalculator calculator;
 	
 	@Mock
 	private ScaleConfig scaleConfig;

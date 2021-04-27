@@ -70,4 +70,13 @@ public final class CalculatorUtils
     {
         return safeValue(value).multiply(BigDecimal.valueOf(0.01));
     }
+
+    public static BigDecimal roundUpNearestFive(BigDecimal merchantFeeAmount)
+    {
+        final BigDecimal five = new BigDecimal("5");
+
+        return merchantFeeAmount.divide(five)
+                .setScale(0, RoundingMode.CEILING)
+                .multiply(five);
+    }
 }

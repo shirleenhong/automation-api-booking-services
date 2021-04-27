@@ -21,12 +21,12 @@ public class ExchangeOrderConfigTest {
 	
 	@Test
 	public void shouldCreateOtherServiceCalculatorFactory() {
-		assertThat(config.otherServiceCalculatorFactory(), is(instanceOf(OtherServiceCalculatorFactory.class)));
+		assertThat(config.AirCalculatorFactory(), is(instanceOf(OtherServiceCalculatorFactory.class)));
 	}
 
 	@Test
 	public void shouldCreateOtherServiceNonAirCalculatorFactory() {
-		assertThat(config.otherServiceNonAirCalculatorFactory(), is(instanceOf(
+		assertThat(config.NonAirCalculatorFactory(), is(instanceOf(
 				OtherServiceNonAirCalculatorFactory.class)));
 	}
 

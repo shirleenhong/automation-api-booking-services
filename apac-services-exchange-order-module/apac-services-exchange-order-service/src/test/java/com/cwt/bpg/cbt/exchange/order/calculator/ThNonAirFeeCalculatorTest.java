@@ -8,11 +8,13 @@ import static org.mockito.Mockito.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import com.cwt.bpg.cbt.calculator.model.Country;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -34,6 +36,7 @@ public class ThNonAirFeeCalculatorTest {
     private RoundingConfig roundingConfig;
 
     private MerchantFee merchantFee;
+    private String countryCode = "TH";
 
     @Before
     public void setup() {
@@ -43,11 +46,7 @@ public class ThNonAirFeeCalculatorTest {
 
         ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
 
-        when(roundingConfig.getRoundingMode(eq("nettFare"), anyString())).thenReturn(RoundingMode.HALF_UP);
-        when(roundingConfig.getRoundingMode(eq("nettCost"), anyString())).thenReturn(RoundingMode.HALF_UP);
-        when(roundingConfig.getRoundingMode(eq("merchantFee"), anyString())).thenReturn(RoundingMode.HALF_UP);
-        when(roundingConfig.getRoundingMode(eq("totalSellingFare"), anyString())).thenReturn(RoundingMode.HALF_UP);
-        when(roundingConfig.getRoundingMode(eq("commission"), anyString())).thenReturn(RoundingMode.HALF_UP);
+        when(roundingConfig.getRoundingMode(anyString(), anyString())).thenReturn(RoundingMode.HALF_UP);
 
         ReflectionTestUtils.setField(calculator, "roundingConfig", roundingConfig);
 
@@ -69,13 +68,13 @@ public class ThNonAirFeeCalculatorTest {
         NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
         assertNotNull(result);
 
-        assertThat(result.getCommission(), Matchers.equalTo(BigDecimal.valueOf(5)));
-        assertThat(result.getGstAmount(), Matchers.equalTo(BigDecimal.valueOf(39.55)));
-        assertThat(result.getMerchantFee(), Matchers.equalTo(BigDecimal.valueOf(10)));
-        assertThat(result.getNettCost(), Matchers.equalTo(BigDecimal.valueOf(1228)));
-        assertThat(result.getSellingPrice(), Matchers.equalTo(BigDecimal.valueOf(550)));
-        assertThat(result.getTax(), Matchers.equalTo(BigDecimal.valueOf(15)));
-        assertThat(result.getTotalSellingPrice(), Matchers.equalTo(BigDecimal.valueOf(614.55)));
+        assertThat(result.getCommission(), Matchers.comparesEqualTo(BigDecimal.valueOf(5)));
+        assertThat(result.getGstAmount(), Matchers.comparesEqualTo(BigDecimal.valueOf(39.55)));
+        assertThat(result.getMerchantFee(), Matchers.comparesEqualTo(BigDecimal.valueOf(10)));
+        assertThat(result.getNettCost(), Matchers.comparesEqualTo(BigDecimal.valueOf(1228)));
+        assertThat(result.getSellingPrice(), Matchers.comparesEqualTo(BigDecimal.valueOf(550)));
+        assertThat(result.getTax(), Matchers.comparesEqualTo(BigDecimal.valueOf(15)));
+        assertThat(result.getTotalSellingPrice(), Matchers.comparesEqualTo(BigDecimal.valueOf(614.55)));
     }
 
     @Test
@@ -118,7 +117,7 @@ public class ThNonAirFeeCalculatorTest {
         input.setCommission(new BigDecimal(5D));
         NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
 
-        assertThat(result.getGstAmount(), Matchers.equalTo(BigDecimal.valueOf(35.35)));
+        assertThat(result.getGstAmount(), Matchers.comparesEqualTo(BigDecimal.valueOf(35.35)));
     }
 
     @Test
@@ -134,7 +133,7 @@ public class ThNonAirFeeCalculatorTest {
         input.setCommission(new BigDecimal(5D));
         NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
 
-        assertThat(result.getMerchantFee(), Matchers.equalTo(BigDecimal.valueOf(10)));
+        assertThat(result.getMerchantFee(), Matchers.comparesEqualTo(BigDecimal.valueOf(10)));
     }
 
 }

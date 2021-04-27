@@ -11,12 +11,12 @@ import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculato
 public class ExchangeOrderConfig {
 
 	@Bean(name = "otherServiceCalculatorFactory")
-	public OtherServiceCalculatorFactory otherServiceCalculatorFactory() {
+	public OtherServiceCalculatorFactory AirCalculatorFactory() {
 		return new OtherServiceCalculatorFactory();
 	}
 
 	@Bean(name = "otherServiceNonAirCalculatorFactory")
-	public OtherServiceNonAirCalculatorFactory otherServiceNonAirCalculatorFactory() {
+	public OtherServiceNonAirCalculatorFactory NonAirCalculatorFactory() {
 		return new OtherServiceNonAirCalculatorFactory();
 	}
 	
