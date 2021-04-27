@@ -8,20 +8,24 @@ import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceNonAirCalcu
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 
 @Configuration("com.cwt.bpg.cbt.exchange.order.config")
-public class ExchangeOrderConfig {
+public class ExchangeOrderConfig
+{
 
-	@Bean(name = "otherServiceCalculatorFactory")
-	public OtherServiceCalculatorFactory AirCalculatorFactory() {
-		return new OtherServiceCalculatorFactory();
-	}
+    @Bean(name = "otherServiceCalculatorFactory")
+    public OtherServiceCalculatorFactory airCalculatorFactory()
+    {
+        return new OtherServiceCalculatorFactory();
+    }
 
-	@Bean(name = "otherServiceNonAirCalculatorFactory")
-	public OtherServiceNonAirCalculatorFactory NonAirCalculatorFactory() {
-		return new OtherServiceNonAirCalculatorFactory();
-	}
-	
-	@Bean(name = "transactionFeeCalculatorFactory")
-	public TransactionFeeCalculatorFactory transactionFeeCalculatorFactory() {
-		return new TransactionFeeCalculatorFactory();
-	}
+    @Bean(name = "otherServiceNonAirCalculatorFactory")
+    public OtherServiceNonAirCalculatorFactory nonAirCalculatorFactory()
+    {
+        return new OtherServiceNonAirCalculatorFactory();
+    }
+
+    @Bean(name = "transactionFeeCalculatorFactory")
+    public TransactionFeeCalculatorFactory transactionFeeCalculatorFactory()
+    {
+        return new TransactionFeeCalculatorFactory();
+    }
 }

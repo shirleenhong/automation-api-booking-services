@@ -24,7 +24,8 @@ import com.cwt.bpg.cbt.exchange.order.model.MerchantFee;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesBreakdown;
 import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
 
-public class ThNonAirFeeCalculatorTest {
+public class ThNonAirFeeCalculatorTest
+{
 
     @InjectMocks
     private ThNonAirFeeCalculator calculator;
@@ -39,7 +40,8 @@ public class ThNonAirFeeCalculatorTest {
     private String countryCode = "TH";
 
     @Before
-    public void setup() {
+    public void setup()
+    {
         MockitoAnnotations.initMocks(this);
 
         when(scaleConfig.getScale(eq("TH"))).thenReturn(0);
@@ -55,7 +57,8 @@ public class ThNonAirFeeCalculatorTest {
     }
 
     @Test
-    public void shouldCalculateFees0DScaleExceptGST() {
+    public void shouldCalculateFees0DScaleExceptGST()
+    {
 
         NonAirFeesInput input = new NonAirFeesInput();
 
@@ -78,7 +81,8 @@ public class ThNonAirFeeCalculatorTest {
     }
 
     @Test
-    public void shouldNotFailOnNullInput() {
+    public void shouldNotFailOnNullInput()
+    {
         NonAirFeesBreakdown result = calculator.calculate(null, null, null);
 
         assertThat(result.getCommission(), is(nullValue(BigDecimal.class)));
@@ -91,7 +95,8 @@ public class ThNonAirFeeCalculatorTest {
     }
 
     @Test
-    public void shouldNotFailOnEmptyInput() {
+    public void shouldNotFailOnEmptyInput()
+    {
         NonAirFeesInput input = new NonAirFeesInput();
         NonAirFeesBreakdown result = calculator.calculate(input, null, "TH");
 
@@ -105,7 +110,8 @@ public class ThNonAirFeeCalculatorTest {
     }
 
     @Test
-    public void shouldCalculateGstAmount() {
+    public void shouldCalculateGstAmount()
+    {
         MerchantFee merchantFee = new MerchantFee();
         merchantFee.setMerchantFeePercent(2.2D);
 
@@ -121,7 +127,8 @@ public class ThNonAirFeeCalculatorTest {
     }
 
     @Test
-    public void shouldCalculateMerchantFee() {
+    public void shouldCalculateMerchantFee()
+    {
         MerchantFee merchantFee = new MerchantFee();
         merchantFee.setMerchantFeePercent(2.2D);
 

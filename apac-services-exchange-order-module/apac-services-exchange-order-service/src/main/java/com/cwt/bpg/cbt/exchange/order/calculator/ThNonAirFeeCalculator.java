@@ -26,16 +26,18 @@ public class ThNonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, No
     private int scale;
 
     @Override
-    public NonAirFeesBreakdown calculate(NonAirFeesInput input, MerchantFee merchantFee, String countryCode) {
+    public NonAirFeesBreakdown calculate(NonAirFeesInput input, MerchantFee merchantFee, String countryCode)
+    {
         NonAirFeesBreakdown result = new NonAirFeesBreakdown();
 
-        if (input == null) {
+        if (input == null)
+        {
             return result;
         }
 
         scale = scaleConfig.getScale(countryCode);
 
-        final BigDecimal nettCost = round(safeValue(input.getNettCost()),scale);
+        final BigDecimal nettCost = round(safeValue(input.getNettCost()), scale);
         final BigDecimal sellingPrice = round(safeValue(input.getSellingPrice()), scale);
         final BigDecimal tax = round(safeValue(input.getTax()), scale);
         final BigDecimal commission = round(safeValue(input.getCommission()), scale);
@@ -63,10 +65,10 @@ public class ThNonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, No
     {
         BigDecimal merchantFeeAmount = BigDecimal.ZERO;
 
-        if (merchantFee != null) {
+        if (merchantFee != null)
+        {
             final Double merchantFeePercent = getMerchantFeeForVendorCode(merchantFee, input.getVendorCode());
-            merchantFeeAmount = round(calculatePercentage(nettPrice, merchantFeePercent), scale,
-                    roundingConfig.getRoundingMode("merchantFee", "TH"));
+            merchantFeeAmount = calculatePercentage(nettPrice, merchantFeePercent);
         }
 
         return roundUpNearestFive(merchantFeeAmount);

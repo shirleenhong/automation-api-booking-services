@@ -11,7 +11,8 @@ import com.cwt.bpg.cbt.exchange.order.model.NonAirFeesInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-public class OtherServiceNonAirCalculatorFactory {
+public class OtherServiceNonAirCalculatorFactory
+{
 
     @Autowired
     @Qualifier("thNonAirFeeCalculator")
@@ -24,18 +25,22 @@ public class OtherServiceNonAirCalculatorFactory {
     private Map<String, Calculator<NonAirFeesBreakdown, NonAirFeesInput>> calculatorMap = new HashMap<>();
 
     @PostConstruct
-    public void init(){
+    public void init()
+    {
         calculatorMap.put(Country.THAILAND.getCode(), thNonAirFeeCalculator);
         calculatorMap.put(Country.SINGAPORE.getCode(), defaultNonAirFeeCalculator);
         calculatorMap.put(Country.HONG_KONG.getCode(), defaultNonAirFeeCalculator);
     }
 
-    public Calculator<NonAirFeesBreakdown, NonAirFeesInput> getCalculator(String countryCode){
+    public Calculator<NonAirFeesBreakdown, NonAirFeesInput> getCalculator(String countryCode)
+    {
 
-        if (calculatorMap.containsKey(countryCode)){
+        if (calculatorMap.containsKey(countryCode))
+        {
             return calculatorMap.get(countryCode);
         }
-        else{
+        else
+        {
             throw new IllegalArgumentException("Country not Supported");
         }
     }
