@@ -24,6 +24,7 @@ import com.cwt.bpg.cbt.exchange.order.calculator.IndiaNonAirFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
+import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceNonAirCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.tf.FeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.model.*;
@@ -36,6 +37,9 @@ public class OtherServiceFeesServiceTest {
 
     @Mock
     private OtherServiceCalculatorFactory factory;
+
+    @Mock
+    private OtherServiceNonAirCalculatorFactory nonAirFactory;
 
     @Mock
     private TransactionFeeCalculatorFactory tfFactory;
@@ -85,6 +89,8 @@ public class OtherServiceFeesServiceTest {
 
     @Test
     public void shouldReturnFeesBreakdown() {
+        when(nonAirFactory.getCalculator(anyString()))
+                .thenReturn(nonAirFeeCalculator);
 
         when(nonAirFeeCalculator.calculate(any(NonAirFeesInput.class), any(MerchantFee.class), anyString()))
                 .thenReturn(new NonAirFeesBreakdown());
@@ -197,6 +203,9 @@ public class OtherServiceFeesServiceTest {
 
     @Test
     public void shouldReturnNonAirFeeNonIndia() {
+        when(nonAirFactory.getCalculator(anyString()))
+                .thenReturn(nonAirFeeCalculator);
+
         when(nonAirFeeCalculator
                 .calculate(
                         any(NonAirFeesInput.class),

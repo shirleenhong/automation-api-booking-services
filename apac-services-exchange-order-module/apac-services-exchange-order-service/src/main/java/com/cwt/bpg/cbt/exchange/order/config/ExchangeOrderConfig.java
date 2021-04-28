@@ -4,18 +4,28 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceCalculatorFactory;
+import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceNonAirCalculatorFactory;
 import com.cwt.bpg.cbt.exchange.order.calculator.factory.TransactionFeeCalculatorFactory;
 
 @Configuration("com.cwt.bpg.cbt.exchange.order.config")
-public class ExchangeOrderConfig {
+public class ExchangeOrderConfig
+{
 
-	@Bean(name = "otherServiceCalculatorFactory")
-	public OtherServiceCalculatorFactory otherServiceCalculatorFactory() {
-		return new OtherServiceCalculatorFactory();
-	}
-	
-	@Bean(name = "transactionFeeCalculatorFactory")
-	public TransactionFeeCalculatorFactory transactionFeeCalculatorFactory() {
-		return new TransactionFeeCalculatorFactory();
-	}
+    @Bean(name = "otherServiceCalculatorFactory")
+    public OtherServiceCalculatorFactory airCalculatorFactory()
+    {
+        return new OtherServiceCalculatorFactory();
+    }
+
+    @Bean(name = "otherServiceNonAirCalculatorFactory")
+    public OtherServiceNonAirCalculatorFactory nonAirCalculatorFactory()
+    {
+        return new OtherServiceNonAirCalculatorFactory();
+    }
+
+    @Bean(name = "transactionFeeCalculatorFactory")
+    public TransactionFeeCalculatorFactory transactionFeeCalculatorFactory()
+    {
+        return new TransactionFeeCalculatorFactory();
+    }
 }

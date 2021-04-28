@@ -70,4 +70,11 @@ public final class CalculatorUtils
     {
         return safeValue(value).multiply(BigDecimal.valueOf(0.01));
     }
+
+    public static BigDecimal roundUpNearestFive(BigDecimal input)
+    {
+        final BigDecimal five = new BigDecimal("5");
+
+        return input == null ? null : input.divide(five).setScale(0, RoundingMode.CEILING).multiply(five);
+    }
 }

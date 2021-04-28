@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.cwt.bpg.cbt.exchange.order.calculator.factory.OtherServiceNonAirCalculatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,6 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import com.cwt.bpg.cbt.calculator.model.Country;
-import com.cwt.bpg.cbt.exchange.order.calculator.Calculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.IndiaNonAirFeeCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.NettCostCalculator;
 import com.cwt.bpg.cbt.exchange.order.calculator.VisaFeesCalculator;
@@ -52,10 +52,6 @@ public class OtherServiceFeesService
     static final int BILL_TO_COMPANY = 3;
 
     @Autowired
-    @Qualifier(value = "nonAirFeeCalculator")
-    private Calculator<NonAirFeesBreakdown, NonAirFeesInput> nonAirFeeCalculator;
-
-    @Autowired
     @Qualifier(value = "indiaNonAirFeeCalculator")
     private IndiaNonAirFeeCalculator indiaNonAirFeeCalculator;
 
@@ -69,6 +65,9 @@ public class OtherServiceFeesService
 
     @Autowired
     private OtherServiceCalculatorFactory osFactory;
+
+    @Autowired
+    private OtherServiceNonAirCalculatorFactory osNonAirFactory;
 
     @Autowired
     private TransactionFeeCalculatorFactory tfFactory;
@@ -88,7 +87,7 @@ public class OtherServiceFeesService
     public NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input, String countryCode)
     {
         MerchantFee merchantFee = merchantFeeService.getMerchantFee(countryCode, input.getClientAccountNumber());
-        return this.nonAirFeeCalculator.calculate(input, merchantFee, countryCode);
+        return this.osNonAirFactory.getCalculator(countryCode).calculate(input, merchantFee, countryCode);
     }
 
     public IndiaNonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input)
@@ -201,7 +200,7 @@ public class OtherServiceFeesService
 
         if (input.getFopMode() == BILL_TO_COMPANY
                 || !isProductSubjectToMF(client.isStandardMfProduct() ? defaultClient : client,
-                        input.getProductCode()))
+                input.getProductCode()))
         {
             mfPercent = 0D;
         }

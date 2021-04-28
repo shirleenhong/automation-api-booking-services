@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 public class CalculatorUtilsTest
@@ -181,5 +182,54 @@ public class CalculatorUtilsTest
     {
         BigDecimal decimal = CalculatorUtils.calculatePercentage(2000.00, null);
         assertThat(decimal.doubleValue(), is(equalTo(0.0)));
+    }
+
+    @Test
+    public void shouldRoundUpToNearestFiveWhenValueIsBetweenOneAndFive()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(2.24));
+        assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(5)));
+    }
+
+    @Test
+    public void shouldRoundUpToNearestFiveWhenValueIsBetweenFiveAndTen()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(6.35));
+        assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(10)));
+    }
+
+    @Test
+    public void shouldNotRoundToNearestFiveWhenValueIsZero()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(0));
+        assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(0)));
+    }
+
+    @Test
+    public void shouldNotRoundToNearestFiveWhenValueIsNull()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(null);
+        assertThat(decimal, is(equalTo(null)));
+    }
+
+    @Test
+    public void shouldRoundToNearestFiveWhenValueIsDivisibleByFive()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(15));
+        assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(15)));
+    }
+
+    @Test
+    public void shouldRoundToNearestFiveWhenValueIsDivisibleByTen()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(100));
+        assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(100)));
+    }
+
+    @Test
+    public void shouldRoundUpToNearestFiveWhenValueIsDecimal()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(0.11));
+        assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(5)));
     }
 }
