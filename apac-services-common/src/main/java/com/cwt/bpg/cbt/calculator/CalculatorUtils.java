@@ -71,11 +71,11 @@ public final class CalculatorUtils
         return safeValue(value).multiply(BigDecimal.valueOf(0.01));
     }
 
-    public static BigDecimal roundUpNearestFive(BigDecimal merchantFeeAmount)
+    public static BigDecimal roundUpNearestFive(BigDecimal input)
     {
         final BigDecimal five = new BigDecimal("5");
 
-        return merchantFeeAmount.divide(five)
+        return input.divide(five)
                 .setScale(0, RoundingMode.CEILING)
                 .multiply(five);
     }

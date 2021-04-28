@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 public class CalculatorUtilsTest
@@ -181,5 +182,12 @@ public class CalculatorUtilsTest
     {
         BigDecimal decimal = CalculatorUtils.calculatePercentage(2000.00, null);
         assertThat(decimal.doubleValue(), is(equalTo(0.0)));
+    }
+
+    @Test
+    public void shouldRoundUpToNearestFive()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(5.55));
+        assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(10)));
     }
 }
