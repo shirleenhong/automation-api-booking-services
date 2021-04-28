@@ -87,7 +87,7 @@ public class OtherServiceFeesService
     public NonAirFeesBreakdown calculateNonAirFees(NonAirFeesInput input, String countryCode)
     {
         MerchantFee merchantFee = merchantFeeService.getMerchantFee(countryCode, input.getClientAccountNumber());
-        return  this.osNonAirFactory.getCalculator(countryCode).calculate(input,merchantFee,countryCode);
+        return this.osNonAirFactory.getCalculator(countryCode).calculate(input, merchantFee, countryCode);
     }
 
     public IndiaNonAirFeesBreakdown calculateIndiaNonAirFees(IndiaNonAirFeesInput input)
@@ -200,7 +200,7 @@ public class OtherServiceFeesService
 
         if (input.getFopMode() == BILL_TO_COMPANY
                 || !isProductSubjectToMF(client.isStandardMfProduct() ? defaultClient : client,
-                        input.getProductCode()))
+                input.getProductCode()))
         {
             mfPercent = 0D;
         }

@@ -75,8 +75,6 @@ public final class CalculatorUtils
     {
         final BigDecimal five = new BigDecimal("5");
 
-        return input.divide(five)
-                .setScale(0, RoundingMode.CEILING)
-                .multiply(five);
+        return input == null ? null : input.divide(five).setScale(0, RoundingMode.CEILING).multiply(five);
     }
 }

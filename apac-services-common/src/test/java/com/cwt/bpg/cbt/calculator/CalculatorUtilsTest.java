@@ -185,9 +185,51 @@ public class CalculatorUtilsTest
     }
 
     @Test
-    public void shouldRoundUpToNearestFive()
+    public void shouldRoundUpToNearestFiveWhenValueIsBetweenOneAndFive()
     {
-        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(5.55));
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(2.24));
+        assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(5)));
+    }
+
+    @Test
+    public void shouldRoundUpToNearestFiveWhenValueIsBetweenFiveAndTen()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(6.35));
         assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(10)));
+    }
+
+    @Test
+    public void shouldNotRoundToNearestFiveWhenValueIsZero()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(0));
+        assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(0)));
+    }
+
+    @Test
+    public void shouldNotRoundToNearestFiveWhenValueIsNull()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(null);
+        assertThat(decimal, is(equalTo(null)));
+    }
+
+    @Test
+    public void shouldRoundToNearestFiveWhenValueIsDivisibleByFive()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(15));
+        assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(15)));
+    }
+
+    @Test
+    public void shouldRoundToNearestFiveWhenValueIsDivisibleByTen()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(100));
+        assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(100)));
+    }
+
+    @Test
+    public void shouldRoundUpToNearestFiveWhenValueIsDecimal()
+    {
+        BigDecimal decimal = CalculatorUtils.roundUpNearestFive(new BigDecimal(0.11));
+        assertThat(decimal, Matchers.comparesEqualTo(BigDecimal.valueOf(5)));
     }
 }
