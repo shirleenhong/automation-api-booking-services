@@ -143,37 +143,4 @@ public class ThNonAirFeeCalculatorTest
         assertThat(result.getMerchantFee(), Matchers.comparesEqualTo(BigDecimal.valueOf(10)));
     }
 
-    @Test
-    public void shouldCalculateNonAirFeeWithZeroGst()
-    {
-        MerchantFee merchantFee = new MerchantFee();
-        merchantFee.setMerchantFeePercent(2.2D);
-
-        NonAirFeesInput input = new NonAirFeesInput();
-        input.setSellingPrice(new BigDecimal(300));
-        input.setGstPercent(0D);
-        input.setNettCost(new BigDecimal(800));
-        input.setTax(new BigDecimal(20D));
-        input.setCommission(new BigDecimal(5D));
-        NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
-
-        assertThat(result.getTotalSellingPrice(), Matchers.comparesEqualTo(BigDecimal.valueOf(330)));
-    }
-
-    @Test
-    public void shouldCalculateNonAirFeeWithoutGst()
-    {
-        MerchantFee merchantFee = new MerchantFee();
-        merchantFee.setMerchantFeePercent(2.2D);
-
-        NonAirFeesInput input = new NonAirFeesInput();
-        input.setSellingPrice(new BigDecimal(300));
-        input.setNettCost(new BigDecimal(800));
-        input.setTax(new BigDecimal(20D));
-        input.setCommission(new BigDecimal(5D));
-        NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
-
-        assertThat(result.getTotalSellingPrice(), Matchers.comparesEqualTo(BigDecimal.valueOf(330)));
-    }
-
 }
