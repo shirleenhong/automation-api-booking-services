@@ -42,13 +42,16 @@ public class ThNonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, No
         final BigDecimal tax = round(safeValue(input.getTax()), scale);
         final BigDecimal commission = round(safeValue(input.getCommission()), scale);
 
-        final BigDecimal nettPrice = sellingPrice.add(tax);
+        BigDecimal nettPrice = sellingPrice.add(tax);
         final BigDecimal gstAmount = calculatePercentage(nettPrice, input.getGstPercent()).setScale(2, RoundingMode.HALF_UP);
-        final BigDecimal nettPriceWithGST = nettPrice.add(gstAmount);
+
+        if (gstAmount.compareTo(BigDecimal.ZERO) > 0)
+        {
+            nettPrice = nettPrice.add(gstAmount);
+        }
 
         final BigDecimal merchantFeeAmount = applyMerchantFee(merchantFee, input, nettPrice);
-
-        final BigDecimal totalSellingPrice = (nettPriceWithGST.add(safeValue(merchantFeeAmount)).setScale(2, RoundingMode.HALF_UP));
+        final BigDecimal totalSellingPrice = (nettPrice.add(safeValue(merchantFeeAmount)));
 
         result.setNettCost(nettCost);
         result.setSellingPrice(sellingPrice);
