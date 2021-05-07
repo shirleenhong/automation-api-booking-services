@@ -24,11 +24,11 @@ public class MigrationCli implements Callable<Void>
 
     private static final Logger logger = LoggerFactory.getLogger(MigrationCli.class);
 
-    @Option(names = "-environment", required = true, description = "dev, int, preprod")
-    private String environment;
+    @Option(names = "-environment", required = false, description = "dev, int, preprod")
+    private String environment = "local";
 
-    @Option(names = "-country", required = true, description = "HK, SG, IN")
-    private String countryCode;
+    @Option(names = "-country", required = false, description = "HK, SG, IN, TH")
+    private String countryCode = "TH";
 
     @ArgGroup(validate = false, heading = "%noptions for india migration%n")
     private IndiaOptions indiaOptions;
@@ -36,10 +36,13 @@ public class MigrationCli implements Callable<Void>
     @ArgGroup(validate = false, heading = "%noptions for Singapore / Hong Kong migration%n")
     private HkSgOptions hkSgOptions;
 
+    @ArgGroup(validate = false, heading = "%noptions for Thailand migration%n")
+    private ThOptions thOptions;
+
     @ArgGroup(validate = false, heading = "%ncompare migration client, applicable for india only%n")
     private ClientCompareOptions clientCompareOptions;
 
-    private static List<String> countryCodes = Arrays.asList("IN", "HK", "SG");
+    private static List<String> countryCodes = Arrays.asList("IN", "HK", "SG", "TH");
 
     public static void main(String[] args)
     {
@@ -168,6 +171,17 @@ public class MigrationCli implements Callable<Void>
                  }
             }
         }
+        if (countryCode.equalsIgnoreCase("TH"))
+        {
+            if (thOptions != null)
+            {
+                if (thOptions.migrateProductList)
+                {
+                    logger.info("Migrating product list...");
+                    service.migrateProductList();
+                }
+            }
+        }
         context.close();
         return null;
     }
@@ -215,6 +229,13 @@ public class MigrationCli implements Callable<Void>
 
         @Option(names = "-merchant-fee", description = "migrate HK & SG merchant fees")
         boolean migrateMerchantFees;
+    }
+
+    private static class ThOptions {
+
+        @Option(names = "-product-list", description = "migrate products")
+        boolean migrateProductList;
+
     }
 
     private static class ClientCompareOptions {

@@ -17,7 +17,7 @@
 
   <properties>
     <java.version>1.8</java.version>
-    <apac-services.version>2.7.0-SNAPSHOT</apac-services.version>
+    <apac-services.version>2.19.0-SNAPSHOT</apac-services.version>
   </properties>
 
   <build>
