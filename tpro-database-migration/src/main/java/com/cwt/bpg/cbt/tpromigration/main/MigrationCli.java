@@ -36,7 +36,6 @@ public class MigrationCli implements Callable<Void>
     @ArgGroup(validate = false, heading = "%noptions for Singapore / Hong Kong migration%n")
     private HkSgOptions hkSgOptions;
 
-
     @ArgGroup(validate = false, heading = "%ncompare migration client, applicable for india only%n")
     private ClientCompareOptions clientCompareOptions;
 
