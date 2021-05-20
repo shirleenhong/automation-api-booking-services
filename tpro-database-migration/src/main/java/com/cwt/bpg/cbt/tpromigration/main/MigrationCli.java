@@ -25,10 +25,10 @@ public class MigrationCli implements Callable<Void>
     private static final Logger logger = LoggerFactory.getLogger(MigrationCli.class);
 
     @Option(names = "-environment", required = true, description = "dev, int, preprod")
-    private String environment = "local";
+    private String environment;
 
     @Option(names = "-country", required = true, description = "HK, SG, IN, TH")
-    private String countryCode = "TH";
+    private String countryCode;
 
     @ArgGroup(validate = false, heading = "%noptions for india migration%n")
     private IndiaOptions indiaOptions;
