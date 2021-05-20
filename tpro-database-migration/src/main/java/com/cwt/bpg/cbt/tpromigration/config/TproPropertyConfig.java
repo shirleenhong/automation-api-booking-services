@@ -7,7 +7,6 @@ import org.springframework.context.annotation.PropertySource;
 import com.cwt.bpg.cbt.tpromigration.config.condition.HkCondition;
 import com.cwt.bpg.cbt.tpromigration.config.condition.IndiaCondition;
 import com.cwt.bpg.cbt.tpromigration.config.condition.SgCondition;
-import com.cwt.bpg.cbt.tpromigration.config.condition.ThCondition;
 
 @Configuration("com.cwt.bpg.cbt.tpromigration.tprodb.config.property")
 public class TproPropertyConfig {
@@ -28,11 +27,5 @@ public class TproPropertyConfig {
 	@Configuration("com.cwt.bpg.cbt.tpromigration.tprodb.config.property.source")
 	@PropertySource(value = { "classpath:properties/tprodb-sg.properties" }, ignoreResourceNotFound = true)
 	static class SgPropertyConfig {
-	}
-
-	@Conditional(ThCondition.class)
-	@Configuration("com.cwt.bpg.cbt.tpromigration.tprodb.config.property.source")
-	@PropertySource(value = { "classpath:properties/tprodb-th.properties" }, ignoreResourceNotFound = true)
-	static class ThPropertyConfig {
 	}
 }
