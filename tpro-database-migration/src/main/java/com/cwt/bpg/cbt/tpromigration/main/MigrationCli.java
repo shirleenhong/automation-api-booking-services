@@ -27,7 +27,7 @@ public class MigrationCli implements Callable<Void>
     @Option(names = "-environment", required = true, description = "dev, int, preprod")
     private String environment;
 
-    @Option(names = "-country", required = true, description = "HK, SG, IN, TH")
+    @Option(names = "-country", required = true, description = "HK, SG, IN")
     private String countryCode;
 
     @ArgGroup(validate = false, heading = "%noptions for india migration%n")
