@@ -142,7 +142,7 @@ public class ExchangeOrderControllerTest {
 
 
     @Test
-    public void shouldFailTHExchangeOrderCountryCodeIsNotLowerCase() throws Exception {
+    public void shouldFailTHExchangeOrderWhenCountryCodeIsNotLowerCase() throws Exception {
 
         ExchangeOrder order = createExchangeOrder();
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
@@ -220,7 +220,7 @@ public class ExchangeOrderControllerTest {
     }
 
     @Test
-    public void shouldFailTHExchangeOrderIsNotLowerCase() throws Exception {
+    public void shouldFailTHExchangeOrderWhenCountryCodeIsNotLowerCase() throws Exception {
 
         ExchangeOrder order = createExchangeOrder();
         order.getServiceInfo().setCommission(BigDecimal.ZERO);
@@ -301,7 +301,7 @@ public class ExchangeOrderControllerTest {
     }
 
     @Test
-    public void shouldFailTHExchangeOrderByPNRIsNotLowerCase() throws Exception {
+    public void shouldFailTHExchangeOrderByPNRWhenCountryCodeIsNotLowerCase() throws Exception {
         List orders = Arrays.asList(new ExchangeOrder());
         when(eoService.getExchangeOrderByRecordLocator("TH", pnr)).thenReturn(orders);
 
@@ -322,7 +322,7 @@ public class ExchangeOrderControllerTest {
     }
 
     @Test
-    public void shouldFailTHExchangeOrderByExchangeOrderNumberIsNotLowerCase() throws Exception {
+    public void shouldFailTHExchangeOrderByExchangeOrderNumberWhenCountryCodeIsNotLowerCase() throws Exception {
 
         ExchangeOrder order = new ExchangeOrder();
         when(eoService.get(eoNumber)).thenReturn(order);
