@@ -58,6 +58,7 @@ public class ExchangeOrderControllerTest {
     private String url;
     private String urlSg;
     private String urlIn;
+    private String urlth;
     private String eoNumber;
     private String pnr;
 
@@ -69,6 +70,7 @@ public class ExchangeOrderControllerTest {
         url = "/exchange-order";
         urlSg = "/exchange-order/sg";
         urlIn = "/exchange-order/in";
+        urlth = "/exchange-order/th";
         eoNumber = "1806100005";
         pnr = "U9L8VY";
     }
@@ -198,6 +200,8 @@ public class ExchangeOrderControllerTest {
         verify(eoService, times(1)).get("sg", eoNumber);
     }
 
+
+
     @Test
     public void shouldGetExchangeOrderByPNR() throws Exception {
         List orders = Arrays.asList(new ExchangeOrder());
@@ -206,6 +210,27 @@ public class ExchangeOrderControllerTest {
         mockMvc.perform(get(urlSg + "/" + pnr)).andExpect(status().isOk());
 
         verify(eoService, times(1)).getExchangeOrderByRecordLocator("sg", pnr);
+    }
+
+    @Test
+    public void shouldGetThExchangeOrderByPNR() throws Exception {
+        List orders = Arrays.asList(new ExchangeOrder());
+        when(eoService.getExchangeOrderByRecordLocator("TH", pnr)).thenReturn(orders);
+
+        mockMvc.perform(get(urlth + "/" + pnr)).andExpect(status().isOk());
+
+        verify(eoService, times(1)).getExchangeOrderByRecordLocator("th", pnr);
+    }
+
+    @Test
+    public void shouldGetThExchangeOrderByExchangeOrderNumber() throws Exception {
+
+        ExchangeOrder order = new ExchangeOrder();
+        when(eoService.get(eoNumber)).thenReturn(order);
+
+        mockMvc.perform(get(urlth + "/" + eoNumber)).andExpect(status().isOk());
+
+        verify(eoService, times(1)).get("th", eoNumber);
     }
 
     @Test
