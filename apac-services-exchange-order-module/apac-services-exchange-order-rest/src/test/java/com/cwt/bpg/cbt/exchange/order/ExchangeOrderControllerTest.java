@@ -58,7 +58,7 @@ public class ExchangeOrderControllerTest {
     private String url;
     private String urlSg;
     private String urlIn;
-    private String urlth;
+    private String urlTh;
     private String eoNumber;
     private String pnr;
 
@@ -70,7 +70,7 @@ public class ExchangeOrderControllerTest {
         url = "/exchange-order";
         urlSg = "/exchange-order/sg";
         urlIn = "/exchange-order/in";
-        urlth = "/exchange-order/th";
+        urlTh = "/exchange-order/th";
         eoNumber = "1806100005";
         pnr = "U9L8VY";
     }
@@ -119,6 +119,25 @@ public class ExchangeOrderControllerTest {
     }
 
     @Test
+    public void shouldCreateThailandExchangeOrder() throws Exception {
+
+        ExchangeOrder order = createExchangeOrder();
+        order.getServiceInfo().setCommission(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
+        order.setEoNumber(null);
+        List<BaseExchangeOrder> orders = Arrays.asList(order);
+
+        when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
+
+        mockMvc.perform(post(urlTh).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
+    }
+    @Test
     public void shouldCreateIndiaExchangeOrder() throws Exception {
 
         IndiaExchangeOrder order = new IndiaExchangeOrder();
@@ -152,6 +171,24 @@ public class ExchangeOrderControllerTest {
         List<ExchangeOrder> orders = Arrays.asList(order);
 
         mockMvc.perform(post(urlSg).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
+    }
+    @Test
+    public void shouldUpdateThailandExchangeOrder() throws Exception {
+
+        ExchangeOrder order = createExchangeOrder();
+        order.getServiceInfo().setCommission(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
+        order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
+        order.setEoNumber("1122334455");
+        List<ExchangeOrder> orders = Arrays.asList(order);
+
+        mockMvc.perform(post(urlTh).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
@@ -213,22 +250,22 @@ public class ExchangeOrderControllerTest {
     }
 
     @Test
-    public void shouldGetThExchangeOrderByPNR() throws Exception {
+    public void shouldGetThailandExchangeOrderByPNR() throws Exception {
         List orders = Arrays.asList(new ExchangeOrder());
         when(eoService.getExchangeOrderByRecordLocator("TH", pnr)).thenReturn(orders);
 
-        mockMvc.perform(get(urlth + "/" + pnr)).andExpect(status().isOk());
+        mockMvc.perform(get(urlTh + "/" + pnr)).andExpect(status().isOk());
 
         verify(eoService, times(1)).getExchangeOrderByRecordLocator("th", pnr);
     }
 
     @Test
-    public void shouldGetThExchangeOrderByExchangeOrderNumber() throws Exception {
+    public void shouldGetThailandExchangeOrderByExchangeOrderNumber() throws Exception {
 
         ExchangeOrder order = new ExchangeOrder();
         when(eoService.get(eoNumber)).thenReturn(order);
 
-        mockMvc.perform(get(urlth + "/" + eoNumber)).andExpect(status().isOk());
+        mockMvc.perform(get(urlTh + "/" + eoNumber)).andExpect(status().isOk());
 
         verify(eoService, times(1)).get("th", eoNumber);
     }
