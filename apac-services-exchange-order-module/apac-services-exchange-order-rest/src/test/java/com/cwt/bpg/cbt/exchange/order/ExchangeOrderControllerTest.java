@@ -220,24 +220,6 @@ public class ExchangeOrderControllerTest {
     }
 
     @Test
-    public void shouldFailTHExchangeOrderWhenCountryCodeIsNotLowerCase() throws Exception {
-
-        ExchangeOrder order = createExchangeOrder();
-        order.getServiceInfo().setCommission(BigDecimal.ZERO);
-        order.getServiceInfo().setGst(BigDecimal.ZERO);
-        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
-        order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
-        order.setEoNumber("1122334455");
-        List<ExchangeOrder> orders = Arrays.asList(order);
-
-        mockMvc.perform(post(urlTH).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
-                .andExpect(status().isNotFound())
-                .andReturn()
-                .getResponse();
-
-        verifyZeroInteractions(eoService);
-    }
-    @Test
     public void shouldUpdateFinanceFields() throws Exception {
         when(eoService.update(any(ExchangeOrder.class))).thenReturn(true);
 
