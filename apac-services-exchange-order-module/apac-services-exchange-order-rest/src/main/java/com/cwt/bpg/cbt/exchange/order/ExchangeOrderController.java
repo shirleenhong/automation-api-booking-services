@@ -44,11 +44,11 @@ public class ExchangeOrderController
     private ExchangeOrderReportService eoReportService;
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @PostMapping(path = "/exchange-order/{countryCode:hk|sg}", produces = {
+    @PostMapping(path = "/exchange-order/{countryCode:hk|sg|th}", produces = {
             MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {
                     MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
-    @ApiOperation(value = "[HK/SG only] Saves new and updates existing exchange orders. EO objects without "
+    @ApiOperation(value = "[HK/SG/TH only] Saves new and updates existing exchange orders. EO objects without "
             + "eoNumber are created. Those with eoNumber are updated.")
     public ResponseEntity<List<ExchangeOrder>> saveExchangeOrder(
             @PathVariable @ApiParam("2-character country code") String countryCode,
@@ -58,10 +58,10 @@ public class ExchangeOrderController
         return new ResponseEntity(eoService.save(countryCode, input), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{eoNumber:^[0-9]{10}$}", produces = {
+    @GetMapping(path = "/exchange-order/{countryCode:hk|sg|th}/{eoNumber:^[0-9]{10}$}", produces = {
             MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
-    @ApiOperation(value = "[HK/SG only] Returns exchange order given an exchange order number.")
+    @ApiOperation(value = "[HK/SG/TH only] Returns exchange order given an exchange order number.")
     public ResponseEntity<ExchangeOrder> getExchangeOrder(
             @PathVariable @ApiParam("2-character country code (lowercase)") String countryCode,
             @PathVariable @ApiParam(value = "10-digit Exchange order number") String eoNumber)
@@ -72,10 +72,10 @@ public class ExchangeOrderController
     }
 
     @SuppressWarnings("unchecked")
-    @GetMapping(path = "/exchange-order/{countryCode:hk|sg}/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = {
+    @GetMapping(path = "/exchange-order/{countryCode:hk|sg|th}/{recordLocator:^[a-zA-Z0-9]{6}$}", produces = {
             MediaType.APPLICATION_JSON_UTF8_VALUE })
     @ResponseBody
-    @ApiOperation(value = "[HK/SG only] Returns exchange order given a PNR record locator.")
+    @ApiOperation(value = "[HK/SG/TH only] Returns exchange order given a PNR record locator.")
     public ResponseEntity<List<ExchangeOrder>> getExchangeOrderByRecordLocator(
             @PathVariable @ApiParam("2-character country code") String countryCode,
             @PathVariable @ApiParam(value = "6-character PNR record locator") String recordLocator)

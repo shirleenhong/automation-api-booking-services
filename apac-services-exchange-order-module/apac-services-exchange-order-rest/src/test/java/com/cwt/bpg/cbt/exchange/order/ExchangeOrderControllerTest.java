@@ -58,6 +58,8 @@ public class ExchangeOrderControllerTest {
     private String url;
     private String urlSg;
     private String urlIn;
+    private String urlTh;
+    private String urlTH;
     private String eoNumber;
     private String pnr;
 
@@ -69,6 +71,8 @@ public class ExchangeOrderControllerTest {
         url = "/exchange-order";
         urlSg = "/exchange-order/sg";
         urlIn = "/exchange-order/in";
+        urlTh = "/exchange-order/th";
+        urlTH = "/exchange-order/TH";
         eoNumber = "1806100005";
         pnr = "U9L8VY";
     }
@@ -117,6 +121,46 @@ public class ExchangeOrderControllerTest {
     }
 
     @Test
+    public void shouldCreateThailandExchangeOrder() throws Exception {
+
+        ExchangeOrder order = createExchangeOrder();
+        order.getServiceInfo().setCommission(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
+        order.setEoNumber(null);
+        List<BaseExchangeOrder> orders = Arrays.asList(order);
+
+        when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
+
+        mockMvc.perform(post(urlTh).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
+    }
+
+
+    @Test
+    public void shouldFailTHExchangeOrderWhenCountryCodeIsNotLowerCase() throws Exception {
+
+        ExchangeOrder order = createExchangeOrder();
+        order.getServiceInfo().setCommission(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
+        order.setEoNumber(null);
+        List<BaseExchangeOrder> orders = Arrays.asList(order);
+
+        when(eoService.save(anyString(), anyListOf(ExchangeOrder.class))).thenReturn(orders);
+
+        mockMvc.perform(post(urlTH).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
+                .andExpect(status().isNotFound())
+                .andReturn()
+                .getResponse();
+
+        verifyZeroInteractions(eoService);
+    }
+    @Test
     public void shouldCreateIndiaExchangeOrder() throws Exception {
 
         IndiaExchangeOrder order = new IndiaExchangeOrder();
@@ -156,7 +200,43 @@ public class ExchangeOrderControllerTest {
 
         verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
     }
+    @Test
+    public void shouldUpdateThailandExchangeOrder() throws Exception {
 
+        ExchangeOrder order = createExchangeOrder();
+        order.getServiceInfo().setCommission(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
+        order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
+        order.setEoNumber("1122334455");
+        List<ExchangeOrder> orders = Arrays.asList(order);
+
+        mockMvc.perform(post(urlTh).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        verify(eoService, times(1)).save(anyString(), anyListOf(ExchangeOrder.class));
+    }
+
+    @Test
+    public void shouldFailTHExchangeOrderWhenCountryCodeIsNotLowerCase() throws Exception {
+
+        ExchangeOrder order = createExchangeOrder();
+        order.getServiceInfo().setCommission(BigDecimal.ZERO);
+        order.getServiceInfo().setGst(BigDecimal.ZERO);
+        order.getServiceInfo().setMerchantFee(BigDecimal.ZERO);
+        order.getServiceInfo().getFormOfPayment().setFopType(FopType.CWT);
+        order.setEoNumber("1122334455");
+        List<ExchangeOrder> orders = Arrays.asList(order);
+
+        mockMvc.perform(post(urlTH).contentType(APPLICATION_JSON_UTF8).content(convertObjectToJsonBytes(orders)))
+                .andExpect(status().isNotFound())
+                .andReturn()
+                .getResponse();
+
+        verifyZeroInteractions(eoService);
+    }
     @Test
     public void shouldUpdateFinanceFields() throws Exception {
         when(eoService.update(any(ExchangeOrder.class))).thenReturn(true);
@@ -198,6 +278,8 @@ public class ExchangeOrderControllerTest {
         verify(eoService, times(1)).get("sg", eoNumber);
     }
 
+
+
     @Test
     public void shouldGetExchangeOrderByPNR() throws Exception {
         List orders = Arrays.asList(new ExchangeOrder());
@@ -206,6 +288,48 @@ public class ExchangeOrderControllerTest {
         mockMvc.perform(get(urlSg + "/" + pnr)).andExpect(status().isOk());
 
         verify(eoService, times(1)).getExchangeOrderByRecordLocator("sg", pnr);
+    }
+
+    @Test
+    public void shouldGetThailandExchangeOrderByPNR() throws Exception {
+        List orders = Arrays.asList(new ExchangeOrder());
+        when(eoService.getExchangeOrderByRecordLocator("TH", pnr)).thenReturn(orders);
+
+        mockMvc.perform(get(urlTh + "/" + pnr)).andExpect(status().isOk());
+
+        verify(eoService, times(1)).getExchangeOrderByRecordLocator("th", pnr);
+    }
+
+    @Test
+    public void shouldFailTHExchangeOrderByPNRWhenCountryCodeIsNotLowerCase() throws Exception {
+        List orders = Arrays.asList(new ExchangeOrder());
+        when(eoService.getExchangeOrderByRecordLocator("TH", pnr)).thenReturn(orders);
+
+        mockMvc.perform(get(urlTH + "/" + pnr)).andExpect(status().isNotFound());
+
+        verifyZeroInteractions(eoService);
+    }
+
+    @Test
+    public void shouldGetThailandExchangeOrderByExchangeOrderNumber() throws Exception {
+
+        ExchangeOrder order = new ExchangeOrder();
+        when(eoService.get(eoNumber)).thenReturn(order);
+
+        mockMvc.perform(get(urlTh + "/" + eoNumber)).andExpect(status().isOk());
+
+        verify(eoService, times(1)).get("th", eoNumber);
+    }
+
+    @Test
+    public void shouldFailTHExchangeOrderByExchangeOrderNumberWhenCountryCodeIsNotLowerCase() throws Exception {
+
+        ExchangeOrder order = new ExchangeOrder();
+        when(eoService.get(eoNumber)).thenReturn(order);
+
+        mockMvc.perform(get(urlTH + "/" + eoNumber)).andExpect(status().isNotFound());
+
+        verifyZeroInteractions(eoService);
     }
 
     @Test
