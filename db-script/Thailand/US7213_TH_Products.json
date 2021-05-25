@@ -1,0 +1,162 @@
+[
+  {
+    "ProductCode": 0,
+    "SortKey": "BSP TKT",
+    "Description": "BSP TKT",
+    "Type": "BT",
+    "TktPrefix": 0,
+    "IsEVNum": "FALSE",
+    "ShowTktType": "TRUE",
+    "VATPer": 0
+  },
+  {
+    "ProductCode": 12,
+    "SortKey": "MEEGRE",
+    "Description": "MEET AND GREET",
+    "Type": "MS",
+    "TktPrefix": 88600,
+    "IsEVNum": "TRUE",
+    "ShowTktType": "FALSE",
+    "VATPer": 0
+  },
+  {
+    "ProductCode": 16,
+    "SortKey": "HOTEL",
+    "Description": "HOTEL",
+    "Type": "HL",
+    "TktPrefix": 88200,
+    "IsEVNum": "TRUE",
+    "ShowTktType": "FALSE",
+    "VATPer": 0
+  },
+  {
+    "ProductCode": 18,
+    "SortKey": "FEE24HRS",
+    "Description": "LONDON 24HRS SERVICE FEE",
+    "Type": "MS",
+    "TktPrefix": 0,
+    "IsEVNum": "TRUE",
+    "ShowTktType": "FALSE",
+    "VATPer": 0.07
+  },
+  {
+    "ProductCode": 19,
+    "SortKey": "CARSEA",
+    "Description": "CAR RENTAL",
+    "Type": "CX",
+    "TktPrefix": 88500,
+    "IsEVNum": "TRUE",
+    "ShowTktType": "FALSE",
+    "VATPer": 0
+  },
+  {
+    "ProductCode": 2,
+    "SortKey": "GSA TKT",
+    "Description": "GSA TKT",
+    "Type": "CT",
+    "TktPrefix": 88100,
+    "IsEVNum": "TRUE",
+    "ShowTktType": "FALSE",
+    "VATPer": 0
+  },
+  {
+    "ProductCode": 30,
+    "SortKey": "BSPDOM TKT",
+    "Description": "BSPDOM TKT",
+    "Type": "BT",
+    "TktPrefix": 0,
+    "IsEVNum": "FALSE",
+    "ShowTktType": "TRUE",
+    "VATPer": 0
+  },
+  {
+    "ProductCode": 35,
+    "SortKey": "TRANXFEE",
+    "Description": "TRANSACTION FEE",
+    "Type": "MS",
+    "TktPrefix": 0,
+    "IsEVNum": "FALSE",
+    "ShowTktType": "TRUE",
+    "VATPer": 0.07
+  },
+  {
+    "ProductCode": 37,
+    "SortKey": "FEEVIS",
+    "Description": "VISA FEE",
+    "Type": "VI",
+    "TktPrefix": 88700,
+    "IsEVNum": "TRUE",
+    "ShowTktType": "FALSE",
+    "VATPer": 0.07
+  },
+  {
+    "ProductCode": 38,
+    "SortKey": "SVC FEE",
+    "Description": "SERVICE FEE",
+    "Type": "MS",
+    "TktPrefix": 88700,
+    "IsEVNum": "TRUE",
+    "ShowTktType": "FALSE",
+    "VATPer": 0.07
+  },
+  {
+    "ProductCode": 4,
+    "SortKey": "DOM TKT",
+    "Description": "DOM TKT",
+    "Type": "CT",
+    "TktPrefix": 0,
+    "IsEVNum": "FALSE",
+    "ShowTktType": "TRUE",
+    "VATPer": 0
+  },
+  {
+    "ProductCode": 50,
+    "SortKey": "REBATE",
+    "Description": "REBATE",
+    "Type": "MS",
+    "TktPrefix": 0,
+    "IsEVNum": "FALSE",
+    "ShowTktType": "TRUE",
+    "VATPer": 0
+  },
+  {
+    "ProductCode": 6,
+    "SortKey": "VSA COST",
+    "Description": "VISA COST",
+    "Type": "VI",
+    "TktPrefix": 88700,
+    "IsEVNum": "TRUE",
+    "ShowTktType": "FALSE",
+    "VATPer": 0
+  },
+  {
+    "ProductCode": 7,
+    "SortKey": "CAR TRF",
+    "Description": "CAR TRANSFER",
+    "Type": "CX",
+    "TktPrefix": 88500,
+    "IsEVNum": "TRUE",
+    "ShowTktType": "FALSE",
+    "VATPer": 0
+  },
+  {
+    "ProductCode": 8,
+    "SortKey": "DSP CHG",
+    "Description": "DSP CHG",
+    "Type": "MS",
+    "TktPrefix": "",
+    "IsEVNum": "FALSE",
+    "ShowTktType": "FALSE",
+    "VATPer": 0
+  },
+  {
+    "ProductCode": 9,
+    "SortKey": "INS CHG",
+    "Description": "INS CHG",
+    "Type": "MS",
+    "TktPrefix": 88800,
+    "IsEVNum": "TRUE",
+    "ShowTktType": "FALSE",
+    "VATPer": 0
+  }
+]
