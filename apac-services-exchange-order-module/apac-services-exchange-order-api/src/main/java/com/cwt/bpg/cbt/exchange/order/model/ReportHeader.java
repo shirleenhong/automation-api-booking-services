@@ -10,10 +10,11 @@ import org.mongodb.morphia.annotations.Id;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity(value = "reportHeaders", noClassnameStored = true)
-public class ReportHeader implements Serializable {
+public class ReportHeader implements Serializable
+{
 
     private static final long serialVersionUID = -1835330460259508098L;
-    
+
     @Id
     @NotEmpty
     @ApiModelProperty(value = "Country code")
@@ -31,45 +32,68 @@ public class ReportHeader implements Serializable {
 
     @ApiModelProperty(value = "Header Fax Number")
     private String faxNumber;
-    
 
-    public String getCompanyName() {
+    @ApiModelProperty(value = "Header Other Details")
+    private String otherDetails;
+
+
+    public String getCompanyName()
+    {
         return companyName;
     }
 
-    public void setCompanyName(String companyName) {
+    public void setCompanyName(String companyName)
+    {
         this.companyName = companyName;
     }
 
-    public String getAddress() {
+    public String getAddress()
+    {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(String address)
+    {
         this.address = address;
     }
 
-    public String getPhoneNumber() {
+    public String getPhoneNumber()
+    {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber)
+    {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getFaxNumber() {
+    public String getFaxNumber()
+    {
         return faxNumber;
     }
 
-    public void setFaxNumber(String faxNumber) {
+    public void setFaxNumber(String faxNumber)
+    {
         this.faxNumber = faxNumber;
     }
 
-	public String getCountryCode() {
-		return countryCode;
-	}
+    public String getOtherDetails()
+    {
+        return otherDetails;
+    }
 
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
+    public void setOtherDetails(String taxId)
+    {
+        this.otherDetails = otherDetails;
+    }
+
+    public String getCountryCode()
+    {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode)
+    {
+        this.countryCode = countryCode;
+    }
 }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exchange-order" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isTitleNewPage="true" uuid="11876608-3e71-4654-8bad-9498a837d1ff">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
@@ -26,6 +27,7 @@
 	<parameter name="HEADER_FAX" class="java.lang.String"/>
 	<parameter name="HEADER_PHONE" class="java.lang.String"/>
 	<parameter name="HEADER_COMPANY_NAME" class="java.lang.String"/>
+	<parameter name="HEADER_OTHER_DETAILS" class="java.lang.String"/>
 	<parameter name="REMARKS_BAND" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
@@ -65,20 +67,24 @@
 				<reportElement x="0" y="15" width="470" height="15" uuid="a9d633f4-aa65-4af7-a549-cebb0e5a6f24"/>
 				<textFieldExpression><![CDATA[$P{HEADER_ADDRESS}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="0" y="30" width="470" height="15" uuid="a9d633f4-aa65-4af7-a549-cebb0e5a6f24"/>
+				<textFieldExpression><![CDATA[$P{HEADER_OTHER_DETAILS}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="0" y="43" width="19" height="15" uuid="962b53f4-259c-45cb-9bbb-080d14b0af30"/>
 				<text><![CDATA[Tel:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="19" y="43" width="62" height="15" uuid="49f5e6e4-98e8-4b19-b8df-b25d563a7334"/>
+				<reportElement x="19" y="43" width="85" height="15" uuid="49f5e6e4-98e8-4b19-b8df-b25d563a7334"/>
 				<textFieldExpression><![CDATA[$P{HEADER_PHONE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="98" y="43" width="22" height="15" uuid="f2e68e60-d51d-4bab-8e7b-77c7e9efd9a4"/>
-				<text><![CDATA[Fax:]]></text>
+				<reportElement x="106" y="43" width="22" height="15" uuid="f2e68e60-d51d-4bab-8e7b-77c7e9efd9a4"/>
+				<text><![CDATA[Fax TEST:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="120" y="43" width="62" height="15" uuid="d3f8df42-1d0c-4781-a877-2d8cd5278ee5"/>
+				<reportElement x="128" y="43" width="85" height="15" uuid="d3f8df42-1d0c-4781-a877-2d8cd5278ee5"/>
 				<textFieldExpression><![CDATA[$P{HEADER_FAX}]]></textFieldExpression>
 			</textField>
 			<image isUsingCache="false">
