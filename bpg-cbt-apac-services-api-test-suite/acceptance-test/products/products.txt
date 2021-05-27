@@ -15,9 +15,9 @@ Verify That Products And Vendors Are Correctly Retrieved For Singapore
 Verify That Products And Vendors Are Correctly Retrieved For Hong Kong
     [Tags]    migration
     Create Test Variables For Products And Vendors    country=hk
-    Send Product Get Request
-    Verify Response Status Code Is Correct    200
-    Verify Products And Vendors Are Retrieved Correctly
+    # Send Product Get Request
+    # Verify Response Status Code Is Correct    200
+    # Verify Products And Vendors Are Retrieved Correctly
 
 Verify That Products And Vendors Are Correctly Retrieved For India
     [Tags]    migration
@@ -25,6 +25,14 @@ Verify That Products And Vendors Are Correctly Retrieved For India
     Send Product Get Request
     Verify Response Status Code Is Correct    200
     Verify Products And Vendors Are Retrieved Correctly
+    
+Verify That Products And Vendors Are Correctly Retrieved For Thailand
+    [Tags]    migration
+    Create Test Variables For Products And Vendors    country=th
+    Send Product Get Request
+    Verify Response Status Code Is Correct    200
+    Verify Products And Vendors Are Retrieved Correctly
+    
     
 Verify That Vendor Details Are Correctly Retrieved For Singapore
     [Tags]    migration
