@@ -41,7 +41,7 @@ Create Test Variables For Products And Vendors
     \    ${item_number}    Get Substring    ${data_item[0]}    3
     \    ${data_type}    Set Variable If    "${data_type.upper()}"=="PRO"    product    vendor
     \    Set Test Variable    ${${data_type}_code_${item_number}}    ${data_item[1]}
-    \    Run Keyword If    "${data_type}"=="product" and "${country}"!="in"    Set Test Variable    ${${data_type}_type_${item_number}}    ${data_item[2]}
+    \    Run Keyword If    "${data_type}"=="product" and "${country}"!="in"    Set Test Variable    ${${data_type}_type_${item_number}}    ${data_item[2]}    
     ${data_list_2}    Split String    ${${country}_data_list_2}    |
     : FOR    ${data}    IN    @{data_list_2}
     \    ${data_item}    Split String    ${data}    ,
@@ -184,7 +184,7 @@ Verify Products And Vendors Are Not Retrieved
 
 Verify Products And Vendors Are Retrieved Correctly
     Comment    Create File    ${EXECDIR}/file_with_products_vendors.txt    ${response.content}
-    ${all_product_list_length}    Get Length    ${all_product_list}
+    ${all_product_list_length}    Get Length    ${all_product_list}    
     : FOR    ${index}    IN RANGE    ${all_product_list_length}
     \    ${item_product_code}    Get Json Value As String    ${response.content}    $.[${index}].productCode
     \    Verify Json Value Is Correct    $[${index}].description    ${product_code_${item_product_code}}
