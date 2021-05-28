@@ -67,49 +67,27 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>jasperreports-maven-plugin</artifactId>
-            <version>1.0-beta-2</version>
+            <groupId>com.alexnederlof</groupId>
+            <artifactId>jasperreports-plugin</artifactId>
+            <version>2.8</version>
             <configuration>
+              <compiler>net.sf.jasperreports.engine.design.JRJdtCompiler</compiler>
               <sourceDirectory>src/main/resources/jasper</sourceDirectory>
               <outputDirectory>src/main/resources/jasper</outputDirectory>
             </configuration>
             <executions>
               <execution>
-                <phase>compile</phase>
+                <phase>process-sources</phase>
                 <goals>
-                  <goal>compile-reports</goal>
+                  <goal>jasper</goal>
                 </goals>
               </execution>
             </executions>
-
             <dependencies>
-              <dependency>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jasperreports-maven-plugin</artifactId>
-                <version>1.0-beta-2</version>
-                <exclusions>
-                  <exclusion>
-                    <groupId>jasperreports</groupId>
-                    <artifactId>jasperreports</artifactId>
-                  </exclusion>
-                </exclusions>
-              </dependency>
               <dependency>
                 <groupId>net.sf.jasperreports</groupId>
                 <artifactId>jasperreports</artifactId>
                 <version>6.6.0</version>
-                <exclusions>
-                  <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                  </exclusion>
-                </exclusions>
-              </dependency>
-              <dependency>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <version>${groovy.version}</version>
               </dependency>
             </dependencies>
           </plugin>
