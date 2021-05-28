@@ -44,7 +44,7 @@ public class ThNonAirFeeCalculatorTest
     {
         MockitoAnnotations.initMocks(this);
 
-        when(scaleConfig.getScale(eq("TH"))).thenReturn(0);
+        when(scaleConfig.getScale(eq("TH"))).thenReturn(2);
 
         ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
 
@@ -71,13 +71,13 @@ public class ThNonAirFeeCalculatorTest
         NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
         assertNotNull(result);
 
-        assertThat(result.getCommission(), Matchers.comparesEqualTo(BigDecimal.valueOf(5)));
-        assertThat(result.getGstAmount(), Matchers.comparesEqualTo(BigDecimal.valueOf(39.55)));
+        assertThat(result.getCommission(), Matchers.comparesEqualTo(BigDecimal.valueOf(5.20)));
+        assertThat(result.getGstAmount(), Matchers.comparesEqualTo(BigDecimal.valueOf(39.58)));
         assertThat(result.getMerchantFee(), Matchers.comparesEqualTo(BigDecimal.valueOf(10)));
-        assertThat(result.getNettCost(), Matchers.comparesEqualTo(BigDecimal.valueOf(1228)));
-        assertThat(result.getSellingPrice(), Matchers.comparesEqualTo(BigDecimal.valueOf(550)));
-        assertThat(result.getTax(), Matchers.comparesEqualTo(BigDecimal.valueOf(15)));
-        assertThat(result.getTotalSellingPrice(), Matchers.comparesEqualTo(BigDecimal.valueOf(614.55)));
+        assertThat(result.getNettCost(), Matchers.comparesEqualTo(BigDecimal.valueOf(1228.27)));
+        assertThat(result.getSellingPrice(), Matchers.comparesEqualTo(BigDecimal.valueOf(550.30)));
+        assertThat(result.getTax(), Matchers.comparesEqualTo(BigDecimal.valueOf(15.15)));
+        assertThat(result.getTotalSellingPrice(), Matchers.comparesEqualTo(BigDecimal.valueOf(615.03)));
     }
 
     @Test
