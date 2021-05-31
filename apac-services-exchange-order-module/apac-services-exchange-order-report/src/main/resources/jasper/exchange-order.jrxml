@@ -214,7 +214,7 @@
 				<reportElement x="160" y="255" width="373" height="15" isPrintWhenDetailOverflows="true" uuid="4f781742-7881-4d47-b6ef-0d8052fec06b"/>
 				<textFieldExpression><![CDATA[$P{FAX}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="160" y="270" width="373" height="15" isPrintWhenDetailOverflows="true" uuid="12af925a-c461-4615-bf74-ea3a8d585424"/>
 				<textFieldExpression><![CDATA[$P{EMAIL}]]></textFieldExpression>
 			</textField>
@@ -302,7 +302,7 @@
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pdfDescriptions})]]></dataSourceExpression>
 					</datasetRun>
 					<jr:listContents height="15" width="373">
-						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 							<reportElement x="0" y="0" width="373" height="15" isPrintWhenDetailOverflows="true" uuid="8ee12ef8-5f81-4ff3-ba03-6e473267b969"/>
 							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
 						</textField>
@@ -317,7 +317,7 @@
 				<textElement markup="none"/>
 				<text><![CDATA[Air Reference]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="160" y="16" width="373" height="15" uuid="da5c5400-cadf-4365-917a-5481b38010c6"/>
 				<textFieldExpression><![CDATA[$P{AIR_REFERENCE_VALUE}]]></textFieldExpression>
 			</textField>
@@ -337,7 +337,7 @@
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{eoRemarks})]]></dataSourceExpression>
 					</datasetRun>
 					<jr:listContents height="15" width="373">
-						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 							<reportElement x="0" y="0" width="373" height="15" uuid="8a8bce05-eee3-4800-97d4-831ac7f79c26"/>
 							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
 						</textField>

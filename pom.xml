@@ -21,7 +21,7 @@
     <commons-logging.version>1.1</commons-logging.version>
     <hamcrest.version>2.1</hamcrest.version>
     <jackson.version>2.9.5</jackson.version>
-    <jasper.report.version>6.6.0</jasper.report.version>
+    <jasper.report.version>6.11.0</jasper.report.version>
     <jsonwebtoken.version>0.7.0</jsonwebtoken.version>
     <mongodb.morphia.version>1.3.2</mongodb.morphia.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
