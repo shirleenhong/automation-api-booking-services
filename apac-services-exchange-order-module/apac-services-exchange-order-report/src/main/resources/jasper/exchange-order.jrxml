@@ -81,7 +81,7 @@
 			</textField>
 			<staticText>
 				<reportElement x="106" y="43" width="22" height="15" uuid="f2e68e60-d51d-4bab-8e7b-77c7e9efd9a4"/>
-				<text><![CDATA[Fax TEST:]]></text>
+				<text><![CDATA[Fax:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="128" y="43" width="85" height="15" uuid="d3f8df42-1d0c-4781-a877-2d8cd5278ee5"/>
