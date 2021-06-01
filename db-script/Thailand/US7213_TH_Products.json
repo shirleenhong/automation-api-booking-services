@@ -23,7 +23,7 @@
     "ProductCode": 16,
     "SortKey": "HOTEL",
     "Description": "HOTEL",
-    "Type": "HL",
+    "Type": "MS",
     "TktPrefix": 88200,
     "IsEVNum": "TRUE",
     "ShowTktType": "FALSE",
