@@ -41,19 +41,11 @@ public class ThAirCalculatorTest
         Mockito.when(scaleConfig.getScale(Mockito.eq("TH"))).thenReturn(2);
 
         Mockito.when(
-                roundingConfig.getRoundingMode(Mockito.eq("merchantFee"), anyString()))
+                roundingConfig.getRoundingMode(anyString(), anyString()))
                 .thenReturn(RoundingMode.UP);
         Mockito.when(
                 roundingConfig.getRoundingMode(Mockito.eq("commission"), anyString()))
                 .thenReturn(RoundingMode.DOWN);
-        Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("nettFare"), anyString()))
-                .thenReturn(RoundingMode.UP);
-        Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("totalSellingFare"),
-                anyString())).thenReturn(RoundingMode.UP);
-        Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("nettCost"), anyString()))
-                .thenReturn(RoundingMode.UP);
-        Mockito.when(roundingConfig.getRoundingMode(Mockito.eq("discount"), anyString()))
-                .thenReturn(RoundingMode.UP);
 
         ReflectionTestUtils.setField(calculator, "scaleConfig", scaleConfig);
         ReflectionTestUtils.setField(calculator, "roundingConfig", roundingConfig);
