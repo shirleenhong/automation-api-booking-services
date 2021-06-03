@@ -39,17 +39,23 @@ public class ThAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
         BigDecimal totalSellingFare;
         BigDecimal nettCost;
         BigDecimal merchantFeeAmount;
-        BigDecimal sellingPrice = round(safeValue((input.getSellingPrice())), scale);
-        BigDecimal commission = safeValue(input.getCommission());
         BigDecimal nettFare = safeValue(input.getNettFare());
-        BigDecimal tax1 = safeValue(input.getTax1());
-        BigDecimal tax2 = safeValue(input.getTax2());
+        final BigDecimal sellingPrice = round(safeValue((input.getSellingPrice())), scale);
+        final BigDecimal commission = safeValue(input.getCommission());
+        final BigDecimal discount = safeValue(input.getDiscount());
+        final BigDecimal tax1 = safeValue(input.getTax1());
+        final BigDecimal tax2 = safeValue(input.getTax2());
+        final Double gst = safeValue(input.getGst());
+        final BigDecimal transactionFee = safeValue(input.getTransactionFee());
+        final BigDecimal vat = round(calculatePercentage(transactionFee, gst), scale);
 
         result.setCommission(commission);
+        result.setDiscount(discount);
         result.setSellingPrice(sellingPrice);
+        result.setVat(vat);
 
         nettCost = nettFare;
-        nettFare = round(sellingPrice.add(tax1).add(tax2), scale, getRoundingMode("nettFare", countryCode));
+        nettFare = round(nettFare.add(tax1).add(tax2).add(commission).subtract(discount), scale, getRoundingMode("nettFare", countryCode));
         result.setNettFare(nettFare);
 
         merchantFeeAmount = applyMerchantFee(merchantFee, input, scale, getRoundingMode("merchantFee", countryCode), nettFare);
@@ -64,11 +70,12 @@ public class ThAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
     }
 
     private BigDecimal applyMerchantFee(MerchantFee merchantFee, AirFeesInput input, int scale, RoundingMode roundingMode,
-            BigDecimal nettFare)
+                                        BigDecimal nettFare)
     {
         BigDecimal merchantFeeAmount = BigDecimal.ZERO;
 
-        if (merchantFee != null) {
+        if (merchantFee != null)
+        {
             Double merchantFeePercent = getMerchantFeeForVendorCode(merchantFee, input.getVendorCode());
             merchantFeeAmount = round(calculatePercentage(nettFare, merchantFeePercent), scale, roundingMode);
         }
