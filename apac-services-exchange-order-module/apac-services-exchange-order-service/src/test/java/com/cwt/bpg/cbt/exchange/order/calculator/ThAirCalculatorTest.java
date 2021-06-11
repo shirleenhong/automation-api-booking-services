@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import com.cwt.bpg.cbt.exchange.order.model.FopType;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -80,7 +81,7 @@ public class ThAirCalculatorTest
     }
 
     @Test
-    public void shouldCalculateMerchantFee()
+    public void shouldCalculateMerchantFeeIfFopTypeIsCwt()
     {
         MerchantFee merchantFee = new MerchantFee();
         merchantFee.setMerchantFeePercent(20D);
@@ -94,6 +95,7 @@ public class ThAirCalculatorTest
         input.setTransactionFee(new BigDecimal(350));
         input.setGst(7D);
         input.setClientType("TF");
+        input.setFopType(FopType.CWT);
         AirFeesBreakdown airFeesBreakdown = calculator.calculate(input, merchantFee, countryCode);
 
         assertThat(airFeesBreakdown.getCommission(), Matchers.comparesEqualTo(BigDecimal.valueOf(2000)));
@@ -103,6 +105,48 @@ public class ThAirCalculatorTest
         assertThat(airFeesBreakdown.getTotalSellingFare(), Matchers.comparesEqualTo(BigDecimal.valueOf(16780.00)));
         assertThat(airFeesBreakdown.getNettCost(), Matchers.comparesEqualTo(BigDecimal.valueOf(10000.00)));
         assertThat(airFeesBreakdown.getVat(), Matchers.comparesEqualTo(BigDecimal.valueOf(24.50)));
+    }
+
+    @Test
+    public void shouldNotCalculateMerchantFeeIfFopTypeIsCreditCard()
+    {
+        MerchantFee merchantFee = new MerchantFee();
+        merchantFee.setMerchantFeePercent(20D);
+        AirFeesInput input = new AirFeesInput();
+        input.setSellingPrice(new BigDecimal(10000));
+        input.setCommission(new BigDecimal(2000));
+        input.setNettFare(new BigDecimal(10000));
+        input.setTax1(new BigDecimal(1000));
+        input.setTax2(new BigDecimal(1000));
+        input.setDiscount(new BigDecimal(20));
+        input.setTransactionFee(new BigDecimal(350));
+        input.setGst(7D);
+        input.setClientType("TF");
+        input.setFopType(FopType.CREDIT_CARD);
+        AirFeesBreakdown airFeesBreakdown = calculator.calculate(input, merchantFee, countryCode);
+
+        assertThat(airFeesBreakdown.getMerchantFee(), Matchers.comparesEqualTo(BigDecimal.valueOf(0)));
+    }
+
+    @Test
+    public void shouldNotCalculateMerchantFeeIfFopTypeIsInvoice()
+    {
+        MerchantFee merchantFee = new MerchantFee();
+        merchantFee.setMerchantFeePercent(20D);
+        AirFeesInput input = new AirFeesInput();
+        input.setSellingPrice(new BigDecimal(10000));
+        input.setCommission(new BigDecimal(2000));
+        input.setNettFare(new BigDecimal(10000));
+        input.setTax1(new BigDecimal(1000));
+        input.setTax2(new BigDecimal(1000));
+        input.setDiscount(new BigDecimal(20));
+        input.setTransactionFee(new BigDecimal(350));
+        input.setGst(7D);
+        input.setClientType("TF");
+        input.setFopType(FopType.INVOICE);
+        AirFeesBreakdown airFeesBreakdown = calculator.calculate(input, merchantFee, countryCode);
+
+        assertThat(airFeesBreakdown.getMerchantFee(), Matchers.comparesEqualTo(BigDecimal.valueOf(0)));
     }
 
     @Test
@@ -118,6 +162,7 @@ public class ThAirCalculatorTest
         input.setTax1(new BigDecimal(300));
         input.setTax2(new BigDecimal(200));
         input.setClientType("TF");
+        input.setFopType(FopType.CWT);
         AirFeesBreakdown airFeesBreakdown = calculator.calculate(input, merchantFee, countryCode);
 
         assertThat(airFeesBreakdown.getCommission(), Matchers.comparesEqualTo(BigDecimal.valueOf(800)));
