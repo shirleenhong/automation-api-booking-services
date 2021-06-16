@@ -660,7 +660,7 @@ Get Json Content
 
 Identify Exchange Order Market
     [Arguments]    ${eo_index}=0
-    ${market}    Set Variable If    "${country_code_${eo_index}_value.upper()}"=="HK"    1    "${country_code_${eo_index}_value.upper()}"=="SG"    2    3
+    ${market}    Set Variable If    "${country_code_${eo_index}_value.upper()}"=="TH"    4    "${country_code_${eo_index}_value.upper()}"=="HK"    1    "${country_code_${eo_index}_value.upper()}"=="SG"    2    3
     Set Test Variable    ${market_${eo_index}}    ${market}
 
 Refresh Test Variables For Exchange Order
