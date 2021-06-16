@@ -69,7 +69,7 @@
 			</textField>
 			<textField>
 				<reportElement x="0" y="30" width="470" height="15" uuid="a9d633f4-aa65-4af7-a549-cebb0e5a6f24"/>
-				<textFieldExpression><![CDATA[$P{HEADER_OTHER_DETAILS}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{HEADER_OTHER_DETAILS} !=null ? $P{HEADER_OTHER_DETAILS} : ""]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="43" width="19" height="15" uuid="962b53f4-259c-45cb-9bbb-080d14b0af30"/>
