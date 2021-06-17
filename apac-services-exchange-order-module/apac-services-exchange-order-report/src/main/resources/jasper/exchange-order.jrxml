@@ -64,7 +64,7 @@
 				<textFieldExpression><![CDATA[$P{HEADER_COMPANY_NAME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="15" width="470" height="15" uuid="a9d633f4-aa65-4af7-a549-cebb0e5a6f24"/>
+				<reportElement x="0" y="15" width="490" height="15" uuid="a9d633f4-aa65-4af7-a549-cebb0e5a6f24"/>
 				<textFieldExpression><![CDATA[$P{HEADER_ADDRESS}]]></textFieldExpression>
 			</textField>
 			<textField>
