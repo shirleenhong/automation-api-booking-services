@@ -1,10 +1,10 @@
 {   
 	"_id" : "TH",
-  "companyName" : "CWT Travel Services (Thailand) Limited",
-  "address" : "Time Square Building 18th Floor,Room# 1801-2,246 Sukhumvit Road,Klongtoey",
-  "otherDetails" : "Bangkok,10110             Tax ID: 0105543014391",
-  "phoneNumber" : "+66 2685 1700",
-  "faxNumber" : "+66 2653 3631"
+    "companyName" : "CWT Travel Services (Thailand) Limited",
+    "address" : "Time Square Building 18th Floor,Room# 1801-2,246 Sukhumvit Road,Klongtoey,Bangkok 10110",
+	"otherDetails" : "Tax ID: 0105543014391",
+    "phoneNumber" : "+66 2685 1700",
+    "faxNumber" : "+66 2653 3631"
 }
 
 
