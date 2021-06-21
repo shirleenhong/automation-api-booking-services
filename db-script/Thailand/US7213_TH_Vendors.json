@@ -586,5 +586,19 @@
     "Country": "THAILAND",
     "FaxNumber": "",
     "Email": ""
+  },
+  {
+    "VendorNumber": "001860",
+    "VendorName": "CW TRAVEL THAILAND",
+    "SortKey": "CWT",
+    "ProductCodes": 92,
+    "Address1": "",
+    "Address2": "",
+    "City": "BANGKOK",
+    "State": "TH",
+    "ZipCode": "",
+    "Country": "THAILAND",
+    "FaxNumber": "",
+    "Email": ""
   }
 ]

@@ -74,7 +74,7 @@ public class ThAirCalculator implements Calculator<AirFeesBreakdown, AirFeesInpu
     {
         BigDecimal merchantFeeAmount = BigDecimal.ZERO;
 
-        if (merchantFee != null & FopType.CWT.equals(input.getFopType()))
+        if (merchantFee != null & FopType.CWT.equals(input.getFopType()) & !input.isMerchantFeeWaive())
         {
             Double merchantFeePercent = getMerchantFeeForVendorCode(merchantFee, input.getVendorCode());
             merchantFeeAmount = round(calculatePercentage(nettFare, merchantFeePercent), scale, roundingMode);
