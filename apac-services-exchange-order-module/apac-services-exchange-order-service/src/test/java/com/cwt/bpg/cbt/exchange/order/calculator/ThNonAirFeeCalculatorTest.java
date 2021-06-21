@@ -138,9 +138,40 @@ public class ThNonAirFeeCalculatorTest
         input.setNettCost(new BigDecimal(800));
         input.setTax(new BigDecimal(20D));
         input.setCommission(new BigDecimal(5D));
+        input.setMerchantFeeAbsorb(false);
         NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
 
         assertThat(result.getMerchantFee(), Matchers.comparesEqualTo(BigDecimal.valueOf(10)));
+    }
+
+    @Test
+    public void shouldCalculateZeroMerchantWhenNull()
+    {
+        MerchantFee merchantFee = new MerchantFee();
+
+        NonAirFeesInput input = new NonAirFeesInput();
+        input.setSellingPrice(new BigDecimal(1000));
+        input.setNettCost(new BigDecimal(500));
+        input.setTax(new BigDecimal(20D));
+        NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
+
+        assertThat(result.getMerchantFee(), Matchers.comparesEqualTo(BigDecimal.valueOf(0)));
+    }
+
+    @Test
+    public void shouldCalculateZeroMerchantIsMerchantFeeAbsorb()
+    {
+        MerchantFee merchantFee = new MerchantFee();
+        merchantFee.setMerchantFeePercent(2.2D);
+
+        NonAirFeesInput input = new NonAirFeesInput();
+        input.setSellingPrice(new BigDecimal(1000));
+        input.setNettCost(new BigDecimal(500));
+        input.setTax(new BigDecimal(20D));
+        input.setMerchantFeeAbsorb(true);
+        NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
+
+        assertThat(result.getMerchantFee(), Matchers.comparesEqualTo(BigDecimal.valueOf(0)));
     }
 
     @Test
