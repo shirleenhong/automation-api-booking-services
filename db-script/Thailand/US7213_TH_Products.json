@@ -158,5 +158,15 @@
     "IsEVNum": "TRUE",
     "ShowTktType": "FALSE",
     "VATPer": 0
+  },
+  {
+    "ProductCode": 92,
+    "SortKey": "CWT",
+    "Description": "CW TRAVEL THAILAND",
+    "Type": "MS",
+    "TktPrefix": 0,
+    "IsEVNum": "FALSE",
+    "ShowTktType": "TRUE",
+    "VATPer": 0.07
   }
 ]

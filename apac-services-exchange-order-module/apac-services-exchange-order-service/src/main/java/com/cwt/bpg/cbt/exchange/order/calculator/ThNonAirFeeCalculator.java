@@ -68,7 +68,7 @@ public class ThNonAirFeeCalculator implements Calculator<NonAirFeesBreakdown, No
     {
         BigDecimal merchantFeeAmount = BigDecimal.ZERO;
 
-        if (merchantFee != null)
+        if (merchantFee != null & !input.isMerchantFeeAbsorb())
         {
             final Double merchantFeePercent = getMerchantFeeForVendorCode(merchantFee, input.getVendorCode());
             merchantFeeAmount = calculatePercentage(nettPrice, merchantFeePercent);
