@@ -64,17 +64,17 @@ public class ThNonAirFeeCalculatorTest
 
         input.setSellingPrice(new BigDecimal(550.30D));
         input.setGstPercent(7D);
-        input.setNettCost(new BigDecimal(1228.27));
+        input.setNettCost(new BigDecimal(300.27));
         input.setTax(new BigDecimal(15.15D));
         input.setCommission(new BigDecimal(5.2D));
 
         NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
         assertNotNull(result);
 
-        assertThat(result.getCommission(), Matchers.comparesEqualTo(BigDecimal.valueOf(5.20)));
+        assertThat(result.getCommission(), Matchers.comparesEqualTo(BigDecimal.valueOf(260.03)));
         assertThat(result.getGstAmount(), Matchers.comparesEqualTo(BigDecimal.valueOf(39.58)));
         assertThat(result.getMerchantFee(), Matchers.comparesEqualTo(BigDecimal.valueOf(10)));
-        assertThat(result.getNettCost(), Matchers.comparesEqualTo(BigDecimal.valueOf(1228.27)));
+        assertThat(result.getNettCost(), Matchers.comparesEqualTo(BigDecimal.valueOf(300.27)));
         assertThat(result.getSellingPrice(), Matchers.comparesEqualTo(BigDecimal.valueOf(550.30)));
         assertThat(result.getTax(), Matchers.comparesEqualTo(BigDecimal.valueOf(15.15)));
         assertThat(result.getTotalSellingPrice(), Matchers.comparesEqualTo(BigDecimal.valueOf(615.03)));
@@ -174,6 +174,21 @@ public class ThNonAirFeeCalculatorTest
         NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
 
         assertThat(result.getTotalSellingPrice(), Matchers.comparesEqualTo(BigDecimal.valueOf(330)));
+    }
+
+    @Test
+    public void shouldCalculateCommission()
+    {
+        MerchantFee merchantFee = new MerchantFee();
+        merchantFee.setMerchantFeePercent(2.2D);
+
+        NonAirFeesInput input = new NonAirFeesInput();
+        input.setSellingPrice(new BigDecimal(1000));
+        input.setNettCost(new BigDecimal(500));
+        input.setTax(new BigDecimal(20D));
+        NonAirFeesBreakdown result = calculator.calculate(input, merchantFee, "TH");
+
+        assertThat(result.getCommission(), Matchers.comparesEqualTo(BigDecimal.valueOf(525)));
     }
 
 }
